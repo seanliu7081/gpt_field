@@ -151,6 +151,9 @@ def worker_with_fake_environment(monkeypatch, tmp_path):
         def check_success(self):
             return self.success
 
+        def close(self):
+            pass
+
     initial_path = tmp_path / "init_files" / "libero_10" / "task.init"
     initial_path.parent.mkdir(parents=True)
     initial_path.write_bytes(b"fixture initial states")
@@ -160,9 +163,10 @@ def worker_with_fake_environment(monkeypatch, tmp_path):
         manual_seed=lambda seed: None, load=lambda *args, **kwargs: [None] * 50))
     task = SimpleNamespace(language="pick up the mug", problem_folder="libero_10", init_states_file="task.init")
 
-    def create(max_steps):
+    def create(max_steps, *, stop_on_success=True):
         worker = _LiberoWorker.__new__(_LiberoWorker)
-        worker.config = LiberoConfig(max_steps=max_steps, image_size=4, settle_steps=2)
+        worker.config = LiberoConfig(max_steps=max_steps, image_size=4, settle_steps=2,
+                                     stop_on_success=stop_on_success)
         worker.env = None
         worker.benchmark_root = tmp_path
         worker.benchmark = SimpleNamespace(get_num_tasks=lambda: 10, get_task=lambda task_id: task,
@@ -210,3 +214,38 @@ def test_finite_worker_stops_at_policy_horizon_excluding_settle_steps(worker_wit
     assert response["status"]["success"] is False
     with pytest.raises(RuntimeError, match="reset"):
         worker.step(action)
+
+
+@pytest.mark.parametrize("value", [None, 0, 1, "false"])
+def test_stop_on_success_requires_explicit_boolean(value):
+    with pytest.raises(ValueError, match="stop_on_success"):
+        LiberoConfig(stop_on_success=value)
+
+
+def test_model_completion_mode_keeps_success_feedback_but_allows_further_actions(worker_with_fake_environment):
+    worker = worker_with_fake_environment(None, stop_on_success=False)
+    worker.env.success = True
+    action = [0, 0, 0, 0, 0, 0, -1]
+    for step in range(1, 4):
+        response = worker.step(action)
+        assert response["status"]["success"] is True
+        assert response["status"]["terminated"] is False
+        assert response["status"]["steps"] == step
+    worker.env.success = False
+    assert worker.step(action)["status"]["success"] is False
+
+
+def test_model_completion_mode_still_honors_finite_horizon(worker_with_fake_environment):
+    worker = worker_with_fake_environment(2, stop_on_success=False)
+    worker.env.success = True
+    assert worker.step([0, 0, 0, 0, 0, 0, -1])["status"]["terminated"] is False
+    status = worker.step([0, 0, 0, 0, 0, 0, -1])["status"]
+    assert status["terminated"] is status["horizon_reached"] is status["success"] is True
+
+
+def test_success_at_reset_does_not_terminate_model_completion_mode(worker_with_fake_environment, monkeypatch):
+    worker = worker_with_fake_environment(None, stop_on_success=False)
+    monkeypatch.setattr(worker._env_class, "check_success", lambda self: True)
+    status = worker.reset(0, 0)["status"]
+    assert status["success"] is True and status["terminated"] is False
+    assert worker.step([0, 0, 0, 0, 0, 0, -1])["status"]["steps"] == 1

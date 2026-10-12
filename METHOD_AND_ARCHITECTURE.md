@@ -2,6 +2,28 @@
 
 Implementation snapshot: 2026-10-11.
 
+Update (2026-10-12): the optional `--field-improvements` variant is described in
+the [README](README.md). The fixed-cadence algorithms below remain the legacy
+protocol. The new variant adds `field_grounding.py`: for a visually estimated
+held-object offset `b` and desired object-center offset `c`, both in world axes
+at generation, the effective gripper goal offset is
+`g = c - R_target R_current.T b`. The raw model response is preserved; this
+effective goal is used consistently for both grid expansion and planning.
+The relationship assumes a rigid grasp and must be re-estimated if the object slips.
+
+For fields with no repulsors, boxes or masks, `LocalPlanner.plan_analytic` generates
+the straight geodesic of the constant positive diagonal attraction metric,
+clipped to the current grid/workspace and at most 10 cm of arc length. It samples
+segments no longer than 1 cm, including a shorter last segment. Other fields retain
+the lattice search. Measured endpoint distance, rather than path projection alone,
+controls early replanning. Goal/boundary arrival, invalid direction, low measured
+motion and reliable fixed-camera visual divergence can close a field block before
+thirty actions. Those events request a new model decision and never end the task.
+The external-camera check tracks a model-provided textured patch using normalized
+cross correlation; its image-distance test is a heuristic, not reconstructed 3D
+geometry, grasp detection or calibrated confidence. No NES training, obstacle SDF,
+depth, hidden object pose or success signal is introduced into the policy.
+
 This document explains how Astra's visual predictions become robot actions in the direct, field-only, and hybrid implementations. It focuses on the mathematical interfaces, algorithms, and software structure. Use [IMPLEMENTATION_PROTOCOL.md](IMPLEMENTATION_PROTOCOL.md) for environment setup, commands, and stopping rules, and [EVALUATION_REPORT.md](EVALUATION_REPORT.md) for measured outcomes, videos, and experimental limitations.
 
 The system is an **inference-time controller built around a hosted multimodal model**. The repository does not train or fine-tune Astra, learn a dynamics model, or implement a neural distance-field network. In the field variants, Astra emits a discrete task-conditioned scalar potential; a deterministic local planner converts that potential into translation commands. In the direct variant, Astra emits the normalized robot commands itself. Hybrid control selects between these interfaces within one episode.
@@ -28,10 +50,11 @@ $$
 
 One action advances **0.05 simulated seconds** at 20 Hz. Translation components scale by 0.05 m; rotation components scale by 0.5 rad. Positive gripper commands close, negative commands open, and zero requests zero incremental gripper motion. A command is a controller target, not a guaranteed measured displacement.
 
-There are two separate timescales:
+There are three relevant timescales in the current hybrid:
 
-- **Every action:** execute one command, acquire a new robot/image observation, and record the measured transition. Field mode also replans from that new robot state.
-- **Every five actions:** submit a new visual request to Astra. For a normal uninterrupted run, refresh boundaries are `t_k = 5k`.
+- **Every action:** execute one command, acquire a new robot/image observation, and record the measured transition. Adapt field orientation from that current state; the low-level OSC controller retains its feedback.
+- **Every ten field actions:** plan a ten-step path from the measured position, then execute its ten fixed world-frame translation primitives in order. Standalone field baselines instead replan after each action.
+- **Every action block:** submit a new visual request to Astra. Standalone direct/field baselines use `t_k = 5k`. Hybrid v5 uses `t_0=0`, `t_{k+1}=t_k+K_k`, where `K_k=30` for a field block and `K_k=5` for a direct block (1.5 and 0.25 simulated seconds, respectively).
 
 Simulation pauses while awaiting a model response. The resulting method is closed-loop across refreshes; it does not run the large model at a real-time 20 Hz inference rate. Within a direct-action chunk, the remaining commands are held fixed, while the simulator's OSC controller retains its ordinary low-level feedback.
 
@@ -42,7 +65,7 @@ Sources: [observation.py](src/gpt_field/observation.py), [action.py](src/gpt_fie
 Write a model decision abstractly as
 
 $$
-z_k = f_\theta(H_k, o_{5k}; \mathcal{S}_m),
+z_k = f_\theta(H_k, o_{Kk}; \mathcal{S}_m),
 $$
 
 where `H_k` is retained history before the current observation is appended, and `S_m` denotes the method-specific prompt and output schema. This notation describes inference; this repository does not update `θ`.
@@ -51,9 +74,29 @@ where `H_k` is retained history before the current observation is appended, and 
 |---|---|---|
 | Direct + history | `A_k ∈ [-1,1]^(5×7)` | Execute the five validated commands in order |
 | Field-only + history | `F_k = (v_k, B_k, U_k, Q_k, G_k, M_k, stage_k)` | Search short translation paths in the field; adapt orientation and gripper intent |
-| Hybrid + history | Routing envelope plus either `F_k` or `A_k` | Use the selected branch for the next five-action block |
+| Compact hybrid + history | Routing envelope plus either compact field parameters or `A_k ∈ [-1,1]^(5×7)` | Expand to 33³ locally; use the field for 30 actions or execute five direct actions before the next request |
 
-For the field output, `v_k` contains 729 potential values; `B_k` and `U_k` are predicted blocked and unknown vertex indices; `Q_k` is a target quaternion; `G_k` is open/close/hold; `M_k` is move/hold. `stage_k` is a descriptive label, not executable phase logic.
+For the field output, `v_k` contains 729 potential values in the standalone baselines and 35,937 in hybrid v5; `B_k` and `U_k` are predicted blocked and unknown vertex indices; `Q_k` is a target quaternion; `G_k` is open/close/hold; `M_k` is move/hold. `stage_k` is a descriptive label, not executable phase logic.
+
+The current live hybrid replaces dense model output with `analytic-goal-rbf-v1`
+parameters. GPT predicts goal offset `g`, three positive attraction weights `w`,
+up to four Gaussian repulsors `(c_j, radius_j, weight_j)`, and up to four boxes
+each for blocked and unknown regions, plus the same orientation/gripper/stage
+commands. All positions are relative to the generation pose in world axes.
+Local code samples the following analytic potential at the 33³ grid vertices:
+
+```text
+V(r) = sqrt(sum_i w_i ((r_i - g_i) / 0.08)^2)
+       + sum_j weight_j exp(-0.5 ||r - c_j||² / radius_j²)
+```
+
+Inclusive boxes generate vertex masks, with blocked precedence on overlap.
+The planner receives the expanded dense field, while GPT history retains only
+the raw compact response and existing observation/feedback records. The model
+therefore no longer emits or receives 35,937 values per field block. This field
+family constrains expressiveness; dense sampling does not supply finer visual
+information. Unlike the unrestricted dense contract, this analytic potential is
+nonnegative, but it is still not a metric distance field.
 
 The original `field` experiment is a separate condition: it uses the same field/control interface but supplies only the current observation to the model, without the later complete history and execution-feedback transcript. Likewise, the generic `FieldPolicy(method="direct")` path is not the later `DirectHistoryPolicy` baseline. Names should not be treated as interchangeable.
 
@@ -124,7 +167,7 @@ The repository neither contains Astra weights nor reveals its internal visual en
 
 The same model identifier supplies direct actions, fields, and hybrid routing. Hybrid makes **one inference request** that returns both the mode choice and the chosen payload; it does not call separate planner, contact, router, and critic models. There is no second model checking history or grading success.
 
-Recorded later episodes used `gpt-6-astra`; their response metadata resolved to `reasoning.effort=medium` and `service_tier=default`. The current configuration has no effort/tier CLI selector. These are recorded execution settings, not a description of Astra's neural internals. Details and evidence are in [the evaluation report](EVALUATION_REPORT.md).
+Recorded later episodes used `gpt-6-astra`; their response metadata resolved to `reasoning.effort=medium` and `service_tier=default`. The upcoming hybrid test explicitly requests `reasoning.effort=high` through the subscription client and records this in its manifest. An explicit response-effort mismatch stops execution; missing metadata does not verify the resolved effort. The runner has no effort/tier CLI selector. Historical medium-effort results remain distinct from this new setting. Details and evidence are in [the evaluation report](EVALUATION_REPORT.md).
 
 ### 2.3 Client inheritance versus policy composition
 
@@ -305,7 +348,7 @@ Source: [direct_history.py](src/gpt_field/direct_history.py).
 
 ### 6.1 Spatial representation
 
-At refresh boundary `5k`, define field center `c_k = p_(5k)` and grid nodes
+For the standalone field baseline, at refresh boundary `5k`, define field center `c_k = p_(5k)` and grid nodes
 
 $$
 \xi^{(k)}_{ijr}=c_k+0.02\,[i-4,j-4,r-4],
@@ -315,6 +358,8 @@ $$
 Here `k` is the refresh index and `r` the z-grid index. In code, flattening is `81*i + 9*j + r`. The cube has a 0.16 m side length, extending 0.08 m along each axis from its center. Its axes are world aligned, not rotated with the wrist.
 
 The center stays fixed for the five-action block. Actual robot motion changes the query position, not the meaning of previously generated grid values. Reinterpreting old values around each new robot pose would create a different and incorrect algorithm.
+
+Hybrid v5 uses `K_field=30`, `n=33`, and spacing `s=0.005 m`: nodes are `c_k + 0.005·[i−16,j−16,r−16]` for indices 0–32, with flattening `1089*i + 33*j + r`. Its center is the measured pose at the start of the current field block, held fixed for 30 actions; the cube still spans ±0.08 m. Field blocks can start at any hybrid boundary, including step 35 after a 30-action field block and five-action direct block. The same interpolation uses spacing `s` in its denominator. The following baseline formula uses `s=0.02 m`.
 
 For a query point `x`, convert to lattice coordinates
 
@@ -345,7 +390,7 @@ $$
 \mathcal{D}=0.01\{+e_x,-e_x,+e_y,-e_y,+e_z,-e_z\}\quad\text{meters}.
 $$
 
-From the **current measured** position `p_t`, enumerate a horizon-three sequence `d_1,d_2,d_3` and its predicted waypoints
+For the standalone baseline, from the **current measured** position `p_t`, enumerate a horizon-three sequence `d_1,d_2,d_3` and its predicted waypoints. Hybrid v5 uses ten moves and exact lattice dynamic programming as described in §7.1.
 
 $$
 \hat p_j=p_t+\sum_{i=1}^{j}d_i, \qquad j=1,2,3.
@@ -398,12 +443,14 @@ Source: [ActionAdapter.adapt](src/gpt_field/action.py).
 
 ### 6.4 Field control pseudocode
 
+Use `update_steps=5`, `execution_steps=1`, and the 9³ grid for the standalone baseline, or `update_steps=30`, `execution_steps=10`, the 33³ grid, and `PlannerConfig(horizon=10)` inside hybrid v5. The hybrid client is the local field cache, so it does not issue a second model request. Hybrid orchestration resets the field policy's internal step to zero at each new field block and reports global action indices in outward diagnostics. The pseudocode below shows the baseline horizon-three search; hybrid uses §7.1's exact ten-step lattice search and executes the selected ten primitives before planning again.
+
 ```text
-FIELD_ACT(o, global_action_index):
-    if global_action_index mod 5 == 0:
+FIELD_ACT(o, global_action_index, grid, update_steps):
+    if global_action_index mod update_steps == 0:
         prediction ← client.predict(o, mode="field")
         validate prediction
-        field ← GridField(default_grid, center=o.position, prediction)
+        field ← GridField(grid, center=o.position, prediction)
 
     if prediction.motion_mode == "hold":
         delta ← [0, 0, 0]
@@ -432,20 +479,28 @@ For illustration only, if a valid local field is `V(x)=−x_world`, orientation 
 
 ### 7.1 Routing contract
 
-A hybrid response contains exactly:
+The compact hybrid and legacy dense v5 both use a 33×33×33 grid with 0.005 m spacing, retaining the 16 cm cube. Their local search looks ahead ten steps of 1 cm each (10 cm cumulative path), then executes all ten selected primitives before replanning from actual measured position. The 30-action field block supplies three such planning/execution cycles and is the separate model refresh interval. Direct mode retains five actions per model response. A hybrid response contains exactly:
 
 ```text
 controller:     "coarse_field" or "contact_direct"
 target_region:  "black_bowl" or "plate"
 near_target:    boolean
 routing_reason: brief nonempty explanation
-field:          field prediction or null
+field:          compact field prediction (dense values in legacy v5) or null
 direct:         {actions: five normalized 7D commands} or null
 ```
 
 Validation requires `near_target=false` in coarse mode and `true` in direct mode, with only the matching payload populated. These checks enforce internal consistency of the model response; they do not verify physical proximity.
 
 The prompt asks for field planning during free-space approach/transport and direct control near the active interaction region for alignment, grasping, lift clearance, placement, or release. `near_target` is a model judgment based on the allowed views, robot state, and history. There is no hidden object-distance threshold, field-value threshold, or contact sensor used for routing.
+
+For horizon ten, `LocalPlanner` uses exact dynamic programming. At each depth, the state key is `(integer displacement xyz, first primitive, last primitive)`. Equivalent prefixes have identical future valid moves, terminal costs, and immediate-potential tie scores. Retaining their lexicographically first prefix therefore preserves the selected trajectory; summing their multiplicities counts all represented valid full sequences. Positions use `start + integer_displacement × step_m`, avoiding path-order-dependent accumulation error. Node queries and directed edge checks are cached within each plan.
+
+The planner finds the global minimum `V(p̂_10)` across final states and applies the existing numerical tolerance before retaining one lexicographic finalist per first move. Immediate-potential ties and primitive order then select the winner. This order matters because tolerance bands are not transitive. Logs contain at most six terminal-band finalist paths, identified by `plan.search.candidate_semantics`; `represented_valid_sequence_count` separately records the number of full valid sequences. This is an exact search with merged states, with no beam-width limit or accumulated path cost.
+
+All ten predicted segments must fit the valid field and workspace when planned. The ±8 cm coverage prevents a straight 10 cm path starting at the center, but turning paths remain possible. With no complete valid ten-step path, the policy commits zero translation for the ten-action execution window; it does not reduce the planning horizon. Explicit horizon three preserves historical v1/v2/v3 prompts and the original exhaustive search; horizon ten with `field_execution_steps=1` preserves the v4 receding-horizon prompt.
+
+The execution queue contains the successive selected translation primitives, each relative to the measured pose at its own control step. It does not repeat the first primitive or drive back to absolute predicted waypoints. Per-action tracking feedback is recorded but does not rewrite remaining translation commands; orientation and gripper adaptation continue against the latest state. Replanning uses the latest actual pose at the end of the window. This trades fewer local searches for a longer period before translation tracking errors affect the selected path. Predicted field validity is therefore not a guarantee about a disturbed realized trajectory.
 
 ### 7.2 One model decision, one active branch
 
@@ -454,10 +509,13 @@ HYBRID_ACT(o):
     require no pending action and exact observation continuity
     t ← global policy action index
 
-    if t mod 5 == 0:
+    if first action or current controller block is exhausted:
         envelope ← client.predict(o, mode="hybrid")
         validate routing and active payload
         controller ← envelope.controller
+        chunk_start ← t
+        chunk_index ← next chronological model-decision index
+        active_steps ← 30 if controller == "coarse_field" else 5
         if controller == "coarse_field":
             field_cache.prepare(o, envelope.field)
             clear direct queue
@@ -465,13 +523,17 @@ HYBRID_ACT(o):
             direct queue ← envelope.direct.actions
 
     if controller == "coarse_field":
-        original_field_policy.step_index ← t
-        decision ← original_field_policy.act(o)
+        field_policy_with_horizon_10.step_index ← t - chunk_start
+        decision ← field_policy_with_horizon_10.act(o)
         # Its refresh consumes the cached field; no second model request occurs.
+        # At block offsets 0,10,20: plan from measured position and cache
+        # the ten selected primitive deltas (or ten zero deltas if no valid path).
+        # Every action: pop the next fixed delta and adapt orientation from o.
     else:
         decision ← Decision(next unchanged direct action)
 
-    attach controller, routing, history, and global chunk diagnostics
+    attach global step t, chunk_index, chunk_step=t-chunk_start,
+        controller, routing, and history diagnostics
     register the pending decision
     advance the hybrid policy.step_index by one
     return decision
@@ -485,9 +547,13 @@ HYBRID_OBSERVE_TRANSITION(before, decision, after):
 
 Both controllers retain one shared transcript, global step counter, 25-action feedback window, and last nonzero grip intent. A direct zero gripper action executes as zero without erasing the intent used by a later field `hold`.
 
-Switching is reversible at five-action boundaries. Returning to field mode requires a newly generated field centered at the current observation; the old pre-contact field is not reactivated. In direct mode, the policy's public `field` property is `None`. Independently, `HybridVideoRecorder.decision` clears its rendered field and local-plan state, preventing a stale coarse field from being displayed as the current plan.
+The FieldPolicy execution queue is cleared on reset, field refresh, or a handoff to direct mode. A final queue is truncated at the next model boundary if an explicit custom field interval is not divisible by the execution window. Success, interruption, or errors can stop a queue early. For a field block beginning at global step 35, local searches occur at 35, 45, and 55. Diagnostics retain the original full plan and separately record `plan_refreshed`, global `plan_start_step`, `plan_step`, `plan_execution_steps`, and the current `planned_delta_xyz`. Video and summary counts distinguish a new search from a cached move.
+
+Switching is reversible after 30 field actions or five direct actions. For example, field → direct → field requests occur at steps 0, 30, and 35. Returning to field mode requires a newly generated field centered at the current observation; the old pre-contact field is not reactivated. In direct mode, the policy's public `field` property is `None`. Independently, `HybridVideoRecorder.decision` clears its rendered field and local-plan state, preventing a stale coarse field from being displayed as the current plan.
 
 A possible trajectory is field approach → direct grasp retries → field transport → direct placement. It is not a programmed phase sequence. The recorded hybrid episode chose that pattern, but the code does not force it, automatically close the gripper, or trigger recovery from a stage label.
+
+The fixed field can run out of forward coverage during a 30-action block. The existing planner rejects outside-field candidates and returns zero translation if the start is invalid or no candidate remains; it does not request an early field refresh. The historical successful `chatgpt_hybrid_001` run used v1 (9³, 2 cm spacing, five-action blocks).
 
 Sources: [hybrid schema and prompt](src/gpt_field/hybrid_subscription.py), [hybrid orchestration and cache](src/gpt_field/hybrid_policy.py).
 
@@ -503,7 +569,7 @@ Sources: [hybrid schema and prompt](src/gpt_field/hybrid_subscription.py), [hybr
 | Subscription access | [chatgpt_auth.py](src/gpt_field/chatgpt_auth.py), [chatgpt_plan.py](src/gpt_field/chatgpt_plan.py) | Separate account authorization and complete SSE response transport |
 | Direct subscription adapter | [chatgpt_direct.py](src/gpt_field/chatgpt_direct.py) | Reuse the direct prompt/schema with subscription transport |
 | Hybrid model interface | [hybrid_subscription.py](src/gpt_field/hybrid_subscription.py) | Routing envelope, prompt, schema validation, subscription prediction |
-| Hybrid policy | [hybrid_policy.py](src/gpt_field/hybrid_policy.py) | Branch selection, original planner composition, shared gripper memory |
+| Hybrid policy | [hybrid_policy.py](src/gpt_field/hybrid_policy.py) | Branch selection, ten-step field planner composition, shared gripper memory |
 | Field evaluation | [field.py](src/gpt_field/field.py): `GridField` | Fixed-center interpolation and predicted-mask segment validity |
 | Discrete search | [planner.py](src/gpt_field/planner.py): `LocalPlanner`, `PlanResult` | Candidate enumeration, ranking, first move, full diagnostics |
 | Action adaptation | [action.py](src/gpt_field/action.py): `ActionAdapter` | Field orientation/translation conversion and grip intent |
@@ -536,9 +602,17 @@ The artifact auditor reconstructs histories, recalculates coarse plans, checks e
 
 ### 9.2 Computational implications
 
-Field storage and numeric output scale as `n^3` grid samples; the current `n=9` produces 729 values per field. Discrete candidate enumeration scales as `6^h`; current horizon `h=3` produces 216 nominal sequences before rejection. Each candidate also requires segment-validity queries. This explains why increasing grid resolution or horizon changes both representation cost and local work.
+Local field storage scales as `n^3` grid samples; standalone `n=9` produces 729 values per field, while hybrid `n=33` stores 35,937 at 0.5 cm spacing over the same 16 cm span. Dense v5 also emits these values from GPT; the compact client emits only the analytic parameters described in §1.2. The standalone horizon-three exhaustive search has 216 nominal sequences. Hybrid horizon ten has `6^10=60,466,176` nominal sequences (11,718,750 after immediate-reversal filtering alone), but computes reachability with merged lattice states rather than enumerating those sequences. State counts grow polynomially with this lattice horizon, and edge validity is reused within each plan. Logged finalists are at most six; actual state and represented-path counts depend on field/workspace validity and are recorded in `plan.search`.
 
-Every five actions, direct control emits 35 action scalars, while a field emits 729 potential scalars plus auxiliary commands and masks. Output size alone does not determine model quality or latency, but it affects the amount of data retained and resent.
+Every five actions, standalone direct control emits 35 action scalars, while standalone field control emits 729 potential scalars plus auxiliary commands and masks. Hybrid v5 emits 35 direct-action scalars for a five-action direct block or 35,937 field values plus auxiliary commands and masks for a 30-action field block. Output size alone does not determine model quality or latency, but it affects the amount of data retained and resent.
+
+The timing runner fixes controller choice and compares equal executed-action
+counts from identical reset states, with fresh histories and alternating order.
+It separates model transport, local field expansion, local search, and actual
+simulator/feedback time. The intended comparison for a 30-action block is one
+compact model call plus expansion and three local plans versus six Direct model
+calls. Startup and reset are excluded from control timing. This benchmark does
+not estimate success rate or time to task completion.
 
 With complete uncompressed textual history and approximately constant new text per refresh, prompt length grows approximately linearly in the number of refreshes, and cumulative resent input grows approximately quadratically. This is a scaling argument, not a measured runtime law; image retention, varying outputs, caching, and context limits affect actual usage. The present implementation prunes old images but does not summarize old textual fields or feedback.
 

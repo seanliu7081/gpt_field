@@ -6,6 +6,170 @@ Read [the implementation protocol](IMPLEMENTATION_PROTOCOL.md) for the exact dir
 
 Read [the method and architecture document](METHOD_AND_ARCHITECTURE.md) for equations, algorithm pseudocode, model interfaces, class relationships, and runtime data flow.
 
+The new opt-in `--field-improvements` variant adds RGB goal-consistency checks,
+held-object placement offsets, and analytic paths that can end before ten segments.
+Preview the exact subscription request without credentials or execution:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/evaluate_bowl_hybrid_subscription.py \
+  --field-improvements --preflight
+```
+
+For a fresh full-task run, replace `--preflight` with
+`--output runs/grounded_compact_medium_next`. This makes live ChatGPT subscription
+requests. The preset uses Astra medium, tracking, block summaries, and the existing
+grasp-settling/centered-placement guidance. Direct remains five actions; the grid
+remains 33³ at 0.005 m. Only actual LIBERO success completes the evaluation; there
+is no episode timeout, stagnation stop, model-completion stop, or API-key fallback.
+
+The model's versioned `goal_reference` can describe the visually estimated offset
+between a held bowl and the gripper. Local code compensates that offset for the
+requested orientation before computing the gripper goal and expanding the grid.
+An optional external-camera image anchor enables local patch tracking. Two reliable
+observations moving farther from its projected target, accompanied by measured
+robot motion, request a new model decision. Missing, textureless, ambiguous or lost
+anchors are reported as unavailable/inconclusive, not as successful tracking.
+
+For pure goal fields, local paths contain at most ten 1 cm segments, with a shortened
+last segment and a 5 mm measured arrival tolerance. Goal-triggered model refresh
+also requires measured orientation error at most 0.05 rad, so unfinished rotation
+can continue locally after translation arrives. Paths remain inside the current
+grid/workspace; repulsors or masks retain lattice planning. A path guides at most
+ten control actions and can replan sooner on measured endpoint arrival. Field
+blocks refresh after at most thirty actions, or earlier on goal arrival, local
+boundary arrival, an invalid direction, visual contradiction, or five commanded
+actions totaling at least 5 mm but realizing at most 0.5 mm. These events request
+fresh RGB-based routing; they never declare task completion or force a grasp.
+Early blocks retain full feedback locally and explicit `field_control_event` records;
+their closed histories can be summarized for the next model request.
+
+This implementation has offline behavioral tests. No new full-task success or
+speed improvement is established by those tests. Previous comparison results below
+belong to the earlier fixed-cadence protocols; the comparison script retains that
+protocol rather than silently enabling this new variant.
+
+The opt-in optimized Compact Hybrid keeps the 33³ / 0.005 m field, ten 1 cm geometric segments,
+ten control actions per local plan, and thirty actions per model refresh. `--execution-mode tracking`
+follows the path from each measured pose with a 3 cm look-ahead and a 5 cm command-norm bound;
+the actual motion is measured rather than assumed equal to geometric path length. Predicted masks,
+grid bounds and workspace still constrain commands. `--feedback-history block_summary` replaces
+completed feedback blocks in model input with deterministic measured-motion summaries; complete
+per-action records remain in `trace.jsonl`. Legacy `fixed` / `full` defaults remain available.
+The planner skips redundant segment traversal only when the entire grid is valid, retaining its
+original candidate ranking and counts.
+
+Run a fresh, sequential full-task comparison with the same Astra medium subscription route,
+initial state, feedback summaries and first-of-LIBERO-or-model completion rule:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/compare_optimized_compact.py \
+  --output runs/optimized_compact_medium_next
+```
+
+The Direct arm always emits five actions and uses no local field planning. Both arms retain
+videos, request logs, source snapshots and detailed timing. `comparison.json` reports wall-clock
+control time including model waits; video playback duration is not a timing measurement.
+This command makes live subscription requests and has no API-key or model fallback.
+
+For a fresh pair with identical grasp/placement guidance and actual LIBERO-success
+stopping in both arms, use:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/compare_optimized_compact.py \
+  --matched-libero-guidance --output runs/fair_compact_medium_pair_next
+```
+
+Both arms restart from the same task, initial state and seed, using Astra medium,
+subscription OAuth and block feedback summaries. The same two operational guidance
+paragraphs are included verbatim in both prompts; controller-specific routing, field
+representation and action-schema instructions remain appropriate to each method.
+The report verifies actual request guidance as well as configuration, source hashes,
+initial observations and evaluator success. It reports a completed-task speed ratio
+only when both arms achieve actual LIBERO success and the matching checks pass.
+This remains one sequential pair, subject to model behavior and service-latency variation.
+
+The completed [matched-guidance pair 004](runs/fair_compact_medium_pair_004/comparison.json)
+used this protocol without time, action, or stagnation caps. Both arms attained actual
+LIBERO success and all 23 matching checks passed:
+
+| Controller | Control wall time | Model pipeline time | Model calls | Actions |
+| --- | ---: | ---: | ---: | ---: |
+| Tracking Compact Hybrid | 445.662 s | 368.150 s | 37 | 335 |
+| Five-action Direct | 443.232 s | 403.347 s | 46 | 227 |
+
+Hybrid took 2.430 s longer (0.55%); this pair does not demonstrate an end-to-end
+speed advantage. Its model pipeline used 35.197 s less time (8.73%), but more
+actions, simulation and inline video work offset that saving. Inline video rendering
+took 54.618 s for Hybrid and 27.811 s for Direct; local Hybrid planning took 2.999 s.
+Model pipeline time includes request/history processing and local field expansion
+(0.357 s in Hybrid), not just server inference. Both arms stopped on the first
+evaluator-success action while still commanding gripper closure, so these results
+do not establish released-and-settled placement. Full audits passed 17,441 Hybrid
+and 10,396 Direct checks, including complete video decoding.
+
+The [attempt ledger](runs/fair_compact_medium_attempts.json) also retains all three
+preceding incomplete pairs: server overload after 125.561 s, missing stream completion
+after 5,465.491 s, and an invalid model quaternion after 2,415.380 s. Each ended in
+the Hybrid arm before Direct started, with no LIBERO success. Their combined
+8,006.433 s is separate retry cost and is not erased by pair 004. The completed-pair
+times above are conditional on that pair succeeding; they are not average time to
+success across attempts or evidence of a statistically stable speed difference.
+
+The recorded [optimized comparison](runs/optimized_compact_medium_comparison_001/comparison.json)
+used identical initial images/state, `gpt-6-astra` medium, subscription OAuth, block summaries,
+and the first LIBERO-success or explicit-model-completion signal:
+
+| Controller | Control wall time | Model calls | Stop signal |
+| --- | ---: | ---: | --- |
+| Tracking Compact Hybrid | 433.436 s | 39 | LIBERO success |
+| Five-action Direct, fresh retry | 724.784 s | 75 | Astra completion; LIBERO success false |
+
+In this completed timing comparison Hybrid used 291.348 s less time (40.20%; 1.67× speedup).
+The first Direct attempt was interrupted by HTTP 503 after 589.071 s and 350 actions; it is
+retained separately in the report and excluded from completed-trial timing. This is one
+comparison with different model-generated trajectories and different allowed stop signals,
+so it does not establish a stable average speedup or equal physical success.
+
+The completed runs passed 33,487 offline audit checks, including request/model/effort/route,
+history reconstruction, commands, stopping, source snapshots and full video decoding.
+[Offline validation](runs/optimized_compact_validation_001/verification.json) also preserves
+the exact 45-plan comparison (7.83× local speedup), real-simulator tracking calibration,
+and deterministic history compression measurements. Tracking's commands respect predicted
+grid validity, but actual dynamics can overshoot the fixed field boundary: this Hybrid run
+had 20 subsequent zero-translation actions while waiting for a valid plan or field refresh.
+
+For a fresh Direct retry requiring actual LIBERO success, use:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/evaluate_bowl_hybrid_subscription.py \
+  --reasoning-effort medium --controller-mode direct \
+  --feedback-history block_summary --centered-placement-guidance \
+  --output runs/direct_medium_libero_success_next
+```
+
+This opt-in prompt asks for visual centering within the plate rim and alignment checks
+from both cameras before release and after retracting. It adds no hidden object state,
+success feedback, local controller or supplied action directions. Five-action chunks and
+subscription-only inference remain unchanged. The prompt is versioned separately; model
+completion stopping is disabled. Previous model-declared completions remain historical
+results and are not reclassified as LIBERO success.
+
+Add `--grasp-settle-guidance` to this command for the separate v5 prompt: it explains
+the 20 Hz control clock (five actions are 0.25 s, and model waiting does not advance
+physics), asks the model to hold its grasp pose until measured finger motion settles,
+and to check a short lift in both views before transport. This remains model-generated
+Direct control, with no scripted grasp sequence or hidden object feedback. The v4
+prompt remains available without this flag.
+
+The [v5 Direct retry](runs/direct_medium_libero_success_002/results.json) attained actual
+LIBERO success in **268.433 s (4 min 28 s)**, with 127 actions and 26 Astra medium
+subscription calls. It stopped at the first evaluator success during lowering onto the
+plate, while still commanding closure; release and retract were not executed. The run
+passed 5,890 offline audit checks. The preceding v4 attempt was interrupted after
+856.203 s and 435 actions without success; both attempts remain recorded. This v5
+successful episode took 165.003 s less than the previous successful Hybrid episode,
+but its added grasp/placement guidance means this is not a strict matched comparison.
+
 ## Repository contents and local experiment artifacts
 
 This repository contains the controller source, tests, configuration examples, method documentation, and a [curated evaluation summary](results/summary.json). The full `runs/` directory, videos, raw model requests/responses, private credentials, virtual environments, and caches remain outside Git. Links into `runs/` in the historical documents refer to the originating experiment workspace; they are not downloadable repository assets. Links into `../heading_flow_pub/` likewise identify that workspace's external LIBERO source checkout.
@@ -545,14 +709,58 @@ command. There is no action, model-call, or episode-time horizon. Actual LIBERO
 success completes the episode; user interruption, subscription errors, or
 infrastructure failures leave it incomplete and unscored.
 
-Every five executed actions, one `gpt-6-astra` subscription response selects
+At each mode-specific block boundary, one `gpt-6-astra` subscription response selects
 either `coarse_field` or `contact_direct` and supplies that controller's payload.
-Coarse fields use the original 9×9×9 grid, local planner, and action adapter.
-Direct control executes exactly five normalized seven-value OSC actions.
+The current compact hybrid uses a **33×33×33 grid at 0.005 m (0.5 cm) spacing**,
+retaining the original **16 cm cube** centered at the measured end-effector pose.
+GPT returns a relative goal, three attraction weights, up to four Gaussian
+repulsors, and up to four blocked and four unknown boxes. Local NumPy code
+expands these parameters into **35,937 potentials** and vertex masks. The raw
+compact response stays in model history; expanded values are local artifacts.
+This analytic representation restricts the field shapes GPT can express and
+does not turn 0.5 cm sampling into 0.5 cm visual localization accuracy.
+The local planner uses **1 cm primitives
+and a ten-step search horizon** (10 cm total commanded path), executes all ten
+selected translation primitives in order, then replans from the actual measured
+position. The same field supplies **three local plans per 30-action block** at
+block-relative steps 0, 10, and 20. Each action still records measured feedback
+and adapts orientation from the latest state. Remaining translation commands are
+fixed during each ten-action window; measured tracking error does not rewrite
+them into waypoint corrections. This reduces planning work but permits more
+tracking error to accumulate before the next local replan.
+Field control refreshes the model after **30 actions**; direct control
+returns exactly **five normalized seven-value OSC actions**, executed before the
+next model request. At 20 Hz these blocks span **1.5 seconds** and **0.25 seconds**
+of simulated time, respectively.
+Hybrid requests explicitly set **`reasoning.effort="high"`**, using the existing
+ChatGPT subscription OAuth route. The manifest records the requested effort;
+an explicitly different effort in response metadata stops execution without
+retry or API-key fallback. Missing response metadata is not proof of the resolved effort.
 Near-target status is Astra's visual judgment about the active bowl or plate
 interaction region, not a simulator contact signal or a calibrated distance.
-The choice can change at every five-action boundary, including a return to
-field planning during free-space transport.
+The choice can change after 30 field actions or five direct actions, including
+a return to field planning during free-space transport. For example, field →
+direct → field requests occur at zero-based steps 0, 30, and 35.
+
+The field remains fixed for all 30 actions. Longer action blocks do not expand
+its coverage: near the cube boundary, feasible candidates decrease; an invalid
+start or no valid candidates gives zero translation until the next scheduled
+refresh. There is no automatic early refresh. Unlike the legacy dense v5
+protocol, the compact protocol does not ask GPT to emit all grid values.
+The v1 results below do not evaluate the compact method.
+
+The ten-step planner uses exact dynamic programming over lattice positions,
+first moves, and last moves, merging equivalent partial paths. It preserves
+terminal-potential ranking, immediate-potential tie breaking, and fixed primitive
+order without enumerating all **6¹⁰ = 60,466,176** sequences. Logs and videos show
+at most six terminal-band finalists, while `plan.search` separately records the
+represented valid sequence count and search state counts. The ±8 cm field limits
+every segment: a 10 cm path may turn, but cannot travel straight 10 cm from the
+center. A complete valid ten-step path is required; there is no shorter-horizon
+fallback. Hold or no valid full path commits zero translation for that execution
+window, while orientation and gripper still operate. Episode success or an
+interruption can stop partway through a window. Standalone baselines retain their
+three-step exhaustive planner with one action executed before replanning.
 
 This is a new prompt and routing condition. Both modes share all prior textual
 observations, complete accepted model outputs, opaque reasoning items, and
@@ -570,15 +778,92 @@ MUJOCO_EGL_DEVICE_ID=2 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=
 ```
 
 The existing ChatGPT login supplies credentials; there is no API-key or model
-fallback. Choose a new output directory. `--offline-smoke` exercises 15 real
-simulator actions with three scripted responses (field → direct → field),
+fallback. Choose a new output directory. `--offline-smoke` exercises 65 real
+simulator actions with three scripted responses (30 field → five direct → 30 field),
 including closure and retention of close intent, without model calls or a
 performance score. Live runs save shared request/response records, routing
 decisions, controller switches, actions, feedback, summary, and one annotated
 video. The video shows heatmaps and local plans for field control, and action
 chunks for direct control. Routing labels are explicitly model predictions.
 
-The first live hybrid episode reached **LIBERO success: 1/1**, after **448
+For the authorized timing-only comparison, run:
+
+```bash
+MUJOCO_EGL_DEVICE_ID=2 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  .venv/bin/python -u scripts/evaluate_bowl_hybrid_subscription.py \
+  --timing-comparison --blocks 3 --actions-per-block 30 \
+  --output runs/compact_field_timing_next
+```
+
+Each pair resets both controllers to the same official initial state and clears
+their histories. Order alternates between pairs. The compact-field arm makes one
+request and three local plans per 30 actions; the Direct arm makes six requests
+for five actions each. Controller selection is fixed by the experiment in these
+arms, while the normal hybrid runner still lets GPT select it. Both arms use
+`gpt-6-astra`, explicit high effort, the existing subscription login, and actual
+simulator execution with feedback. Startup/reset time is separated from model
+transport, field expansion, local planning, and control-loop time. This compares
+time for equal action counts, not time to task completion. Incomplete arms are
+reported as such, and no model or credential fallback is used.
+
+The completed [compact timing run](runs/compact_field_timing_001/comparison.md)
+contains three paired 30-action trials per controller (90 actions each), all with
+matching reset images/state and `gpt-6-astra` / `high` response metadata. Mean
+control time per 30 actions was **28.49 s for compact Field versus 66.75 s for
+Direct**: **57.31% less time**, or a **2.34×** ratio. Mean model transport time
+was **21.13 s versus 65.00 s**; Field additionally spent **0.061 s expanding the
+grid** and **5.07 s on three local plans** per trial. Requests totaled 3 versus
+18. Startup/reset are excluded from those controller timings. This is a timing
+result for equal action counts, not a task-completion comparison. Exact totals
+and definitions are in [summary.json](runs/compact_field_timing_001/summary.json).
+
+The subsequent [compact full-task attempt](runs/compact_hybrid_full_001/analysis.json)
+was stopped by the user after **657 acknowledged actions, 47 subscription
+requests, and 854.08 s**, with no LIBERO success observed. It remains incomplete
+and unscored. The correct bowl was lifted, transported, and released in contact
+with the plate, but its final horizontal body-origin distance from the plate
+was **4.669 cm**, outside the goal's strict **<3 cm** threshold. The model
+declared completion and held for the final 177 acknowledged actions. An isolated
+diagnostic replay matched every recorded state and both camera images exactly;
+the [artifact audit](runs/compact_hybrid_full_001_audit/audit.json) passed 30,874
+checks. The final additional action proposal lacked simulator acknowledgement
+and was excluded from the replay. See the
+[episode video](runs/compact_hybrid_full_001/episode.mp4). This single interrupted
+attempt does not measure time to successful completion against Direct control.
+
+For an explicit model-completion timing test with the user's requested medium
+effort, run a fresh episode:
+
+```bash
+MUJOCO_EGL_DEVICE_ID=2 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  .venv/bin/python -u scripts/evaluate_bowl_hybrid_subscription.py \
+  --reasoning-effort medium --stop-on-model-complete \
+  --output runs/compact_hybrid_medium_next
+```
+
+This opt-in completion v2 protocol adds `task_complete` and `completion_reason`
+to Astra's compact response. A validated completion declaration stops before
+local planning or execution of any action from that response. Temporary holds
+do not stop the episode. Either LIBERO success or Astra's completion declaration
+stops this mode, whichever occurs first; the two signals remain separate. The summary records
+`model_declared_complete`, the terminal response, and `control_elapsed_s` from
+the initial observation through that response, excluding startup and cleanup.
+The default high-effort v1 protocol and the equal-action timing benchmark remain
+available; the new completion instruction is an additional experimental change.
+
+The [medium completion run](runs/compact_hybrid_medium_001/timing_comparison.json)
+stopped on Astra's explicit completion declaration after **550 executed actions
+and 36 subscription requests**, with no action issued from the terminal response.
+LIBERO success was not observed. Control time to the declaration was **658.98 s**;
+the comparable video-event interval was **659.23 s**, versus **736.91 s** for the
+prior high-effort run's first completion judgment (**77.68 s / 10.54% shorter**).
+The medium rollout included a placement correction. This is a single-record
+comparison with different trajectories and an added completion instruction,
+not an isolated estimate of effort's effect. See the
+[video](runs/compact_hybrid_medium_001/episode.mp4) and
+[summary](runs/compact_hybrid_medium_001/summary.json).
+
+The historical **v1 (9×9×9, 2 cm, five-action blocks)** live hybrid episode reached **LIBERO success: 1/1**, after **448
 executed actions** and **90 real subscription requests** (51 fields and 39
 direct-action chunks). It ran field approach → direct grasp/retries → field
 transport → direct placement, switching at action ordinals 226, 386 and 416.
@@ -594,3 +879,95 @@ direct commands and recomputed original field plans. This is one episode, not
 an estimate of general reliability. The final gripper command remained closed
 (+1) when LIBERO reported success; release and post-release stability were not
 tested.
+
+## Distance-field control v7 (opt-in)
+
+The `--distance-field-control` preset selects Astra medium, subscription OAuth,
+tracking, block feedback summaries and the shared grasp/placement guidance. It
+keeps Direct chunks at five actions and the local grid at 33³ / 5 mm. Historical
+protocols and runs remain available. Preview the exact request without credentials,
+inference or a simulator:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/evaluate_bowl_hybrid_subscription.py \
+  --distance-field-control --preflight
+```
+
+A fresh full-task run uses the same flag with `--output runs/distance_field_next`.
+Only actual LIBERO success completes the evaluation. The preset has no episode
+time/action cap and no model-completion stop or API-key fallback.
+
+Select `--task drawer_bowl` to run LIBERO-Goal task 3, initial state 0, seed 7:
+"open the top drawer and put the bowl inside". The default remains `bowl_plate`.
+Preview with `--preflight`, then use a fresh output directory for live execution:
+
+```bash
+env -u OPENAI_API_KEY PYTHONPATH=src .venv/bin/python scripts/evaluate_bowl_hybrid_subscription.py \
+  --distance-field-control --task drawer_bowl --output runs/drawer_distance_next
+```
+
+This task adds `drawer_handle` and `drawer_interior` targets and explicit handle
+grasp/pull/release phases. Handle contact and constrained insertion use five-action
+Direct chunks; free-space movements use the same distance planner. The model
+infers the pull direction from RGB and measured response. Automatic upward
+reobservation is disabled around the cabinet: recovery movements require a new
+model decision. Task metadata and prompts are recorded and checked by the same
+offline auditor. The official containment predicate determines success; no
+extra drawer-closing or released-stability requirement is added to it.
+
+The model supplies compact scene guidance and explicit `control_context.phase`
+(`approach`, `grasp`, `transport`, `align`, `release`, `verify`, `recover`). Local
+Dijkstra solves a 26-neighbor cost-to-go graph with Euclidean edge lengths and
+optional Gaussian traversal density >= 1. Unknown/blocked vertices, diagonal
+corner cutting and continuous compact boxes are excluded. Costs are meters in
+the graph when density is one, or weighted meters otherwise; the old attraction
+values do not rank paths. The guarantee is for this finite predicted graph, not
+true scene geometry, a continuous geodesic or whole-arm collision avoidance.
+Each extracted path has at most ten segments, each <= 1 cm. A cached solve can
+serve multiple measured-position replans. The planner reserves 2.5 mm for its
+goal region and 2.5 mm for tracking within the 5 mm measured arrival threshold.
+
+Paired external-camera patch tracking follows an explicitly supplied moving
+point and its desired projected location. Planar XY corrections (<= 1 cm) require
+enough actual motion in both axes to identify a well-conditioned local image
+Jacobian. Height, orientation, finger motion, match ambiguity/loss and prediction
+residual checks invalidate unsupported calibration. The desired image location
+must represent the same rigid point at the intended height/orientation; matching
+a bowl rim to a plate center is not generally sufficient. Missing anchors,
+texture or two-axis excitation produce an explicit fallback. This is local RGB
+guidance, not a learned object detector, depth estimator or 3D placement proof.
+Proposed corrected goals must also remain inside the calibrated XY region and
+height tolerance before adoption. Already-overlapping paired anchors cannot
+initialize independent patch tracking; they request unverified/reobservation
+fallback rather than certify alignment.
+
+Fields may be reused beyond 30 actions, in increments of 30 up to 120, only with
+reliable visual tracking, measured movement and non-worsening image error.
+Arrival, lost tracking, invalid paths or lack of progress request an earlier
+model decision. Reuse and goal corrections preserve the original world-frame
+grid and obstacle coordinates; the implementation does not enlarge known space
+or recenter a grid into unobserved geometry. Outside-grid goals request a nearer
+goal/new observation. A 120-action field limit is an inference refresh bound,
+not an episode stopping rule.
+
+Verification holds are checked after five observations. Consecutive stable
+image agreement is reported only as observational evidence. If evidence is
+missing/misaligned, an open-gripper Field hold may perform one logged upward
+reobservation move of at most 2 cm within the same predicted-valid region, for
+at most ten control ticks, then request a recovery decision. A new release or
+model-directed recovery re-arms this allowance; repeated holds alone do not.
+The observation move uses a separately logged vertical path with hard geometry
+checks; soft repulsors cannot turn it into a lateral/downward detour. It is
+re-anchored at each measured pose without correcting lateral drift.
+Direct actions are never altered or truncated. Local code never certifies task
+success, and a stubborn model can still repeat recovery requests.
+
+Traces separate raw model fields, locally revised goals, local visual feedback,
+distance-control boundary events and computed distance maps. The new video
+renderer displays the local cost-to-go map rather than labeling the old compact
+attraction potential as a computed distance. The dedicated offline auditor is
+`scripts/audit_distance_control.py`; reconstruction uses the controller's shared
+algorithms and does not reconstruct physical object state. Offline tests and
+solver microbenchmarks do not establish full-task success or speedup.
+Video local metadata describes the pre-action decision that generated the
+displayed command; the trace separately records post-action visual feedback.

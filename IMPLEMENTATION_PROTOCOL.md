@@ -4,6 +4,17 @@ This document specifies the code that was actually implemented in `gpt_field`, i
 
 Recorded outcomes, videos, and the limits of comparison are collected in [EVALUATION_REPORT.md](EVALUATION_REPORT.md). Mathematical definitions, pseudocode, and code/model diagrams are in [METHOD_AND_ARCHITECTURE.md](METHOD_AND_ARCHITECTURE.md).
 
+The opt-in `--field-improvements` protocol introduced on 2026-10-12 uses the
+grounded compact schema and event-triggered field refresh described in the
+[README](README.md). It requires compact Hybrid, tracking, medium effort and
+LIBERO-only completion. Its geometric path has at most ten segments; its field
+refresh interval is at most thirty actions. Direct still executes all five actions.
+The fixed-cadence tables and historical runs below describe the older protocols.
+`field_control_event` trace rows are emitted immediately after the acknowledged
+feedback that caused a refresh; their `step` is the next action index. Raw compact
+predictions, effective gripper goals, grounding diagnostics and source snapshots
+remain available for reconstruction. Offline tests are not full-task timing results.
+
 The immediate objective is **planning usefulness**: can model-produced spatial potentials guide useful robot actions? Metric distance fidelity is a separate question. The primary `values` output is a finite, arbitrary-scale, lower-is-better potential, with no claimed distance unit. The separate fidelity command and its illustrative reference format do not turn these manipulation experiments into distance-estimation evaluations. See [the original implementation plan](IMPLEMENTATION_PLAN.md), [schema](src/gpt_field/schema.py), and [README](README.md).
 
 ## 1. Experimental conditions and scope
@@ -15,7 +26,7 @@ The three current control interfaces are direct actions with history, field plan
 | Original field, `field` | One local potential grid plus orientation/gripper commands | Replan translation from the current measured position on every action | Current model observation only; the host still maintains the active field and gripper intent | Historical API-key runner |
 | Direct with history, `direct_history` | Exactly five normalized 7D actions | Execute the returned actions in order | Full retained textual history and per-action measured feedback; latest two model-observation camera pairs | API-key full-task runner |
 | Field with history, `field_history` | Same field contract as the original field | Same original local planner and action adapter | Same history/feedback policy as the direct baseline | API-key full-task runner; subscription access probe and first-close diagnostic |
-| Hybrid, `hybrid_field_direct` | One routing decision and either a field or five direct actions | Execute the selected controller for that five-action block | One shared history and feedback stream across both controllers | Subscription full-task runner |
+| Compact hybrid, `hybrid_field_direct` | One routing decision and either compact field parameters or five direct actions | Expand to 33³ locally; execute 30 field actions or five direct actions before the next model request | One shared history and feedback stream across both controllers | Subscription full-task runner |
 
 “Plan-only” means the **field-planning control condition** here. It still sends executed robot actions and controls orientation and the gripper. It is different from the static subscription probe, which generates a field and a local plan but executes no robot action.
 
@@ -39,7 +50,7 @@ Each fresh episode in the specialized single-episode runners follows this sequen
 4. Execute ten settling actions `[0, 0, 0, 0, 0, 0, -1]`.
 5. Record the initial policy observation and begin action numbering at zero.
 
-Settling actions occur before the evaluated policy trajectory and are not counted as policy actions. The simulator runs at **20 Hz**: one policy action advances **0.05 seconds** of simulated control time, and a five-action block spans **0.25 seconds**. The simulator pauses while waiting for a model response. Wall-clock runtime therefore includes inference and rendering latency and is different from simulated motion time.
+Settling actions occur before the evaluated policy trajectory and are not counted as policy actions. The simulator runs at **20 Hz**: one policy action advances **0.05 seconds** of simulated control time. A five-action standalone or hybrid-direct block spans **0.25 seconds**; a 30-action hybrid-field block spans **1.5 seconds**. The simulator pauses while waiting for a model response. Wall-clock runtime therefore includes inference and rendering latency and is different from simulated motion time.
 
 For the unbounded episode runners, `max_steps=None` is serialized and the worker uses an infinite simulator horizon with `ignore_done=True`. The worker still explicitly checks task success. There is no concealed 520-action limit from the generic `LiberoConfig` default in these runs. Per-request HTTP and simulator-response timeouts remain infrastructure safeguards, not an episode action horizon.
 
@@ -97,13 +108,13 @@ The direct-history, field-history, and hybrid conditions share the same retained
 - Commit a model output to history only after response completion and schema validation. Invalid outputs do not become an accepted turn.
 - Clear episode history on reset without resetting the client’s lifetime usage ledger. Context exhaustion ends the run; it does not silently remove textual history.
 
-“Latest two observations” refers to observations at model refresh boundaries. The simulator returns images after every action, and those observations are recorded, but the model is queried only every five actions. It does not receive a fresh visual turn after each individual action inside a block.
+“Latest two observations” refers to observations at model refresh boundaries. The simulator returns images after every action, and those observations are recorded, but the model is queried only at block boundaries (five actions for the standalone baselines and hybrid direct; 30 for hybrid field). It does not receive a fresh visual turn after each individual action inside a block.
 
 After every acknowledged simulator action, the runner calls `observe_transition(before, decision, after)` before requesting another action. The policy enforces both the exact pending decision and equality between the next observation and the preceding measured `after` observation. This prevents skipping feedback or associating it with a different action.
 
 Each feedback record contains:
 
-- Global zero-based `step`, five-action `chunk_index`, and `chunk_step`.
+- Global zero-based `step`, chronological `chunk_index`, and within-block `chunk_step` (30 actions for hybrid field; five for hybrid direct and the standalone baselines). Hybrid block indices count accepted model decisions; global step division cannot recover them when block lengths differ.
 - Measured before/after eight-value states and the exact executed normalized action.
 - Desired translation `0.05 × action[:3]` and desired world rotation `0.5 × action[3:6]`.
 - Measured translation `after_xyz − before_xyz`, its norm, the commanded translation norm, and translation tracking error `||measured − desired||`.
@@ -131,6 +142,8 @@ Thus the direct baseline is open-loop at the **model-command level within each f
 ## 5. Field-planning condition
 
 ### 5.1 Model output and fixed world grid
+
+This section describes the original and standalone field configuration. Hybrid v5 uses the same field semantics with a 33×33×33, 0.005 m grid, a ten-step exact lattice planner, and a 30-action field refresh interval; see §6.
 
 The original field interface uses prompt version `astra-potential-v1`; the history extension uses `astra-field-history-v1`. The nested field schema is the same in both:
 
@@ -190,7 +203,7 @@ The field constrains translational search only; it is not a joint SE(3), gripper
 
 ## 6. Hybrid routing and execution
 
-The hybrid uses prompt version `astra-hybrid-field-direct-history-v1`. Every five executed actions, **one** Astra response selects a controller and supplies that controller’s payload. There is no separate routing-model request followed by a second control-model request.
+The current live hybrid uses the compact `analytic-goal-rbf-v1` field representation. The legacy dense client retains prompt version `astra-hybrid-field-direct-history-v5`. After **30 field actions or five direct actions**, **one** Astra response selects a controller and supplies that controller’s payload. There is no separate routing-model request followed by a second control-model request.
 
 The strict envelope has exactly these keys:
 
@@ -200,26 +213,54 @@ The strict envelope has exactly these keys:
   "target_region": "black_bowl" | "plate",
   "near_target": boolean,
   "routing_reason": nonempty string, at most 500 characters,
-  "field": original field object | null,
+  "field": compact field parameters | null,
   "direct": {"actions": five normalized 7D actions} | null
 }
 ```
 
 The validator requires `near_target=false` for `coarse_field` and `near_target=true` for `contact_direct`; the inactive payload must be `null`. `routing_reason` is a brief observable explanation, not a required chain-of-thought transcript.
 
+The compact field contains `stage`, `orientation_target_xyzw`, `gripper_command`,
+`motion_mode`, `goal_offset_m`, `attraction_weights`, `repulsors`, `blocked_boxes`,
+and `unknown_boxes`. All positions are offsets in world axes from the measured
+end-effector position at generation. With offset `r`, goal `g`, weights `w`, and
+repulsors `(c_j, radius_j, weight_j)`, local expansion computes:
+
+```text
+V(r) = sqrt(sum_i w_i * ((r_i - g_i) / 0.08)^2)
+       + sum_j weight_j * exp(-0.5 * ||r - c_j||^2 / radius_j^2)
+```
+
+There are at most four repulsors and four boxes of each mask type. Vertices
+inside inclusive axis-aligned boxes receive the corresponding mask, with blocked
+taking precedence over unknown. Local expansion uses no simulator geometry.
+The 33³ expanded field enters the existing planner; only the raw compact response
+is replayed in GPT history. This is a restricted analytic potential family, not a
+metric distance field or a claim of 0.5 cm perception accuracy.
+
 The routing instruction asks Astra to use fields for free-space approach or transport, and direct actions for interaction near the active bowl/plate region, including alignment, grasping, immediate lift clearance, placement, or release. **Near-target is a visual/model judgment.** It is not a measured contact flag, hidden object-distance threshold, field-value threshold, or parsed `stage` string.
 
-The selected controller remains active for the next five-action block, subject to task success or interruption. Switching is reversible at every block boundary. Holding the bowl does not permanently lock the policy into direct mode: it may return to field planning for transport and later choose direct placement. There is no hard-coded approach/grasp/lift/place finite-state machine or automatic recovery sequence.
+The selected controller remains active for 30 actions in field mode or five actions in direct mode, subject to task success or interruption. Switching is reversible at every block boundary, measured from that block's actual start. For field → direct → field, requests occur at zero-based steps 0, 30, and 35. Holding the bowl does not permanently lock the policy into direct mode: it may return to field planning for transport and later choose direct placement. There is no hard-coded approach/grasp/lift/place finite-state machine or automatic recovery sequence.
 
 Execution rules:
 
-- **Coarse field:** feed the already validated field to the frozen original `FieldPolicy` through a cache that makes no model calls. The original grid, planner, interpolation, masks, and adapter perform the action calculation.
+- **Coarse field:** feed the already validated 33×33×33 field (0.005 m spacing) to `FieldPolicy` through a cache that makes no model calls. The grid still covers 16 cm per axis. Plan ten 1 cm primitives with exact lattice dynamic programming and execute all ten in order before replanning from the latest measured position. A full field block plans at relative steps 0, 10, and 20, then requests a new model decision at step 30. Interpolation, masks, terminal/immediate/lexicographic selection, and action scaling retain their existing meanings.
 - **Contact direct:** consume exactly the validated five-action array, unchanged, without field planning or the field rotation cap.
 - **Return to coarse field:** request a new field centered at the current measured pose; never reactivate an old field centered before direct motion.
 - **Shared gripper memory:** after an acknowledged action and valid transition feedback, remember its last nonzero open/close intent across both controllers. Direct `0` is executed as `0` and leaves this remembered intent unchanged. A later field `hold` repeats the remembered intent, initially open.
 - **Shared history:** mode changes do not reset the transcript, step numbering, feedback window, or image-retention rule.
 
-The trace records `routing_decision` at each refresh and `controller_switch` when the controller changes after an earlier selection. Both are labeled as model predictions. The video uses heatmaps and local candidate paths only for coarse-field control; contact-direct frames show the returned action chunk and measured motion, with no stale field or invented local plan. See [hybrid schema/client](src/gpt_field/hybrid_subscription.py), [hybrid policy](src/gpt_field/hybrid_policy.py), [runner](scripts/evaluate_bowl_hybrid_subscription.py), and [video recorder](src/gpt_field/hybrid_video.py).
+A field retains its original center for the complete 30-action block. Coverage stays ±8 cm, so a ten-step path may turn but cannot go straight 10 cm from the center. Every predicted segment must remain valid inside the field and workspace when planned. An invalid start or absence of any complete ten-step path commits zero translation for that execution window, while orientation and gripper commands still apply; the planner does not shorten the requested horizon. There is no early-refresh or mid-window replanning rule. Flat/non-improving valid fields retain the original `plateau_move` behavior. Expanded grid values remain local; model history contains the compact parameters.
+
+During execution, translation is the next fixed world-frame primitive from the selected path, not the first primitive repeated and not a correction from measured position to a stored waypoint. Orientation is still adapted against each actual measured state, and every action requires transition feedback before the next action. Predicted path validity does not certify a tracking-disturbed realized trajectory. Success, interruption, and errors may end a window early. Reset, controller handoff, and new field generation discard any queued moves. For explicitly configured refresh intervals that are not divisible by the execution window, the last window is truncated at the model boundary.
+
+The ten-step search is exact dynamic programming, not beam pruning. At each depth it merges prefixes with identical integer displacement, first direction, and last direction, retaining the lexicographically first prefix and summing represented path counts. It caches lattice-node potentials and edge validity. After all ten layers it finds the global terminal-potential minimum and its numerical tie band, keeps one lexicographic finalist per first direction, then applies the immediate-potential and lexicographic tie breaks. No running path-cost term is added. Only horizons above six use this search; the original horizon-three baseline remains exhaustive.
+
+`plan.candidates`, `candidate_count`, and `valid_count` describe the at-most-six logged terminal-band finalists for this planner. They are not the number of all searched paths. `plan.search` identifies `exact_lattice_dp` and records `nominal_candidate_count=60,466,176`, `represented_valid_sequence_count`, layer state counts, and transition/cache counts. The video labels these paths as finalists. The selected finalist contains eleven positions (start plus ten moves) and ten primitives, with 0.10 m total commanded travel.
+
+The recorded `chatgpt_hybrid_001` success used **v1: 9×9×9, 0.02 m, five-action blocks**, and does not establish performance for the compact method. The dense client preserves v1–v5 for protocol verification. The live runner now defaults to compact fields with both planning horizon and execution window ten; its scripted smoke retains the dense fixture.
+
+The trace records `routing_decision` at each refresh and `controller_switch` when the controller changes after an earlier selection. Both are labeled as model predictions. Field action diagnostics distinguish `plan_refreshed`, global `plan_start_step`, within-plan `plan_step`, committed `plan_execution_steps`, and the current `planned_delta_xyz`. The cached full `plan` remains unchanged during its execution window; `plan.delta_xyz` remains that plan's first move. `local_plan_count` counts actual searches. The video emits `local_replan` only when planning occurs and `field_action` for cached moves, highlighting the current primitive. Contact-direct frames show the returned action chunk and measured motion, with no stale field or invented local plan. See [hybrid schema/client](src/gpt_field/hybrid_subscription.py), [hybrid policy](src/gpt_field/hybrid_policy.py), [runner](scripts/evaluate_bowl_hybrid_subscription.py), and [video recorder](src/gpt_field/hybrid_video.py).
 
 ## 7. Model transport, settings, and credential separation
 
@@ -245,7 +286,7 @@ Subscription requests have no automatic retry or API-key/model fallback. Quota, 
 
 ### 7.3 Reasoning effort and service tier actually used
 
-The current `AstraConfig` and runner CLIs expose **no reasoning-effort selector and no service-tier selector**. Requests omit a `reasoning` configuration object and explicitly carry `service_tier="default"` through the base payload.
+The standalone baselines omit a `reasoning` configuration object. Current hybrid requests explicitly include **`reasoning={"effort":"high"}`** through `ChatGPTPlanHybridClient`, and the runner records `policy.reasoning_effort` in its preflight and manifest. This setting uses the same ChatGPT subscription OAuth transport; it does not enable API-key billing. An explicitly conflicting effort in response metadata is rejected before actions/history are accepted, with no retry or fallback. Missing effort metadata does not establish the resolved setting. Explicit `reasoning_effort=None` is available on the client to reproduce historical omitted-effort requests. Runner CLIs expose no effort/tier selector, and the shared payload still carries `service_tier="default"`.
 
 For the completed hybrid run, **all 90 recorded responses** report `model="gpt-6-astra"`, `reasoning.effort="medium"`, and `service_tier="default"`. Thus “medium” describes the observed resolved model setting; it was not a user-selected `--reasoning-effort` experiment. “Default” is the recorded standard/default service route. Neither “maximum effort,” “high effort,” nor priority service was requested. This statement concerns public response metadata only, not opaque reasoning content. See [configuration implementation](src/gpt_field/astra.py), [hybrid manifest](runs/chatgpt_hybrid_001/manifest.json), and [recorded response metadata](runs/chatgpt_hybrid_001/requests/000001-ad37697575064384b00b5112255f16a1.response.json).
 
@@ -267,11 +308,29 @@ Predicate sources: [task BDDL](../heading_flow_pub/third_party/LIBERO/libero/lib
 |---|---|---|---|
 | Full-task API-key direct/field | Actual LIBERO success | API budget, user interruption, infrastructure/API failure | Only successful completion scores; incomplete attempts keep `success_rate=null` |
 | Full-task subscription hybrid | Actual LIBERO success | User interruption, subscription/auth/quota/context failure, infrastructure failure | Successful episode scores; incomplete attempts keep `success_rate=null` |
+| Compact Field / Direct timing comparison | Equal requested action counts in every paired arm (default 3 × 30 per controller) | User interruption, subscription failure, infrastructure failure, early simulator termination | Timing only; no success score and no overall speed ratio for incomplete pairs |
 | Subscription first-close diagnostic | First actual positive gripper action acknowledged, followed by saved observation/feedback | User/API/infrastructure stop or earlier simulator termination | Always unscored; not a full task evaluation |
 | Static subscription field probe | One validated field and local plan | Access/protocol/validation failure | Zero executed robot actions; always unscored |
 | Scripted smoke | Fixed diagnostic action count, or earlier termination/error | Infrastructure failure | Always unscored and visibly labeled scripted |
 
-The full-task direct, field-history, and hybrid runners have no policy-step, model-call, or episode-wall-time horizon. A close command does not end a full-task episode. A five-action block can end early on task success, and no further action or model request is sent after the successful transition is saved. Errors in required feedback or finalization do not produce a false completed score.
+The full-task direct, field-history, and hybrid runners have no policy-step, model-call, or episode-wall-time horizon. A close command does not end a full-task episode. An action block can end early on task success, and no further action or model request is sent after the successful transition is saved. Errors in required feedback or finalization do not produce a false completed score.
+
+The separate timing comparison fixes the controller rather than asking the model
+to route. Its Field schema contains only compact parameters; its Direct schema
+contains only five actions. Each arm starts with empty model history and the same
+official initial state/seed; both state and image digests must match. Replicate
+order alternates Field/Direct and Direct/Field. Every proposed action must receive
+simulator acknowledgement and feedback. An early terminal state is recorded as an
+incomplete arm, never filled with invented actions. The test does not compare
+success rates, path quality, or time to task completion.
+
+The ledger measures model transport (network, generation, stream parsing), local
+field expansion, local planning, the complete policy decision and feedback, and
+simulator stepping separately. Transport, expansion, and planning are subsets of
+policy time and must not be added to it again. `control_loop_s` is policy plus
+simulator time; startup, reset, external trace writes, and finalization are excluded.
+Request logging inside policy calls is included. Simulator startup/reset and full
+run wall time are also recorded. Actual holds remain counted as executed actions.
 
 The current completed hybrid result is **one success in one episode**, not a statistically reliable estimate across initial states or tasks. Budget-limited baselines must not be silently converted to completed 0% evaluations or pooled with setup probes and smoke tests.
 
@@ -384,9 +443,25 @@ MUJOCO_EGL_DEVICE_ID=2 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=
   --output runs/protocol_hybrid_live
 ```
 
-The isolated smoke uses exactly **three scripted envelopes and 15 actions**: field/open for five actions, direct/close for five, and field/hold for five. It verifies return to field mode and retention of close intent. That fifteen-action cap exists only in smoke mode. The live runner has no such cap and continues through closing to task success or an allowed stop.
+The isolated smoke uses exactly **three scripted envelopes and 65 actions**: field/open for 30 actions, direct/close for five, and field/hold for 30. It verifies return to field mode and retention of close intent. That 65-action cap exists only in smoke mode. The live runner has no such cap and continues through closing to task success or an allowed stop.
 
-The completed reference is [chatgpt_hybrid_001](runs/chatgpt_hybrid_001/summary.json), with its [full video](runs/chatgpt_hybrid_001/episode.mp4) and [stage-indexed viewer](runs/chatgpt_hybrid_001/index.html).
+The historical v1 completed reference is [chatgpt_hybrid_001](runs/chatgpt_hybrid_001/summary.json), with its [full video](runs/chatgpt_hybrid_001/episode.mp4) and [stage-indexed viewer](runs/chatgpt_hybrid_001/index.html).
+
+Run the compact-versus-Direct timing comparison through the same authorized
+subscription entry point:
+
+```bash
+MUJOCO_EGL_DEVICE_ID=2 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  .venv/bin/python -u scripts/evaluate_bowl_hybrid_subscription.py \
+  --timing-comparison --blocks 3 --actions-per-block 30 \
+  --output runs/compact_field_timing_next
+```
+
+This uses `gpt-6-astra` and explicit high effort in both arms, with no API-key
+fallback or automatic request retry. `summary.json`, `comparison.md`, per-arm
+traces, and raw request/response artifacts retain the timing evidence. The normal
+full-task hybrid defaults to compact fields; `--field-representation dense`
+explicitly restores the legacy dense v5 protocol.
 
 ### 9.6 Independent offline audit
 
@@ -401,9 +476,9 @@ Use `--allow-offline-smoke` explicitly to audit a scripted smoke. An optional `-
 
 Each fresh runner stores configuration/source provenance in `manifest.json`, simulator details in `simulator.json`, current/terminal bookkeeping in `run_state.json`, flushed decision/action/observation/feedback records in `trace.jsonl`, and terminal outcomes in `summary.json`, `runner_summary.json`, and `episodes.jsonl`. Model records are under `api/` for the older API-key history runners and `requests/` for subscription runners. Request keys link decisions to their exact model input and response records.
 
-Annotated `episode.mp4` files and `episode.events.jsonl` sidecars show recorded intermediate products. They omit API waiting time and hold events for legibility; video length is not wall-clock duration or simulator elapsed time. Field mode shows real field slices/candidates/selected first moves; direct mode shows real generated action chunks. Every smoke frame is labeled scripted. Success labels come from the evaluator, not a policy reward input.
+Annotated `episode.mp4` files and `episode.events.jsonl` sidecars show recorded intermediate products. They omit API waiting time and hold events for legibility; video length is not wall-clock duration or simulator elapsed time. Field mode shows real field slices/candidates and the current selected primitive; direct mode shows real generated action chunks. Every smoke frame is labeled scripted. Success labels come from the evaluator, not a policy reward input.
 
-This implementation already provides reversible visual routing, shared history, per-action feedback, unchanged original field planning, and direct control near model-selected interaction regions. It does **not** yet provide a matched full-task subscription evaluation of all three interfaces, repeated-initial-state reliability estimates, explicit reasoning-effort/tier experiments, oracle contact-based routing, automatic stall recovery, or a release-and-settle success criterion. Those would be new experimental conditions with their own frozen configurations and artifacts.
+This implementation already provides reversible visual routing, shared history, per-action feedback, ten-step exact field planning in the current hybrid, and direct control near model-selected interaction regions. It does **not** yet provide a matched full-task subscription evaluation of all three interfaces, repeated-initial-state reliability estimates, explicit reasoning-effort/tier experiments, oracle contact-based routing, automatic stall recovery, or a release-and-settle success criterion. Those would be new experimental conditions with their own frozen configurations and artifacts.
 
 The generic code also includes `field_one`, `affine`, `shuffled`, `minimum`, and `waypoint` alternatives and a separate fidelity command. Their existence, and the synthetic offline demo, are not completed real-Astra manipulation results. Comparisons should distinguish implemented software paths from actually executed experiments.
 

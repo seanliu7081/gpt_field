@@ -34,10 +34,11 @@ CHUNK_SIZE = 5
 PROGRESS_WINDOW = 25
 
 
-def _allowed(observation: Mapping[str, Any]) -> PolicyObservation:
+def _allowed(observation: Mapping[str, Any], task_prompt: str = TASK) -> PolicyObservation:
     result = PolicyObservation.from_dict(observation)
-    if result.prompt != TASK:
-        raise ValueError("Task text does not match the requested bowl task")
+    if result.prompt != task_prompt:
+        raise ValueError("Task text does not match the requested bowl task" if task_prompt == TASK
+                         else "Task text does not match the configured task")
     return result
 
 
@@ -64,9 +65,12 @@ class DirectHistoryAstraClient(AstraClient):
     Failed requests and schema retries never commit a conversation turn.
     """
 
-    def __init__(self, config=None, *, image_history: int = 2, **kwargs):
+    def __init__(self, config=None, *, image_history: int = 2, task_prompt: str = TASK, **kwargs):
         if type(image_history) is not int or image_history < 1:
             raise ValueError("image_history must be a positive integer")
+        if not isinstance(task_prompt, str) or not task_prompt.strip() or len(task_prompt) > 1000:
+            raise ValueError("task_prompt must be a nonempty task description of at most 1000 characters")
+        self.task_prompt = task_prompt
         super().__init__(config, **kwargs)
         self.image_history = image_history
         self._history_lock = threading.RLock()
@@ -107,7 +111,7 @@ class DirectHistoryAstraClient(AstraClient):
         grid = grid or GridSpec()
         if grid.frame != "world":
             raise ValueError("The direct-history baseline requires the verified world frame")
-        allowed = _allowed(observation)
+        allowed = _allowed(observation, self.task_prompt)
         with self._history_lock:
             payload = super().build_payload(allowed.to_dict(), grid, mode)
             observation_text = {
@@ -235,8 +239,11 @@ class DirectHistoryAstraClient(AstraClient):
         for key in ("step", "chunk_index", "chunk_step"):
             if type(feedback[key]) is not int or feedback[key] < 0:
                 raise ValueError(f"Feedback {key} must be a nonnegative integer")
-        if feedback["chunk_step"] >= CHUNK_SIZE:
-            raise ValueError("Feedback chunk_step exceeds five-action chunk")
+        chunk_size = getattr(self, "chunk_size", CHUNK_SIZE)
+        # Hybrid feedback shares this schema across its field and direct blocks.
+        chunk_size = max(chunk_size, getattr(self, "field_update_steps", chunk_size))
+        if feedback["chunk_step"] >= chunk_size:
+            raise ValueError(f"Feedback chunk_step exceeds {chunk_size}-action chunk")
         for key, length in (("before_state", 8), ("after_state", 8), ("normalized_action", 7),
                             ("desired_translation_delta_m", 3), ("desired_world_rotation_delta_rad", 3),
                             ("measured_translation_delta_m", 3), ("gripper_joint_delta", 2)):
@@ -280,7 +287,7 @@ class DirectHistoryPolicy:
         self._progress: list[dict] = []
 
     def act(self, observation: PolicyObservation) -> Decision:
-        allowed = _allowed(observation.to_dict())
+        allowed = _allowed(observation.to_dict(), getattr(self.client, "task_prompt", TASK))
         if self._pending is not None:
             raise RuntimeError("observe_transition is required before the next action")
         if self._expected_observation is not None and allowed != self._expected_observation:
@@ -308,8 +315,8 @@ class DirectHistoryPolicy:
 
     def observe_transition(self, before: PolicyObservation, decision: Decision,
                            after: PolicyObservation) -> dict:
-        before = _allowed(before.to_dict())
-        after = _allowed(after.to_dict())
+        before = _allowed(before.to_dict(), getattr(self.client, "task_prompt", TASK))
+        after = _allowed(after.to_dict(), getattr(self.client, "task_prompt", TASK))
         if self._pending is None:
             raise RuntimeError("No action is awaiting transition feedback")
         pending_before, pending_decision = self._pending
@@ -338,7 +345,8 @@ class DirectHistoryPolicy:
         step = self.step_index - 1
         feedback = {
             "type": "execution_feedback", "step": step,
-            "chunk_index": step // CHUNK_SIZE, "chunk_step": step % CHUNK_SIZE,
+            "chunk_index": decision.diagnostics.get("chunk_index", step // self.update_steps),
+            "chunk_step": decision.diagnostics.get("chunk_step", step % self.update_steps),
             "before_state": list(before.state), "after_state": list(after.state),
             "normalized_action": action, "desired_translation_delta_m": desired,
             "desired_world_rotation_delta_rad": [ROTATION_SCALE_RAD * value for value in action[3:6]],

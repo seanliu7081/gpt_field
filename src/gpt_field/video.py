@@ -386,7 +386,11 @@ class EpisodeVideoRecorder:
             for px, py in pixels[1:]:
                 pd.ellipse((px - 3, py - 3, px + 3, py + 3), fill=YELLOW)
             if len(pixels) > 1:
-                px, py = pixels[1]
+                move_index = min(int(self.details.get("plan_step", 0)) + 1, len(pixels) - 1)
+                px, py = pixels[move_index]
+                reference = self.details.get("tracking", {}).get("reference_xyz")
+                if reference is not None:
+                    px, py = project_world([reference], field.lower, field.upper, axes, side)[0]
                 pd.rectangle((px - 5, py - 5, px + 5, py + 5), outline=TEXT, width=2)
         px, py = project_world([self.observation.state[:3]], field.lower, field.upper, axes, side)[0]
         pd.ellipse((px - 6, py - 6, px + 6, py + 6), fill=TEXT, outline=BG, width=2)
@@ -403,15 +407,18 @@ class EpisodeVideoRecorder:
 
     def _event_strip(self, draw):
         labels = ("1  OBSERVE", "2  ASTRA REFRESH", "3  LOCAL REPLAN", "4  EXECUTE / OBSERVE")
-        active = {"observation": 0, "field_refresh": 1, "local_replan": 2, "executed": 3}.get(self.event)
+        active = {"observation": 0, "field_refresh": 1, "local_replan": 2, "field_action": 3, "executed": 3}.get(self.event)
         for index, label in enumerate(labels):
             x = 425 + index * 291
             draw.rounded_rectangle((x, 654, x + 277, 695), radius=8,
                                    fill=(32, 91, 90) if index == active else PANEL,
                                    outline=GREEN if index == active else (44, 56, 74), width=2)
             draw.text((x + 11, 666), label, font=_font(15, True), fill=TEXT if index == active else MUTED)
-        for x, color, label in ((425, CYAN, "valid candidates"), (638, YELLOW, "selected horizon"),
-                                (862, MAGENTA, "measured trace"), (1077, TEXT, "current EEF / square: first move")):
+        search = self.details.get("plan", {}).get("search", {})
+        candidate_label = "search finalists" if search.get("candidate_semantics") == "terminal_band_finalists" else "valid candidates"
+        move_label = "current EEF / square: current move" if "plan_step" in self.details else "current EEF / square: first move"
+        for x, color, label in ((425, CYAN, candidate_label), (638, YELLOW, "selected horizon"),
+                                (862, MAGENTA, "measured trace"), (1077, TEXT, move_label)):
             draw.line((x, 719, x + 22, 719), fill=color, width=3)
             draw.text((x + 30, 709), label, font=_font(14), fill=MUTED)
 
@@ -427,12 +434,25 @@ class EpisodeVideoRecorder:
         draw.text((442, 815), f"Action normalized 7D: {_vector(self.action, 2) if self.action else 'not issued'}", font=_font(15), fill=TEXT)
         if self._measured_delta is not None:
             line = "Executed displacement m: " + _vector(self._measured_delta, 4)
+        elif "planned_delta_xyz" in self.details:
+            line = "Current planned delta m: " + _vector(self.details["planned_delta_xyz"], 4)
         else:
             line = "First planned delta m: " + (_vector(plan["delta_xyz"], 4) if "delta_xyz" in plan else "not available")
         draw.text((442, 843), line, font=_font(15), fill=MAGENTA if self._measured_delta is not None else YELLOW)
         prediction = self.field.prediction if self.field else None
-        draw.text((1030, 786), f"Search: {plan.get('valid_count', 0)} / {plan.get('candidate_count', 0)} valid; selected {plan.get('selected_index', '-')}", font=_font(15), fill=TEXT)
-        draw.text((1030, 815), f"Planner: {_short(self.details.get('status', 'not yet run'), 48)}", font=_font(15), fill=TEXT)
+        search = plan.get("search", {})
+        if search.get("candidate_semantics") == "terminal_band_finalists":
+            search_line = (f"Exact DP: {plan.get('candidate_count', 0)} finalists; "
+                           f"{search.get('represented_valid_sequence_count', 0):,} valid paths")
+        else:
+            search_line = f"Search: {plan.get('valid_count', 0)} / {plan.get('candidate_count', 0)} valid; selected {plan.get('selected_index', '-')}"
+        draw.text((1030, 786), search_line, font=_font(15), fill=TEXT)
+        if "plan_step" in self.details and plan:
+            planner_line = (f"Plan step {self.details['plan_step'] + 1}/{self.details['plan_execution_steps']}; "
+                            f"planned at step {self.details['plan_start_step']} | {self.details.get('status', '')}")
+        else:
+            planner_line = f"Planner: {_short(self.details.get('status', 'not yet run'), 48)}"
+        draw.text((1030, 815), planner_line, font=_font(15), fill=TEXT)
         auxiliary = f"Gripper: {prediction.gripper_command}; motion: {prediction.motion_mode}" if prediction else "No auxiliary field commands recorded"
         draw.text((1030, 843), auxiliary, font=_font(15), fill=TEXT)
         latency = []

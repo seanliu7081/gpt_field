@@ -26,6 +26,7 @@ from .astra import (
     _canonical, _strict_loads, validate_prediction,
 )
 from .field_history import FieldHistoryAstraClient
+from .direct_history import TASK
 from .schema import GridSpec
 
 
@@ -383,7 +384,8 @@ class ChatGPTPlanFieldClient(FieldHistoryAstraClient):
     """
 
     def __init__(self, config: AstraConfig | None = None, *, token_provider: Callable[[], str],
-                 image_history: int = 2, transport=None, log_dir=None, clock=time.monotonic):
+                 image_history: int = 2, transport=None, log_dir=None, clock=time.monotonic,
+                 task_prompt: str = TASK):
         config = config or AstraConfig()
         if not callable(token_provider):
             raise TypeError("token_provider must be callable")
@@ -391,7 +393,7 @@ class ChatGPTPlanFieldClient(FieldHistoryAstraClient):
             raise ValueError("API-key dollar caps/prices do not apply to ChatGPT subscription usage")
         self.token_provider = token_provider
         self._used_access_tokens: set[str] = set()
-        super().__init__(config, image_history=image_history, api_key="",
+        super().__init__(config, image_history=image_history, task_prompt=task_prompt, api_key="",
                          transport=transport or subscription_sse_transport, log_dir=log_dir, clock=clock)
 
     def preflight(self) -> None:

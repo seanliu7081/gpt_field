@@ -37,6 +37,7 @@ class LiberoConfig:
     libero_root: str | None = None
     python_executable: str | None = None
     response_timeout_s: float = 120.0
+    stop_on_success: bool = True
 
     def __post_init__(self) -> None:
         if self.suite not in SUITE_TASK_COUNTS:
@@ -49,6 +50,8 @@ class LiberoConfig:
                 raise ValueError(f"{name} has an invalid value")
         if not math.isfinite(self.response_timeout_s) or self.response_timeout_s <= 0:
             raise ValueError("response_timeout_s must be positive")
+        if type(self.stop_on_success) is not bool:
+            raise ValueError("stop_on_success must be a boolean")
 
 
 class SimulatorError(RuntimeError):
@@ -316,7 +319,8 @@ class _LiberoWorker:
             obs, _reward, _done, _info = self.env.step([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0])
         success = bool(self.env.check_success())
         self.status = {"task_id": task_id, "episode_index": episode_index, "steps": 0,
-                       "success": success, "terminated": success, "horizon_reached": False,
+                       "success": success, "terminated": success and self.config.stop_on_success,
+                       "horizon_reached": False,
                        "initial_state_file": str(init_path), "initial_state_sha256": _sha256(init_path),
                        "bddl_sha256": _sha256(bddl_path)}
         return self._response(obs)
@@ -330,7 +334,7 @@ class _LiberoWorker:
         self.status["success"] = success
         self.status["horizon_reached"] = (self.config.max_steps is not None
                                           and self.status["steps"] >= self.config.max_steps)
-        self.status["terminated"] = success or self.status["horizon_reached"]
+        self.status["terminated"] = (success and self.config.stop_on_success) or self.status["horizon_reached"]
         return self._response(obs)
 
     def _response(self, obs: dict) -> dict:

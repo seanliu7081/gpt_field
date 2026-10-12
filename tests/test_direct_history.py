@@ -330,6 +330,18 @@ class DirectHistoryPolicyTests(unittest.TestCase):
         self.assertEqual(policy.act(observation()).diagnostics["step"], 0)
         self.assertEqual(instance.budget_snapshot()["api_calls"], 2)
 
+    def test_feedback_chunk_bound_uses_client_setting_and_preserves_direct_default(self):
+        instance = client(FakeTransport(envelope()))
+        policy = DirectHistoryPolicy(instance)
+        _, _, feedback = execute(policy, observation(), 0)
+        with self.assertRaisesRegex(ValueError, "5-action chunk"):
+            instance.record_transition({**feedback, "chunk_step": 5})
+        instance.chunk_size = 5
+        instance.field_update_steps = 30
+        instance.record_transition({**feedback, "step": 29, "chunk_step": 29})
+        with self.assertRaisesRegex(ValueError, "30-action chunk"):
+            instance.record_transition({**feedback, "step": 30, "chunk_step": 30})
+
     def test_feedback_rejects_evaluator_fields_and_snapshot_mutation(self):
         instance = client(FakeTransport(envelope()))
         policy = DirectHistoryPolicy(instance)

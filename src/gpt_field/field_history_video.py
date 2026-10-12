@@ -133,15 +133,20 @@ class FieldHistoryVideoRecorder(EpisodeVideoRecorder):
     def _event_strip(self, draw):
         labels = ("1 OBSERVE", "2 SCRIPTED FIELD" if self.offline_mock else "2 ASTRA FIELD",
                   "3 LOCAL REPLAN", "4 EXECUTE / FEEDBACK")
-        active = {"observation": 0, "field_refresh": 1, "local_replan": 2, "executed": 3}.get(self.event)
+        active = {"observation": 0, "field_refresh": 1, "local_replan": 2, "field_action": 3, "executed": 3}.get(self.event)
         for index, label in enumerate(labels):
             x = 425 + index * 291
             draw.rounded_rectangle((x, 654, x + 277, 695), radius=8,
                                    fill=(32, 91, 90) if index == active else PANEL,
                                    outline=GREEN if index == active else (44, 56, 74), width=2)
             draw.text((x + 11, 666), label, font=_font(14, True), fill=TEXT if index == active else MUTED)
-        for x, color, label in ((425, CYAN, "valid candidates"), (638, YELLOW, "selected horizon"),
-                                (862, MAGENTA, "measured trace"), (1077, TEXT, "current EEF / square: first move")):
+        search = self.details.get("plan", {}).get("search", {})
+        candidate_label = "search finalists" if search.get("candidate_semantics") == "terminal_band_finalists" else "valid candidates"
+        move_label = "current EEF / square: current move" if "plan_step" in self.details else "current EEF / square: first move"
+        if "tracking" in self.details:
+            move_label = "current EEF / square: reference"
+        for x, color, label in ((425, CYAN, candidate_label), (638, YELLOW, "selected horizon"),
+                                (862, MAGENTA, "measured trace"), (1077, TEXT, move_label)):
             draw.line((x, 719, x + 22, 719), fill=color, width=3)
             draw.text((x + 30, 709), label, font=_font(14), fill=MUTED)
 
@@ -160,16 +165,35 @@ class FieldHistoryVideoRecorder(EpisodeVideoRecorder):
         draw.text((1030, 757), " | ".join(latency) or "No response latency recorded", font=_font(14), fill=MUTED)
         plan = self.details.get("plan", {})
         draw.text((442, 782), "EEF world m: " + _vector(self.observation.state[:3], 4), font=_font(15), fill=TEXT)
-        draw.text((1030, 782), f"Search: {plan.get('valid_count', 0)}/{plan.get('candidate_count', 0)} valid; selected {plan.get('selected_index', '-')}",
-                  font=_font(15), fill=TEXT)
+        search = plan.get("search", {})
+        if search.get("candidate_semantics") == "terminal_band_finalists":
+            search_line = (f"Exact DP: {plan.get('candidate_count', 0)} finalists; "
+                           f"{search.get('represented_valid_sequence_count', 0):,} valid paths")
+        else:
+            search_line = f"Search: {plan.get('valid_count', 0)}/{plan.get('candidate_count', 0)} valid; selected {plan.get('selected_index', '-')}"
+        draw.text((1030, 782), search_line, font=_font(15), fill=TEXT)
         draw.text((442, 808), "Action 7D: " + (_vector(self.action, 2) if self.action else "not issued"), font=_font(15), fill=TEXT)
         prediction = self.field.prediction if self.field else None
         auxiliary = f"Field gripper: {prediction.gripper_command}; motion: {prediction.motion_mode}" if prediction else "No field auxiliary commands recorded"
         draw.text((1030, 808), auxiliary, font=_font(15), fill=TEXT)
-        line = ("Executed delta m: " + _vector(self._measured_delta, 4) if self._measured_delta is not None else
-                "First planned delta m: " + (_vector(plan["delta_xyz"], 4) if "delta_xyz" in plan else "not available"))
+        if self._measured_delta is not None:
+            line = "Executed delta m: " + _vector(self._measured_delta, 4)
+        elif "commanded_delta_xyz" in self.details:
+            line = "Tracking command delta m: " + _vector(self.details["commanded_delta_xyz"], 4)
+        elif "planned_delta_xyz" in self.details:
+            line = "Current planned delta m: " + _vector(self.details["planned_delta_xyz"], 4)
+        else:
+            line = "First planned delta m: " + (_vector(plan["delta_xyz"], 4) if "delta_xyz" in plan else "not available")
         draw.text((442, 834), line, font=_font(15), fill=MAGENTA if self._measured_delta is not None else YELLOW)
-        draw.text((1030, 834), "Planner: " + _short(self.details.get("status", "not yet run"), 49), font=_font(14), fill=TEXT)
+        if "plan_step" in self.details and plan:
+            planner_line = (f"Plan step {self.details['plan_step'] + 1}/{self.details['plan_execution_steps']}; "
+                            f"planned at step {self.details['plan_start_step']} | {self.details.get('status', '')}")
+            if "tracking" in self.details:
+                planner_line = (f"Tracking action {self.details['plan_step'] + 1}/{self.details['plan_execution_steps']}; "
+                                f"path progress {100 * self.details['tracking']['progress_m']:.1f} cm")
+        else:
+            planner_line = "Planner: " + _short(self.details.get("status", "not yet run"), 49)
+        draw.text((1030, 834), planner_line, font=_font(14), fill=TEXT)
         feedback = self.feedback
         if feedback is None:
             feedback_line = "Execution feedback not yet recorded. No task-success signal is supplied to the model."
