@@ -1,0 +1,236 @@
+--- drawer_high/astranomy/client.py
++++ libero10_high/astranomy/client.py
+@@ -21,7 +21,7 @@
+ from gpt_field.astranomy_agentic_client import (
+     AstranomyAgenticClient, validate_command, validate_feedback,
+ )
+-from .policy import MODEL, EFFORT, PROVIDER, TASK, config_overrides, dynamic_tools, policy_instructions
++from .policy import MODEL, EFFORT, PROVIDER, TASK, SUPPORTED_TASKS, config_overrides, dynamic_tools, policy_instructions
+ from .transport import PolicyGateway
+ 
+ 
+@@ -183,10 +183,11 @@
+     def __init__(self, config=None, *, token_provider, task_key=TASK, log_dir,
+                  rpc_factory=StdioRPC, binary=None, check_stop=lambda: None):
+         config = config or AstraConfig(model=MODEL, max_api_calls=None, max_wall_time_s=None, max_cost_usd=None)
+-        if task_key != TASK or config.model != MODEL:
+-            raise ValueError("This isolated retry is pinned to drawer_bowl and gpt-6-astra")
++        if task_key not in SUPPORTED_TASKS or config.model != MODEL:
++            raise ValueError("This isolated runtime accepts only approved tasks and gpt-6-astra")
+         # Reuse existing strict sensor-schema validation, never its transport.
+-        self.validator = AstranomyAgenticClient(config, token_provider=token_provider, task_key=TASK)
++        self.task_key = task_key
++        self.validator = AstranomyAgenticClient(config, token_provider=token_provider, task_key=task_key)
+         self.token_provider, self.rpc_factory = token_provider, rpc_factory
+         self.binary = binary or shutil.which("codex")
+         if not self.binary:
+@@ -222,7 +223,7 @@
+                                     "capabilities": {"experimentalApi": True}})
+         self.rpc.send({"method": "initialized", "params": {}})
+         params = {"model": MODEL, "modelProvider": PROVIDER, "approvalPolicy": "never",
+-                  "sandbox": "read-only", "baseInstructions": policy_instructions(),
++                  "sandbox": "read-only", "baseInstructions": policy_instructions(self.task_key),
+                   "developerInstructions": "", "config": config_overrides()}
+         if self.thread_id:
+             params["threadId"] = self.thread_id
+--- drawer_high/astranomy/offline_check.py
++++ libero10_high/astranomy/offline_check.py
+@@ -18,6 +18,7 @@
+ from gpt_field.astranomy_agentic_motion import ShortTargetExecutor
+ from gpt_field.observation import image_to_data_url
+ from .client import CodexPolicyClient, StdioRPC, server_command
++from .policy import TASK, SUPPORTED_TASKS
+ 
+ 
+ def fixture_request():
+@@ -33,7 +34,7 @@
+             "joint_positions": [0.] * 7, "geometry": geometry, "step": 0}
+ 
+ 
+-def check(output):
++def check(output, task_key=TASK):
+     output = Path(output).resolve()
+     output.mkdir(parents=True, exist_ok=False)
+     requests = []
+@@ -92,9 +93,9 @@
+         local += ["-c", "features.enable_request_compression=false"]
+         return StdioRPC(local, **kwargs)
+ 
+-    client = CodexPolicyClient(token_provider=lambda: "offline-oauth-fixture-not-a-credential",
++    client = CodexPolicyClient(task_key=task_key, token_provider=lambda: "offline-oauth-fixture-not-a-credential",
+                               log_dir=output / "rpc", rpc_factory=local_rpc)
+-    report = {"kind": "offline_codex_protocol_integration", "external_inference_requests": 0,
++    report = {"kind": "offline_codex_protocol_integration", "task_key": task_key, "external_inference_requests": 0,
+               "simulator_steps": 0, "subscription_credentials_loaded": False}
+     try:
+         request = fixture_request()
+@@ -140,4 +141,6 @@
+     import argparse
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--output", type=Path, required=True)
+-    print(json.dumps(check(parser.parse_args().output), indent=2))
++    parser.add_argument("--task", choices=SUPPORTED_TASKS, default=TASK)
++    args = parser.parse_args()
++    print(json.dumps(check(args.output, task_key=args.task), indent=2))
+--- drawer_high/astranomy/policy.py
++++ libero10_high/astranomy/policy.py
+@@ -3,17 +3,22 @@
+ 
+ from gpt_field.astranomy_agentic_prompt import instructions
+ from gpt_field.astranomy_agentic_client import tool_definitions
++from gpt_field.distance_tasks import resolve_distance_task
++from .libero10_tasks import LIBERO10_TASK_KEYS
+ 
+ MODEL = "gpt-6-astra"
+ EFFORT = "high"
+ TASK = "drawer_bowl"
++SUPPORTED_TASKS = (TASK, *LIBERO10_TASK_KEYS)
+ PROVIDER = "astranomy_chatgpt_plan"
+ REFERENCE = "https://research.nvidia.com/labs/srl/projects/astranomy/"
+ VERSION = "astranomy-codex-libero-v1"
+ 
+ 
+-def policy_instructions():
+-    return instructions(TASK) + """
++def policy_instructions(task_key=TASK):
++    if task_key not in SUPPORTED_TASKS:
++        raise ValueError("Unsupported Astranomy task")
++    return instructions(task_key) + """
+ 
+ PERSISTENT CODEX SESSION
+ This episode uses one persistent Codex thread. Each observation starts a turn.
+@@ -69,11 +74,12 @@
+     return result
+ 
+ 
+-def review_plan():
++def review_plan(task_key=TASK):
++    task = resolve_distance_task(task_key)
+     return {"version": VERSION, "reference": REFERENCE,
+             "status": "prepared_awaiting_user_approval", "full_test_started": False,
+-            "task": "open the top drawer and put the bowl inside",
+-            "suite": "libero_goal", "task_id": 3, "episode_index": 0, "seed": 7,
++            "task": task.prompt,
++            "suite": task.suite, "task_id": task.task_id, "episode_index": 0, "seed": 7,
+             "model": MODEL, "reasoning_effort": EFFORT,
+             "billing": "chatgpt_subscription", "api_key_fallback": False,
+             "runtime": "persistent_codex_app_server_thread",
+@@ -91,4 +97,4 @@
+                             "20 Hz OSC instead of 15 Hz damped-least-squares joint control",
+                             "world grip-site position/right-hand orientation instead of robot-root flange pose",
+                             "no privileged subtask progress; no episode cap"],
+-            "approval_scope": "one fresh drawer_bowl episode only; no automatic retry or other task"}
++            "approval_scope": "one fresh episode per selected task; no automatic retry"}
+--- drawer_high/astranomy/run.py
++++ libero10_high/astranomy/run.py
+@@ -1,4 +1,4 @@
+-"""One approval-gated Astranomy/Codex drawer-bowl retry.
++"""One user-authorized Astranomy/Codex episode with Astra high.
+ 
+ Default mode only prepares a review plan, with no credentials, model, or simulator.
+ New code and results live under gpt_field/astranomy; old modules are read-only.
+@@ -25,6 +25,8 @@
+ from gpt_field.distance_tasks import DISTANCE_TASK_KEYS, resolve_distance_task
+ from gpt_field.experiment import digest, source_manifest, write_json
+ from gpt_field.libero import LiberoConfig
++from .libero10_tasks import LIBERO10_TASK_KEYS, expected_reset
++from .policy import SUPPORTED_TASKS
+ from gpt_field.observation import decode_image, image_to_data_url
+ from gpt_field.video import MP4Stream, WIDTH, HEIGHT, _font
+ 
+@@ -45,7 +47,7 @@
+     return LiberoConfig(suite=task.suite, seed=7, image_size=512, render_size=512,
+         max_steps=None, settle_steps=10, python_executable=life.DEFAULT_SIM_PYTHON,
+         libero_root=life.DEFAULT_LIBERO_ROOT, stop_on_success=True,
+-        collision_check_mode="task_manipulation_v1", stop_on_collision=False,
++        collision_check_mode="none" if task.suite == "libero_10" else "task_manipulation_v1", stop_on_collision=False,
+         include_arm_joints=True)
+ 
+ 
+@@ -58,7 +60,7 @@
+ class CalibratedSimProcess(life._SessionSimProcess):
+     def __init__(self, config):
+         super().__init__(config, command=[config.python_executable or sys.executable, "-u", "-m",
+-            "gpt_field.astranomy_agentic_sim", "--worker", "--config-json", json.dumps(asdict(config))])
++            ("astranomy.libero10_worker" if config.suite == "libero_10" else "gpt_field.astranomy_agentic_sim"), "--worker", "--config-json", json.dumps(asdict(config))])
+ 
+     def geometry(self):
+         from gpt_field.astranomy_agentic_geometry import validate_geometry_metadata
+@@ -133,8 +135,8 @@
+     if not 0 <= episode_index < 50:
+         raise ValueError("episode index must be 0..49")
+     task, config, sim_config = resolve_distance_task(task_key), configuration(), sim_configuration(task_key)
+-    if task_key != "drawer_bowl" or episode_index != 0:
+-        raise ValueError("This retry is scoped to drawer_bowl, initial state 0")
++    if task_key not in SUPPORTED_TASKS or episode_index != 0:
++        raise ValueError("This runtime is scoped to approved tasks, initial state 0")
+     output.mkdir(parents=True)
+     freeze_sources(output)
+     client = None
+@@ -156,6 +158,7 @@
+             "no whole-episode action cap per existing user protocol"],
+         "stopping_rule": ["raw LIBERO success", "operator stop", "infrastructure/subscription failure"],
+         "collision_policy": "record_only", "success_qualification": "raw_libero_goal",
++        "collision_monitor": "generic_contact_v2" if task.suite == "libero_10" else "task_manipulation_v1",
+         "simulation_pauses_for_api": True, "prior_budgets_inherited": False}
+     write_json(output / "manifest.json", {"configuration": identity, "identity_hash": digest(identity),
+         "created_utc": datetime.now(timezone.utc).isoformat()})
+@@ -240,7 +243,7 @@
+                 raise ValueError("Official task mismatch")
+             write_json(output / "initial_observation.json", obs.to_dict())
+             actual = initial_identity(obs)
+-            expected = life.DEFAULT_EXPECTED_SHA256.get((task_key, episode_index))
++            expected = expected_reset(task_key, episode_index, life.DEFAULT_EXPECTED_SHA256)
+             write_json(output / "initial_observation_check.json", {"sha256": actual, "expected": expected,
+                        "matched": actual == expected if expected else None})
+             if expected and actual != expected:
+@@ -383,6 +386,7 @@
+ def main(argv=None):
+     from .policy import review_plan, policy_instructions, dynamic_tools
+     parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--task", choices=SUPPORTED_TASKS, default="drawer_bowl")
+     parser.add_argument("--run", action="store_true", help="Execute one approved full task")
+     parser.add_argument("--approved-full-test", action="store_true",
+                         help="Use only after the user explicitly approves this prepared full test")
+@@ -393,7 +397,7 @@
+     parser.add_argument("--no-video", action="store_true")
+     args = parser.parse_args(argv)
+     if not args.run:
+-        print(json.dumps({**review_plan(), "proposed_output": str(args.output.resolve())}, indent=2))
++        print(json.dumps({**review_plan(args.task), "proposed_output": str(args.output.resolve())}, indent=2))
+         return 0
+     if not args.approved_full_test:
+         parser.error("The user requires approval before the full test. Review the preparation first.")
+@@ -403,7 +407,7 @@
+     if output.exists():
+         parser.error("Existing artifacts cannot be overwritten or resumed")
+     from gpt_field.chatgpt_auth import SubscriptionCredentials
+-    result = execute(output, task_key="drawer_bowl", episode_index=0,
++    result = execute(output, task_key=args.task, episode_index=0,
+         token_provider=SubscriptionCredentials(store_dir=args.store_dir).access_token,
+         video=not args.no_video)
+     return 0 if result["evaluation_completed"] else 3
+--- drawer_high/src/gpt_field/distance_tasks.py
++++ libero10_high/src/gpt_field/distance_tasks.py
+@@ -39,6 +39,21 @@
+         control_phases=(*_COMMON_PHASES, "handle_grasp", "drawer_open", "handle_release"),
+         allow_upward_reobservation=False,
+     ),
++    "libero_10_t2": DistanceTaskSpec(
++        key="libero_10_t2", suite="libero_10", task_id=2,
++        prompt='turn on the stove and put the moka pot on it', target_regions=(), placement_target="",
++        control_phases=_COMMON_PHASES, allow_upward_reobservation=False,
++    ),
++    "libero_10_t6": DistanceTaskSpec(
++        key="libero_10_t6", suite="libero_10", task_id=6,
++        prompt='put the white mug on the plate and put the chocolate pudding to the right of the plate', target_regions=(), placement_target="",
++        control_phases=_COMMON_PHASES, allow_upward_reobservation=False,
++    ),
++    "libero_10_t8": DistanceTaskSpec(
++        key="libero_10_t8", suite="libero_10", task_id=8,
++        prompt='put both moka pots on the stove', target_regions=(), placement_target="",
++        control_phases=_COMMON_PHASES, allow_upward_reobservation=False,
++    ),
+ })
+ DISTANCE_TASK_KEYS = tuple(_TASKS)
+ 

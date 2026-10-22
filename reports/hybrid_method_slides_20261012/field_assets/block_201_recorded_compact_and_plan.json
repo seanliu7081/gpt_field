@@ -1,0 +1,317 @@
+{
+  "field_refresh_action_index_zero_based": 201,
+  "last_executed_action_index_zero_based": 214,
+  "source_action_trace_line_1based": 871,
+  "source_request": "runs/bowl_obstacle_distance_medium_zero_shot_001/requests/000032-d9b8148fa78a4d179c8f7c357c8f5c13.request.json",
+  "source_request_sha256": "ce7c907227fedd164371183005ece2338c21c47ac8e860c0ead54adfd71cb402",
+  "raw_model_compact_prediction": {
+    "control_context": {
+      "phase": "recover",
+      "visual_reference": null
+    },
+    "controller": "coarse_field",
+    "direct": null,
+    "field": {
+      "attraction_weights": [
+        1,
+        1,
+        1
+      ],
+      "blocked_boxes": [
+        {
+          "lower_offset_m": [
+            0.015,
+            -0.08,
+            -0.08
+          ],
+          "upper_offset_m": [
+            0.08,
+            0.08,
+            -0.015
+          ]
+        }
+      ],
+      "goal_offset_m": [
+        -0.07,
+        0,
+        0.045
+      ],
+      "goal_reference": {
+        "desired_object_center_offset_m": null,
+        "kind": "end_effector",
+        "object_center_offset_m": null,
+        "visual_anchor": null
+      },
+      "gripper_command": "open",
+      "motion_mode": "move",
+      "orientation_target_xyzw": [
+        0.99961,
+        -0.00091,
+        -0.02792,
+        0.00027
+      ],
+      "repulsors": [],
+      "stage": "elevated reverse approach and orientation restoration",
+      "unknown_boxes": [
+        {
+          "lower_offset_m": [
+            -0.08,
+            -0.08,
+            -0.08
+          ],
+          "upper_offset_m": [
+            0.015,
+            0.08,
+            -0.05
+          ]
+        }
+      ]
+    },
+    "near_target": false,
+    "routing_reason": "The external view shows the gripper still behind and above the target bowl, with the bottle close to the prior approach. Reverse longitudinal direction while gaining height, restore the earlier downward orientation, and exclude the lower object-filled region.",
+    "target_region": "black_bowl"
+  },
+  "effective_compact_field": {
+    "attraction_weights": [
+      1,
+      1,
+      1
+    ],
+    "blocked_boxes": [
+      {
+        "lower_offset_m": [
+          0.015,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          0.08,
+          0.08,
+          -0.015
+        ]
+      }
+    ],
+    "goal_offset_m": [
+      -0.07,
+      0,
+      0.045
+    ],
+    "gripper_command": "open",
+    "motion_mode": "move",
+    "orientation_target_xyzw": [
+      0.99961,
+      -0.00091,
+      -0.02792,
+      0.00027
+    ],
+    "repulsors": [],
+    "stage": "elevated reverse approach and orientation restoration",
+    "unknown_boxes": [
+      {
+        "lower_offset_m": [
+          -0.08,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          0.015,
+          0.08,
+          -0.05
+        ]
+      }
+    ]
+  },
+  "field_center_world_xyz_m": [
+    -0.04558293323599661,
+    0.20656395605484587,
+    1.025472947123347
+  ],
+  "goal_world_xyz_m": [
+    -0.11558293323599661,
+    0.20656395605484587,
+    1.070472947123347
+  ],
+  "recorded_plan": {
+    "delta_xyz": [
+      -0.007071067811865485,
+      0.0,
+      0.007071067811865506
+    ],
+    "status": "move",
+    "candidate_count": 1,
+    "valid_count": 1,
+    "selected_index": 0,
+    "start_potential": 0.08863961030678923,
+    "predicted_improvement": 0.08742640687119287,
+    "reason": null,
+    "numerical_tie_tolerance": 0.0,
+    "candidates": [
+      {
+        "primitives": [
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path"
+        ],
+        "positions": [
+          [
+            -0.04558293323599661,
+            0.20656395605484587,
+            1.025472947123347
+          ],
+          [
+            -0.052654001047862095,
+            0.20656395605484587,
+            1.0325440149352125
+          ],
+          [
+            -0.05972506885972759,
+            0.20656395605484587,
+            1.039615082747078
+          ],
+          [
+            -0.06679613667159306,
+            0.20656395605484587,
+            1.0466861505589433
+          ],
+          [
+            -0.07058293323599661,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.0805829332359966,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.09058293323599662,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.09558293323599662,
+            0.20656395605484587,
+            1.055472947123347
+          ],
+          [
+            -0.10058293323599661,
+            0.20656395605484587,
+            1.055472947123347
+          ],
+          [
+            -0.1076540010478621,
+            0.20656395605484587,
+            1.0625440149352126
+          ],
+          [
+            -0.11472506885972761,
+            0.20656395605484587,
+            1.0696150827470778
+          ]
+        ],
+        "path_length_m": 0.08742640687119287,
+        "valid": true,
+        "terminal_potential": 0.0012132034355963606,
+        "immediate_potential": 0.07863961030678923,
+        "invalid_reason": null
+      }
+    ],
+    "search": {
+      "method": "dijkstra_distance_field",
+      "connectivity": 26,
+      "candidate_semantics": "one_extracted_graph_shortest_path",
+      "distance_semantics": "weighted_graph_path_cost_to_goal_region",
+      "edge_cost": "euclidean_length_times_mean_endpoint_density",
+      "cost_unit": "m",
+      "density_minimum": 1.0,
+      "uses_attraction_potential": false,
+      "goal_xyz": [
+        -0.11558293323599661,
+        0.20656395605484587,
+        1.070472947123347
+      ],
+      "goal_tolerance_m": 0.0025,
+      "goal_distance_m": 0.08321658488546615,
+      "goal_reached": false,
+      "endpoint_is_goal": false,
+      "endpoint_in_goal_region": true,
+      "boundary_clipped": false,
+      "direction_invalid": false,
+      "needs_observation": false,
+      "cache_hit": false,
+      "segment_count": 10,
+      "max_path_length_m": 0.1,
+      "settled_vertex_count": 25080,
+      "seed_count": 1,
+      "valid_vertex_count": 25080,
+      "start_cost_m": 0.08863961030678923,
+      "terminal_cost_m": 0.0012132034355963606,
+      "shortest_graph_path_length_m": 0.08863961030678923,
+      "endpoint_xyz": [
+        -0.11472506885972761,
+        0.20656395605484587,
+        1.0696150827470778
+      ],
+      "path_termination": "goal_region"
+    }
+  },
+  "expanded_field_exact_match": true,
+  "reconstructed_plan_exact_match": true,
+  "executed_control_count": 14,
+  "replan_action_indices_zero_based": [
+    201,
+    211
+  ],
+  "initial_goal_distance_m": 0.08321658488546615,
+  "final_goal_distance_m": 0.0036218105338121555,
+  "measured_path_length_m": 0.08577535572771393,
+  "measured_net_displacement_m": 0.08050428967955321,
+  "measured_y_offset_range_m": [
+    -0.0005633838098840771,
+    0.002132469286115768
+  ],
+  "raw_rgb": [
+    {
+      "artifact": "block_201_input_external.png",
+      "sha256": "7db3bb16f6b1bc60724e4edd33250791dc16365dfa1fb4c11eb0587bcb9edebe",
+      "source_trace_line_1based": 865,
+      "source_event": "executed",
+      "after_action_index_zero_based": 200,
+      "source_key": "observation/image",
+      "transformation": "base64 decode only; original PNG bytes"
+    },
+    {
+      "artifact": "block_201_input_wrist.png",
+      "sha256": "57b6b91c4858739883b1353bb4ac30fdbc899b0a06a4a5f7466d6e2e29a98701",
+      "source_trace_line_1based": 865,
+      "source_event": "executed",
+      "after_action_index_zero_based": 200,
+      "source_key": "observation/wrist_image",
+      "transformation": "base64 decode only; original PNG bytes"
+    }
+  ],
+  "terminal_collision": null,
+  "data_artifacts": [
+    "block_201_data.npz",
+    "block_201_eef_track.csv"
+  ],
+  "primary_slice": {
+    "axes": [
+      "world X",
+      "world Z"
+    ],
+    "fixed_axis": "world Y",
+    "fixed_world_coordinate_m": 0.20656395605484587,
+    "fixed_offset_m": 0.0,
+    "grid_index": 16,
+    "path_lies_in_slice": true,
+    "description": "Exact XZ plane of the 3-D distance field. The selected path lies in this plane; the measured path in the tracking plot is an XZ projection."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "model_inputs": "RGB pixels only; learned FOV; no GT depth, K, geometry, crop, or scale alignment",
+  "device": "cuda:0",
+  "physical_gpu_index": 0,
+  "batch_size": 1,
+  "model_dtype": "float16",
+  "postprocessing_dtype": "float32",
+  "attention": "sdpa",
+  "seed": 0,
+  "eval_mode": true,
+  "preprocessing": {
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "image_mean": 0.5,
+    "image_processor_type": "DepthProImageProcessorFast",
+    "image_std": 0.5,
+    "resample": 2,
+    "rescale_factor": 0.00392156862745098,
+    "size": {
+      "height": 1536,
+      "width": 1536
+    }
+  },
+  "native_image_handling": "Full upright RGB, no crop or augmentation; official resize to 1536x1536; predictions resized back to original H,W",
+  "postprocessing": "Official processor: focal=0.5*W/tan(FOV_deg*pi/360); scale canonical inverse depth by W/focal; bilinear resize; depth=1/clamp(inverse_depth,1e-4,1e4)",
+  "depth_convention": "camera_z",
+  "depth_units": "m",
+  "intrinsics_assumption": "fx=fy=predicted focal; zero skew; principal point ((W-1)/2,(H-1)/2); integer coordinates denote pixel centers",
+  "no_outcome_tuning": true
+}

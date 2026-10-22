@@ -14,6 +14,11 @@ from PIL import Image
 OBSERVATION_KEYS = frozenset({
     "observation/image", "observation/wrist_image", "observation/state", "prompt"
 })
+# The original four-field protocol remains the default. Arm proprioception is
+# an explicit paired extension, never a route for arbitrary simulator state.
+JOINT_OBSERVATION_KEYS = OBSERVATION_KEYS | frozenset({
+    "observation/joint_position", "observation/joint_velocity"
+})
 
 
 def image_to_data_url(image: np.ndarray, size: int = 224, rotate: bool = True) -> str:
@@ -78,6 +83,8 @@ class PolicyObservation:
     wrist_image: str
     state: tuple[float, ...]
     prompt: str
+    joint_position: tuple[float, ...] | None = None
+    joint_velocity: tuple[float, ...] | None = None
 
     def __post_init__(self):
         if len(self.state) != 8 or any(
@@ -87,33 +94,67 @@ class PolicyObservation:
             raise ValueError("state must contain 8 finite numbers: xyz, axis-angle, two gripper joints")
         if not isinstance(self.prompt, str) or not self.prompt.strip():
             raise ValueError("prompt must be a nonempty task instruction")
+        if (self.joint_position is None) != (self.joint_velocity is None):
+            raise ValueError("joint_position and joint_velocity must be supplied together")
+        for name in ("joint_position", "joint_velocity"):
+            values = getattr(self, name)
+            if values is None:
+                continue
+            try:
+                valid = len(values) == 7 and all(
+                    not isinstance(x, (bool, np.bool_))
+                    and isinstance(x, (int, float, np.number))
+                    and not isinstance(x, (complex, np.complexfloating))
+                    and math.isfinite(float(x)) for x in values)
+            except (TypeError, ValueError, OverflowError):
+                valid = False
+            if not valid:
+                raise ValueError(f"{name} must contain 7 finite real Panda arm joint values")
+            object.__setattr__(self, name, tuple(float(x) for x in values))
         decode_image(self.image)
         decode_image(self.wrist_image)
         object.__setattr__(self, "state", tuple(float(x) for x in self.state))
 
     def to_dict(self) -> dict:
-        return {
+        data = {
             "observation/image": self.image,
             "observation/wrist_image": self.wrist_image,
             "observation/state": list(self.state),
             "prompt": self.prompt,
         }
+        if self.joint_position is not None:
+            data.update({"observation/joint_position": list(self.joint_position),
+                         "observation/joint_velocity": list(self.joint_velocity)})
+        return data
 
     @classmethod
     def from_dict(cls, data: Mapping) -> "PolicyObservation":
-        if set(data) != OBSERVATION_KEYS:
-            raise ValueError("policy observations must have exactly the four allowlisted fields")
+        if set(data) not in (OBSERVATION_KEYS, JOINT_OBSERVATION_KEYS):
+            raise ValueError("policy observations require the four allowlisted fields, optionally with both arm joint fields")
+        joints = {}
+        if set(data) == JOINT_OBSERVATION_KEYS:
+            if data["observation/joint_position"] is None or data["observation/joint_velocity"] is None:
+                raise ValueError("serialized arm joint fields must contain values, not null")
+            joints = {"joint_position": data["observation/joint_position"],
+                      "joint_velocity": data["observation/joint_velocity"]}
         return cls(data["observation/image"], data["observation/wrist_image"],
-                   tuple(data["observation/state"]), data["prompt"])
+                   tuple(data["observation/state"]), data["prompt"], **joints)
 
     @classmethod
-    def from_libero(cls, obs: Mapping, prompt: str, image_size: int = 224) -> "PolicyObservation":
+    def from_libero(cls, obs: Mapping, prompt: str, image_size: int = 224, *,
+                    include_arm_joints: bool = False) -> "PolicyObservation":
         # Explicit indexing: additional object, contact, reward, or predicate data is discarded.
         position = np.asarray(obs["robot0_eef_pos"], dtype=float)
         gripper = np.asarray(obs["robot0_gripper_qpos"], dtype=float)
         if position.shape != (3,) or gripper.shape != (2,):
             raise ValueError("unexpected LIBERO position or gripper state shape")
         state = (*position, *quaternion_to_axisangle(obs["robot0_eef_quat"]), *gripper)
+        if type(include_arm_joints) is not bool:
+            raise ValueError("include_arm_joints must be a boolean")
+        joints = {}
+        if include_arm_joints:
+            joints = {"joint_position": obs["robot0_joint_pos"],
+                      "joint_velocity": obs["robot0_joint_vel"]}
         return cls(image_to_data_url(obs["agentview_image"], image_size),
                    image_to_data_url(obs["robot0_eye_in_hand_image"], image_size),
-                   tuple(state), prompt)
+                   tuple(state), prompt, **joints)

@@ -1,0 +1,1169 @@
+{
+  "version": "v7-scene-slide-evidence-1",
+  "created_utc": "2026-10-21T14:30:26.637378+00:00",
+  "runs": {
+    "t3_old": {
+      "run_id": "agent_speedup_v2_user_check_libero_10_t3_002",
+      "task_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "status": "success",
+      "steps": 419,
+      "config": {
+        "suite": "libero_10",
+        "task_id": 3,
+        "episode_index": 0,
+        "seed": 7,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "control_hz": 20,
+        "rgb_size_px": 512,
+        "camera_views": [
+          "external",
+          "wrist"
+        ],
+        "controller": "OSC_POSE",
+        "stop_on_success": true,
+        "stop_on_model_complete": false,
+        "collision_policy": "record_only",
+        "oracle_enabled": false,
+        "human_reviewed_plan": true,
+        "approval_mode": "manual",
+        "policy_version": "agent-speedup-v2-user-check-agent-1",
+        "prompt_version": "user-check-agent-first-prompt-1",
+        "plan_sha256": "87f7d9f3413aa2c6d11668be1ce63a1faeb601d637875d4bfdc35bd2d8f9ae32",
+        "reviewed_regions": [],
+        "reviewed_step_types": [
+          "place_in",
+          "slide"
+        ],
+        "limits": {
+          "max_api_calls": null,
+          "max_policy_steps": null,
+          "max_wall_time_s": null
+        }
+      },
+      "reset": {
+        "expected_sha256": "dac6a0409193f4a5f66eb6845579633a693d49c741d2426f6a350dd172c41358",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "dac6a0409193f4a5f66eb6845579633a693d49c741d2426f6a350dd172c41358",
+        "initial_state_sha256": "e98ded151f64a036c74c872336dd09b968c379f3c9db7bc333aba37e7c235b86",
+        "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it.pruned_init"
+      },
+      "timing_s": {
+        "control_without_video": 1270.2330491346947,
+        "control_with_video": 1316.292410222988,
+        "video_render": 46.05936108829337,
+        "run_elapsed": 1323.7283381610177,
+        "model_pipeline": 1226.5897857089585,
+        "policy_compute": 0.43975309492088854,
+        "simulator_step": 39.998922277765814,
+        "observe_transition": 0.7557306613016408,
+        "run_state_logging": 1.9375684413535055,
+        "startup_to_initial_observation": 5.025178928015521,
+        "preparation": 27.927149622002617,
+        "preparation_model": 22.20049079999444,
+        "review_phase": 13.090215,
+        "approval_to_claim": 0.248144,
+        "completion_time_eligible": true
+      },
+      "model_calls": {
+        "execution_requests": 87,
+        "execution_decisions": 87,
+        "decision_types": {
+          "motion": 87
+        },
+        "execution_calls_by_kind": {
+          "agent": 87,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "preparation_requests": 1,
+        "completed_run_total_requests": 88
+      },
+      "attribution": {
+        "fragment_steps": 0,
+        "direct_steps": 419,
+        "native_macro_steps": 0,
+        "executed_step_denominator": 419,
+        "fragment_grants": 0,
+        "native_macro_grants": 0,
+        "direct_action_note": "Direct/fragment targets both use local bounded OSC; these are policy control steps, not separate model calls."
+      },
+      "success": {
+        "official_libero": true,
+        "task_success": true,
+        "strict_physical_at_terminal": false,
+        "strict_physical_after_diagnostic_settle": true,
+        "model_declared_complete": false,
+        "terminal_failing_checks": {
+          "close white_cabinet_1_bottom_region": [
+            "robot_not_touching_part",
+            "joint_at_rest"
+          ],
+          "in akita_black_bowl_1 white_cabinet_1_bottom_region": [
+            "at_rest"
+          ]
+        }
+      },
+      "collision": {
+        "detected": true,
+        "forbidden_contact_points": 671,
+        "robot_scene_points": 646,
+        "robot_nonfinger_manipulated_object_points": 0,
+        "manipulated_object_scene_points": 25,
+        "first_forbidden_action_index": 67
+      },
+      "physical_truth": {
+        "terminal_atoms": [
+          {
+            "atom": [
+              "close",
+              "white_cabinet_1_bottom_region"
+            ],
+            "kind": "articulation",
+            "raw": true,
+            "strict": false,
+            "checks": {
+              "joint_at_rest": false,
+              "libero_threshold": true,
+              "robot_not_touching_part": false
+            },
+            "why_not": [
+              "robot_not_touching_part",
+              "joint_at_rest"
+            ],
+            "numbers": {
+              "com": null,
+              "origin": null,
+              "tilt_deg": null,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": null,
+              "speed_mps": null,
+              "robot_contacts": [
+                "gripper0_finger2_collision"
+              ],
+              "env_contacts": null,
+              "window_disp_mm": null
+            },
+            "official_geometry": {
+              "joints": [
+                {
+                  "body": 29,
+                  "fraction_from_closed": 0.0548,
+                  "joint": "white_cabinet_1_bottom_level",
+                  "q": 0.00069,
+                  "qd": 0.0658,
+                  "range": [
+                    -0.16,
+                    0.01
+                  ],
+                  "type": 2
+                }
+              ],
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          },
+          {
+            "atom": [
+              "in",
+              "akita_black_bowl_1",
+              "white_cabinet_1_bottom_region"
+            ],
+            "kind": "inside_container",
+            "raw": true,
+            "strict": false,
+            "checks": {
+              "at_rest": false,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": true,
+              "not_perched_on_rim": true,
+              "supported_by_container_or_contents": true
+            },
+            "why_not": [
+              "at_rest"
+            ],
+            "numbers": {
+              "com": [
+                0.0262,
+                0.2801,
+                0.9484
+              ],
+              "origin": [
+                0.0254,
+                0.2767,
+                0.9259
+              ],
+              "tilt_deg": 3.39,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": null,
+              "speed_mps": 0.0658,
+              "robot_contacts": [],
+              "env_contacts": [
+                "white_cabinet_1:white_cabinet_1_g35",
+                "white_cabinet_1:white_cabinet_1_g38"
+              ],
+              "window_disp_mm": 34.921
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          }
+        ],
+        "diagnosis_only": true
+      },
+      "sources": {
+        "summary.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/summary.json",
+        "manifest.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/manifest.json",
+        "policy.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/policy.json",
+        "initial_observation_check.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/initial_observation_check.json",
+        "physical_truth.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/physical_truth.json",
+        "user_check_plan_history.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/user_check_plan_history.json",
+        "approved_plan.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/approved_plan.json",
+        "user_check_review.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/user_check_review.json",
+        "trace.jsonl": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/trace.jsonl",
+        "episode.mp4": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_002/episode.mp4"
+      }
+    },
+    "t3_v7": {
+      "run_id": "agent_speedup_v2_user_check_libero_10_t3_003",
+      "task_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "status": "success",
+      "steps": 1207,
+      "config": {
+        "suite": "libero_10",
+        "task_id": 3,
+        "episode_index": 0,
+        "seed": 7,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "control_hz": 20,
+        "rgb_size_px": 512,
+        "camera_views": [
+          "external",
+          "wrist"
+        ],
+        "controller": "OSC_POSE",
+        "stop_on_success": true,
+        "stop_on_model_complete": false,
+        "collision_policy": "record_only",
+        "oracle_enabled": false,
+        "human_reviewed_plan": false,
+        "approval_mode": "user_authorized_automatic",
+        "policy_version": "agent-speedup-v2-user-check-agent-2",
+        "prompt_version": "user-check-agent-first-prompt-2",
+        "plan_sha256": "f86f987713439bfd100b64eb033e409d61c312b92779ad32a1c0b5b15d248c8d",
+        "reviewed_regions": [],
+        "reviewed_step_types": [
+          "slide",
+          "place_in",
+          "slide"
+        ],
+        "limits": {
+          "max_api_calls": null,
+          "max_policy_steps": null,
+          "max_wall_time_s": null
+        }
+      },
+      "reset": {
+        "expected_sha256": "dac6a0409193f4a5f66eb6845579633a693d49c741d2426f6a350dd172c41358",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "dac6a0409193f4a5f66eb6845579633a693d49c741d2426f6a350dd172c41358",
+        "initial_state_sha256": "e98ded151f64a036c74c872336dd09b968c379f3c9db7bc333aba37e7c235b86",
+        "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it.pruned_init"
+      },
+      "timing_s": {
+        "control_without_video": 509.16405088163447,
+        "control_with_video": 615.3774930780055,
+        "video_render": 106.21344219637103,
+        "run_elapsed": 623.1448843370308,
+        "model_pipeline": 356.2383889739285,
+        "policy_compute": 1.066460415138863,
+        "simulator_step": 110.67853057320463,
+        "observe_transition": 9.742905464663636,
+        "run_state_logging": 29.642232671612874,
+        "startup_to_initial_observation": 5.181096801999956,
+        "preparation": 27.146761447016615,
+        "preparation_model": 21.417404306004755,
+        "review_phase": 0.090533,
+        "approval_to_claim": 0.058184,
+        "completion_time_eligible": true
+      },
+      "model_calls": {
+        "execution_requests": 22,
+        "execution_decisions": 22,
+        "decision_types": {
+          "execute": 20,
+          "motion": 2
+        },
+        "execution_calls_by_kind": {
+          "agent": 22,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "preparation_requests": 1,
+        "completed_run_total_requests": 23
+      },
+      "attribution": {
+        "fragment_steps": 1197,
+        "direct_steps": 10,
+        "native_macro_steps": 0,
+        "executed_step_denominator": 1207,
+        "fragment_grants": 20,
+        "native_macro_grants": 0,
+        "direct_action_note": "Direct/fragment targets both use local bounded OSC; these are policy control steps, not separate model calls."
+      },
+      "success": {
+        "official_libero": true,
+        "task_success": true,
+        "strict_physical_at_terminal": false,
+        "strict_physical_after_diagnostic_settle": true,
+        "model_declared_complete": false,
+        "terminal_failing_checks": {
+          "close white_cabinet_1_bottom_region": [
+            "robot_not_touching_part",
+            "joint_at_rest"
+          ],
+          "in akita_black_bowl_1 white_cabinet_1_bottom_region": [
+            "at_rest"
+          ]
+        }
+      },
+      "collision": {
+        "detected": true,
+        "forbidden_contact_points": 1488,
+        "robot_scene_points": 1249,
+        "robot_nonfinger_manipulated_object_points": 0,
+        "manipulated_object_scene_points": 239,
+        "first_forbidden_action_index": 99
+      },
+      "physical_truth": {
+        "terminal_atoms": [
+          {
+            "atom": [
+              "close",
+              "white_cabinet_1_bottom_region"
+            ],
+            "kind": "articulation",
+            "raw": true,
+            "strict": false,
+            "checks": {
+              "joint_at_rest": false,
+              "libero_threshold": true,
+              "robot_not_touching_part": false
+            },
+            "why_not": [
+              "robot_not_touching_part",
+              "joint_at_rest"
+            ],
+            "numbers": {
+              "com": null,
+              "origin": null,
+              "tilt_deg": null,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": null,
+              "speed_mps": null,
+              "robot_contacts": [
+                "gripper0_finger2_collision"
+              ],
+              "env_contacts": null,
+              "window_disp_mm": null
+            },
+            "official_geometry": {
+              "joints": [
+                {
+                  "body": 29,
+                  "fraction_from_closed": 0.0528,
+                  "joint": "white_cabinet_1_bottom_level",
+                  "q": 0.00102,
+                  "qd": 0.02171,
+                  "range": [
+                    -0.16,
+                    0.01
+                  ],
+                  "type": 2
+                }
+              ],
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          },
+          {
+            "atom": [
+              "in",
+              "akita_black_bowl_1",
+              "white_cabinet_1_bottom_region"
+            ],
+            "kind": "inside_container",
+            "raw": true,
+            "strict": false,
+            "checks": {
+              "at_rest": false,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": true,
+              "not_perched_on_rim": true,
+              "supported_by_container_or_contents": true
+            },
+            "why_not": [
+              "at_rest"
+            ],
+            "numbers": {
+              "com": [
+                0.026,
+                0.2852,
+                0.947
+              ],
+              "origin": [
+                0.0266,
+                0.2829,
+                0.9242
+              ],
+              "tilt_deg": 0.0,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": null,
+              "speed_mps": 0.02171,
+              "robot_contacts": [],
+              "env_contacts": [
+                "white_cabinet_1:white_cabinet_1_g38"
+              ],
+              "window_disp_mm": 7.384
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          }
+        ],
+        "diagnosis_only": true
+      },
+      "sources": {
+        "summary.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/summary.json",
+        "manifest.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/manifest.json",
+        "policy.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/policy.json",
+        "initial_observation_check.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/initial_observation_check.json",
+        "physical_truth.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/physical_truth.json",
+        "user_check_plan_history.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/user_check_plan_history.json",
+        "approved_plan.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/approved_plan.json",
+        "user_check_review.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/user_check_review.json",
+        "trace.jsonl": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/trace.jsonl",
+        "episode.mp4": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/episode.mp4"
+      },
+      "limitations": [
+        "At observation step393, the model reported that the bowl appeared to slip during transfer and land upright in the drawer; this is not a controlled-placement demonstration.",
+        "The official success stopped execution while the robot still touched the drawer and the drawer/bowl were moving."
+      ]
+    },
+    "t6_old": {
+      "run_id": "agent_speedup_v2_user_check_libero_10_t6_007",
+      "task_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "status": "success",
+      "steps": 464,
+      "config": {
+        "suite": "libero_10",
+        "task_id": 6,
+        "episode_index": 0,
+        "seed": 7,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "control_hz": 20,
+        "rgb_size_px": 512,
+        "camera_views": [
+          "external",
+          "wrist"
+        ],
+        "controller": "OSC_POSE",
+        "stop_on_success": true,
+        "stop_on_model_complete": false,
+        "collision_policy": "record_only",
+        "oracle_enabled": false,
+        "human_reviewed_plan": true,
+        "approval_mode": "manual",
+        "policy_version": "agent-speedup-v2-user-check-agent-1",
+        "prompt_version": "user-check-agent-first-prompt-1",
+        "plan_sha256": "e94dd262f6e0ab0f6b625cc67858e3b39ed7403748443fc91b2f0b477a4cfe48",
+        "reviewed_regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "reviewed_step_types": [
+          "place_on",
+          "place_on"
+        ],
+        "limits": {
+          "max_api_calls": null,
+          "max_policy_steps": null,
+          "max_wall_time_s": null
+        }
+      },
+      "reset": {
+        "expected_sha256": "59d7c04f412daf02dc8818807d8343bda70e6f4dcffa2dfdb16cf9cb35bd048e",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "59d7c04f412daf02dc8818807d8343bda70e6f4dcffa2dfdb16cf9cb35bd048e",
+        "initial_state_sha256": "6e811394c4ff9a43ae23515d8512e9b657c04344b94dd5baed121b595490514f",
+        "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate.pruned_init"
+      },
+      "timing_s": {
+        "control_without_video": 1289.2462749313563,
+        "control_with_video": 1338.558293492999,
+        "video_render": 49.31201856164262,
+        "run_elapsed": 1347.6396988540073,
+        "model_pipeline": 1229.2727530650445,
+        "policy_compute": 0.45578565273899585,
+        "simulator_step": 56.037407826428534,
+        "observe_transition": 0.7929479991144035,
+        "run_state_logging": 2.04790138619137,
+        "startup_to_initial_observation": 6.761182424990693,
+        "preparation": 35.29990877202363,
+        "preparation_model": 27.58729353698436,
+        "review_phase": 6342.584326,
+        "approval_to_claim": 0.320723,
+        "completion_time_eligible": true
+      },
+      "model_calls": {
+        "execution_requests": 84,
+        "execution_decisions": 84,
+        "decision_types": {
+          "macro": 1,
+          "motion": 82,
+          "finish": 1
+        },
+        "execution_calls_by_kind": {
+          "agent": 84,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "preparation_requests": 1,
+        "completed_run_total_requests": 85
+      },
+      "attribution": {
+        "fragment_steps": 0,
+        "direct_steps": 404,
+        "native_macro_steps": 60,
+        "executed_step_denominator": 464,
+        "fragment_grants": 0,
+        "native_macro_grants": 1,
+        "direct_action_note": "Direct/fragment targets both use local bounded OSC; these are policy control steps, not separate model calls.",
+        "native_macro_detail": "All60 native macro actions were incomplete CalibratePlus setup (close30,yaw5+6,open19); substantive object manipulation used direct control."
+      },
+      "success": {
+        "official_libero": true,
+        "task_success": true,
+        "strict_physical_at_terminal": false,
+        "strict_physical_after_diagnostic_settle": true,
+        "model_declared_complete": false,
+        "terminal_failing_checks": {
+          "on chocolate_pudding_1 living_room_table_plate_right_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_target",
+            "supported_only_by_target"
+          ]
+        }
+      },
+      "collision": {
+        "detected": true,
+        "forbidden_contact_points": 1972,
+        "robot_scene_points": 0,
+        "robot_nonfinger_manipulated_object_points": 1972,
+        "manipulated_object_scene_points": 0,
+        "first_forbidden_action_index": 174
+      },
+      "physical_truth": {
+        "terminal_atoms": [
+          {
+            "atom": [
+              "on",
+              "porcelain_mug_1",
+              "plate_1"
+            ],
+            "kind": "on_object",
+            "raw": true,
+            "strict": true,
+            "checks": {
+              "at_rest": true,
+              "com_over_target_footprint": true,
+              "not_held": true,
+              "orientation_kept": true,
+              "supported_by_target": true,
+              "supported_only_by_target": true
+            },
+            "why_not": [],
+            "numbers": {
+              "com": [
+                0.1413,
+                0.0124,
+                0.4972
+              ],
+              "origin": [
+                0.1414,
+                0.0241,
+                0.4428
+              ],
+              "tilt_deg": 1.56,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": 58.26,
+              "speed_mps": 0.0,
+              "robot_contacts": [],
+              "env_contacts": [
+                "plate_1:plate_1_g1",
+                "plate_1:plate_1_g4"
+              ],
+              "window_disp_mm": 0.0
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          },
+          {
+            "atom": [
+              "on",
+              "chocolate_pudding_1",
+              "living_room_table_plate_right_region"
+            ],
+            "kind": "on_table_zone",
+            "raw": true,
+            "strict": false,
+            "checks": {
+              "at_rest": false,
+              "com_over_region": true,
+              "not_held": false,
+              "orientation_kept": true,
+              "supported_by_target": false,
+              "supported_only_by_target": false
+            },
+            "why_not": [
+              "not_held",
+              "at_rest",
+              "supported_by_target",
+              "supported_only_by_target"
+            ],
+            "numbers": {
+              "com": [
+                0.1451,
+                0.1456,
+                0.4675
+              ],
+              "origin": [
+                0.1446,
+                0.1454,
+                0.4668
+              ],
+              "tilt_deg": 0.68,
+              "com_margin_region_mm": 4.43,
+              "com_margin_target_mm": null,
+              "speed_mps": 0.10208,
+              "robot_contacts": [
+                "gripper0_finger1_collision",
+                "gripper0_finger1_pad_collision",
+                "gripper0_finger2_collision",
+                "gripper0_finger2_pad_collision"
+              ],
+              "env_contacts": [],
+              "window_disp_mm": 44.028
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": [
+                0.05,
+                0.05
+              ],
+              "d_site": [
+                -0.0054,
+                0.0454,
+                0.0568
+              ],
+              "band_z": [
+                0.002,
+                0.107
+              ]
+            }
+          }
+        ],
+        "diagnosis_only": true
+      },
+      "sources": {
+        "summary.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/summary.json",
+        "manifest.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/manifest.json",
+        "policy.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/policy.json",
+        "initial_observation_check.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/initial_observation_check.json",
+        "physical_truth.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/physical_truth.json",
+        "user_check_plan_history.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/user_check_plan_history.json",
+        "approved_plan.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/approved_plan.json",
+        "user_check_review.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/user_check_review.json",
+        "trace.jsonl": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/trace.jsonl",
+        "episode.mp4": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_007/episode.mp4"
+      }
+    },
+    "t6_v7": {
+      "run_id": "agent_speedup_v2_user_check_libero_10_t6_009",
+      "task_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "status": "user_stop",
+      "steps": 1544,
+      "config": {
+        "suite": "libero_10",
+        "task_id": 6,
+        "episode_index": 0,
+        "seed": 7,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "control_hz": 20,
+        "rgb_size_px": 512,
+        "camera_views": [
+          "external",
+          "wrist"
+        ],
+        "controller": "OSC_POSE",
+        "stop_on_success": true,
+        "stop_on_model_complete": false,
+        "collision_policy": "record_only",
+        "oracle_enabled": false,
+        "human_reviewed_plan": false,
+        "approval_mode": "user_authorized_automatic",
+        "policy_version": "agent-speedup-v2-user-check-agent-2",
+        "prompt_version": "user-check-agent-first-prompt-2",
+        "plan_sha256": "9ec7037516d86edff37045c0029985ad762c04a72994de891d4f953a3b66572a",
+        "reviewed_regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "reviewed_step_types": [
+          "place_on",
+          "place_on"
+        ],
+        "limits": {
+          "max_api_calls": null,
+          "max_policy_steps": null,
+          "max_wall_time_s": null
+        }
+      },
+      "reset": {
+        "expected_sha256": "59d7c04f412daf02dc8818807d8343bda70e6f4dcffa2dfdb16cf9cb35bd048e",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "59d7c04f412daf02dc8818807d8343bda70e6f4dcffa2dfdb16cf9cb35bd048e",
+        "initial_state_sha256": "6e811394c4ff9a43ae23515d8512e9b657c04344b94dd5baed121b595490514f",
+        "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate.pruned_init"
+      },
+      "timing_s": {
+        "control_without_video": 754.900062427856,
+        "control_with_video": 920.648626715003,
+        "video_render": 165.74856428714702,
+        "run_elapsed": 930.0204794220044,
+        "model_pipeline": 495.8853562439908,
+        "policy_compute": 1.8527364928158931,
+        "simulator_step": 184.63008305930998,
+        "observe_transition": 21.43702555372147,
+        "run_state_logging": 47.9897230832139,
+        "startup_to_initial_observation": 6.883328037976753,
+        "preparation": 32.334737576020416,
+        "preparation_model": 24.28914609295316,
+        "review_phase": 0.10371,
+        "approval_to_claim": 0.077853,
+        "completion_time_eligible": false
+      },
+      "model_calls": {
+        "execution_requests": 28,
+        "execution_decisions": 28,
+        "decision_types": {
+          "execute": 26,
+          "finish": 1,
+          "motion": 1
+        },
+        "execution_calls_by_kind": {
+          "agent": 28,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "preparation_requests": 1,
+        "completed_run_total_requests": 29
+      },
+      "attribution": {
+        "fragment_steps": 1538,
+        "direct_steps": 6,
+        "native_macro_steps": 0,
+        "executed_step_denominator": 1544,
+        "fragment_grants": 26,
+        "native_macro_grants": 0,
+        "direct_action_note": "Direct/fragment targets both use local bounded OSC; these are policy control steps, not separate model calls."
+      },
+      "success": {
+        "official_libero": false,
+        "task_success": false,
+        "strict_physical_at_terminal": false,
+        "strict_physical_after_diagnostic_settle": false,
+        "model_declared_complete": false,
+        "terminal_failing_checks": {
+          "on chocolate_pudding_1 living_room_table_plate_right_region": [
+            "com_over_region"
+          ]
+        }
+      },
+      "collision": {
+        "detected": true,
+        "forbidden_contact_points": 1208,
+        "robot_scene_points": 1208,
+        "robot_nonfinger_manipulated_object_points": 0,
+        "manipulated_object_scene_points": 0,
+        "first_forbidden_action_index": 515
+      },
+      "physical_truth": {
+        "terminal_atoms": [
+          {
+            "atom": [
+              "on",
+              "porcelain_mug_1",
+              "plate_1"
+            ],
+            "kind": "on_object",
+            "raw": true,
+            "strict": true,
+            "checks": {
+              "at_rest": true,
+              "com_over_target_footprint": true,
+              "not_held": true,
+              "orientation_kept": true,
+              "supported_by_target": true,
+              "supported_only_by_target": true
+            },
+            "why_not": [],
+            "numbers": {
+              "com": [
+                0.1418,
+                0.0128,
+                0.4972
+              ],
+              "origin": [
+                0.1433,
+                0.0244,
+                0.4428
+              ],
+              "tilt_deg": 1.56,
+              "com_margin_region_mm": null,
+              "com_margin_target_mm": 58.35,
+              "speed_mps": 0.0,
+              "robot_contacts": [],
+              "env_contacts": [
+                "plate_1:plate_1_g1",
+                "plate_1:plate_1_g4"
+              ],
+              "window_disp_mm": 0.0
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": null,
+              "d_site": null,
+              "band_z": null
+            }
+          },
+          {
+            "atom": [
+              "on",
+              "chocolate_pudding_1",
+              "living_room_table_plate_right_region"
+            ],
+            "kind": "on_table_zone",
+            "raw": false,
+            "strict": false,
+            "checks": {
+              "at_rest": true,
+              "com_over_region": false,
+              "not_held": true,
+              "orientation_kept": true,
+              "resting_on_surface": true,
+              "supported_by_target": true,
+              "supported_only_by_target": true
+            },
+            "why_not": [
+              "com_over_region"
+            ],
+            "numbers": {
+              "com": [
+                0.1874,
+                0.1704,
+                0.4505
+              ],
+              "origin": [
+                0.1869,
+                0.1704,
+                0.4498
+              ],
+              "tilt_deg": 0.0,
+              "com_margin_region_mm": -20.36,
+              "com_margin_target_mm": null,
+              "speed_mps": 0.0,
+              "robot_contacts": [],
+              "env_contacts": [
+                "living_room_table:geom_10",
+                "living_room_table:geom_13"
+              ],
+              "window_disp_mm": 0.0
+            },
+            "official_geometry": {
+              "joints": null,
+              "half_xy": [
+                0.05,
+                0.05
+              ],
+              "d_site": [
+                0.0369,
+                0.0704,
+                0.0398
+              ],
+              "band_z": [
+                0.002,
+                0.107
+              ]
+            }
+          }
+        ],
+        "diagnosis_only": true,
+        "pudding_region_diagram": {
+          "frame": "world_xy",
+          "official_region_bounds_m": {
+            "x": [
+              0.1,
+              0.2
+            ],
+            "y": [
+              0.05,
+              0.15
+            ]
+          },
+          "official_region_center_xy_m": [
+            0.15,
+            0.1
+          ],
+          "terminal_pudding_com_world_m": [
+            0.1874,
+            0.1704,
+            0.4505
+          ],
+          "terminal_pudding_origin_world_m": [
+            0.1869,
+            0.1704,
+            0.4498
+          ],
+          "terminal_com_margin_mm": -20.36,
+          "miss_direction": "+y beyond y=0.15 upper edge",
+          "distinction": "COM/object origin are post-run physical measurements, not gripper target coordinates. Bounds are evaluator-only and were not supplied to the policy.",
+          "bounds_source": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate.bddl:16",
+          "bounds_evidence": "BDDL ranges (0.09999999999999999 0.05 0.2 0.15000000000000002), yaw0; consistent with saved terminal site-relative origin offset."
+        }
+      },
+      "sources": {
+        "summary.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/summary.json",
+        "manifest.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/manifest.json",
+        "policy.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/policy.json",
+        "initial_observation_check.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/initial_observation_check.json",
+        "physical_truth.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/physical_truth.json",
+        "user_check_plan_history.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/user_check_plan_history.json",
+        "approved_plan.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/approved_plan.json",
+        "user_check_review.json": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/user_check_review.json",
+        "trace.jsonl": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/trace.jsonl",
+        "episode.mp4": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/episode.mp4"
+      },
+      "limitations": [
+        "User stop at1544 steps; the final pudding center of mass remained20.36mm outside the official placement region.",
+        "Mug passed all terminal physical checks. Pudding was released, supported and at rest, but com_over_region was false."
+      ]
+    }
+  },
+  "comparisons": {
+    "t3": {
+      "same_initial_observation_sha256": true,
+      "same_initial_state_sha256": true,
+      "same_bddl_sha256": true,
+      "same_model_effort_episode_seed": true,
+      "completion_speed_comparison_eligible": true,
+      "old_net_control_s": 1270.2330491346947,
+      "new_net_control_s": 509.16405088163447,
+      "old_execution_requests": 87,
+      "new_execution_requests": 22,
+      "speed_ratio_old_over_new": 2.4947422091863007,
+      "net_control_time_reduction_percent": 59.91569805017386,
+      "interpretation": "Single historical matched-reset comparison; manual versus automatic review and plan differences remain."
+    },
+    "t6": {
+      "same_initial_observation_sha256": true,
+      "same_initial_state_sha256": true,
+      "same_bddl_sha256": true,
+      "same_model_effort_episode_seed": true,
+      "completion_speed_comparison_eligible": false,
+      "old_net_control_s": 1289.2462749313563,
+      "new_net_control_s": 754.900062427856,
+      "old_execution_requests": 84,
+      "new_execution_requests": 28,
+      "speed_ratio_old_over_new": null,
+      "net_control_time_reduction_percent": null,
+      "interpretation": "New run is incomplete. Fewer requests and shorter elapsed time do not establish task-completion speedup."
+    }
+  },
+  "interrupted_preparation": {
+    "run_id": "agent_speedup_v2_user_check_libero_10_t6_008",
+    "status": "user_interrupted_preparation",
+    "phase": "model_draft_before_policy_actions",
+    "policy_actions": 0,
+    "execution_decisions": 0,
+    "preparation_requests_sent": 1,
+    "preparation_completed_responses": 0,
+    "error_type": "KeyboardInterrupt",
+    "model_budget_elapsed_s_at_interrupt": 634.1277588229859,
+    "replacement_run": "agent_speedup_v2_user_check_libero_10_t6_009",
+    "performance_episode": false,
+    "sources": [
+      "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_008_launch/user_stop_request.json",
+      "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_008_review/requests/000001-07416d70d5d84aa39130e6bade11090a.result.json",
+      "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_008_launch/runner.log"
+    ]
+  },
+  "assets": [
+    {
+      "name": "t3_initial",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t3_initial.png",
+      "relative_path": "assets/t3_initial.png",
+      "run_key": "t3_v7",
+      "observation_step": 0,
+      "request_ordinal": 1,
+      "camera": "external",
+      "caption": "Initial scene: black bowl beside the already-open bottom drawer.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/requests/000001-85723f0da7374b6b9c55902c164ca04a.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "d717fb1eb543cb55cdb4d0c8285b0c4491444a600f8fbd15236e053093852f5a"
+    },
+    {
+      "name": "t3_mid",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t3_mid.png",
+      "relative_path": "assets/t3_mid.png",
+      "run_key": "t3_v7",
+      "observation_step": 393,
+      "request_ordinal": 8,
+      "camera": "external",
+      "caption": "Bowl in the open drawer footprint; model reports possible grasp slip and requests a support check.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/requests/000008-e3123a97d2104aac93781dbb45191ad4.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "4492bf5796e2c30fe3104989b1c7e1eff751aa4c41bdd7003af5ae0ca9b578c2"
+    },
+    {
+      "name": "t3_final",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t3_final.png",
+      "relative_path": "assets/t3_final.png",
+      "run_key": "t3_v7",
+      "observation_step": 1202,
+      "request_ordinal": 22,
+      "camera": "external",
+      "caption": "Pre-terminal closing view at step1202; official success occurs at step1207, before withdrawal.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t3_003/requests/000022-5f2aa8b8359e44f4b02add1170582f18.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "72a0255d24be1f348f2dbad0648aae030f96619d0d7ee2baf63ef7b54608b9e7"
+    },
+    {
+      "name": "t6_initial",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t6_initial.png",
+      "relative_path": "assets/t6_initial.png",
+      "run_key": "t6_v7",
+      "observation_step": 0,
+      "request_ordinal": 1,
+      "camera": "external",
+      "caption": "Initial white mug, plate and pudding scene.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/requests/000001-ea5fe073c7b44fac8830f25750dc7151.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "bc5a86dbcb9bc158ccbf9da8d46327ae6cfd6ea19a2bd15196b5bcbd8c2c43de"
+    },
+    {
+      "name": "t6_mug_placed",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t6_mug_placed.png",
+      "relative_path": "assets/t6_mug_placed.png",
+      "run_key": "t6_v7",
+      "observation_step": 376,
+      "request_ordinal": 7,
+      "camera": "external",
+      "caption": "Model inspection after releasing the mug on the plate; later terminal audit confirms stable support.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/requests/000007-987de68a11544c97a7fe6aa8e3a0eb04.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "428563e4edbb8db6c5f8414472aacf6d0ca8deba2c78105a13d19bab7667f44e"
+    },
+    {
+      "name": "t6_final",
+      "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v7_en/assets/t6_final.png",
+      "relative_path": "assets/t6_final.png",
+      "run_key": "t6_v7",
+      "observation_step": 1543,
+      "request_ordinal": 28,
+      "camera": "external",
+      "caption": "Last model observation before user stop at1544; pudding is released but outside the official region.",
+      "source_request": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t6_009/requests/000028-ee0cb1f6a07a46c3a0875499c144e5f6.request.json",
+      "source_note": "Last current-observation external image in saved request; decoded bytes unchanged, no replay, crop or annotation.",
+      "sha256": "5eba279e028826e2cea371fb58cc52d3e1a2abeccac2818a1caeeff56324e12d"
+    }
+  ],
+  "limitations": [
+    "One recorded episode per scene/version; not a statistical success-rate estimate or controlled ablation.",
+    "Historical runs used manual plan review; v7 runs used user-authorized automatic approval. Initial plans and execution policies differ.",
+    "Video-excluded control time excludes draft preparation, review waiting, simulator startup and post-run diagnostic settling.",
+    "Terminal physical audits are evaluator-only evidence and were not supplied to the live policy. Diagnostic release/settle is not an agent-completed action sequence.",
+    "Forbidden contact-point counts count sampled physics contacts, not independent collision events.",
+    "Current v7 t6 was stopped incomplete: its duration cannot be called completion latency or used to claim speedup."
+  ],
+  "provenance": {
+    "method": "Read existing JSON, frozen code metadata, official BDDL and saved request RGB only. No new model calls, simulations or replays.",
+    "project_root": "/workspace/gpt_field"
+  }
+}

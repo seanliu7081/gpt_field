@@ -85,6 +85,9 @@ class FieldPolicy:
         self.clear_pending_plan()
         self.adapter.reset()
 
+    def _make_field(self, raw, center):
+        return GridField(self.grid, center, FieldPrediction.from_dict(raw, self.grid))
+
     def act(self, observation: PolicyObservation) -> Decision:
         # Revalidate even direct caller-created objects at this boundary.
         allowed = PolicyObservation.from_dict(observation.to_dict())
@@ -109,8 +112,7 @@ class FieldPolicy:
                 if self.method == "waypoint":
                     self.field = waypoint_field(self.grid, center, raw, raw["waypoint_xyz"])
                 else:
-                    prediction = FieldPrediction.from_dict(raw, self.grid)
-                    self.field = GridField(self.grid, center, prediction)
+                    self.field = self._make_field(raw, center)
                     transform = self.method if self.method in ("affine", "shuffled", "minimum") else "field"
                     self.field = transform_field(self.field, transform, seed=self.seed + self.step_index)
                 stage = raw["stage"]

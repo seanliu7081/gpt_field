@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "started_unix": 1792435394.1073847,
+  "input_manifest": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/rgb_inputs.json",
+  "input_manifest_sha256": "8d51752b8636890a2f5269ff5c533c3deaf0324fd8ce29f638d2f9d7826d0965",
+  "inputs": [
+    {
+      "name": "bowl002_initial",
+      "rgb_path": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/bowl002_initial.png",
+      "rgb_sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+      "width": 512,
+      "height": 512,
+      "frozen_rgb": "inputs/bowl002_initial.png"
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "rgb_path": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_closed_step60.png",
+      "rgb_sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+      "width": 512,
+      "height": 512,
+      "frozen_rgb": "inputs/drawer003_closed_step60.png"
+    },
+    {
+      "name": "drawer003_open_step552",
+      "rgb_path": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_open_step552.png",
+      "rgb_sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+      "width": 512,
+      "height": 512,
+      "frozen_rgb": "inputs/drawer003_open_step552.png"
+    }
+  ],
+  "predictions": [
+    {
+      "name": "bowl002_initial",
+      "file": "predictions/bowl002_initial.npz",
+      "sha256": "d9a13080c9f79922112b7a8f10cae39b606a375a9564a19531ec412af1bd89ea",
+      "depth_units": "m",
+      "depth_convention": "camera_z",
+      "shape": [
+        512,
+        512
+      ],
+      "focal_length_px": 604.47265625,
+      "field_of_view_deg": 45.90625,
+      "K_pred": [
+        [
+          604.47265625,
+          0.0,
+          255.5
+        ],
+        [
+          0.0,
+          604.47265625,
+          255.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "inference_ms": 819.5340590027627,
+      "preprocess_inference_postprocess_save_ms": 912.422452995088,
+      "depth_quantiles_m": {
+        "0": 0.6738825440406799,
+        "0.01": 0.7028751969337463,
+        "0.5": 0.9941984415054321,
+        "0.99": 1.5341945886611938,
+        "1": 1.5751731395721436
+      },
+      "rgb_sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+      "model_revision": "de816c8ce7168afcb231f96d501d72b869d0beda"
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "file": "predictions/drawer003_closed_step60.npz",
+      "sha256": "434633a9374d3747edc58676216100ca969489eb36fcb8fcf12870dc9ed5cc05",
+      "depth_units": "m",
+      "depth_convention": "camera_z",
+      "shape": [
+        512,
+        512
+      ],
+      "focal_length_px": 471.49334716796875,
+      "field_of_view_deg": 57.0,
+      "K_pred": [
+        [
+          471.49334716796875,
+          0.0,
+          255.5
+        ],
+        [
+          0.0,
+          471.49334716796875,
+          255.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "inference_ms": 183.67161499918438,
+      "preprocess_inference_postprocess_save_ms": 223.96298400417436,
+      "depth_quantiles_m": {
+        "0": 0.6401810646057129,
+        "0.01": 0.6553069353103638,
+        "0.5": 0.9181954860687256,
+        "0.99": 1.4574756622314453,
+        "1": 1.5638253688812256
+      },
+      "rgb_sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+      "model_revision": "de816c8ce7168afcb231f96d501d72b869d0beda"
+    },
+    {
+      "name": "drawer003_open_step552",
+      "file": "predictions/drawer003_open_step552.npz",
+      "sha256": "f7cbc81d0a808b14bac56f47d91fb8717547f1cf77a54df96022c5b321900f84",
+      "depth_units": "m",
+      "depth_convention": "camera_z",
+      "shape": [
+        512,
+        512
+      ],
+      "focal_length_px": 431.6356201171875,
+      "field_of_view_deg": 61.34375,
+      "K_pred": [
+        [
+          431.6356201171875,
+          0.0,
+          255.5
+        ],
+        [
+          0.0,
+          431.6356201171875,
+          255.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "inference_ms": 183.7086250016,
+      "preprocess_inference_postprocess_save_ms": 223.07913200347684,
+      "depth_quantiles_m": {
+        "0": 0.4510299265384674,
+        "0.01": 0.4596758484840393,
+        "0.5": 0.6324331760406494,
+        "0.99": 0.9613265991210938,
+        "1": 0.98210608959198
+      },
+      "rgb_sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+      "model_revision": "de816c8ce7168afcb231f96d501d72b869d0beda"
+    }
+  ],
+  "model": {
+    "repo_id": "apple/DepthPro-hf",
+    "revision": "de816c8ce7168afcb231f96d501d72b869d0beda",
+    "files_sha256": {
+      "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/model.safetensors": "9c6811e3165485b9a94a204329860cb333a79877e757eb795a179a4ea34bbcf7",
+      "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/config.json": "995993be477aefdf41468ca51e171afd26b59aeee4b0afc4ef16957f0b622222",
+      "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/preprocessor_config.json": "88c3e95c10d3780840674bfd52581de03c547cf0a4976b9c4779dd8e2fc5af05",
+      "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/README.md": "9137c19eca509c4e6145ce6d2be0140e059e6221dd88d5937d13ef1c2bce9ee2"
+    },
+    "download_manifest": "/workspace/gpt_field/scene_test/rgb_scene/models/download_info.json",
+    "download_manifest_sha256": "d74513eb27ab96e26f7a33bed33112462d31eb7a99774cceb0993d4fb8280634",
+    "source_urls": [
+      "https://huggingface.co/apple/DepthPro-hf",
+      "https://github.com/apple-aiml-research/ml-depth-pro",
+      "https://huggingface.co/docs/transformers/v4.57.1/en/model_doc/depth_pro"
+    ],
+    "license_model_card_metadata": "apple-amlr",
+    "license_note": "Pinned model card metadata says apple-amlr; its older prose says Apple-ASCL. Card preserved verbatim; no relicensing claim."
+  },
+  "configuration": {
+    "model_inputs": "RGB pixels only; learned FOV; no GT depth, K, geometry, crop, or scale alignment",
+    "device": "cuda:0",
+    "physical_gpu_index": 0,
+    "batch_size": 1,
+    "model_dtype": "float16",
+    "postprocessing_dtype": "float32",
+    "attention": "sdpa",
+    "seed": 0,
+    "eval_mode": true,
+    "preprocessing": {
+      "do_normalize": true,
+      "do_rescale": true,
+      "do_resize": true,
+      "image_mean": 0.5,
+      "image_processor_type": "DepthProImageProcessorFast",
+      "image_std": 0.5,
+      "resample": 2,
+      "rescale_factor": 0.00392156862745098,
+      "size": {
+        "height": 1536,
+        "width": 1536
+      }
+    },
+    "native_image_handling": "Full upright RGB, no crop or augmentation; official resize to 1536x1536; predictions resized back to original H,W",
+    "postprocessing": "Official processor: focal=0.5*W/tan(FOV_deg*pi/360); scale canonical inverse depth by W/focal; bilinear resize; depth=1/clamp(inverse_depth,1e-4,1e4)",
+    "depth_convention": "camera_z",
+    "depth_units": "m",
+    "intrinsics_assumption": "fx=fy=predicted focal; zero skew; principal point ((W-1)/2,(H-1)/2); integer coordinates denote pixel centers",
+    "no_outcome_tuning": true
+  },
+  "environment": {
+    "torch": "2.10.0",
+    "torchvision": "0.25.0",
+    "transformers": "4.57.6",
+    "huggingface-hub": "0.36.0",
+    "safetensors": "0.7.0",
+    "numpy": "1.26.4",
+    "Pillow": "12.3.0",
+    "python": "3.10.21 | packaged by conda-forge | (main, Aug 21 2026, 22:42:31) [GCC 14.4.0]",
+    "cuda_runtime": "12.9",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "gpu_total_memory_bytes": 25280839680
+  },
+  "source_sha256": {
+    "/workspace/gpt_field/scene_test/rgb_scene/infer_depth.py": "af9a2914c31c106e4777bf72e18caeceffb952d96c45f503781badd2412930f4",
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/depth_pro/modeling_depth_pro.py": "02b64e79523fd215c253bb9e59af0f5449a0d7a105f904b69fe6315627c51701",
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/depth_pro/image_processing_depth_pro_fast.py": "464dc9ecf4dbd5396b43c3d63788ceaa049b82ed679e57728d2766156bff2433",
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/dinov2/modeling_dinov2.py": "e1376e0decc4cf3fd60042a17464a4118f1802a4e1ca2af4496c211fabb6d34b",
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/image_processing_utils_fast.py": "038a4aa9e57716be46a18822f5f2f977c8a5b9d0e9cc3db63f032cddafd7d1ac"
+  },
+  "frozen_artifact_sha256": {
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/infer_depth.py": "af9a2914c31c106e4777bf72e18caeceffb952d96c45f503781badd2412930f4",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/modeling_depth_pro.py": "02b64e79523fd215c253bb9e59af0f5449a0d7a105f904b69fe6315627c51701",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/image_processing_depth_pro_fast.py": "464dc9ecf4dbd5396b43c3d63788ceaa049b82ed679e57728d2766156bff2433",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/modeling_dinov2.py": "e1376e0decc4cf3fd60042a17464a4118f1802a4e1ca2af4496c211fabb6d34b",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/image_processing_utils_fast.py": "038a4aa9e57716be46a18822f5f2f977c8a5b9d0e9cc3db63f032cddafd7d1ac",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/config.json": "995993be477aefdf41468ca51e171afd26b59aeee4b0afc4ef16957f0b622222",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/preprocessor_config.json": "88c3e95c10d3780840674bfd52581de03c547cf0a4976b9c4779dd8e2fc5af05",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/README.md": "9137c19eca509c4e6145ce6d2be0140e059e6221dd88d5937d13ef1c2bce9ee2",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/download_info.json": "d74513eb27ab96e26f7a33bed33112462d31eb7a99774cceb0993d4fb8280634",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/input_manifest.json": "8d51752b8636890a2f5269ff5c533c3deaf0324fd8ce29f638d2f9d7826d0965",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/bowl002_initial.png": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/drawer003_closed_step60.png": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/drawer003_open_step552.png": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/settings.json": "1f9468ff78b6b120e1ec3b81ad851ea2f5ceef6ef12c67a86e30f2ba2e5c0926"
+  },
+  "model_load_seconds": 1.0320901370141655,
+  "peak_gpu_allocated_bytes": 3945560064,
+  "peak_gpu_reserved_bytes": 6039797760,
+  "sources_unchanged": {
+    "/workspace/gpt_field/scene_test/rgb_scene/infer_depth.py": true,
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/depth_pro/modeling_depth_pro.py": true,
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/depth_pro/image_processing_depth_pro_fast.py": true,
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/models/dinov2/modeling_dinov2.py": true,
+    "/venv/fm_dno/lib/python3.10/site-packages/transformers/image_processing_utils_fast.py": true
+  },
+  "model_files_unchanged": {
+    "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/model.safetensors": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/config.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/preprocessor_config.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/models/apple_DepthPro_hf/README.md": true
+  },
+  "frozen_artifacts_unchanged": {
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/infer_depth.py": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/modeling_depth_pro.py": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/image_processing_depth_pro_fast.py": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/modeling_dinov2.py": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/source/image_processing_utils_fast.py": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/config.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/preprocessor_config.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/README.md": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/model_metadata/download_info.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/input_manifest.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/bowl002_initial.png": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/drawer003_closed_step60.png": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/inputs/drawer003_open_step552.png": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/settings.json": true
+  },
+  "inputs_unchanged": {
+    "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/rgb_inputs.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/models/download_info.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/bowl002_initial.png": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_closed_step60.png": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_open_step552.png": true
+  },
+  "predictions_unchanged": {
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/predictions/bowl002_initial.npz": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/predictions/drawer003_closed_step60.npz": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/predictions_001/predictions/drawer003_open_step552.npz": true
+  },
+  "finished_unix": 1792435402.0194707,
+  "wall_seconds": 7.912087917327881
+}

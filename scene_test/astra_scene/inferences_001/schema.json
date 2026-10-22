@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "units": {
+      "type": "string",
+      "enum": [
+        "m"
+      ]
+    },
+    "coordinate_frame": {
+      "type": "string",
+      "enum": [
+        "camera_cv_xright_ydown_zforward"
+      ]
+    },
+    "estimated_focal_px": {
+      "type": "number",
+      "minimum": 1.0,
+      "maximum": 10000.0
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "op": {
+            "type": "string",
+            "enum": [
+              "box",
+              "cylinder",
+              "difference",
+              "intersection",
+              "sphere",
+              "union"
+            ]
+          },
+          "center_m": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rotation_xyzw": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 4,
+                "maxItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "size_m": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "left": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "right": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "center_m",
+          "left",
+          "name",
+          "op",
+          "right",
+          "rotation_xyzw",
+          "size_m"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "root": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 63
+    },
+    "uncertainty_notes": {
+      "type": "string",
+      "maxLength": 8000
+    }
+  },
+  "required": [
+    "coordinate_frame",
+    "estimated_focal_px",
+    "nodes",
+    "root",
+    "schema_version",
+    "uncertainty_notes",
+    "units"
+  ]
+}

@@ -1,0 +1,81 @@
+LIBERO 实际场景：SDF 表示与有限体积运动测试
+========================================
+
+入口
+----
+EXPERIMENT_PLAN.txt：运行前固定的实验范围和方法。
+RESULTS.txt：实际结果、指标解释和限制（完整运行后生成）。
+captures_001：原始场景快照、RGB、状态核对及碰撞几何。
+runs/sdf_full_001：3 个快照 × 4/2/1 mm 的正式 SDF 结果。
+runs/motion_full_001：在以上场中评价 9 条几何路径 × 3 个分辨率。
+
+所有代码、结果及附加依赖都位于本目录。上一轮 scene_test 实现只读复用，
+gpt_field/src、机器人策略和历史运行不需要修改。
+
+输入来自 LIBERO 的碰撞模型，不是 RGB 图像的三维重建，也不是旧版
+agent_speedup_v1 的 waypoint 目标距离场。新增 SDF 表示到场景材料
+边界的有符号欧氏距离，外部为正、内部为负。
+
+环境
+----
+使用现有 /workspace/venvs/libero-plus/bin/python。
+requirements-extra.txt 列出本轮额外依赖，已隔离在 libero_scene/_deps。
+上一轮 rtree 依赖位于 scene_test/_deps。脚本按需加入本地依赖路径。
+不需要启动 GPU 推理、API 服务、机器人任务或新的模型调用。
+
+复跑命令（从 /workspace/gpt_field 执行）
+----------------------------------------
+每次 --output 必须使用一个尚不存在的目录，不能覆盖已完成运行。
+
+1. 验证新增模块：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B -m pytest -q -p no:cacheprovider \
+ scene_test/libero_scene/tests
+
+2. 用已有静态快照运行完整 SDF 矩阵：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B \
+ scene_test/libero_scene/reconstruct_libero.py \
+ --captures scene_test/libero_scene/captures_001/snapshots.json \
+ --output scene_test/libero_scene/runs/sdf_repeat_001
+
+小规模检查可加：--spacings .004 --samples 2000 --surface-samples 2000。
+这种检查不能代替完整 9 配置，也不能作为 motion_libero.py 的输入。
+
+3. 等步骤 2 成功完成后，运行几何运动测试：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B \
+ scene_test/libero_scene/motion_libero.py \
+ --sdf-run scene_test/libero_scene/runs/sdf_repeat_001 \
+ --output scene_test/libero_scene/runs/motion_repeat_001
+
+这个步骤只读取已保存的场，不控制机器人。输入场、原场景及运行源码
+都有校验哈希；场外查询和保守界无法判定的情况保留为 unknown。
+
+输出说明
+--------
+SDF fields/*.npz：稠密网格，含原点、间距、浮点值和量化误差记录。
+SDF meshes/*.ply：从零等值面提取的三角网格。
+SDF reference/：全场景碰撞并集、共享评估点及原始快照。
+SDF metrics.json / metrics.csv：距离误差、占据、双向表面指标及细节诊断。
+SDF figures/：上下文区域图、SDF 截面、误差图和重建表面图。
+Motion cases.json：在查询 SDF 之前保存的体积、路径和几何锚点。
+Motion reference_checks.json：独立球/盒与盒/盒参考检测结果。
+Motion metrics.json：连续运动检测及离散采样基线，含 unknown。
+各 run 的 manifest.json 和 source/：状态、版本、参数、源码快照及完整性。
+
+测量解释
+--------
+距离误差 e(x)=|插值 SDF(x)-碰撞几何真实 SDF(x)|，以 mm 报告。
+近表面点位于 |真实 SDF| <= 5 mm；它们在三个网格之间固定不变。
+P95 表示这组采样点中 95% 的误差不超过该值，不是整个空间的上界。
+表面 precision：重建表面采样点离参考表面是否足够近。
+表面 recall：参考表面采样点是否能在重建中找到足够近的表面。
+F1 是两者的调和平均；不能代替薄壁、孔洞或通道拓扑检查。
+
+场景对象会接触、重叠；真值先进行布尔并集，去掉埋在内部的盒面。
+网格与评分局限于碗/盘或抽屉附近的指定区域，距离参考仍使用全场景。
+这组测试不测视觉估计误差、关节约束、接触物理或机器人任务成功率。

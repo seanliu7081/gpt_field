@@ -1,0 +1,105 @@
+单张 RGB 场重建测试：文件与复跑
+===============================
+
+测试链路
+--------
+一张 RGB → DepthPro 预测深度/焦距 → 保存三维投影 TSDF → 只读场文件解码。
+DepthPro 没有文字 prompt，输入是完整单张图像的像素。
+没有真实深度、模拟器相机参数、物体尺寸或语义掩码进入预测/场构建。
+
+主要文件
+--------
+EXPERIMENT_PLAN.txt：实验定义、A/B/C 区别和评分参考修正记录。
+RESULTS.txt：最终实测结果与解释。
+inputs_001/rgb_inputs.json：只含名称、RGB 路径、SHA 的模型输入清单。
+models/：固定版本 Apple DepthPro-hf 权重与下载来源。
+predictions_001/：3 次固定 RGB-only 推断、原始米制深度和预测 K。
+references_004/：只供评价的精确图像时刻深度、相机和掩码。
+reference_validation_004.json：参考图与模型输入的精确绑定及射线校准检查。
+runs/fields_full_001/：9 个正式场构建/解码配置与完整表示损失 B。
+runs/evaluation_full_001/：独立感知 A 和端到端 C 评分。
+runs/analysis_001/：结果图。pipeline.png 展示完整链路，
+representation_loss.png 衡量表示保留，reference_comparison.png 对照真值，
+scene_accuracy_AC.png 展示整个非机器人可见场景的 A/C 指标。
+preservation_final.json：805 个既有文件的运行前后哈希对比。
+
+每次运行必须使用新的输出目录。脚本拒绝覆盖旧运行。
+references_001/002/003 是被门限拦住的参考准备尝试，不用作真值。
+所有新文件都在 rgb_scene；现有项目、上一轮 scene_test 结果不需要改动。
+
+复跑（从 /workspace/gpt_field 执行）
+----------------------------------
+使用现有 /workspace/venvs/libero-plus/bin/python。
+原生几何查询依赖只读复用 scene_test/libero_scene/_deps 和 scene_test/_deps。
+所有脚本都可加 --help 查看参数。推荐设置 BLAS/OMP 线程为 1，场构建
+由自己的四个 CPU worker 并行。模型推断只使用 GPU 0。
+
+1. RGB 推断（可直接复用已冻结 predictions_001，避免重复预测）：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B scene_test/rgb_scene/infer_depth.py \
+ --inputs scene_test/rgb_scene/inputs_001/rgb_inputs.json \
+ --output scene_test/rgb_scene/predictions_repeat_001
+
+2. 仅由预测构建并保存场，再从保存场解码并测表示损失 B：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B scene_test/rgb_scene/build_fields.py \
+ --predictions scene_test/rgb_scene/predictions_001/manifest.json \
+ --output scene_test/rgb_scene/runs/fields_repeat_001 --workers 4
+
+默认 4/2/1 mm、每方向 100,000 个表面样本。先测小规模可额外加：
+--spacings .004 --surface-samples 1000 --snapshot bowl002_initial
+
+3. 等场构建完成后，独立读取真值做 A/C 评价：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B scene_test/rgb_scene/evaluate_rgb.py \
+ --fields scene_test/rgb_scene/runs/fields_repeat_001 \
+ --references scene_test/rgb_scene/references_004/manifest.json \
+ --output scene_test/rgb_scene/runs/evaluation_repeat_001
+
+4. 单独证明“只凭场文件即可重建”（无需图像、深度图、模型或真值参数）：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B scene_test/rgb_scene/decode_saved_fields.py \
+ --fields scene_test/rgb_scene/runs/fields_full_001/fields/bowl002_initial_h1mm \
+ --runtime scene_test/rgb_scene/runs/fields_full_001/source/field_rgb.py \
+ --output scene_test/rgb_scene/runs/decode_bowl_1mm_repeat_001
+
+这个命令仅加载场块和冻结的解码代码。已对小规模场独立运行一次，输出
+顶点和三角形逐元素与构建阶段结果相同，证据在
+runs/decode_smoke_001/builder_comparison.json。
+
+5. 新增代码验证：
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+ /workspace/venvs/libero-plus/bin/python -B -m pytest -q -p no:cacheprovider \
+ scene_test/rgb_scene/tests
+
+保存空间的结构
+--------------
+fields/<场景>_h<间距>mm/*.npz：每个图像 tile/Z slab 一个三维场块，含
+values、observed、cell_valid、lower_m、spacing_m、metadata_json。
+metadata 记录截断距离、预测 K 和裁剪边界；没有 GT 数据。
+values 是沿相机 Z 的距离残差，单位米；未知体素不能当作自由空间。
+解码器使用全部这些场数据，在有效 cell 内提取零等值面。
+
+geometry/*_decoded_field.npz：解码出的表面，vertices_m 为 float64，
+faces 为 int32。它是开放的可见表面，不是推断完整背面后的封闭实体。
+samples/：跨分辨率共享的参考表面样本。
+distances/：逐样本误差及主评分的像素中心射线结果。
+manifest.json / settings.json / source/：配置、哈希、状态及冻结源码。
+
+读数
+----
+B 小：表示场比较忠实地保留了写入的预测几何。
+A 大：图像前端本身没有准确估计真实几何。
+C 大：最终从场恢复的场景与真实场景仍有较大偏差。
+这三项不能简单相加或相减。B 很好不能证明 C 很好。
+
+主要 A/C 采用射线直接查询实际 mesh，并与准确的真实像素中心深度比较。
+MAE/P95 是命中条件下的数值，必须与覆盖率和全部参考像素分母下的
+阈值通过率一起读；未命中算未通过。可选二级表面指标只评价可靠可见
+内部区域，正式 A/C 运行中关闭；B 的完整双向表面指标保持启用。
+本测试测单视图可见几何；未观测背面/遮挡区域保持 unknown。

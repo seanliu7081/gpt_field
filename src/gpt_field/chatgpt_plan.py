@@ -14,6 +14,8 @@ from __future__ import annotations
 
 import copy
 from dataclasses import asdict
+from email.utils import parsedate_to_datetime
+import math
 import re
 import time
 from typing import Any, Callable, Iterable, Mapping
@@ -74,7 +76,7 @@ def _safe_error_code(value: Any) -> str:
 
 
 def _failure_metadata(error: BaseException) -> dict[str, Any]:
-    """Only machine error codes and HTTP status may be persisted or displayed."""
+    """Only allowlisted machine diagnostics may be persisted or displayed."""
     result = {}
     status = getattr(error, "http_status", None)
     if type(status) is int and 100 <= status <= 599:
@@ -84,10 +86,31 @@ def _failure_metadata(error: BaseException) -> dict[str, Any]:
         code = _LOCAL_FAILURE_CODES.get(str(error))
     if code is not None:
         result["error_code"] = _safe_error_code(code)
+    retry_after = getattr(error, "retry_after_s", None)
+    if (type(retry_after) in (int, float) and math.isfinite(retry_after)
+            and retry_after >= 0):
+        result["retry_after_s"] = retry_after
     media_type = getattr(error, "response_media_type", None)
     if isinstance(media_type, str) and re.fullmatch(r"[a-z0-9.+-]+/[a-z0-9.+-]+", media_type):
         result["response_media_type"] = media_type
     return result
+
+
+def _retry_after_seconds(value: Any) -> float | None:
+    """Parse HTTP Retry-After without retaining arbitrary header contents."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    try:
+        if re.fullmatch(r"[0-9]{1,12}", value):
+            return float(value)
+        date = parsedate_to_datetime(value)
+        if date.tzinfo is None:
+            return None
+        seconds = date.timestamp() - time.time()
+        return max(0., seconds) if math.isfinite(seconds) else None
+    except (ValueError, TypeError, OverflowError):
+        return None
 
 
 def _protocol_error(message: str, *, http_status=None, error_code=None) -> APIError:
@@ -123,10 +146,12 @@ def _open_public(request: Request, timeout_s: float):
         except (ValueError, UnicodeError, OSError):
             code = "unknown_error"
         # Do not retain arbitrary server error text, URLs or bearer headers.
-        raise _protocol_error(
+        error = _protocol_error(
             f"ChatGPT subscription HTTP {exc.code}: {code}; no retry or API-key fallback",
             http_status=exc.code, error_code=code,
-        ) from None
+        )
+        error.retry_after_s = _retry_after_seconds(exc.headers.get("Retry-After") if exc.headers else None)
+        raise error from None
     except (URLError, TimeoutError, OSError) as exc:
         raise _protocol_error(f"Subscription transport failure ({type(exc).__name__}); no retry",
                               error_code="subscription_network_error") from None

@@ -1,0 +1,142 @@
+{
+  "status": "passed_with_documented_prediction_limits",
+  "created_utc": "2026-10-20T02:16:32.078855+00:00",
+  "baseline_files_verified_unchanged": 842,
+  "changed_preexisting_files": [],
+  "stages": {
+    "planning_001": {
+      "status": "complete",
+      "manifest_sha256": "f77b1096ef44f2ddc8d777e6004edc8de9e3d5cfb19da5c481db1d897dc18e34",
+      "sources_verified": 12,
+      "inputs_verified": 35,
+      "artifacts_verified": 27,
+      "elapsed_s": 312.70051903501735
+    },
+    "evaluation_001": {
+      "status": "complete",
+      "manifest_sha256": "cea683abb1a1c95c9300c0d6d56f648936f04b4d4e4f41af55823262cb072e98",
+      "sources_verified": 6,
+      "inputs_verified": 129,
+      "artifacts_verified": 8,
+      "elapsed_s": 51.86742385700927
+    }
+  },
+  "same_endpoints_and_native_samples_as_previous": true,
+  "same_planner_settings_as_previous": true,
+  "predicted_records": 80,
+  "evaluation_records_including_oracle": 120,
+  "summary": [
+    {
+      "snapshot": "drawer003_closed_step60",
+      "method": "astra",
+      "queries": 20,
+      "statuses": {
+        "planned": 20
+      },
+      "returned_paths": 20,
+      "truth_valid_returned_paths": 18,
+      "truth_invalid_returned_paths": 2,
+      "returned_path_truth_collision_rate": 0.1,
+      "refusals_with_oracle_valid_path": 0,
+      "mean_planning_seconds": 6.0135209849948295,
+      "mean_returned_eef_length_m": 0.2072464608184746
+    },
+    {
+      "snapshot": "drawer003_closed_step60",
+      "method": "depthpro",
+      "queries": 20,
+      "statuses": {
+        "invalid_goal": 20
+      },
+      "returned_paths": 0,
+      "truth_valid_returned_paths": 0,
+      "truth_invalid_returned_paths": 0,
+      "returned_path_truth_collision_rate": null,
+      "refusals_with_oracle_valid_path": 18,
+      "mean_planning_seconds": 1.3832451223497628,
+      "mean_returned_eef_length_m": null
+    },
+    {
+      "snapshot": "drawer003_closed_step60",
+      "method": "oracle",
+      "queries": 20,
+      "statuses": {
+        "planned": 18,
+        "invalid_goal": 2
+      },
+      "returned_paths": 18,
+      "truth_valid_returned_paths": 18,
+      "truth_invalid_returned_paths": 0,
+      "returned_path_truth_collision_rate": 0.0,
+      "refusals_with_oracle_valid_path": 0,
+      "mean_planning_seconds": 0.0034606836998136714,
+      "mean_returned_eef_length_m": 0.20736569876017436
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "method": "astra",
+      "queries": 20,
+      "statuses": {
+        "planned": 20
+      },
+      "returned_paths": 20,
+      "truth_valid_returned_paths": 14,
+      "truth_invalid_returned_paths": 6,
+      "returned_path_truth_collision_rate": 0.3,
+      "refusals_with_oracle_valid_path": 0,
+      "mean_planning_seconds": 6.473336778645171,
+      "mean_returned_eef_length_m": 0.2621024763182308
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "method": "depthpro",
+      "queries": 20,
+      "statuses": {
+        "invalid_goal": 20
+      },
+      "returned_paths": 0,
+      "truth_valid_returned_paths": 0,
+      "truth_invalid_returned_paths": 0,
+      "returned_path_truth_collision_rate": null,
+      "refusals_with_oracle_valid_path": 14,
+      "mean_planning_seconds": 1.4258232348991442,
+      "mean_returned_eef_length_m": null
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "method": "oracle",
+      "queries": 20,
+      "statuses": {
+        "planned": 14,
+        "invalid_goal": 6
+      },
+      "returned_paths": 14,
+      "truth_valid_returned_paths": 14,
+      "truth_invalid_returned_paths": 0,
+      "returned_path_truth_collision_rate": 0.0,
+      "refusals_with_oracle_valid_path": 0,
+      "mean_planning_seconds": 0.002906025193806272,
+      "mean_returned_eef_length_m": 0.2936433104987578
+    }
+  ],
+  "start_rejections_after_fix": 0,
+  "tests": {
+    "combined_core_and_previous_suite_passed": 87,
+    "additional_legend_regressions_passed": 2
+  },
+  "plot_directory": "runs/analysis_002",
+  "plot_artifacts_verified": 3,
+  "posthoc_contact_diagnostic": {
+    "file": "runs/failure_diagnostics_001/report.json",
+    "sha256": "14956e381919d3ed66a98ed7d8c682e0e11f25d4cce0b86208f7d35b3d27ba42",
+    "inputs_verified": 185,
+    "all_true_collision_locations_predicted_free": true
+  },
+  "limitations": [
+    "Known initial SELF material is an explicit noninterpenetration/calibration prior, not camera reconstruction.",
+    "DepthPro still refuses goals with unsupported novel space.",
+    "Astra returns eight colliding paths despite accepting their goals.",
+    "Validation is finite native-geometry path sampling, not continuous collision certification."
+  ],
+  "report_sha256": "bceee190cb87b1360c346fed623e3c5589cded495d342d5f02d33c64587a58f8"
+}

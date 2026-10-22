@@ -1,0 +1,154 @@
+{
+  "scope": "Read-only audit of completed drawer003 field_planning_v2; no new experiments.",
+  "slide_ready_zh": [
+    {
+      "title": "规划发生在关节空间，场负责判断机器人是否能放得下",
+      "points": [
+        "搜索变量是 7 个机械臂关节角 q；两根手指固定在原快照姿态。",
+        "每个候选 q 先检查关节限位和自碰撞，再用正运动学将原始机器人表面点变换到相机坐标。",
+        "查询环境场 φ_env(p)：任何表面点占据或未知，则拒绝该姿态。全部采样点为空闲，才接受。",
+        "先尝试关节直连；直连被拒绝后才运行双向 RRT-Connect，再做捷径简化。没有使用场梯度导航。"
+      ],
+      "formula": "q ∈ R^7 → FK + original robot surface {p_i(q)} → φ_env(p_i) → valid(q) → joint-space path",
+      "sources": [
+        "scene_test/field_planning_v2/run_fixed_planning.py:48",
+        "scene_test/field_planning/run_planning.py:86",
+        "scene_test/field_planning/joint_planner.py:33"
+      ]
+    },
+    {
+      "title": "为什么需要先从 Astra 场中去掉机器人",
+      "points": [
+        "原始单图重建包含 robot_* 组件，初始机器人会与它自己的图像重建相撞。",
+        "v2 只移除顶层 union 中完整的 robot_* 组件，保留环境组件和差集；关闭/打开分别移除 6/14 个组件。",
+        "当前规划查询派生环境解析 CSG，范围沿用原 2 mm 场边界；不是继续使用原始稠密网格插值。",
+        "解析查询避免格点插值误差，但不会纠正 Astra 预测的物体位置、尺寸或漏建几何。"
+      ],
+      "sources": [
+        "scene_test/field_planning_v2/planning_fields.py:92",
+        "scene_test/field_planning_v2/planning_fields.py:215",
+        "scene_test/field_planning_v2/RESULTS.txt"
+      ]
+    },
+    {
+      "title": "规划与真值评分严格分开",
+      "points": [
+        "规划只接收预测场、原始机器人模型、初始关节和已知配准，不查询真实场景碰撞。",
+        "全部计划先保存并校验输入/代码哈希，再读取完整 LIBERO 场景评分。",
+        "每个姿态采样 172,411 个原生碰撞表面点，覆盖全部 13 个原始碰撞几何体；表面覆盖半径 ≤5 mm。",
+        "规划边最大关节步长 0.025 rad；真值评分细化到 ≤0.005 rad。属于有限采样验证，不是连续扫掠体积证明。"
+      ],
+      "sources": [
+        "scene_test/field_planning_v2/PROTOCOL.txt",
+        "scene_test/field_planning_v2/run_fixed_planning.py:98",
+        "scene_test/field_planning_v2/runs/planning_001/manifest.json",
+        "scene_test/field_planning_v2/runs/evaluation_001/metrics.json"
+      ]
+    },
+    {
+      "title": "40 次规划返回 40 条路径，32 条通过真值采样",
+      "points": [
+        "只测试 drawer003 两个静态快照；每快照 10 组起终点 ×2 个种子 =20次。",
+        "关闭：20条返回，18条真值采样通过，2条碰撞。打开：20条返回，14条通过，6条碰撞。",
+        "38 条为关节直连；2 条触发 RRT 搜索并成功返回。",
+        "32/40 是这组查询的路径通过数，不是场景几何重建精度，不是抽屉任务成功率；重复种子的直连不构成独立几何试验。"
+      ],
+      "sources": [
+        "scene_test/field_planning_v2/runs/evaluation_001/metrics.json",
+        "scene_test/field_planning_v2/RESULTS.txt"
+      ]
+    },
+    {
+      "title": "成功绕行说明搜索能工作，失败揭示几何仍有偏差",
+      "points": [
+        "打开快照 base_negative 两个种子均触发 RRT，所得路径通过真值采样；同组真值规划可直连，所以不能宣称绕行是真实场景所必需或最优。",
+        "8条失败来自4组起终点，每组2个种子；这些目标本身真实碰撞，正确行为应为拒绝。",
+        "真实接触位置在 Astra 环境场中仍为空闲：φ约 +50 至 +151 mm；同一姿态所有机器人表面采样也判为空闲。",
+        "这表明预测环境几何与真实接触区域不匹配；仅缩小路径采样步长不能补回缺失几何。φ值不是整体重建误差或真实物理间隙。"
+      ],
+      "sources": [
+        "scene_test/field_planning_v2/runs/failure_diagnostics_001/report.json",
+        "scene_test/field_planning_v2/video_case_review.json"
+      ]
+    }
+  ],
+  "metrics": {
+    "queries_total": 40,
+    "snapshot_count": 2,
+    "unique_endpoint_pairs_total": 20,
+    "seeds": [
+      17,
+      29
+    ],
+    "astra_returned": 40,
+    "astra_truth_valid": 32,
+    "astra_truth_collision": 8,
+    "direct_paths": 38,
+    "rrt_paths": 2,
+    "full_native_geom_count": 13,
+    "robot_surface_points": 172411,
+    "surface_cover_radius_max_m": 0.005,
+    "edge_max_joint_step_rad": 0.025,
+    "truth_max_joint_step_rad": 0.005,
+    "occupied_sign_epsilon_m": 1e-09,
+    "closed": {
+      "returned": 20,
+      "truth_valid": 18,
+      "truth_collision": 2,
+      "removed_robot_components": 6
+    },
+    "open": {
+      "returned": 20,
+      "truth_valid": 14,
+      "truth_collision": 6,
+      "removed_robot_components": 14
+    },
+    "contact_phi_range_mm": [
+      49.976168575959285,
+      150.69135931190667
+    ]
+  },
+  "rrt_examples": [
+    {
+      "snapshot": "drawer003_open_step552",
+      "case_id": "base_negative",
+      "seed": 17,
+      "planning_seconds": 20.10693429398816,
+      "path_vertices": 3,
+      "truth_samples": 92,
+      "truth_min_distance_m": 0.00472495961550079
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "case_id": "base_negative",
+      "seed": 29,
+      "planning_seconds": 18.85331367200706,
+      "path_vertices": 3,
+      "truth_samples": 115,
+      "truth_min_distance_m": 0.00472495961550079
+    }
+  ],
+  "visuals": [
+    {
+      "path": "/workspace/gpt_field/scene_test/field_planning_v2/video_001/previews/22_030.png",
+      "use": "RRT 成功案例：原始机器人 + 环境场横切热图；清楚说明热图为环境几何场，不是目标距离。",
+      "caption": "打开快照 / base_negative / seed17。规划20.11秒；保存路径通过92个真值姿态样本。热图仅为当前末端高度的水平切片，不能代表整臂间隙。"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/field_planning_v2/video_001/previews/34_060.png",
+      "use": "预测为空闲、真值碰撞失败案例。",
+      "caption": "打开快照 / wrist_negative / seed17。红圈为真实柜体与手指接触；场内预测路径仍可行。该图是保存路径的运动学回放，不是一次动力学控制任务。"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/field_planning_v2/runs/analysis_002/before_after_outcomes.png",
+      "use": "修复前后整体计数，可只提取 Astra 分组或重画简洁柱状图。",
+      "caption": "自体障碍修复让 Astra 从全部起点拒绝变为返回路径，但仍有8条真实碰撞。不要将结果称为80%重建精度。"
+    }
+  ],
+  "visual_integrity": [
+    "没有保存 RRT 树搜索轨迹，不要绘制貌似真实的搜索树；可以画明确标为原理示意的树。",
+    "视频时长是展示选择，不是控制时长；关节路径来自保存结果，场景在快照处冻结。",
+    "端点/末端线不是全机器人占据体积；使用13原生碰撞体评估。",
+    "Astra 当前场是带符号隐式函数；CSG 组合不保证每处数值都为精确欧氏最近距离。"
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "cameras": {
+    "external": {
+      "focal_length_px": [
+        618.0386719675123,
+        618.0386719675123
+      ],
+      "fovy_deg": 45.0,
+      "mujoco_name": "agentview",
+      "pose_source": "fixed_world_camera",
+      "position_world_m": [
+        0.6065773716836134,
+        0.0,
+        0.96
+      ],
+      "principal_point_px": [
+        255.5,
+        255.5
+      ],
+      "rotation_world_from_camera": [
+        [
+          -1.7233905013069872e-06,
+          -0.5287697435529835,
+          0.8487653140297038
+        ],
+        [
+          0.9999999999985034,
+          -7.823149652530503e-07,
+          1.5430955956352577e-06
+        ],
+        [
+          -1.5194045527300304e-07,
+          0.848765314031093,
+          0.5287697435535403
+        ]
+      ]
+    },
+    "wrist": {
+      "focal_length_px": [
+        333.6256954473487,
+        333.6256954473487
+      ],
+      "fovy_deg": 75.0,
+      "mujoco_name": "robot0_eye_in_hand",
+      "pose_source": "observed_robot_pose_fixed_mount",
+      "position_world_m": [
+        0.0013740237971336597,
+        -0.007887677621773618,
+        0.790080885011893
+      ],
+      "principal_point_px": [
+        255.5,
+        255.5
+      ],
+      "rotation_world_from_camera": [
+        [
+          -0.0015285862551420852,
+          0.998478396441735,
+          0.055123091923458385
+        ],
+        [
+          -0.9999986804637666,
+          -0.0014959443950389546,
+          -0.0006334201543179445
+        ],
+        [
+          -0.0005499952595571429,
+          -0.055123987423882935,
+          0.9984793655933535
+        ]
+      ]
+    }
+  },
+  "frame": "simulation_world",
+  "gripper": {
+    "approach_axis_hand": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "asset_provenance": [
+      {
+        "path": "models/assets/grippers/panda_gripper.xml",
+        "sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+        "size_bytes": 4600
+      }
+    ],
+    "finger_joint_ranges_m": [
+      [
+        0.0,
+        0.04
+      ],
+      [
+        -0.04,
+        0.0
+      ]
+    ],
+    "hand_to_grip_site_m": [
+      0.0,
+      0.0,
+      0.097
+    ],
+    "jaw_axis_hand": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "model": "PandaGripper",
+    "nominal_inner_gap_from_finger_q_m": "q1 - q2 - 0.001",
+    "nominal_open_inner_gap_m": 0.079,
+    "orientation_reference": "robot0_right_hand",
+    "pad_full_size_m": [
+      0.016,
+      0.008,
+      0.016
+    ],
+    "pad_midpoint_lateral_offset_hand_m": "(q1 + q2) / 2",
+    "position_reference": "gripper0_grip_site",
+    "symmetric_pad_midpoint_from_grip_site_hand_m": [
+      0.0,
+      0.0,
+      -0.0036
+    ]
+  },
+  "image": {
+    "height": 512,
+    "pixel_axes": "u_right_v_down",
+    "pixel_centers": "integer",
+    "source_transform": "raw_mujoco_rgb_vertical_flip_no_crop",
+    "width": 512
+  },
+  "schema_version": "astranomy-agentic-panda-camera-v2"
+}

@@ -1,0 +1,2834 @@
+[
+  {
+    "page": 1,
+    "text": "EXPERIMENT REVIEW · LIBERO DRAWER003",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 239.107
+  },
+  {
+    "page": 1,
+    "text": "Astra 场景场",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 162.736
+  },
+  {
+    "page": 1,
+    "text": "从单张图像，到几何表示，再到机器人路径",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 247.00000000000003
+  },
+  {
+    "page": 1,
+    "text": "证据范围：drawer003 closed step60 / open step552；原有实验复核，未重新推理。 [S1–S8]",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 373.27500000000003
+  },
+  {
+    "page": 1,
+    "text": "01 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 1,
+    "text": "单张 RGB  →  CSG 隐式场",
+    "x": 52,
+    "top": 138,
+    "font_size": 12,
+    "width": 137.268
+  },
+  {
+    "page": 1,
+    "text": "三个需要分开回答的问题",
+    "x": 40,
+    "top": 185,
+    "font_size": 23,
+    "width": 253.0
+  },
+  {
+    "page": 1,
+    "text": "01",
+    "x": 40,
+    "top": 230,
+    "font_size": 19,
+    "width": 22.419999999999998
+  },
+  {
+    "page": 1,
+    "text": "场从哪里来",
+    "x": 80,
+    "top": 230,
+    "font_size": 18,
+    "width": 90.00000000000001
+  },
+  {
+    "page": 1,
+    "text": "Astra 估计几何参数；代码把参数变成可查询的场。",
+    "x": 80,
+    "top": 258.0,
+    "font_size": 15,
+    "width": 339.41999999999996
+  },
+  {
+    "page": 1,
+    "text": "02",
+    "x": 40,
+    "top": 310,
+    "font_size": 19,
+    "width": 22.419999999999998
+  },
+  {
+    "page": 1,
+    "text": "几何保留得多准确",
+    "x": 80,
+    "top": 310,
+    "font_size": 18,
+    "width": 144.00000000000003
+  },
+  {
+    "page": 1,
+    "text": "网格能保留多数模型表面；真实柜体仍有厘米级偏差。",
+    "x": 80,
+    "top": 338.0,
+    "font_size": 15,
+    "width": 360.0
+  },
+  {
+    "page": 1,
+    "text": "03",
+    "x": 40,
+    "top": 390,
+    "font_size": 19,
+    "width": 22.419999999999998
+  },
+  {
+    "page": 1,
+    "text": "规划怎样使用场",
+    "x": 80,
+    "top": 390,
+    "font_size": 18,
+    "width": 126.00000000000001
+  },
+  {
+    "page": 1,
+    "text": "关节空间搜索，候选机器人姿态通过场查询筛选。",
+    "x": 80,
+    "top": 418.0,
+    "font_size": 15,
+    "width": 330.0
+  },
+  {
+    "page": 1,
+    "text": "实验图：抽屉打开快照，Astra 的唯一视觉输入",
+    "x": 588,
+    "top": 466,
+    "font_size": 11,
+    "width": 226.908
+  },
+  {
+    "page": 2,
+    "text": "01 / FIELD MEANING",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 106.964
+  },
+  {
+    "page": 2,
+    "text": "先区分：目标距离场与场景几何场",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 420.0
+  },
+  {
+    "page": 2,
+    "text": "相同的“热图”形式，可以表达完全不同的信息。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 286.0
+  },
+  {
+    "page": 2,
+    "text": "[S10] drawer003 冻结规划代码；目标场为到目标区域的图距离，无障碍编码。Astra 语义据 [S1, S2]。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 406.278
+  },
+  {
+    "page": 2,
+    "text": "02 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 2,
+    "text": "此前 speedup v1 的 waypoint 场",
+    "x": 60,
+    "top": 151,
+    "font_size": 11,
+    "width": 167.101
+  },
+  {
+    "page": 2,
+    "text": "“离目标还有多远”",
+    "x": 60,
+    "top": 181,
+    "font_size": 24,
+    "width": 216.0
+  },
+  {
+    "page": 2,
+    "text": "目标位置决定场值。颜色描述每个空间位置到当",
+    "x": 60,
+    "top": 231.0,
+    "font_size": 18,
+    "width": 378.00000000000006
+  },
+  {
+    "page": 2,
+    "text": "前路点目标区域的距离。",
+    "x": 60,
+    "top": 257.64,
+    "font_size": 18,
+    "width": 198.00000000000003
+  },
+  {
+    "page": 2,
+    "text": "它本身没有编码柜体、桌面和障碍物的表面。",
+    "x": 60,
+    "top": 338.0,
+    "font_size": 17,
+    "width": 340.0
+  },
+  {
+    "page": 2,
+    "text": "本次 Astra 场景场",
+    "x": 504,
+    "top": 151,
+    "font_size": 11,
+    "width": 88.42899999999999
+  },
+  {
+    "page": 2,
+    "text": "“哪里被物体占据”",
+    "x": 504,
+    "top": 181,
+    "font_size": 24,
+    "width": 216.0
+  },
+  {
+    "page": 2,
+    "text": "图像估计出的物体形状决定场值。零等值面表示",
+    "x": 504,
+    "top": 231.0,
+    "font_size": 18,
+    "width": 378.00000000000006
+  },
+  {
+    "page": 2,
+    "text": "预测表面，正负号区分内外。",
+    "x": 504,
+    "top": 257.64,
+    "font_size": 18,
+    "width": 234.00000000000003
+  },
+  {
+    "page": 2,
+    "text": "规划可用它检查机器人是否与预测环境重叠。",
+    "x": 504,
+    "top": 338.0,
+    "font_size": 17,
+    "width": 340.0
+  },
+  {
+    "page": 2,
+    "text": "本 PDF 讨论场景几何场；热图颜色由物体几何决定，与目标路点距离无关。",
+    "x": 56,
+    "top": 449.0,
+    "font_size": 16,
+    "width": 534.72
+  },
+  {
+    "page": 3,
+    "text": "02 / CREATION PIPELINE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 130.537
+  },
+  {
+    "page": 3,
+    "text": "Astra 输出几何描述，代码生成数值场",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 470.736
+  },
+  {
+    "page": 3,
+    "text": "模型没有逐个输出数百万个 voxel，也没有直接输出最终网格模型。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 385.93100000000004
+  },
+  {
+    "page": 3,
+    "text": "[S1] prompt / schema / field_csg.py；[S2] build_fields.py 与 evaluation。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 304.569
+  },
+  {
+    "page": 3,
+    "text": "03 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 3,
+    "text": "01",
+    "x": 56,
+    "top": 165,
+    "font_size": 14,
+    "width": 16.52
+  },
+  {
+    "page": 3,
+    "text": "单张 RGB",
+    "x": 56,
+    "top": 195.0,
+    "font_size": 18,
+    "width": 77.52600000000001
+  },
+  {
+    "page": 3,
+    "text": "512 × 512",
+    "x": 56,
+    "top": 246,
+    "font_size": 13,
+    "width": 62.114000000000004
+  },
+  {
+    "page": 3,
+    "text": "无深度输入",
+    "x": 56,
+    "top": 265,
+    "font_size": 13,
+    "width": 65.0
+  },
+  {
+    "page": 3,
+    "text": "02",
+    "x": 237,
+    "top": 165,
+    "font_size": 14,
+    "width": 16.52
+  },
+  {
+    "page": 3,
+    "text": "Astra JSON",
+    "x": 237,
+    "top": 195.0,
+    "font_size": 18,
+    "width": 99.41400000000002
+  },
+  {
+    "page": 3,
+    "text": "基元、位姿",
+    "x": 237,
+    "top": 246,
+    "font_size": 13,
+    "width": 65.0
+  },
+  {
+    "page": 3,
+    "text": "尺寸、布尔关系",
+    "x": 237,
+    "top": 265,
+    "font_size": 13,
+    "width": 91.00000000000001
+  },
+  {
+    "page": 3,
+    "text": "03",
+    "x": 418,
+    "top": 165,
+    "font_size": 14,
+    "width": 16.52
+  },
+  {
+    "page": 3,
+    "text": "解析场 φ(p)",
+    "x": 418,
+    "top": 195.0,
+    "font_size": 18,
+    "width": 98.028
+  },
+  {
+    "page": 3,
+    "text": "代码计算任意",
+    "x": 418,
+    "top": 246,
+    "font_size": 13,
+    "width": 78.0
+  },
+  {
+    "page": 3,
+    "text": "三维点的场值",
+    "x": 418,
+    "top": 265,
+    "font_size": 13,
+    "width": 78.0
+  },
+  {
+    "page": 3,
+    "text": "04",
+    "x": 599,
+    "top": 165,
+    "font_size": 14,
+    "width": 16.52
+  },
+  {
+    "page": 3,
+    "text": "保存数值网格",
+    "x": 599,
+    "top": 195.0,
+    "font_size": 18,
+    "width": 108.00000000000001
+  },
+  {
+    "page": 3,
+    "text": "float32",
+    "x": 599,
+    "top": 246,
+    "font_size": 13,
+    "width": 42.445
+  },
+  {
+    "page": 3,
+    "text": "4 mm / 2 mm",
+    "x": 599,
+    "top": 265,
+    "font_size": 13,
+    "width": 79.32600000000001
+  },
+  {
+    "page": 3,
+    "text": "05",
+    "x": 780,
+    "top": 165,
+    "font_size": 14,
+    "width": 16.52
+  },
+  {
+    "page": 3,
+    "text": "解码表面",
+    "x": 780,
+    "top": 195.0,
+    "font_size": 18,
+    "width": 72.00000000000001
+  },
+  {
+    "page": 3,
+    "text": "φ = 0",
+    "x": 780,
+    "top": 246,
+    "font_size": 13,
+    "width": 30.134000000000004
+  },
+  {
+    "page": 3,
+    "text": "Marching Cubes",
+    "x": 780,
+    "top": 265,
+    "font_size": 13,
+    "width": 96.694
+  },
+  {
+    "page": 3,
+    "text": "模型负责：几何估计",
+    "x": 58,
+    "top": 350,
+    "font_size": 18,
+    "width": 162.00000000000003
+  },
+  {
+    "page": 3,
+    "text": "从照片猜测尺寸、位置、方向、开口和不可见",
+    "x": 58,
+    "top": 383.0,
+    "font_size": 15,
+    "width": 300.0
+  },
+  {
+    "page": 3,
+    "text": "部分。",
+    "x": 58,
+    "top": 405.2,
+    "font_size": 15,
+    "width": 45.0
+  },
+  {
+    "page": 3,
+    "text": "本地代码负责：场求值、保存和解码",
+    "x": 415,
+    "top": 350,
+    "font_size": 18,
+    "width": 288.00000000000006
+  },
+  {
+    "page": 3,
+    "text": "解码器只读取保存的数值块，不读取 RGB、CSG JSON 或真值几何。",
+    "x": 415,
+    "top": 383.0,
+    "font_size": 15,
+    "width": 452.58
+  },
+  {
+    "page": 3,
+    "text": "本次生成器：gpt-6-astra / medium；每个快照独立输入、一次有效输出。",
+    "x": 40,
+    "top": 460,
+    "font_size": 15,
+    "width": 493.755
+  },
+  {
+    "page": 4,
+    "text": "03 / PROMPT & OUTPUT",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 128.28199999999998
+  },
+  {
+    "page": 4,
+    "text": "输入没有真值几何；尺度和形状都由图像估计",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 560.0
+  },
+  {
+    "page": 4,
+    "text": "原始提示词要求估计场景几何，同时明确单张图像的尺度与遮挡歧义。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 403.00000000000006
+  },
+  {
+    "page": 4,
+    "text": "[S1] instructions.txt、schema.json、fields/drawer003_closed_step60.json；未做 GT 尺度对齐。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 397.5930000000001
+  },
+  {
+    "page": 4,
+    "text": "04 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 4,
+    "text": "输入约束（原提示词摘要）",
+    "x": 58,
+    "top": 147,
+    "font_size": 20,
+    "width": 240.0
+  },
+  {
+    "page": 4,
+    "text": "只提供一张正向 RGB；允许常识性的物体尺寸先验",
+    "x": 74,
+    "top": 192.0,
+    "font_size": 16,
+    "width": 355.28000000000003
+  },
+  {
+    "page": 4,
+    "text": "。",
+    "x": 74,
+    "top": 215.68,
+    "font_size": 16,
+    "width": 16.0
+  },
+  {
+    "page": 4,
+    "text": "不提供深度、相机标定、场景资产、任务历史或其",
+    "x": 74,
+    "top": 244.68,
+    "font_size": 16,
+    "width": 352.0
+  },
+  {
+    "page": 4,
+    "text": "他帧。",
+    "x": 74,
+    "top": 268.36,
+    "font_size": 16,
+    "width": 48.0
+  },
+  {
+    "page": 4,
+    "text": "输出 JSON：box / sphere / cylinder 加布尔组合。",
+    "x": 74,
+    "top": 297.36,
+    "font_size": 16,
+    "width": 358.384
+  },
+  {
+    "page": 4,
+    "text": "最多 32 个基元、64 个总节点；记录不确定和省略",
+    "x": 74,
+    "top": 326.36,
+    "font_size": 16,
+    "width": 350.272
+  },
+  {
+    "page": 4,
+    "text": "的细节。",
+    "x": 74,
+    "top": 350.04,
+    "font_size": 16,
+    "width": 64.0
+  },
+  {
+    "page": 4,
+    "text": "模型还报告焦距估计，但代码直接使用其三维参数建场，不用该焦距再",
+    "x": 58,
+    "top": 422,
+    "font_size": 12,
+    "width": 372.0
+  },
+  {
+    "page": 4,
+    "text": "反投影。",
+    "x": 58,
+    "top": 440,
+    "font_size": 12,
+    "width": 48.0
+  },
+  {
+    "page": 4,
+    "text": "真实输出片段：closed 快照",
+    "x": 500,
+    "top": 146,
+    "font_size": 18,
+    "width": 223.47000000000003
+  },
+  {
+    "page": 4,
+    "text": "name",
+    "x": 500,
+    "top": 191,
+    "font_size": 12,
+    "width": 33.324
+  },
+  {
+    "page": 4,
+    "text": "dark_left_cabinet",
+    "x": 500,
+    "top": 210,
+    "font_size": 14,
+    "width": 116.032
+  },
+  {
+    "page": 4,
+    "text": "op",
+    "x": 500,
+    "top": 238,
+    "font_size": 12,
+    "width": 15.24
+  },
+  {
+    "page": 4,
+    "text": "box",
+    "x": 500,
+    "top": 257,
+    "font_size": 14,
+    "width": 24.108
+  },
+  {
+    "page": 4,
+    "text": "center_m",
+    "x": 500,
+    "top": 285,
+    "font_size": 12,
+    "width": 56.628
+  },
+  {
+    "page": 4,
+    "text": "[-0.30, 0.09, 0.82]",
+    "x": 500,
+    "top": 304,
+    "font_size": 14,
+    "width": 109.98400000000001
+  },
+  {
+    "page": 4,
+    "text": "size_m",
+    "x": 500,
+    "top": 332,
+    "font_size": 12,
+    "width": 41.064
+  },
+  {
+    "page": 4,
+    "text": "[0.14, 0.115, 0.17]",
+    "x": 500,
+    "top": 351,
+    "font_size": 14,
+    "width": 112.896
+  },
+  {
+    "page": 4,
+    "text": "rotation_xyzw",
+    "x": 500,
+    "top": 379,
+    "font_size": 12,
+    "width": 85.72800000000001
+  },
+  {
+    "page": 4,
+    "text": "[0.316228, 0, 0, 0.948683]",
+    "x": 500,
+    "top": 398,
+    "font_size": 14,
+    "width": 162.65200000000002
+  },
+  {
+    "page": 4,
+    "text": "单位：米；box 的 size_m 是半尺寸。",
+    "x": 500,
+    "top": 428,
+    "font_size": 12,
+    "width": 199.812
+  },
+  {
+    "page": 4,
+    "text": "相机坐标：X 向右、Y 向下、Z 向前。",
+    "x": 500,
+    "top": 445,
+    "font_size": 12,
+    "width": 196.548
+  },
+  {
+    "page": 5,
+    "text": "04 / FIELD DEFINITION",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 119.53699999999999
+  },
+  {
+    "page": 5,
+    "text": "场保存的是“实体在哪里”的隐式函数",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 476.0
+  },
+  {
+    "page": 5,
+    "text": "CSG = Constructive Solid Geometry：用简单实体和布尔关系组合复杂形状。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 445.913
+  },
+  {
+    "page": 5,
+    "text": "[S1] field_csg.py；右侧为空腔概念示意，不是实验重建图。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 239.66100000000003
+  },
+  {
+    "page": 5,
+    "text": "05 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 5,
+    "text": "场定义域内每个 p，都能查询 φ(p)",
+    "x": 60,
+    "top": 151,
+    "font_size": 21,
+    "width": 321.65700000000004
+  },
+  {
+    "page": 5,
+    "text": "φ(p) < 0",
+    "x": 88,
+    "top": 203,
+    "font_size": 18,
+    "width": 69.35400000000001
+  },
+  {
+    "page": 5,
+    "text": "实体内部：占据",
+    "x": 233,
+    "top": 203,
+    "font_size": 17,
+    "width": 119.00000000000001
+  },
+  {
+    "page": 5,
+    "text": "φ(p) = 0",
+    "x": 88,
+    "top": 246,
+    "font_size": 18,
+    "width": 69.35400000000001
+  },
+  {
+    "page": 5,
+    "text": "模型预测的表面",
+    "x": 233,
+    "top": 246,
+    "font_size": 17,
+    "width": 119.00000000000001
+  },
+  {
+    "page": 5,
+    "text": "φ(p) > 0",
+    "x": 88,
+    "top": 289,
+    "font_size": 18,
+    "width": 69.35400000000001
+  },
+  {
+    "page": 5,
+    "text": "实体外部：候选自由空间",
+    "x": 233,
+    "top": 289,
+    "font_size": 17,
+    "width": 187.0
+  },
+  {
+    "page": 5,
+    "text": "并集：min(a, b)       交集：max(a, b)",
+    "x": 60,
+    "top": 349,
+    "font_size": 16,
+    "width": 257.344
+  },
+  {
+    "page": 5,
+    "text": "差集：max(a, −b)     → 可以表达空腔",
+    "x": 60,
+    "top": 385,
+    "font_size": 16,
+    "width": 259.92
+  },
+  {
+    "page": 5,
+    "text": "实体",
+    "x": 617,
+    "top": 349,
+    "font_size": 14,
+    "width": 28.0
+  },
+  {
+    "page": 5,
+    "text": "空腔 / 自由空间",
+    "x": 648,
+    "top": 254,
+    "font_size": 16,
+    "width": 109.456
+  },
+  {
+    "page": 5,
+    "text": "示意：外部实体 − 内部实体",
+    "x": 560,
+    "top": 397,
+    "font_size": 14,
+    "width": 168.042
+  },
+  {
+    "page": 5,
+    "text": "零等值面同时包含外壁和内壁。",
+    "x": 560,
+    "top": 417,
+    "font_size": 14,
+    "width": 196.0
+  },
+  {
+    "page": 5,
+    "text": "注意：布尔组合后的 φ 不保证处处等于到最近表面的精确欧氏距离。",
+    "x": 40,
+    "top": 476.0,
+    "font_size": 15,
+    "width": 454.09499999999997
+  },
+  {
+    "page": 6,
+    "text": "05 / WHAT IS ACTUALLY QUERIED",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 177.265
+  },
+  {
+    "page": 6,
+    "text": "重建测试与规划测试使用不同的读取路径",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 504.0
+  },
+  {
+    "page": 6,
+    "text": "两条路径来自同一次 Astra 几何估计，但不能把它们当作完全相同的数值实验。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 453.076
+  },
+  {
+    "page": 6,
+    "text": "[S2] 保存场与解码；[S5] planning_fields.py:215–267；planning_001/settings.json。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 347.112
+  },
+  {
+    "page": 6,
+    "text": "06 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 6,
+    "text": "Astra",
+    "x": 58,
+    "top": 162,
+    "font_size": 20,
+    "width": 51.7
+  },
+  {
+    "page": 6,
+    "text": "原始 CSG JSON",
+    "x": 58,
+    "top": 196,
+    "font_size": 20,
+    "width": 143.24
+  },
+  {
+    "page": 6,
+    "text": "包含场景",
+    "x": 58,
+    "top": 290.0,
+    "font_size": 17,
+    "width": 68.0
+  },
+  {
+    "page": 6,
+    "text": "以及可见机器人",
+    "x": 58,
+    "top": 315.16,
+    "font_size": 17,
+    "width": 119.00000000000001
+  },
+  {
+    "page": 6,
+    "text": "重建精度分支",
+    "x": 318,
+    "top": 153,
+    "font_size": 11,
+    "width": 66.0
+  },
+  {
+    "page": 6,
+    "text": "原始场 → 保存 2 mm 网格 → 解码 mesh → 评分",
+    "x": 318,
+    "top": 180,
+    "font_size": 18,
+    "width": 386.42400000000004
+  },
+  {
+    "page": 6,
+    "text": "检验数值表示是否保留模型形状，以及解码场景与真值差多远。",
+    "x": 318,
+    "top": 219.0,
+    "font_size": 15,
+    "width": 420.0
+  },
+  {
+    "page": 6,
+    "text": "当前 planning v2 分支",
+    "x": 318,
+    "top": 299,
+    "font_size": 11,
+    "width": 112.431
+  },
+  {
+    "page": 6,
+    "text": "移除 robot_* → 环境解析场 → 直接查询 φ(p)",
+    "x": 318,
+    "top": 326,
+    "font_size": 18,
+    "width": 367.362
+  },
+  {
+    "page": 6,
+    "text": "原 2 mm 网格仅提供查询域边界；规划没有读取网格值做插值。",
+    "x": 318,
+    "top": 365.0,
+    "font_size": 15,
+    "width": 421.185
+  },
+  {
+    "page": 6,
+    "text": "解析查询可避免网格插值误差，但不会纠正模型估计错的尺寸、位置或漏建物体。",
+    "x": 56,
+    "top": 445.0,
+    "font_size": 15,
+    "width": 540.0
+  },
+  {
+    "page": 7,
+    "text": "06 / ERROR DEFINITION",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 126.23599999999999
+  },
+  {
+    "page": 7,
+    "text": "准确性必须分两层测量",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 280.0
+  },
+  {
+    "page": 7,
+    "text": "“模型给出的形状被保存得很好”，不等于“模型给出的形状就是真实场景”。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 455.00000000000006
+  },
+  {
+    "page": 7,
+    "text": "[S2] evaluate_fields.py；comparison_summary.json。所有真值仅用于事后评估。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 336.105
+  },
+  {
+    "page": 7,
+    "text": "07 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 7,
+    "text": "A / C：相对于真实场景的误差",
+    "x": 60,
+    "top": 149,
+    "font_size": 11,
+    "width": 144.518
+  },
+  {
+    "page": 7,
+    "text": "A：原始解析场 vs LIBERO 真值",
+    "x": 60,
+    "top": 186,
+    "font_size": 18,
+    "width": 247.10400000000004
+  },
+  {
+    "page": 7,
+    "text": "C：2 mm 网格解码表面 vs 真值",
+    "x": 60,
+    "top": 217,
+    "font_size": 18,
+    "width": 250.74000000000004
+  },
+  {
+    "page": 7,
+    "text": "同一真实相机射线，比较第一个交点的相机 Z 深度。",
+    "x": 60,
+    "top": 275.0,
+    "font_size": 16,
+    "width": 368.81600000000003
+  },
+  {
+    "page": 7,
+    "text": "B：场表示本身的保存误差",
+    "x": 504,
+    "top": 149,
+    "font_size": 11,
+    "width": 128.49099999999999
+  },
+  {
+    "page": 7,
+    "text": "原始解析场",
+    "x": 504,
+    "top": 186,
+    "font_size": 18,
+    "width": 90.00000000000001
+  },
+  {
+    "page": 7,
+    "text": "vs 保存网格后解码的表面",
+    "x": 504,
+    "top": 217,
+    "font_size": 18,
+    "width": 201.83400000000003
+  },
+  {
+    "page": 7,
+    "text": "6 个由模型边界生成的外部视角；不使用真值。检验同",
+    "x": 504,
+    "top": 275.0,
+    "font_size": 16,
+    "width": 380.464
+  },
+  {
+    "page": 7,
+    "text": "一预测几何的变化。",
+    "x": 504,
+    "top": 298.68,
+    "font_size": 16,
+    "width": 144.0
+  },
+  {
+    "page": 7,
+    "text": "e(u,v) = | z_pred(u,v) − z_GT(u,v) |",
+    "x": 60,
+    "top": 386,
+    "font_size": 22,
+    "width": 360.822
+  },
+  {
+    "page": 7,
+    "text": "单位：mm",
+    "x": 737,
+    "top": 390,
+    "font_size": 18,
+    "width": 88.70400000000001
+  },
+  {
+    "page": 7,
+    "text": "MAE / P95 只统计命中射线；同时报告覆盖率。≤5 mm 比例把漏失计为失败。",
+    "x": 40,
+    "top": 450,
+    "font_size": 14,
+    "width": 485.394
+  },
+  {
+    "page": 7,
+    "text": "这里不是三维最近表面距离，也没有验证所有隐藏表面；B 的射线集合与 A / C 不同。",
+    "x": 40,
+    "top": 471,
+    "font_size": 14,
+    "width": 523.8100000000001
+  },
+  {
+    "page": 8,
+    "text": "07 / REPRESENTATION PRESERVATION",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 207.416
+  },
+  {
+    "page": 8,
+    "text": "2 mm 网格保留了多数已预测表面",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 419.216
+  },
+  {
+    "page": 8,
+    "text": "B：只比较“原始 Astra 形状”和“网格解码形状”，不比较真实场景。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 409.617
+  },
+  {
+    "page": 8,
+    "text": "[S2] comparison_summary.json / preservation_B_six_views；[S3] grazing-wall diagnostic。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 383.75100000000003
+  },
+  {
+    "page": 8,
+    "text": "08 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 8,
+    "text": "保存误差 B（2 mm）",
+    "x": 56,
+    "top": 147,
+    "font_size": 16,
+    "width": 154.448
+  },
+  {
+    "page": 8,
+    "text": "抽屉关闭 · step60",
+    "x": 360,
+    "top": 147,
+    "font_size": 16,
+    "width": 140.4
+  },
+  {
+    "page": 8,
+    "text": "抽屉打开 · step552",
+    "x": 640,
+    "top": 147,
+    "font_size": 16,
+    "width": 149.84
+  },
+  {
+    "page": 8,
+    "text": "有参考表面的射线数",
+    "x": 56,
+    "top": 192,
+    "font_size": 16,
+    "width": 144.0
+  },
+  {
+    "page": 8,
+    "text": "1,750",
+    "x": 360,
+    "top": 192,
+    "font_size": 16,
+    "width": 39.968
+  },
+  {
+    "page": 8,
+    "text": "1,897",
+    "x": 640,
+    "top": 192,
+    "font_size": 16,
+    "width": 39.968
+  },
+  {
+    "page": 8,
+    "text": "命中保留率",
+    "x": 56,
+    "top": 236,
+    "font_size": 16,
+    "width": 80.0
+  },
+  {
+    "page": 8,
+    "text": "100%",
+    "x": 360,
+    "top": 236,
+    "font_size": 16,
+    "width": 41.376
+  },
+  {
+    "page": 8,
+    "text": "98.735%",
+    "x": 640,
+    "top": 236,
+    "font_size": 16,
+    "width": 63.584
+  },
+  {
+    "page": 8,
+    "text": "命中 MAE",
+    "x": 56,
+    "top": 280,
+    "font_size": 16,
+    "width": 69.376
+  },
+  {
+    "page": 8,
+    "text": "0.0071 mm",
+    "x": 360,
+    "top": 280,
+    "font_size": 16,
+    "width": 86.88
+  },
+  {
+    "page": 8,
+    "text": "0.0034 mm",
+    "x": 640,
+    "top": 280,
+    "font_size": 16,
+    "width": 86.88
+  },
+  {
+    "page": 8,
+    "text": "命中最大误差",
+    "x": 56,
+    "top": 324,
+    "font_size": 16,
+    "width": 96.0
+  },
+  {
+    "page": 8,
+    "text": "8.395 mm",
+    "x": 360,
+    "top": 324,
+    "font_size": 16,
+    "width": 73.184
+  },
+  {
+    "page": 8,
+    "text": "0.539 mm",
+    "x": 640,
+    "top": 324,
+    "font_size": 16,
+    "width": 73.184
+  },
+  {
+    "page": 8,
+    "text": "丢失原始交点",
+    "x": 56,
+    "top": 368,
+    "font_size": 16,
+    "width": 96.0
+  },
+  {
+    "page": 8,
+    "text": "0",
+    "x": 360,
+    "top": 368,
+    "font_size": 16,
+    "width": 8.88
+  },
+  {
+    "page": 8,
+    "text": "24",
+    "x": 640,
+    "top": 368,
+    "font_size": 16,
+    "width": 17.76
+  },
+  {
+    "page": 8,
+    "text": "为什么均值很小？大量平面易于保留；均值还排除了没有命中的射线。",
+    "x": 40,
+    "top": 419.0,
+    "font_size": 16,
+    "width": 496.0
+  },
+  {
+    "page": 8,
+    "text": "打开快照的 24 条漏失都在背景墙上沿的掠射位置，不在抽屉；小均值仍不保证薄结构、隐藏空腔或拓扑完整。",
+    "x": 40,
+    "top": 454,
+    "font_size": 15,
+    "width": 728.37
+  },
+  {
+    "page": 9,
+    "text": "08 / SCENE RECONSTRUCTION ACCURACY",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 223.02499999999998
+  },
+  {
+    "page": 9,
+    "text": "与真值相比：柜体仍有约 71–98 mm 深度误差",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 574.364
+  },
+  {
+    "page": 9,
+    "text": "C：2 mm 网格解码后，在整块可见目标柜体上评估；不是只测把手。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 396.40900000000005
+  },
+  {
+    "page": 9,
+    "text": "[S2] comparison_summary.json；MAE / P95 为相机 Z 深度绝对误差。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 285.165
+  },
+  {
+    "page": 9,
+    "text": "09 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 9,
+    "text": "相对 LIBERO 真值",
+    "x": 56,
+    "top": 146,
+    "font_size": 16,
+    "width": 129.76
+  },
+  {
+    "page": 9,
+    "text": "关闭 · step60",
+    "x": 376,
+    "top": 146,
+    "font_size": 16,
+    "width": 108.4
+  },
+  {
+    "page": 9,
+    "text": "打开 · step552",
+    "x": 656,
+    "top": 146,
+    "font_size": 16,
+    "width": 117.84
+  },
+  {
+    "page": 9,
+    "text": "柜体 MAE",
+    "x": 56,
+    "top": 187,
+    "font_size": 17,
+    "width": 73.712
+  },
+  {
+    "page": 9,
+    "text": "70.99 mm",
+    "x": 376,
+    "top": 187,
+    "font_size": 17,
+    "width": 82.28
+  },
+  {
+    "page": 9,
+    "text": "98.01 mm",
+    "x": 656,
+    "top": 187,
+    "font_size": 17,
+    "width": 82.28
+  },
+  {
+    "page": 9,
+    "text": "柜体 P95",
+    "x": 56,
+    "top": 228,
+    "font_size": 17,
+    "width": 67.43900000000001
+  },
+  {
+    "page": 9,
+    "text": "166.23 mm",
+    "x": 376,
+    "top": 228,
+    "font_size": 17,
+    "width": 87.19300000000001
+  },
+  {
+    "page": 9,
+    "text": "308.22 mm",
+    "x": 656,
+    "top": 228,
+    "font_size": 17,
+    "width": 87.19300000000001
+  },
+  {
+    "page": 9,
+    "text": "柜体误差 ≤ 5 mm",
+    "x": 56,
+    "top": 269,
+    "font_size": 17,
+    "width": 137.34300000000002
+  },
+  {
+    "page": 9,
+    "text": "0.830%",
+    "x": 376,
+    "top": 269,
+    "font_size": 17,
+    "width": 58.123000000000005
+  },
+  {
+    "page": 9,
+    "text": "1.213%",
+    "x": 656,
+    "top": 269,
+    "font_size": 17,
+    "width": 58.123000000000005
+  },
+  {
+    "page": 9,
+    "text": "柜体射线命中率",
+    "x": 56,
+    "top": 310,
+    "font_size": 17,
+    "width": 119.00000000000001
+  },
+  {
+    "page": 9,
+    "text": "100%",
+    "x": 376,
+    "top": 310,
+    "font_size": 17,
+    "width": 43.962
+  },
+  {
+    "page": 9,
+    "text": "100%",
+    "x": 656,
+    "top": 310,
+    "font_size": 17,
+    "width": 43.962
+  },
+  {
+    "page": 9,
+    "text": "整幅图像 MAE",
+    "x": 56,
+    "top": 351,
+    "font_size": 17,
+    "width": 105.96100000000001
+  },
+  {
+    "page": 9,
+    "text": "438.15 mm",
+    "x": 376,
+    "top": 351,
+    "font_size": 17,
+    "width": 87.19300000000001
+  },
+  {
+    "page": 9,
+    "text": "361.06 mm",
+    "x": 656,
+    "top": 351,
+    "font_size": 17,
+    "width": 87.19300000000001
+  },
+  {
+    "page": 9,
+    "text": "A → C：关闭 71.14 → 70.99 mm；打开 97.98 → 98.01 mm。主要偏差已存在于原始几何估计。",
+    "x": 40,
+    "top": 400,
+    "font_size": 15,
+    "width": 647.4449999999999
+  },
+  {
+    "page": 9,
+    "text": "100% 命中只表示射线撞上了某个预测表面，可能是错的墙或桌面；不代表 100% 几何正确。",
+    "x": 40,
+    "top": 451,
+    "font_size": 14,
+    "width": 571.816
+  },
+  {
+    "page": 9,
+    "text": "2 mm 是网格间距，不是本次重建精度。结论仅覆盖这两个单次预测快照。",
+    "x": 40,
+    "top": 472,
+    "font_size": 14,
+    "width": 459.97
+  },
+  {
+    "page": 10,
+    "text": "09 / VISUAL EVIDENCE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 117.711
+  },
+  {
+    "page": 10,
+    "text": "同一视角对比：布局可辨，深度与细节有偏差",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 560.0
+  },
+  {
+    "page": 10,
+    "text": "从保存场解码出的表面重新投射深度；未做尺度或位姿对齐。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 351.00000000000006
+  },
+  {
+    "page": 10,
+    "text": "[S2] evaluation_001 保存的数值数组；本页据原始数组重画，见 figures manifest。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 334.67400000000004
+  },
+  {
+    "page": 10,
+    "text": "10 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 10,
+    "text": "输入 RGB",
+    "x": 84,
+    "top": 121,
+    "font_size": 14,
+    "width": 60.298
+  },
+  {
+    "page": 10,
+    "text": "LIBERO 真值深度",
+    "x": 296,
+    "top": 121,
+    "font_size": 14,
+    "width": 110.36200000000001
+  },
+  {
+    "page": 10,
+    "text": "Astra 场解码深度",
+    "x": 508,
+    "top": 121,
+    "font_size": 14,
+    "width": 109.36800000000001
+  },
+  {
+    "page": 10,
+    "text": "绝对深度误差",
+    "x": 720,
+    "top": 121,
+    "font_size": 14,
+    "width": 84.0
+  },
+  {
+    "page": 10,
+    "text": "关闭",
+    "x": 40,
+    "top": 212,
+    "font_size": 15,
+    "width": 30.0
+  },
+  {
+    "page": 10,
+    "text": "打开",
+    "x": 40,
+    "top": 380,
+    "font_size": 15,
+    "width": 30.0
+  },
+  {
+    "page": 10,
+    "text": "深度 0 → 4 m",
+    "x": 296,
+    "top": 489,
+    "font_size": 9,
+    "width": 53.388000000000005
+  },
+  {
+    "page": 10,
+    "text": "误差 0 → 0.5 m（饱和）",
+    "x": 720,
+    "top": 489,
+    "font_size": 9,
+    "width": 96.885
+  },
+  {
+    "page": 11,
+    "text": "10 / SELF-GEOMETRY FIX",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 132.209
+  },
+  {
+    "page": 11,
+    "text": "规划前先移除“机器人自己的重建”",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 448.0
+  },
+  {
+    "page": 11,
+    "text": "保留环境几何，再用原生机器人模型查询它，避免把自己当成障碍。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 390.00000000000006
+  },
+  {
+    "page": 11,
+    "text": "[S5] planning_fields.py；RESULTS.txt；field_provenance.json。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 269.01000000000005
+  },
+  {
+    "page": 11,
+    "text": "11 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 11,
+    "text": "原接入问题",
+    "x": 60,
+    "top": 153,
+    "font_size": 11,
+    "width": 55.0
+  },
+  {
+    "page": 11,
+    "text": "照片中的机器人也被建进了场",
+    "x": 60,
+    "top": 190.0,
+    "font_size": 23,
+    "width": 299.0
+  },
+  {
+    "page": 11,
+    "text": "原生机器人表面与 robot_* 组件重合。所有查询",
+    "x": 60,
+    "top": 279.0,
+    "font_size": 18,
+    "width": 379.242
+  },
+  {
+    "page": 11,
+    "text": "都在起点被拒绝，无法进入规划。",
+    "x": 60,
+    "top": 305.64,
+    "font_size": 18,
+    "width": 270.00000000000006
+  },
+  {
+    "page": 11,
+    "text": "当前 v2 处理",
+    "x": 504,
+    "top": 153,
+    "font_size": 11,
+    "width": 61.81999999999999
+  },
+  {
+    "page": 11,
+    "text": "移除完整的 robot_* 并集组件",
+    "x": 504,
+    "top": 190.0,
+    "font_size": 22,
+    "width": 292.204
+  },
+  {
+    "page": 11,
+    "text": "关闭快照移除 6 个，打开快照移除 14 个。保留其",
+    "x": 504,
+    "top": 279.0,
+    "font_size": 18,
+    "width": 388.09800000000007
+  },
+  {
+    "page": 11,
+    "text": "他环境实体、差集和重叠部分。",
+    "x": 504,
+    "top": 305.64,
+    "font_size": 18,
+    "width": 252.00000000000003
+  },
+  {
+    "page": 11,
+    "text": "修复后的环境场支持起点检查。但 robot_* 名称是模型判断，不是经过真值验证的语义分割。",
+    "x": 40,
+    "top": 413.0,
+    "font_size": 18,
+    "width": 739.2420000000001
+  },
+  {
+    "page": 11,
+    "text": "查询范围沿用原场边界；域外或符号不明确的点按未知拒绝。",
+    "x": 40,
+    "top": 477,
+    "font_size": 15,
+    "width": 405.0
+  },
+  {
+    "page": 12,
+    "text": "11 / HOW PLANNING WORKS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 151.51399999999998
+  },
+  {
+    "page": 12,
+    "text": "搜索在 7 维关节空间，场负责检查候选姿态",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 533.232
+  },
+  {
+    "page": 12,
+    "text": "先尝试关节直连；失败后用 RRT-Connect 搜索。当前没有沿场梯度导航。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 423.39700000000005
+  },
+  {
+    "page": 12,
+    "text": "[S5] run_fixed_planning.py；[S6] robot_geometry.py / joint_planner.py；[S7] 原生碰撞评分。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 390.20400000000006
+  },
+  {
+    "page": 12,
+    "text": "12 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 12,
+    "text": "候选关节角 q",
+    "x": 53,
+    "top": 198,
+    "font_size": 18,
+    "width": 105.67800000000001
+  },
+  {
+    "page": 12,
+    "text": "7 个机械臂关节",
+    "x": 53,
+    "top": 238,
+    "font_size": 14,
+    "width": 94.906
+  },
+  {
+    "page": 12,
+    "text": "手指固定",
+    "x": 53,
+    "top": 261,
+    "font_size": 14,
+    "width": 56.0
+  },
+  {
+    "page": 12,
+    "text": "正运动学 FK",
+    "x": 283,
+    "top": 198,
+    "font_size": 18,
+    "width": 98.96400000000001
+  },
+  {
+    "page": 12,
+    "text": "原生机器人表面",
+    "x": 283,
+    "top": 238,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 12,
+    "text": "变换到相机坐标",
+    "x": 283,
+    "top": 261,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 12,
+    "text": "查询 φ_env(p)",
+    "x": 513,
+    "top": 198,
+    "font_size": 18,
+    "width": 122.59800000000001
+  },
+  {
+    "page": 12,
+    "text": "任一点占据或未知",
+    "x": 513,
+    "top": 238,
+    "font_size": 14,
+    "width": 112.0
+  },
+  {
+    "page": 12,
+    "text": "拒绝该姿态",
+    "x": 513,
+    "top": 261,
+    "font_size": 14,
+    "width": 70.0
+  },
+  {
+    "page": 12,
+    "text": "连接与搜索",
+    "x": 743,
+    "top": 198,
+    "font_size": 18,
+    "width": 90.00000000000001
+  },
+  {
+    "page": 12,
+    "text": "关节插值检查边",
+    "x": 743,
+    "top": 238,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 12,
+    "text": "返回关节路径",
+    "x": 743,
+    "top": 261,
+    "font_size": 14,
+    "width": 84.0
+  },
+  {
+    "page": 12,
+    "text": "输入：预测环境场 + 已知机器人模型、关节与相机配准",
+    "x": 40,
+    "top": 139,
+    "font_size": 11,
+    "width": 264.484
+  },
+  {
+    "page": 12,
+    "text": "13 个原生碰撞几何体",
+    "x": 56,
+    "top": 353,
+    "font_size": 20,
+    "width": 188.14000000000001
+  },
+  {
+    "page": 12,
+    "text": "172,411 个表面点；覆盖半径 ≤5 mm。",
+    "x": 56,
+    "top": 386,
+    "font_size": 14,
+    "width": 247.618
+  },
+  {
+    "page": 12,
+    "text": "同时检查关节限位与机器人自碰撞。",
+    "x": 56,
+    "top": 407,
+    "font_size": 14,
+    "width": 224.0
+  },
+  {
+    "page": 12,
+    "text": "先保存全部路径，再用真值评分",
+    "x": 500,
+    "top": 353,
+    "font_size": 20,
+    "width": 280.0
+  },
+  {
+    "page": 12,
+    "text": "规划边最大关节步长 0.025 rad；",
+    "x": 500,
+    "top": 386,
+    "font_size": 14,
+    "width": 203.238
+  },
+  {
+    "page": 12,
+    "text": "事后真值检查细化至 0.005 rad。",
+    "x": 500,
+    "top": 407,
+    "font_size": 14,
+    "width": 203.238
+  },
+  {
+    "page": 12,
+    "text": "5 mm 是表面采样覆盖尺度，不是安全余量。有限姿态/表面采样不能证明连续路径绝对无碰撞。",
+    "x": 40,
+    "top": 459,
+    "font_size": 15,
+    "width": 633.7049999999999
+  },
+  {
+    "page": 13,
+    "text": "12 / PLANNING RESULTS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 131.164
+  },
+  {
+    "page": 13,
+    "text": "返回 40 条路径，其中 32 条通过真值采样",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 511.504
+  },
+  {
+    "page": 13,
+    "text": "两个静态快照 × 每个 10 组起终点 × 两个随机种子；共 20 组不同起终点组合。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 455.15600000000006
+  },
+  {
+    "page": 13,
+    "text": "[S7] evaluation_001/metrics.json；[S5] RESULTS.txt；仅静态几何规划，没有执行抽屉操作任务。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 397.99800000000005
+  },
+  {
+    "page": 13,
+    "text": "13 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 13,
+    "text": "通过真值采样",
+    "x": 61,
+    "top": 136,
+    "font_size": 14,
+    "width": 84.0
+  },
+  {
+    "page": 13,
+    "text": "真值发生碰撞",
+    "x": 262,
+    "top": 136,
+    "font_size": 14,
+    "width": 84.0
+  },
+  {
+    "page": 13,
+    "text": "关闭快照",
+    "x": 40,
+    "top": 195,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 13,
+    "text": "18",
+    "x": 207,
+    "top": 203,
+    "font_size": 20,
+    "width": 23.6
+  },
+  {
+    "page": 13,
+    "text": "2",
+    "x": 711.0,
+    "top": 203,
+    "font_size": 20,
+    "width": 11.8
+  },
+  {
+    "page": 13,
+    "text": "20 条返回",
+    "x": 788,
+    "top": 204,
+    "font_size": 17,
+    "width": 74.91900000000001
+  },
+  {
+    "page": 13,
+    "text": "打开快照",
+    "x": 40,
+    "top": 280,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 13,
+    "text": "14",
+    "x": 207,
+    "top": 288,
+    "font_size": 20,
+    "width": 23.6
+  },
+  {
+    "page": 13,
+    "text": "6",
+    "x": 599.0,
+    "top": 288,
+    "font_size": 20,
+    "width": 11.8
+  },
+  {
+    "page": 13,
+    "text": "20 条返回",
+    "x": 788,
+    "top": 289,
+    "font_size": 17,
+    "width": 74.91900000000001
+  },
+  {
+    "page": 13,
+    "text": "38 条关节直连",
+    "x": 60,
+    "top": 377,
+    "font_size": 20,
+    "width": 128.14000000000001
+  },
+  {
+    "page": 13,
+    "text": "+",
+    "x": 303,
+    "top": 377,
+    "font_size": 20,
+    "width": 11.1
+  },
+  {
+    "page": 13,
+    "text": "2 条 RRT 搜索路径",
+    "x": 354,
+    "top": 377,
+    "font_size": 20,
+    "width": 165.20000000000002
+  },
+  {
+    "page": 13,
+    "text": "32/40 是这组路径的采样通过数，不是“80% 重建精度”，也不是抽屉任务成功率。",
+    "x": 40,
+    "top": 443,
+    "font_size": 17,
+    "width": 630.547
+  },
+  {
+    "page": 13,
+    "text": "两种种子下的相同直连路径并不构成独立的几何重建试验。",
+    "x": 40,
+    "top": 468,
+    "font_size": 17,
+    "width": 442.00000000000006
+  },
+  {
+    "page": 14,
+    "text": "13 / RRT EXAMPLE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 97.163
+  },
+  {
+    "page": 14,
+    "text": "一个 RRT 案例：场可以参与路径搜索",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 460.404
+  },
+  {
+    "page": 14,
+    "text": "打开快照 · base_negative · seed 17；已保存路径的运动学回放。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 392.67800000000005
+  },
+  {
+    "page": 14,
+    "text": "[S7] evaluation metrics / plans；[S9] video_001/previews/22_030.png。没有保存搜索树轨迹。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 390.0690000000001
+  },
+  {
+    "page": 14,
+    "text": "14 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 14,
+    "text": "20.11 s",
+    "x": 712,
+    "top": 147,
+    "font_size": 36,
+    "width": 122.65200000000002
+  },
+  {
+    "page": 14,
+    "text": "规划计算时间",
+    "x": 712,
+    "top": 194.0,
+    "font_size": 14,
+    "width": 84.0
+  },
+  {
+    "page": 14,
+    "text": "3",
+    "x": 712,
+    "top": 240,
+    "font_size": 36,
+    "width": 21.240000000000002
+  },
+  {
+    "page": 14,
+    "text": "保存的路径顶点",
+    "x": 712,
+    "top": 287.0,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 14,
+    "text": "4.725 mm",
+    "x": 712,
+    "top": 333,
+    "font_size": 36,
+    "width": 174.24
+  },
+  {
+    "page": 14,
+    "text": "92 个真值姿态样本中的最小间",
+    "x": 712,
+    "top": 380.0,
+    "font_size": 14,
+    "width": 186.67600000000002
+  },
+  {
+    "page": 14,
+    "text": "隙",
+    "x": 712,
+    "top": 400.72,
+    "font_size": 14,
+    "width": 14.0
+  },
+  {
+    "page": 14,
+    "text": "热图是当前末端高度的环境场水平切片；线是末端 XY 投影，不代表整臂间隙。",
+    "x": 40,
+    "top": 453,
+    "font_size": 15,
+    "width": 518.28
+  },
+  {
+    "page": 14,
+    "text": "同组真值场中直连也可行，因此这次绕行不能证明必要或最优。",
+    "x": 40,
+    "top": 475,
+    "font_size": 15,
+    "width": 420.0
+  },
+  {
+    "page": 15,
+    "text": "14 / CONTACT DIAGNOSIS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 137.159
+  },
+  {
+    "page": 15,
+    "text": "失败案例：场判为自由，原生夹爪却碰到柜体",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 560.0
+  },
+  {
+    "page": 15,
+    "text": "打开快照 · wrist_negative · seed 17 · 第 33 个真值采样姿态（零基编号）。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 459.14700000000005
+  },
+  {
+    "page": 15,
+    "text": "[S8] failure_diagnostics_001/report.json；本页按原关节姿态重绘并复核原生接触，见 assets/collision_render_data.json。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 501.7680000000001
+  },
+  {
+    "page": 15,
+    "text": "15 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 15,
+    "text": "红圈：原生接触位置投影",
+    "x": 389,
+    "top": 334,
+    "font_size": 13,
+    "width": 143.0
+  },
+  {
+    "page": 15,
+    "text": "图像为事后诊断，未进入规划。",
+    "x": 389,
+    "top": 355,
+    "font_size": 13,
+    "width": 182.00000000000003
+  },
+  {
+    "page": 15,
+    "text": "同一位置，两种判断",
+    "x": 612,
+    "top": 151,
+    "font_size": 11,
+    "width": 99.0
+  },
+  {
+    "page": 15,
+    "text": "真实几何",
+    "x": 612,
+    "top": 186,
+    "font_size": 16,
+    "width": 64.0
+  },
+  {
+    "page": 15,
+    "text": "已穿入 0.200 mm",
+    "x": 612,
+    "top": 213,
+    "font_size": 23,
+    "width": 185.541
+  },
+  {
+    "page": 15,
+    "text": "Astra 预测环境场",
+    "x": 612,
+    "top": 265,
+    "font_size": 16,
+    "width": 122.048
+  },
+  {
+    "page": 15,
+    "text": "φ = +150.580 mm",
+    "x": 612,
+    "top": 292,
+    "font_size": 23,
+    "width": 194.879
+  },
+  {
+    "page": 15,
+    "text": "此姿态的全部 172,411 个机器人表面采样",
+    "x": 612,
+    "top": 352.0,
+    "font_size": 16,
+    "width": 288.896
+  },
+  {
+    "page": 15,
+    "text": "点也被预测为空闲。",
+    "x": 612,
+    "top": 375.68,
+    "font_size": 16,
+    "width": 144.0
+  },
+  {
+    "page": 15,
+    "text": "这直接证实接触区域的预测几何有偏差。φ 数值不是实际安全间隙，也不是整场重建误差。",
+    "x": 40,
+    "top": 478.0,
+    "font_size": 14,
+    "width": 559.7760000000001
+  },
+  {
+    "page": 16,
+    "text": "15 / WHAT THE EVIDENCE SUPPORTS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 197.527
+  },
+  {
+    "page": 16,
+    "text": "本轮结论：场可查询、可规划，几何还不够准确",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 588.0
+  },
+  {
+    "page": 16,
+    "text": "区分“表示是否有效”和“输入图像能否提供足够准确的三维信息”。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 403.00000000000006
+  },
+  {
+    "page": 16,
+    "text": "综合 [S1–S8]；下方为建议的后续实验，不是已经取得的结果。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 249.64200000000002
+  },
+  {
+    "page": 16,
+    "text": "16 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 16,
+    "text": "表示能力",
+    "x": 57,
+    "top": 151,
+    "font_size": 11,
+    "width": 44.0
+  },
+  {
+    "page": 16,
+    "text": "可以表达与保存",
+    "x": 57,
+    "top": 184.0,
+    "font_size": 21,
+    "width": 147.0
+  },
+  {
+    "page": 16,
+    "text": "CSG 能表达实体和空腔；2 mm 网",
+    "x": 57,
+    "top": 260,
+    "font_size": 16,
+    "width": 240.032
+  },
+  {
+    "page": 16,
+    "text": "格在多数已预测表面上保留精度较",
+    "x": 57,
+    "top": 284,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 16,
+    "text": "好。",
+    "x": 57,
+    "top": 308,
+    "font_size": 16,
+    "width": 32.0
+  },
+  {
+    "page": 16,
+    "text": "重建精度",
+    "x": 357,
+    "top": 151,
+    "font_size": 11,
+    "width": 44.0
+  },
+  {
+    "page": 16,
+    "text": "仍有厘米级偏差",
+    "x": 357,
+    "top": 184.0,
+    "font_size": 21,
+    "width": 147.0
+  },
+  {
+    "page": 16,
+    "text": "可见柜体 MAE 约 71 / 98 mm；高",
+    "x": 357,
+    "top": 260,
+    "font_size": 16,
+    "width": 237.072
+  },
+  {
+    "page": 16,
+    "text": "网格分辨率不能修正模型猜错的形",
+    "x": 357,
+    "top": 284,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 16,
+    "text": "状。",
+    "x": 357,
+    "top": 308,
+    "font_size": 16,
+    "width": 32.0
+  },
+  {
+    "page": 16,
+    "text": "规划作用",
+    "x": 657,
+    "top": 151,
+    "font_size": 11,
+    "width": 44.0
+  },
+  {
+    "page": 16,
+    "text": "能搜索，尚不能保证安全",
+    "x": 657,
+    "top": 184.0,
+    "font_size": 21,
+    "width": 231.00000000000003
+  },
+  {
+    "page": 16,
+    "text": "原生机器人可用场做可行性检查；",
+    "x": 657,
+    "top": 260,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 16,
+    "text": "8 条返回路径仍在真值中碰撞。",
+    "x": 657,
+    "top": 284,
+    "font_size": 16,
+    "width": 220.464
+  },
+  {
+    "page": 16,
+    "text": "下一轮建议：固定相同查询，逐项改善几何信息",
+    "x": 40,
+    "top": 395,
+    "font_size": 20,
+    "width": 420.0
+  },
+  {
+    "page": 16,
+    "text": "① 提供已知相机标定和尺度，隔离尺度误差。",
+    "x": 40,
+    "top": 431,
+    "font_size": 15,
+    "width": 303.36
+  },
+  {
+    "page": 16,
+    "text": "② 加入多视角，单独评估抽屉开口、柜体边缘与遮挡区域。",
+    "x": 40,
+    "top": 453,
+    "font_size": 15,
+    "width": 393.36
+  },
+  {
+    "page": 16,
+    "text": "③ 显式记录未知和不确定区域，同时复测重建误差与真实碰撞。",
+    "x": 40,
+    "top": 475,
+    "font_size": 15,
+    "width": 423.35999999999996
+  },
+  {
+    "page": 17,
+    "text": "APPENDIX / EVIDENCE INDEX",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 154.286
+  },
+  {
+    "page": 17,
+    "text": "数据来源与复现入口",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 252.0
+  },
+  {
+    "page": 17,
+    "text": "所有结论来自现有 drawer003 实验；本次只新增幻灯片、图表与生成脚本。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 434.564
+  },
+  {
+    "page": 17,
+    "text": "项目根目录：/workspace/gpt_field；完整来源哈希保存在本幻灯片目录的 evidence_*.json / deck_manifest.json。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 465.12000000000006
+  },
+  {
+    "page": 17,
+    "text": "17 / 17",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 17,
+    "text": "[S1]  生成约束与场定义",
+    "x": 40,
+    "top": 125,
+    "font_size": 13,
+    "width": 135.512
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/inferences_001/instructions.txt",
+    "x": 40,
+    "top": 149,
+    "font_size": 9,
+    "width": 233.94600000000003
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/field_csg.py",
+    "x": 40,
+    "top": 163,
+    "font_size": 9,
+    "width": 153.06300000000002
+  },
+  {
+    "page": 17,
+    "text": "[S2]  重建与保存精度",
+    "x": 40,
+    "top": 198,
+    "font_size": 13,
+    "width": 122.51200000000001
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/comparison_summary.json",
+    "x": 40,
+    "top": 222,
+    "font_size": 9,
+    "width": 217.76400000000004
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/evaluate_fields.py",
+    "x": 40,
+    "top": 236,
+    "font_size": 9,
+    "width": 179.604
+  },
+  {
+    "page": 17,
+    "text": "[S3]  掠射边界漏失诊断",
+    "x": 40,
+    "top": 271,
+    "font_size": 13,
+    "width": 135.512
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/runs/diagnostic_open_wall_misses_001/report.json",
+    "x": 40,
+    "top": 295,
+    "font_size": 9,
+    "width": 321.36300000000006
+  },
+  {
+    "page": 17,
+    "text": "[S4]  原始 Astra 场与保存网格",
+    "x": 40,
+    "top": 344,
+    "font_size": 13,
+    "width": 175.019
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/inferences_001/fields/",
+    "x": 40,
+    "top": 368,
+    "font_size": 9,
+    "width": 196.29900000000004
+  },
+  {
+    "page": 17,
+    "text": "scene_test/astra_scene/runs/fields_001/",
+    "x": 40,
+    "top": 382,
+    "font_size": 9,
+    "width": 171.324
+  },
+  {
+    "page": 17,
+    "text": "[S5]  规划接入与自体移除",
+    "x": 40,
+    "top": 417,
+    "font_size": 13,
+    "width": 148.512
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/RESULTS.txt",
+    "x": 40,
+    "top": 441,
+    "font_size": 9,
+    "width": 180.10800000000003
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/planning_fields.py",
+    "x": 40,
+    "top": 455,
+    "font_size": 9,
+    "width": 205.58700000000002
+  },
+  {
+    "page": 17,
+    "text": "[S6]  机器人表面与搜索算法",
+    "x": 500,
+    "top": 125,
+    "font_size": 13,
+    "width": 161.512
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning/robot_geometry.py",
+    "x": 500,
+    "top": 149,
+    "font_size": 9,
+    "width": 194.67900000000003
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning/joint_planner.py",
+    "x": 500,
+    "top": 163,
+    "font_size": 9,
+    "width": 182.86200000000002
+  },
+  {
+    "page": 17,
+    "text": "[S7]  路径和真值评分",
+    "x": 500,
+    "top": 198,
+    "font_size": 13,
+    "width": 122.51200000000001
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/runs/planning_001/plans.json",
+    "x": 500,
+    "top": 222,
+    "font_size": 9,
+    "width": 253.81800000000004
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/runs/evaluation_001/metrics.json",
+    "x": 500,
+    "top": 236,
+    "font_size": 9,
+    "width": 269.81100000000004
+  },
+  {
+    "page": 17,
+    "text": "[S8]  失败接触诊断",
+    "x": 500,
+    "top": 271,
+    "font_size": 13,
+    "width": 109.51200000000001
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/runs/failure_diagnostics_001/report.json",
+    "x": 500,
+    "top": 295,
+    "font_size": 9,
+    "width": 300.105
+  },
+  {
+    "page": 17,
+    "text": "[S9]  规划演示视频",
+    "x": 500,
+    "top": 344,
+    "font_size": 13,
+    "width": 109.51200000000001
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/video_001/planning_highlights.mp4",
+    "x": 500,
+    "top": 368,
+    "font_size": 9,
+    "width": 279.87300000000005
+  },
+  {
+    "page": 17,
+    "text": "scene_test/field_planning_v2/video_001/planning_all_queries.mp4",
+    "x": 500,
+    "top": 382,
+    "font_size": 9,
+    "width": 284.62500000000006
+  },
+  {
+    "page": 17,
+    "text": "[S10]  此前 waypoint 目标场",
+    "x": 500,
+    "top": 417,
+    "font_size": 13,
+    "width": 170.716
+  },
+  {
+    "page": 17,
+    "text": "runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/contact_skills.py",
+    "x": 500,
+    "top": 441,
+    "font_size": 9,
+    "width": 362.17800000000005
+  },
+  {
+    "page": 17,
+    "text": "runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/fine_distance_planner.py",
+    "x": 500,
+    "top": 455,
+    "font_size": 9,
+    "width": 398.583
+  }
+]

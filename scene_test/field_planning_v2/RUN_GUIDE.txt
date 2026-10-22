@@ -1,0 +1,40 @@
+All changes and outputs for this correction live in field_planning_v2.
+The original field_planning experiment, original prediction artifacts and robot
+control code are read-only dependencies. No new model inference is required.
+
+From /workspace/gpt_field, using the existing LIBERO Python environment:
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /workspace/venvs/libero-plus/bin/python -B -m pytest -q -p no:cacheprovider scene_test/field_planning_v2/tests scene_test/field_planning/tests
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /workspace/venvs/libero-plus/bin/python -B scene_test/field_planning_v2/run_fixed_planning.py plan --output scene_test/field_planning_v2/runs/planning_NEW
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /workspace/venvs/libero-plus/bin/python -B scene_test/field_planning_v2/run_fixed_planning.py evaluate --plans scene_test/field_planning_v2/runs/planning_NEW --output scene_test/field_planning_v2/runs/evaluation_NEW
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /workspace/venvs/libero-plus/bin/python -B scene_test/field_planning_v2/plot_results_complete.py --metrics scene_test/field_planning_v2/runs/evaluation_NEW/metrics.json --output scene_test/field_planning_v2/runs/analysis_NEW
+
+Use fresh output directories; existing results are never overwritten. The plan
+command reads the old robot-only packages and the new sensor-only calibration
+exports in preparation_001. Each exported calibration includes its source hash
+and the explicit restricted use of known rig K for self-image association.
+
+The two sources produce different planning representations:
+  Astra: environment-only analytic CSG, with derived JSON and component log.
+  DepthPro: projective depth, visibility support, unknown states and SELF prior.
+The projective residual is not an ESDF. Its Euclidean clearance lower bound is
+reported as zero, and SELF support does not imply observed scene free space.
+
+Read PROTOCOL.txt for the frozen comparison design. plans.json includes every
+endpoint decision and support-layer diagnostic. field_provenance.json records
+consumed hashes and map changes. metrics.json includes post-plan original LIBERO
+collision checks and paired truth-planner outcomes. The figures separate start
+classification changes from actual returned-path validity.
+
+The authoritative figures for this run are in runs/analysis_002. analysis_001
+is preserved but its outcomes legend omitted the gray refusal category. The
+new plot_results_complete.py fixes only legend selection; frozen original
+plot_results.py and both earlier experiment manifests remain unchanged.
+
+Optional posthoc collision diagnosis, after evaluation is complete:
+Read diagnose_failures.py --help for its input/output options. It queries the
+predicted Astra field at original MuJoCo contact locations; it never changes
+the field or feeds those locations back to planning.

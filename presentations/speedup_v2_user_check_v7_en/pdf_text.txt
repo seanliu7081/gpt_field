@@ -1,0 +1,497 @@
+PAGE 1
+VERSION 7  /  FRAMEWORK + SCENE TESTS
+SpeedUp v2 User Check
+Visual decisions.
+Measured motion fragments.
+One persistent task owner.
+A model-led robot executive that delegates repeated
+control while retaining the ability to recover and
+revise its plan.
+English edition · October 21, 2026
+gpt-6-astra / high · LIBERO-10 t3 and t6
+Recorded initial scenes
+t3: bowl into bottom drawer, then close.
+t6: mug onto plate; pudding to its right.
+Implementation: agent-speedup-v2-user-check-7. Scene images and metrics come from preserved real-task runs.
+01
+
+
+PAGE 2
+RESULTS AT A GLANCE
+What the current evidence shows
+One matched initialization per task; the prior reference is v6 User Check, not a new Astranomy benchmark.
+2.49×
+t3 observed speed at raw goal
+completion
+99%+
+v7 actions executed by generic
+fragments
+Incomplete
+t6 stopped by user; no completion
+ratio
+t3: faster, with quality caveats
+8:29 versus 21:10; 22 versus 87 model
+decisions.
+Raw LIBERO success in both runs.
+Strict physical completion fails in both.
+t6: execution works; goal still missed
+Mug placed; pudding grasped and repositioned.
+Stopped at 12:35 and 28 decisions.
+Final pudding center lies outside target region.
+These runs demonstrate controller use and a t3 timing improvement, not broad task generalization.
+[R1–R4] Saved summaries, agent_stats and physical_truth. Times exclude video rendering and initial plan preparation.
+02
+
+
+PAGE 3
+DESIGN PRINCIPLE
+The model remains responsible for the task
+Use fast execution where the target is clear; return control when the execution evidence changes.
+Model responsibility
+Interpret the task and
+scene.
+Choose grasp, route and
+object goal.
+Inspect outcomes.
+Change method when
+needed.
+Executor responsibility
+Track numerical targets
+from measured state.
+Run explicit gripper stages.
+Detect local completion or
+lack of progress.
+Return measured evidence.
+Independent evaluation
+Record benchmark success.
+Audit release, support and
+stability separately.
+Record contacts.
+Do not feed hidden truth to
+the policy.
+Connection to Astranomy: retain model-directed numerical control and visual correction; v7
+adds longer measured execution sequences between model decisions.
+[M1–M4] agent.py, agent_client.py, fragments.py, sim.py. Existing Astranomy and original v2 implementations are unchanged.
+03
+
+
+PAGE 4
+ARCHITECTURE
+The full control loop
+Visual reasoning between fragments; proprioceptive feedback control within fragments.
+Initial review
+Task + draft JSON
+Object / goal
+selectors
+One-time approval
+Persistent
+executive
+Current RGB + robot
+state
+Reviewed goals /
+constraints
+High-effort model
+decision
+Execution
+branch
+execute: fragments
+motion: short target
+macro: optional
+native skill
+Measured
+handoff
+Pose / gap / action
+result
+Completed / pending
+stages
+Fresh visual
+observation
+Arrival, checkpoint, stall or exhausted budget returns
+control to the same executive.
+Independent benchmark and physical audit
+observe execution outside this control loop.
+[M1,M2,M3] A finish response is a model claim plus fresh observation; it cannot set the benchmark success flag.
+04
+
+
+PAGE 5
+BEFORE EACH TEST
+The English review interface
+Selection-based editing generates the JSON; the user does not need to type a program.
+PRE-TEST PLAN REVIEW
+Action  ·  do
+Place on a surface
+▾
+Object  ·  obj
+C · selected object
+▾
+Grasp part  ·  grip
+D · selected part
+▾
+Reference  ·  ref
+B · selected support
+▾
+Direction  ·  sense
+Executor chooses
+▾
+Constraint  ·  keep
+Maintain orientation
+▾
+English throughout
+Headings, choices, buttons, status
+messages, errors and accessibility
+labels.
+Review scope
+Objects, task steps, preserved
+relations, spatial regions and
+placement goals.
+Recent v7 tests used explicitly authorized automatic
+approval; no manual review occurred.
+[UI] agent_speedup_v2_user_check.html. Left: schematic of the actual selection fields, not a browser screenshot.
+05
+
+
+PAGE 6
+ACTION INTERFACE
+Three execution paths, different responsibilities
+The model selects one action type per decision. Optional payloads not used by that type remain null.
+Path
+What it executes
+What this does not imply
+execute
+1–6 generic segments; measured completion;
+up to 240 control steps per sequence.
+No object recognition, grasp certificate or collision-free
+path guarantee.
+motion
+A numerical pose/gripper target for 1–5
+control steps.
+Target may not be reached within that short grant.
+macro
+Optional legacy hold, turn, place_on or
+release, with its own prerequisites.
+A semantic plan intent is not proof that a native macro
+implements it.
+observe / finish
+Fresh observation, or a completion claim
+followed by observation.
+Neither action sets official success.
+v7’s measured acceleration in these tests came from execute fragments; native macro actions were zero.
+[M1,M2,M3,M5] Legacy macro grants are bounded and may require calibration / grounding; they are optional.
+06
+
+
+PAGE 7
+REAL EXECUTION EXAMPLE
+One decision can close, test-lift and observe
+t6_009, decision 3: the model supplies the sequence; the same generic executor handles both stages.
+"execution": {
+  "segments": [
+    {"skill": "set_gripper",
+     "xyz_m": null, "quaternion_wxyz": null,
+     "gripper": "close", "profile": "contact",
+     "max_steps": 40, "observation_after": false},
+    {"skill": "move_relative",
+     "xyz_m": [0, 0, 0.03],
+     "quaternion_wxyz": null, "gripper": "keep",
+     "profile": "contact", "max_steps": 55,
+     "observation_after": true}
+  ]
+}
+Explicit stages
+Close until local measured conditions
+pass, then lift from the actual
+segment-entry pose.
+Visual confirmation belongs to
+the model
+After the lift, inspect whether the
+mug moved with the gripper. Stable
+gap alone is insufficient.
+Shown: execution payload excerpt.
+[R4 request 3; M3] The 3 cm lift is a model-selected value from this run, not a task-specific constant in the executor.
+07
+
+
+PAGE 8
+LOCAL CONTROL
+Measured completion and explicit return points
+The controller converts pose error into bounded OSC commands at 20 Hz.
+Design bound
+Transit profile
+Contact profile
+Target translation from entry
+Up to 30 cm
+Up to 8 cm
+Per-action translation cap
+2 cm
+5 mm
+Position arrival tolerance
+4 mm
+2 mm
+Target rotation / action cap
+1.2 rad / 0.1 rad
+0.5 rad / 0.1 rad
+Advance on measured completion
+Relative goals use actual entry pose; gripper open/close is
+a separate stage.
+Return on uncertainty or boundary
+Stall, gap change, envelope rejection, budget or observation
+checkpoint returns control.
+[M3] Max 120 steps/segment, 240/sequence. Contact is a slower profile—not contact sensing or a safety certificate.
+08
+
+
+PAGE 9
+GENERALITY AND INFORMATION BOUNDARY
+What is reusable—and what still requires judgment
+Task-independent code does not establish that all tasks or spatial meanings are supported correctly.
+Reusable implementation
+Five fragments: move_to_pose, move_relative,
+approach, set_gripper, wait.
+Measured state and explicit handoffs.
+No task IDs, object names or predefined task
+coordinates in the fragment executor.
+Model-selected route, grasp and checkpoints.
+Limits of the current interface
+Input: RGB, robot pose/gap/joints, camera and
+tool geometry, action feedback.
+No hidden object poses, depth, contact identities
+or goal predicates.
+Fragment constraints rely on model
+interpretation; there is no whole-arm collision
+planner.
+Local feedback is proprioceptive. Fresh visual reasoning happens at model decision boundaries.
+[M1–M4] Six recent image pairs plus continuous textual execution history. Geometry calibration does not provide object depth.
+09
+
+
+PAGE 10
+EXPERIMENT SETUP
+Real-task evaluation protocol
+All tests use existing LIBERO scenes; no synthetic trajectory or replay is substituted for a task result.
+Setting
+Recorded value
+Model / effort
+gpt-6-astra / high; subscription route; zero API-key calls
+Matched conditions
+LIBERO-10 t3 or t6; episode 0; seed 7; matching initial observation hashes within each task
+Reference
+Prior v6 User Check: t3_002 and t6_007; not a fresh pure-Astranomy comparison
+Current trials
+v7 t3_003; t6_009 after user-requested restart of the stalled t6_008 preparation
+Approval
+Prior runs manually reviewed; v7 initial plans automatically approved with user authorization
+Outcome / timing
+Raw LIBERO goal; separate strict physical audit; contacts recorded. Control time excludes video
+and preparation.
+[R1–R5] Frozen run/review records. Local implementation validation was limited; no repeated smoke rollout was performed.
+10
+
+
+PAGE 11
+RECORDED SCENE  /  T3_003
+t3: bowl into the bottom drawer, then close
+The agent changes its numerical route and hand configuration while fragments execute the repeated control.
+Step 0 · Initial scene.
+The bowl starts outside the drawer.
+Step 393 · Bowl in the cavity.
+Model reports a likely slip during transfer.
+Step 1202 · Near-final push.
+Raw success follows at step 1207.
+[R2] Unaltered saved external-camera observations. The transfer should not be described as a verified controlled placement.
+11
+
+
+PAGE 12
+MEASURED RESULT
+t3: fewer calls, faster raw-goal completion
+Net control time falls 59.9%, while the physical action count grows 2.88×.
+Video-excluded control time
+v6 / t3_002
+21:10
+v7 / t3_003
+8:29
+Model decisions
+v6 / t3_002
+87
+v7 / t3_003
+22
+Official goal succeeds in both
+Actions: 419 → 1,207.
+Single-run observed time ratio: 2.49×.
+No multi-seed reliability claim.
+Manipulation quality is unresolved
+Strict final-state success: false in both.
+Contact points: 671 → 1,488.
+Final motion/contact has not settled.
+[R1,R2] Contact points are accumulated physics samples, not distinct collisions. Counterfactual settle checks are not agent actions.
+12
+
+
+PAGE 13
+RECORDED SCENE  /  T6_009
+t6: mug placement and pudding recovery
+The mug phase finishes in six model decisions; subsequent work is spent on pudding grasp and placement.
+Step 0 · Initial scene.
+White mug, plate and pudding.
+Step 376 · Mug released on plate.
+Gripper has withdrawn upward.
+Step 1543 · Before user stop.
+Pudding released; target relation still false.
+[R4] Saved external-camera observations. Final physical audit confirms the mug goal; pudding region membership fails.
+13
+
+
+PAGE 14
+EXECUTION EVIDENCE
+t6: useful recovery, incomplete task
+Stopped by the user at 1,544 steps and 28 model decisions; net elapsed control time 12:35.
+1
+Mug transfer
+Approach, close, test-lift, carry, lower, release and withdraw in six decisions.
+2
+Pudding descent blocked
+Fingers contact the tabletop. The fragment yields on stall; the model initially suspects a joint limit.
+3
+Grasp recovered
+After another blocked descent, close at the reached height and test-lift. The pudding follows.
+4
+Placement revised
+Regrasp and reposition; change wrist pitch to improve reach. Final center still misses the goal region.
+[R4] 1,208 forbidden contact-point samples, from fingers/table. Prior t6_007 completed raw goal in 21:29 / 84 calls; no speed ratio here.
+14
+
+
+PAGE 15
+GENERAL FRAMEWORK LIMITATION
+t6 exposes a coordinate-frame mismatch
+Framework right_of = world +x is not the same as the benchmark’s named plate-right region.
+0.10
+0.15
+0.20
+0.25
+0.30
+0.00
+0.05
+0.10
+0.15
+0.20
+Official
+target region
+Final pudding COM
+world x (m) →
+world y (m) ↑
+Semantic issue
+Shared instructions tie “right” to +x. Initial
+placements follow that assumption, and later
+recovery must work around it.
+Terminal result
+Pudding COM ≈ (0.1874, 0.1704) m.
+x is within the official range.
+y is about 20.4 mm beyond its upper edge.
+Directions need an explicit, task-grounded reference frame.
+[R4; M6; BDDL] Evaluator-only post-run diagram, not policy input. Region x=[0.10,0.20], y=[0.05,0.15] m.
+15
+
+
+PAGE 16
+CONTROL ATTRIBUTION
+Where the framework actually did the work
+The model still selects targets. The fragment controller supplies almost all per-step motor commands.
+t3_003
+99.17%
+1,197 fragment actions / 10 direct actions / 0 native macro actions
+20 execute grants; 1,207 total control steps.
+t6_009
+99.61%
+1,538 fragment actions / 6 direct actions / 0 native macro actions
+26 execute grants; 1,544 total control steps.
+The useful combination: model-level perception, planning and recovery + reusable measured execution.
+These percentages measure command attribution, not the fraction of intelligence supplied by either side.
+[R2,R4 agent_stats] Generic v7 fragments are distinct from old semantic macros. Direct counts can include observation/finish holds.
+16
+
+
+PAGE 17
+DESIGN CONCLUSIONS
+What to retain, and what to improve next
+These are conclusions from the recorded tests, not new changes or validated future performance.
+Retain
+Model ownership of the full task.
+Longer measured fragments where targets are
+clear.
+Explicit gripper stages, checkpoints and
+cause-preserving feedback.
+Separate task outcome, physical quality and
+execution timing.
+Next general improvements
+Ground directional relations in an explicit frame
+instead of a universal axis convention.
+Verify whole-object placement from new
+observations.
+Improve contact/cause feedback and route quality.
+Evaluate multiple tasks and resets before claiming
+generality.
+The English UI is a language-only update. The recorded v7 controller and evaluator were not changed for these slides.
+[M1–M6; R1–R5] t3 is a raw-goal timing gain with quality caveats. t6 remains a stopped, incomplete attempt.
+17
+
+
+PAGE 18
+APPENDIX
+Evidence, timing and reproducibility
+Saved recordings only. No new simulator episode, model request or smoke test was used to build this deck.
+Run
+Outcome
+Control / calls
+Draft call / review
+t3_002 · v6
+Raw success; strict false
+21:10 / 87 decisions
+1 request; manual review
+t3_003 · v7
+Raw success; strict false
+8:29 / 22 decisions
+21.4 s; auto-approved
+t6_007 · v6
+Raw success; strict false
+21:29 / 84 decisions
+1 request; manual review
+t6_009 · v7
+User stop; raw/strict false
+12:35 / 28 decisions
+24.3 s; auto-approved
+Preparation interruption: t6_008 was stopped by the user while the first draft request was still pending, before policy actions. It is
+preserved separately and excluded from control-time ratios.
+Source index, exact metrics, reset hashes and frame provenance: evidence.json.
+Method files: agent.py, agent_client.py, fragments.py, agent_macros.py, spatial.py and the user-check runner.
+Full preparation: t3_003 27.1 s; t6_009 32.3 s. Draft-call latency is a subset. Exact timing and source paths: evidence.json.
+18
+
+
+PAGE 19
+APPENDIX  /  AUDIT TRAIL
+Source map
+All claims are grounded in current source or preserved task artifacts; frame provenance is recorded in evidence.json.
+Method source IDs
+Directory: src/gpt_field/
+Common prefix: agent_speedup_v2_user_check
+M1 _agent.py — executive and shared state
+M2 _agent_client.py — model interface
+M3 _fragments.py — measured execution
+M4 _sim.py — observations and evaluation bridge
+M5 _agent_macros.py — optional native macros
+M6 _spatial.py — directional semantics
+UI .html — English plan review interface
+Recorded run IDs
+Directory: runs/
+Prefix: agent_speedup_v2_user_check_libero_10_
+R1 t3_002 — prior v6 reference
+R2 t3_003 — current v7 task result
+R3 t6_007 — prior v6 reference
+R4 t6_009 — current v7 user-stopped attempt
+R5 t6_008_review — interrupted preparation
+Artifacts: summary.json, agent_stats.json,
+physical_truth.json, review.json and requests/.
+BDDL: LIBERO-10 LIVING_ROOM_SCENE6 white-mug / pudding task, plate_right_region (lines 16–24). See evidence.json for its full path.
+19

@@ -1,0 +1,257 @@
+{
+  "status": "reviewed",
+  "inputs_sha256": {
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/planning_001/plans.json": "72159aebcc3b4a144ffa7350d8930918eff13293c25bce17fcfeda12dc0ca191",
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/evaluation_001/metrics.json": "9a57adb0bfbf202354a174c6d143e1483de58d22726e96869dac65bf9fa5fbb3",
+    "/workspace/gpt_field/scene_test/field_planning_v2/RESULTS.txt": "bceee190cb87b1360c346fed623e3c5589cded495d342d5f02d33c64587a58f8"
+  },
+  "cases": [
+    {
+      "role": "rrt_success",
+      "snapshot": "drawer003_open_step552",
+      "case_id": "base_negative",
+      "method": "astra",
+      "seed": 17,
+      "metrics_record_index": 62,
+      "plans_record_index": 42,
+      "status": "planned",
+      "reason": "rrt_connect",
+      "planning_seconds": 20.10693429398816,
+      "counts": {
+        "state_checks": 64,
+        "edge_checks": 20,
+        "iterations": 3,
+        "tree_nodes": 8
+      },
+      "path_vertices": 3,
+      "path_q_sha256": "df739c3a392872c1abcac660f510723ea13a6637c48d98e8441cd4f0499e1211",
+      "truth_valid_at_samples": true,
+      "truth_sample_count": 92,
+      "truth_minimum_environment_distance_m": 0.00472495961550079,
+      "first_invalid_sample": null,
+      "goal_field_points": {
+        "points": 172411,
+        "free": 172411,
+        "occupied": 0,
+        "unknown": 0,
+        "supported": 172411,
+        "supported_ambiguous": 0,
+        "known_initial_self_points": 0,
+        "novel_region_points": 172411,
+        "initial_self_overrides_raw_unknown": 0,
+        "initial_self_overrides_raw_occupied_band": 0,
+        "initial_self_already_raw_free": 0,
+        "self_image_associated_points": 0
+      },
+      "environment_source": "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator",
+      "suggested_display": "piecewise joint-linear interpolation of exact saved vertices"
+    },
+    {
+      "role": "paired_oracle",
+      "snapshot": "drawer003_open_step552",
+      "case_id": "base_negative",
+      "method": "oracle",
+      "seed": 17,
+      "metrics_record_index": 102,
+      "plans_record_index": null,
+      "status": "planned",
+      "reason": "straight_edge_valid",
+      "planning_seconds": 0.004372511990368366,
+      "counts": {
+        "state_checks": 19,
+        "edge_checks": 1,
+        "iterations": 0,
+        "tree_nodes": 0
+      },
+      "path_vertices": 2,
+      "path_q_sha256": "f30b4bc6fdbe1ad4222bf1292cdfdbf03b75def6a8dee4bafba829abcfce814c",
+      "truth_valid_at_samples": true,
+      "truth_sample_count": 91,
+      "truth_minimum_environment_distance_m": 0.004724959615500568,
+      "first_invalid_sample": null,
+      "goal_field_points": {},
+      "environment_source": "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator",
+      "suggested_display": "piecewise joint-linear interpolation of exact saved vertices"
+    },
+    {
+      "role": "same_goal_depthpro_refusal",
+      "snapshot": "drawer003_open_step552",
+      "case_id": "base_negative",
+      "method": "depthpro",
+      "seed": 17,
+      "metrics_record_index": 82,
+      "plans_record_index": 62,
+      "status": "invalid_goal",
+      "reason": "predicted_occupied_and_unknown",
+      "planning_seconds": 1.6422409630031325,
+      "counts": {
+        "state_checks": 2,
+        "edge_checks": 0,
+        "iterations": 0,
+        "tree_nodes": 0
+      },
+      "path_vertices": 0,
+      "path_q_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "truth_valid_at_samples": null,
+      "truth_sample_count": null,
+      "truth_minimum_environment_distance_m": null,
+      "first_invalid_sample": null,
+      "goal_field_points": {
+        "points": 172411,
+        "free": 84245,
+        "occupied": 6211,
+        "unknown": 81955,
+        "supported": 90456,
+        "supported_ambiguous": 0,
+        "known_initial_self_points": 68078,
+        "novel_region_points": 104333,
+        "initial_self_overrides_raw_unknown": 68078,
+        "initial_self_overrides_raw_occupied_band": 0,
+        "initial_self_already_raw_free": 0,
+        "self_image_associated_points": 0
+      },
+      "environment_source": "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator",
+      "suggested_display": "stationary start plus labeled requested target; never interpolate a nonexistent plan"
+    },
+    {
+      "role": "collision_failure",
+      "snapshot": "drawer003_open_step552",
+      "case_id": "wrist_negative",
+      "method": "astra",
+      "seed": 17,
+      "metrics_record_index": 74,
+      "plans_record_index": 54,
+      "status": "planned",
+      "reason": "straight_edge_valid",
+      "planning_seconds": 5.346917746996041,
+      "counts": {
+        "state_checks": 17,
+        "edge_checks": 1,
+        "iterations": 0,
+        "tree_nodes": 0
+      },
+      "path_vertices": 2,
+      "path_q_sha256": "85e1f15374bdf14d50cf2eb2055119a2bec27b3aa1119470217aee89064033bf",
+      "truth_valid_at_samples": false,
+      "truth_sample_count": 81,
+      "truth_minimum_environment_distance_m": -0.004884245207637522,
+      "first_invalid_sample": {
+        "sample_index": 33,
+        "segment_index": 0,
+        "segment_fraction": 0.4125,
+        "q": [
+          0.0025682340910677375,
+          0.5169359511551379,
+          -0.0043780579924078905,
+          -1.5997556967619508,
+          0.005287650813237378,
+          1.9004518337391412,
+          0.7816515284884364
+        ],
+        "valid": false,
+        "joint_limits_valid": true,
+        "environment_collision": true,
+        "self_collision": false,
+        "contacts": [
+          {
+            "geom1": "wooden_cabinet_1_g11",
+            "geom2": "gripper0_finger1_collision",
+            "distance_m": -0.0001997669741185505,
+            "kind": "environment"
+          }
+        ],
+        "penetration_tolerance_m": 1e-07,
+        "environment_min_distance_m": -0.0001997669741185505,
+        "environment_closest_pair": [
+          "gripper0_finger1_collision",
+          "wooden_cabinet_1_g11"
+        ],
+        "self_min_distance_m": 0.0009971689975443927,
+        "self_closest_pair": [
+          "robot0_link0_collision",
+          "robot0_link1_collision"
+        ],
+        "distance_cap_m": 0.05,
+        "distance_semantics": "native eligible geom pairs using scoped native GJK; positive distances capped; original contacts unchanged",
+        "distance_backend": "MuJoCo native GJK geomDistance, scoped nativeccd enable flag"
+      },
+      "goal_field_points": {
+        "points": 172411,
+        "free": 172411,
+        "occupied": 0,
+        "unknown": 0,
+        "supported": 172411,
+        "supported_ambiguous": 0,
+        "known_initial_self_points": 0,
+        "novel_region_points": 172411,
+        "initial_self_overrides_raw_unknown": 0,
+        "initial_self_overrides_raw_occupied_band": 0,
+        "initial_self_already_raw_free": 0,
+        "self_image_associated_points": 0
+      },
+      "environment_source": "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator",
+      "suggested_display": "piecewise joint-linear interpolation of exact saved vertices"
+    },
+    {
+      "role": "pure_unknown_refusal",
+      "snapshot": "drawer003_closed_step60",
+      "case_id": "wrist_positive",
+      "method": "depthpro",
+      "seed": 17,
+      "metrics_record_index": 32,
+      "plans_record_index": 32,
+      "status": "invalid_goal",
+      "reason": "unknown_space",
+      "planning_seconds": 1.2123510189994704,
+      "counts": {
+        "state_checks": 2,
+        "edge_checks": 0,
+        "iterations": 0,
+        "tree_nodes": 0
+      },
+      "path_vertices": 0,
+      "path_q_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "truth_valid_at_samples": null,
+      "truth_sample_count": null,
+      "truth_minimum_environment_distance_m": null,
+      "first_invalid_sample": null,
+      "goal_field_points": {
+        "points": 172411,
+        "free": 167428,
+        "occupied": 0,
+        "unknown": 4983,
+        "supported": 167428,
+        "supported_ambiguous": 0,
+        "known_initial_self_points": 158553,
+        "novel_region_points": 13858,
+        "initial_self_overrides_raw_unknown": 141497,
+        "initial_self_overrides_raw_occupied_band": 2402,
+        "initial_self_already_raw_free": 14654,
+        "self_image_associated_points": 0
+      },
+      "environment_source": "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_closed_step60/evaluator",
+      "suggested_display": "stationary start plus labeled requested target; never interpolate a nonexistent plan"
+    }
+  ],
+  "integrity_requirements": [
+    "Never rerun or alter the planner when preparing the replay.",
+    "Interpolate along each saved path_q segment, preserve every original vertex and both endpoints; do not smooth or spline beyond the saved path.",
+    "Animate original MuJoCo model with frozen environment and fixed finger joints, qvel=0 and mj_forward only.",
+    "Declare playback duration a visualization choice, not original control time or planning time. Display saved planning_seconds separately.",
+    "All field planning results are frozen before visualization reads the scene. Full scene is evaluator/display-only.",
+    "Astra RRT success is finite sampled truth validation, not a continuous collision certificate.",
+    "Same-query oracle direct edge is valid, so Astra detour is not demonstrated necessary or optimal in truth.",
+    "No saved RRT tree trace exists; do not invent explored branches. Display final returned path only.",
+    "DepthPro returned no path; do not animate a suggested or oracle trajectory under its label.",
+    "The experiment moves a frozen drawer scene around selected 7-DOF arm queries; this is not a rerun of the full drawer-opening task.",
+    "If interpolated display states receive fresh collision checks, report these as replay checks separately from archived sampled evaluation."
+  ],
+  "rendering_notes": {
+    "backend": "MUJOCO_GL=egl; local successful renderer regression uses MUJOCO_EGL_DEVICE_ID=2",
+    "native_renderer_orientation": "mujoco.Renderer.render returns upright image; do not apply the raw sim.render vertical flip blindly",
+    "orientation_evidence": "/workspace/gpt_field/scene_test/rgb_scene/tests/test_prepare_reference.py:test_pixel_centres_match_independent_non_msaa_opengl_tilted_face",
+    "camera": "agentview at original fixed camera; extra camera views are visualization-only and must not be implied perception inputs",
+    "native_scene_setter": "GroundTruthEvaluator._set_q resets qpos=frozen_qpos, arm q, qvel=0 then mj_forward",
+    "distance_backend": "Use NativeDistanceGroundTruthEvaluator for fresh distances; original legacy MPR distance values were unreliable."
+  }
+}

@@ -1,0 +1,104 @@
+Standalone scene-field experiments
+=================================
+
+This directory contains new offline test code. The original README.txt and
+protocol.json are retained unchanged as the approved planning documents.
+Actual execution settings, source copies, hashes and status live in each run's
+manifest.json. Existing run directories are refused rather than overwritten.
+
+1. Environment
+
+The execution environment used here is:
+  /workspace/venvs/libero-plus/bin/python
+
+Existing scientific packages are reused read-only. rtree 1.4.1 was installed
+ONLY into scene_test/_deps; it was not installed into the existing environment.
+requirements-scene.txt records the versions needed for a separate new environment.
+Use -B or PYTHONDONTWRITEBYTECODE=1 to avoid creating bytecode in source trees.
+
+From /workspace/gpt_field:
+
+  env PYTHONPATH=scene_test/_deps:scene_test OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    /workspace/venvs/libero-plus/bin/python -B -m pytest -q -p no:cacheprovider scene_test/tests
+
+2. SDF reconstruction
+
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    /workspace/venvs/libero-plus/bin/python -B scene_test/reconstruct.py \
+    --output scene_test/runs/sdf_full_NEW
+
+Defaults execute all 45 configurations, with 100,000 uniform points, 100,000
+near-surface points, and 100,000 surface samples in each comparison direction.
+Construction, interpolation queries and mesh extraction each have a warmup
+followed by three timing repetitions. Saved reference samples are shared across
+the three grid resolutions. The reference geometry is known, not inferred from
+images. SDF distances are negative inside solid material and positive in air.
+
+For an explicitly nonformal startup check:
+
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    /workspace/venvs/libero-plus/bin/python -B scene_test/reconstruct.py \
+    --output scene_test/runs/sdf_smoke_NEW \
+    --scenes sphere_seed11,rotated_box_seed11 --spacings 0.004 \
+    --samples 2000 --surface-samples 2000 --timing-repeats 1
+
+Inspect metrics.json / metrics.csv, configuration_metrics/, and figures/.
+Surface F1@2mm is not a test that 1mm gaps survive: inspect the separate feature
+sign probes, zero-crossing widths, and connected component counts.
+Additional thin-wall cross-section figure for a completed run:
+
+  /workspace/venvs/libero-plus/bin/python -B scene_test/plot_thin_features.py \
+    scene_test/runs/sdf_full_NEW
+
+3. Geometry motion (after completing reconstruction)
+
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    /workspace/venvs/libero-plus/bin/python -B scene_test/geometry_motion.py \
+    --output scene_test/runs/motion_full_NEW
+
+Defaults run 15 prescribed cases at 4, 2 and 1 mm grid spacing (45 configurations).
+The filled-body lattice has maximum spacing 2 mm. A separate exact geometry
+oracle checks the same bodies and trajectories. Unknown means unresolved and is
+not counted as either free or blocked. The mathematical assumptions and bounds
+are explained in GEOMETRY_MOTION.txt.
+
+For a small, explicitly nonformal check:
+
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    /workspace/venvs/libero-plus/bin/python -B scene_test/geometry_motion.py \
+    --output scene_test/runs/motion_smoke_NEW --spacings .004 \
+    --cases box_rotation_midpath_collision,box_contains_tiny_obstacle,sphere_outside_roi
+
+Inspect trajectory_results.png and case_geometry.png under figures/, plus
+metrics.json / metrics.csv, cases.json, reference_checks.json and saved field
+NPZs. The original exact geometry remains available in cases.json; source/ and
+manifest.json preserve the implementation and hashes used in the run.
+
+These are checks of given rigid-body motions, not path search or robot execution.
+Timing is descriptive and has one measured check/build per configuration; it is
+not the repeated timing benchmark used by the SDF reconstruction experiment.
+
+4. Original-file preservation
+
+  /workspace/venvs/libero-plus/bin/python -B scene_test/verify_preservation.py
+
+The baseline covers 773 pre-existing files in total: src/scripts/tests/configs/
+root files and the two original scene_test planning documents. New experiment files and
+outputs are outside that baseline. Checks report changed or missing files.
+
+5. Interpreting failed attempts
+
+sdf_full_001 is an incomplete, preserved development attempt. It identified
+scale-sensitive triangle distance tolerances in a dependency and a CSV error
+while handling that failure. Its frozen code and diagnostic evidence remain
+available. Do not use it as the final reconstruction result.
+
+Numerical checks validate the metric implementation as well as the SDF builder.
+The final geometry reference remains the declared continuous primitives or
+material boundary; a visualization point cloud is never substituted for a
+continuous nearest-surface calculation.
+
+SDF_RESULTS.txt explains the completed representation test. GEOMETRY_MOTION.txt
+explains the motion check. RESULTS.txt records the final executed runs and any
+workspace preservation differences. These tests do not execute a robot or make
+model calls.

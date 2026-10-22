@@ -1,0 +1,58 @@
+Drawer003 原始机器人在预测场中的离线规划
+=====================================
+
+工作目录 /workspace/gpt_field；Python /workspace/venvs/libero-plus/bin/python。
+建议 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1，并使用 -B 禁止写入字节码。
+所有输出目录必须不存在；不覆盖已有实验。没有模型请求或机器人动作。
+
+1. 准备原始机器人模型（已完成，可复用 preparation_001）：
+   从 robot_geometry 导入 export_robot_package。
+   输入 references_004/snapshots/<drawer_snapshot>/evaluator，输出一个新目录。
+   只导出原机器人模型/资产、自身关节状态和固定装置标定，不导出环境。
+   当前两个包均已独立审计原生几何、关节和全场景 FK 一致性。
+
+2. 在保存的预测场中规划：
+   python -B scene_test/field_planning/run_planning.py plan \
+     --preparation scene_test/field_planning/preparation_001 \
+     --output NEW_PLANNING_DIRECTORY
+
+   仅读取原有 2 mm Astra 和 DepthPro 场，保留真实缺块/unknown。
+   本轮使用完整原机器人碰撞几何；场内机器人影像未被自动删除。
+   输出 plans.json、起点实际机器人样本诊断 NPZ、字段消费哈希、源码副本。
+
+3. 封存规划后进行原生真值评分与 oracle 对照：
+   python -B scene_test/field_planning/native_distance_evaluation.py \
+     --plans NEW_PLANNING_DIRECTORY --output NEW_EVALUATION_DIRECTORY
+
+   使用修正的距离接口：MuJoCo 3.2.6 在距离查询期间局部启用 nativeCCD，
+   查询结束恢复原选项，原始接触检测和 oracle 规划的碰撞判断不改变。
+   修复原因和独立分离轴证据见 evaluator_distance_diagnostic_001.json。
+   旧 run_planning.py evaluate 路线保留复现历史用，不用于最终间隙结论。
+   正距离截断在 50 mm；有限 0.005 rad 关节采样不提供连续碰撞证明。
+
+4. 绘图：
+   python -B scene_test/field_planning/plot_planning.py \
+     --metrics NEW_EVALUATION_DIRECTORY/metrics.json --output NEW_ANALYSIS_DIRECTORY
+
+   自动读取计划目录中的诊断数组。没有预测路径的格子仅显示起终点和
+   拒绝原因；真实路径示例取同一组 oracle 成功查询，图上明确标记 case。
+   点云来自原始机器人碰撞几何；遮挡点亦可投影，不是表面可见性分割。
+
+5. 单元/集成验证：
+   python -B -m pytest -q -p no:cacheprovider scene_test/field_planning/tests
+
+文件约定
+--------
+plans.json：主规划结果及起点状态，不含用于主规划的真实环境信息。
+metrics.json：后验真值、oracle、完整配对汇总。无返回路径时碰撞率为 null。
+start_causes_001：Astra 原始场命名组件的后验归因，没有据此修改地图或重跑。
+EXPERIMENT_PLAN.txt：事先固定的目标偏移、种子、预算、采样与 unknown 规则。
+RESULTS.txt：正式结论及正确版本入口；旧 evaluation_001/analysis_001 只保留
+历史审计，不作为最终间隙数据。所有数值结论以修正后的版本为准。
+
+测试边界
+--------
+这是原始场是否可以直接支持机器人路径查询的实验。场内机器人外观和
+缺失的自由空间信息都会导致起点拒绝。拒绝不能解释为数学上的无解，也
+不能归结为 RRT 搜索能力不足；同样不能推断移除自体影像后一定成功。
+此处不执行抓取、接触、开抽屉控制，也没有新增球体/方块/简化夹爪。

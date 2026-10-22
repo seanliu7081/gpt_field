@@ -1,0 +1,52 @@
+Drawer003 planning-map integration correction
+
+Scope
+Only drawer003_closed_step60 and drawer003_open_step552. Use all 13 original
+LIBERO Panda collision geoms, original joints, fixed original finger positions,
+5 mm maximum surface sampling radius, 10 original goal offsets and seeds 17/29.
+Reuse unchanged joint-space RRT-Connect settings. No live robot task, new model
+inference, new perception input, or edits to previous code/results.
+
+Astra
+Read the original model-produced CSG. Flatten only the root union; remove whole
+components named robot_*. Retain nonrobot components and all their difference
+expressions. Query the derived environment-only analytic CSG within the original
+saved grid bounds. This revises the planning representation; it is not a claim
+that the old scalar grid can distinguish self from obstacles. Model completion
+and inaccurate environment geometry remain model hypotheses.
+
+DepthPro
+Keep original predicted camera intrinsics and predicted depth unchanged. Recover
+pre-surface ray evidence that the old near-surface block allocation did not save.
+Use explicit known rig intrinsics only to associate robot image pixels with the
+known original robot. This calibration was evaluation-only for the RGB-only
+reconstruction benchmark; it is newly declared sensor metadata for this robot
+planning stage and does not improve or rescale the model depth prediction.
+Robot self-occlusion caps free support, and prediction-associated self surfaces
+outside the known initial robot become unknown, not free. Preserve unknown
+behind surfaces, beyond support and outside the view. Fixed 20 mm depth margin
+and self-association tolerance are selected before any truth evaluation.
+
+Known initial SELF material
+For DepthPro only, points inside the exact union of native robot collision hulls
+at q_initial have a separate SELF support layer. No dilation or bounding-box
+free-space carve is allowed. This uses the declared prior that the current robot
+is registered correctly and does not interpenetrate the environment. It is not
+camera evidence and does not establish neighboring free space. Log overrides of
+unknown/occupied predictions separately. Astra environmental obstacles are not
+overridden by this prior.
+
+Evaluation separation
+Predicted planners receive only predicted geometry, native robot-only packages,
+q_initial and declared rig calibration. They never receive full-scene meshes,
+reference depth, segmentation or environment collision queries. Seal all plans,
+inputs and source hashes before opening the full LIBERO scene. Then use the
+existing corrected native-GJK distance evaluator and original contact predicate
+at <=0.005 rad maximum joint increments. Compare same-query truth planner.
+
+Report returned paths, truth-valid/invalid returned paths, refusal reasons,
+oracle-supported refusals, planning time, start support layers and provenance.
+Repeated seeds on direct paths are not independent geometrical trials. Surface
+and edge sampling is finite; no continuous swept-volume proof is claimed.
+If single-view geometry still cannot support a motion, report that information
+limit explicitly rather than marking unknown space free or weakening the robot.

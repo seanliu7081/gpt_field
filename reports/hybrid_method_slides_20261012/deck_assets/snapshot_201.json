@@ -1,0 +1,242 @@
+{
+  "field_center": [
+    -0.04558293323599661,
+    0.20656395605484587,
+    1.025472947123347
+  ],
+  "effective_compact_field": {
+    "attraction_weights": [
+      1,
+      1,
+      1
+    ],
+    "blocked_boxes": [
+      {
+        "lower_offset_m": [
+          0.015,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          0.08,
+          0.08,
+          -0.015
+        ]
+      }
+    ],
+    "goal_offset_m": [
+      -0.07,
+      0,
+      0.045
+    ],
+    "gripper_command": "open",
+    "motion_mode": "move",
+    "orientation_target_xyzw": [
+      0.99961,
+      -0.00091,
+      -0.02792,
+      0.00027
+    ],
+    "repulsors": [],
+    "stage": "elevated reverse approach and orientation restoration",
+    "unknown_boxes": [
+      {
+        "lower_offset_m": [
+          -0.08,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          0.015,
+          0.08,
+          -0.05
+        ]
+      }
+    ]
+  },
+  "control_context": {
+    "phase": "recover",
+    "visual_reference": null
+  },
+  "routing": {
+    "controller": "coarse_field",
+    "target_region": "black_bowl",
+    "near_target": false,
+    "routing_reason": "The external view shows the gripper still behind and above the target bowl, with the bottle close to the prior approach. Reverse longitudinal direction while gaining height, restore the earlier downward orientation, and exclude the lower object-filled region."
+  },
+  "plan": {
+    "delta_xyz": [
+      -0.007071067811865485,
+      0.0,
+      0.007071067811865506
+    ],
+    "status": "move",
+    "candidate_count": 1,
+    "valid_count": 1,
+    "selected_index": 0,
+    "start_potential": 0.08863961030678923,
+    "predicted_improvement": 0.08742640687119287,
+    "reason": null,
+    "numerical_tie_tolerance": 0.0,
+    "candidates": [
+      {
+        "primitives": [
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path"
+        ],
+        "positions": [
+          [
+            -0.04558293323599661,
+            0.20656395605484587,
+            1.025472947123347
+          ],
+          [
+            -0.052654001047862095,
+            0.20656395605484587,
+            1.0325440149352125
+          ],
+          [
+            -0.05972506885972759,
+            0.20656395605484587,
+            1.039615082747078
+          ],
+          [
+            -0.06679613667159306,
+            0.20656395605484587,
+            1.0466861505589433
+          ],
+          [
+            -0.07058293323599661,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.0805829332359966,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.09058293323599662,
+            0.20656395605484587,
+            1.050472947123347
+          ],
+          [
+            -0.09558293323599662,
+            0.20656395605484587,
+            1.055472947123347
+          ],
+          [
+            -0.10058293323599661,
+            0.20656395605484587,
+            1.055472947123347
+          ],
+          [
+            -0.1076540010478621,
+            0.20656395605484587,
+            1.0625440149352126
+          ],
+          [
+            -0.11472506885972761,
+            0.20656395605484587,
+            1.0696150827470778
+          ]
+        ],
+        "path_length_m": 0.08742640687119287,
+        "valid": true,
+        "terminal_potential": 0.0012132034355963606,
+        "immediate_potential": 0.07863961030678923,
+        "invalid_reason": null
+      }
+    ],
+    "search": {
+      "method": "dijkstra_distance_field",
+      "connectivity": 26,
+      "candidate_semantics": "one_extracted_graph_shortest_path",
+      "distance_semantics": "weighted_graph_path_cost_to_goal_region",
+      "edge_cost": "euclidean_length_times_mean_endpoint_density",
+      "cost_unit": "m",
+      "density_minimum": 1.0,
+      "uses_attraction_potential": false,
+      "goal_xyz": [
+        -0.11558293323599661,
+        0.20656395605484587,
+        1.070472947123347
+      ],
+      "goal_tolerance_m": 0.0025,
+      "goal_distance_m": 0.08321658488546615,
+      "goal_reached": false,
+      "endpoint_is_goal": false,
+      "endpoint_in_goal_region": true,
+      "boundary_clipped": false,
+      "direction_invalid": false,
+      "needs_observation": false,
+      "cache_hit": false,
+      "segment_count": 10,
+      "max_path_length_m": 0.1,
+      "settled_vertex_count": 25080,
+      "seed_count": 1,
+      "valid_vertex_count": 25080,
+      "start_cost_m": 0.08863961030678923,
+      "terminal_cost_m": 0.0012132034355963606,
+      "shortest_graph_path_length_m": 0.08863961030678923,
+      "endpoint_xyz": [
+        -0.11472506885972761,
+        0.20656395605484587,
+        1.0696150827470778
+      ],
+      "path_termination": "goal_region"
+    }
+  },
+  "tracking": {
+    "lookahead_m": 0.03,
+    "max_command_m": 0.05,
+    "progress_m": 0.0,
+    "path_length_m": 0.08742640687119278,
+    "endpoint_tolerance_m": 0.0025,
+    "endpoint_distance_m": 0.08203147600789747,
+    "endpoint_reached": false,
+    "reference_xyz": [
+      -0.06679613667159312,
+      0.20656395605484587,
+      1.0466861505589433
+    ],
+    "reference_progress_m": 0.03,
+    "command_target_xyz": [
+      -0.06679613667159312,
+      0.20656395605484587,
+      1.0466861505589433
+    ],
+    "command_norm_m": 0.029999999999999968,
+    "distance_to_path_m": 0.0,
+    "shortened_for_validity": false,
+    "status": "tracking"
+  },
+  "grounding": null,
+  "state": [
+    -0.04558293323599661,
+    0.20656395605484587,
+    1.025472947123347,
+    -3.1137255941292836,
+    0.1088438140740031,
+    0.08411209163624447,
+    0.039788405010369274,
+    -0.039670411753098184
+  ],
+  "action": [
+    -0.4242640687119302,
+    0.0,
+    0.4242640687119259,
+    -0.04692712646897225,
+    0.0037486957952773572,
+    0.13743267562541198,
+    -1.0
+  ]
+}

@@ -1,0 +1,716 @@
+{
+  "scope": "Chinese PDF framework evidence, frozen SpeedUp v1 only, no inference performed",
+  "sources": [
+    {
+      "path": "/workspace/gpt_field/AGENTS.md",
+      "sha256": "17ab56d83fb9897aa058a3d538524e0a5faed2d28183c3da1758cf9bf41207fd"
+    },
+    {
+      "path": "/workspace/gpt_field/agent_SpeedUp_v1.md",
+      "sha256": "bedda9e35d9ca66d6d358356dc03df5e46e2c5a8b060f6227c01b8eb1f2a5478"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py",
+      "sha256": "47ba34af24951279cddc4057f7a97d26a5819d2c1c26020b696bee8919552726"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py",
+      "sha256": "81e5eecef503f1d6aa397a5f896e01f3effbd46a4d7e07b15f93d80d6ddd6fb0"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/mark_prompting.py",
+      "sha256": "fd21f563f505b00edc321e3945a8b25f83243855ce4cad00bbcf2cfa9fcacc90"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/contact_skills.py",
+      "sha256": "48b4dda3762a098c52525e20cc3862917642dc649640295699031a534cca2098"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/wrist_servo.py",
+      "sha256": "5fdfe8af584976684579a6e02663af5d45cb869b2f9c8d342397084479053199"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/agent_speedup_v1.py",
+      "sha256": "db430aedbcf30d982c75c119aa63d429702fd5b4b18559e78e7c6aaf8bcc4449"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/agent_speedup_v1_client.py",
+      "sha256": "eaf72412f046273b8726b145f3b1cad5d71233309844b53445f97b7b2d75f5f2"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/mark_prompting.py",
+      "sha256": "f84d582f3b6689072c468849f40d5f849c6f26b3702bc146c2dc05fc64edb8fe"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/contact_skills.py",
+      "sha256": "c5feeafeb9e3d6e634092b396b408ac22e05dd13527a96d4b53a6825e2dd777d"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/wrist_servo.py",
+      "sha256": "3789554f9412d762a453db5c62f3debd8eef6cf6342eb918336bd7318ca77a09"
+    }
+  ],
+  "run_data": {
+    "drawer003": {
+      "root": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial",
+      "prompt_version": "agent-speedup-v1-prompt-5",
+      "model": "gpt-6-astra",
+      "reasoning": {
+        "effort": "medium"
+      },
+      "history_protocol": "agent-speedup-v1-stateless",
+      "request_counts": {
+        "decision": 15,
+        "pointing_coarse": 3,
+        "pointing_fine": 3
+      },
+      "decision_skill_counts": {
+        "reach": 5,
+        "grasp_with": 3,
+        "place_release": 2,
+        "transport": 5
+      },
+      "decisions_with_extra_waypoints": 2,
+      "decisions_grasp_then_pull": 2,
+      "examples": [
+        {
+          "kind": "decision",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000001-aad999441b694792bfc198c6e5bff463.request.json",
+            "sha256": "5ad8ec8951dacfa4d85f60c6e110bcecdd1b1f2a132b64a2dce7544d589f8038"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000001-aad999441b694792bfc198c6e5bff463.response.json",
+            "sha256": "4ff3a7eb2f5b03b24fccfdb73a2c6c278438e54c3a881ea66817bad3f3168d4a"
+          },
+          "input_text": [
+            "{\"request\":\"decision\",\"task\":\"open the top drawer and put the bowl inside\",\"state_summary\":{\"task\":\"open the top drawer and put the bowl inside\",\"task_key\":\"drawer_bowl\",\"target_description\":\"the only bowl in the scene (black outside, white with a black floral pattern inside)\",\"step\":89,\"end_effector_position_m\":[-0.2052,-0.0079,1.1741],\"tool_axes_world\":{\"jaw_axis\":[-0.001,-1.0,-0.001],\"approach_axis\":[-0.047,0.001,-0.999],\"wrist_image_right\":[-0.001,-1.0,-0.001],\"wrist_image_up\":[0.999,-0.001,-0.047]},\"approach_tilt_from_straight_down_deg\":2.7,\"world_up_in_wrist_image\":\"out_of_image_plane\",\"robot_base_direction_world\":[-1.0,0.017,0.0],\"frontal_arm_reach\":null,\"external_image_axes_world\":{\"image_right\":[0.061,0.998,0.0],\"image_up\":[-0.996,-0.085,0.0],\"source\":\"measured from the hand's own probe moves at episode start\"},\"finger_gap_mm\":79.67,\"gripper_state\":\"open\",\"holding_object\":false,\"held_with_strategy\":null,\"pulled_since_grasp_m\":null,\"held_height_above_pick_m\":null,\"hold_quality\":null,\"target_history\":null,\"reach_limits\":null,\"loop_warning\":null,\"consecutive_rejected_decisions\":0,\"last_outcome\":{\"skill\":\"calibrate\",\"params\":{},\"status\":\"succeeded\",\"reason\":\"calibrated\",\"step\":89,\"evidence\":{}},\"ledger\":[],\"recent_decisions\":[],\"counts\":{\"decisions\":0,\"grasp_with_calls\":0,\"grasp_attempts_reaching_align\":0,\"local_retries_used\":0,\"failed_in_a_row\":0},\"limits\":{\"max_waypoint_offset_m_per_axis\":0.075,\"pull_travel_range_m\":[0.02,0.16],\"place_lowering\":\"at most 0.15 m\"}}}",
+            "External camera (upright):",
+            "Wrist camera (upright):"
+          ],
+          "response": {
+            "situation": "The top drawer handle is to the right of the bowl in the wrist view, on the cabinet’s exposed front. The hand is high above the table; I will move toward a hover in front of the handle.",
+            "skill": "reach",
+            "params": {
+              "target": null,
+              "strategy": null,
+              "side": null,
+              "approach": null,
+              "waypoint_offset_m": [
+                0,
+                -0.075,
+                -0.075
+              ],
+              "more_waypoints_m": null,
+              "max_travel_m": null
+            }
+          }
+        },
+        {
+          "kind": "decision",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000004-4446ec329f2b4f04b46224d3776e83c6.request.json",
+            "sha256": "86b58b317f52442b68f7304d266a6c952a27aed3403edcde02efc8a654b9711d"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000004-4446ec329f2b4f04b46224d3776e83c6.response.json",
+            "sha256": "f05eaf3d6195e7f9efff54699aa8920c86f693e443cd903d006246d53cc1be14"
+          },
+          "input_text": [
+            "{\"request\":\"decision\",\"task\":\"open the top drawer and put the bowl inside\",\"state_summary\":{\"task\":\"open the top drawer and put the bowl inside\",\"task_key\":\"drawer_bowl\",\"target_description\":\"the only bowl in the scene (black outside, white with a black floral pattern inside)\",\"step\":150,\"end_effector_position_m\":[-0.0615,-0.0624,0.9824],\"tool_axes_world\":{\"jaw_axis\":[-0.009,-1.0,0.002],\"approach_axis\":[-0.044,-0.002,-0.999],\"wrist_image_right\":[-0.009,-1.0,0.002],\"wrist_image_up\":[0.999,-0.01,-0.044]},\"approach_tilt_from_straight_down_deg\":2.5,\"world_up_in_wrist_image\":\"out_of_image_plane\",\"robot_base_direction_world\":[-0.995,0.104,0.0],\"frontal_arm_reach\":null,\"external_image_axes_world\":{\"image_right\":[0.061,0.998,0.0],\"image_up\":[-0.996,-0.085,0.0],\"source\":\"measured from the hand's own probe moves at episode start\"},\"finger_gap_mm\":79.86,\"gripper_state\":\"open\",\"holding_object\":false,\"held_with_strategy\":null,\"pulled_since_grasp_m\":null,\"held_height_above_pick_m\":null,\"hold_quality\":null,\"target_history\":null,\"reach_limits\":null,\"loop_warning\":null,\"consecutive_rejected_decisions\":0,\"last_outcome\":{\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,-0.04,-0.05]},\"status\":\"failed\",\"reason\":\"no_progress\",\"step\":150,\"evidence\":{\"measured_displacement_m\":[0.0717,-0.0225,-0.0487],\"final_error_m\":0.0178,\"progress_fraction\":0.8955,\"final_angle_deg\":0.7069,\"max_gap_rise_mm\":null}},\"ledger\":[{\"n\":2,\"step\":105,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.0,-0.075,-0.075]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[-0.0012,-0.0717,-0.0719],\"progress_fraction\":0.9575,\"final_angle_deg\":0.2333,\"external_image_shift_px_right_down\":[-52.4,0.9],\"end_xyz\":[-0.206,-0.08,1.102],\"tilt_from_straight_down_deg\":2.5},{\"n\":3,\"step\":122,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,0.0414,-0.075]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[0.0733,0.0397,-0.0711],\"progress_fraction\":0.9619,\"final_angle_deg\":0.4123,\"external_image_shift_px_right_down\":[24.5,20.6],\"end_xyz\":[-0.133,-0.04,1.031],\"tilt_from_straight_down_deg\":2.9},{\"n\":4,\"step\":150,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,-0.04,-0.05]},\"status\":\"failed\",\"reason\":\"no_progress\",\"measured_displacement_m\":[0.0717,-0.0225,-0.0487],\"progress_fraction\":0.8955,\"final_angle_deg\":0.7069,\"external_image_shift_px_right_down\":[-21.0,21.3],\"end_xyz\":[-0.061,-0.062,0.982],\"tilt_from_straight_down_deg\":2.5}],\"recent_decisions\":[{\"step\":89,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.0,-0.075,-0.075]},\"situation\":\"The top drawer handle is to the right of the bowl in the wrist view, on the cabinet’s exposed front.\",\"outcome\":\"succeeded:goal_reached\"},{\"step\":105,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,0.0414,-0.075]},\"situation\":\"The top drawer handle is above and to the right of the fingers in the wrist view, beside the cabinet\",\"outcome\":\"succeeded:goal_reached\"},{\"step\":122,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,-0.04,-0.05]},\"situation\":\"The top drawer handle is high on the right of the wrist view, beyond the bowl. I will move toward a \",\"outcome\":\"failed:no_progress\"}],\"counts\":{\"decisions\":3,\"grasp_with_calls\":0,\"grasp_attempts_reaching_align\":0,\"local_retries_used\":0,\"failed_in_a_row\":1},\"limits\":{\"max_waypoint_offset_m_per_axis\":0.075,\"pull_travel_range_m\":[0.02,0.16],\"place_lowering\":\"at most 0.15 m\"}}}",
+            "External camera (upright):",
+            "Wrist camera (upright):"
+          ],
+          "response": {
+            "situation": "The cabinet is on the right in the wrist view, with the bowl beside the fingers on the left. The hand is on the free front side of the top drawer handle, ready for a frontal approach.",
+            "skill": "grasp_with",
+            "params": {
+              "target": "top_drawer_handle",
+              "strategy": "frontal_bar_pinch",
+              "side": null,
+              "approach": "world_-y",
+              "waypoint_offset_m": null,
+              "more_waypoints_m": null,
+              "max_travel_m": 0.12
+            }
+          }
+        },
+        {
+          "kind": "pointing_coarse",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000005-19c7ce282ac6491abb882bf84b8f76be.request.json",
+            "sha256": "f31c949a5dabd0b5d4d49d2c629a123264e5a8efc5b91fb443c815fc4c3ccd8e"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000005-19c7ce282ac6491abb882bf84b8f76be.response.json",
+            "sha256": "25984c096fb2942c1a752173743d3a7dd5d8284aef3edbd75ab582430a01d6a1"
+          },
+          "input_text": [
+            "{\"request\":\"pointing\",\"stage\":\"coarse\",\"task\":\"open the top drawer and put the bowl inside\",\"target_phrase\":\"a clearly visible point on the top drawer handle's bar (the horizontal handle bar; not the handle of another drawer) between its two mounting posts, preferably mid-way; never a part hidden behind the robot's fingertips; 0 if that bar is not visible\",\"context\":{\"strategy\":\"frontal_bar_pinch\",\"target\":\"top_drawer_handle\",\"approach\":\"world_-y\",\"image_orientation\":\"turned so that world up is at the top of this image; the robot's fingertips are at its right edge\"}}",
+            "Wrist camera (turned so world up is at the top) with 64 numbered grid cells:"
+          ],
+          "response": {
+            "cell_id": 20
+          }
+        },
+        {
+          "kind": "pointing_fine",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000006-891a9c39c8ed4a20a834eb2fcebf1a33.request.json",
+            "sha256": "951cb9eaf3d0834a5f57c32e1a02c29e104956c5e4a496846e81923bf1844d7d"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000006-891a9c39c8ed4a20a834eb2fcebf1a33.response.json",
+            "sha256": "4b4def50dd9eb7020abb4ab8f55226f6557fd8c006cbeaef70d16cdf1541a144"
+          },
+          "input_text": [
+            "{\"request\":\"pointing\",\"stage\":\"fine\",\"task\":\"open the top drawer and put the bowl inside\",\"target_phrase\":\"a clearly visible point on the top drawer handle's bar (the horizontal handle bar; not the handle of another drawer) between its two mounting posts, preferably mid-way; never a part hidden behind the robot's fingertips; 0 if that bar is not visible\",\"context\":{\"strategy\":\"frontal_bar_pinch\",\"target\":\"top_drawer_handle\",\"approach\":\"world_-y\",\"image_orientation\":\"turned so that world up is at the top of this image; the robot's fingertips are at its right edge\",\"cell_id\":20}}",
+            "Wrist-camera crop (turned so world up is at the top, enlarged) with 64 numbered points:"
+          ],
+          "response": {
+            "point_id": 36
+          }
+        }
+      ],
+      "actual_instructions": "agent-speedup-v1-prompt-5. You supervise a robot arm with a parallel-jaw gripper. Task: \"open the top drawer and put the bowl inside\". Zero-shot: no demonstrations, object poses, depth or camera calibration are available.\nROLE. Each request, choose ONE macro skill and its discrete parameters. A local executor runs it at 20 Hz with its own sensing: it aligns the gripper on a target with the wrist camera, finds depth by touch (motion stall or finger deflection), closes the gripper only after its own sensor checks pass, verifies a grasp with a short lift or pull, and retries a failed grasp locally. You never output poses, rotations, depths or gripper commands. You are asked again when the skill ends; state_summary then holds a ledger of finished skills and the last outcome (status, reason, evidence). The episode starts with an automatic gripper calibration.\nINPUTS. Both images are UPRIGHT (not mirrored). state_summary gives the measured end-effector position (the grip point midway between the fingertips; world frame, metres, +z up), the finger gap in mm, and tool_axes_world: world unit vectors for wrist-image right (the jaw axis, along which the fingers open), wrist-image up, and the approach axis (where the wrist camera looks and the fingers point). tool_axes_world apply ONLY to the WRIST image: something seen to the right in the wrist image lies along +wrist_image_right, something seen LOW in it lies along -wrist_image_up (the grip axis is below the image centre, see below). The EXTERNAL image comes from a different, fixed camera with its own axes; never convert external-image directions with tool_axes_world. external_image_axes_world (when present) gives the world horizontal direction for right and up in the EXTERNAL image, measured from the hand's own probe moves at the episode start (image_right: right in that view; image_up: farther back). Ledger lines' external_image_shift_px_right_down give each move's hand shift in that image (+ = right / down): check that moves went as intended. The external image's vertical direction mixes height and depth; judge heights from state_summary and the wrist view instead. The wrist camera sits 5 cm from the grip axis toward wrist-image up, so a point in line with the fingers appears below the wrist-image centre; the fingertips show at the bottom of the wrist image. world_up_in_wrist_image names the wrist-image direction of world up (e.g. right when the jaw is vertical); higher objects lie that way. approach_tilt_from_straight_down_deg is 0 for a top-down hand. Robot facts: maximum finger opening 79 mm; the jaw is horizontal in the wrist image, so a bar that can be pinched appears vertical between the fingers. The arm's reach is limited: near the edge of its workspace the hand cannot stay top-down and tilts; the executor then stops with reach_limit. robot_base_direction_world points from the grip toward the robot base (horizontal). With a turned hand the arm locks at full stretch when its wrist is too far from the shoulder (state_summary.frontal_arm_reach); such hovers and moves are refused: approach handles from the robot-side half, nearer the base. A turned (jaw-vertical) hand extends about 10 cm above and below the grip point: keep about 11 cm between the grip point and the table or objects below it, also while it turns.\nSKILLS (set every parameter a skill does not use to null):\n- reach(waypoint_offset_m): move the grip point by [dx, dy, dz] world metres relative to its CURRENT position, each component within +/-0.075; chain calls for longer moves. Orientation and gripper are unchanged. It does not see obstacles: route around objects with intermediate waypoints (e.g. up first; move horizontally at a clear height, then descend): more_waypoints_m adds up to 2 further offsets run in order in the same call (a whole detour in one decision; it stops at the first waypoint that fails). Moves that would push further past a recorded reach_limit (state_summary.reach_limits) are rejected.\n- grasp_with(target, strategy, side or approach, max_travel_m for a handle): sensor-gated grasp of target with a strategy below. Meanwhile the executor asks you separate short pointing questions (numbered marks on the wrist image).\n- pull(max_travel_m): with a grasped bar, pull back opposite to the approach axis until the TOTAL travel since the grasp (including the 2 cm verification pull; see state_summary.pulled_since_grasp_m) reaches max_travel_m (0.02-0.16 m); stops early at a stall or end-stop. Do not over-pull: an over-extended drawer can block later moves, and an open drawer front overhangs what lies in front of the cabinet.\n- transport(waypoint_offset_m, more_waypoints_m, target=destination): like reach while holding an object, keeping the grasp orientation; it stops at once if the hold is lost (lost_in_transport) or if the held object presses against something (held_object_contact; the hand then backs off about 1 cm: up, or against a rising move). While holding, the wrist view is mostly blocked by the object: judge the destination in the EXTERNAL image with external_image_axes_world. Carry a held object 3-6 cm above its pick height (state_summary.held_height_above_pick_m) when the path is clear, otherwise high enough to pass over what is in the way (e.g. above an open drawer's front edge); move it out from under anything overhanging it before lifting it high. A raised object looks farther back in the external image than its footprint. Within about 5 cm of the destination use moves of at most 3 cm.\n- place_release(waypoint_offset_m, target=destination): move horizontally (and up, never down) by the offset to bring the held object over the destination, then lower with touch sensing until the object meets a support (down to 3 cm below the pick height), open, back away 3 cm. Aim the held object's centre (not the grip point) over the destination centre. With [0, 0, 0] it lowers and releases at the current position; for a held handle it opens, backs away, lifts 5 cm and turns the hand top-down (the way to let go of a handle).\n- retreat(): back away 3 cm opposite to the approach axis, gripper unchanged; it keeps any grasp and never releases (clearance or a better view).\nSTRATEGIES:\n- rim_pinch (bowls, open containers): the executor uses the top-down episode-start orientation; if the hand is turned (e.g. after a handle), grasp_with first restores it and returns reason orientation_restored so you can choose side in the new top-down wrist view. side (wrist_left | wrist_right) picks the rim point at the left or right of the container in the UPRIGHT wrist image. The executor puts the grip axis over that rim so the wall goes between the open fingers, lowers until a fingertip touches the container floor, then closes on the wall. Choose the side with free space next to the container (no neighbouring object within about 4 cm). Never centre the hand over a container wider than the 79 mm opening. The hand body is about 20 cm long along the jaw (wrist-image left-right), 6 cm across, its underside about 3 cm above the grip point: when the fingers reach the container floor, nothing taller than the container may lie within 10 cm of the grip along the jaw or 3 cm across (an open drawer counts). The executor aligns on the pointed rim from any hover where the whole container is visible, so after an aligned failure change the side or clear the obstacle rather than the hover. Before grasp_with, reach a hover 5-10 cm above the rim (or just above anything overhanging it, e.g. an open drawer front) with the whole container, including the chosen side, visible in the wrist image while the hand is top-down (a tilted camera looks forward and can show objects that are out of top-down reach). If grasp_with fails with orient_budget, orient_stall or pose_drift_reach_limit, the hand cannot become top-down there: move along robot_base_direction_world and up before trying again; an object beyond that point is out of reach for rim_pinch. A container held this way hangs off-centre: its centre is about one radius from the grip point along the jaw axis, toward wrist-image right for wrist_left and left for wrist_right.\n- frontal_bar_pinch (handles, horizontal bars): approach (world_-y | world_+y | world_-x | world_+x) is the horizontal world direction in which the hand moves toward the bar, from its free front side (e.g. a bar whose front faces world +x needs world_-x). The executor turns the hand to that horizontal approach with the jaw vertical, aligns the grip axis on the bar, advances until the fingertips touch the surface behind the bar, backs off slightly, closes, and verifies with a short pull. Before grasp_with, reach a hover on the approach side, about level with the bar and 6-10 cm in front of it, with free space between hand and bar. Give max_travel_m to grasp and then pull in the same call (or use pull afterwards).\nREASONS (outcome.reason): goal_reached = arrived; reach_limit = the hand could not keep its orientation moving that way (workspace edge or contact; do not push further that way, move the other way); finger_contact = an open finger touched something (go around it, up first); uncontrolled_motion = the arm jumped; left_planning_grid = the hand overshot the move; blocked = little progress (contact, or the arm cannot move that way in this orientation); slow_arrival = most of the move done, out of steps; orientation_drift = position reached, orientation drifted; no_progress = no motion; held_object_contact = the held object hit something; lost_in_transport = the object dropped; no_support_contact_within_bound = lowered to 3 cm below the pick height without meeting a support; orientation_restored = the hand was turned top-down, choose again in the new view; orient_budget / orient_stall / pose_drift_reach_limit = the hand could not be turned to the grasp orientation here; beyond_recorded_reach_limit = rejected (past a known limit); grasp_with failures (local retries already used; the detail says what to change): mark_not_visible / pointed_not_a_bar / textureless_mark = the target point was not found in the wrist view; hover_beyond_frontal_reach / bar_point_beyond_reach / beyond_frontal_reach / frontal_stretch_limit = too far from the robot base for a turned hand; probe_failed / align_no_convergence / align_blocked / approach_drift / hover_off_bar_across / bar_point_far_along = the hand could not be aligned on it from this hover; no_contact_within_bound = nothing was touched; empty_close = the fingers closed on nothing; blocked_above_rim = the hand body landed on something before the fingers reached the rim (outward-shifted retries included); hold_lost / hold_jam = the grip did not hold; hover_<reason> = place_release's hover ended with <reason>.\nRULES. Targets: top_drawer_handle, bowl, top_drawer_interior. After a failure (local retries are already used), change something (hover position, side, strategy or target) instead of repeating the same choice; a failed close may have pushed the object, so re-check the images. A succeeded grasp_with means the executor verified the hold. If an object was dropped (state_summary.target_history.lost_at_step), it is still the task object: look for it near lost_eef_xyz, even if it no longer matches its described place. state_summary.loop_warning means recent choices keep failing: change the plan. You never declare completion; the episode is ended externally. If the task looks complete, choose retreat. Write situation first: one or two short sentences on what you see and where the target is relative to the fingers; while holding an object, say instead where the destination is relative to the held object in the EXTERNAL image and how high the object is above its pick height.\nTarget appearance (user-provided from the initial RGB view; not a pose or position): \"the only bowl in the scene (black outside, white with a black floral pattern inside)\". Use it to identify the task objects.",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "situation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 280
+          },
+          "skill": {
+            "type": "string",
+            "enum": [
+              "reach",
+              "grasp_with",
+              "pull",
+              "transport",
+              "place_release",
+              "retreat"
+            ]
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "target": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "top_drawer_handle",
+                      "bowl",
+                      "top_drawer_interior"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "strategy": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "rim_pinch",
+                      "frontal_bar_pinch"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "side": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "wrist_left",
+                      "wrist_right"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "approach": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "world_-y",
+                      "world_+y",
+                      "world_-x",
+                      "world_+x"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "waypoint_offset_m": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "number",
+                      "minimum": -0.075,
+                      "maximum": 0.075
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "more_waypoints_m": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "items": {
+                        "type": "number",
+                        "minimum": -0.075,
+                        "maximum": 0.075
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "max_travel_m": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0.02,
+                    "maximum": 0.16
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "target",
+              "strategy",
+              "side",
+              "approach",
+              "waypoint_offset_m",
+              "more_waypoints_m",
+              "max_travel_m"
+            ]
+          }
+        },
+        "required": [
+          "situation",
+          "skill",
+          "params"
+        ]
+      }
+    },
+    "bowl002": {
+      "root": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial",
+      "prompt_version": "agent-speedup-v1-prompt-2",
+      "model": "gpt-6-astra",
+      "reasoning": {
+        "effort": "medium"
+      },
+      "history_protocol": "agent-speedup-v1-stateless",
+      "request_counts": {
+        "decision": 9,
+        "pointing_coarse": 1,
+        "pointing_fine": 1
+      },
+      "decision_skill_counts": {
+        "reach": 5,
+        "grasp_with": 1,
+        "transport": 2,
+        "place_release": 1
+      },
+      "decisions_with_extra_waypoints": 0,
+      "decisions_grasp_then_pull": 0,
+      "examples": [
+        {
+          "kind": "decision",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000001-b15a3a335535487d888ad025b9db0310.request.json",
+            "sha256": "92b9ea4c5564a9ea3209edc6e3940bcb71516a4442a789ee9a5f64438dfa1192"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000001-b15a3a335535487d888ad025b9db0310.response.json",
+            "sha256": "55e09138c3aec7070b161f33f0076b73c6a60bfb4eff07d0bbcfe4e7a7264799"
+          },
+          "input_text": [
+            "{\"request\":\"decision\",\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"state_summary\":{\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"task_key\":\"bowl_plate\",\"target_description\":\"the black bowl between the plate and the ramekin (white with a black floral pattern); the other identical bowl is not the target\",\"step\":89,\"end_effector_position_m\":[-0.2146,-0.0108,1.1723],\"tool_axes_world\":{\"jaw_axis\":[-0.002,-1.0,-0.0],\"approach_axis\":[-0.047,0.0,-0.999],\"wrist_image_right\":[-0.002,-1.0,-0.0],\"wrist_image_up\":[0.999,-0.002,-0.047]},\"approach_tilt_from_straight_down_deg\":2.7,\"external_image_axes_world\":{\"image_right\":[0.077,0.997,0.0],\"image_up\":[-0.997,-0.075,0.0],\"source\":\"measured from the hand's own probe moves at episode start\"},\"finger_gap_mm\":79.67,\"gripper_state\":\"open\",\"holding_object\":false,\"held_with_strategy\":null,\"pulled_since_grasp_m\":null,\"held_height_above_pick_m\":null,\"hold_quality\":null,\"target_history\":null,\"reach_limits\":null,\"loop_warning\":null,\"consecutive_rejected_decisions\":0,\"last_outcome\":{\"skill\":\"calibrate\",\"params\":{},\"status\":\"succeeded\",\"reason\":\"calibrated\",\"step\":89,\"evidence\":{}},\"ledger\":[],\"counts\":{\"decisions\":0,\"grasp_with_calls\":0,\"grasp_attempts_reaching_align\":0,\"local_retries_used\":0,\"failed_in_a_row\":0},\"limits\":{\"max_waypoint_offset_m_per_axis\":0.075,\"pull_travel_range_m\":[0.02,0.16],\"place_lowering\":\"at most 0.15 m\"}}}",
+            "External camera (upright):",
+            "Wrist camera (upright):"
+          ],
+          "response": {
+            "situation": "The target bowl is partially clipped at the upper-left of the wrist view, between the plate above it and the ramekin below it. I will move toward it to bring the entire bowl into view before selecting a rim grasp.",
+            "skill": "reach",
+            "params": {
+              "target": null,
+              "strategy": null,
+              "side": null,
+              "approach": null,
+              "waypoint_offset_m": [
+                0.075,
+                0.075,
+                0.05
+              ],
+              "max_travel_m": null
+            }
+          }
+        },
+        {
+          "kind": "decision",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000006-b3f62f8720ab428e948837e463a52528.request.json",
+            "sha256": "858fae491810ede5f5bbc288c8de228f8d09ca96b0e8b1c2061fa901597cbda6"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000006-b3f62f8720ab428e948837e463a52528.response.json",
+            "sha256": "b8475d37c1736bff564c725a184165be047c93d7d623b8c5b07ce54707f5d8a0"
+          },
+          "input_text": [
+            "{\"request\":\"decision\",\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"state_summary\":{\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"task_key\":\"bowl_plate\",\"target_description\":\"the black bowl between the plate and the ramekin (white with a black floral pattern); the other identical bowl is not the target\",\"step\":170,\"end_effector_position_m\":[-0.0427,0.2312,1.1185],\"tool_axes_world\":{\"jaw_axis\":[-0.005,-1.0,0.014],\"approach_axis\":[-0.074,-0.014,-0.997],\"wrist_image_right\":[-0.005,-1.0,0.014],\"wrist_image_up\":[0.997,-0.006,-0.074]},\"approach_tilt_from_straight_down_deg\":4.3,\"external_image_axes_world\":{\"image_right\":[0.077,0.997,0.0],\"image_up\":[-0.997,-0.075,0.0],\"source\":\"measured from the hand's own probe moves at episode start\"},\"finger_gap_mm\":79.99,\"gripper_state\":\"open\",\"holding_object\":false,\"held_with_strategy\":null,\"pulled_since_grasp_m\":null,\"held_height_above_pick_m\":null,\"hold_quality\":null,\"target_history\":null,\"reach_limits\":null,\"loop_warning\":null,\"consecutive_rejected_decisions\":0,\"last_outcome\":{\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[-0.075,0.0316,0.04]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"step\":170,\"evidence\":{\"measured_displacement_m\":[-0.0719,0.0306,0.038],\"final_error_m\":0.0038,\"progress_fraction\":0.9585,\"final_angle_deg\":0.2695,\"max_gap_rise_mm\":null}},\"ledger\":[{\"n\":2,\"step\":107,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,0.075,0.05]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[0.0731,0.0723,0.0491],\"progress_fraction\":0.9718,\"final_angle_deg\":0.5683,\"external_image_shift_px_right_down\":[49.2,19.3],\"end_xyz\":[-0.141,0.061,1.221],\"tilt_from_straight_down_deg\":3.3},{\"n\":3,\"step\":123,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,0.075,0.0]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[0.0724,0.0722,0.0009],\"progress_fraction\":0.964,\"final_angle_deg\":0.5187,\"external_image_shift_px_right_down\":[49.2,19.1],\"end_xyz\":[-0.069,0.134,1.222],\"tilt_from_straight_down_deg\":3.7},{\"n\":4,\"step\":140,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.075,0.05,-0.075]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[0.072,0.0485,-0.0714],\"progress_fraction\":0.9585,\"final_angle_deg\":0.3444,\"external_image_shift_px_right_down\":[31.7,19.5],\"end_xyz\":[0.003,0.182,1.151],\"tilt_from_straight_down_deg\":4.0},{\"n\":5,\"step\":155,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[0.025,0.018,-0.075]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[0.0262,0.0185,-0.0704],\"progress_fraction\":0.9528,\"final_angle_deg\":0.567,\"external_image_shift_px_right_down\":[12.2,7.1],\"end_xyz\":[0.029,0.201,1.081],\"tilt_from_straight_down_deg\":4.6},{\"n\":6,\"step\":170,\"skill\":\"reach\",\"params\":{\"waypoint_offset_m\":[-0.075,0.0316,0.04]},\"status\":\"succeeded\",\"reason\":\"goal_reached\",\"measured_displacement_m\":[-0.0719,0.0306,0.038],\"progress_fraction\":0.9585,\"final_angle_deg\":0.2695,\"external_image_shift_px_right_down\":[26.5,-21.2],\"end_xyz\":[-0.043,0.231,1.119],\"tilt_from_straight_down_deg\":4.3}],\"counts\":{\"decisions\":5,\"grasp_with_calls\":0,\"grasp_attempts_reaching_align\":0,\"local_retries_used\":0,\"failed_in_a_row\":0},\"limits\":{\"max_waypoint_offset_m_per_axis\":0.075,\"pull_travel_range_m\":[0.02,0.16],\"place_lowering\":\"at most 0.15 m\"}}}",
+            "External camera (upright):",
+            "Wrist camera (upright):"
+          ],
+          "response": {
+            "situation": "The target bowl is fully visible just above the fingertips in the wrist view, with the plate beyond it. Its wrist-right rim has clear surrounding space for a pinch.",
+            "skill": "grasp_with",
+            "params": {
+              "target": "black_bowl",
+              "strategy": "rim_pinch",
+              "side": "wrist_right",
+              "approach": null,
+              "waypoint_offset_m": null,
+              "max_travel_m": null
+            }
+          }
+        },
+        {
+          "kind": "pointing_coarse",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000007-ffe14eecf4be47c0bd82be9ff40f0d45.request.json",
+            "sha256": "d24c519abb199082461050aa950acd538528df651a4b44de87526a610855cd3a"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000007-ffe14eecf4be47c0bd82be9ff40f0d45.response.json",
+            "sha256": "c5caf8b72528155389564ec238d0deba2bceb85aca95fe135d2a999c05f4006c"
+          },
+          "input_text": [
+            "{\"request\":\"pointing\",\"stage\":\"coarse\",\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"target_phrase\":\"the point on the visible top edge (rim) of the black bowl at its far right side, on the horizontal line through the black bowl's centre\",\"context\":{\"strategy\":\"rim_pinch\",\"target\":\"black_bowl\",\"side\":\"wrist_right\",\"target_appearance\":\"the black bowl between the plate and the ramekin (white with a black floral pattern); the other identical bowl is not the target\"}}",
+            "Wrist camera (upright) with 64 numbered grid cells:"
+          ],
+          "response": {
+            "cell_id": 46
+          }
+        },
+        {
+          "kind": "pointing_fine",
+          "request": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000008-a5fad09380954f88af55ba928ee0bbab.request.json",
+            "sha256": "25a214869e6f3e2ec0738a972e528609764ebf5e2be24bcfbf000e855970af53"
+          },
+          "response_source": {
+            "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/requests/000008-a5fad09380954f88af55ba928ee0bbab.response.json",
+            "sha256": "eca4bf0524d895cb408c79a54861be5b3decc5dd7fd811b13961abbb9db983d2"
+          },
+          "input_text": [
+            "{\"request\":\"pointing\",\"stage\":\"fine\",\"task\":\"pick up the black bowl between the plate and the ramekin and place it on the plate\",\"target_phrase\":\"the point on the visible top edge (rim) of the black bowl at its far right side, on the horizontal line through the black bowl's centre\",\"context\":{\"strategy\":\"rim_pinch\",\"target\":\"black_bowl\",\"side\":\"wrist_right\",\"target_appearance\":\"the black bowl between the plate and the ramekin (white with a black floral pattern); the other identical bowl is not the target\",\"cell_id\":46}}",
+            "Wrist-camera crop (upright, enlarged 5x) with 64 numbered points:"
+          ],
+          "response": {
+            "point_id": 13
+          }
+        }
+      ],
+      "actual_instructions": "agent-speedup-v1-prompt-2. You supervise a robot arm with a parallel-jaw gripper. Task: \"pick up the black bowl between the plate and the ramekin and place it on the plate\". Zero-shot: no demonstrations, object poses, depth or camera calibration are available.\nROLE. Each request, choose ONE macro skill and its discrete parameters. A local executor runs it at 20 Hz with its own sensing: it aligns the gripper on a target with the wrist camera, finds depth by touch (motion stall or finger deflection), closes the gripper only after its own sensor checks pass, verifies a grasp with a short lift or pull, and retries a failed grasp locally. You never output poses, rotations, depths or gripper commands. You are asked again when the skill ends; state_summary then holds a ledger of finished skills and the last outcome (status, reason, evidence). The episode starts with an automatic gripper calibration.\nINPUTS. Both images are UPRIGHT (not mirrored). state_summary gives the measured end-effector position (the grip point midway between the fingertips; world frame, metres, +z up), the finger gap in mm, and tool_axes_world: world unit vectors for wrist-image right (the jaw axis, along which the fingers open), wrist-image up, and the approach axis (where the wrist camera looks and the fingers point). tool_axes_world apply ONLY to the WRIST image: something seen to the right in the wrist image lies along +wrist_image_right. The EXTERNAL image comes from a different, fixed camera with its own axes; never convert external-image directions with tool_axes_world. external_image_axes_world (when present) gives the world horizontal direction for right and up in the EXTERNAL image, measured from the hand's own probe moves at the episode start: to move something toward image-right in the external view, move along image_right; toward image-up (farther back in the external view), along image_up. Each ledger line's external_image_shift_px_right_down says how far that move shifted the hand in the external image (positive = right / down), so you can check that a move went the way you intended. The wrist camera sits 5 cm from the grip axis toward wrist-image up, so a point in line with the fingers appears below the wrist-image centre; the fingertips show at the bottom of the wrist image. approach_tilt_from_straight_down_deg is 0 for a top-down hand. Robot facts: maximum finger opening 79 mm; the jaw is horizontal in the wrist image, so a bar that can be pinched appears vertical between the fingers. The arm's reach is limited: near the edge of its workspace (far from the robot base) the hand cannot stay top-down, tilts and moves erratically; the executor then stops with reach_limit.\nSKILLS (set every parameter a skill does not use to null):\n- reach(waypoint_offset_m): move the grip point by [dx, dy, dz] world metres relative to its CURRENT position, each component within +/-0.075; chain calls for longer moves. Orientation and gripper are unchanged. It does not see obstacles: route around objects with intermediate waypoints (e.g. up first). Moves that would push further past a recorded reach_limit (state_summary.reach_limits) are rejected.\n- grasp_with(target, strategy, side or approach): sensor-gated grasp of target with a strategy below. Meanwhile the executor asks you separate short pointing questions (numbered marks on the wrist image).\n- pull(max_travel_m): with a grasped bar, pull back opposite to the approach axis until the TOTAL travel since the grasp (including the 2 cm verification pull; see state_summary.pulled_since_grasp_m) reaches max_travel_m (0.02-0.16 m); stops early at a stall or end-stop. Do not over-pull: an over-extended drawer can block later moves.\n- transport(waypoint_offset_m, target=destination): like reach while holding an object, keeping the grasp orientation; it stops at once if the hold is lost (lost_in_transport) or if the held object presses against something (held_object_contact; the hand is then lifted 1 cm). While holding, the wrist view is mostly blocked by the object: judge the destination in the EXTERNAL image with external_image_axes_world. Carry a held object 3-6 cm above its pick height (state_summary.held_height_above_pick_m) when the path is clear; a raised object looks farther back in the external image than its footprint. Within about 5 cm of the destination use moves of at most 3 cm.\n- place_release(waypoint_offset_m, target=destination): move horizontally (and up, never down) by the offset to bring the held object over the destination, then lower with touch sensing until the object meets a support (down to 3 cm below the pick height), open, back away 3 cm. Aim the held object's centre (not the grip point) over the destination centre. With [0, 0, 0] it lowers and releases at the current position; for a held handle it simply opens and backs away (the way to let go of a handle).\n- retreat(): back away 3 cm opposite to the approach axis, gripper unchanged; it keeps any grasp and never releases (clearance or a better view).\nSTRATEGIES:\n- rim_pinch (bowls, open containers): the executor uses the top-down episode-start orientation; if the hand is turned (e.g. after a handle), grasp_with first restores it and returns reason orientation_restored so you can choose side in the new top-down wrist view. side (wrist_left | wrist_right) picks the rim point at the left or right of the container in the UPRIGHT wrist image. The executor puts the grip axis over that rim so the wall goes between the open fingers, lowers until a fingertip touches the container floor, then closes on the wall. Choose the side with free space next to the container (no neighbouring object within about 4 cm). Never centre the hand over a container wider than the 79 mm opening. Before grasp_with, reach a hover 5-10 cm above the rim with the whole container, including the chosen side, visible in the wrist image while the hand is top-down (a tilted camera looks forward and can show objects that are out of top-down reach). If grasp_with fails with orient_budget, orient_stall or pose_drift_reach_limit, the hand cannot become top-down there: move back toward the robot base and up before trying again; an object beyond that point is out of reach for rim_pinch. A container held this way hangs off-centre: its centre is about one radius from the grip point along the jaw axis, toward wrist-image right for wrist_left and left for wrist_right.\n- frontal_bar_pinch (handles, horizontal bars): approach (world_-y | world_+y | world_-x | world_+x) is the horizontal world direction in which the hand moves toward the bar, from its free front side (e.g. a bar whose front faces world +x needs world_-x). The executor turns the hand to that horizontal approach with the jaw vertical, aligns the grip axis on the bar, advances until the fingertips touch the surface behind the bar, backs off slightly, closes, and verifies with a short pull. Before grasp_with, reach a hover on the approach side, about level with the bar and 6-10 cm in front of it, with free space between hand and bar. Then use pull.\nREASONS (outcome.reason): goal_reached = arrived; reach_limit = workspace edge, the hand could not keep its orientation moving that way (do not push further that way; come back toward the robot); uncontrolled_motion = the arm jumped near its workspace edge; left_planning_grid = the hand overshot the planned move; blocked = little progress (something in the way or the workspace edge); slow_arrival = most of the move done, out of steps; orientation_drift = position reached but orientation drifted (workspace edge); no_progress = no motion at all; held_object_contact = the held object hit something; lost_in_transport = the object dropped; no_support_contact_within_bound = lowered to 3 cm below the pick height without meeting a support; orientation_restored = the hand was turned top-down, choose again in the new view; orient_budget / orient_stall / pose_drift_reach_limit = the hand could not be turned to the grasp orientation here; beyond_recorded_reach_limit = rejected, would push past a known limit; hover_<reason> = place_release's hover move ended with <reason>.\nRULES. Targets: black_bowl, plate. After a failure (local retries are already used), change something (hover position, side, strategy or target) instead of repeating the same choice; a failed close may have pushed the object, so re-check the images. A succeeded grasp_with means the executor verified the hold. If an object was dropped (state_summary.target_history.lost_at_step), it is still the task object: look for it near lost_eef_xyz, even if it no longer matches its described place. state_summary.loop_warning means recent choices keep failing: change the plan. You never declare completion; the episode is ended externally. If the task looks complete, choose retreat. Write situation first: one or two short sentences on what you see and where the target is relative to the fingers; while holding an object, say instead where the destination is relative to the held object in the EXTERNAL image and how high the object is above its pick height.\nTarget appearance (user-provided from the initial RGB view; not a pose or position): \"the black bowl between the plate and the ramekin (white with a black floral pattern); the other identical bowl is not the target\". Use it to identify the task objects.",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "situation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 280
+          },
+          "skill": {
+            "type": "string",
+            "enum": [
+              "reach",
+              "grasp_with",
+              "pull",
+              "transport",
+              "place_release",
+              "retreat"
+            ]
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "target": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "black_bowl",
+                      "plate"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "strategy": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "rim_pinch",
+                      "frontal_bar_pinch"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "side": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "wrist_left",
+                      "wrist_right"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "approach": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "world_-y",
+                      "world_+y",
+                      "world_-x",
+                      "world_+x"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "waypoint_offset_m": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "number",
+                      "minimum": -0.075,
+                      "maximum": 0.075
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "max_travel_m": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0.02,
+                    "maximum": 0.16
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "target",
+              "strategy",
+              "side",
+              "approach",
+              "waypoint_offset_m",
+              "max_travel_m"
+            ]
+          }
+        },
+        "required": [
+          "situation",
+          "skill",
+          "params"
+        ]
+      }
+    }
+  },
+  "slide_ready_facts": [
+    {
+      "topic": "范围与版本",
+      "text_zh": "以已完成的 drawer003 和 bowl002 冻结源码与实际请求为依据。drawer003 使用 prompt-5，bowl002 使用 prompt-2；不能把后来 drawer 的批量 waypoint 等功能追溯到 bowl002。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:37",
+        "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/frozen_source/agent_speedup_v1_client.py:37"
+      ]
+    },
+    {
+      "topic": "总框架",
+      "text_zh": "Astra 负责语义决策和视觉指点；本地技能执行器负责姿态、横向对齐、接近深度、夹爪闭合及抓持验证。宏技能结束后回到 Astra；技能内部只有按需指点请求，无逐步动作选择请求。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:1",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:308",
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:20"
+      ]
+    },
+    {
+      "topic": "输入",
+      "text_zh": "决策输入是任务语言、当前外部相机与腕部相机双 512×512 RGB、机器人状态摘要。图像校正为正向且不镜像。不是单图三维场景重建接口。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:447",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:558",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/requests/000001-aad999441b694792bfc198c6e5bff463.request.json"
+      ]
+    },
+    {
+      "topic": "状态与历史",
+      "text_zh": "state8 经本地代码转为 grip 世界位置、工具轴、指间距、抓持状态、已拉距离、最近结果与最多 12 条技能 ledger；drawer003 另有最近 3 次决策摘要、失败/碰撞反应与可达性记忆。每次只有一条 user message，不保存整段聊天或旧图像。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:447",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:483",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:34"
+      ]
+    },
+    {
+      "topic": "允许与禁止的信息",
+      "text_zh": "允许任务描述、可观测机器人状态、机器人夹爪/腕部安装几何、机器人自身探测动作得到的图像响应；不向策略提供深度、已标定相机投影参数、物体真值位姿、示范或模拟器接触真值。无预先相机标定不等于无任何机器人几何先验。",
+      "sources": [
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:420",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:115",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:834"
+      ]
+    },
+    {
+      "topic": "模型调用",
+      "text_zh": "gpt-6-astra，reasoning.effort=medium，ChatGPT subscription，strict JSON schema。decision 输出 situation→skill→params 的有序对象；不是 OpenAI 原生工具调用，而是本地策略解析 JSON 后调度技能。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:90",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:483",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:744"
+      ]
+    },
+    {
+      "topic": "六个技能",
+      "text_zh": "reach：保持姿态/夹爪的 waypoint 移动；grasp_with：选目标和 rim_pinch 或 frontal_bar_pinch；pull：保持抓持向后拉；transport：携物 waypoint 移动且监测丢失；place_release：移动到上方→接触式降低→松开退让；retreat：沿接近轴反方向退 3 cm。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:159",
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:395"
+      ]
+    },
+    {
+      "topic": "参数界限",
+      "text_zh": "waypoint_offset_m 为相对当前位置的世界坐标偏移，每轴 ±7.5 cm；drawer003 more_waypoints_m 允许至多 2 个额外偏移（共 3 段）。pull 总行程 2–16 cm，包含 2 cm 验证拉动；frontal grasp 可附带 max_travel_m 合并抓与拉。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:90",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:159",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:954"
+      ]
+    },
+    {
+      "topic": "标记指点",
+      "text_zh": "Coarse：512 图上 8×8 共 64 个格，选 cell_id。Fine：在选中格周围裁剪再放大，叠加 8×8 点，选 point_id；0 表示看不见。普通碗裁剪 96×96 放大 5 倍成 480×480；drawer003 横杆用 128×128 放大 4 倍成 512×512。跟踪只读无标记原图。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/mark_prompting.py:1",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/mark_prompting.py:118",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:565",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:109"
+      ]
+    },
+    {
+      "topic": "横杆指点的坐标处理",
+      "text_zh": "drawer003 依据机器人姿态将腕图转至重力向上，回答再映回腕图坐标。横杆点须通过梯度结构方向检查，失败可从 coarse 重问一次；它不使用场景真值来校正标记。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:565",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/mark_prompting.py:159"
+      ]
+    },
+    {
+      "topic": "事件驱动",
+      "text_zh": "初始化先自动夹爪标定并探测外部图像方向；此后在技能结束或局部重试用完后请求下一个 decision。每个 act 最多 2 个 decision、最多 2 轮指点推进，以避免无动作循环；这不是全任务调用上限。",
+      "sources": [
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:308",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1.py:826"
+      ]
+    },
+    {
+      "topic": "加速的设计原因",
+      "text_zh": "把高频执行从大模型移到本地闭环；模型只选宏技能及少量参数；stateless 当前观测与精简 ledger 限制输入历史；短标记 ID、传感器驱动的局部重试减少往返；drawer003 将多 waypoint 与抓拉/释放复位合并。其收益必须用实测结果说明，设计文档的 110–245 s 等预测不是当前测量。",
+      "sources": [
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:42",
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:443",
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:754",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:1"
+      ]
+    },
+    {
+      "topic": "场的职责边界",
+      "text_zh": "SpeedUp v1 的场由本地代码根据模型选的 waypoint 合成，是局部目标距离场，且 v1 无 repulsor；不是 Astra 直接重建的场景 SDF，也不能据热图声称场中编码了抽屉/障碍几何。模型需用中间 waypoint 选路，执行器以可观测反馈停下。",
+      "sources": [
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:399",
+        "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/agent_speedup_v1_client.py:159"
+      ]
+    },
+    {
+      "topic": "完成判据",
+      "text_zh": "模型输出不含完成标志。实验由 runner 每步检查 raw LIBERO success；技能 hold_pass、场景视觉判断和任务成功应区分；接触/碰撞记录不自动取消 raw LIBERO 成功。",
+      "sources": [
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:186",
+        "/workspace/gpt_field/agent_SpeedUp_v1.md:135",
+        "/workspace/gpt_field/AGENTS.md:51"
+      ]
+    }
+  ],
+  "applicable_constraints_zh": [
+    "当前用户只要求讲解与 PDF；无需启动 live model/simulator/full-task。",
+    "保留全部既有代码和实验结果；本任务只新增 presentations/speedup_v1 文件。",
+    "报告 medium/subscription、真实 LIBERO 完成与 video-excluded time；不可把停止/未完成试验计作完成速度。",
+    "冻结实际源码/请求优先于设计文档中的旧状态和预估数字。"
+  ],
+  "caveats_zh": [
+    "设计文件头部仍写未 live，且早期细节与后来修复共存；不要直接拿该文档状态当最终事实。",
+    "actual state_summary.place_lowering 的初始说明 at most0.15m 随已有 pick height 改为 below pick 3cm；执行实现可到0.30m，技术详情应以 frozen code 为准。",
+    "请求日志中的 grid33/5mm 是继承客户端元数据，不可据此认定实际本地 planner 分辨率；需核对 frozen WaypointReach 与 FineDistancePlanner。",
+    "模型的 situation 是对外生成的简短解释文本，不是其内部推理过程。"
+  ]
+}

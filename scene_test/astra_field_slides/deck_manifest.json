@@ -1,0 +1,36 @@
+{
+  "pdf": "/workspace/gpt_field/scene_test/astra_field_slides/astra_field_explained_zh.pdf",
+  "page_count": 17,
+  "language": "zh-CN",
+  "page_size_pt": [
+    960,
+    540
+  ],
+  "scope": "Existing single RGB Astra drawer003 closed step60/open step552 reconstruction and field_planning_v2; no new inference or planning.",
+  "source_sha256": {
+    "/workspace/gpt_field/scene_test/astra_scene/RESULTS.txt": "aa1f132663926241f25c310b056e12817f4a629787a4d1dcd87c2c7712df72ba",
+    "/workspace/gpt_field/scene_test/astra_scene/comparison_summary.json": "60964f6731c0426d358831ad8f2e4d6e813e0976d5baece7cfd226f33d7ab637",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/instructions.txt": "1d01aae912d386546e49aa913fd9d2e1d85fecce84f53e4b32b3a7c644eab3ae",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/schema.json": "b400d4e3e1be8256b89482629922df163cec0e52078c5cccacbf46661b8ec471",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/manifest.json": "4c30610f450abd67959458ef9a2634e59349d517e3dde5d1067523ee38ed6d14",
+    "/workspace/gpt_field/scene_test/astra_scene/field_csg.py": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e",
+    "/workspace/gpt_field/scene_test/astra_scene/build_fields.py": "67a9407f6c19f904faf97139562a6158fcfaa040dcf492c75f1f5cd6fa171bf9",
+    "/workspace/gpt_field/scene_test/astra_scene/evaluate_fields.py": "d4b0547658da9e89594ce311262ca0ea89d71ea574a2a2d2c619f98a57d82ec2",
+    "/workspace/gpt_field/scene_test/field_planning_v2/planning_fields.py": "8dbeba99f5c2c42341158a10438b3eab67022c1d9b24f01f5eb4025abcdea6c9",
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/planning_001/plans.json": "72159aebcc3b4a144ffa7350d8930918eff13293c25bce17fcfeda12dc0ca191",
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/evaluation_001/metrics.json": "9a57adb0bfbf202354a174c6d143e1483de58d22726e96869dac65bf9fa5fbb3",
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/failure_diagnostics_001/report.json": "14956e381919d3ed66a98ed7d8c682e0e11f25d4cce0b86208f7d35b3d27ba42",
+    "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/contact_skills.py": "48b4dda3762a098c52525e20cc3862917642dc649640295699031a534cca2098",
+    "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/fine_distance_planner.py": "3f97d6aad048f8a39527deb643582700ed53b905feb0b807e0233c292caaa239"
+  },
+  "pdf_sha256": "ad534cd3543bee085df880c9a492f33327879cfedc4871761ecbde8d9980916c",
+  "images_manifest": "/workspace/gpt_field/scene_test/astra_field_slides/assets/evidence_figures_manifest.json",
+  "font_license": "/workspace/gpt_field/scene_test/astra_field_slides/assets/OFL.txt",
+  "caveats": [
+    "Planning directly queries self-excluded analytic CSG, not original saved2mm samples.",
+    "Scene MAE is visible-camera-Z depth error, not 3D closest-surface distance.",
+    "B uses six model-derived view rays and is not a subtraction of A/C.",
+    "32/40 is finite-sampled path count, not reconstruction accuracy or task success.",
+    "No continuous collision certificate or complete hidden geometry evaluation."
+  ]
+}

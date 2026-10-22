@@ -1,0 +1,287 @@
+{
+  "status": "complete",
+  "reconstruction_panels": [
+    {
+      "snapshot": "drawer003_closed_step60",
+      "panels": [
+        "closed_rgb.png",
+        "closed_gt_depth.png",
+        "closed_decoded_depth.png",
+        "closed_absolute_error.png"
+      ],
+      "valid_reference_pixels": 262144,
+      "decoded_misses": 0,
+      "target_cabinet_pixels": 36143,
+      "target_hit_pixels": 36143,
+      "target_mae_on_hits_mm": 70.98786199409149,
+      "error_above_display_cap": 59763
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "panels": [
+        "open_rgb.png",
+        "open_gt_depth.png",
+        "open_decoded_depth.png",
+        "open_absolute_error.png"
+      ],
+      "valid_reference_pixels": 262144,
+      "decoded_misses": 0,
+      "target_cabinet_pixels": 45439,
+      "target_hit_pixels": 45439,
+      "target_mae_on_hits_mm": 98.00803562960536,
+      "error_above_display_cap": 81435
+    }
+  ],
+  "depth_color_limits_m": [
+    0,
+    4
+  ],
+  "error_color_limits_m": [
+    0,
+    0.5
+  ],
+  "gray": "invalid reference ray",
+  "cyan": "valid reference ray with no positive decoded hit",
+  "camera_depth_semantics": "camera Z; identical saved reference-camera rays; native predicted scale, no alignment",
+  "rrt_panels": {
+    "source": "/workspace/gpt_field/scene_test/field_planning_v2/video_001/previews/22_030.png",
+    "snapshot": "drawer003_open_step552",
+    "case_id": "base_negative",
+    "seed": 17,
+    "scene_crop_box": [
+      24,
+      112,
+      624,
+      712
+    ],
+    "field_crop_box": [
+      656,
+      112,
+      1256,
+      712
+    ],
+    "source_kind": "cropped saved planning video preview",
+    "frame_index": 30
+  },
+  "collision": {
+    "failure_row": {
+      "snapshot": "drawer003_open_step552",
+      "case_id": "wrist_negative",
+      "seed": 17,
+      "first_invalid_sample_index": 33,
+      "q7": [
+        0.0025682340910677375,
+        0.5169359511551379,
+        -0.0043780579924078905,
+        -1.5997556967619508,
+        0.005287650813237378,
+        1.9004518337391412,
+        0.7816515284884364
+      ],
+      "original_native_truth": {
+        "valid": false,
+        "joint_limits_valid": true,
+        "environment_collision": true,
+        "self_collision": false,
+        "contacts": [
+          {
+            "geom1": "wooden_cabinet_1_g11",
+            "geom2": "gripper0_finger1_collision",
+            "distance_m": -0.0001997669741185505,
+            "kind": "environment"
+          }
+        ],
+        "penetration_tolerance_m": 1e-07,
+        "environment_min_distance_m": -0.0001997669741185505,
+        "environment_closest_pair": [
+          "gripper0_finger1_collision",
+          "wooden_cabinet_1_g11"
+        ],
+        "self_min_distance_m": 0.0009971689975443927,
+        "self_closest_pair": [
+          "robot0_link0_collision",
+          "robot0_link1_collision"
+        ],
+        "distance_cap_m": 0.05,
+        "distance_semantics": "native eligible geom pairs using scoped native GJK; positive distances capped; original contacts unchanged",
+        "distance_backend": "MuJoCo native GJK geomDistance, scoped nativeccd enable flag"
+      },
+      "contact_queries": [
+        {
+          "geom1": "wooden_cabinet_1_g11",
+          "geom2": "gripper0_finger1_collision",
+          "native_contact_distance_m": -0.0001997669741185505,
+          "native_contact_position_world_m": [
+            -0.014827537904088521,
+            -0.04442061748214963,
+            1.1222544473641203
+          ],
+          "native_contact_position_camera_m": [
+            -0.04442049428844703,
+            -0.043362701393867664,
+            0.8305897738419415
+          ],
+          "predicted_environment_state_at_contact": 1,
+          "predicted_environment_phi_m": 0.15057950571155296,
+          "predicted_environment_domain_supported": true,
+          "predicted_free_at_actual_contact_position": true,
+          "minimum_implicit_component": "dark_left_cabinet",
+          "minimum_component_phi_m": 0.15057950571155296,
+          "component_selection_semantics": "minimum implicit scalar among retained union operands; not claimed exact nearest Euclidean surface",
+          "phi_exceeds_absolute_contact_depth": true
+        }
+      ],
+      "predicted_robot_surface_at_same_dense_truth_pose": {
+        "points": 172411,
+        "free": 172411,
+        "occupied": 0,
+        "unknown": 0,
+        "supported": 172411,
+        "supported_ambiguous": 0,
+        "known_initial_self_points": 0,
+        "novel_region_points": 172411,
+        "initial_self_overrides_raw_unknown": 0,
+        "initial_self_overrides_raw_occupied_band": 0,
+        "initial_self_already_raw_free": 0,
+        "self_image_associated_points": 0
+      },
+      "robot_self_check_at_same_pose": {
+        "valid": true,
+        "self_collision": false,
+        "joint_limits_valid": true,
+        "contacts": []
+      },
+      "diagnostic_interpretation": "Predicted environment is free at actual native contact positions: representation/geometry mismatch contributes, not merely the planner skipping an already-represented obstacle."
+    },
+    "render_pixels": [
+      600,
+      600
+    ],
+    "contact_pixel_xy": [
+      260.7658752361814,
+      261.6882576321732
+    ],
+    "zoom_crop_box": [
+      175,
+      176,
+      345,
+      346
+    ],
+    "camera": "native agentview",
+    "q_mode": "saved exact first native collision q7; no dynamics",
+    "display_only": "Hide geomgroup0 duplicate collision shapes and sites; original visual scene remains unchanged",
+    "native_contact_recheck_distance_difference_m": 0.0,
+    "native_contact_recheck_position_difference_m": 0.0,
+    "purpose": "Posthoc illustration only; no ground-truth input to planning"
+  },
+  "consumed_sha256": {
+    "/workspace/gpt_field/scene_test/astra_scene/runs/evaluation_001/arrays/drawer003_closed_step60_reference_and_analytic.npz": "a672d98f6c31a309fe0b7d52ee59f96418126702b3a594a510c2cb81021916c7",
+    "/workspace/gpt_field/scene_test/astra_scene/runs/evaluation_001/arrays/drawer003_closed_step60_h2mm.npz": "5f8d97148e67d3f70c3f5fe2ef869a5796ca694a186c1fd8fbd9a03fe52abb04",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/inputs/drawer003_closed_step60.png": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+    "/workspace/gpt_field/scene_test/astra_scene/runs/evaluation_001/arrays/drawer003_open_step552_reference_and_analytic.npz": "1cedf703aac012f7655c29be91d06c4b9fa33fcacc99e8fb0d712e219b046426",
+    "/workspace/gpt_field/scene_test/astra_scene/runs/evaluation_001/arrays/drawer003_open_step552_h2mm.npz": "954819c293c84f3e1730d9055b03962943cc6d9e066e0918a6e6702858907058",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/inputs/drawer003_open_step552.png": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+    "/workspace/gpt_field/scene_test/field_planning_v2/runs/failure_diagnostics_001/report.json": "14956e381919d3ed66a98ed7d8c682e0e11f25d4cce0b86208f7d35b3d27ba42",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger.stl": "2d07a740392f3b9b0816f65d64fff9927d3d57c897870fc4b6ff9c56fff3a0c8",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger_longer.stl": "8857e33ee59c3a395c3036a11e4f1731c88c203c821bb03ca97737a2d04cba27",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger_vis.stl": "e49613148a74f1ba9b5793813078e5becf15833e0296073dc1c523508be35ae4",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/hand.stl": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/hand_vis.stl": "fdeb1a924b8d0f1f997f47d6d8af102c7290a1d5144145efdc39501dc13f0fa1",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/mounts/meshes/rethink_mount/pedestal.stl": "f96ff12bfb347c77580e4392556b15e47ef7228711c45b0f1193b100af22866a",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link0.stl": "dfc6d94330de8ddb005b311bfdba9f3b8e1aa7c256b71592ee7ff32cb9a9a5aa",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link1.stl": "d24e332dffccf260b91d05dde17c5998bb9559d37da8608a8ee5213d9661f603",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link2.stl": "370f7605a0fae3529db169ded50f52f171024aa792d4d773bc84197301f6a039",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link3.stl": "0a8d638b9349c6c0eefc4e888636ac4838c4b27170f18a51699321118af709c1",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link4.stl": "0180ebb5772ec9840cb049750cffb29a9ddc90311752a16ea34757782ef9e48d",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link5.stl": "dd17e688c7870e722283525879643d53a74c0024d328b0e14b034b54c8b6c31a",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link6.stl": "20b768e99a0e0440b5754dcca108016434e57937cc356acd9c352ccd3cb27f77",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link7.stl": "92ac6afcf7574c034d3170d8a68e95ac9048ab9d0dd5bbd8311b86e551b9ab1c",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_0.obj": "6c4415add409c161a92dc7cccbecf6819a3a92aba3b0cf043cd513b58aa23257",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_1.obj": "ac248e0725c1eb29a0dd6490fc8d349dc57c5c3f51f15752266d4cc55753e1ee",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_10.obj": "b4b1a66f689dededc8c45cc2fc01aa3bdf8f2cf689ee83eb3db0f9400af9883f",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_11.obj": "3f22c57436629d8f1d06650f105a822cb3b85f071f3c268210561abf2812b809",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_2.obj": "e112cdf4c9071ae6c277ae9c92b165060d02bc8b954da7df24e67aaf11deede0",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_3.obj": "ba273f526f3b3d4e8489ddd89813f5d109f0e289ca993550c9a06beca5a83416",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_4.obj": "df932880c83025fdef4a8366926679c924adb395c3313aa445c151387c5a12b3",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_5.obj": "ae616a8d11339861af3b83d6bf1d0d1038c61984a7ddae5af93ffb96cc32a122",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_6.obj": "d9b40045d90e0202640437e66dc9b02c5c449b9169f97d70099dfc35a88f2eb4",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_7.obj": "c61618cad1396e6a134ba8b32ec754fc67bd576d411417142f1a36f4003c7017",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_8.obj": "82b9aedf8ff51ebde219529fa366c079311f5528203276cd1eedfcba90574d52",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link0_vis/link0_vis_9.obj": "00b9daacb7c18b0ab071b089515b9e87a8785abafb36cf63355e3b8afdce8022",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link1_vis/link1_vis.obj": "912779814d93a7d2c6f0413f6eb5042291b08e11b3dae769019aaa0ddb64e23f",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link2_vis/link2_vis.obj": "96c6ea002e2c6474ac1473014e3f0df1f90b7aa2beb5c6182671fda890a3cb74",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link3_vis/link3_vis_0.obj": "b2119dee4b4a5e3a5bdac57b7fa04d379da8af502860496946a90c1b904db590",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link3_vis/link3_vis_1.obj": "ebfed3850a693ac1a1b97a418742ec98355f7008de1e14037cdbdbc75a0d5fb9",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link3_vis/link3_vis_2.obj": "81e20d3187dcafcc4ce8bca69c74d6ad985491d263939a93b6aac8b478a4cc86",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link3_vis/link3_vis_3.obj": "53abcab5d93f13797f34450929dfe8c0ddbcd72266130611487d10be23cd736a",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link4_vis/link4_vis_0.obj": "591f8533b4020ebbaafc4a4cb62c7e0988f204879dd1cbd30a78c3bc197f380b",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link4_vis/link4_vis_1.obj": "3c1a7e83814a54522b91dc069e2448b6f0ca10149869fd68713e97e9f1dd5d05",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link4_vis/link4_vis_2.obj": "931bdb58e44e8b328842708e00ef80c0e8e48f47949804b7c8b10dc8e9d8dbf2",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link4_vis/link4_vis_3.obj": "dd8ab577710fbe454ca463f0d69edf36f717d2868355288a76b77f586a384aa9",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link5_vis/link5_vis_0.obj": "65417fb042a34286b6aa5fee2e0a7ff60a567f1296738f985b666cd319fb3d7a",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link5_vis/link5_vis_1.obj": "f61bc98778d9e22a422ac2a339603d606b8e6af7727d8629a442cc04419a2789",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link5_vis/link5_vis_2.obj": "ebca16efc559c30fa812168764d0b4b353049965bdc6cbbf25708a945948b2b4",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_0.obj": "e66366f5bdd2a04b75d17abd251019bf59b57f3f74dcfdbefa870c437121b790",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_1.obj": "05fa8ccb4bc50585862c374a2c1e2a072c6422b6e3088404767d5bb7fc714500",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_10.obj": "a846ef010d109e6e66bfd67f995263c4cef5e2e0a56560c3ce6831e0abc8c07b",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_11.obj": "ffd2103606b3288c98c3c3f29cccb3e202dc12d92d58225e4fbf5ef023a8c28f",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_12.obj": "bc34f87c700531402a64cde7f7f9f25c4f5351ce6ec96f3b078e75a55b70bd42",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_13.obj": "a476a77077eeec8bdb0db07163dd20f8213e2106c6d88ac554346293434bd479",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_14.obj": "289cbb1e35b09f158dcaf7025d815d76f935e2d5ca956bb03d25c5f10748af51",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_15.obj": "f66985ec70db62eec18669848e53c1509ac4e68d6b97a58874fedc180c1cd85c",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_16.obj": "45af20fc788566fdc76053167264685792f20f22c683dfd0cc382d8c8bbb640a",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_2.obj": "a7aaca55658be11af36f2388a1c674d6ce09973dd8b9f87c30bf00bb245b55e8",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_3.obj": "ad289bd24071568198d907b001ae659676637b6c868212ad1d49177a2352bb7b",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_4.obj": "606af8cc5fe30b63a2a28c0c78b423c780ca3b73cc88356570a92145941ffde8",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_5.obj": "06d573ce2e042a4ffbf080e79ae1cdc84e3a63e4d1bf72272d81410789bb61d6",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_6.obj": "4382b6e12dc5dbcc1ca3fdc595dd82e73e1dc4a6b8ceca545bfdd0338ca12d21",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_7.obj": "2777f33115993dec3af8eb6d614af6165ae2836ffd1ea4e41849ed32c5a60326",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_8.obj": "aef37fabd21f209461bdb9ed6873ebc3ded6807bb01ec88cf1a002499ae629d2",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link6_vis/link6_vis_9.obj": "c1a7246819060a248d61291ae3a9a629f7e11d866090f32729e6e434eda7cefd",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_0.obj": "2d35397b9d9289e3cfaa9de5cf689185b5d3b0bba7b204efffbc8443ea9c615d",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_1.obj": "32ca565d7e3923a9b10a536043845d28911756de976f51c84e426aea3cc719ab",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_2.obj": "da959a052900a8d03914b03bf0cd79662a49c2462e1737cc177591be33be5951",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_3.obj": "6af51159175526f823c37a59fc22e78ebad90809662d30e154da8cbabf355bd2",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_4.obj": "b72d69f2da72512b48c0c418a7169b023d5bcddb12e894fe97bf8eeee57e5090",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_5.obj": "d91d2892366a36f82f5bfc7e0fe60b360faf5ace94f8ba1ef38b15d6d9c4ffac",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_6.obj": "6f8e94925a34c5e0fecae66c11460d7c4ff70dcf448a5da6de14e1badf0e71da",
+    "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/obj_meshes/link7_vis/link7_vis_7.obj": "36957666d65f3bee84661c5d8276711b4958aae10c9a5192c0fdfd5a8b7f7770",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/calibration.json": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/camera_sample_state.npz": "b10ff8421fb962f33613a336d9ccfebc39c1bfc29edf5c73a308c5a4b47744be",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/render_model.xml": "f5f9ac4ca1533d9c9006f95e7ead245300bf3fbfc7c8d1c1201b7f719aebafdf",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/flat_stove/metal.png": "93784216a66b52be9c8ccc3732e50f511815291e32f34f97bd139ed7229061fa",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/flat_stove/stove_burner/burnerplate.stl": "93526fc3f2585e828c115f0f20d5ff43129ce7dc46c9fcc8216c4015c717bd00",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/flat_stove/stove_knob_base/visual/stove_knob_base_vis.msh": "d65ed847f007e5f3e1a01edb45c63ccb9f881f92479ec516028fb654f4077ddc",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/flat_stove/stove_knob_button/visual/stove_knob_button_vis.msh": "b7cff7b5899505d5abcfed347a86fe7ef837203560838b9d9453196a91f8a743",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/dark_fine_wood.png": "9aaa94ef4cd61592b566569bba3569276a38ea5ff22ed4b978b77b038b38a11f",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/metal.png": "93784216a66b52be9c8ccc3732e50f511815291e32f34f97bd139ed7229061fa",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_base/visual/wooden_cabinet_base_vis.msh": "8bcf371361562de9ac8ac2fe06db6b6b695dde3cbe50e86de5a6e272d21e1f9c",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_bottom/visual/wooden_cabinet_bottom_vis.msh": "23181bdeb6ce44e3634318e6c946fa00f568eb25256b8546558775eda691700c",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_bottom_handle/visual/wooden_cabinet_bottom_handle_vis.msh": "a61587cbcebb8a8ad5dc0d8c60e6db4747a5a118397485a0a5eb5e171c2d397e",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_middle/visual/wooden_cabinet_middle_vis.msh": "580eead06792affbd91c1b5c17e3d1c94082fcb247eb4812d1a8ac4c120253c5",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_middle_handle/visual/wooden_cabinet_middle_handle_vis.msh": "1688f375dde79450d9e5cfcb5dc17a16c27018c9dbf74513577588d54e62e0a8",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_top/visual/wooden_cabinet_top_vis.msh": "2b7c08ad3740ad45965eaedd9cf07f64ea12dd4044cac7e71fa5b601b4cbb481",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/articulated_objects/wooden_cabinet/wooden_cabinet_top_handle/visual/wooden_cabinet_top_handle_vis.msh": "58924271007a30a14eda7111e7eefd7be3f8b04a1d31bbf4964d7da419282df6",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_hope_objects/cream_cheese/texture_map.png": "6ef390c92c83f6f27da79df09130e48bda6785f98181942d2ec2548ab2afa814",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_hope_objects/cream_cheese/visual/cream_cheese_vis.msh": "0110fcd0351384174e70956ae83c4b30a677bc5673aa8107213b73334efbdf3b",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_scanned_objects/akita_black_bowl/texture.png": "8a646d98b084b7400dd91beed9c83e10b4a4dca572896b3974356b7937a4bd85",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_scanned_objects/akita_black_bowl/visual/akita_black_bowl_vis.msh": "6474d536a740e995c3a2eaeb74c61e14da94131b0b222c250b61b30b13d11229",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_scanned_objects/plate/texture.png": "6b742142bf0e29a90d76c4b0254a4481e9eff4807eff3ac6c4ac67a5888fb005",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/stable_scanned_objects/plate/visual/model_vis.msh": "7d3278b1cefb2ed496094cad18f0c66004ee65ab933122ec8d5efdc78daa96b4",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/textures/light-gray-floor-tile.png": "a2aae4ba3b38c3ab9851eca9ad6e76cef9357ef75b3e9a4b280f694ca30acbc5",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/textures/light-gray-plaster.png": "d0bdaf13b44ab6ef3122451f6b3853e40bdf20bb9be7662649683ba525dfe191",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/textures/martin_novak_wood_table.png": "9d714fbf44d4d44f279761c0ddd0b2fd7271446cdbb85fcbef8677fe5f929850",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_bottle/cork_texture.png": "93a9c1d22c7256e423a1473b2bf9107b4e120cd249423f7e01289f9c6fd63feb",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_bottle/label_wine.png": "a8caed4b3414dcf4b72558e339ce1cad1b90b4f159d0d293f06ed04a1f473241",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_bottle/visual/wine_bottle_red_cork_vis.msh": "2b993448e727c8abf8c25a5ed28699e4594dc692e3eaad76a957627f0afcc474",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_bottle/visual/wine_bottle_red_logo_vis.msh": "99e4f2bec9c76a5277dc40efe774f47e9f079ced13b4197f0ac79bb36bc54e47",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_bottle/visual/wine_bottle_red_main_vis.msh": "92a7a897bdac34f47161cb418fbe6f7fc9056d2f0e93647beb8139cffeed270a",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_rack/light-wood.png": "967be64bdb170d36283bc43c2ae5d525ec88f78bc837dc7d0efc9a28d68caad1",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_rack/mahogany.png": "702a734fef1bf0df4e446f98f571628f81e423caba64b5fcfd683bae42135c3b",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_rack/visual/wine_rack_planes_vis.msh": "f3daf4c20ed4b513b0d3b19d5580aa6f9c677ab6935a138f316b00852714d936",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_rack/visual/wine_rack_stand_vis.msh": "6b4cf3bd2a65f93f41563e86b55b4789965001f78473268b592e59abad9c64fd",
+    "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/assets/turbosquid_objects/wine_rack/visual/wine_rack_stoppers_vis.msh": "8647657c858c45b6a55e507689888dffaf80d68d9395f9c7eb5a40eb64e17c62",
+    "/workspace/gpt_field/scene_test/field_planning_v2/video_001/previews/22_030.png": "22cefd3ad2449949af757b70420248ee1a1625702ca166f1e48b944017f175e7"
+  },
+  "sources_unchanged": true
+}

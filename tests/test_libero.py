@@ -1,4 +1,5 @@
-from dataclasses import asdict
+from dataclasses import asdict, replace
+import hashlib
 import json
 import math
 import sys
@@ -7,7 +8,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from gpt_field.libero import LiberoConfig, SimProcess, SimulatorError, _LiberoWorker
+from gpt_field.libero import LiberoConfig, SimProcess, SimulatorError, _LiberoWorker, validate_initial_state_override
 from gpt_field.observation import OBSERVATION_KEYS, PolicyObservation, image_to_data_url
 
 
@@ -141,6 +142,7 @@ def worker_with_fake_environment(monkeypatch, tmp_path):
             return observation
 
         def set_init_state(self, state):
+            self.initial_state = state
             return observation
 
         def step(self, action):
@@ -176,6 +178,59 @@ def worker_with_fake_environment(monkeypatch, tmp_path):
         return worker
 
     return create
+
+
+@pytest.mark.parametrize("state", [np.zeros((2, 3)), np.array([]), np.array([np.nan]),
+                                    np.array([np.inf]), np.array([1, 2]),
+                                    np.array([object()], dtype=object)])
+def test_custom_layout_rejects_non_finite_or_non_float_vector(tmp_path, state):
+    path = tmp_path / "layout.npy"
+    np.save(path, state)
+    with pytest.raises(ValueError, match="initial_state_override"):
+        validate_initial_state_override(path)
+
+
+def test_custom_layout_loader_hash_and_size_limit(tmp_path):
+    path = tmp_path / "layout.npy"
+    state = np.array([0.0, 1.25, -0.5])
+    np.save(path, state)
+    metadata = validate_initial_state_override(path)
+    assert metadata == {"path": str(path), "shape": [3], "dtype": "float64",
+                        "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    path.write_bytes(b"x" * (1024 * 1024 + 1))
+    with pytest.raises(ValueError, match="1 MiB"):
+        validate_initial_state_override(path)
+
+
+def test_custom_layout_state_is_applied_but_only_observables_reach_policy(
+        worker_with_fake_environment, monkeypatch, tmp_path):
+    worker = worker_with_fake_environment(None)
+    baseline = np.arange(12, dtype=float)
+    changed = baseline.copy()
+    changed[5:7] += [0.06, -0.08]
+    path = tmp_path / "layout.npy"
+    np.save(path, changed)
+    monkeypatch.setattr(sys.modules["torch"], "load", lambda *a, **k: [baseline] * 50)
+    worker.config = replace(worker.config, initial_state_override=str(path))
+    response = worker.reset(0, 7)
+    np.testing.assert_array_equal(worker.env.initial_state, changed)
+    assert response["status"]["episode_index"] == 7
+    assert response["status"]["initial_state_source"] == "custom_override"
+    assert response["status"]["initial_state_override_sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+    assert set(response["observation"]) == OBSERVATION_KEYS
+    assert "initial_state_override" not in json.dumps(response["observation"])
+
+
+def test_custom_layout_shape_must_match_task_before_environment_construction(
+        worker_with_fake_environment, monkeypatch, tmp_path):
+    worker = worker_with_fake_environment(None)
+    monkeypatch.setattr(sys.modules["torch"], "load", lambda *a, **k: [np.zeros(12)] * 50)
+    path = tmp_path / "wrong-layout.npy"
+    np.save(path, np.zeros(13))
+    worker.config = replace(worker.config, initial_state_override=str(path))
+    worker._env_class = lambda **kwargs: pytest.fail("wrong-shaped state must fail before env construction")
+    with pytest.raises(ValueError, match="shape must match"):
+        worker.reset(0, 0)
 
 
 def test_unbounded_worker_passes_220_actions_and_still_stops_on_success(worker_with_fake_environment):

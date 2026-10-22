@@ -1,0 +1,492 @@
+{
+  "schema_version": "libero-demonstration-download-provenance-v1",
+  "created_at_utc": "2026-10-12T08:27:24.778387+00:00",
+  "repo_id": "yifengzhu-hf/LIBERO-datasets",
+  "repo_type": "dataset",
+  "repository_source_evidence": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/utils/download_utils.py:108",
+  "revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+  "repository_file": "libero_goal/open_the_top_drawer_and_put_the_bowl_inside_demo.hdf5",
+  "resolved_url": "https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets/resolve/f13aa24a3da8c43c7225569f28c562979fa0e35a/libero_goal/open_the_top_drawer_and_put_the_bowl_inside_demo.hdf5",
+  "local_hdf5": "/workspace/gpt_field/data/libero_demonstrations/libero_goal/open_the_top_drawer_and_put_the_bowl_inside_demo.hdf5",
+  "download_bytes": 1017886342,
+  "sha256": "1b50d99a053a7e4547c9ae9ccd2e3cd762543d27be78f240f13440d7ae487ae8",
+  "sha256_verified_against_hub_lfs_etag": true,
+  "download_scope": "Only one task HDF5 file; this container has50 official episodes. Only demo_0 enters the model reference.",
+  "source_episode_count": 50,
+  "selected_demo_key": "demo_0",
+  "selection_rule": "Choose the lowest numbered demonstration whose initial state differs from evaluation init0; demo_0 satisfies the check beyond timestamp.",
+  "observable_schema": {
+    "actions": {
+      "shape": [
+        170,
+        7
+      ],
+      "dtype": "float64"
+    },
+    "obs/agentview_rgb": {
+      "shape": [
+        170,
+        128,
+        128,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "obs/eye_in_hand_rgb": {
+      "shape": [
+        170,
+        128,
+        128,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "obs/ee_pos": {
+      "shape": [
+        170,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "obs/ee_ori": {
+      "shape": [
+        170,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "obs/gripper_states": {
+      "shape": [
+        170,
+        2
+      ],
+      "dtype": "float64"
+    }
+  },
+  "source_task_language": "open the top drawer and put the bowl inside",
+  "source_image_convention": "opengl",
+  "image_preprocessing": "Source and live renderer use opengl convention. Each raw RGB frame is rotated180degrees then bilinearly resized/padded to224x224 with the existing policy helper. Original demo RGB resolution128x128.",
+  "axisangle_conversion": {
+    "method": "Convert stored axisangle to quaternion, then use live quaternion_to_axisangle canonicalization; represents identical rotation.",
+    "source_rows_with_norm_above_pi": 8,
+    "maximum_source_norm_rad": 3.1528085815449955
+  },
+  "post_action_observation_verification": {
+    "source": "/workspace/heading_flow_pub/third_party/LIBERO/scripts/create_dataset.py",
+    "source_sha256": "6ff09687a6ca8cb5df16b828cce2326467099da2b4dd6e5af557644d3e60f37f",
+    "env_step_line": 177,
+    "proprio_append_line": 203,
+    "image_append_line": 220,
+    "retained_action_indices_line": 227,
+    "source_initial_actions_discarded": 5,
+    "conclusion": "Stored obs[i] contains the observation returned AFTER executing retained actions[i]. The reference pairs normalized_action[i] with after_state[i] and labels every keyframe after_action_index. It does not teach obs[i] as the input preceding action[i]."
+  },
+  "offline_initial_state_comparison": {
+    "purpose": "Episode distinctness audit only; no simulator state vectors or state-comparison data enter the policy reference.",
+    "eval_initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_goal/open_the_top_drawer_and_put_the_bowl_inside.pruned_init",
+    "eval_initial_state_sha256": "1cd5354ade9ab9f323a518515f961df96123b7daeca017df1f62d3e9ff18794f",
+    "eval_initial_state_index": 0,
+    "comparisons": {
+      "demo_0": {
+        "exact_equal_to_eval_init0": false,
+        "allclose_to_eval_init0_atol_1e_9": false,
+        "max_absolute_difference_excluding_timestamp": 0.26860228172468065,
+        "exact_matching_pruned_indices": []
+      },
+      "demo_1": {
+        "exact_equal_to_eval_init0": false,
+        "allclose_to_eval_init0_atol_1e_9": false,
+        "max_absolute_difference_excluding_timestamp": 0.13232761977821053,
+        "exact_matching_pruned_indices": []
+      }
+    },
+    "limitation": "Vector inequality establishes a different recorded initialization, not a claim about any particular object pose or contact geometry."
+  },
+  "excluded_from_policy_reference": [
+    "states",
+    "robot_states",
+    "joint_states",
+    "object poses",
+    "model XML",
+    "init_state",
+    "rewards",
+    "dones",
+    "success labels",
+    "offline initial-state comparison"
+  ],
+  "reference_path": "/workspace/gpt_field/data/demo_references/drawer_one_demo_001.json",
+  "reference_bytes": 2386242,
+  "reference_sha256": "4df612388a99671674d44b10783c860805681b5a3e9e2cbac71b38d95663e1d4",
+  "reference_metadata": {
+    "action_count": 170,
+    "all_steps_included": true,
+    "bundle_bytes": 2386242,
+    "bundle_sha256": "4df612388a99671674d44b10783c860805681b5a3e9e2cbac71b38d95663e1d4",
+    "demo_key": "demo_0",
+    "frame_hashes": [
+      {
+        "after_action_index": 0,
+        "external": {
+          "pixel_sha256": "abeb42d1a2ed0842158529090b9d384cdef53970030aa636c3618a29aa370634",
+          "png_bytes": 39131,
+          "png_sha256": "39e8484992dddd3faae1fb002445a9a5b5d0e561f7d345a49befb600dc8250ee"
+        },
+        "wrist": {
+          "pixel_sha256": "db60b1845c77e1a9bb161e7eef6068f5d0b0ce813e832d5a75e34b793e6e3ad0",
+          "png_bytes": 34557,
+          "png_sha256": "5f950096d86bb52d22c91f49f831ea1ccf26edba09d84a39d0ce3f7593a9db5b"
+        }
+      },
+      {
+        "after_action_index": 6,
+        "external": {
+          "pixel_sha256": "c475adc0f8507e524a2b4e1b9b15176d3533a95c0cfbefd9f0e6babff98410df",
+          "png_bytes": 39193,
+          "png_sha256": "bf8e834d5368b3547d1536a07b853c20bc0a2a2edcc98259e19a297562d79f9b"
+        },
+        "wrist": {
+          "pixel_sha256": "d634eecb377eb6d1a4cdc53651930e542af1a1a7589809955da4a8e6fb35cdea",
+          "png_bytes": 33600,
+          "png_sha256": "e1b5775749d90cb24c0c81be7e5d517642949e138cc272982705ea9a53b6c361"
+        }
+      },
+      {
+        "after_action_index": 12,
+        "external": {
+          "pixel_sha256": "80874901c6adf4b2c2530489ee81a9914e3555405a9b57cf4d4de6f6997a0190",
+          "png_bytes": 39168,
+          "png_sha256": "5280b02822e97562f59b65656aaac1e352bab6850a6d27831c926f11c6d16457"
+        },
+        "wrist": {
+          "pixel_sha256": "7ea1bfb14485677116857bfc00df45dfff598f496e15f361f34cf7cabd71630d",
+          "png_bytes": 30926,
+          "png_sha256": "9377d7eb1a4096646213451d2567766268d541695119dd46cc898c77163b414e"
+        }
+      },
+      {
+        "after_action_index": 24,
+        "external": {
+          "pixel_sha256": "0c3e868e92a02183e5830c4f4f36a3e2d695b39e40633af925d34fe9dffa4049",
+          "png_bytes": 39546,
+          "png_sha256": "9e08773ef0522d14ccf5c968adcbe28edd906e82dfa661740996a7a04aa28d51"
+        },
+        "wrist": {
+          "pixel_sha256": "3c2e8b9dd4d662fc0e2835ee95d0bd9149338f1163eb4a55696ada50f2fd9d36",
+          "png_bytes": 26680,
+          "png_sha256": "ae5bb9cb1561854bb9b7be6b07f5478bac82a27417ece9b5f03d682365ab64a3"
+        }
+      },
+      {
+        "after_action_index": 36,
+        "external": {
+          "pixel_sha256": "d9959dc0a54721e4db1c29dec613da31e8627a95d1272f37c92197c5391045f7",
+          "png_bytes": 39637,
+          "png_sha256": "386a61b9bd0b53d16fd9d993ad2c06cfe876960191fb601fa5b58b567d687994"
+        },
+        "wrist": {
+          "pixel_sha256": "59928b1207d97d1fad7b590cdf2f5cc0a31bfcc452c9c2939c013a3ebfe03331",
+          "png_bytes": 26230,
+          "png_sha256": "c82173a7095da57bfeb609d4f805698e28f5cfcefb9c3ff69618d7456d534e7f"
+        }
+      },
+      {
+        "after_action_index": 42,
+        "external": {
+          "pixel_sha256": "bed2135672f721708a1a8fb9d962e7ce2894656319ab5245aba96519714b9b98",
+          "png_bytes": 39566,
+          "png_sha256": "262954c61b184f4b45a22b97e3cc41d5f0f9107b049f8dcb39df971bb330f450"
+        },
+        "wrist": {
+          "pixel_sha256": "226c6dd03c21fa3062829ab38fc8c5e340da2b8906fb4a464e52c9e6cbb97629",
+          "png_bytes": 26309,
+          "png_sha256": "8ca481ccaa12dae7d1d60ec193d319af2476818b28968256cdc1cd6bfcf56639"
+        }
+      },
+      {
+        "after_action_index": 49,
+        "external": {
+          "pixel_sha256": "435fe22f578d4823395b64e9d3f31115723dcc69378c8ef40299ab540f202a12",
+          "png_bytes": 38819,
+          "png_sha256": "eb54d04a0f4024098a32fe6b4ed9e5e59e08d4800afcd2f4039600039f95c261"
+        },
+        "wrist": {
+          "pixel_sha256": "6f216a3f0112ed8163934b91dae0b2ca932e78549311866e4b36eab0834846b9",
+          "png_bytes": 26255,
+          "png_sha256": "7a88a5edffccdcbc1c8cf5d95c9b1837b105a5440f01890e6b6f8dab7dcf6cdf"
+        }
+      },
+      {
+        "after_action_index": 61,
+        "external": {
+          "pixel_sha256": "42e8ac4b6b9d63138032b2579e4c8da163678e55c4241b56cc9356c75442cccb",
+          "png_bytes": 37624,
+          "png_sha256": "c3d69d7a662e80778ffc09b437a631d421631ead78128cb20fbc98683508ca87"
+        },
+        "wrist": {
+          "pixel_sha256": "805f1b25e381c7f8514b76cbfb6f810e09e730fbb2210b50705fcb99dfc15d0c",
+          "png_bytes": 26146,
+          "png_sha256": "7bb4290eecc67f5c7394478ba61b0b70b2817919805448dfebdcc101abbf6e98"
+        }
+      },
+      {
+        "after_action_index": 67,
+        "external": {
+          "pixel_sha256": "7337c84f10b198ab70ab43b8fcaf73e9e740742d1a0e07557687ee3973d13d29",
+          "png_bytes": 37638,
+          "png_sha256": "2280c2d25e1384798a4b2980fa153226124100341bed9e51c5a853916fb1fa55"
+        },
+        "wrist": {
+          "pixel_sha256": "0886756ddb538305af19165bd9b62e3573ac992d86860eb5b62c04ca64a0c30d",
+          "png_bytes": 28106,
+          "png_sha256": "b60f026420e25271f61a92c44e9b242680d3c43f191dd71572f68dbb88a8723c"
+        }
+      },
+      {
+        "after_action_index": 74,
+        "external": {
+          "pixel_sha256": "ca5d3c3bed2f3aa6016954d7e2b721bf55292e64d197af22537c1644efe8c1d3",
+          "png_bytes": 37586,
+          "png_sha256": "e89c23f0053eff5e2bdba4cd0ca31744777fa56b86e39991d1bc0b2f1dbee458"
+        },
+        "wrist": {
+          "pixel_sha256": "45ffad2494d7790a08754a049a5cba4552276d4526dd870401a80a1f033cadbb",
+          "png_bytes": 33127,
+          "png_sha256": "bde361a1d0752d5a50601a9360953ce85a96f7b944ff301b53441468042e8b32"
+        }
+      },
+      {
+        "after_action_index": 86,
+        "external": {
+          "pixel_sha256": "586dfff86b0662cf0e6e1d890085f5a4d40800eb7492e926ffcd2f9476466f53",
+          "png_bytes": 37788,
+          "png_sha256": "51256976bc371eb1a7a2ccc97880c50fae8eeb9b27f0fc66bd416582f8dfdacc"
+        },
+        "wrist": {
+          "pixel_sha256": "36b2e5a2c4d95f40425008694e7868ab5a5a05323503cd8dbdbff8346331532b",
+          "png_bytes": 39340,
+          "png_sha256": "bafca4cdf6d16679ff615752a08945508d4b90b288124c03cc0dd81e81f88706"
+        }
+      },
+      {
+        "after_action_index": 92,
+        "external": {
+          "pixel_sha256": "8f91756638f7056467239e5b3d851b0c6fc2207f5aa2a5b00cdf47945b644e64",
+          "png_bytes": 37647,
+          "png_sha256": "644247fd85709d918ec5c45b4b629d618c3422152b16c62d0975fafd813897fd"
+        },
+        "wrist": {
+          "pixel_sha256": "7870626993841870e623846cf2b10e3aaad9ae8282ed3f13e27bc339f632e8c4",
+          "png_bytes": 45312,
+          "png_sha256": "b5e94113c1d4a211a7f9321d1d3254364ef2a472c7eff9f83548a4ca88ee5cee"
+        }
+      },
+      {
+        "after_action_index": 99,
+        "external": {
+          "pixel_sha256": "863522a3c5df0a6c7cec78794c930b14809f6d5174114963e6ebdb5fc4766cb4",
+          "png_bytes": 37697,
+          "png_sha256": "274d561dd2298767aefb96341ac38802c4561b04112d22c3508964a45763884d"
+        },
+        "wrist": {
+          "pixel_sha256": "6e3a4db93234c1c496d7b28d47ea709e22898189e1fb5dcf85f88d6f2f386d30",
+          "png_bytes": 44187,
+          "png_sha256": "5396e750bd00eb3f83154f4741c167ebb722f8123989daf1e46ca78c2b1236c3"
+        }
+      },
+      {
+        "after_action_index": 100,
+        "external": {
+          "pixel_sha256": "1af3657cd176510ad1cd15ec3942c0d5e6e5c12dc61dadc7dc41e255eef94c12",
+          "png_bytes": 37627,
+          "png_sha256": "17d7b20f89ac0beb7318956260fa51bcc100e7a3251c68884912bd34de104d3c"
+        },
+        "wrist": {
+          "pixel_sha256": "344de5aa365aa1dd5b45ca1ec7b5752ef2d727fb3f167009eb7efa57d8d3d07f",
+          "png_bytes": 44533,
+          "png_sha256": "f5adc69718207475efe398f5e6088a33cde4da3b1b302efa77c78d54e8252145"
+        }
+      },
+      {
+        "after_action_index": 107,
+        "external": {
+          "pixel_sha256": "f76c0a8970cce232f9e760de74738f867f907226e33b6bd97703a5a3b71ee93c",
+          "png_bytes": 37325,
+          "png_sha256": "21311154da3fc36bf0df96e480de1963868482c544e7e4dc4aec2bea5d47aae2"
+        },
+        "wrist": {
+          "pixel_sha256": "3a2ad255d695521a640891a4a60a4b79d5511181ab11da2b19640a23682937d5",
+          "png_bytes": 44688,
+          "png_sha256": "07d92bba9798f287d458944ef2ea03198d1bb581aa42b0221926d565d3f2107b"
+        }
+      },
+      {
+        "after_action_index": 115,
+        "external": {
+          "pixel_sha256": "78fc807c495d57908ba93d7a6253e939c72c67aec28e2bd334c8bac99c6b4874",
+          "png_bytes": 37609,
+          "png_sha256": "409dfc9001b45882d5848f908226029d4aaba11514bf6e7f20a83698b76a0ade"
+        },
+        "wrist": {
+          "pixel_sha256": "76a888663776fb59f3935a3851ad4714d1742567db1c6e4574c8d614a4593e6a",
+          "png_bytes": 41628,
+          "png_sha256": "9bc8a62c08c82509821c2ad6e77ca56191fbbcf3fe3f6b9c43dfa2ba69754dce"
+        }
+      },
+      {
+        "after_action_index": 123,
+        "external": {
+          "pixel_sha256": "c7d92e1a3fca11ff53809844e4f11ba9171b441cf12936a2b7d56d402e696af0",
+          "png_bytes": 37945,
+          "png_sha256": "a4f28c9563829e41e4a892c0852c8e597fc9c4ad1df66a5edfb68d51aefd6235"
+        },
+        "wrist": {
+          "pixel_sha256": "89a522209f0c41494a7708aa41320ca93890d438a9f7d69aa36723cd586c42f9",
+          "png_bytes": 40998,
+          "png_sha256": "0e0f17317745b6e3379a996f7f05da13bec55fa4d6f54a697c8f0ef154814dd9"
+        }
+      },
+      {
+        "after_action_index": 131,
+        "external": {
+          "pixel_sha256": "bf23404953be5f834eb1e0edd4288eebc4444eb5a55e7c826c98499f7568e24b",
+          "png_bytes": 38129,
+          "png_sha256": "6389094efdc32cf5436fe259eedf676466eeadd1fe999d089959804c41a0a75c"
+        },
+        "wrist": {
+          "pixel_sha256": "c4602ab6ac737b51c668548b5dd085a9343330d13f0cd7c6a50ff88e67b80997",
+          "png_bytes": 42607,
+          "png_sha256": "e82aa12ae354bd0f885064c4df08a2d7a0584ba581b7f912e03d154b541f1443"
+        }
+      },
+      {
+        "after_action_index": 138,
+        "external": {
+          "pixel_sha256": "de801a60544c75b60f6dee964d4e324e8ae1eb200698e2bb85fb530b02b7f12b",
+          "png_bytes": 37516,
+          "png_sha256": "7a2424a280fef07a38a1bcdb36292f174fc9ca4809856f7d14acb034eb9f27df"
+        },
+        "wrist": {
+          "pixel_sha256": "98b534fbe7493385c1805b860eae7024944a983728b71fbb1359c8231ced1ee4",
+          "png_bytes": 41252,
+          "png_sha256": "6c132e956e56d73326958ffe70f8ab49005bd161f127e7a2538e60853c87b2b5"
+        }
+      },
+      {
+        "after_action_index": 146,
+        "external": {
+          "pixel_sha256": "18064fdfdbecf9a77558677104daea5592e02c88ccf6d80c12bedfe5e0249d89",
+          "png_bytes": 36777,
+          "png_sha256": "25e532cb1f639cc7dc0fb4146e456e394951c0538cd42e7210101650f12289c9"
+        },
+        "wrist": {
+          "pixel_sha256": "887ccb1f8cd79674f27b457264fa03fccfb6df32ade63456c1a105b9a475e9d0",
+          "png_bytes": 36648,
+          "png_sha256": "47a03155d129f68e96ad5f6e2dac78a4766c14fce6b5b239f62435a85ddee4f6"
+        }
+      },
+      {
+        "after_action_index": 154,
+        "external": {
+          "pixel_sha256": "475a6fa20a73053283f294d6b52922da40d131ffc9ed6ab466f5b56d2674945b",
+          "png_bytes": 36936,
+          "png_sha256": "1c036e622cf10925a0d42776423d951cb3b59c8700d54189cd9c4cb14879db59"
+        },
+        "wrist": {
+          "pixel_sha256": "0706b39b6abce4352a727127bd3300c207a6661cb2d1345903feb0372667c3fe",
+          "png_bytes": 37124,
+          "png_sha256": "90948859639e6856422aefe74e3ec6982e7390bdd098e908b4b835f365f96ee4"
+        }
+      },
+      {
+        "after_action_index": 162,
+        "external": {
+          "pixel_sha256": "ae74cb12f847bbe3fc683cbca8cdad96bfcb702e436c459dd5f963507f7beb35",
+          "png_bytes": 39183,
+          "png_sha256": "e10125ab932a5c691875d67d75c2237b1dcda663487f150475f641926dd83996"
+        },
+        "wrist": {
+          "pixel_sha256": "863ad4bb22a4c2eb22a6a33646f17114eb630c5a23402323d9815b373a971b9d",
+          "png_bytes": 30818,
+          "png_sha256": "f7302041a5a2a3f08ef03fd0204f9f6ec6526fa5137bae12431b1344f827d2fc"
+        }
+      },
+      {
+        "after_action_index": 163,
+        "external": {
+          "pixel_sha256": "f3d87217a1498b98139f294c5cf08a72108554c0847aff08375e8bb893c97ade",
+          "png_bytes": 39364,
+          "png_sha256": "0d351cebbf272ac60cf0abc96e04d3bb92b364b9f11785eb7101fbe79f563175"
+        },
+        "wrist": {
+          "pixel_sha256": "efb0e5be5b6a6dec4edeb66df8e8fada741b26d4b982f3c5a6c6141051b3c444",
+          "png_bytes": 30197,
+          "png_sha256": "61c408d4a70e161b36dea7f7312fb5c137a9dea98fa580c569839443503e6541"
+        }
+      },
+      {
+        "after_action_index": 169,
+        "external": {
+          "pixel_sha256": "18ae38169845f42c01bfdf13f59015cd6da6dc171933573ad2ba79399a87ccde",
+          "png_bytes": 39923,
+          "png_sha256": "2d26d33a861dc96fd9e23b44914b015950fbcfe20938f5554dd939004dce4cc6"
+        },
+        "wrist": {
+          "pixel_sha256": "f5386e81a3fa7d6085072ee6299500f1a9c8eefa006334750d043b5e30666693",
+          "png_bytes": 32941,
+          "png_sha256": "8687ff3b7813fa9b1fe1b3f426d6bb0ed352c47a7076c567604fb3d7316eac8e"
+        }
+      }
+    ],
+    "full_step_sha256": "f0a8deea9196c631e94094313d93c35b1579e34a6281ccdc6beb4160a2694297",
+    "image_count": 48,
+    "image_sampling": "keyframes_only",
+    "keyframe_count": 24,
+    "keyframe_indices": [
+      0,
+      6,
+      12,
+      24,
+      36,
+      42,
+      49,
+      61,
+      67,
+      74,
+      86,
+      92,
+      99,
+      100,
+      107,
+      115,
+      123,
+      131,
+      138,
+      146,
+      154,
+      162,
+      163,
+      169
+    ],
+    "preprocess": {
+      "action_layout": "normalized_world_osc_pose_7",
+      "image_orientation": "rotate_180",
+      "image_size": 224,
+      "keyframe_selection": "uniform_plus_gripper_transitions_v1",
+      "numeric_decimals": 6,
+      "observation_timing": "after_action",
+      "orientation_conversion": "axisangle_shortest_equivalent",
+      "state_layout": "eef_xyz_axisangle_gripper_qpos"
+    },
+    "schema_version": "libero-observable-demo-v1",
+    "source_episode_step_count": 170,
+    "source_file_name": "open_the_top_drawer_and_put_the_bowl_inside_demo.hdf5",
+    "source_file_sha256": "1b50d99a053a7e4547c9ae9ccd2e3cd762543d27be78f240f13440d7ae487ae8",
+    "source_suite": "libero_goal",
+    "source_task_id": 3,
+    "state_count": 170,
+    "task_key": "drawer_bowl",
+    "task_prompt": "open the top drawer and put the bowl inside"
+  },
+  "simulator_calls_during_preparation": 0,
+  "model_calls_during_preparation": 0
+}

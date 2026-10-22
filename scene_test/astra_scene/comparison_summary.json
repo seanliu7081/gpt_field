@@ -1,0 +1,346 @@
+{
+  "scope": "Three fixed single-RGB images, each one Astra response; no fine-tuning or reference alignment.",
+  "new_representation": "Astra-authored CSG implicit JSON; deterministic float32 grid sampling; saved-array-only zero-isosurface decode.",
+  "primary_metric": "Camera-Z first-hit depth absolute error against exact simulator visible geometry; no surface-nearest-neighbor claim.",
+  "prior_comparison_limit": "Same RGB, reference and 2mm grid spacing, but different model and representation/capacity; not an isolated model ablation. MAE conditions on hits; jointly report coverage and all-GT-denominator thresholds.",
+  "B_limit": "Six external 64x64 ray sets per scene, not full-surface/hidden-cavity/topology preservation.",
+  "metric_sources": {
+    "scene_test/astra_scene/runs/evaluation_001/metrics.json": "e370ee51c52d8b7fb984231f48f623bf4bb4a13e7d686492067dd4484189d51f",
+    "scene_test/rgb_scene/runs/evaluation_full_001/metrics.json": "fa0fa0c1f76e48be797515c4661a01d1c01a5ef2907303b4d6791d65818ea134"
+  },
+  "rows": [
+    {
+      "snapshot": "bowl002_initial",
+      "spacing_m": 0.002,
+      "target_region": "target_bowl_visible",
+      "analytic_A_target": {
+        "reference_pixels": 3081,
+        "hit_pixels": 3081,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.04599702895636921,
+        "rmse_on_hits_m": 0.053428135472214276,
+        "p95_on_hits_m": 0.09279901825862014,
+        "max_on_hits_m": 0.11790807784485158,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.011684518013631937,
+          "2mm": 0.018175916910094125,
+          "5mm": 0.04057124310288867,
+          "10mm": 0.10353781239857189
+        }
+      },
+      "decoded_C_target": {
+        "reference_pixels": 3081,
+        "hit_pixels": 3081,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.045709455355003197,
+        "rmse_on_hits_m": 0.05308905038507436,
+        "p95_on_hits_m": 0.09112687071341186,
+        "max_on_hits_m": 0.1178731988017665,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.012009087958455048,
+          "2mm": 0.018500486854917234,
+          "5mm": 0.04089581304771178,
+          "10mm": 0.10418695228821812
+        }
+      },
+      "decoded_C_full_scene": {
+        "reference_pixels": 262144,
+        "hit_pixels": 262144,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.47487371007731005,
+        "rmse_on_hits_m": 0.8054846346178756,
+        "p95_on_hits_m": 1.9501399636774888,
+        "max_on_hits_m": 2.4596751876226945,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.000789642333984375,
+          "2mm": 0.001598358154296875,
+          "5mm": 0.00376129150390625,
+          "10mm": 0.008056640625
+        }
+      },
+      "decoded_C_nonrobot": {
+        "reference_pixels": 240116,
+        "hit_pixels": 240116,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.4943887661409691,
+        "rmse_on_hits_m": 0.8366877289871211,
+        "p95_on_hits_m": 1.9877432899076948,
+        "max_on_hits_m": 2.4596751876226945,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0007288144063702543,
+          "2mm": 0.0014284762364856986,
+          "5mm": 0.0034858151893251595,
+          "10mm": 0.007596328441253394
+        }
+      },
+      "preservation_B_six_views": {
+        "reference_pixels": 1892,
+        "hit_pixels": 1892,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 2.3362118173934453e-06,
+        "rmse_on_hits_m": 4.417413519660828e-05,
+        "p95_on_hits_m": 2.5526174665113636e-07,
+        "max_on_hits_m": 0.001546065822343845,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.9994714587737844,
+          "2mm": 1.0,
+          "5mm": 1.0,
+          "10mm": 1.0
+        },
+        "total_test_rays": 24576,
+        "new_hit_where_original_misses": 0,
+        "new_hit_fraction_all_test_rays": 0.0,
+        "scope": "six model-bounds-derived external views; first-hit axial distance"
+      },
+      "previous_DepthPro_projective_TSDF_C_target": {
+        "reference_pixels": 3081,
+        "hit_pixels": 3019,
+        "miss_pixels": 62,
+        "coverage": 0.9798766634209672,
+        "mae_on_hits_m": 0.0068047928519722215,
+        "rmse_on_hits_m": 0.011135679927545274,
+        "p95_on_hits_m": 0.024999676697282158,
+        "max_on_hits_m": 0.05509961482137449,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.09477442388834793,
+          "2mm": 0.20253164556962025,
+          "5mm": 0.5890944498539435,
+          "10mm": 0.8273287893541058
+        }
+      }
+    },
+    {
+      "snapshot": "drawer003_closed_step60",
+      "spacing_m": 0.002,
+      "target_region": "target_cabinet_visible",
+      "analytic_A_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 36143,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.07113631958607643,
+        "rmse_on_hits_m": 0.09171569606177944,
+        "p95_on_hits_m": 0.16623654100953028,
+        "max_on_hits_m": 0.17109936853504093,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0016047367401709875,
+          "2mm": 0.002379437235425947,
+          "5mm": 0.008466369698143485,
+          "10mm": 0.03469551503748997
+        }
+      },
+      "decoded_C_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 36143,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.07098786199409149,
+        "rmse_on_hits_m": 0.09161030594731488,
+        "p95_on_hits_m": 0.16622850720905638,
+        "max_on_hits_m": 0.17109938029180927,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0014387294911877818,
+          "2mm": 0.0022410978612732754,
+          "5mm": 0.00830036244916028,
+          "10mm": 0.036078908779016684
+        }
+      },
+      "decoded_C_full_scene": {
+        "reference_pixels": 262144,
+        "hit_pixels": 262144,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.43815096996938835,
+        "rmse_on_hits_m": 0.6937685536499051,
+        "p95_on_hits_m": 1.7346271529681658,
+        "max_on_hits_m": 2.1034584955672564,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.000782012939453125,
+          "2mm": 0.001495361328125,
+          "5mm": 0.00433349609375,
+          "10mm": 0.011871337890625
+        }
+      },
+      "decoded_C_nonrobot": {
+        "reference_pixels": 239969,
+        "hit_pixels": 239969,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.45006235405062445,
+        "rmse_on_hits_m": 0.717362159620821,
+        "p95_on_hits_m": 1.758450338931541,
+        "max_on_hits_m": 2.1034584955672564,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008542770107805591,
+          "2mm": 0.0016335443328096546,
+          "5mm": 0.0047339448012034884,
+          "10mm": 0.012968341744141952
+        }
+      },
+      "preservation_B_six_views": {
+        "reference_pixels": 1750,
+        "hit_pixels": 1750,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 7.103934838399186e-06,
+        "rmse_on_hits_m": 0.00021107724641188016,
+        "p95_on_hits_m": 5.416185763440495e-07,
+        "max_on_hits_m": 0.008394733970927604,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.9988571428571429,
+          "2mm": 0.9988571428571429,
+          "5mm": 0.9994285714285714,
+          "10mm": 1.0
+        },
+        "total_test_rays": 24576,
+        "new_hit_where_original_misses": 0,
+        "new_hit_fraction_all_test_rays": 0.0,
+        "scope": "six model-bounds-derived external views; first-hit axial distance"
+      },
+      "previous_DepthPro_projective_TSDF_C_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 34886,
+        "miss_pixels": 1257,
+        "coverage": 0.9652214813380184,
+        "mae_on_hits_m": 0.0708970108297784,
+        "rmse_on_hits_m": 0.08238775143748643,
+        "p95_on_hits_m": 0.14924756555201202,
+        "max_on_hits_m": 0.22447649145126358,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.006972304457294635,
+          "2mm": 0.013280579918656448,
+          "5mm": 0.032758763799352573,
+          "10mm": 0.060841656752344854
+        }
+      }
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "spacing_m": 0.002,
+      "target_region": "target_cabinet_visible",
+      "analytic_A_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 45439,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.09798433554090254,
+        "rmse_on_hits_m": 0.14226862713573027,
+        "p95_on_hits_m": 0.3081884577927307,
+        "max_on_hits_m": 0.47466416070693285,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008582935363894452,
+          "2mm": 0.005633926802966614,
+          "5mm": 0.012082132089174498,
+          "10mm": 0.08369462356125795
+        }
+      },
+      "decoded_C_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 45439,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.09800803562960536,
+        "rmse_on_hits_m": 0.1423258766826175,
+        "p95_on_hits_m": 0.30821688486607257,
+        "max_on_hits_m": 0.4739230586356933,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008803010629635335,
+          "2mm": 0.005633926802966614,
+          "5mm": 0.012126147142322675,
+          "10mm": 0.08382666872070248
+        }
+      },
+      "decoded_C_full_scene": {
+        "reference_pixels": 262144,
+        "hit_pixels": 262144,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.36105815108657857,
+        "rmse_on_hits_m": 0.5562652247425746,
+        "p95_on_hits_m": 1.0614556896467682,
+        "max_on_hits_m": 2.152289707985683,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.000244140625,
+          "2mm": 0.001209259033203125,
+          "5mm": 0.0029449462890625,
+          "10mm": 0.01638031005859375
+        }
+      },
+      "decoded_C_nonrobot": {
+        "reference_pixels": 230328,
+        "hit_pixels": 230328,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.3384751756812523,
+        "rmse_on_hits_m": 0.5593036869787187,
+        "p95_on_hits_m": 1.070861377832664,
+        "max_on_hits_m": 2.152289707985683,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0002778646104685492,
+          "2mm": 0.0013762981487270328,
+          "5mm": 0.0033517418637768748,
+          "10mm": 0.018642978708624223
+        }
+      },
+      "preservation_B_six_views": {
+        "reference_pixels": 1897,
+        "hit_pixels": 1873,
+        "miss_pixels": 24,
+        "coverage": 0.9873484449130205,
+        "mae_on_hits_m": 3.4323889647686965e-06,
+        "rmse_on_hits_m": 2.954151997107026e-05,
+        "p95_on_hits_m": 4.3551301391886307e-07,
+        "max_on_hits_m": 0.0005386578061958858,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.9873484449130205,
+          "2mm": 0.9873484449130205,
+          "5mm": 0.9873484449130205,
+          "10mm": 0.9873484449130205
+        },
+        "total_test_rays": 24576,
+        "new_hit_where_original_misses": 0,
+        "new_hit_fraction_all_test_rays": 0.0,
+        "scope": "six model-bounds-derived external views; first-hit axial distance"
+      },
+      "previous_DepthPro_projective_TSDF_C_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 44426,
+        "miss_pixels": 1013,
+        "coverage": 0.9777063755804485,
+        "mae_on_hits_m": 0.23025395975002202,
+        "rmse_on_hits_m": 0.23603856331903503,
+        "p95_on_hits_m": 0.32361394791700915,
+        "max_on_hits_m": 0.40330654126824284,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.00026409031888906004,
+          "2mm": 0.0004621580580558551,
+          "5mm": 0.001100376328704417,
+          "10mm": 0.002068707497964304
+        }
+      }
+    }
+  ]
+}

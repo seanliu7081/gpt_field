@@ -56,6 +56,43 @@ def test_distance_arrival_then_direct_five_unchanged_and_no_success_claim():
     assert len(transport.calls) == 3
 
 
+@pytest.mark.parametrize("quaternion,aligned_rotation", [
+    ([1, 0, 0, 0], [np.pi, 0., 0.]),
+    ([-1, 0, 0, 0], [np.pi, 0., 0.]),
+    ([0, 0, 0, 1], [0., 0., 0.]),
+])
+@pytest.mark.parametrize("orientation_aligned", [False, True])
+def test_integer_json_quaternion_post_action_matches_float_semantics_and_preserves_raw_intent(
+        quaternion, aligned_rotation, orientation_aligned):
+    # JSON numbers may validly be integers. The archived relayout failure used
+    # [1,0,0,0] and crashed only after its first physical action, when progress
+    # checking normalized an integer array in place.
+    raw = intent()
+    raw["field"]["orientation_target_xyzw"] = quaternion
+    floating = copy.deepcopy(raw)
+    floating["field"]["orientation_target_xyzw"] = [float(v) for v in quaternion]
+    integer_policy, _ = controller(raw)
+    float_policy, _ = controller(floating)
+    rotation = aligned_rotation if orientation_aligned else [0., 0., np.pi/2]
+    obs = observation(state=[.1, .2, 1., *rotation, .04, -.04])
+    outcomes = []
+    for policy in (integer_policy, float_policy):
+        decision = policy.act(obs)
+        after = replace(obs, state=(.13, .2, 1., *rotation, .04, -.04))
+        feedback = policy.observe_transition(obs, decision, after)
+        assert policy.client.history_stats()["feedback_records"] == 1
+        outcomes.append((decision.action, feedback, policy.pending_field_event))
+    assert outcomes[0] == outcomes[1]
+    if orientation_aligned:
+        assert integer_policy.pending_field_event["reason"] == "goal_reached"
+    else:
+        assert integer_policy.pending_field_event is None
+    saved = integer_policy.client.last_compact_prediction["field"]["orientation_target_xyzw"]
+    assert saved == quaternion and all(type(value) is int for value in saved)
+    assert raw["field"]["orientation_target_xyzw"] == quaternion
+    assert integer_policy._completion is None
+
+
 def test_goal_region_and_tracker_tolerances_do_not_accumulate_into_deadlock():
     policy, _ = controller(intent(goal=(.06, 0., 0.)))
     initial = observation()

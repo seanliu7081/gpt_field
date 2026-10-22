@@ -1,0 +1,103 @@
+{
+  "status": "review_passed_with_explicit_assumptions",
+  "created_utc": "2026-10-20T02:06:18.769011+00:00",
+  "scope": "independent read-only reviewofplanning_fields.py,self_geometry.py,run_fixed_planning.py andPROTOCOL; noformaloutcomeaudit",
+  "blocking_findings": [],
+  "checks": [
+    {
+      "name": "native_robot_self_geometry",
+      "result": "pass",
+      "evidence": "13originalnativecolliders; exactq0convexhullunion;1e-10m numericalboundarytolerance; no intentionaldilation orproxyreplacement. Frozenq0material doesnotexpandwithcandidatepose."
+    },
+    {
+      "name": "depthpro_calibration_separation",
+      "result": "pass",
+      "evidence": "Originaldepth_m andK_pred are readfromhash-verified predictions. KnownrigK usedonlypixelselfassociation. Candidatephysicalrayp/p_z queriesexactrobotocclusion; no trueK ray substitutedatpredKpixel."
+    },
+    {
+      "name": "novel_region_visibility",
+      "result": "pass",
+      "evidence": "OutsideinitialSELF, free requires valid predictedtriangle and z<min(predicteddepth,knownrobotfront)-20mm-epsilon. Occluded/out-of-view/invalid/behinddepth pointsremainunknown."
+    },
+    {
+      "name": "self_association_no_free_carving",
+      "result": "pass",
+      "evidence": "Anyself-associatedtrianglevertexmakes surfacebandambiguous; outsideSELF itbecomesunknown, neverfree. Calibratedselfprojection is expresslynotverifiedsegmentation."
+    },
+    {
+      "name": "initial_material_override_is_explicit",
+      "result": "pass_with_declared_prior",
+      "evidence": "OnlyDepthPro overridesinsideexactknownq0material. source_code3 andknown_initial_self distinguishthisfromcameraevidence; rawoccupied/unknown/freeorigin countsrecorded. Requiresvalidregistration andinitialnoninterpenetration assumption; nosimulatorcontacttruthused."
+    },
+    {
+      "name": "astra_environment_selection",
+      "result": "pass_with_semantic_hypothesis",
+      "evidence": "Remove onlyrobot_namedtop-unioncomponents; preserveallnonrobotcomponentsandtheirdifference/intersectionexpressions includingoverlaps. Originalquerydomainretained; noSELFoverridingenvironmentobstacles."
+    },
+    {
+      "name": "clearance_semantics",
+      "result": "pass",
+      "evidence": "DepthProconservative_clearance stayszero: projective residual andSELFprior are notESDF. Astra lowerbound applies onlyto1-Lipschitzimplicitmodelzerosetanddomain, not physicalscene truth."
+    },
+    {
+      "name": "planning_truth_boundary",
+      "result": "pass_static_review",
+      "evidence": "Planningcallback usespredictions,knownrobotpackages,q0 anddeclaredrigfile only. FullLIBEROscene evaluator enteredseparately aftersealedplans. Rigfile containsK/shape/extrinsics andsourcehash, noobjectdepth/mesh."
+    },
+    {
+      "name": "finite_sampling_limits",
+      "result": "pass_documented",
+      "evidence": "5mm surfacecover andfinitejoint-edgechecks explicitlynotwhole-volume orcontinuouscollision certificates. Sameoriginalrobot/endpoints/seeds/plannersettings retained."
+    }
+  ],
+  "tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /workspace/venvs/libero-plus/bin/python -B -m pytest -q -p no:cacheprovider scene_test/field_planning_v2/tests scene_test/field_planning/tests",
+    "exit_code": 0,
+    "observed_output": "87 passed in 6.39s",
+    "new_adapter_tests": 14,
+    "new_self_geometry_tests": 8,
+    "new_plot_tests": 6,
+    "unchanged_previous_suite_tests": 59
+  },
+  "source_sha256": {
+    "scene_test/field_planning_v2/planning_fields.py": "8dbeba99f5c2c42341158a10438b3eab67022c1d9b24f01f5eb4025abcdea6c9",
+    "scene_test/field_planning_v2/plot_results.py": "58034ebc6d0b69ffc9bf2bbad9757f2e8565c016bf3c64c635b434295dbb11a3",
+    "scene_test/field_planning_v2/run_fixed_planning.py": "ad055766d18ee2ab3d081d5fe454f0dab256d230b7ee6d5f69557e69774a4c73",
+    "scene_test/field_planning_v2/self_geometry.py": "419029bd86857024e77e155441b96254330342775ad7b60ece2b6219b638d6fc",
+    "scene_test/field_planning_v2/tests/test_planning_fields.py": "54fe14ae1cc114190253546291b4c9c9b9942d72d600fe1c6d07aea5c2690a71",
+    "scene_test/field_planning_v2/tests/test_plot_results.py": "b5800e4b1b0829430ff7378fc66c2312652bf933e09a2957fe8c6c0d6354585c",
+    "scene_test/field_planning_v2/tests/test_self_geometry.py": "4619904239ec4b848fa56d551cd68c96e1c6359e70038e3773ee711ab2c6b975",
+    "scene_test/field_planning/joint_planner.py": "e012b99e4298221db8db4f6a85905c5b96d0ca9bf2eb427f48c638fd3e50ac75",
+    "scene_test/field_planning/native_distance_evaluation.py": "45ca9ead3fc3057429e521f9b4d7362276317d3b7087409604c0aedd3390593b",
+    "scene_test/field_planning/plot_planning.py": "734905b0667f637cef8fc7cde635222907370afa6bba8d83c377f10041c64359",
+    "scene_test/field_planning/predicted_fields.py": "4811a39e45c1aa3166ad7fee548548d1f87144efdc4ba1faa667ca5335195b1d",
+    "scene_test/field_planning/robot_geometry.py": "06cac98508455f1ec1a2716ad238c0cdf2f94c53011f8bc48b45e1dbb253d585",
+    "scene_test/field_planning/run_planning.py": "b99fe8c8264bca82945d9baec52358dd615a9317e8e24dc461b10873d1816e81",
+    "scene_test/field_planning/tests/test_joint_planner.py": "4e91e521b97bebe3600e8f3cc5d3cdafbfd04a9ee220460d4cb6df765bc5a699",
+    "scene_test/field_planning/tests/test_native_distance_evaluation.py": "753e8c7bd1243925abe083980b2c0a600d57acf9d04755e8074af8f9bb997ebe",
+    "scene_test/field_planning/tests/test_plot_planning.py": "f7be330410134eff950541bb71960eeeef7fbeb2773a8f2637beeda45ad46efe",
+    "scene_test/field_planning/tests/test_predicted_fields.py": "6fe2ac6897a14be581385857b1e4baaa6902edc1d828ef2b2d1e06b66ee04580",
+    "scene_test/field_planning/tests/test_robot_geometry.py": "c32fc6d984b87386fa729431ee1569d159da287829b1885d1c17f597f599613d",
+    "scene_test/field_planning/tests/test_run_planning.py": "cf2cd17c25fce0cf623d4a57a10537d9c8062274a3b85ab260813bf019562678"
+  },
+  "protocol_sha256": "0d55a12c985222c67a5a7bf2829f048804778b92e9780fcfd6b9670d3ad17ce5",
+  "reused_formal_runtime_unchanged": {
+    "/workspace/gpt_field/scene_test/field_planning/joint_planner.py": true,
+    "/workspace/gpt_field/scene_test/field_planning/native_distance_evaluation.py": true,
+    "/workspace/gpt_field/scene_test/field_planning/plot_planning.py": true,
+    "/workspace/gpt_field/scene_test/field_planning/predicted_fields.py": true,
+    "/workspace/gpt_field/scene_test/field_planning/robot_geometry.py": true,
+    "/workspace/gpt_field/scene_test/field_planning/run_planning.py": true
+  },
+  "nonblocking_reporting_caveats": [
+    "novel_region_points is~known_initial_self. Astra doesnotuseSELFprior, so itsall172411startpointsarelabellednovel bythiscounter. Do notinterpretthat asactualnewlysweptAstra geometry orcomparethiscounteracrossmethods.",
+    "DepthPro supported/free countsinclude explicitSELFprior. 100percentstartacceptanceisnot100percentcamerareconstructioncoverage.",
+    "This isaplanning-map intervention: AstraanalyticenvironmentCSG replacesoldsampledgridqueries; DepthProrestoresdepthrayprefixes. Itisnotanunchanged-grid result.",
+    "Modelrobotlabels and20mmselfassociationarenotground-truthsegmentation. InitialSELFpriorcanoverrideconflictingpredictedobstaclesonlyunderdeclarednoninterpenetration/calibrationassumption.",
+    "Correctedstarts donotguaranteemovablepaths: newlysweptbodyspacebehindoccluders/outofview canremainunknown."
+  ],
+  "own_writes": [
+    "scene_test/field_planning_v2/review_audit.json"
+  ],
+  "reviewer_modified_adapter_or_frozen_runtime": false
+}

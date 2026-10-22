@@ -1,0 +1,111 @@
+{
+  "failure_row": {
+    "snapshot": "drawer003_open_step552",
+    "case_id": "wrist_negative",
+    "seed": 17,
+    "first_invalid_sample_index": 33,
+    "q7": [
+      0.0025682340910677375,
+      0.5169359511551379,
+      -0.0043780579924078905,
+      -1.5997556967619508,
+      0.005287650813237378,
+      1.9004518337391412,
+      0.7816515284884364
+    ],
+    "original_native_truth": {
+      "valid": false,
+      "joint_limits_valid": true,
+      "environment_collision": true,
+      "self_collision": false,
+      "contacts": [
+        {
+          "geom1": "wooden_cabinet_1_g11",
+          "geom2": "gripper0_finger1_collision",
+          "distance_m": -0.0001997669741185505,
+          "kind": "environment"
+        }
+      ],
+      "penetration_tolerance_m": 1e-07,
+      "environment_min_distance_m": -0.0001997669741185505,
+      "environment_closest_pair": [
+        "gripper0_finger1_collision",
+        "wooden_cabinet_1_g11"
+      ],
+      "self_min_distance_m": 0.0009971689975443927,
+      "self_closest_pair": [
+        "robot0_link0_collision",
+        "robot0_link1_collision"
+      ],
+      "distance_cap_m": 0.05,
+      "distance_semantics": "native eligible geom pairs using scoped native GJK; positive distances capped; original contacts unchanged",
+      "distance_backend": "MuJoCo native GJK geomDistance, scoped nativeccd enable flag"
+    },
+    "contact_queries": [
+      {
+        "geom1": "wooden_cabinet_1_g11",
+        "geom2": "gripper0_finger1_collision",
+        "native_contact_distance_m": -0.0001997669741185505,
+        "native_contact_position_world_m": [
+          -0.014827537904088521,
+          -0.04442061748214963,
+          1.1222544473641203
+        ],
+        "native_contact_position_camera_m": [
+          -0.04442049428844703,
+          -0.043362701393867664,
+          0.8305897738419415
+        ],
+        "predicted_environment_state_at_contact": 1,
+        "predicted_environment_phi_m": 0.15057950571155296,
+        "predicted_environment_domain_supported": true,
+        "predicted_free_at_actual_contact_position": true,
+        "minimum_implicit_component": "dark_left_cabinet",
+        "minimum_component_phi_m": 0.15057950571155296,
+        "component_selection_semantics": "minimum implicit scalar among retained union operands; not claimed exact nearest Euclidean surface",
+        "phi_exceeds_absolute_contact_depth": true
+      }
+    ],
+    "predicted_robot_surface_at_same_dense_truth_pose": {
+      "points": 172411,
+      "free": 172411,
+      "occupied": 0,
+      "unknown": 0,
+      "supported": 172411,
+      "supported_ambiguous": 0,
+      "known_initial_self_points": 0,
+      "novel_region_points": 172411,
+      "initial_self_overrides_raw_unknown": 0,
+      "initial_self_overrides_raw_occupied_band": 0,
+      "initial_self_already_raw_free": 0,
+      "self_image_associated_points": 0
+    },
+    "robot_self_check_at_same_pose": {
+      "valid": true,
+      "self_collision": false,
+      "joint_limits_valid": true,
+      "contacts": []
+    },
+    "diagnostic_interpretation": "Predicted environment is free at actual native contact positions: representation/geometry mismatch contributes, not merely the planner skipping an already-represented obstacle."
+  },
+  "render_pixels": [
+    600,
+    600
+  ],
+  "contact_pixel_xy": [
+    260.7658752361814,
+    261.6882576321732
+  ],
+  "zoom_crop_box": [
+    175,
+    176,
+    345,
+    346
+  ],
+  "camera": "native agentview",
+  "q_mode": "saved exact first native collision q7; no dynamics",
+  "display_only": "Hide geomgroup0 duplicate collision shapes and sites; original visual scene remains unchanged",
+  "native_contact_recheck_distance_difference_m": 0.0,
+  "native_contact_recheck_position_difference_m": 0.0,
+  "purpose": "Posthoc illustration only; no ground-truth input to planning"
+}

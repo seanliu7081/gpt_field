@@ -1,0 +1,143 @@
+{
+  "action_order": [
+    "dx/0.05",
+    "dy/0.05",
+    "dz/0.05",
+    "world_rotvec_x/0.5",
+    "world_rotvec_y/0.5",
+    "world_rotvec_z/0.5",
+    "gripper_minus1_open_plus1_close"
+  ],
+  "agentic_geometry_extension": true,
+  "arm_joint_observation": {
+    "count": 7,
+    "enabled": true,
+    "order": [
+      "Panda arm joint 1",
+      "Panda arm joint 2",
+      "Panda arm joint 3",
+      "Panda arm joint 4",
+      "Panda arm joint 5",
+      "Panda arm joint 6",
+      "Panda arm joint 7"
+    ],
+    "position_key": "observation/joint_position",
+    "position_unit": "rad",
+    "source": "measured robot0_joint_pos and robot0_joint_vel observables; gripper joints remain in observation/state",
+    "velocity_key": "observation/joint_velocity",
+    "velocity_unit": "rad/s"
+  },
+  "base_collision_check_mode": "none",
+  "benchmark_variant": "LIBERO official layout (explicit checkout)",
+  "collision_check_mode": "generic_contact_v2",
+  "collision_monitoring": {
+    "chained_v1_monitor": null,
+    "goal_aware": true,
+    "mode": "generic_contact_v2",
+    "rule_table": null,
+    "sampling": "every actual physics substep and final control endpoint",
+    "version": "agent-speedup-v2-generic-contact-v2"
+  },
+  "collision_policy": "record_only",
+  "control_freq_hz": 20,
+  "controller": {
+    "control_delta": true,
+    "damping_ratio": 1,
+    "damping_ratio_limits": [
+      0,
+      10
+    ],
+    "impedance_mode": "fixed",
+    "input_max": 1,
+    "input_min": -1,
+    "interpolation": null,
+    "kp": 150,
+    "kp_limits": [
+      0,
+      300
+    ],
+    "orientation_limits": null,
+    "output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "output_min": [
+      -0.05,
+      -0.05,
+      -0.05,
+      -0.5,
+      -0.5,
+      -0.5
+    ],
+    "position_limits": null,
+    "ramp_ratio": 0.2,
+    "type": "OSC_POSE",
+    "uncouple_pos_ori": true
+  },
+  "controller_sources": {
+    "control_utils": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/utils/control_utils.py",
+      "sha256": "1d0f1a063894b1e8289339e223665e14e8aec492c31e9e00f42edea8dc735f43"
+    },
+    "osc": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/controllers/osc.py",
+      "sha256": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb"
+    },
+    "osc_pose_config": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/controllers/config/osc_pose.json",
+      "sha256": "07f3a8b41d3eecc8a36700a85bd8207ee3fbc36eb73f6a2248340c96770d1e45"
+    },
+    "panda_gripper": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/grippers/panda_gripper.py",
+      "sha256": "a3760a8fc4599fa6f79914304b82466f3c1bda1a945943ca693bb57f00dc59eb"
+    }
+  },
+  "evaluator_ops": [],
+  "geometry_contract": "astranomy_synchronized_camera_and_fixed_robot",
+  "image_protocol": "render RGB -> rotate 180 degrees -> bilinear resize with centered black padding",
+  "image_size": 512,
+  "initial_states_per_task": 50,
+  "libero_source": {
+    "git_commit": null,
+    "python_files": 100,
+    "python_tree_sha256": "ddd318ab2a023ea09d68bdd7c581d22a064d7204471fb26a736c6f91ed9d014d",
+    "root": "/workspace/heading_flow_pub/third_party/LIBERO"
+  },
+  "max_policy_steps": null,
+  "monitor_options": {
+    "goal_aware": true,
+    "truth_window": false
+  },
+  "mujoco_gl": "egl",
+  "oracle_enabled": false,
+  "packages": {
+    "Pillow": "12.3.0",
+    "mujoco": "3.2.6",
+    "numpy": "1.26.4",
+    "robosuite": "1.4.1",
+    "torch": "2.10.0"
+  },
+  "protocol": "gpt-field-libero-jsonl-v1",
+  "python_executable": "/workspace/venvs/libero-plus/bin/python",
+  "render_size": 512,
+  "seed": 7,
+  "settle_steps": 10,
+  "stop_on_collision": false,
+  "success_qualification": "raw_libero_goal",
+  "success_source": "OffScreenRenderEnv.check_success()",
+  "suite": "libero_10",
+  "task_count": 10,
+  "task_order_index": 0,
+  "v2_sim_version": "agent-speedup-v2-sim-v2",
+  "worker_protocol_ops": [
+    "metadata",
+    "tasks",
+    "reset",
+    "step",
+    "geometry"
+  ]
+}

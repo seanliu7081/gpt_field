@@ -1,0 +1,747 @@
+{
+  "artifact_type": "recorded_dijkstra_field_scientific_figures",
+  "source_run": "runs/bowl_obstacle_distance_medium_zero_shot_001",
+  "source_trace_sha256": "e1d6e177db31d1518835d939c3df0e2b41773fa9393ff6e0d86f3e41f532864e",
+  "source_manifest_sha256": "8cfec66d61957269da042e0e9b1577ff1cbfaf84dedb184d0326efa88861f59c",
+  "verified_source_hashes": {
+    "distance_planner.py": {
+      "current_sha256": "f607e0e9f37cd694301a476db71df6e9bf3e18b0bd103941e85ed3fc3b6cfe2d",
+      "recorded_sha256": "f607e0e9f37cd694301a476db71df6e9bf3e18b0bd103941e85ed3fc3b6cfe2d",
+      "matches": true
+    },
+    "distance_policy.py": {
+      "current_sha256": "470db608bc08cd85caa6a7119d983b0073860282d2524d550e17eb62452639fb",
+      "recorded_sha256": "470db608bc08cd85caa6a7119d983b0073860282d2524d550e17eb62452639fb",
+      "matches": true
+    },
+    "compact_field.py": {
+      "current_sha256": "4ac5637b119aae26cb299fcd56ce3e8e123b36391d1aa3b0ff02f296892f815b",
+      "recorded_sha256": "4ac5637b119aae26cb299fcd56ce3e8e123b36391d1aa3b0ff02f296892f815b",
+      "matches": true
+    },
+    "field.py": {
+      "current_sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499",
+      "recorded_sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499",
+      "matches": true
+    },
+    "schema.py": {
+      "current_sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09",
+      "recorded_sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09",
+      "matches": true
+    },
+    "planner.py": {
+      "current_sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1",
+      "recorded_sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1",
+      "matches": true
+    },
+    "tracking.py": {
+      "current_sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64",
+      "recorded_sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64",
+      "matches": true
+    }
+  },
+  "reconstruction_python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+  "reconstruction_numpy": "2.5.3",
+  "model_calls": 0,
+  "simulator_calls": 0,
+  "coordinate_frame": "world axes; plots use offsets from the field-generation EEF position",
+  "grid": {
+    "size": 33,
+    "spacing_m": 0.005,
+    "frame": "world"
+  },
+  "distance_definition": {
+    "D": "D(v) = min over valid graph paths from v to the seeded goal region of sum c(u,w)",
+    "edge_cost": "c(u,w) = ||w-u||_2 * [rho(u)+rho(w)]/2",
+    "density": "rho(x) = 1 + sum_j a_j exp(-||x-c_j||^2 / (2 sigma_j^2))",
+    "graph": "26-neighbor 3-D lattice; every active diagonal interpolation corner and continuous segment must avoid blocked/unknown boxes",
+    "goal_seeding": "Grid vertices in the tolerance ball have D=0; valid virtual edges connect nearby corners to the tolerance-sphere surface when needed.",
+    "unreachable": "Infinity at invalid/unreachable nodes, preserved as infinity in NPZ, never converted to zero.",
+    "unit": "Meters when rho=1; weighted meters with dimensionless nonconstant density.",
+    "selected_examples": "Both recorded examples have no Gaussian repulsors, so rho=1 and D is 3-D graph path length in meters.",
+    "not_sdf": "D is cost to the model-specified local goal region, not signed distance to an object surface.",
+    "legacy_potential": "The dense analytic attraction values are also reproduced for version verification, but the Dijkstra cost does not use attraction_weights or these legacy values."
+  },
+  "scope_limits": [
+    "Masks and goals are recorded model estimates, not measured obstacle meshes or object poses.",
+    "Each heatmap is an actual plane of the full 3-D solved D field; it is not a 2-D replanning result.",
+    "Tracking measurements are end-effector positions only, not object motion or full-arm collision clearance.",
+    "The source episode ultimately failed the collision criterion; these are method illustrations, not a successful-task result."
+  ],
+  "blocks": [
+    {
+      "field_refresh_action_index_zero_based": 201,
+      "last_executed_action_index_zero_based": 214,
+      "source_action_trace_line_1based": 871,
+      "source_request": "runs/bowl_obstacle_distance_medium_zero_shot_001/requests/000032-d9b8148fa78a4d179c8f7c357c8f5c13.request.json",
+      "source_request_sha256": "ce7c907227fedd164371183005ece2338c21c47ac8e860c0ead54adfd71cb402",
+      "raw_model_compact_prediction": {
+        "control_context": {
+          "phase": "recover",
+          "visual_reference": null
+        },
+        "controller": "coarse_field",
+        "direct": null,
+        "field": {
+          "attraction_weights": [
+            1,
+            1,
+            1
+          ],
+          "blocked_boxes": [
+            {
+              "lower_offset_m": [
+                0.015,
+                -0.08,
+                -0.08
+              ],
+              "upper_offset_m": [
+                0.08,
+                0.08,
+                -0.015
+              ]
+            }
+          ],
+          "goal_offset_m": [
+            -0.07,
+            0,
+            0.045
+          ],
+          "goal_reference": {
+            "desired_object_center_offset_m": null,
+            "kind": "end_effector",
+            "object_center_offset_m": null,
+            "visual_anchor": null
+          },
+          "gripper_command": "open",
+          "motion_mode": "move",
+          "orientation_target_xyzw": [
+            0.99961,
+            -0.00091,
+            -0.02792,
+            0.00027
+          ],
+          "repulsors": [],
+          "stage": "elevated reverse approach and orientation restoration",
+          "unknown_boxes": [
+            {
+              "lower_offset_m": [
+                -0.08,
+                -0.08,
+                -0.08
+              ],
+              "upper_offset_m": [
+                0.015,
+                0.08,
+                -0.05
+              ]
+            }
+          ]
+        },
+        "near_target": false,
+        "routing_reason": "The external view shows the gripper still behind and above the target bowl, with the bottle close to the prior approach. Reverse longitudinal direction while gaining height, restore the earlier downward orientation, and exclude the lower object-filled region.",
+        "target_region": "black_bowl"
+      },
+      "effective_compact_field": {
+        "attraction_weights": [
+          1,
+          1,
+          1
+        ],
+        "blocked_boxes": [
+          {
+            "lower_offset_m": [
+              0.015,
+              -0.08,
+              -0.08
+            ],
+            "upper_offset_m": [
+              0.08,
+              0.08,
+              -0.015
+            ]
+          }
+        ],
+        "goal_offset_m": [
+          -0.07,
+          0,
+          0.045
+        ],
+        "gripper_command": "open",
+        "motion_mode": "move",
+        "orientation_target_xyzw": [
+          0.99961,
+          -0.00091,
+          -0.02792,
+          0.00027
+        ],
+        "repulsors": [],
+        "stage": "elevated reverse approach and orientation restoration",
+        "unknown_boxes": [
+          {
+            "lower_offset_m": [
+              -0.08,
+              -0.08,
+              -0.08
+            ],
+            "upper_offset_m": [
+              0.015,
+              0.08,
+              -0.05
+            ]
+          }
+        ]
+      },
+      "field_center_world_xyz_m": [
+        -0.04558293323599661,
+        0.20656395605484587,
+        1.025472947123347
+      ],
+      "goal_world_xyz_m": [
+        -0.11558293323599661,
+        0.20656395605484587,
+        1.070472947123347
+      ],
+      "recorded_plan": {
+        "delta_xyz": [
+          -0.007071067811865485,
+          0.0,
+          0.007071067811865506
+        ],
+        "status": "move",
+        "candidate_count": 1,
+        "valid_count": 1,
+        "selected_index": 0,
+        "start_potential": 0.08863961030678923,
+        "predicted_improvement": 0.08742640687119287,
+        "reason": null,
+        "numerical_tie_tolerance": 0.0,
+        "candidates": [
+          {
+            "primitives": [
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path"
+            ],
+            "positions": [
+              [
+                -0.04558293323599661,
+                0.20656395605484587,
+                1.025472947123347
+              ],
+              [
+                -0.052654001047862095,
+                0.20656395605484587,
+                1.0325440149352125
+              ],
+              [
+                -0.05972506885972759,
+                0.20656395605484587,
+                1.039615082747078
+              ],
+              [
+                -0.06679613667159306,
+                0.20656395605484587,
+                1.0466861505589433
+              ],
+              [
+                -0.07058293323599661,
+                0.20656395605484587,
+                1.050472947123347
+              ],
+              [
+                -0.0805829332359966,
+                0.20656395605484587,
+                1.050472947123347
+              ],
+              [
+                -0.09058293323599662,
+                0.20656395605484587,
+                1.050472947123347
+              ],
+              [
+                -0.09558293323599662,
+                0.20656395605484587,
+                1.055472947123347
+              ],
+              [
+                -0.10058293323599661,
+                0.20656395605484587,
+                1.055472947123347
+              ],
+              [
+                -0.1076540010478621,
+                0.20656395605484587,
+                1.0625440149352126
+              ],
+              [
+                -0.11472506885972761,
+                0.20656395605484587,
+                1.0696150827470778
+              ]
+            ],
+            "path_length_m": 0.08742640687119287,
+            "valid": true,
+            "terminal_potential": 0.0012132034355963606,
+            "immediate_potential": 0.07863961030678923,
+            "invalid_reason": null
+          }
+        ],
+        "search": {
+          "method": "dijkstra_distance_field",
+          "connectivity": 26,
+          "candidate_semantics": "one_extracted_graph_shortest_path",
+          "distance_semantics": "weighted_graph_path_cost_to_goal_region",
+          "edge_cost": "euclidean_length_times_mean_endpoint_density",
+          "cost_unit": "m",
+          "density_minimum": 1.0,
+          "uses_attraction_potential": false,
+          "goal_xyz": [
+            -0.11558293323599661,
+            0.20656395605484587,
+            1.070472947123347
+          ],
+          "goal_tolerance_m": 0.0025,
+          "goal_distance_m": 0.08321658488546615,
+          "goal_reached": false,
+          "endpoint_is_goal": false,
+          "endpoint_in_goal_region": true,
+          "boundary_clipped": false,
+          "direction_invalid": false,
+          "needs_observation": false,
+          "cache_hit": false,
+          "segment_count": 10,
+          "max_path_length_m": 0.1,
+          "settled_vertex_count": 25080,
+          "seed_count": 1,
+          "valid_vertex_count": 25080,
+          "start_cost_m": 0.08863961030678923,
+          "terminal_cost_m": 0.0012132034355963606,
+          "shortest_graph_path_length_m": 0.08863961030678923,
+          "endpoint_xyz": [
+            -0.11472506885972761,
+            0.20656395605484587,
+            1.0696150827470778
+          ],
+          "path_termination": "goal_region"
+        }
+      },
+      "expanded_field_exact_match": true,
+      "reconstructed_plan_exact_match": true,
+      "executed_control_count": 14,
+      "replan_action_indices_zero_based": [
+        201,
+        211
+      ],
+      "initial_goal_distance_m": 0.08321658488546615,
+      "final_goal_distance_m": 0.0036218105338121555,
+      "measured_path_length_m": 0.08577535572771393,
+      "measured_net_displacement_m": 0.08050428967955321,
+      "measured_y_offset_range_m": [
+        -0.0005633838098840771,
+        0.002132469286115768
+      ],
+      "raw_rgb": [
+        {
+          "artifact": "block_201_input_external.png",
+          "sha256": "7db3bb16f6b1bc60724e4edd33250791dc16365dfa1fb4c11eb0587bcb9edebe",
+          "source_trace_line_1based": 865,
+          "source_event": "executed",
+          "after_action_index_zero_based": 200,
+          "source_key": "observation/image",
+          "transformation": "base64 decode only; original PNG bytes"
+        },
+        {
+          "artifact": "block_201_input_wrist.png",
+          "sha256": "57b6b91c4858739883b1353bb4ac30fdbc899b0a06a4a5f7466d6e2e29a98701",
+          "source_trace_line_1based": 865,
+          "source_event": "executed",
+          "after_action_index_zero_based": 200,
+          "source_key": "observation/wrist_image",
+          "transformation": "base64 decode only; original PNG bytes"
+        }
+      ],
+      "terminal_collision": null,
+      "data_artifacts": [
+        "block_201_data.npz",
+        "block_201_eef_track.csv"
+      ],
+      "primary_slice": {
+        "axes": [
+          "world X",
+          "world Z"
+        ],
+        "fixed_axis": "world Y",
+        "fixed_world_coordinate_m": 0.20656395605484587,
+        "fixed_offset_m": 0.0,
+        "grid_index": 16,
+        "path_lies_in_slice": true,
+        "description": "Exact XZ plane of the 3-D distance field. The selected path lies in this plane; the measured path in the tracking plot is an XZ projection."
+      }
+    },
+    {
+      "field_refresh_action_index_zero_based": 300,
+      "last_executed_action_index_zero_based": 309,
+      "source_action_trace_line_1based": 1293,
+      "source_request": "runs/bowl_obstacle_distance_medium_zero_shot_001/requests/000044-b3a18556d7524f72bf244ea43a08527c.request.json",
+      "source_request_sha256": "e94b7f5765f6eefa25ec52159de05f9838a66b79ecf189dc64992477a810a15b",
+      "raw_model_compact_prediction": {
+        "control_context": {
+          "phase": "approach",
+          "visual_reference": null
+        },
+        "controller": "coarse_field",
+        "direct": null,
+        "field": {
+          "attraction_weights": [
+            1,
+            1,
+            1
+          ],
+          "blocked_boxes": [
+            {
+              "lower_offset_m": [
+                0.035,
+                -0.08,
+                -0.08
+              ],
+              "upper_offset_m": [
+                0.08,
+                0.08,
+                0.015
+              ]
+            },
+            {
+              "lower_offset_m": [
+                -0.08,
+                -0.08,
+                -0.08
+              ],
+              "upper_offset_m": [
+                -0.025,
+                -0.035,
+                0.025
+              ]
+            }
+          ],
+          "goal_offset_m": [
+            -0.015,
+            0.015,
+            -0.06
+          ],
+          "goal_reference": {
+            "desired_object_center_offset_m": null,
+            "kind": "end_effector",
+            "object_center_offset_m": null,
+            "visual_anchor": null
+          },
+          "gripper_command": "open",
+          "motion_mode": "move",
+          "orientation_target_xyzw": [
+            0.99961,
+            -0.00091,
+            -0.02792,
+            0.00027
+          ],
+          "repulsors": [],
+          "stage": "bounded descent above black bowl away from ramekin",
+          "unknown_boxes": []
+        },
+        "near_target": false,
+        "routing_reason": "The wrist view now clearly shows the black bowl separated from the ramekin, and the external view retains vertical clearance above the bowl. Make a bounded descent with a small planar correction, preserving exclusions toward the ramekin and nearby bottle.",
+        "target_region": "black_bowl"
+      },
+      "effective_compact_field": {
+        "attraction_weights": [
+          1,
+          1,
+          1
+        ],
+        "blocked_boxes": [
+          {
+            "lower_offset_m": [
+              0.035,
+              -0.08,
+              -0.08
+            ],
+            "upper_offset_m": [
+              0.08,
+              0.08,
+              0.015
+            ]
+          },
+          {
+            "lower_offset_m": [
+              -0.08,
+              -0.08,
+              -0.08
+            ],
+            "upper_offset_m": [
+              -0.025,
+              -0.035,
+              0.025
+            ]
+          }
+        ],
+        "goal_offset_m": [
+          -0.015,
+          0.015,
+          -0.06
+        ],
+        "gripper_command": "open",
+        "motion_mode": "move",
+        "orientation_target_xyzw": [
+          0.99961,
+          -0.00091,
+          -0.02792,
+          0.00027
+        ],
+        "repulsors": [],
+        "stage": "bounded descent above black bowl away from ramekin",
+        "unknown_boxes": []
+      },
+      "field_center_world_xyz_m": [
+        -0.20694765056433712,
+        0.2068811742191525,
+        1.0058280301063212
+      ],
+      "goal_world_xyz_m": [
+        -0.22194765056433713,
+        0.2218811742191525,
+        0.9458280301063211
+      ],
+      "recorded_plan": {
+        "delta_xyz": [
+          -0.0050000000000000044,
+          0.0050000000000000044,
+          -0.004999999999999893
+        ],
+        "status": "move",
+        "candidate_count": 1,
+        "valid_count": 1,
+        "selected_index": 0,
+        "start_potential": 0.07098076211353326,
+        "predicted_improvement": 0.07098076211353326,
+        "reason": null,
+        "numerical_tie_tolerance": 0.0,
+        "candidates": [
+          {
+            "primitives": [
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path",
+              "distance_path"
+            ],
+            "positions": [
+              [
+                -0.20694765056433712,
+                0.2068811742191525,
+                1.0058280301063212
+              ],
+              [
+                -0.21194765056433712,
+                0.2118811742191525,
+                1.0008280301063213
+              ],
+              [
+                -0.21194765056433712,
+                0.2118811742191525,
+                0.9908280301063213
+              ],
+              [
+                -0.21194765056433712,
+                0.2118811742191525,
+                0.9808280301063212
+              ],
+              [
+                -0.21194765056433712,
+                0.2118811742191525,
+                0.9708280301063212
+              ],
+              [
+                -0.2177211532562334,
+                0.21765467691104876,
+                0.9650545274144249
+              ],
+              [
+                -0.22194765056433713,
+                0.2218811742191525,
+                0.9608280301063211
+              ],
+              [
+                -0.22194765056433713,
+                0.2218811742191525,
+                0.9508280301063211
+              ],
+              [
+                -0.22194765056433713,
+                0.2218811742191525,
+                0.9458280301063211
+              ]
+            ],
+            "path_length_m": 0.07098076211353326,
+            "valid": true,
+            "terminal_potential": 0.0,
+            "immediate_potential": 0.062320508075688924,
+            "invalid_reason": null
+          }
+        ],
+        "search": {
+          "method": "dijkstra_distance_field",
+          "connectivity": 26,
+          "candidate_semantics": "one_extracted_graph_shortest_path",
+          "distance_semantics": "weighted_graph_path_cost_to_goal_region",
+          "edge_cost": "euclidean_length_times_mean_endpoint_density",
+          "cost_unit": "m",
+          "density_minimum": 1.0,
+          "uses_attraction_potential": false,
+          "goal_xyz": [
+            -0.22194765056433713,
+            0.2218811742191525,
+            0.9458280301063211
+          ],
+          "goal_tolerance_m": 0.0025,
+          "goal_distance_m": 0.06363961030678933,
+          "goal_reached": false,
+          "endpoint_is_goal": true,
+          "endpoint_in_goal_region": true,
+          "boundary_clipped": false,
+          "direction_invalid": false,
+          "needs_observation": false,
+          "cache_hit": false,
+          "segment_count": 8,
+          "max_path_length_m": 0.1,
+          "settled_vertex_count": 26697,
+          "seed_count": 1,
+          "valid_vertex_count": 26697,
+          "start_cost_m": 0.07098076211353326,
+          "terminal_cost_m": 0.0,
+          "shortest_graph_path_length_m": 0.07098076211353326,
+          "endpoint_xyz": [
+            -0.22194765056433713,
+            0.2218811742191525,
+            0.9458280301063211
+          ],
+          "path_termination": "goal_region"
+        }
+      },
+      "expanded_field_exact_match": true,
+      "reconstructed_plan_exact_match": true,
+      "executed_control_count": 10,
+      "replan_action_indices_zero_based": [
+        300
+      ],
+      "initial_goal_distance_m": 0.06363961030678933,
+      "final_goal_distance_m": 0.005698173387424961,
+      "measured_path_length_m": 0.05888775552791098,
+      "measured_net_displacement_m": 0.05832162308754722,
+      "measured_y_offset_range_m": [
+        0.0,
+        0.01309778362309813
+      ],
+      "raw_rgb": [
+        {
+          "artifact": "block_300_input_external.png",
+          "sha256": "957e340b33e17b435d41e14165fd4eb6db896454cedd292fd2d3fbcb35ac0547",
+          "source_trace_line_1based": 1288,
+          "source_event": "executed",
+          "after_action_index_zero_based": 299,
+          "source_key": "observation/image",
+          "transformation": "base64 decode only; original PNG bytes"
+        },
+        {
+          "artifact": "block_300_input_wrist.png",
+          "sha256": "8af3b99477ca39dc526b0b9a16ad79fe75e91dce685e52e49654ce356a88b8c3",
+          "source_trace_line_1based": 1288,
+          "source_event": "executed",
+          "after_action_index_zero_based": 299,
+          "source_key": "observation/wrist_image",
+          "transformation": "base64 decode only; original PNG bytes"
+        }
+      ],
+      "terminal_collision": {
+        "phase": "action",
+        "action_index": 309,
+        "physics_substep": 7,
+        "contact_distance_m": -9.514610222601095e-05,
+        "geom1": {
+          "id": 151,
+          "name": "glazed_rim_porcelain_ramekin_1_g8",
+          "body": "glazed_rim_porcelain_ramekin_1_main",
+          "object": "glazed_rim_porcelain_ramekin_1",
+          "role": "scene"
+        },
+        "geom2": {
+          "id": 74,
+          "name": "gripper0_finger1_collision",
+          "body": "gripper0_leftfinger",
+          "object": "robot0_gripper",
+          "role": "robot_finger"
+        },
+        "reason": "robot_scene_contact"
+      },
+      "data_artifacts": [
+        "block_300_data.npz",
+        "block_300_eef_track.csv"
+      ]
+    }
+  ],
+  "plotting_python": "3.10.21 | packaged by conda-forge | (main, Aug 21 2026, 22:42:31) [GCC 14.4.0]",
+  "plotting_numpy": "1.26.4",
+  "matplotlib_version": "3.10.8",
+  "figures": [
+    {
+      "png": "field_cost_slice.png",
+      "pdf": "field_cost_slice.pdf",
+      "description": "Exact XZ slice of recorded 3-D Dijkstra cost at decision 201; both exclusion masks and selected path are real recorded data.",
+      "png_sha256": "67ef55c72b153af38f10a2f3ed916c8c6494533e65fd1e8fd9ec3d2e9e5ff6c1",
+      "pdf_sha256": "055028a73cf989525299bab9e1253a6ab901a5c23cc0d9346cf4dfcf109bb19d"
+    },
+    {
+      "png": "field_cost_slice_wide.png",
+      "pdf": "field_cost_slice_wide.pdf",
+      "description": "Slide-width exact XZ slice with real blocked/unknown masks and recorded path; 14 by 4.7 inches.",
+      "png_sha256": "f9adc8304ce92f32b9ea83eba87cf00d69b2f7047d3c4ad5486dbf89ee9a867c",
+      "pdf_sha256": "5c9d7dc58a472bf8c3c71627f13e2ebe435c414b269b53e7293a57f6633e5143"
+    },
+    {
+      "png": "field_tracking.png",
+      "pdf": "field_tracking.pdf",
+      "description": "Recorded planned versus measured EEF motion and measured 3-D goal error; no synthetic trajectories.",
+      "png_sha256": "f89178abfe1815dc4ee90a41ef8408ab9da33be6864cde0004415b11bf84708d",
+      "pdf_sha256": "dcfa27983e738a6fb596442a65f1be85303c47d9576b76ada9928f0c15bb6c0d"
+    },
+    {
+      "png": "terminal_field_tracking.png",
+      "pdf": "terminal_field_tracking.pdf",
+      "description": "Recorded planned versus measured EEF motion and measured 3-D goal error; no synthetic trajectories.",
+      "png_sha256": "b651f10e6bb0e47eef1146720848cbe20da220985f2676bbfe813e4eebbefb7a",
+      "pdf_sha256": "3c3b86bc0984d3fc26c881a5c7b2340ebd76b9a4e362ca4acc40f92bbeda44f6"
+    },
+    {
+      "png": "field_tracking_wide.png",
+      "pdf": "field_tracking_wide.pdf",
+      "description": "Slide-width real initial/replanned paths, actual EEF projection, and goal-error history; 10 by 4 inches.",
+      "png_sha256": "e3181d967d7c76ee0c9992af3f3c3b9fd48e6014cf52e6930f0f7e08745dc2aa",
+      "pdf_sha256": "c05ae4f5d2dd1ad5ed7ea6852ded4d0407aadc8a35d604e9344458114cbe63b1"
+    }
+  ],
+  "generation_script_sha256": "48b0d3ed3c037fb4900bd85e12853516c9b7794d6558e556c0dd1482b4d81b42",
+  "numerical_artifact_hashes": {
+    "block_201_data.npz": "d9a494b9c56fea42be3087c85e2e5714b1f2c7556c6c004d185353a1fc61e6f1",
+    "block_201_eef_track.csv": "924c0d839b30f5e10f426a91a612761cfd9a38a2e22c1e2cd3bb575094a7981e",
+    "block_300_data.npz": "f63a27ebfa2d5868f29a9abf4f9accd0f2d08f577f6621cf6024d7d72ae1c48d",
+    "block_300_eef_track.csv": "9271b103e95d7ffa9c99a64603b4696ae4dbe0576613fee5e59a5daf4c51edd4"
+  }
+}

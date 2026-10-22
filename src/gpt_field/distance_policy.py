@@ -416,7 +416,7 @@ class DistanceHybridPolicy(HybridFieldDirectPolicy):
             self._event("visual_unavailable")
             return
         current = _rotvec_quaternion(np.asarray(after.state[3:6]))
-        target = np.asarray(compact["orientation_target_xyzw"])
+        target = np.asarray(compact["orientation_target_xyzw"], dtype=float)
         target /= np.linalg.norm(target)
         rotation = _quaternion_product(target, np.r_[-current[:3], current[3]])
         angle = 2 * np.arctan2(np.linalg.norm(rotation[:3]), abs(rotation[3]))

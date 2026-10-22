@@ -1,0 +1,207 @@
+{
+  "status": "complete",
+  "settings": {
+    "random_seed": 20261019,
+    "camera_rays_per_scene": 4096,
+    "global_coarse_samples_per_ray": 257,
+    "bisection_iterations": 40,
+    "lipschitz_random_pairs": 10000,
+    "zero_residual_tolerance_m": 1e-08,
+    "sign_tolerance_m": 1e-09,
+    "local_epsilon_parameter_m": "max(1e-7,abs(t)*1e-7)",
+    "reference_calibration_usage": "evaluator-only after all Astra calls completed; never model input",
+    "method": "independent scalar-field zero/sign sampling and bisection checks of analytic endpoint-intersection implementation; no mesh/GT depth used",
+    "limitations": [
+      "Finite random ray and point checks are not a proof.",
+      "Global coarse scan can miss thin material or tangencies; no absence guarantee.",
+      "Tangency/coincident-boundary/non-crossing zero events are reported separately."
+    ],
+    "independent_sphere_trace": "t += positive phi / norm(direction), no minimum step, uses 1-Lipschitz lower bound, stops at phi<=1e-10 m",
+    "sphere_trace_max_iterations": 2000,
+    "sphere_trace_agreement_parameter_tolerance_m": 1e-06,
+    "local_dense_samples_per_hit": 65,
+    "local_dense_parameter_halfwidth_m": 1e-05
+  },
+  "scenes": [
+    {
+      "name": "bowl002_initial",
+      "rays": 4096,
+      "hits": 4096,
+      "misses": 0,
+      "pixel_indices_sha256": "e0b8b16a64725544651707dd2e8d6cf5a818d87f76fe6126ac6723d016693813",
+      "origin_phi_m": 0.5788267041668488,
+      "hit_residual": {
+        "max_abs_m": 7.389922007661198e-15,
+        "violations": 0
+      },
+      "local_signs": {
+        "entering": 4096,
+        "exiting": 0,
+        "tangent_outside": 0,
+        "tangent_inside": 0,
+        "near_zero_or_nearly_tangent": 0,
+        "wrong_first_crossing_direction": 0
+      },
+      "global_scan": {
+        "far_parameter_m": 1.585,
+        "step_parameter_m": 0.00619140625,
+        "earlier_opposite_material_sample_violations": 0,
+        "first_coarse_sign_change_rays": 4096,
+        "earlier_bisected_root_violations": 0,
+        "bisected_later_than_analytic": 38,
+        "max_abs_residual_at_bisected_roots_m": 2.7478019859472624e-15,
+        "bisected_first_root_agrees_with_analytic_within_1e_minus8_m": 4058
+      },
+      "lipschitz": {
+        "pairs": 10000,
+        "violations": 0,
+        "max_ratio_abs_dphi_over_distance": 0.9997281478545383,
+        "max_positive_excess_m": 0.0
+      },
+      "passed": true,
+      "sphere_trace": {
+        "converged": 4096,
+        "unconverged": 0,
+        "overshoot_violations": 0,
+        "max_iterations_used": 313,
+        "max_abs_parameter_error_m": 1.8414276770073457e-09,
+        "disagreement_over_1e_minus6_m": 0
+      },
+      "local_dense_scan": {
+        "rays": 4096,
+        "samples_per_ray": 65,
+        "center_zero_residual_max_m": 7.389922007661198e-15,
+        "strict_positive_before_negative_after_rays": 4096,
+        "multiple_strict_sampled_crossings": 0
+      }
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "rays": 4096,
+      "hits": 4096,
+      "misses": 0,
+      "pixel_indices_sha256": "e0b8b16a64725544651707dd2e8d6cf5a818d87f76fe6126ac6723d016693813",
+      "origin_phi_m": 0.5590003554399664,
+      "hit_residual": {
+        "max_abs_m": 1.0359768598533492e-14,
+        "violations": 0
+      },
+      "local_signs": {
+        "entering": 4096,
+        "exiting": 0,
+        "tangent_outside": 0,
+        "tangent_inside": 0,
+        "near_zero_or_nearly_tangent": 0,
+        "wrong_first_crossing_direction": 0
+      },
+      "global_scan": {
+        "far_parameter_m": 1.6849999999999998,
+        "step_parameter_m": 0.006582031249999999,
+        "earlier_opposite_material_sample_violations": 0,
+        "first_coarse_sign_change_rays": 4096,
+        "earlier_bisected_root_violations": 0,
+        "bisected_later_than_analytic": 41,
+        "max_abs_residual_at_bisected_roots_m": 2.9524993561125257e-15,
+        "bisected_first_root_agrees_with_analytic_within_1e_minus8_m": 4055
+      },
+      "lipschitz": {
+        "pairs": 10000,
+        "violations": 0,
+        "max_ratio_abs_dphi_over_distance": 0.9999753215368161,
+        "max_positive_excess_m": 0.0
+      },
+      "passed": true,
+      "sphere_trace": {
+        "converged": 4096,
+        "unconverged": 0,
+        "overshoot_violations": 0,
+        "max_iterations_used": 227,
+        "max_abs_parameter_error_m": 1.315251685340968e-09,
+        "disagreement_over_1e_minus6_m": 0
+      },
+      "local_dense_scan": {
+        "rays": 4096,
+        "samples_per_ray": 65,
+        "center_zero_residual_max_m": 1.0359768598533492e-14,
+        "strict_positive_before_negative_after_rays": 4096,
+        "multiple_strict_sampled_crossings": 0
+      }
+    },
+    {
+      "name": "drawer003_open_step552",
+      "rays": 4096,
+      "hits": 4096,
+      "misses": 0,
+      "pixel_indices_sha256": "e0b8b16a64725544651707dd2e8d6cf5a818d87f76fe6126ac6723d016693813",
+      "origin_phi_m": 0.7492195814800361,
+      "hit_residual": {
+        "max_abs_m": 4.107825191113079e-15,
+        "violations": 0
+      },
+      "local_signs": {
+        "entering": 4096,
+        "exiting": 0,
+        "tangent_outside": 0,
+        "tangent_inside": 0,
+        "near_zero_or_nearly_tangent": 0,
+        "wrong_first_crossing_direction": 0
+      },
+      "global_scan": {
+        "far_parameter_m": 2.390000369986469,
+        "step_parameter_m": 0.009335938945259645,
+        "earlier_opposite_material_sample_violations": 0,
+        "first_coarse_sign_change_rays": 4096,
+        "earlier_bisected_root_violations": 0,
+        "bisected_later_than_analytic": 43,
+        "max_abs_residual_at_bisected_roots_m": 4.274358644806853e-15,
+        "bisected_first_root_agrees_with_analytic_within_1e_minus8_m": 4053
+      },
+      "lipschitz": {
+        "pairs": 10000,
+        "violations": 0,
+        "max_ratio_abs_dphi_over_distance": 0.9998947236584262,
+        "max_positive_excess_m": 0.0
+      },
+      "passed": true,
+      "sphere_trace": {
+        "converged": 4096,
+        "unconverged": 0,
+        "overshoot_violations": 0,
+        "max_iterations_used": 381,
+        "max_abs_parameter_error_m": 2.083357486526438e-09,
+        "disagreement_over_1e_minus6_m": 0
+      },
+      "local_dense_scan": {
+        "rays": 4096,
+        "samples_per_ray": 65,
+        "center_zero_residual_max_m": 4.107825191113079e-15,
+        "strict_positive_before_negative_after_rays": 4096,
+        "multiple_strict_sampled_crossings": 0
+      }
+    }
+  ],
+  "consumed_sha256": {
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/source/scene_test/astra_scene/field_csg.py": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/manifest.json": "4c30610f450abd67959458ef9a2634e59349d517e3dde5d1067523ee38ed6d14",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/manifest.json": "254d44a3ff694c108482fef8fcef75babfd9f5100d3ae771d7f15b5cf44ab1aa",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/bowl002_initial.json": "63b5909de879f8058367c01ce1d371979d1485772229aa448139c0f86aea5b14",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/bowl002_initial/evaluator/calibration.json": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/drawer003_closed_step60.json": "11bdfc9a42755041fc251918fa0086a374e84e56610e309c4afcb3cf0bc7900e",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_closed_step60/evaluator/calibration.json": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/drawer003_open_step552.json": "d46628e0ade2982bf2928095c20a60cc4de375805f08789eb86f609fae2ac205",
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/calibration.json": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429"
+  },
+  "elapsed_s": 10.475574231997598,
+  "inputs_unchanged": {
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/source/scene_test/astra_scene/field_csg.py": true,
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/manifest.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/manifest.json": true,
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/bowl002_initial.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/bowl002_initial/evaluator/calibration.json": true,
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/drawer003_closed_step60.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_closed_step60/evaluator/calibration.json": true,
+    "/workspace/gpt_field/scene_test/astra_scene/inferences_001/fields/drawer003_open_step552.json": true,
+    "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/calibration.json": true
+  },
+  "additional_audit_elapsed_s": 5.126829724002164
+}

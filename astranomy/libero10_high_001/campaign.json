@@ -1,0 +1,59 @@
+{
+  "user_request": "try the astranomy agentic version on libero-10 t2, t6, and t8, keep astra high",
+  "status": "complete",
+  "method": "astranomy_codex_agentic",
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "billing": "chatgpt_subscription",
+  "api_key_fallback": false,
+  "parallel_episodes": 3,
+  "attempts_per_task": 1,
+  "automatic_retries": false,
+  "episode_caps": null,
+  "stopping": [
+    "raw LIBERO success",
+    "operator stop",
+    "infrastructure/subscription error"
+  ],
+  "collision_policy": "record_only",
+  "collision_monitor": "generic_contact_v2",
+  "baseline": "/workspace/gpt_field/astranomy/runs/drawer_bowl_high_001/frozen_source",
+  "tasks": [
+    {
+      "task_key": "libero_10_t2",
+      "task_id": 2,
+      "episode_index": 0,
+      "seed": 7,
+      "render_gpu": 2,
+      "output": "/workspace/gpt_field/astranomy/runs/libero_10_t2_high_001",
+      "runner_log": "/workspace/gpt_field/astranomy/launch/libero10_high_001/t2_runner.log",
+      "program": "astranomy_t2_high"
+    },
+    {
+      "task_key": "libero_10_t6",
+      "task_id": 6,
+      "episode_index": 0,
+      "seed": 7,
+      "render_gpu": 3,
+      "output": "/workspace/gpt_field/astranomy/runs/libero_10_t6_high_001",
+      "runner_log": "/workspace/gpt_field/astranomy/launch/libero10_high_001/t6_runner.log",
+      "program": "astranomy_t6_high"
+    },
+    {
+      "task_key": "libero_10_t8",
+      "task_id": 8,
+      "episode_index": 0,
+      "seed": 7,
+      "render_gpu": 4,
+      "output": "/workspace/gpt_field/astranomy/runs/libero_10_t8_high_001",
+      "runner_log": "/workspace/gpt_field/astranomy/launch/libero10_high_001/t8_runner.log",
+      "program": "astranomy_t8_high"
+    }
+  ],
+  "supervisor_config": "/workspace/gpt_field/astranomy/launch/libero10_high_001/supervisord.conf",
+  "launched_utc": "2026-10-20T10:52:35.626773+00:00",
+  "successful_episodes": 3,
+  "attempted_episodes": 3,
+  "results": "/workspace/gpt_field/astranomy/libero10_high_001/results.json",
+  "private_supervisor_shutdown": true
+}

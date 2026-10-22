@@ -1,0 +1,3914 @@
+[
+  {
+    "page": 1,
+    "text": "FRAMEWORK · METHODS · RESULTS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 206.701
+  },
+  {
+    "page": 1,
+    "text": "SpeedUp v1",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 164.052
+  },
+  {
+    "page": 1,
+    "text": "模型监督的宏技能 + 局部视觉与状态反馈闭环",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 260.03900000000004
+  },
+  {
+    "page": 1,
+    "text": "技术细节以 drawer003 冻结版本为主；结果另列 bowl002。所有证据来自已保存运行。[S1–S10]",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 384.26400000000007
+  },
+  {
+    "page": 1,
+    "text": "01 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 1,
+    "text": "语言与视觉决策 / 本地技能执行",
+    "x": 52,
+    "top": 141,
+    "font_size": 12,
+    "width": 166.092
+  },
+  {
+    "page": 1,
+    "text": "输入如何变成技能、",
+    "x": 40,
+    "top": 188,
+    "font_size": 32,
+    "width": 288.0
+  },
+  {
+    "page": 1,
+    "text": "距离场、路径与动作？",
+    "x": 40,
+    "top": 232,
+    "font_size": 32,
+    "width": 320.0
+  },
+  {
+    "page": 1,
+    "text": "01",
+    "x": 40,
+    "top": 303,
+    "font_size": 18,
+    "width": 21.240000000000002
+  },
+  {
+    "page": 1,
+    "text": "框架：谁负责理解，谁负责执行",
+    "x": 80,
+    "top": 303,
+    "font_size": 18,
+    "width": 252.00000000000003
+  },
+  {
+    "page": 1,
+    "text": "02",
+    "x": 40,
+    "top": 354,
+    "font_size": 18,
+    "width": 21.240000000000002
+  },
+  {
+    "page": 1,
+    "text": "方法：指点、伺服、接触与规划细节",
+    "x": 80,
+    "top": 354,
+    "font_size": 18,
+    "width": 288.00000000000006
+  },
+  {
+    "page": 1,
+    "text": "03",
+    "x": 40,
+    "top": 405,
+    "font_size": 18,
+    "width": 21.240000000000002
+  },
+  {
+    "page": 1,
+    "text": "结果：完成条件、耗时、调用与限制",
+    "x": 80,
+    "top": 405,
+    "font_size": 18,
+    "width": 288.00000000000006
+  },
+  {
+    "page": 1,
+    "text": "图：drawer003 把手释放后的真实运行画面",
+    "x": 588,
+    "top": 476,
+    "font_size": 11,
+    "width": 211.244
+  },
+  {
+    "page": 2,
+    "text": "01 / SYSTEM FRAMEWORK",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 138.578
+  },
+  {
+    "page": 2,
+    "text": "总框架：模型选技能，执行器闭环完成动作",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 532.0
+  },
+  {
+    "page": 2,
+    "text": "距离场是局部 waypoint 执行模块；抓取接触由另一条反馈链处理。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 387.68600000000004
+  },
+  {
+    "page": 2,
+    "text": "[S1] agent_speedup_v1.py / client；[S2–S6] 技能、局部规划、视觉与状态反馈。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 329.06700000000006
+  },
+  {
+    "page": 2,
+    "text": "02 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 2,
+    "text": "输入",
+    "x": 55,
+    "top": 151,
+    "font_size": 20,
+    "width": 40.0
+  },
+  {
+    "page": 2,
+    "text": "任务语言",
+    "x": 55,
+    "top": 191,
+    "font_size": 16,
+    "width": 64.0
+  },
+  {
+    "page": 2,
+    "text": "当前外部 RGB",
+    "x": 55,
+    "top": 220,
+    "font_size": 16,
+    "width": 99.28
+  },
+  {
+    "page": 2,
+    "text": "当前腕部 RGB",
+    "x": 55,
+    "top": 249,
+    "font_size": 16,
+    "width": 99.28
+  },
+  {
+    "page": 2,
+    "text": "机器人 state8",
+    "x": 55,
+    "top": 278,
+    "font_size": 16,
+    "width": 97.888
+  },
+  {
+    "page": 2,
+    "text": "压缩结果 / 记忆",
+    "x": 55,
+    "top": 307,
+    "font_size": 16,
+    "width": 109.44
+  },
+  {
+    "page": 2,
+    "text": "Astra / medium",
+    "x": 264,
+    "top": 150,
+    "font_size": 21,
+    "width": 157.92000000000002
+  },
+  {
+    "page": 2,
+    "text": "语义决策：skill + params",
+    "x": 264,
+    "top": 187,
+    "font_size": 14,
+    "width": 159.516
+  },
+  {
+    "page": 2,
+    "text": "按需指点：cell / point ID",
+    "x": 264,
+    "top": 207,
+    "font_size": 14,
+    "width": 156.31
+  },
+  {
+    "page": 2,
+    "text": "本地 Skill Executor",
+    "x": 264,
+    "top": 277,
+    "font_size": 19,
+    "width": 171.418
+  },
+  {
+    "page": 2,
+    "text": "分派、状态机、失败处理",
+    "x": 264,
+    "top": 312.0,
+    "font_size": 14,
+    "width": 154.0
+  },
+  {
+    "page": 2,
+    "text": "移动分支",
+    "x": 542,
+    "top": 146,
+    "font_size": 18,
+    "width": 72.00000000000001
+  },
+  {
+    "page": 2,
+    "text": "waypoint → 目标距离场 → Planner",
+    "x": 542,
+    "top": 180,
+    "font_size": 15,
+    "width": 238.67999999999998
+  },
+  {
+    "page": 2,
+    "text": "→ PathTracker → 位移与姿态保持",
+    "x": 542,
+    "top": 202,
+    "font_size": 15,
+    "width": 231.09
+  },
+  {
+    "page": 2,
+    "text": "接触分支",
+    "x": 542,
+    "top": 260,
+    "font_size": 18,
+    "width": 72.00000000000001
+  },
+  {
+    "page": 2,
+    "text": "Point + Align → GuardedApproach",
+    "x": 542,
+    "top": 295,
+    "font_size": 15,
+    "width": 237.84
+  },
+  {
+    "page": 2,
+    "text": "→ Close → VerifyHold / Pull / Release",
+    "x": 542,
+    "top": 317,
+    "font_size": 15,
+    "width": 257.96999999999997
+  },
+  {
+    "page": 2,
+    "text": "7D 控制动作 → LIBERO / OSC → 新 RGB 与机器人状态",
+    "x": 267,
+    "top": 406,
+    "font_size": 19,
+    "width": 465.88
+  },
+  {
+    "page": 2,
+    "text": "逐步反馈",
+    "x": 385,
+    "top": 360,
+    "font_size": 11,
+    "width": 44.0
+  },
+  {
+    "page": 2,
+    "text": "技能结束：outcome / ledger → 下一次模型决策；技能执行中：每动作反馈，按需请求指点。",
+    "x": 40,
+    "top": 473.0,
+    "font_size": 14,
+    "width": 580.1320000000001
+  },
+  {
+    "page": 3,
+    "text": "02 / INPUTS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 63.403999999999996
+  },
+  {
+    "page": 3,
+    "text": "模型看到当前双 RGB 与结构化状态摘要",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 490.952
+  },
+  {
+    "page": 3,
+    "text": "实图来自 drawer003 首次 decision（step89，完成自动标定与探测之后）。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 438.08700000000005
+  },
+  {
+    "page": 3,
+    "text": "[S1] request000001；输入图逐字节提取，未重新渲染。state8 本地派生摘要；无深度或物体真值。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 396.60300000000007
+  },
+  {
+    "page": 3,
+    "text": "03 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 3,
+    "text": "外部相机 · 512 × 512",
+    "x": 40,
+    "top": 132,
+    "font_size": 15,
+    "width": 156.72
+  },
+  {
+    "page": 3,
+    "text": "腕部相机 · 512 × 512",
+    "x": 296,
+    "top": 132,
+    "font_size": 15,
+    "width": 156.72
+  },
+  {
+    "page": 3,
+    "text": "state8 → state_summary",
+    "x": 572,
+    "top": 149,
+    "font_size": 19,
+    "width": 233.529
+  },
+  {
+    "page": 3,
+    "text": "[x, y, z, roll, pitch, yaw, qf1, qf2]",
+    "x": 572,
+    "top": 188.0,
+    "font_size": 13,
+    "width": 188.77300000000002
+  },
+  {
+    "page": 3,
+    "text": "末端世界位置、工具轴、指间距",
+    "x": 588,
+    "top": 230.0,
+    "font_size": 14,
+    "width": 196.0
+  },
+  {
+    "page": 3,
+    "text": "抓持状态、已拉距离、末次结果",
+    "x": 588,
+    "top": 251.0,
+    "font_size": 14,
+    "width": 196.0
+  },
+  {
+    "page": 3,
+    "text": "最近 12 条技能 ledger；drawer 另有最近 3 次决",
+    "x": 588,
+    "top": 272.0,
+    "font_size": 14,
+    "width": 298.032
+  },
+  {
+    "page": 3,
+    "text": "策摘要",
+    "x": 588,
+    "top": 292.72,
+    "font_size": 14,
+    "width": 42.0
+  },
+  {
+    "page": 3,
+    "text": "外部图像方向：由自身探测动作在线估计",
+    "x": 588,
+    "top": 313.72,
+    "font_size": 14,
+    "width": 252.0
+  },
+  {
+    "page": 3,
+    "text": "还有任务文字、目标外观说明和机器人几何先验。没有示范、深度、物体位姿或模拟器接触真值。",
+    "x": 40,
+    "top": 451,
+    "font_size": 15,
+    "width": 645.0
+  },
+  {
+    "page": 3,
+    "text": "stateless 表示不保留完整聊天 / 旧图像；显式摘要仍携带任务记忆。",
+    "x": 40,
+    "top": 473,
+    "font_size": 15,
+    "width": 452.655
+  },
+  {
+    "page": 4,
+    "text": "03 / MODEL CONTRACT",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 123.002
+  },
+  {
+    "page": 4,
+    "text": "Astra 返回技能 JSON，本地代码负责分派",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 525.0
+  },
+  {
+    "page": 4,
+    "text": "gpt-6-astra · medium · ChatGPT subscription · strict JSON schema。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 437.32000000000005
+  },
+  {
+    "page": 4,
+    "text": "[S1] frozen client / policy；drawer003 request000008 对应 step248 的成功把手抓取决策。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 368.61300000000006
+  },
+  {
+    "page": 4,
+    "text": "04 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 4,
+    "text": "真实输出节选（省略 situation 与 null 字段）",
+    "x": 58,
+    "top": 150,
+    "font_size": 11,
+    "width": 222.81599999999997
+  },
+  {
+    "page": 4,
+    "text": "{",
+    "x": 58,
+    "top": 188,
+    "font_size": 15,
+    "width": 5.069999999999999
+  },
+  {
+    "page": 4,
+    "text": "  \"skill\": \"grasp_with\",",
+    "x": 58,
+    "top": 214,
+    "font_size": 15,
+    "width": 153.15
+  },
+  {
+    "page": 4,
+    "text": "  \"params\": {",
+    "x": 58,
+    "top": 240,
+    "font_size": 15,
+    "width": 86.46
+  },
+  {
+    "page": 4,
+    "text": "    \"target\": \"top_drawer_handle\",",
+    "x": 58,
+    "top": 266,
+    "font_size": 15,
+    "width": 235.035
+  },
+  {
+    "page": 4,
+    "text": "    \"strategy\": \"frontal_bar_pinch\",",
+    "x": 58,
+    "top": 292,
+    "font_size": 15,
+    "width": 237.69
+  },
+  {
+    "page": 4,
+    "text": "    \"approach\": \"world_-y\",",
+    "x": 58,
+    "top": 318,
+    "font_size": 15,
+    "width": 182.64
+  },
+  {
+    "page": 4,
+    "text": "    \"max_travel_m\": 0.12",
+    "x": 58,
+    "top": 344,
+    "font_size": 15,
+    "width": 165.105
+  },
+  {
+    "page": 4,
+    "text": "  }",
+    "x": 58,
+    "top": 370,
+    "font_size": 15,
+    "width": 11.79
+  },
+  {
+    "page": 4,
+    "text": "}",
+    "x": 58,
+    "top": 396,
+    "font_size": 15,
+    "width": 5.069999999999999
+  },
+  {
+    "page": 4,
+    "text": "决策对象的三个部分",
+    "x": 513,
+    "top": 151,
+    "font_size": 21,
+    "width": 189.0
+  },
+  {
+    "page": 4,
+    "text": "situation",
+    "x": 513,
+    "top": 195,
+    "font_size": 17,
+    "width": 75.48
+  },
+  {
+    "page": 4,
+    "text": "对当前视觉关系的简短描述。",
+    "x": 513,
+    "top": 224.0,
+    "font_size": 16,
+    "width": 208.0
+  },
+  {
+    "page": 4,
+    "text": "skill",
+    "x": 513,
+    "top": 263.0,
+    "font_size": 17,
+    "width": 34.561
+  },
+  {
+    "page": 4,
+    "text": "从六个宏技能中选择一个。",
+    "x": 513,
+    "top": 292.0,
+    "font_size": 16,
+    "width": 192.0
+  },
+  {
+    "page": 4,
+    "text": "params",
+    "x": 513,
+    "top": 331.0,
+    "font_size": 17,
+    "width": 63.27400000000001
+  },
+  {
+    "page": 4,
+    "text": "目标、策略、抓取侧、接近方向、相对 waypoint 或拉",
+    "x": 513,
+    "top": 360.0,
+    "font_size": 16,
+    "width": 381.152
+  },
+  {
+    "page": 4,
+    "text": "动上限。",
+    "x": 513,
+    "top": 383.68,
+    "font_size": 16,
+    "width": 64.0
+  },
+  {
+    "page": 4,
+    "text": "这是结构化输出后的本地技能调用；模型不直接输出低层 7D 控制动作，也不逐点输出距离场。",
+    "x": 40,
+    "top": 469.0,
+    "font_size": 15,
+    "width": 625.365
+  },
+  {
+    "page": 5,
+    "text": "04 / SKILL LIBRARY",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 101.398
+  },
+  {
+    "page": 5,
+    "text": "六个宏技能把长动作序列封装为接口",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 448.0
+  },
+  {
+    "page": 5,
+    "text": "自动 calibrate 属于初始化，不是模型可选的第七个宏技能。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 345.54
+  },
+  {
+    "page": 5,
+    "text": "[S1, S2] frozen skill schema、start_macro 与技能状态机；多 waypoint / 抓拉合并为 drawer003 版本能力。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 435.744
+  },
+  {
+    "page": 5,
+    "text": "05 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 5,
+    "text": "技能",
+    "x": 53,
+    "top": 145,
+    "font_size": 15,
+    "width": 30.0
+  },
+  {
+    "page": 5,
+    "text": "模型给出的参数",
+    "x": 233,
+    "top": 145,
+    "font_size": 15,
+    "width": 105.0
+  },
+  {
+    "page": 5,
+    "text": "本地执行内容",
+    "x": 503,
+    "top": 145,
+    "font_size": 15,
+    "width": 90.0
+  },
+  {
+    "page": 5,
+    "text": "reach",
+    "x": 53,
+    "top": 188,
+    "font_size": 15,
+    "width": 39.33
+  },
+  {
+    "page": 5,
+    "text": "相对 waypoint",
+    "x": 233,
+    "top": 188,
+    "font_size": 15,
+    "width": 98.97
+  },
+  {
+    "page": 5,
+    "text": "保持姿态与夹爪，移动末端",
+    "x": 503,
+    "top": 188,
+    "font_size": 15,
+    "width": 180.0
+  },
+  {
+    "page": 5,
+    "text": "grasp_with",
+    "x": 53,
+    "top": 230,
+    "font_size": 15,
+    "width": 78.345
+  },
+  {
+    "page": 5,
+    "text": "目标 + 策略 + 侧 / 方向",
+    "x": 233,
+    "top": 230,
+    "font_size": 15,
+    "width": 147.69
+  },
+  {
+    "page": 5,
+    "text": "对齐 → 接近 → 闭合 → 验证",
+    "x": 503,
+    "top": 230,
+    "font_size": 15,
+    "width": 185.16
+  },
+  {
+    "page": 5,
+    "text": "pull",
+    "x": 53,
+    "top": 272,
+    "font_size": 15,
+    "width": 26.925
+  },
+  {
+    "page": 5,
+    "text": "总行程 2–16 cm",
+    "x": 233,
+    "top": 272,
+    "font_size": 15,
+    "width": 106.27499999999999
+  },
+  {
+    "page": 5,
+    "text": "反向拉动；包含 2 cm 验证拉",
+    "x": 503,
+    "top": 272,
+    "font_size": 15,
+    "width": 189.945
+  },
+  {
+    "page": 5,
+    "text": "transport",
+    "x": 53,
+    "top": 314,
+    "font_size": 15,
+    "width": 65.955
+  },
+  {
+    "page": 5,
+    "text": "waypoint + 目的地",
+    "x": 233,
+    "top": 314,
+    "font_size": 15,
+    "width": 125.655
+  },
+  {
+    "page": 5,
+    "text": "携物移动，逐步监测抓持",
+    "x": 503,
+    "top": 314,
+    "font_size": 15,
+    "width": 165.0
+  },
+  {
+    "page": 5,
+    "text": "place_release",
+    "x": 53,
+    "top": 356,
+    "font_size": 15,
+    "width": 96.825
+  },
+  {
+    "page": 5,
+    "text": "waypoint + 目的地",
+    "x": 233,
+    "top": 356,
+    "font_size": 15,
+    "width": 125.655
+  },
+  {
+    "page": 5,
+    "text": "移到上方 → 降低 → 松开退让",
+    "x": 503,
+    "top": 356,
+    "font_size": 15,
+    "width": 193.44
+  },
+  {
+    "page": 5,
+    "text": "retreat",
+    "x": 53,
+    "top": 398,
+    "font_size": 15,
+    "width": 48.015
+  },
+  {
+    "page": 5,
+    "text": "无",
+    "x": 233,
+    "top": 398,
+    "font_size": 15,
+    "width": 15.0
+  },
+  {
+    "page": 5,
+    "text": "沿接近轴反向退 3 cm",
+    "x": 503,
+    "top": 398,
+    "font_size": 15,
+    "width": 141.585
+  },
+  {
+    "page": 5,
+    "text": "waypoint 每轴限制 ±7.5 cm；drawer003 可附加最多 2 个偏移（一次最多 3 段）。",
+    "x": 40,
+    "top": 453,
+    "font_size": 15,
+    "width": 556.1999999999999
+  },
+  {
+    "page": 5,
+    "text": "frontal_bar_pinch 可附 max_travel_m，将抓住把手和拉开合并在同次决策中。",
+    "x": 40,
+    "top": 475,
+    "font_size": 15,
+    "width": 534.42
+  },
+  {
+    "page": 6,
+    "text": "05 / EXECUTION LOOP",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 118.448
+  },
+  {
+    "page": 6,
+    "text": "模型按事件调用；局部动作按反馈推进",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 476.0
+  },
+  {
+    "page": 6,
+    "text": "20 Hz 是模拟控制频率；模型等待期间模拟器暂停，不代表墙钟实时 20 Hz。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 435.78600000000006
+  },
+  {
+    "page": 6,
+    "text": "[S1] act / observe_transition；[S7, S8] manifest simulation_pauses_for_api 与请求记录。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 370.19700000000006
+  },
+  {
+    "page": 6,
+    "text": "06 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 6,
+    "text": "01",
+    "x": 56,
+    "top": 170,
+    "font_size": 13,
+    "width": 15.340000000000002
+  },
+  {
+    "page": 6,
+    "text": "初始化",
+    "x": 56,
+    "top": 200,
+    "font_size": 20,
+    "width": 60.0
+  },
+  {
+    "page": 6,
+    "text": "自动标定与探测",
+    "x": 56,
+    "top": 241,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 6,
+    "text": "不调用模型",
+    "x": 56,
+    "top": 263,
+    "font_size": 14,
+    "width": 70.0
+  },
+  {
+    "page": 6,
+    "text": "02",
+    "x": 282,
+    "top": 170,
+    "font_size": 13,
+    "width": 15.340000000000002
+  },
+  {
+    "page": 6,
+    "text": "选择技能",
+    "x": 282,
+    "top": 200,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 6,
+    "text": "新 RGB + 摘要",
+    "x": 282,
+    "top": 241,
+    "font_size": 14,
+    "width": 86.912
+  },
+  {
+    "page": 6,
+    "text": "请求一次 decision",
+    "x": 282,
+    "top": 263,
+    "font_size": 14,
+    "width": 113.988
+  },
+  {
+    "page": 6,
+    "text": "03",
+    "x": 508,
+    "top": 170,
+    "font_size": 13,
+    "width": 15.340000000000002
+  },
+  {
+    "page": 6,
+    "text": "执行原语",
+    "x": 508,
+    "top": 200,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 6,
+    "text": "动作 → 观测 → 更新",
+    "x": 508,
+    "top": 241,
+    "font_size": 14,
+    "width": 124.544
+  },
+  {
+    "page": 6,
+    "text": "本地状态机循环",
+    "x": 508,
+    "top": 263,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 6,
+    "text": "04",
+    "x": 734,
+    "top": 170,
+    "font_size": 13,
+    "width": 15.340000000000002
+  },
+  {
+    "page": 6,
+    "text": "完成或失败",
+    "x": 734,
+    "top": 200,
+    "font_size": 20,
+    "width": 100.0
+  },
+  {
+    "page": 6,
+    "text": "记录 outcome / ledger",
+    "x": 734,
+    "top": 241,
+    "font_size": 14,
+    "width": 142.996
+  },
+  {
+    "page": 6,
+    "text": "再请求 decision",
+    "x": 734,
+    "top": 263,
+    "font_size": 14,
+    "width": 99.988
+  },
+  {
+    "page": 6,
+    "text": "技能内部的例外：pointing",
+    "x": 57,
+    "top": 383,
+    "font_size": 18,
+    "width": 219.20400000000004
+  },
+  {
+    "page": 6,
+    "text": "Align 需要视觉目标时另发 coarse / fine 请求；不会每个动",
+    "x": 57,
+    "top": 416,
+    "font_size": 15,
+    "width": 385.59
+  },
+  {
+    "page": 6,
+    "text": "作都问模型怎么动。",
+    "x": 57,
+    "top": 438,
+    "font_size": 15,
+    "width": 135.0
+  },
+  {
+    "page": 6,
+    "text": "外部评估器每步检查任务成功",
+    "x": 501,
+    "top": 383,
+    "font_size": 18,
+    "width": 234.00000000000003
+  },
+  {
+    "page": 6,
+    "text": "raw LIBERO success 可在原语中途终止。hold_pass 只是局",
+    "x": 501,
+    "top": 416,
+    "font_size": 15,
+    "width": 397.32
+  },
+  {
+    "page": 6,
+    "text": "部抓持测试结果。",
+    "x": 501,
+    "top": 438,
+    "font_size": 15,
+    "width": 120.0
+  },
+  {
+    "page": 7,
+    "text": "06 / ONLINE CALIBRATION",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 139.94199999999998
+  },
+  {
+    "page": 7,
+    "text": "先测机器人自身响应，再解释图像与接触",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 504.0
+  },
+  {
+    "page": 7,
+    "text": "不提供场景深度；利用可观测的手指位置和自身运动建立局部参考。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 390.00000000000006
+  },
+  {
+    "page": 7,
+    "text": "[S2, S6] Calibrate / external_axes.py；[S8] agent_stats.json，drawer003 在线标定记录。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 365.98500000000007
+  },
+  {
+    "page": 7,
+    "text": "07 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 7,
+    "text": "夹爪标定",
+    "x": 56,
+    "top": 149,
+    "font_size": 19,
+    "width": 76.0
+  },
+  {
+    "page": 7,
+    "text": "空中闭合曲线 + 打开与稳定段。",
+    "x": 56,
+    "top": 210.0,
+    "font_size": 17,
+    "width": 238.05100000000002
+  },
+  {
+    "page": 7,
+    "text": "记录空闭合指间距、开指噪声。",
+    "x": 56,
+    "top": 234.65,
+    "font_size": 17,
+    "width": 238.00000000000003
+  },
+  {
+    "page": 7,
+    "text": "",
+    "x": 56,
+    "top": 259.3,
+    "font_size": 17,
+    "width": 0.0
+  },
+  {
+    "page": 7,
+    "text": "drawer003：空闭合底值 1.186 mm；",
+    "x": 56,
+    "top": 283.95,
+    "font_size": 17,
+    "width": 285.226
+  },
+  {
+    "page": 7,
+    "text": "接触阈值 max(0.1 mm, 3σ) = 0.1 mm。",
+    "x": 56,
+    "top": 308.6,
+    "font_size": 17,
+    "width": 297.228
+  },
+  {
+    "page": 7,
+    "text": "外部图像方向标定",
+    "x": 500,
+    "top": 149,
+    "font_size": 19,
+    "width": 152.0
+  },
+  {
+    "page": 7,
+    "text": "3 次总体回到附近的 XY 探测动作。",
+    "x": 500,
+    "top": 210.0,
+    "font_size": 17,
+    "width": 260.627
+  },
+  {
+    "page": 7,
+    "text": "用图像位移与实测世界位移拟合映射。",
+    "x": 500,
+    "top": 234.65,
+    "font_size": 17,
+    "width": 289.0
+  },
+  {
+    "page": 7,
+    "text": "",
+    "x": 500,
+    "top": 259.3,
+    "font_size": 17,
+    "width": 0.0
+  },
+  {
+    "page": 7,
+    "text": "图像向右 ≈ [0.061, 0.998, 0]",
+    "x": 500,
+    "top": 283.95,
+    "font_size": 17,
+    "width": 215.543
+  },
+  {
+    "page": 7,
+    "text": "图像向上 ≈ [−0.996, −0.085, 0]",
+    "x": 500,
+    "top": 308.6,
+    "font_size": 17,
+    "width": 234.413
+  },
+  {
+    "page": 7,
+    "text": "Δs_image ≈ J_ext · Δp_world,XY      （外部相机方向不能直接套用腕部相机轴）",
+    "x": 56,
+    "top": 454.0,
+    "font_size": 16,
+    "width": 593.856
+  },
+  {
+    "page": 8,
+    "text": "07 / COARSE-TO-FINE POINTING",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 171.457
+  },
+  {
+    "page": 8,
+    "text": "视觉指点：先选区域，再选局部接触点",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 476.0
+  },
+  {
+    "page": 8,
+    "text": "实图：drawer003 成功把手抓取的请求 9 / 10；模型返回 cell28 → point44。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 441.285
+  },
+  {
+    "page": 8,
+    "text": "[S1, S5] request000009 / request000010、mark_prompting.py；图像为实际发送给模型的字节。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 393.59700000000004
+  },
+  {
+    "page": 8,
+    "text": "08 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 8,
+    "text": "Coarse：8 × 8 区域",
+    "x": 40,
+    "top": 131,
+    "font_size": 17,
+    "width": 157.199
+  },
+  {
+    "page": 8,
+    "text": "Fine：局部裁剪 + 8 × 8 点",
+    "x": 398,
+    "top": 131,
+    "font_size": 17,
+    "width": 204.27200000000002
+  },
+  {
+    "page": 8,
+    "text": "横杆版本",
+    "x": 720,
+    "top": 180.0,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 8,
+    "text": "128 × 128 裁剪",
+    "x": 720,
+    "top": 226,
+    "font_size": 16,
+    "width": 112.032
+  },
+  {
+    "page": 8,
+    "text": "放大 4 倍",
+    "x": 720,
+    "top": 252,
+    "font_size": 16,
+    "width": 64.048
+  },
+  {
+    "page": 8,
+    "text": "",
+    "x": 720,
+    "top": 278,
+    "font_size": 16,
+    "width": 0.0
+  },
+  {
+    "page": 8,
+    "text": "普通碗：96 × 96",
+    "x": 720,
+    "top": 304,
+    "font_size": 16,
+    "width": 122.688
+  },
+  {
+    "page": 8,
+    "text": "放大 5 倍",
+    "x": 720,
+    "top": 330,
+    "font_size": 16,
+    "width": 64.048
+  },
+  {
+    "page": 8,
+    "text": "",
+    "x": 720,
+    "top": 356,
+    "font_size": 16,
+    "width": 0.0
+  },
+  {
+    "page": 8,
+    "text": "不可见可返回 0",
+    "x": 720,
+    "top": 382,
+    "font_size": 16,
+    "width": 108.464
+  },
+  {
+    "page": 8,
+    "text": "把手指点图按重力转正，结果映回腕图；NCC 跟踪只读无标记原图。模型选的是像素点，不是 3D 位姿。",
+    "x": 40,
+    "top": 468.0,
+    "font_size": 14,
+    "width": 642.796
+  },
+  {
+    "page": 9,
+    "text": "08 / WRIST VISUAL SERVO",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 137.511
+  },
+  {
+    "page": 9,
+    "text": "像素点变成毫米级动作：在线图像 Jacobian",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 552.1320000000001
+  },
+  {
+    "page": 9,
+    "text": "小幅自身探测 + NCC 跟踪；不把像素误差直接假装成已知的米制深度。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 405.93800000000005
+  },
+  {
+    "page": 9,
+    "text": "[S5] wrist_servo.py:295–360,462–529,850–857,970–998,1075–1114；drawer003 冻结版本。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 377.19000000000005
+  },
+  {
+    "page": 9,
+    "text": "09 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 9,
+    "text": "Δs ≈ J Δp_plane       J ∈ R^(2×2), 单位 px/m",
+    "x": 60,
+    "top": 151,
+    "font_size": 21,
+    "width": 447.34200000000004
+  },
+  {
+    "page": 9,
+    "text": "Δp_cmd ∝ − pinv(J) (s − s*)",
+    "x": 60,
+    "top": 184,
+    "font_size": 17,
+    "width": 226.78000000000003
+  },
+  {
+    "page": 9,
+    "text": "1. 建立局部映射",
+    "x": 56,
+    "top": 250,
+    "font_size": 19,
+    "width": 135.698
+  },
+  {
+    "page": 9,
+    "text": "探测移动、读取实测位移、跟踪像素",
+    "x": 56,
+    "top": 311.0,
+    "font_size": 15,
+    "width": 240.0
+  },
+  {
+    "page": 9,
+    "text": "。普通二维探测目标 2 mm；横杆跨",
+    "x": 56,
+    "top": 332.75,
+    "font_size": 15,
+    "width": 237.825
+  },
+  {
+    "page": 9,
+    "text": "轴探测出 / 回各 6 mm。",
+    "x": 56,
+    "top": 354.5,
+    "font_size": 15,
+    "width": 160.42499999999998
+  },
+  {
+    "page": 9,
+    "text": "2. 持续更新",
+    "x": 350,
+    "top": 250,
+    "font_size": 19,
+    "width": 97.698
+  },
+  {
+    "page": 9,
+    "text": "普通二维 J 用 Broyden；横杆更新标",
+    "x": 350,
+    "top": 311.0,
+    "font_size": 15,
+    "width": 242.445
+  },
+  {
+    "page": 9,
+    "text": "量 κ。使用干净、小旋转样本，拒绝",
+    "x": 350,
+    "top": 332.75,
+    "font_size": 15,
+    "width": 236.625
+  },
+  {
+    "page": 9,
+    "text": "异常更新。目标 s* 补偿 5 cm 腕相机",
+    "x": 350,
+    "top": 354.5,
+    "font_size": 15,
+    "width": 240.69
+  },
+  {
+    "page": 9,
+    "text": "安装偏移。",
+    "x": 350,
+    "top": 376.25,
+    "font_size": 15,
+    "width": 75.0
+  },
+  {
+    "page": 9,
+    "text": "3. 检查收敛",
+    "x": 652,
+    "top": 250,
+    "font_size": 19,
+    "width": 97.698
+  },
+  {
+    "page": 9,
+    "text": "阈值 min(6 px, max(2 px, κ×3 mm))",
+    "x": 652,
+    "top": 311.0,
+    "font_size": 15,
+    "width": 245.31
+  },
+  {
+    "page": 9,
+    "text": "，连续 3 帧满足。横杆只视觉纠正跨",
+    "x": 652,
+    "top": 332.75,
+    "font_size": 15,
+    "width": 240.045
+  },
+  {
+    "page": 9,
+    "text": "杆方向，沿杆由本体位置保持。",
+    "x": 652,
+    "top": 354.5,
+    "font_size": 15,
+    "width": 210.0
+  },
+  {
+    "page": 9,
+    "text": "κ 为在线估计的 px/m；3 mm 是伺服阈值的尺度参数，不是经场景真值验证的定位精度。",
+    "x": 40,
+    "top": 470.0,
+    "font_size": 15,
+    "width": 589.35
+  },
+  {
+    "page": 10,
+    "text": "09 / BOWL GRASP STRATEGY",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 152.44899999999998
+  },
+  {
+    "page": 10,
+    "text": "rim_pinch：用反馈决定接近深度与闭合时机",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 560.784
+  },
+  {
+    "page": 10,
+    "text": "模型选碗沿左 / 右侧；本地执行器把碗壁放入两指之间。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 322.92
+  },
+  {
+    "page": 10,
+    "text": "[S2, S5] GuardedApproach / Grasp / VerifyHold；[S7] bowl002 hold_pass 原视频帧。技术常量为 drawer003。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 450.21600000000007
+  },
+  {
+    "page": 10,
+    "text": "10 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 10,
+    "text": "实录：碗抓持测试通过后",
+    "x": 52,
+    "top": 438,
+    "font_size": 12,
+    "width": 132.0
+  },
+  {
+    "page": 10,
+    "text": "01",
+    "x": 356,
+    "top": 150,
+    "font_size": 16,
+    "width": 18.88
+  },
+  {
+    "page": 10,
+    "text": "Point + Align",
+    "x": 397,
+    "top": 148,
+    "font_size": 18,
+    "width": 111.61800000000001
+  },
+  {
+    "page": 10,
+    "text": "先横向对齐选定的碗沿",
+    "x": 397,
+    "top": 176,
+    "font_size": 14,
+    "width": 140.0
+  },
+  {
+    "page": 10,
+    "text": "02",
+    "x": 356,
+    "top": 228,
+    "font_size": 16,
+    "width": 18.88
+  },
+  {
+    "page": 10,
+    "text": "GuardedApproach",
+    "x": 397,
+    "top": 226,
+    "font_size": 18,
+    "width": 162.01800000000003
+  },
+  {
+    "page": 10,
+    "text": "每 20 mm 分段下降并刷新对齐",
+    "x": 397,
+    "top": 254,
+    "font_size": 14,
+    "width": 190.876
+  },
+  {
+    "page": 10,
+    "text": "03",
+    "x": 356,
+    "top": 306,
+    "font_size": 16,
+    "width": 18.88
+  },
+  {
+    "page": 10,
+    "text": "接触 → 回退 → Close",
+    "x": 397,
+    "top": 304,
+    "font_size": 18,
+    "width": 172.45800000000003
+  },
+  {
+    "page": 10,
+    "text": "接触后回退 4 mm，再按测量条件闭合",
+    "x": 397,
+    "top": 332,
+    "font_size": 14,
+    "width": 235.97
+  },
+  {
+    "page": 10,
+    "text": "04",
+    "x": 356,
+    "top": 384,
+    "font_size": 16,
+    "width": 18.88
+  },
+  {
+    "page": 10,
+    "text": "VerifyHold",
+    "x": 397,
+    "top": 382,
+    "font_size": 18,
+    "width": 94.12200000000001
+  },
+  {
+    "page": 10,
+    "text": "上提 25 mm；检查夹距与运动是否支持抓持",
+    "x": 397,
+    "top": 410,
+    "font_size": 14,
+    "width": 271.74
+  },
+  {
+    "page": 10,
+    "text": "接触代理：开指向内偏转超过阈值，或实测 / 命令接近量比值显著下降；未读取模拟器接触身",
+    "x": 342,
+    "top": 466,
+    "font_size": 14,
+    "width": 571.76
+  },
+  {
+    "page": 10,
+    "text": "份。",
+    "x": 342,
+    "top": 485,
+    "font_size": 14,
+    "width": 28.0
+  },
+  {
+    "page": 11,
+    "text": "10 / HANDLE GRASP & CONTACT LOGIC",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 207.09699999999998
+  },
+  {
+    "page": 11,
+    "text": "frontal_bar_pinch：抓住把手，再验证与拉动",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 587.02
+  },
+  {
+    "page": 11,
+    "text": "水平接近、夹爪转向、跨杆对齐；避免沿均匀把手纹理误追踪。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 364.00000000000006
+  },
+  {
+    "page": 11,
+    "text": "[S2, S5] Grasp / VerifyHold / frontal_bar_pinch；[S8] step248–441 的宏结果。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 320.49000000000007
+  },
+  {
+    "page": 11,
+    "text": "11 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 11,
+    "text": "Orient → Point / Align → GuardedApproach → 回退 5 mm → Close → Pull-test",
+    "x": 58,
+    "top": 157,
+    "font_size": 18,
+    "width": 671.22
+  },
+  {
+    "page": 11,
+    "text": "接触事件",
+    "x": 56,
+    "top": 241,
+    "font_size": 19,
+    "width": 76.0
+  },
+  {
+    "page": 11,
+    "text": "满足启用与小旋转条件后，近 2 步",
+    "x": 56,
+    "top": 302.0,
+    "font_size": 16,
+    "width": 240.048
+  },
+  {
+    "page": 11,
+    "text": "响应比均值 < 0.6×本次自由响应",
+    "x": 56,
+    "top": 325.2,
+    "font_size": 16,
+    "width": 230.256
+  },
+  {
+    "page": 11,
+    "text": "，或手指偏转超阈值。",
+    "x": 56,
+    "top": 348.4,
+    "font_size": 16,
+    "width": 160.0
+  },
+  {
+    "page": 11,
+    "text": "闭合与验证",
+    "x": 350,
+    "top": 241,
+    "font_size": 19,
+    "width": 95.0
+  },
+  {
+    "page": 11,
+    "text": "第 15 步夹距 > 空闭合基线 +0.5",
+    "x": 350,
+    "top": 302.0,
+    "font_size": 16,
+    "width": 219.648
+  },
+  {
+    "page": 11,
+    "text": "mm；再回拉 20 mm。夹距跌破空",
+    "x": 350,
+    "top": 325.2,
+    "font_size": 16,
+    "width": 244.192
+  },
+  {
+    "page": 11,
+    "text": "闭合底值 +1 mm 则判 hold_lost。",
+    "x": 350,
+    "top": 348.4,
+    "font_size": 16,
+    "width": 244.304
+  },
+  {
+    "page": 11,
+    "text": "抓拉合并",
+    "x": 652,
+    "top": 241,
+    "font_size": 19,
+    "width": 76.0
+  },
+  {
+    "page": 11,
+    "text": "模型给 0.12 m 总行程。验证拉动计",
+    "x": 652,
+    "top": 302.0,
+    "font_size": 16,
+    "width": 248.656
+  },
+  {
+    "page": 11,
+    "text": "入其中；成功宏报告实际拉动约",
+    "x": 652,
+    "top": 325.2,
+    "font_size": 16,
+    "width": 224.0
+  },
+  {
+    "page": 11,
+    "text": "0.1198 m。",
+    "x": 652,
+    "top": 348.4,
+    "font_size": 16,
+    "width": 83.248
+  },
+  {
+    "page": 11,
+    "text": "hold_pass 是传感器代理测试；接触可能来自意外遮挡，局部技能并不构成完整碰撞安全证明。",
+    "x": 40,
+    "top": 466.0,
+    "font_size": 15,
+    "width": 630.285
+  },
+  {
+    "page": 12,
+    "text": "11 / LOCAL FIELD DEFINITION",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 157.487
+  },
+  {
+    "page": 12,
+    "text": "距离场来自 waypoint，不来自场景重建",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 500.94800000000004
+  },
+  {
+    "page": 12,
+    "text": "相对位移由模型给出；本地代码设置目标、局部网格与距离查询。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 377.00000000000006
+  },
+  {
+    "page": 12,
+    "text": "[S2] contact_skills.py:894–956；[S3] FineCompactField / FineDistancePlanner；实际逻辑网格不是旧客户端33³元数据。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 491.96700000000004
+  },
+  {
+    "page": 12,
+    "text": "12 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 12,
+    "text": "g = p_start + Δp_model",
+    "x": 60,
+    "top": 153,
+    "font_size": 25,
+    "width": 282.8
+  },
+  {
+    "page": 12,
+    "text": "目标固定；后续用新的实测 p 跟踪",
+    "x": 513,
+    "top": 159,
+    "font_size": 16,
+    "width": 241.088
+  },
+  {
+    "page": 12,
+    "text": "查询势值 U：无量纲",
+    "x": 56,
+    "top": 235,
+    "font_size": 19,
+    "width": 170.525
+  },
+  {
+    "page": 12,
+    "text": "U(v) = ||v − g|| / 0.08",
+    "x": 56,
+    "top": 296.0,
+    "font_size": 18,
+    "width": 159.69600000000003
+  },
+  {
+    "page": 12,
+    "text": "格点值按需计算，再三线性插值。",
+    "x": 56,
+    "top": 322.1,
+    "font_size": 18,
+    "width": 270.00000000000006
+  },
+  {
+    "page": 12,
+    "text": "它不是障碍物表面的 signed distance。",
+    "x": 56,
+    "top": 348.2,
+    "font_size": 18,
+    "width": 315.288
+  },
+  {
+    "page": 12,
+    "text": "实际规划距离 D：单位 m",
+    "x": 500,
+    "top": 235,
+    "font_size": 19,
+    "width": 211.50799999999998
+  },
+  {
+    "page": 12,
+    "text": "D(p) = max(0, ||p − g|| − ε)",
+    "x": 500,
+    "top": 296.0,
+    "font_size": 18,
+    "width": 206.604
+  },
+  {
+    "page": 12,
+    "text": "ε = 2.5 mm，表示目标球半径。",
+    "x": 500,
+    "top": 322.1,
+    "font_size": 18,
+    "width": 251.42400000000004
+  },
+  {
+    "page": 12,
+    "text": "规划器不用 U 的梯度来决定方向。",
+    "x": 500,
+    "top": 348.2,
+    "font_size": 18,
+    "width": 273.04200000000003
+  },
+  {
+    "page": 12,
+    "text": "161³ 逻辑格点，1 mm 间距，起点周围每轴 ±8 cm；不完整物化 417 万个值。",
+    "x": 40,
+    "top": 440,
+    "font_size": 16,
+    "width": 555.312
+  },
+  {
+    "page": 12,
+    "text": "repulsors / blocked_boxes / unknown_boxes 均为空：没有编码抽屉、碗或障碍表面。",
+    "x": 40,
+    "top": 464,
+    "font_size": 16,
+    "width": 624.544
+  },
+  {
+    "page": 13,
+    "text": "12 / FINE DISTANCE PLANNER",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 158.279
+  },
+  {
+    "page": 13,
+    "text": "本次实际走解析最短直线；A* 是备用能力",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 514.5
+  },
+  {
+    "page": 13,
+    "text": "空障碍、均匀密度且直段有效时，解析求到目标球的路径；不需要搜索整个网格。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 468.00000000000006
+  },
+  {
+    "page": 13,
+    "text": "[S3] fine_distance_planner.py:180–431；[S9] 已有回放30次局部规划均为 analytic_uniform_goal_distance。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 446.38200000000006
+  },
+  {
+    "page": 13,
+    "text": "13 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 13,
+    "text": "已运行分支",
+    "x": 59,
+    "top": 155,
+    "font_size": 21,
+    "width": 105.0
+  },
+  {
+    "page": 13,
+    "text": "1. 检查实测起点、workspace 与局部域。",
+    "x": 59,
+    "top": 200,
+    "font_size": 18,
+    "width": 330.19200000000006
+  },
+  {
+    "page": 13,
+    "text": "2. 直接朝目标球边界生成路径。",
+    "x": 59,
+    "top": 234,
+    "font_size": 18,
+    "width": 253.02600000000004
+  },
+  {
+    "page": 13,
+    "text": "3. 每段 1 cm，最多 10 段 / 10 cm。",
+    "x": 59,
+    "top": 268,
+    "font_size": 18,
+    "width": 281.95200000000006
+  },
+  {
+    "page": 13,
+    "text": "p_end = g + ε (p − g) / ||p − g||",
+    "x": 59,
+    "top": 344,
+    "font_size": 19,
+    "width": 263.492
+  },
+  {
+    "page": 13,
+    "text": "距离和局部几何路径按需生成，不保存全域求解距离图。",
+    "x": 59,
+    "top": 385.0,
+    "font_size": 15,
+    "width": 375.0
+  },
+  {
+    "page": 13,
+    "text": "通用备用 A*",
+    "x": 603,
+    "top": 155,
+    "font_size": 21,
+    "width": 112.875
+  },
+  {
+    "page": 13,
+    "text": "1 mm lattice，26 邻接。",
+    "x": 603,
+    "top": 200,
+    "font_size": 16,
+    "width": 178.064
+  },
+  {
+    "page": 13,
+    "text": "边代价 = 边长 × 端点平均密度。",
+    "x": 603,
+    "top": 230,
+    "font_size": 16,
+    "width": 231.216
+  },
+  {
+    "page": 13,
+    "text": "ρ ≥ 1，可含 Gaussian repulsors。",
+    "x": 603,
+    "top": 260,
+    "font_size": 16,
+    "width": 251.04
+  },
+  {
+    "page": 13,
+    "text": "启发式：到目标球的欧氏距离。",
+    "x": 603,
+    "top": 290,
+    "font_size": 16,
+    "width": 224.0
+  },
+  {
+    "page": 13,
+    "text": "只保存已探索节点。",
+    "x": 603,
+    "top": 320,
+    "font_size": 16,
+    "width": 144.0
+  },
+  {
+    "page": 13,
+    "text": "本次没有障碍项，不能把备用 A* 能力说成已经验证了场景避障；模型需要用中间 waypoint 选路。",
+    "x": 40,
+    "top": 461,
+    "font_size": 16,
+    "width": 693.52
+  },
+  {
+    "page": 14,
+    "text": "13 / PATH TRACKER & OSC",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 140.459
+  },
+  {
+    "page": 14,
+    "text": "路径执行依赖实测位置，并持续重新规划",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 504.0
+  },
+  {
+    "page": 14,
+    "text": "局部规划生成几何参考；PathTracker 把参考转换成有界的控制命令。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 402.454
+  },
+  {
+    "page": 14,
+    "text": "[S4] tracking.py；[S2] WaypointReach / HoldingActionAdapter。OSC 为底层位姿增量控制。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 379.09800000000007
+  },
+  {
+    "page": 14,
+    "text": "14 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 14,
+    "text": "实测 p_t",
+    "x": 55,
+    "top": 162,
+    "font_size": 20,
+    "width": 77.18
+  },
+  {
+    "page": 14,
+    "text": "投影到剩余路径",
+    "x": 55,
+    "top": 207,
+    "font_size": 15,
+    "width": 105.0
+  },
+  {
+    "page": 14,
+    "text": "参考点 r_t",
+    "x": 281,
+    "top": 162,
+    "font_size": 20,
+    "width": 93.04
+  },
+  {
+    "page": 14,
+    "text": "沿路径前看 3 cm",
+    "x": 281,
+    "top": 207,
+    "font_size": 15,
+    "width": 111.585
+  },
+  {
+    "page": 14,
+    "text": "位移命令",
+    "x": 507,
+    "top": 162,
+    "font_size": 20,
+    "width": 80.0
+  },
+  {
+    "page": 14,
+    "text": "方向朝参考点，模长 ≤5",
+    "x": 507,
+    "top": 207,
+    "font_size": 15,
+    "width": 161.685
+  },
+  {
+    "page": 14,
+    "text": "cm",
+    "x": 507,
+    "top": 229,
+    "font_size": 15,
+    "width": 21.54
+  },
+  {
+    "page": 14,
+    "text": "OSC 执行",
+    "x": 733,
+    "top": 162,
+    "font_size": 20,
+    "width": 85.54
+  },
+  {
+    "page": 14,
+    "text": "显式保持目标姿态 / 夹爪",
+    "x": 733,
+    "top": 207,
+    "font_size": 15,
+    "width": 162.6
+  },
+  {
+    "page": 14,
+    "text": "重新规划触发",
+    "x": 57,
+    "top": 303,
+    "font_size": 20,
+    "width": 120.0
+  },
+  {
+    "page": 14,
+    "text": "执行 10 个动作，或到达当前路径端点（2.5 mm）",
+    "x": 57,
+    "top": 345,
+    "font_size": 17,
+    "width": 374.374
+  },
+  {
+    "page": 14,
+    "text": "。",
+    "x": 57,
+    "top": 372,
+    "font_size": 17,
+    "width": 17.0
+  },
+  {
+    "page": 14,
+    "text": "固定原 goal / 局部域，以新实测位置重规划。",
+    "x": 57,
+    "top": 399,
+    "font_size": 17,
+    "width": 341.377
+  },
+  {
+    "page": 14,
+    "text": "到达判据与停止条件",
+    "x": 501,
+    "top": 303,
+    "font_size": 20,
+    "width": 180.0
+  },
+  {
+    "page": 14,
+    "text": "||p − g|| ≤5 mm 且姿态误差 ≤0.05 rad。",
+    "x": 501,
+    "top": 345,
+    "font_size": 17,
+    "width": 311.23600000000005
+  },
+  {
+    "page": 14,
+    "text": "无进展、异常跃迁、场界越出、姿态漂移或抓持丢失",
+    "x": 501,
+    "top": 372,
+    "font_size": 17,
+    "width": 391.0
+  },
+  {
+    "page": 14,
+    "text": "可提前返回。",
+    "x": 501,
+    "top": 399,
+    "font_size": 17,
+    "width": 102.00000000000001
+  },
+  {
+    "page": 14,
+    "text": "5 cm 是命令上限，不是保证每一步真实移动 5 cm；每次都会读回实测反馈。",
+    "x": 40,
+    "top": 474,
+    "font_size": 15,
+    "width": 508.16999999999996
+  },
+  {
+    "page": 15,
+    "text": "14 / RECORDED FIELD EXAMPLE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 168.75099999999998
+  },
+  {
+    "page": 15,
+    "text": "实际局部场：颜色表示到 waypoint 的距离",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 535.304
+  },
+  {
+    "page": 15,
+    "text": "drawer003 · step552 后的 reach：Δp = [−40, +75, +61.7] mm。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 377.58500000000004
+  },
+  {
+    "page": 15,
+    "text": "[S9] 既有回放 run002 / field007、runtime_plans 与 field_actions；本页只读取保存数据绘图。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 381.807
+  },
+  {
+    "page": 15,
+    "text": "15 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 15,
+    "text": "白虚线：局部规划路径；橙线：实测末端轨迹；星号：目标。三张切片穿过目标，轨迹为投影。",
+    "x": 40,
+    "top": 433,
+    "font_size": 15,
+    "width": 630.0
+  },
+  {
+    "page": 15,
+    "text": "这些密集颜色是事后诊断采样；原规划器解析计算路径，不读取这张热图，也没有从图中识别障碍。",
+    "x": 56,
+    "top": 478.0,
+    "font_size": 12,
+    "width": 528.0
+  },
+  {
+    "page": 16,
+    "text": "15 / TRANSPORT & PLACE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 136.807
+  },
+  {
+    "page": 16,
+    "text": "携物与放置也有局部反馈，但不是全场避障",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 532.0
+  },
+  {
+    "page": 16,
+    "text": "抓到物体后，模型通过外部图像选目的地与中间 waypoint；局部执行器监测状态。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 475.77400000000006
+  },
+  {
+    "page": 16,
+    "text": "[S1, S2] transport / place_release；drawer003 frozen prompt-5 与原语实现。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 319.00500000000005
+  },
+  {
+    "page": 16,
+    "text": "16 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 16,
+    "text": "transport：运动中检查抓持",
+    "x": 56,
+    "top": 150,
+    "font_size": 19,
+    "width": 241.547
+  },
+  {
+    "page": 16,
+    "text": "使用 waypoint / PathTracker，保持抓取姿态。",
+    "x": 56,
+    "top": 211.0,
+    "font_size": 17,
+    "width": 359.92400000000004
+  },
+  {
+    "page": 16,
+    "text": "",
+    "x": 56,
+    "top": 235.65,
+    "font_size": 17,
+    "width": 0.0
+  },
+  {
+    "page": 16,
+    "text": "夹距异常下降 → lost_in_transport。",
+    "x": 56,
+    "top": 260.3,
+    "font_size": 17,
+    "width": 281.911
+  },
+  {
+    "page": 16,
+    "text": "夹距突增等代理信号 → held_object_contact。",
+    "x": 56,
+    "top": 284.95,
+    "font_size": 17,
+    "width": 359.108
+  },
+  {
+    "page": 16,
+    "text": "异常响应提前退出，回传证据给模型。",
+    "x": 56,
+    "top": 309.6,
+    "font_size": 17,
+    "width": 289.0
+  },
+  {
+    "page": 16,
+    "text": "place_release：先到上方，再接触式降低",
+    "x": 500,
+    "top": 150,
+    "font_size": 19,
+    "width": 357.31399999999996
+  },
+  {
+    "page": 16,
+    "text": "水平 / 向上移到目标上方；降低时根据实测响应寻找",
+    "x": 500,
+    "top": 211.0,
+    "font_size": 17,
+    "width": 388.28000000000003
+  },
+  {
+    "page": 16,
+    "text": "支撑，再松开退让。",
+    "x": 500,
+    "top": 235.65,
+    "font_size": 17,
+    "width": 153.0
+  },
+  {
+    "page": 16,
+    "text": "",
+    "x": 500,
+    "top": 260.3,
+    "font_size": 17,
+    "width": 0.0
+  },
+  {
+    "page": 16,
+    "text": "把手释放是单独分支：松开、退让、抬升、转回朝下",
+    "x": 500,
+    "top": 284.95,
+    "font_size": 17,
+    "width": 391.0
+  },
+  {
+    "page": 16,
+    "text": "。",
+    "x": 500,
+    "top": 309.6,
+    "font_size": 17,
+    "width": 17.0
+  },
+  {
+    "page": 16,
+    "text": "若抓取失败，先用有限本地重试；耗尽后模型需改 hover、抓取侧或策略。两次选定成功记录的实际本地重试数均为 0。",
+    "x": 40,
+    "top": 452,
+    "font_size": 16,
+    "width": 842.864
+  },
+  {
+    "page": 17,
+    "text": "16 / WHERE SPEED COMES FROM",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 175.219
+  },
+  {
+    "page": 17,
+    "text": "“SpeedUp”的设计重点是减少模型往返",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 517.048
+  },
+  {
+    "page": 17,
+    "text": "高频动作、对齐和状态判断留在本地；模型负责较低频的语义选择。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 390.00000000000006
+  },
+  {
+    "page": 17,
+    "text": "[S1, S8] drawer003 step818 实际 transport 参数；两段额外 waypoint 为 prompt-5 新能力。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 372.33000000000004
+  },
+  {
+    "page": 17,
+    "text": "17 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 17,
+    "text": "更长的本地执行",
+    "x": 56,
+    "top": 149,
+    "font_size": 19,
+    "width": 133.0
+  },
+  {
+    "page": 17,
+    "text": "一个宏技能可运行许多动作。视觉",
+    "x": 56,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 17,
+    "text": "追踪、接近、闭合、抓持验证不用",
+    "x": 56,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 17,
+    "text": "逐步生成文字动作。",
+    "x": 56,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 144.0
+  },
+  {
+    "page": 17,
+    "text": "压缩模型输入输出",
+    "x": 350,
+    "top": 149,
+    "font_size": 19,
+    "width": 152.0
+  },
+  {
+    "page": 17,
+    "text": "只发当前双图 + 显式摘要。指点只",
+    "x": 350,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 240.048
+  },
+  {
+    "page": 17,
+    "text": "返回 ID。stateless 没有累积的整段",
+    "x": 350,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 248.672
+  },
+  {
+    "page": 17,
+    "text": "对话与图像历史。",
+    "x": 350,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 128.0
+  },
+  {
+    "page": 17,
+    "text": "合并语义相邻步骤",
+    "x": 652,
+    "top": 149,
+    "font_size": 19,
+    "width": 152.0
+  },
+  {
+    "page": 17,
+    "text": "drawer003 支持多 waypoint、抓",
+    "x": 652,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 236.832
+  },
+  {
+    "page": 17,
+    "text": "后直接拉、释放后自动复位；减少",
+    "x": 652,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 17,
+    "text": "技能边界的模型请求。",
+    "x": 652,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 160.0
+  },
+  {
+    "page": 17,
+    "text": "真实示例：step818 的一次 transport 决策",
+    "x": 57,
+    "top": 423,
+    "font_size": 17,
+    "width": 328.185
+  },
+  {
+    "page": 17,
+    "text": "[0, +60, 0] → [0, 0, +75] → [0, 0, +75] mm（每段相对当前实测位置）",
+    "x": 57,
+    "top": 454,
+    "font_size": 16,
+    "width": 485.392
+  },
+  {
+    "page": 18,
+    "text": "17 / RECORDED TASK RESULTS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 164.945
+  },
+  {
+    "page": 18,
+    "text": "两条已完成记录：11 / 21 次模型请求",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 459.98400000000004
+  },
+  {
+    "page": 18,
+    "text": "同为 init0 / seed7；各一条完整记录。bowl002 和 drawer003 使用不同提示修订。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 474.94200000000006
+  },
+  {
+    "page": 18,
+    "text": "[S7, S8] summary.json / agent_stats.json / manifest.json；成功依据原始 LIBERO 目标。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 359.81100000000004
+  },
+  {
+    "page": 18,
+    "text": "18 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 18,
+    "text": "指标",
+    "x": 53,
+    "top": 145,
+    "font_size": 16,
+    "width": 32.0
+  },
+  {
+    "page": 18,
+    "text": "bowl002",
+    "x": 363,
+    "top": 145,
+    "font_size": 16,
+    "width": 67.488
+  },
+  {
+    "page": 18,
+    "text": "drawer003",
+    "x": 648,
+    "top": 145,
+    "font_size": 16,
+    "width": 85.168
+  },
+  {
+    "page": 18,
+    "text": "任务 / 版本",
+    "x": 53,
+    "top": 188,
+    "font_size": 16,
+    "width": 77.44
+  },
+  {
+    "page": 18,
+    "text": "碗放盘子 · prompt-2",
+    "x": 363,
+    "top": 188,
+    "font_size": 16,
+    "width": 158.192
+  },
+  {
+    "page": 18,
+    "text": "开抽屉放碗 · prompt-5",
+    "x": 648,
+    "top": 188,
+    "font_size": 16,
+    "width": 174.192
+  },
+  {
+    "page": 18,
+    "text": "raw LIBERO success",
+    "x": 53,
+    "top": 230,
+    "font_size": 16,
+    "width": 147.92000000000002
+  },
+  {
+    "page": 18,
+    "text": "是",
+    "x": 363,
+    "top": 230,
+    "font_size": 16,
+    "width": 16.0
+  },
+  {
+    "page": 18,
+    "text": "是",
+    "x": 648,
+    "top": 230,
+    "font_size": 16,
+    "width": 16.0
+  },
+  {
+    "page": 18,
+    "text": "控制步数",
+    "x": 53,
+    "top": 272,
+    "font_size": 16,
+    "width": 64.0
+  },
+  {
+    "page": 18,
+    "text": "449",
+    "x": 363,
+    "top": 272,
+    "font_size": 16,
+    "width": 26.64
+  },
+  {
+    "page": 18,
+    "text": "967",
+    "x": 648,
+    "top": 272,
+    "font_size": 16,
+    "width": 26.64
+  },
+  {
+    "page": 18,
+    "text": "决策 + 指点 = 模型请求",
+    "x": 53,
+    "top": 314,
+    "font_size": 16,
+    "width": 160.096
+  },
+  {
+    "page": 18,
+    "text": "9 + 2 = 11",
+    "x": 363,
+    "top": 314,
+    "font_size": 16,
+    "width": 67.616
+  },
+  {
+    "page": 18,
+    "text": "15 + 6 = 21",
+    "x": 648,
+    "top": 314,
+    "font_size": 16,
+    "width": 76.496
+  },
+  {
+    "page": 18,
+    "text": "去视频控制墙钟",
+    "x": 53,
+    "top": 356,
+    "font_size": 16,
+    "width": 112.0
+  },
+  {
+    "page": 18,
+    "text": "135.41 s",
+    "x": 363,
+    "top": 356,
+    "font_size": 16,
+    "width": 59.92
+  },
+  {
+    "page": 18,
+    "text": "234.54 s",
+    "x": 648,
+    "top": 356,
+    "font_size": 16,
+    "width": 59.92
+  },
+  {
+    "page": 18,
+    "text": "非允许接触记录",
+    "x": 53,
+    "top": 398,
+    "font_size": 16,
+    "width": 112.0
+  },
+  {
+    "page": 18,
+    "text": "有",
+    "x": 363,
+    "top": 398,
+    "font_size": 16,
+    "width": 16.0
+  },
+  {
+    "page": 18,
+    "text": "有",
+    "x": 648,
+    "top": 398,
+    "font_size": 16,
+    "width": 16.0
+  },
+  {
+    "page": 18,
+    "text": "两次成功均不等于 collision-free success；本协议碰撞只记录，不阻止原始目标成功。",
+    "x": 40,
+    "top": 451,
+    "font_size": 15,
+    "width": 571.785
+  },
+  {
+    "page": 18,
+    "text": "各一次成功记录不能作为跨初始状态成功率，也不能视为完全相同版本的任务对比。",
+    "x": 40,
+    "top": 473,
+    "font_size": 15,
+    "width": 555.0
+  },
+  {
+    "page": 19,
+    "text": "18 / DRAWER EPISODE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 119.15199999999999
+  },
+  {
+    "page": 19,
+    "text": "drawer003：从把手失败恢复，到碗进入抽屉",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 569.044
+  },
+  {
+    "page": 19,
+    "text": "真实视频关键帧；step 表示已执行动作数，不是视频秒数。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 341.15900000000005
+  },
+  {
+    "page": 19,
+    "text": "[S8] episode.mp4 / events / trace；截图来自原视频，方向对齐模型正向视图。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 317.547
+  },
+  {
+    "page": 19,
+    "text": "19 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 19,
+    "text": "step0",
+    "x": 40,
+    "top": 368,
+    "font_size": 16,
+    "width": 43.696
+  },
+  {
+    "page": 19,
+    "text": "初始场景",
+    "x": 40,
+    "top": 398,
+    "font_size": 15,
+    "width": 60.0
+  },
+  {
+    "page": 19,
+    "text": "step552",
+    "x": 266,
+    "top": 368,
+    "font_size": 16,
+    "width": 62.576
+  },
+  {
+    "page": 19,
+    "text": "把手已释放，手转回朝下",
+    "x": 266,
+    "top": 398,
+    "font_size": 15,
+    "width": 165.0
+  },
+  {
+    "page": 19,
+    "text": "step818",
+    "x": 492,
+    "top": 368,
+    "font_size": 16,
+    "width": 62.576
+  },
+  {
+    "page": 19,
+    "text": "碗抓持验证通过",
+    "x": 492,
+    "top": 398,
+    "font_size": 15,
+    "width": 105.0
+  },
+  {
+    "page": 19,
+    "text": "step967",
+    "x": 718,
+    "top": 368,
+    "font_size": 16,
+    "width": 62.576
+  },
+  {
+    "page": 19,
+    "text": "LIBERO 目标触发",
+    "x": 718,
+    "top": 398,
+    "font_size": 15,
+    "width": 115.24499999999999
+  },
+  {
+    "page": 19,
+    "text": "前期一次 reach 无进展、一次把手 hover 跨杆偏离；模型调整后，成功抓拉约 12 cm。",
+    "x": 40,
+    "top": 456,
+    "font_size": 15,
+    "width": 572.8199999999999
+  },
+  {
+    "page": 19,
+    "text": "终止发生在最后 release 的第 3 个动作；松开与退让宏尚未完整结束。",
+    "x": 40,
+    "top": 478,
+    "font_size": 15,
+    "width": 462.24
+  },
+  {
+    "page": 20,
+    "text": "19 / BOWL EPISODE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 104.797
+  },
+  {
+    "page": 20,
+    "text": "bowl002：成功标志先于完整松开动作",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 482.104
+  },
+  {
+    "page": 20,
+    "text": "任务完成判据来自模拟器；本地宏技能和视觉判断不决定何时评分成功。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 416.00000000000006
+  },
+  {
+    "page": 20,
+    "text": "[S7] episode.mp4 / events / trace；final_macro=place_release，final_primitive=lower，primitive.done=false。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 463.91400000000004
+  },
+  {
+    "page": 20,
+    "text": "20 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 20,
+    "text": "step0 · 初始场景",
+    "x": 40,
+    "top": 438,
+    "font_size": 16,
+    "width": 130.96
+  },
+  {
+    "page": 20,
+    "text": "step387 · hold_pass",
+    "x": 340,
+    "top": 438,
+    "font_size": 16,
+    "width": 166.112
+  },
+  {
+    "page": 20,
+    "text": "step449 · LIBERO success",
+    "x": 640,
+    "top": 438,
+    "font_size": 16,
+    "width": 208.08
+  },
+  {
+    "page": 20,
+    "text": "最终成功发生在 lower 阶段，夹爪仍闭合。可以说“满足 LIBERO 放置目标”，不能据此说完整释放并撤回已经执行。",
+    "x": 40,
+    "top": 473.0,
+    "font_size": 14,
+    "width": 727.846
+  },
+  {
+    "page": 21,
+    "text": "20 / TIMING ACCOUNTING",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 137.423
+  },
+  {
+    "page": 21,
+    "text": "控制墙钟、模拟时间、视频长度是不同量",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 504.0
+  },
+  {
+    "page": 21,
+    "text": "主要耗时指标：T_net = control_elapsed_s − video_render_s。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 371.94300000000004
+  },
+  {
+    "page": 21,
+    "text": "[S7, S8] timing_components；model_pipeline_s 已包含在 decision_s，图中未重复计算。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 368.44200000000006
+  },
+  {
+    "page": 21,
+    "text": "21 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 21,
+    "text": "bowl002",
+    "x": 40,
+    "top": 156,
+    "font_size": 19,
+    "width": 80.142
+  },
+  {
+    "page": 21,
+    "text": "81.6",
+    "x": 191,
+    "top": 164,
+    "font_size": 14,
+    "width": 29.330000000000002
+  },
+  {
+    "page": 21,
+    "text": "49.8",
+    "x": 333.14010182754805,
+    "top": 164,
+    "font_size": 14,
+    "width": 29.330000000000002
+  },
+  {
+    "page": 21,
+    "text": "48.1",
+    "x": 426.9946045900296,
+    "top": 164,
+    "font_size": 14,
+    "width": 29.330000000000002
+  },
+  {
+    "page": 21,
+    "text": "净耗时 135.41 s",
+    "x": 184,
+    "top": 203,
+    "font_size": 16,
+    "width": 115.584
+  },
+  {
+    "page": 21,
+    "text": "drawer003",
+    "x": 40,
+    "top": 252,
+    "font_size": 19,
+    "width": 101.137
+  },
+  {
+    "page": 21,
+    "text": "132.2",
+    "x": 191,
+    "top": 260,
+    "font_size": 14,
+    "width": 37.59
+  },
+  {
+    "page": 21,
+    "text": "94.4",
+    "x": 421.3277376712699,
+    "top": 260,
+    "font_size": 14,
+    "width": 29.330000000000002
+  },
+  {
+    "page": 21,
+    "text": "106.2",
+    "x": 599.7611247256665,
+    "top": 260,
+    "font_size": 14,
+    "width": 37.59
+  },
+  {
+    "page": 21,
+    "text": "净耗时 234.54 s",
+    "x": 184,
+    "top": 299,
+    "font_size": 16,
+    "width": 115.584
+  },
+  {
+    "page": 21,
+    "text": "模型调用",
+    "x": 60,
+    "top": 338,
+    "font_size": 14,
+    "width": 56.0
+  },
+  {
+    "page": 21,
+    "text": "模拟器调用墙钟",
+    "x": 285,
+    "top": 338,
+    "font_size": 14,
+    "width": 98.0
+  },
+  {
+    "page": 21,
+    "text": "其他控制",
+    "x": 510,
+    "top": 338,
+    "font_size": 14,
+    "width": 56.0
+  },
+  {
+    "page": 21,
+    "text": "视频渲染",
+    "x": 735,
+    "top": 338,
+    "font_size": 14,
+    "width": 56.0
+  },
+  {
+    "page": 21,
+    "text": "drawer003 的计时口径",
+    "x": 57,
+    "top": 395,
+    "font_size": 18,
+    "width": 189.90000000000003
+  },
+  {
+    "page": 21,
+    "text": "去视频控制：234.54 s    ｜    含渲染控制：340.75 s    ｜    总墙钟：348.96 s",
+    "x": 57,
+    "top": 428,
+    "font_size": 14,
+    "width": 459.466
+  },
+  {
+    "page": 21,
+    "text": "模拟动作时间：967 / 20 = 48.35 s    ｜    注释视频：204.7 s",
+    "x": 57,
+    "top": 447,
+    "font_size": 14,
+    "width": 361.06
+  },
+  {
+    "page": 21,
+    "text": "135.41 s 属于 bowl002；旧 drawer002 的 24.82 分钟是另一条未完成尝试。",
+    "x": 57,
+    "top": 466,
+    "font_size": 14,
+    "width": 469.588
+  },
+  {
+    "page": 22,
+    "text": "21 / HISTORICAL REFERENCE",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 154.605
+  },
+  {
+    "page": 22,
+    "text": "相对历史 Direct，v1 模型调用更少",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 436.91200000000003
+  },
+  {
+    "page": 22,
+    "text": "同一命名碗任务与 seed7；提示、历史、控制接口、标定与碰撞监测工作量不同。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 467.67500000000007
+  },
+  {
+    "page": 22,
+    "text": "[S7, S10] 两条成功历史记录；Direct 净耗时按保存的 control − video 事后计算，未重跑。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 357.14700000000005
+  },
+  {
+    "page": 22,
+    "text": "22 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 22,
+    "text": "指标",
+    "x": 53,
+    "top": 145,
+    "font_size": 15,
+    "width": 30.0
+  },
+  {
+    "page": 22,
+    "text": "历史 Direct002",
+    "x": 323,
+    "top": 145,
+    "font_size": 15,
+    "width": 104.71499999999999
+  },
+  {
+    "page": 22,
+    "text": "SpeedUp v1 bowl002",
+    "x": 628,
+    "top": 145,
+    "font_size": 15,
+    "width": 154.56
+  },
+  {
+    "page": 22,
+    "text": "控制接口",
+    "x": 53,
+    "top": 188,
+    "font_size": 15,
+    "width": 60.0
+  },
+  {
+    "page": 22,
+    "text": "每次生成 5 个直接动作",
+    "x": 323,
+    "top": 188,
+    "font_size": 15,
+    "width": 150.045
+  },
+  {
+    "page": 22,
+    "text": "模型选宏技能 + 本地闭环",
+    "x": 628,
+    "top": 188,
+    "font_size": 15,
+    "width": 165.045
+  },
+  {
+    "page": 22,
+    "text": "模型请求",
+    "x": 53,
+    "top": 230,
+    "font_size": 15,
+    "width": 60.0
+  },
+  {
+    "page": 22,
+    "text": "26",
+    "x": 323,
+    "top": 230,
+    "font_size": 15,
+    "width": 16.65
+  },
+  {
+    "page": 22,
+    "text": "11",
+    "x": 628,
+    "top": 230,
+    "font_size": 15,
+    "width": 16.65
+  },
+  {
+    "page": 22,
+    "text": "低层动作数",
+    "x": 53,
+    "top": 272,
+    "font_size": 15,
+    "width": 75.0
+  },
+  {
+    "page": 22,
+    "text": "127",
+    "x": 323,
+    "top": 272,
+    "font_size": 15,
+    "width": 24.974999999999998
+  },
+  {
+    "page": 22,
+    "text": "449",
+    "x": 628,
+    "top": 272,
+    "font_size": 15,
+    "width": 24.974999999999998
+  },
+  {
+    "page": 22,
+    "text": "模型调用墙钟",
+    "x": 53,
+    "top": 314,
+    "font_size": 15,
+    "width": 90.0
+  },
+  {
+    "page": 22,
+    "text": "242.23 s",
+    "x": 323,
+    "top": 314,
+    "font_size": 15,
+    "width": 56.175
+  },
+  {
+    "page": 22,
+    "text": "81.56 s",
+    "x": 628,
+    "top": 314,
+    "font_size": 15,
+    "width": 47.85
+  },
+  {
+    "page": 22,
+    "text": "去视频控制墙钟",
+    "x": 53,
+    "top": 356,
+    "font_size": 15,
+    "width": 105.0
+  },
+  {
+    "page": 22,
+    "text": "249.45 s",
+    "x": 323,
+    "top": 356,
+    "font_size": 15,
+    "width": 56.175
+  },
+  {
+    "page": 22,
+    "text": "135.41 s",
+    "x": 628,
+    "top": 356,
+    "font_size": 15,
+    "width": 56.175
+  },
+  {
+    "page": 22,
+    "text": "观察：v1 的模型调用更少，但机器人动作更多；减少模型等待不等于减少所有运动或接触。",
+    "x": 40,
+    "top": 411.0,
+    "font_size": 17,
+    "width": 686.681
+  },
+  {
+    "page": 22,
+    "text": "不能把这两条记录的比值当作受控加速倍数或普遍收益。仍需同版、同输入条件的多初始状态对照。",
+    "x": 40,
+    "top": 466.0,
+    "font_size": 15,
+    "width": 660.0
+  },
+  {
+    "page": 23,
+    "text": "22 / CONCLUSIONS",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 102.02499999999999
+  },
+  {
+    "page": 23,
+    "text": "方法价值与边界：分工明确，几何安全仍待补齐",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 588.0
+  },
+  {
+    "page": 23,
+    "text": "把“语义选择”与“动作反馈”分层，是 v1 的主要结构变化。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 357.812
+  },
+  {
+    "page": 23,
+    "text": "综合 [S1–S10]。此前试验已用于修订提示与局部技能，zero-shot 仅表示本次无示范输入。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 359.50500000000005
+  },
+  {
+    "page": 23,
+    "text": "23 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 23,
+    "text": "已展示的能力",
+    "x": 56,
+    "top": 149,
+    "font_size": 19,
+    "width": 114.0
+  },
+  {
+    "page": 23,
+    "text": "当前双 RGB → 少量技能决策 → 多",
+    "x": 56,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 241.616
+  },
+  {
+    "page": 23,
+    "text": "步本地执行。",
+    "x": 56,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 96.0
+  },
+  {
+    "page": 23,
+    "text": "",
+    "x": 56,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 0.0
+  },
+  {
+    "page": 23,
+    "text": "两条记录分别以 11 / 21 次模型请",
+    "x": 56,
+    "top": 279.6,
+    "font_size": 16,
+    "width": 232.12800000000001
+  },
+  {
+    "page": 23,
+    "text": "求达到原始任务目标。",
+    "x": 56,
+    "top": 302.8,
+    "font_size": 16,
+    "width": 160.0
+  },
+  {
+    "page": 23,
+    "text": "当前能力边界",
+    "x": 356,
+    "top": 149,
+    "font_size": 19,
+    "width": 114.0
+  },
+  {
+    "page": 23,
+    "text": "距离场只指向 waypoint，没有环",
+    "x": 356,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 233.568
+  },
+  {
+    "page": 23,
+    "text": "境 SDF。",
+    "x": 356,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 64.96000000000001
+  },
+  {
+    "page": 23,
+    "text": "",
+    "x": 356,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 0.0
+  },
+  {
+    "page": 23,
+    "text": "接触代理、抓持验证与停止规则减",
+    "x": 356,
+    "top": 279.6,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 23,
+    "text": "少盲目执行，但两次仍记录非允许",
+    "x": 356,
+    "top": 302.8,
+    "font_size": 16,
+    "width": 240.0
+  },
+  {
+    "page": 23,
+    "text": "接触。",
+    "x": 356,
+    "top": 326.0,
+    "font_size": 16,
+    "width": 48.0
+  },
+  {
+    "page": 23,
+    "text": "下一步如何验证",
+    "x": 656,
+    "top": 149,
+    "font_size": 19,
+    "width": 133.0
+  },
+  {
+    "page": 23,
+    "text": "冻结同一版本与输入条件。",
+    "x": 656,
+    "top": 210.0,
+    "font_size": 16,
+    "width": 192.0
+  },
+  {
+    "page": 23,
+    "text": "",
+    "x": 656,
+    "top": 233.2,
+    "font_size": 16,
+    "width": 0.0
+  },
+  {
+    "page": 23,
+    "text": "分别消融技能、本地伺服、批量",
+    "x": 656,
+    "top": 256.4,
+    "font_size": 16,
+    "width": 224.0
+  },
+  {
+    "page": 23,
+    "text": "waypoint；跨初始状态测成功、碰",
+    "x": 656,
+    "top": 279.6,
+    "font_size": 16,
+    "width": 245.984
+  },
+  {
+    "page": 23,
+    "text": "撞、请求数与净耗时。",
+    "x": 656,
+    "top": 302.8,
+    "font_size": 16,
+    "width": 160.0
+  },
+  {
+    "page": 23,
+    "text": "1 mm：逻辑网格间距   /   3 mm：视觉伺服阈值尺度   /   5 mm：实测到达容差",
+    "x": 40,
+    "top": 416.0,
+    "font_size": 18,
+    "width": 625.1940000000001
+  },
+  {
+    "page": 23,
+    "text": "它们是三个不同的工程参数，都不能被解释成“场景重建达到毫米级精度”。",
+    "x": 40,
+    "top": 469.0,
+    "font_size": 16,
+    "width": 544.0
+  },
+  {
+    "page": 24,
+    "text": "APPENDIX / SOURCE INDEX",
+    "x": 40,
+    "top": 23,
+    "font_size": 11,
+    "width": 145.28799999999998
+  },
+  {
+    "page": 24,
+    "text": "证据与复现入口",
+    "x": 40,
+    "top": 46,
+    "font_size": 28,
+    "width": 196.0
+  },
+  {
+    "page": 24,
+    "text": "技术细节优先使用 drawer003 的 frozen_source；bowl002 差异按各自日志单列。",
+    "x": 40,
+    "top": 88,
+    "font_size": 13,
+    "width": 474.51300000000003
+  },
+  {
+    "page": 24,
+    "text": "完整源码 / 请求 / 视频哈希：evidence_*.json 与 deck_manifest.json；仅新增本幻灯片目录，无新实验。",
+    "x": 40,
+    "top": 515,
+    "font_size": 9,
+    "width": 420.47100000000006
+  },
+  {
+    "page": 24,
+    "text": "24 / 24",
+    "x": 866,
+    "top": 515,
+    "font_size": 9,
+    "width": 27.540000000000003
+  },
+  {
+    "page": 24,
+    "text": "[S1] 模型输入、契约与调度",
+    "x": 40,
+    "top": 128,
+    "font_size": 14,
+    "width": 170.758
+  },
+  {
+    "page": 24,
+    "text": "agent_speedup_v1.py / agent_speedup_v1_client.py",
+    "x": 40,
+    "top": 153,
+    "font_size": 10,
+    "width": 246.57
+  },
+  {
+    "page": 24,
+    "text": "drawer003/trial/requests/*.request.json",
+    "x": 40,
+    "top": 166,
+    "font_size": 10,
+    "width": 186.29
+  },
+  {
+    "page": 24,
+    "text": "[S2] 技能、接触、抓持与执行",
+    "x": 40,
+    "top": 195,
+    "font_size": 14,
+    "width": 184.758
+  },
+  {
+    "page": 24,
+    "text": "contact_skills.py / agent_speedup_v1.py",
+    "x": 40,
+    "top": 220,
+    "font_size": 10,
+    "width": 190.26
+  },
+  {
+    "page": 24,
+    "text": "[S3] 场与局部规划",
+    "x": 40,
+    "top": 262,
+    "font_size": 14,
+    "width": 114.758
+  },
+  {
+    "page": 24,
+    "text": "fine_distance_planner.py / planner.py",
+    "x": 40,
+    "top": 287,
+    "font_size": 10,
+    "width": 177.95000000000002
+  },
+  {
+    "page": 24,
+    "text": "[S4] 路径跟踪",
+    "x": 40,
+    "top": 329,
+    "font_size": 14,
+    "width": 86.758
+  },
+  {
+    "page": 24,
+    "text": "tracking.py / contact_skills.py",
+    "x": 40,
+    "top": 354,
+    "font_size": 10,
+    "width": 139.6
+  },
+  {
+    "page": 24,
+    "text": "[S5] 视觉指点与伺服",
+    "x": 40,
+    "top": 396,
+    "font_size": 14,
+    "width": 128.758
+  },
+  {
+    "page": 24,
+    "text": "mark_prompting.py / wrist_servo.py",
+    "x": 40,
+    "top": 421,
+    "font_size": 10,
+    "width": 170.58
+  },
+  {
+    "page": 24,
+    "text": "[S6] 在线标定与图像方向",
+    "x": 500,
+    "top": 128,
+    "font_size": 14,
+    "width": 156.758
+  },
+  {
+    "page": 24,
+    "text": "external_axes.py / contact_skills.py",
+    "x": 500,
+    "top": 153,
+    "font_size": 10,
+    "width": 165.91
+  },
+  {
+    "page": 24,
+    "text": "[S7] 碗任务结果",
+    "x": 500,
+    "top": 195,
+    "font_size": 14,
+    "width": 100.758
+  },
+  {
+    "page": 24,
+    "text": "runs/agent_speedup_v1_bowl_zero_shot_002/trial/",
+    "x": 500,
+    "top": 220,
+    "font_size": 10,
+    "width": 243.33
+  },
+  {
+    "page": 24,
+    "text": "summary.json / agent_stats.json / trace.jsonl / episode.mp4",
+    "x": 500,
+    "top": 233,
+    "font_size": 10,
+    "width": 278.62
+  },
+  {
+    "page": 24,
+    "text": "[S8] 抽屉任务结果",
+    "x": 500,
+    "top": 262,
+    "font_size": 14,
+    "width": 114.758
+  },
+  {
+    "page": 24,
+    "text": "runs/agent_speedup_v1_drawer_zero_shot_003/trial/",
+    "x": 500,
+    "top": 287,
+    "font_size": 10,
+    "width": 253.38
+  },
+  {
+    "page": 24,
+    "text": "summary.json / agent_stats.json / trace.jsonl / episode.mp4",
+    "x": 500,
+    "top": 300,
+    "font_size": 10,
+    "width": 278.62
+  },
+  {
+    "page": 24,
+    "text": "[S9] 已有场诊断回放",
+    "x": 500,
+    "top": 329,
+    "font_size": 14,
+    "width": 128.758
+  },
+  {
+    "page": 24,
+    "text": "/workspace/agent_speedup_v1_drawer003_field_replay/run_002/",
+    "x": 500,
+    "top": 354,
+    "font_size": 10,
+    "width": 310.1
+  },
+  {
+    "page": 24,
+    "text": "fields/field_007.* / runtime_plans.jsonl / field_actions.jsonl",
+    "x": 500,
+    "top": 367,
+    "font_size": 10,
+    "width": 275.34000000000003
+  },
+  {
+    "page": 24,
+    "text": "[S10] 历史 Direct 参照",
+    "x": 500,
+    "top": 396,
+    "font_size": 14,
+    "width": 143.15
+  },
+  {
+    "page": 24,
+    "text": "runs/direct_medium_libero_success_002/",
+    "x": 500,
+    "top": 421,
+    "font_size": 10,
+    "width": 197.0
+  },
+  {
+    "page": 24,
+    "text": "summary.json / manifest.json",
+    "x": 500,
+    "top": 434,
+    "font_size": 10,
+    "width": 138.11
+  },
+  {
+    "page": 24,
+    "text": "S1–S6 源码目录：runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/",
+    "x": 40,
+    "top": 470,
+    "font_size": 11,
+    "width": 444.86199999999997
+  },
+  {
+    "page": 24,
+    "text": "项目根目录：/workspace/gpt_field；设计文档 agent_SpeedUp_v1.md 仅作背景，实测以冻结记录为准。",
+    "x": 40,
+    "top": 486,
+    "font_size": 11,
+    "width": 521.884
+  }
+]

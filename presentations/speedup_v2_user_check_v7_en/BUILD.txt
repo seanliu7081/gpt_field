@@ -1,0 +1,34 @@
+SpeedUp v2 User Check v7 — English slide deck
+
+Primary deliverable:
+  speedup_v2_user_check_v7_framework_and_scene_tests_en.pdf
+  19 landscape 16:9 pages; searchable English text and recorded scene frames.
+
+Rebuild in this repository:
+  cd /workspace/gpt_field
+  .venv/bin/python presentations/speedup_v2_user_check_v7_en/build_slides.py
+
+Optional presentation-only rendering and layout check:
+  .venv/bin/python presentations/speedup_v2_user_check_v7_en/check_pdf.py
+
+Dependencies:
+  ReportLab, Pillow, PyMuPDF and DejaVu Sans fonts.
+  The repository's existing vendored PDF libraries are used when available.
+  No model, simulator, credentials, network request or robot rollout is required.
+
+Evidence:
+  evidence.json holds metrics, reset/configuration identity, approval provenance,
+  exact source paths and original saved-image hashes. All report inputs are
+  retained under assets/. Scene frames are not synthesized or replayed.
+  The source code and frame coordinates/values are specific to the saved runs;
+  comparison results are single-episode observations, not causal ablations.
+
+UI change:
+  src/gpt_field/agent_speedup_v2_user_check.html now uses English visible copy
+  and accessibility labels, preserving the existing review workflow.
+
+Interpretation:
+  t3 achieved raw benchmark success faster, with strict physical-quality caveats.
+  t6_009 was stopped by the user and remains incomplete. Its elapsed time must
+  not be reported as a successful-task speedup. t6_008 was interrupted during
+  initial plan preparation and executed no policy actions.

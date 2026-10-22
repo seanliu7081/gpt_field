@@ -1,0 +1,178 @@
+{
+  "status": "complete",
+  "created_utc": "2026-10-19T18:47:26.859027+00:00",
+  "capture_directory": "/workspace/gpt_field/scene_test/libero_scene/captures_001",
+  "capture_snapshots_sha256": "e0cb5fa9aae740689c7ff4e4a36c58c6790b28d7ebde8f7bd20529c35e0c0c75",
+  "script_sha256": "c50d7becee04684ae2e226ef5b9b81a003c2a2eada41e2151487a3b97f12fc40",
+  "primary_input": "single upright RGB only; no simulator depth/masks/calibration to inference",
+  "reference": "first-visible visual surfaces; separate from prior collision geometry SDF",
+  "snapshots": [
+    {
+      "name": "bowl002_initial",
+      "status": "complete",
+      "input_rgb": {
+        "file": "snapshots/bowl002_initial/agentview_upright.png",
+        "sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+        "shape": [
+          512,
+          512,
+          3
+        ],
+        "orientation": "upright_cv",
+        "transformation": "horizontal flip of exact archived agentview PNG; no resizing"
+      },
+      "calibration": {
+        "file": "snapshots/bowl002_initial/evaluator/calibration.json",
+        "sha256": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+        "access": "evaluation_only"
+      },
+      "evaluator_reference": {
+        "file": "snapshots/bowl002_initial/evaluator/reference.npz",
+        "sha256": "dbaeadc4eeb732467b5aa893182a94d4bf3941976b5ec9bc466e3449b5bb2578",
+        "geometry": "rendered_visual_geometries",
+        "orientation": "upright_cv",
+        "access": "evaluation_only",
+        "depth_method": "scalar mj_ray first visible visual-geom hit at exact pixel centre; not resolved MSAA raster depth"
+      },
+      "rgb_match": {
+        "pixels_exact": true,
+        "differing_pixels": 0,
+        "max_channel_error": 0,
+        "archived_sha256": "308d78fa95640ed01e63163a6ee3e17e48e0570e4ef11b641ae738ea132046dc",
+        "matching_camera_sample_count": 1
+      },
+      "state_match": {
+        "max_geom_position_error_m": 0.0,
+        "max_geom_rotation_element_error": 0.0,
+        "qpos_exact": true,
+        "qvel_exact": true,
+        "note": "endpoint matches prior capture; reference depth uses earlier exact cached image instant",
+        "camera_sample_time_s": 0.4980000000000004,
+        "endpoint_time_s": 0.5000000000000003
+      },
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 240116,
+        "target_bowl_visible": 3081,
+        "target_cabinet_visible": 33098,
+        "valid_depth": 262144
+      },
+      "sources_unchanged": true,
+      "report": "snapshots/bowl002_initial/evaluator/report.json"
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "status": "complete",
+      "input_rgb": {
+        "file": "snapshots/drawer003_closed_step60/agentview_upright.png",
+        "sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+        "shape": [
+          512,
+          512,
+          3
+        ],
+        "orientation": "upright_cv",
+        "transformation": "horizontal flip of exact archived agentview PNG; no resizing"
+      },
+      "calibration": {
+        "file": "snapshots/drawer003_closed_step60/evaluator/calibration.json",
+        "sha256": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+        "access": "evaluation_only"
+      },
+      "evaluator_reference": {
+        "file": "snapshots/drawer003_closed_step60/evaluator/reference.npz",
+        "sha256": "ba73d008f361af8b431b348a8111dfaf9db7be4c77bd95ab04086c480806e654",
+        "geometry": "rendered_visual_geometries",
+        "orientation": "upright_cv",
+        "access": "evaluation_only",
+        "depth_method": "scalar mj_ray first visible visual-geom hit at exact pixel centre; not resolved MSAA raster depth"
+      },
+      "rgb_match": {
+        "pixels_exact": true,
+        "differing_pixels": 0,
+        "max_channel_error": 0,
+        "archived_sha256": "e6e9d04b8242089f34b3e28ef056a3109ab32aea925460bb6f242ab9f0b149cd",
+        "matching_camera_sample_count": 1
+      },
+      "state_match": {
+        "max_geom_position_error_m": 0.0,
+        "max_geom_rotation_element_error": 0.0,
+        "qpos_exact": true,
+        "qvel_exact": true,
+        "note": "endpoint matches prior capture; reference depth uses earlier exact cached image instant",
+        "camera_sample_time_s": 3.4979999999998364,
+        "endpoint_time_s": 3.499999999999836
+      },
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 239969,
+        "target_bowl_visible": 2944,
+        "target_cabinet_visible": 36143,
+        "valid_depth": 262144
+      },
+      "sources_unchanged": true,
+      "report": "snapshots/drawer003_closed_step60/evaluator/report.json"
+    },
+    {
+      "name": "drawer003_open_step552",
+      "status": "complete",
+      "input_rgb": {
+        "file": "snapshots/drawer003_open_step552/agentview_upright.png",
+        "sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+        "shape": [
+          512,
+          512,
+          3
+        ],
+        "orientation": "upright_cv",
+        "transformation": "horizontal flip of exact archived agentview PNG; no resizing"
+      },
+      "calibration": {
+        "file": "snapshots/drawer003_open_step552/evaluator/calibration.json",
+        "sha256": "1ffa8bf6742409315691355433795713648551e9d6c7ad770aa985b3a03de429",
+        "access": "evaluation_only"
+      },
+      "evaluator_reference": {
+        "file": "snapshots/drawer003_open_step552/evaluator/reference.npz",
+        "sha256": "d3041d9072304a30fa98d5a2c22787ffe901ce90c8a06611f9c9255019d6f8ac",
+        "geometry": "rendered_visual_geometries",
+        "orientation": "upright_cv",
+        "access": "evaluation_only",
+        "depth_method": "scalar mj_ray first visible visual-geom hit at exact pixel centre; not resolved MSAA raster depth"
+      },
+      "rgb_match": {
+        "pixels_exact": true,
+        "differing_pixels": 0,
+        "max_channel_error": 0,
+        "archived_sha256": "5376e44a641619cb2e2b7f2e9450b4e354805d737166afb085a62c5fd54ed701",
+        "matching_camera_sample_count": 1
+      },
+      "state_match": {
+        "max_geom_position_error_m": 0.0,
+        "max_geom_rotation_element_error": 0.0,
+        "qpos_exact": true,
+        "qvel_exact": true,
+        "note": "endpoint matches prior capture; reference depth uses earlier exact cached image instant",
+        "camera_sample_time_s": 28.097999999995306,
+        "endpoint_time_s": 28.099999999995305
+      },
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 230328,
+        "target_bowl_visible": 2695,
+        "target_cabinet_visible": 45439,
+        "valid_depth": 262144
+      },
+      "sources_unchanged": true,
+      "report": "snapshots/drawer003_open_step552/evaluator/report.json"
+    }
+  ],
+  "elapsed_s": 101.47239731899754,
+  "script_unchanged": true,
+  "capture_unchanged": true,
+  "artifacts_unchanged": {
+    "bowl002_initial": true,
+    "drawer003_closed_step60": true,
+    "drawer003_open_step552": true
+  }
+}

@@ -12,6 +12,7 @@ dependencies = ["numpy>=1.24,<3", "Pillow>=10,<13"]
 [project.optional-dependencies]
 dev = ["pytest>=8,<10"]
 subscription = ["PyJWT[crypto]>=2.10,<3"]
+operation-visual = ["opencv-python-headless==4.13.0.92"]
 
 [project.scripts]
 gpt-field = "gpt_field.cli:main"

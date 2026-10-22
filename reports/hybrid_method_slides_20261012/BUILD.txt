@@ -1,0 +1,18 @@
+English PDF presentation and evidence kit
+
+Rebuild PDF (all embedded images and evidence notes are included):
+  python -m pip install -r requirements.txt
+  python build_slides.py
+
+Render and check every PDF page:
+  python check_pdf.py
+
+Numerical field/track reproduction:
+  field_assets/generate_field_assets.py references the original gpt_field workspace and its recorded trace.
+  See field_assets/metadata.json for exact hashes, indices, arrays and reconstruction checks.
+  This step additionally needs the workspace numerical/plotting environment. It is not required to rebuild the PDF.
+
+source_index.json maps the short slide citations to exact workspace artifacts and hashes.
+method_notes.json and results_notes.json contain fuller technical explanations and trial caveats.
+Slide times exclude measured video overhead; failed/incomplete durations are not completion times.
+No robot simulation or model inference was run to generate this presentation.

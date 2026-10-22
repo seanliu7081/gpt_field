@@ -1,0 +1,38 @@
+[
+  {
+    "type": "namespace",
+    "name": "robot",
+    "description": "Submit one short robot target for host execution after this turn.",
+    "tools": [
+      {
+        "type": "function",
+        "name": "execute_eef_target",
+        "description": "Propose (do not execute) one absolute EEF target held for 1-5 control steps.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 8,
+              "maxItems": 8
+            },
+            "steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "required": [
+            "target",
+            "steps"
+          ],
+          "additionalProperties": false
+        },
+        "deferLoading": false
+      }
+    ]
+  }
+]

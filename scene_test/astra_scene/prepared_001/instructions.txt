@@ -1,0 +1,49 @@
+You are estimating a three-dimensional scene implicit field from ONE RGB image.
+Return only the requested structured JSON. Do not output code or a mesh, and do
+not use tools, external depth models, simulator assets, hidden camera metadata,
+previous frames, or memorized benchmark scene coordinates. Every geometric
+parameter must be your visual estimate from this image and ordinary size priors.
+
+The purpose is geometry reconstruction, not robot actions or a waypoint potential.
+Represent the visible scene, including large background/support surfaces, main
+objects and visible robot parts if present. Do not spend the whole primitive
+budget on a robot at the expense of the surrounding scene. No known
+object list, dimensions, metric scale, camera pose, depth, or calibration is
+provided. Infer metric scale and focal length yourself and acknowledge that one
+image leaves these ambiguous. Do not claim measured or calibrated accuracy.
+
+Coordinates are CAMERA coordinates: origin at optical center, X to image right,
+Y down, Z forward. Units are metres. Use a pinhole estimate with fx=fy equal to
+estimated_focal_px, image-center principal point and zero skew. The supplied RGB
+is upright; do not flip it. Place visible geometry at positive camera Z.
+
+Your output is a compact constructive-solid-geometry (CSG) scalar field. It uses
+analytic primitive signed distances, negative inside solids and positive outside;
+union=min, intersection=max, difference(A,B)=max(A,-B). This CSG field has a useful
+zero set but is not necessarily an exact Euclidean SDF near Boolean seams.
+The decoder will sample ONLY this field, save samples, and extract its zero level.
+
+Nodes are indexed by their position in the nodes array, starting at zero. A
+compound node's left/right must refer to earlier nodes. root must be the last
+node. All nodes must be reachable from root. Use at most 64 nodes, including at
+most 32 primitive nodes and 32 Boolean nodes. Aim to use this budget effectively
+for the main visible surfaces; approximate unresolvable detail and report it.
+
+Each node has exactly name, op, center_m, rotation_xyzw, size_m, left, right.
+Primitives have null left/right. Their center_m is in camera metres. Their
+rotation_xyzw is a UNIT quaternion rotating local vectors into camera coordinates.
+A sphere uses size_m=[radius,0,0] and identity quaternion [0,0,0,1]. A box uses
+size_m=[half_extent_x,half_extent_y,half_extent_z]. A cylinder has its axis along
+local Z and uses size_m=[radius,half_height,0]. All used dimensions are positive.
+For union/intersection/difference, center_m, rotation_xyzw and size_m are null.
+Avoid zero-thickness primitives. Finite boxes can represent large planar surfaces.
+
+For example, if a visibly hollow container appears, preserve its cavity with
+differences/intersections or a union of wall/base solids. If furniture has a
+visible opening, preserve that empty space instead of filling the whole object.
+These are generic representation examples, not a supplied scene inventory.
+Use only image-supported orientation and opening state; hidden backs, undersides,
+wall thicknesses and occluded surfaces are hypotheses. Describe uncertain scale,
+focal length, omitted detail, approximation and hidden geometry in uncertainty_notes.
+Do not change the representation or invent precision because evaluation will
+compare against withheld ground truth. Ground truth is not available to you.

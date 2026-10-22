@@ -1,0 +1,144 @@
+{
+  "language": "English",
+  "scope": "Current implemented DistanceHybridPolicy, reviewed read-only on 2026-10-12. Method notes for slides; experimental results are maintained separately by the coordinating agent.",
+  "recommended_title": "GPT-guided local distance fields for faster robot control",
+  "one_sentence_method": "GPT chooses a local goal, predicted constraints and a control mode; a local Dijkstra planner and measured-pose follower execute free-space motion, while GPT retains five-action Direct control for contact-sensitive phases.",
+  "architecture": {
+    "pipeline": [
+      "Task + current external/wrist RGB + measured robot state + retained observable history",
+      "Astra medium: choose coarse_field or contact_direct, with a semantic phase",
+      "Field branch: compact goal/constraints -> fixed local grid -> Dijkstra cost-to-go -> one bounded path -> measured-pose tracking -> OSC action",
+      "Direct branch: five normalized 7D actions, executed unchanged until a new model decision or evaluator termination",
+      "After every action: measured feedback; local events can request an earlier model decision"
+    ],
+    "sources": ["src/gpt_field/distance_subscription.py:564", "src/gpt_field/hybrid_policy.py:149", "src/gpt_field/distance_policy.py:230"]
+  },
+  "policy_input": {
+    "observable_fields": ["Task instruction", "External RGB and wrist RGB", "Eight robot-state values: end-effector xyz [m], orientation axis-angle xyz [rad], two finger joint positions"],
+    "history": "Keep the latest two live image pairs, previous textual observations and accepted model outputs, and local summaries of completed execution-feedback blocks. Full per-action logs remain on disk. Incomplete blocks are preserved.",
+    "excluded": ["Object ground-truth poses", "Depth", "Collision/contact oracle", "Reward and LIBERO-success labels", "Future evaluation images"],
+    "demonstration_scope": "The current client supports an optional one-demo variant. The latest zero-shot collision-free configuration explicitly rejects demonstrations; do not mix these experimental conditions in one results label.",
+    "sources": ["src/gpt_field/observation.py:76", "src/gpt_field/observation.py:103", "src/gpt_field/observation.py:110", "src/gpt_field/hybrid_subscription.py:346", "src/gpt_field/distance_subscription.py:513", "src/gpt_field/distance_subscription.py:622"]
+  },
+  "compact_prediction": {
+    "slide_headline": "GPT predicts a compact planning description, not 35,937 distance values",
+    "fields": ["Local goal offset [m]", "Target orientation quaternion", "Gripper open / close / hold", "Motion move / hold", "Attraction weights retained for compatibility", "Up to four Gaussian repulsors", "Up to four blocked axis-aligned boxes", "Up to four unknown axis-aligned boxes", "Optional held-object goal reference and external-image anchors"],
+    "grid": {"size": [33, 33, 33], "vertex_count": 35937, "spacing_m": 0.005, "extent_m_per_axis": 0.16, "half_width_m": 0.08, "frame": "world", "center": "Measured end-effector position at the model response's generation observation"},
+    "coordinate_formula": "x_ijk = c + 0.005 * (i-16, j-16, k-16), for i,j,k in {0,...,32}",
+    "known_domain": "The center stays fixed throughout reuse and local goal revisions. Reuse does not move the cube with the robot or expand the known domain. A new model response creates a newly centered field.",
+    "resolution_caveat": "5 mm is a computational grid spacing, not proven 5 mm visual localization accuracy or collision clearance.",
+    "sources": ["src/gpt_field/hybrid_subscription.py:30", "src/gpt_field/schema.py:49", "src/gpt_field/schema.py:57", "src/gpt_field/compact_field.py:42", "src/gpt_field/policy.py:108", "src/gpt_field/distance_policy.py:297", "src/gpt_field/distance_subscription.py:298"]
+  },
+  "goal_anchoring": {
+    "direct_eef_goal": "g = c + goal_offset_m",
+    "held_object_goal": "Let r be the visually estimated current bowl-center offset from the end effector, d the desired bowl-center offset from c, and R_cur/R_tar the measured/current and requested end-effector orientations. The effective end-effector goal is g = c + d - R_tar R_cur^T r.",
+    "purpose": "Place the bowl center at the intended location while accounting for a nonzero grasp offset and requested orientation change.",
+    "assumptions": "The offset is model-estimated and assumes a rigid grasp; slip and visual errors remain possible. Raw prediction and effective local goal are logged separately.",
+    "sources": ["src/gpt_field/field_grounding.py:91", "src/gpt_field/distance_subscription.py:324"]
+  },
+  "two_distinct_fields": {
+    "legacy_compact_U": {
+      "definition": "U(x) = sqrt(sum_a alpha_a * ((x_a-g_a)/ell)^2) + sum_k beta_k * exp(-||x-r_k||^2/(2*sigma_k^2)), with ell = 0.08 m",
+      "variables": "x and g are world positions; r_k = c + center_offset_k; sigma_k is radius_m; alpha_a and beta_k are positive model outputs.",
+      "units": "Dimensionless arbitrary-scale potential because the goal displacement is divided by 0.08 m. It is not an obstacle-surface distance or a shortest-path distance.",
+      "current_role": "Still expanded for compatibility with GridField and its masks. Current Dijkstra edge costs do not use U or attraction_weights. U values remain included in the cache fingerprint, which does not make them part of the path objective.",
+      "sources": ["src/gpt_field/compact_field.py:24", "src/gpt_field/compact_field.py:118", "src/gpt_field/distance_planner.py:113", "src/gpt_field/distance_planner.py:228"]
+    },
+    "current_D": {
+      "density": "rho(x) = 1 + sum_k beta_k * exp(-||x-r_k||^2/(2*sigma_k^2)) >= 1",
+      "edge_cost": "w(u,v) = ||x_v-x_u||_2 * (rho(x_u)+rho(x_v))/2",
+      "cost_to_go": "D(v) = min over valid graph paths v -> goal terminals of [sum of w along the path + any validated terminal-edge cost]",
+      "bellman_view": "For nonterminal vertices, D(v) = min_{u in valid neighbors(v)} [w(v,u) + D(u)]. Unreachable or invalid vertices have D=+infinity.",
+      "units": "rho is dimensionless and w,D have length units. Diagnostics call them m without repulsors and weighted_m with repulsors. With no repulsors, D is shortest geometric length on the finite valid graph, not exact continuous Euclidean/geodesic distance.",
+      "algorithm": "Reverse multi-source Dijkstra from the goal region, storing a successor toward a terminal at each reached vertex.",
+      "sources": ["src/gpt_field/distance_planner.py:57", "src/gpt_field/distance_planner.py:128", "src/gpt_field/distance_planner.py:160", "src/gpt_field/distance_planner.py:183", "src/gpt_field/distance_planner.py:228"]
+    }
+  },
+  "graph_and_constraints": {
+    "connectivity": "26 neighbors: axis, face diagonal and body diagonal offsets. Edge lengths are h, sqrt(2)h or sqrt(3)h for h=5 mm.",
+    "valid_vertices": "Remove blocked and unknown grid vertices, points outside configured workspace, and points inside any continuous blocked/unknown box. Blocked takes precedence when discrete blocked and unknown masks overlap.",
+    "valid_edges": "Require every active interpolation-stencil corner to be valid, and apply a continuous closed-segment/AABB intersection test. This rejects diagonal corner cuts and thin boxes smaller than the grid spacing.",
+    "continuous_path_checks": "GridField traverses every crossed interpolation cell, checking all active corner sets, rather than only regularly spaced samples. The actual-start connection, extracted path and tracker lookahead chords also receive continuous box checks.",
+    "soft_vs_hard": "Gaussian repulsors increase traversal cost but do not create hard collision masks. Blocked and unknown boxes forbid traversal.",
+    "sources": ["src/gpt_field/distance_planner.py:24", "src/gpt_field/distance_planner.py:67", "src/gpt_field/distance_planner.py:94", "src/gpt_field/distance_planner.py:128", "src/gpt_field/field.py:91", "src/gpt_field/compact_field.py:136", "src/gpt_field/distance_policy.py:89"]
+  },
+  "goal_region_and_boundary": {
+    "standalone_default": "DistanceFieldPlanner.plan defaults to a 5 mm goal-region radius.",
+    "actual_current_hybrid": "The current _TrackingDistancePlanner adapter divides the requested 5 mm by two: Dijkstra uses a 2.5 mm goal-region radius and _DistanceTracker uses a 2.5 mm endpoint tolerance. The outer measured arrival check is 5 mm position plus 0.05 rad orientation.",
+    "terminals": "Valid vertices inside the goal sphere have zero cost. For a fractional goal or a region containing no grid vertex, valid enclosing-cell corners can connect to the sphere via validated virtual terminal edges. The graph solution is exact for this finite augmented graph, not for all continuous paths into the sphere.",
+    "actual_start": "A measured off-grid start connects to its valid enclosing-cell corners; choose the smallest start-edge cost plus D(vertex). Follow the stored successors.",
+    "failure_behavior": "Explicit hold yields no path. Invalid start or unreachable goal yields no_valid_candidates. Goal outside the original cube or a non-valid goal yields needs_observation; the goal is never silently clipped to the cube boundary. These outcomes request a new model decision, not task completion.",
+    "sources": ["src/gpt_field/distance_planner.py:163", "src/gpt_field/distance_planner.py:248", "src/gpt_field/distance_planner.py:270", "src/gpt_field/distance_policy.py:28", "src/gpt_field/distance_policy.py:104", "src/gpt_field/distance_policy.py:381", "src/gpt_field/distance_policy.py:423"]
+  },
+  "path_extraction": {
+    "slide_headline": "One shortest-path route, not an enumerated trajectory bank",
+    "candidate_count": "Successful planning returns one extracted CandidateRecord, with candidate_count=1 and valid_count=1. Hold/arrival/failure returns zero candidates. Searching up to 35,937 graph vertices is not generating 35,937 trajectories.",
+    "smoothing": "Merge collinear consecutive graph edges only. Preserve turns and obstacle/repulsor detours. No arbitrary line-of-sight shortcut, spline fitting or gradient descent is used.",
+    "local_horizon": "Split straight runs into segments of at most 1 cm and retain at most 10 segments. Geometric path length is therefore at most 10 cm, possibly shorter because of the goal region, short turns or horizon truncation.",
+    "cache": "Reuse the solved D field while grid, center, field content, masks, goal, tolerance, workspace and repulsors are unchanged. Moving the robot alone only changes start connection/path extraction. Fresh model responses reset cache; changed local goals trigger a new cache key.",
+    "sources": ["src/gpt_field/distance_planner.py:28", "src/gpt_field/distance_planner.py:113", "src/gpt_field/distance_planner.py:262", "src/gpt_field/distance_planner.py:282", "src/gpt_field/distance_planner.py:301", "src/gpt_field/distance_planner.py:327", "src/gpt_field/distance_policy.py:241"]
+  },
+  "path_to_actions": {
+    "slide_headline": "A 10-segment path is tracked from feedback, not executed as ten guaranteed 1 cm moves",
+    "tracking": "Project the measured end-effector position onto the remaining polyline with nondecreasing progress; target up to 3 cm farther along it. If the straight chord crosses a predicted invalid region, fall back to earlier vertices/projection. Stop translation if no valid reference exists.",
+    "translation_formula": "delta_p = (p_ref-p_measured) * min(1, 0.05/||p_ref-p_measured||); normalized translation action = delta_p / 0.05",
+    "rotation_formula": "R_err = R_target R_current^T; take the shortest world-frame axis-angle error, cap its norm at 0.15 rad, and divide by the OSC rotation scale 0.5 rad.",
+    "gripper": "+1 closes, -1 opens; field hold repeats the last nonzero gripper intent across both controllers, initially open. Direct zero is executed as zero and does not change remembered nonzero intent.",
+    "cadence": "Replan the local path after at most ten executed control actions, or earlier on measured path endpoint arrival, a changed local goal, or a field-refresh event. A short geometric path can still be followed over multiple control ticks until arrival or the ten-action window expires.",
+    "physics": "Control frequency is 20 Hz. Requested OSC increments and geometric arc length are not guaranteed realized motion. Waiting for GPT does not advance simulated physics; ten actions correspond to 0.5 s simulated control time, not necessarily wall time or 10 cm actual travel.",
+    "orientation_limitation": "Planning is over end-effector xyz only. Orientation is controlled separately toward one target; there is no joint-space or full SE(3) collision planning.",
+    "sources": ["src/gpt_field/tracking.py:64", "src/gpt_field/tracking.py:96", "src/gpt_field/tracking.py:115", "src/gpt_field/policy.py:126", "src/gpt_field/policy.py:165", "src/gpt_field/action.py:16", "src/gpt_field/action.py:59", "src/gpt_field/distance_subscription.py:278", "src/gpt_field/distance_subscription.py:313"]
+  },
+  "switching_and_model_cadence": {
+    "routing": "At each new accepted model response, GPT chooses coarse_field or contact_direct using permitted visual/state/history inputs. near_target is a model label tied to the selected controller, not a measured contact/proximity predicate.",
+    "phases": "Bowl phases are approach, grasp, transport, align, release, verify and recover. Phase names guide behavior but neither prove grasp nor determine benchmark success. Drawer-task variants add explicit handle phases and use task-specific constraints.",
+    "direct": "Exactly five actions per model response. Local visual feedback observes these actions but does not rewrite them; evaluator success, forbidden collision or external interruption may terminate a partial final chunk.",
+    "field_initial_interval": "30 actions per model response, unless an observable event requests an earlier refresh.",
+    "field_reuse": "At boundaries 30/60/90, extend by 30 up to 120 total only for approach/transport/align + move, reliable visual tracking, at least five measured motion/error records, accumulated measured motion >1 mm, recent visual error no more than 2 px worse than the start of the retained window, and no active reobservation recovery.",
+    "early_events": ["Measured goal reached (5 mm and 0.05 rad)", "Invalid measured start/direction/reference or unreachable local path", "Goal outside known cube", "Previously reliable visual tracking lost", "Five-action commanded translation >=5 mm but realized movement <=0.5 mm", "Alignment calibration unavailable after ten actions", "Placement verification or local-goal validity concern"],
+    "missing_anchor_nuance": "A missing anchor from the outset disables reliable visual reuse/correction; it does not universally stop every initial approach/transport Field action. The nominal 30-action limit remains unless another event triggers.",
+    "sources": ["src/gpt_field/hybrid_policy.py:149", "src/gpt_field/hybrid_policy.py:193", "src/gpt_field/distance_policy.py:218", "src/gpt_field/distance_policy.py:230", "src/gpt_field/distance_policy.py:340", "src/gpt_field/distance_policy.py:426", "src/gpt_field/distance_subscription.py:335"]
+  },
+  "optional_local_visual_feedback": {
+    "method": "Track a model-specified moving point and target projection with normalized cross-correlation patches in the fixed external RGB image. Visual-reference kind is end_effector or held_object; both points must refer to the same rigid point's current and desired projection.",
+    "fit": "In planar align only, use measured XY robot motion and observed pixel displacement to fit a local 2x2 image Jacobian: delta_uv approximately J * delta_xy, via least squares. Proposed correction is J^{-1}(uv_target-uv_moving), norm-capped at 1 cm.",
+    "checks": "Require at least four samples, two-direction excitation >=3 mm in the smaller singular value, bounded conditioning, residual <=1.25 px, and local height/orientation/gripper consistency. This is not camera calibration or depth reconstruction.",
+    "adoption": "Only a calibrated correction changes the effective XY goal, preserving its Z and original field center/masks. A >2 mm goal change clears the pending path. The candidate goal must stay in the calibration domain, valid field and workspace.",
+    "verification": "Five reliable stable visual observations can request a placement_observation_consistent model refresh, never certify benchmark success. If placement evidence is missing, bowl-task code may attempt one validated upward reobservation of at most 2 cm with open gripper, for at most ten ticks; drawer task disables this automatic upward move.",
+    "recovery_exception": "The explicit vertical reobservation path is a separately labeled local recovery, not a Dijkstra detour: preserve hard masks/workspace, ignore soft repulsors, and prohibit lateral/downward geometric segments.",
+    "limitations": "Anchor semantics and rigid-grasp assumptions come from the model. Good patch correlation or a fitted Jacobian cannot prove a correct grasp, object support, depth alignment or task success.",
+    "sources": ["src/gpt_field/local_visual_feedback.py:32", "src/gpt_field/local_visual_feedback.py:51", "src/gpt_field/local_visual_feedback.py:294", "src/gpt_field/distance_policy.py:166", "src/gpt_field/distance_policy.py:297", "src/gpt_field/distance_policy.py:326", "src/gpt_field/distance_policy.py:355", "src/gpt_field/distance_policy.py:401", "src/gpt_field/distance_policy.py:37"]
+  },
+  "distance_field_comparison": [
+    {"representation": "Signed distance field (SDF)", "quantity": "Signed nearest-surface distance, usually with zero on a geometric surface", "role": "Geometry/clearance representation; not inherently a task goal cost-to-go", "current_status": "Not implemented here; no reconstructed surface or ground-truth geometry is supplied to the policy"},
+    {"representation": "Legacy compact U", "quantity": "Dimensionless attraction/repulsion score", "role": "Lower-is-better heuristic; not a path-distance guarantee", "current_status": "Retained as compatibility data, not the current Dijkstra objective"},
+    {"representation": "Current Dijkstra D", "quantity": "Nonnegative accumulated weighted path length to a local goal region", "role": "Route around model-predicted forbidden/unknown regions on a 26-neighbor graph", "current_status": "Implemented; optimal for the constructed finite augmented graph, not exact continuous geodesics"}
+  ],
+  "latest_zero_shot_collision_free_scope": {
+    "shared_prompt": "Explicitly remove demonstration guidance; ask both arms to avoid unintended full-arm, finger and held-bowl contacts, include grasp/payload/rotation extents, treat uncertain space conservatively and reobserve rather than push through obstacles.",
+    "hybrid_prompt": "Ask GPT to put relevant solids in blocked_boxes and uncertain regions in unknown_boxes, visually inflate for held-bowl/finger extent, and avoid empty constraints when an obstacle or required margin intersects the intended local route. This inflation is model-estimated; there is no full-robot geometry oracle.",
+    "evaluation": "A simulator-only monitor inspects collision contacts after each real physics substep and final endpoint. It permits specified finger-bowl grasp and bowl-table/plate support pairs, and scores other monitored robot/bowl-scene contacts as failure. Raw LIBERO success remains separate. This detects and stops after a first collision; it is not predictive collision avoidance.",
+    "monitor_limits": "The monitor excludes robot self/internal contacts, scene-scene-only contacts, positive-distance margins and reset-settling substeps; it checks the settled initial state before policy execution.",
+    "sources": ["src/gpt_field/distance_subscription.py:200", "src/gpt_field/distance_subscription.py:221", "src/gpt_field/libero.py:253", "src/gpt_field/libero.py:383", "src/gpt_field/zero_shot_direct_subscription.py:30"]
+  },
+  "speed_hypothesis": {
+    "mechanisms": ["Compact GPT outputs avoid emitting all 35,937 scalar values", "Local Field control amortizes a model decision over more than Direct's five actions", "Cached Dijkstra fields avoid repeated full solves when only the measured start changes", "Measured-pose following reduces repeated ineffective fixed-increment commands", "Local block feedback summaries reduce retained request text"],
+    "balanced_message": "These mechanisms reduce some model/planning overhead. End-to-end speed also depends on model latency, number of actions, contact-phase difficulty, event-driven refreshes and task success. Fewer GPT calls alone does not prove a faster successful task.",
+    "result_rule": "Label each dataset by task/layout, one-demo versus zero-shot, controller, success criterion and source revision. Use completion-time comparisons only when both runs meet the same success criterion; do not treat collision failures as successful speedups.",
+    "sources": ["src/gpt_field/distance_planner.py:262", "src/gpt_field/distance_subscription.py:513", "src/gpt_field/distance_policy.py:218"]
+  },
+  "claims_to_avoid": [
+    "GPT directly produces the current Dijkstra distance values",
+    "The compact attraction potential is an SDF or a true obstacle distance",
+    "The current planner follows the negative gradient of a learned geodesic field",
+    "26-neighbor Dijkstra guarantees the exact continuous shortest path",
+    "A 5 mm grid proves 5 mm perception or collision accuracy",
+    "Ten path segments mean exactly ten 1 cm realized robot motions",
+    "The planner still enumerates the old fixed-length trajectory bank",
+    "Every Field response always executes exactly 30 actions",
+    "A valid end-effector mask certifies full-arm/payload collision freedom",
+    "Local visual verification or GPT phase labels prove LIBERO completion",
+    "After-contact monitoring prevents the first physical contact",
+    "Single paired trials establish a statistically reliable general speedup"
+  ]
+}

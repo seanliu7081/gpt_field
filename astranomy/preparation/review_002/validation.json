@@ -1,0 +1,80 @@
+{
+  "status": "ready_for_user_review_awaiting_full_test_approval",
+  "offline_tests": {
+    "passed": 99,
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. .venv/bin/python -m pytest -q -p no:cacheprovider astranomy/test_policy.py astranomy/test_transport.py tests/test_astranomy_agentic_motion.py tests/test_astranomy_agentic_prompt.py"
+  },
+  "native_codex_mock_check": {
+    "kind": "offline_codex_protocol_integration",
+    "external_inference_requests": 0,
+    "simulator_steps": 0,
+    "subscription_credentials_loaded": false,
+    "passed": true,
+    "persistent_thread_verified": true,
+    "full_visual_history_verified": true,
+    "native_tools": [
+      "robot"
+    ],
+    "mock_inference_requests": 4,
+    "billing": "offline_mock_no_billing",
+    "api_key_calls": 0,
+    "api_calls": 4,
+    "subscription_inference_calls": 4,
+    "inference_request_count_available": true,
+    "counting_note": "Counted at the provider gateway; Codex turns are reported separately",
+    "codex_turns_started": 2,
+    "accepted_proposals": 2,
+    "thread_id": "01a15459-a9b5-74d1-8bc5-199559ce34da",
+    "token_usage": {
+      "total": {
+        "totalTokens": 520,
+        "inputTokens": 400,
+        "cachedInputTokens": 0,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 120,
+        "reasoningOutputTokens": 0
+      },
+      "last": {
+        "totalTokens": 130,
+        "inputTokens": 100,
+        "cachedInputTokens": 0,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 30,
+        "reasoningOutputTokens": 0
+      },
+      "modelContextWindow": 258400
+    },
+    "token_rotations": 0,
+    "compactions": 0
+  },
+  "source_seal_matches": true,
+  "pre_existing_source_files_checked": 746,
+  "other_worktree_changes_detected": [
+    {
+      "path": "src/gpt_field/agent_speedup_v2_geometry.py",
+      "before_sha256": "478792acd0c8ef8130d4fdcdc210f24fdff17e6786fa198bdafb20849282a40f",
+      "current_sha256": "a23047719150c654995f6060e05bc5feb365a933b551a96c4b5daae64ce664e2"
+    },
+    {
+      "path": "src/gpt_field/agent_speedup_v2_scene.py",
+      "before_sha256": "0a1233d3a4ae14ab8d48edb41e5bdcbc19d46c65ef6d8d95543d4b3933d8d16d",
+      "current_sha256": "94953f429b7f2fd9115d89e5834086436a478a53b4111d3ceb780ef60f52d51b"
+    },
+    {
+      "path": "scripts/agent_speedup_v2_survey_probe.py",
+      "before_sha256": "5cec6cf377f93d6f3895af1f350f64fc8fa26bd530bc46ebefb353c050b844de",
+      "current_sha256": "7f0b62b848f4b21c7521e05fe1d4a785f7be74cb07ee43a328309ae63070ac7a"
+    },
+    {
+      "path": "tests/test_agent_speedup_v2_geometry.py",
+      "before_sha256": "3d6b7a57b0fdf0e40769393a9e8afd1b2038a936240acd948451ee97c5b6d4ee",
+      "current_sha256": "d06ab98aaa490e5020ad38ef8b3e02a527245390e63f1be4490b19df9c350ae7"
+    }
+  ],
+  "existing_code_edits_by_this_task": [],
+  "all_task_code_writes_under": "gpt_field/astranomy",
+  "real_model_calls": 0,
+  "real_simulator_steps": 0,
+  "full_test_started": false,
+  "full_run_directory_exists": false
+}

@@ -18,6 +18,7 @@ from .compact_subscription import (
 )
 from .hybrid_subscription import ChatGPTPlanHybridClient, HYBRID_KEYS
 from .distance_tasks import resolve_distance_task
+from .demonstration import DemoReference
 from .schema import GridSpec
 
 
@@ -33,7 +34,31 @@ ALIGNMENT_ASSUMPTION = "same_rigid_point_desired_projection"
 MAX_FIELD_REUSE_ACTIONS = 120
 
 
-def distance_prompt_version(task_key: str = "bowl_plate") -> str:
+ZERO_SHOT_DISTANCE_PROMPT_VERSION = "astra-distance-field-bowl-plate-zero-shot-collision-free-v1"
+ZERO_SHOT_DISTANCE_SCHEMA_NAME = "astra_distance_field_bowl_plate_zero_shot_collision_free_v1"
+
+
+def _validate_zero_shot_mode(task_key: str, zero_shot_collision_free: bool,
+                            demonstration: bool = False) -> None:
+    if type(zero_shot_collision_free) is not bool:
+        raise ValueError("zero_shot_collision_free must be a boolean")
+    if zero_shot_collision_free:
+        if demonstration:
+            raise ValueError("Zero-shot collision-free control cannot receive a demonstration")
+        if resolve_distance_task(task_key).key != "bowl_plate":
+            raise ValueError("Zero-shot collision-free control requires task_key='bowl_plate'")
+
+
+def distance_prompt_version(task_key: str = "bowl_plate", *, demonstration: bool = False,
+                            zero_shot_collision_free: bool = False) -> str:
+    if type(demonstration) is not bool:
+        raise ValueError("demonstration must be a boolean")
+    _validate_zero_shot_mode(task_key, zero_shot_collision_free, demonstration)
+    if zero_shot_collision_free:
+        return ZERO_SHOT_DISTANCE_PROMPT_VERSION
+    if demonstration:
+        suffix = "drawer" if resolve_distance_task(task_key).key == "drawer_bowl" else "bowl-plate"
+        return f"astra-distance-field-local-feedback-{suffix}-one-demo-v1"
     return (DISTANCE_PROMPT_VERSION if resolve_distance_task(task_key).key == "bowl_plate"
             else "astra-distance-field-local-feedback-drawer-v1")
 
@@ -43,7 +68,10 @@ def distance_field_version(task_key: str = "bowl_plate") -> str:
             else "goal-distance-feedback-drawer-v1")
 
 
-def distance_schema_name(task_key: str = "bowl_plate") -> str:
+def distance_schema_name(task_key: str = "bowl_plate", *, zero_shot_collision_free: bool = False) -> str:
+    _validate_zero_shot_mode(task_key, zero_shot_collision_free)
+    if zero_shot_collision_free:
+        return ZERO_SHOT_DISTANCE_SCHEMA_NAME
     return ("astra_distance_field_feedback_v7" if resolve_distance_task(task_key).key == "bowl_plate"
             else "astra_distance_field_feedback_drawer_v1")
 
@@ -98,13 +126,147 @@ def distance_output_schema(*, task_key: str = "bowl_plate") -> dict[str, Any]:
     return schema
 
 
-def distance_instructions(image_history: int = 2, *, task_key: str = "bowl_plate") -> str:
+def distance_instructions(image_history: int = 2, *, task_key: str = "bowl_plate",
+                          demonstration: bool = False, zero_shot_collision_free: bool = False) -> str:
     task = resolve_distance_task(task_key)
+    version = distance_prompt_version(task_key, demonstration=demonstration,
+                                      zero_shot_collision_free=zero_shot_collision_free)
     if type(image_history) is not int or image_history < 1:
         raise ValueError("image_history must be a positive integer")
+    if zero_shot_collision_free:
+        common = shared_zero_shot_task_guidance(image_history, task_key=task.key)
+        instructions = _bowl_distance_instructions(image_history).replace(DISTANCE_PROMPT_VERSION, version, 1)
+        return (instructions + " " + common["task_and_zero_shot"] + common["collision_free"]
+                + hybrid_collision_field_guidance())
     if task.key == "bowl_plate":
-        return _bowl_distance_instructions(image_history)
-    return _drawer_distance_instructions(image_history)
+        if not demonstration:
+            return _bowl_distance_instructions(image_history)
+        instructions = _bowl_distance_instructions(image_history).replace(DISTANCE_PROMPT_VERSION, version, 1)
+        instructions = instructions.replace(
+            "Control the bowl task using only task text, two current RGB camera images, measured robot "
+            "state and retained observable feedback.",
+            f"Task: {task.prompt}. Control this task using the single external reference demonstration, "
+            "task text, two current RGB camera images, measured robot state and retained observable feedback.", 1)
+        instructions = instructions.replace("demonstrations or future images are supplied.",
+            "or future images of the current evaluation are supplied.", 1)
+        return instructions + (
+            " The first input message is exactly one independent LIBERO reference demonstration, "
+            "explicitly labeled external_demonstration. It supplies the complete recorded normalized "
+            "action and measured robot-state sequence, plus a sampled chronological set of paired RGB "
+            "keyframes. Each after_state and keyframe is AFTER its labeled action_index; it is not "
+            "the observation preceding that action. The demonstration is a separate episode, never "
+            "an executed action, observation, success signal or future state of this evaluation. "
+            "Study its approach orientation, finger alignment, bowl grasp and test lift, free-space "
+            "transport, centered placement on the plate, release and open-gripper retreat. Transfer "
+            "these relationships to the CURRENT scene and measured pose; do not blindly replay "
+            "absolute demonstration coordinates or its action timing. The reference stays fixed "
+            "and available on every request, separately from the latest two live observation image "
+            "pairs. It cannot certify that the current task is complete. Continue to choose the "
+            "normal Field/Direct schema from the current observation and measured execution feedback. "
+            "No reference action is executed automatically."
+        )
+    instructions = _drawer_distance_instructions(image_history)
+    if not demonstration:
+        return instructions
+    instructions = instructions.replace(distance_prompt_version(task_key), version, 1)
+    instructions = instructions.replace(
+        "Control this task using only task text, two current RGB camera images, measured robot state "
+        "and retained observable feedback.",
+        "Control this task using the single external reference demonstration, task text, two current "
+        "RGB camera images, measured robot state and retained observable feedback.", 1)
+    instructions = instructions.replace("demonstrations or future images are supplied.",
+                                        "or future images of the current evaluation are supplied.", 1)
+    instructions = instructions.replace("After grasping the handle, use small deliberate pulls",
+        "After establishing visually supported handle engagement, use small deliberate pulls", 1)
+    return instructions + (
+        " The first input message is exactly one independent LIBERO reference demonstration, "
+        "explicitly labeled external_demonstration. It supplies the complete recorded normalized "
+        "action and measured robot-state sequence, plus a sampled chronological set of paired RGB "
+        "keyframes. Each after_state and keyframe is AFTER its labeled action_index; it is not "
+        "the observation preceding that action. The demonstration is a separate episode, never "
+        "an executed action, observation, success signal or future state of this evaluation. "
+        "Study its approach orientation, finger alignment, handle grasp and pull, handle release, "
+        "bowl grasp and insertion. Do not impose a closed-finger handle grasp if the reference "
+        "shows a different contact strategy; infer engagement from the reference and current RGB "
+        "response. Transfer these relationships to the CURRENT scene and measured "
+        "pose; do not blindly replay absolute demonstration coordinates or its action timing. "
+        "The reference stays fixed and available on every request, separately from the latest "
+        "two live observation image pairs. It cannot certify that the current task is complete. "
+        "Continue to choose the normal Field/Direct schema from the current observation and "
+        "measured execution feedback. No reference action is executed automatically."
+    )
+
+
+def collision_free_guidance() -> str:
+    """Exact observable collision objective shared by the two zero-shot arms."""
+    return (
+        "The full robot, including the arm and gripper fingers, and the held bowl must avoid all "
+        "unintended scene contacts throughout the task. This includes the ketchup bottle, milk "
+        "carton, ramekin, cabinet, stove, table and any other visible obstacle. Allow only necessary "
+        "finger-bowl grasp contact and bowl-table or bowl-plate support contact; these exceptions "
+        "do not permit the arm, fingers or carried bowl to strike other objects. Do not push, tip "
+        "or shift obstacles, and do not use unintended contact to explore or force a passage. "
+        "Plan clearance for the swept volume of the arm, fingers and held bowl, including grasp "
+        "offset, payload extent and changes in orientation, not only the end-effector point. "
+        "Estimate clearance conservatively from the current RGB views and observed motion; no "
+        "ground-truth object poses, collision geometry, contact oracle or hidden scene state is "
+        "available. Occluded or uncertain space is not free space. If the visible evidence does "
+        "not support a clear motion, hold or choose a visibly clear reobservation, then replan "
+        "before advancing; do not force through or assume that a short action is safe. Visible "
+        "obstacle tilt or displacement is an unintended disturbance, even if the bowl reaches "
+        "the plate. Phase labels and model confidence cannot certify collision-free execution. "
+    )
+
+
+def hybrid_collision_field_guidance() -> str:
+    return (
+        "For each coarse_field response, inspect the intended local route and represent relevant "
+        "visible blockers conservatively in blocked_boxes; represent occluded or uncertain "
+        "regions in unknown_boxes. Add repulsors when useful for extra clearance, but a soft "
+        "repulsor does not replace a blocked solid obstacle. Boxes describe forbidden or unknown "
+        "end-effector positions after accounting for the visually estimated held-bowl and finger "
+        "extent, grasp offset and rotational swept volume. Inflate the obstacle estimate for "
+        "these extents and uncertainty within the current local grid. Do not return all-empty "
+        "blocked_boxes, unknown_boxes and repulsors when a relevant obstacle or its required "
+        "clearance margin intersects the proposed route. Empty constraints are justified only "
+        "when the current views support clearance over the proposed local swept volume. Do "
+        "not erase a blocker to obtain a path. If conservative constraints leave no supported "
+        "path, request a hold, a nearer safe goal or reobservation/replanning. The local grid "
+        "and mask checks are not full-arm collision certification, so also avoid visually "
+        "threatened arm configurations. No hidden obstacle coordinates may be assumed. "
+    )
+
+
+def shared_zero_shot_task_guidance(image_history: int = 2, *, task_key: str = "bowl_plate") -> dict[str, str]:
+    """Keep task, grasp and placement spans identical without any demo advice."""
+    _validate_zero_shot_mode(task_key, True)
+    if type(image_history) is not int or image_history != 2:
+        raise ValueError("Matched zero-shot control requires the latest two live image pairs")
+    source = _bowl_distance_instructions(image_history)
+
+    def span(start: str, end: str | None) -> str:
+        if source.count(start) != 1 or (end is not None and source.count(end) != 1):
+            raise ValueError("Shared zero-shot guidance anchors are no longer unique")
+        first, last = source.index(start), source.index(end) if end is not None else len(source)
+        if first >= last:
+            raise ValueError("Shared zero-shot guidance anchors are out of order")
+        return source[first:last]
+
+    task = resolve_distance_task(task_key)
+    return {
+        "task_and_zero_shot": (
+            f"Task: {task.prompt}. This is zero-shot control: no demonstration, reference trajectory "
+            "or prerecorded action sequence is supplied. Choose actions using only the task text, "
+            "current paired RGB, measured robot state and retained live observable feedback/history. "),
+        "allowed_observation": span("Control the bowl task using only ", "Keep the latest "),
+        "scene_clearance": span("These are visual estimates, ", "The follower tracks a local path "),
+        "grasp_settling": span("Actions execute at 20 Hz, so five actions advance only ", None),
+        "placement": span("Place the bowl centered within the plate rim. ", "Actions execute at 20 Hz, so five actions advance only "),
+        "reobservation": span("Missing, ambiguous or lost visual evidence means ", "After release, verify "),
+        "post_release_verification": span("After release, verify ", "A verify/hold interval still requests "),
+        "recovery_and_stopping": span("Do not declare the task complete from a phase name, ", "Place the bowl centered within the plate rim. "),
+        "collision_free": collision_free_guidance(),
+    }
 
 
 def _bowl_distance_instructions(image_history: int = 2) -> str:
@@ -409,8 +571,23 @@ class ChatGPTPlanDistanceClient(ChatGPTPlanCompactClient):
                  field_improvements: bool = True, execution_mode: str = "tracking",
                  feedback_history: str = "block_summary", centered_placement_guidance: bool = True,
                  grasp_settle_guidance: bool = True, stop_on_model_complete: bool = False,
-                 task_key: str = "bowl_plate", **kwargs):
+                 task_key: str = "bowl_plate", demonstration: DemoReference | None = None,
+                 zero_shot_collision_free: bool = False, **kwargs):
         self.task_spec = resolve_distance_task(task_key)
+        _validate_zero_shot_mode(task_key, zero_shot_collision_free, demonstration is not None)
+        self.zero_shot_collision_free = zero_shot_collision_free
+        if zero_shot_collision_free:
+            shared_zero_shot_task_guidance(kwargs.get("image_history", 2), task_key=task_key)
+            if config is not None and config.model != "gpt-6-astra":
+                raise ValueError("Zero-shot collision-free control requires model='gpt-6-astra'")
+            if type(kwargs.get("chunk_size", 5)) is not int or kwargs.get("chunk_size", 5) != 5:
+                raise ValueError("Zero-shot collision-free control requires chunk_size=5")
+        if demonstration is not None:
+            if not isinstance(demonstration, DemoReference):
+                raise TypeError("demonstration must be a validated DemoReference")
+            if demonstration.metadata()["task_key"] != self.task_spec.key:
+                raise ValueError("Demonstration must match the selected task")
+        self.demonstration = demonstration
         self.target_regions = self.task_spec.target_regions
         if "task_prompt" in kwargs and kwargs["task_prompt"] != self.task_spec.prompt:
             raise ValueError("Distance task_prompt must match the selected task contract")
@@ -435,7 +612,8 @@ class ChatGPTPlanDistanceClient(ChatGPTPlanCompactClient):
 
     @property
     def prompt_version(self) -> str:
-        return distance_prompt_version(self.task_spec.key)
+        return distance_prompt_version(self.task_spec.key, demonstration=self.demonstration is not None,
+                                       zero_shot_collision_free=self.zero_shot_collision_free)
 
     def _reset_prediction_diagnostics(self) -> None:
         super()._reset_prediction_diagnostics()
@@ -447,11 +625,25 @@ class ChatGPTPlanDistanceClient(ChatGPTPlanCompactClient):
         # controls; the compact parent's fixed thirty-action compactor cannot
         # represent extended or early-closed distance-control intervals.
         payload = ChatGPTPlanHybridClient.build_payload(self, observation, grid, mode)
-        payload["instructions"] = distance_instructions(self.image_history, task_key=self.task_spec.key)
+        payload["instructions"] = distance_instructions(self.image_history, task_key=self.task_spec.key,
+                                                         demonstration=self.demonstration is not None,
+                                                         zero_shot_collision_free=self.zero_shot_collision_free)
         payload["input"] = compact_distance_feedback_history(payload["input"])
-        payload["text"]["format"] = {"type": "json_schema", "name": distance_schema_name(self.task_spec.key),
+        if self.demonstration is not None:
+            payload["input"] = [self.demonstration.message(), *payload["input"]]
+        payload["text"]["format"] = {"type": "json_schema", "name": distance_schema_name(self.task_spec.key,
+                                      zero_shot_collision_free=self.zero_shot_collision_free),
                                       "strict": True, "schema": distance_output_schema(task_key=self.task_spec.key)}
         return payload
+
+    def _history_input(self, payload: Mapping[str, Any]) -> list[dict]:
+        if self.demonstration is None:
+            return super()._history_input(payload)
+        if not payload["input"] or payload["input"][0] != self.demonstration.message():
+            raise ValueError("The immutable demonstration prefix is missing or changed")
+        # Static reference images must neither duplicate nor displace live images
+        # in the episode history. Reattach the exact prefix in build_payload.
+        return payload["input"][1:]
 
     def validate_response(self, data: Any, grid: GridSpec) -> dict[str, Any]:
         self._reset_prediction_diagnostics()
@@ -521,7 +713,7 @@ class ChatGPTPlanDistanceClient(ChatGPTPlanCompactClient):
             if self.last_compact_prediction is None:
                 raise ValueError("Feedback requires an accepted controller response")
             controller = self.last_compact_prediction["controller"]
-            limit = MAX_FIELD_REUSE_ACTIONS if controller == "coarse_field" else 5
+            limit = self._feedback_action_limit(controller)
             if feedback["chunk_step"] >= limit:
                 raise ValueError(f"Feedback chunk_step exceeds {limit}-action {controller} interval")
             if feedback["step"] != self._feedback_count:
@@ -529,3 +721,7 @@ class ChatGPTPlanDistanceClient(ChatGPTPlanCompactClient):
             self._history.append({"role": "user", "content": [{"type": "input_text",
                 "text": _canonical(copy.deepcopy(dict(feedback)))}]})
             self._feedback_count += 1
+
+    def _feedback_action_limit(self, controller):
+        """Explicit operation profiles may override their own interval bound."""
+        return MAX_FIELD_REUSE_ACTIONS if controller == "coarse_field" else 5

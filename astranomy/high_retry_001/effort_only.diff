@@ -1,0 +1,91 @@
+--- prior/astranomy/policy.py
++++ high/astranomy/policy.py
+@@ -5,7 +5,7 @@
+ from gpt_field.astranomy_agentic_client import tool_definitions
+ 
+ MODEL = "gpt-6-astra"
+-EFFORT = "medium"
++EFFORT = "high"
+ TASK = "drawer_bowl"
+ PROVIDER = "astranomy_chatgpt_plan"
+ REFERENCE = "https://research.nvidia.com/labs/srl/projects/astranomy/"
+--- prior/astranomy/run.py
++++ high/astranomy/run.py
+@@ -86,7 +86,7 @@
+     def record(self, obs, step, calls, tool, phase, feedback=None):
+         canvas = Image.new("RGB", (WIDTH, HEIGHT), (12, 18, 30))
+         draw = ImageDraw.Draw(canvas)
+-        title = "ASTRANOMY CODEX AGENTIC / LIBERO / " + ("SCRIPTED DIAGNOSTIC" if self.smoke else "ASTRA MEDIUM SUBSCRIPTION")
++        title = "ASTRANOMY CODEX AGENTIC / LIBERO / " + ("SCRIPTED DIAGNOSTIC" if self.smoke else "ASTRA HIGH SUBSCRIPTION")
+         draw.text((30, 20), title, font=_font(25, True), fill="white")
+         draw.text((30, 65), self.task, font=_font(20), fill="white")
+         draw.text((30, 105), f"Step {step} | Codex turns {calls} | {phase}", font=_font(20), fill="#66e3a1")
+@@ -140,7 +140,7 @@
+     client = None
+     identity = {"method": METHOD, "zero_shot": True, "task": task.prompt, "task_id": task.task_id,
+         "episode_index": episode_index, "distance_task": task_key, "simulator": asdict(sim_config),
+-        "api": asdict(config), "reasoning_effort": "medium", "billing": "offline_scripted" if smoke else "chatgpt_subscription",
++        "api": asdict(config), "reasoning_effort": "high", "billing": "offline_scripted" if smoke else "chatgpt_subscription",
+         "api_key_fallback": False, "model_fallback": False, "software": source_manifest(),
+         "motion": ShortTargetConfig().to_dict(),
+         "image_history": "all", "text_history": "all", "runtime_harness": "persistent_codex_app_server_thread",
+@@ -201,7 +201,7 @@
+         elapsed = None if control_started is None else (control_stopped or time.monotonic()) - control_started
+         return {"method": METHOD, "status": status, "task": task.prompt, "suite": task.suite,
+             "distance_task": task_key, "task_id": task.task_id, "episode_index": episode_index, "seed": 7,
+-            "zero_shot": True, "reasoning_effort": "medium", "billing": identity["billing"],
++            "zero_shot": True, "reasoning_effort": "high", "billing": identity["billing"],
+             "api_calls": budget.get("api_calls", calls), "api_key_calls": 0, "api_key_fallback": False,
+             "model_responses": None, "codex_policy_turns": calls, "moves": moves, "rejected_moves": rejected, "steps": steps,
+             "simulated_motion_s": steps / 20, "timing_components": dict(timings),
+--- prior/astranomy/test_policy.py
++++ high/astranomy/test_policy.py
+@@ -37,7 +37,7 @@
+             return {}
+         if method in ("thread/start", "thread/resume"):
+             return {"model": "wrong" if self.wrong_model else MODEL, "modelProvider": PROVIDER,
+-                    "reasoningEffort": "medium", "thread": {"id": "persistent-1"}, "instructionSources": []}
++                    "reasoningEffort": "high", "thread": {"id": "persistent-1"}, "instructionSources": []}
+         if method == "turn/start":
+             self.turn += 1
+             ident = f"turn-{self.turn}"
+--- prior/astranomy/test_transport.py
++++ high/astranomy/test_transport.py
+@@ -7,7 +7,7 @@
+ 
+ 
+ def fixture():
+-    return {"model": "gpt-6-astra", "reasoning": {"effort": "medium", "context": "all_turns"},
++    return {"model": "gpt-6-astra", "reasoning": {"effort": "high", "context": "all_turns"},
+             "store": False, "stream": True, "parallel_tool_calls": True,
+             "input": [{"type": "additional_tools", "tools": [{"name": "skills"}]},
+                       {"role": "user", "content": [{"type": "input_image", "image_url": "data:image/png;base64,fake"}]},
+@@ -28,7 +28,7 @@
+     assert result["reasoning"] == payload["reasoning"]
+ 
+ 
+-@pytest.mark.parametrize("field,value", [("model", "other"), ("reasoning", {"effort": "high"}),
++@pytest.mark.parametrize("field,value", [("model", "other"), ("reasoning", {"effort": "medium"}),
+                                            ("store", True), ("stream", False)])
+ def test_protocol_mismatch_is_not_forwarded(field, value):
+     payload = fixture()
+@@ -55,7 +55,7 @@
+ 
+ 
+ @pytest.mark.parametrize("response", [{"model": "other", "output": []},
+-    {"model": "gpt-6-astra", "reasoning": {"effort": "high"}, "output": []}])
++    {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}, "output": []}])
+ def test_response_model_or_effort_change_rejected(response):
+     with pytest.raises(ValueError):
+         validate_completed_response(response)
+--- prior/astranomy/offline_check.py
++++ high/astranomy/offline_check.py
+@@ -116,7 +116,7 @@
+         assert names == ["robot"], f"Unexpected native tools: {names}"
+         for req in requests:
+             assert req["model"] == "gpt-6-astra"
+-            assert req["reasoning"]["effort"] == "medium"
++            assert req["reasoning"]["effort"] == "high"
+         history = json.dumps(requests[2]["input"])
+         assert "actual_execution_feedback" in history and "call_1" in history
+         assert history.count("data:image/") >= 4, "Previous paired images were not retained"

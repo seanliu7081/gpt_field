@@ -1,0 +1,454 @@
+{
+  "scope": "drawer003 closed step60 and open step552; existing evidence only; no new inference or experiment",
+  "sources": [
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/RESULTS.txt",
+      "sha256": "aa1f132663926241f25c310b056e12817f4a629787a4d1dcd87c2c7712df72ba"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/comparison_summary.json",
+      "sha256": "60964f6731c0426d358831ad8f2e4d6e813e0976d5baece7cfd226f33d7ab637"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/inferences_001/instructions.txt",
+      "sha256": "1d01aae912d386546e49aa913fd9d2e1d85fecce84f53e4b32b3a7c644eab3ae"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/inferences_001/schema.json",
+      "sha256": "b400d4e3e1be8256b89482629922df163cec0e52078c5cccacbf46661b8ec471"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/inferences_001/manifest.json",
+      "sha256": "4c30610f450abd67959458ef9a2634e59349d517e3dde5d1067523ee38ed6d14"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/field_csg.py",
+      "sha256": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/build_fields.py",
+      "sha256": "67a9407f6c19f904faf97139562a6158fcfaa040dcf492c75f1f5cd6fa171bf9"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/evaluate_fields.py",
+      "sha256": "d4b0547658da9e89594ce311262ca0ea89d71ea574a2a2d2c619f98a57d82ec2"
+    }
+  ],
+  "rows": [
+    {
+      "snapshot": "drawer003_closed_step60",
+      "spacing_m": 0.002,
+      "target_region": "target_cabinet_visible",
+      "analytic_A_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 36143,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.07113631958607643,
+        "rmse_on_hits_m": 0.09171569606177944,
+        "p95_on_hits_m": 0.16623654100953028,
+        "max_on_hits_m": 0.17109936853504093,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0016047367401709875,
+          "2mm": 0.002379437235425947,
+          "5mm": 0.008466369698143485,
+          "10mm": 0.03469551503748997
+        }
+      },
+      "decoded_C_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 36143,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.07098786199409149,
+        "rmse_on_hits_m": 0.09161030594731488,
+        "p95_on_hits_m": 0.16622850720905638,
+        "max_on_hits_m": 0.17109938029180927,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0014387294911877818,
+          "2mm": 0.0022410978612732754,
+          "5mm": 0.00830036244916028,
+          "10mm": 0.036078908779016684
+        }
+      },
+      "decoded_C_full_scene": {
+        "reference_pixels": 262144,
+        "hit_pixels": 262144,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.43815096996938835,
+        "rmse_on_hits_m": 0.6937685536499051,
+        "p95_on_hits_m": 1.7346271529681658,
+        "max_on_hits_m": 2.1034584955672564,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.000782012939453125,
+          "2mm": 0.001495361328125,
+          "5mm": 0.00433349609375,
+          "10mm": 0.011871337890625
+        }
+      },
+      "decoded_C_nonrobot": {
+        "reference_pixels": 239969,
+        "hit_pixels": 239969,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.45006235405062445,
+        "rmse_on_hits_m": 0.717362159620821,
+        "p95_on_hits_m": 1.758450338931541,
+        "max_on_hits_m": 2.1034584955672564,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008542770107805591,
+          "2mm": 0.0016335443328096546,
+          "5mm": 0.0047339448012034884,
+          "10mm": 0.012968341744141952
+        }
+      },
+      "preservation_B_six_views": {
+        "reference_pixels": 1750,
+        "hit_pixels": 1750,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 7.103934838399186e-06,
+        "rmse_on_hits_m": 0.00021107724641188016,
+        "p95_on_hits_m": 5.416185763440495e-07,
+        "max_on_hits_m": 0.008394733970927604,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.9988571428571429,
+          "2mm": 0.9988571428571429,
+          "5mm": 0.9994285714285714,
+          "10mm": 1.0
+        },
+        "total_test_rays": 24576,
+        "new_hit_where_original_misses": 0,
+        "new_hit_fraction_all_test_rays": 0.0,
+        "scope": "six model-bounds-derived external views; first-hit axial distance"
+      },
+      "previous_DepthPro_projective_TSDF_C_target": {
+        "reference_pixels": 36143,
+        "hit_pixels": 34886,
+        "miss_pixels": 1257,
+        "coverage": 0.9652214813380184,
+        "mae_on_hits_m": 0.0708970108297784,
+        "rmse_on_hits_m": 0.08238775143748643,
+        "p95_on_hits_m": 0.14924756555201202,
+        "max_on_hits_m": 0.22447649145126358,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.006972304457294635,
+          "2mm": 0.013280579918656448,
+          "5mm": 0.032758763799352573,
+          "10mm": 0.060841656752344854
+        }
+      }
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "spacing_m": 0.002,
+      "target_region": "target_cabinet_visible",
+      "analytic_A_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 45439,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.09798433554090254,
+        "rmse_on_hits_m": 0.14226862713573027,
+        "p95_on_hits_m": 0.3081884577927307,
+        "max_on_hits_m": 0.47466416070693285,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008582935363894452,
+          "2mm": 0.005633926802966614,
+          "5mm": 0.012082132089174498,
+          "10mm": 0.08369462356125795
+        }
+      },
+      "decoded_C_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 45439,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.09800803562960536,
+        "rmse_on_hits_m": 0.1423258766826175,
+        "p95_on_hits_m": 0.30821688486607257,
+        "max_on_hits_m": 0.4739230586356933,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0008803010629635335,
+          "2mm": 0.005633926802966614,
+          "5mm": 0.012126147142322675,
+          "10mm": 0.08382666872070248
+        }
+      },
+      "decoded_C_full_scene": {
+        "reference_pixels": 262144,
+        "hit_pixels": 262144,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.36105815108657857,
+        "rmse_on_hits_m": 0.5562652247425746,
+        "p95_on_hits_m": 1.0614556896467682,
+        "max_on_hits_m": 2.152289707985683,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.000244140625,
+          "2mm": 0.001209259033203125,
+          "5mm": 0.0029449462890625,
+          "10mm": 0.01638031005859375
+        }
+      },
+      "decoded_C_nonrobot": {
+        "reference_pixels": 230328,
+        "hit_pixels": 230328,
+        "miss_pixels": 0,
+        "coverage": 1.0,
+        "mae_on_hits_m": 0.3384751756812523,
+        "rmse_on_hits_m": 0.5593036869787187,
+        "p95_on_hits_m": 1.070861377832664,
+        "max_on_hits_m": 2.152289707985683,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.0002778646104685492,
+          "2mm": 0.0013762981487270328,
+          "5mm": 0.0033517418637768748,
+          "10mm": 0.018642978708624223
+        }
+      },
+      "preservation_B_six_views": {
+        "reference_pixels": 1897,
+        "hit_pixels": 1873,
+        "miss_pixels": 24,
+        "coverage": 0.9873484449130205,
+        "mae_on_hits_m": 3.4323889647686965e-06,
+        "rmse_on_hits_m": 2.954151997107026e-05,
+        "p95_on_hits_m": 4.3551301391886307e-07,
+        "max_on_hits_m": 0.0005386578061958858,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.9873484449130205,
+          "2mm": 0.9873484449130205,
+          "5mm": 0.9873484449130205,
+          "10mm": 0.9873484449130205
+        },
+        "total_test_rays": 24576,
+        "new_hit_where_original_misses": 0,
+        "new_hit_fraction_all_test_rays": 0.0,
+        "scope": "six model-bounds-derived external views; first-hit axial distance"
+      },
+      "previous_DepthPro_projective_TSDF_C_target": {
+        "reference_pixels": 45439,
+        "hit_pixels": 44426,
+        "miss_pixels": 1013,
+        "coverage": 0.9777063755804485,
+        "mae_on_hits_m": 0.23025395975002202,
+        "rmse_on_hits_m": 0.23603856331903503,
+        "p95_on_hits_m": 0.32361394791700915,
+        "max_on_hits_m": 0.40330654126824284,
+        "misses_are_failures_in_all_reference_denominator": true,
+        "within_threshold_all_reference_pixels": {
+          "1mm": 0.00026409031888906004,
+          "2mm": 0.0004621580580558551,
+          "5mm": 0.001100376328704417,
+          "10mm": 0.002068707497964304
+        }
+      }
+    }
+  ],
+  "model": "gpt-6-astra",
+  "reasoning_effort": "medium",
+  "generation": {
+    "input": "One independent 512x512 upright RGB image per field; ordinary object-size priors permitted.",
+    "prohibited_inputs": [
+      "DepthPro or other external depth",
+      "GT depth",
+      "GT camera calibration",
+      "scene assets",
+      "scene labels/task history",
+      "other frames",
+      "GT metric dimensions"
+    ],
+    "output": "JSON CSG implicit field, not a dense voxel array or executable program",
+    "primitives": [
+      "oriented box",
+      "sphere",
+      "closed cylinder"
+    ],
+    "maximum_primitives": 32,
+    "maximum_boolean_nodes": 32,
+    "camera_coordinates": "x right, y down, z forward; metres",
+    "sign": "negative inside solid, zero at predicted surface, positive outside",
+    "boolean": {
+      "union": "min(a,b)",
+      "intersection": "max(a,b)",
+      "difference": "max(a,-b)"
+    },
+    "limitation": "Boolean field is 1-Lipschitz but not generally exact nearest-surface Euclidean signed distance.",
+    "saving": "Deterministic float32 samples at 4 mm and 2 mm spacing; 32-cell blocks; only proven no-zero blocks skipped.",
+    "decode": "Marching cubes at level zero, using only saved numeric blocks; no direct JSON, RGB, depth, or GT decoder inputs.",
+    "grid_resolution_is_not_accuracy": true
+  },
+  "metrics": {
+    "scene_error": "Absolute camera-Z difference between predicted and GT first hit along same real camera ray; no scale or pose alignment.",
+    "formula": "e(u,v) = abs(z_pred_first_hit(u,v) - z_GT_visible(u,v))",
+    "MAE_P95_denominator": "Only rays with a predicted hit; coverage must be reported separately.",
+    "threshold_denominator": "All valid GT target pixels, missing hits count as failures.",
+    "target": "Entire visible target cabinet, not just drawer handle.",
+    "visible_only": true,
+    "preservation_B": "Six external 64x64 model-bounds-derived views; 24576 test rays; compare original analytic CSG first hits against decoded grid-mesh first hits without GT."
+  },
+  "caveats": [
+    "100% target ray hits can hit incorrect table or wall; not complete/correct object reconstruction.",
+    "Small matched-ray mean grid preservation error does not prove hidden surfaces, cavities, topology, or all thin features retained.",
+    "Open scene loses 24 of 1897 original first hits at both 2 mm and 4 mm; diagnostic assigns them to grazing model background-wall top edge, not drawer.",
+    "The 2 mm grid does not remove centimetre-scale original Astra geometry errors.",
+    "Original analytic A and decoded C both compared with GT; do not subtract their MAEs and call it an independent error component.",
+    "Only two drawer snapshots, each one response; no general model accuracy claim.",
+    "Planning v2 queries the analytic environment-only CSG directly within the original grid domain; it does not query saved grid values. Reconstruction metrics are from original full-scene CSG."
+  ],
+  "predictions": [
+    {
+      "snapshot": "drawer003_closed_step60",
+      "estimated_focal_px": 460.0,
+      "node_count": 57,
+      "primitive_count": 29,
+      "elapsed_s": 85.74486572398746,
+      "usage": {
+        "input_tokens": 1285,
+        "output_tokens": 4000,
+        "total_tokens": 5285
+      },
+      "uncertainty_notes": "Scale, focal length, depth and camera inclination are visual hypotheses from a single image, not calibrated measurements. Scale is guided by ordinary bottle, dish and tabletop sizes. The table is modeled with an approximately 37-degree camera-frame tilt; the gray background is provisionally a distant wall. The dark left object is approximated as a closed cabinet with three handles. The partly occluded slatted wooden structure is interpreted as a chair; its hidden frame and legs are omitted. Robot housings and joints are coarse primitives, with the cropped upper structure intentionally incomplete. The bowl has an explicit open spherical cavity; its wall thickness and underside are inferred. Burner grooves, plate decoration, labels, robot cables, small fasteners and fine surface relief are omitted. Hidden extents of the table, cabinet and wall are uncertain.",
+      "cabinet_nodes": [
+        {
+          "name": "dark_left_cabinet",
+          "op": "box",
+          "center_m": [
+            -0.3,
+            0.09,
+            0.82
+          ],
+          "rotation_xyzw": [
+            0.31622806601688475,
+            0.0,
+            0.0,
+            0.9486831980504454
+          ],
+          "size_m": [
+            0.14,
+            0.115,
+            0.17
+          ],
+          "left": null,
+          "right": null
+        },
+        {
+          "name": "cabinet_upper_handle",
+          "op": "box",
+          "center_m": [
+            -0.145,
+            0.002,
+            0.731
+          ],
+          "rotation_xyzw": [
+            0.31622806601688475,
+            0.0,
+            0.0,
+            0.9486831980504454
+          ],
+          "size_m": [
+            0.012,
+            0.012,
+            0.049
+          ],
+          "left": null,
+          "right": null
+        },
+        {
+          "name": "cabinet_middle_handle",
+          "op": "box",
+          "center_m": [
+            -0.145,
+            0.073,
+            0.784
+          ],
+          "rotation_xyzw": [
+            0.31622806601688475,
+            0.0,
+            0.0,
+            0.9486831980504454
+          ],
+          "size_m": [
+            0.012,
+            0.012,
+            0.049
+          ],
+          "left": null,
+          "right": null
+        },
+        {
+          "name": "cabinet_lower_handle",
+          "op": "box",
+          "center_m": [
+            -0.145,
+            0.139,
+            0.834
+          ],
+          "rotation_xyzw": [
+            0.31622806601688475,
+            0.0,
+            0.0,
+            0.9486831980504454
+          ],
+          "size_m": [
+            0.012,
+            0.012,
+            0.049
+          ],
+          "left": null,
+          "right": null
+        }
+      ]
+    },
+    {
+      "snapshot": "drawer003_open_step552",
+      "estimated_focal_px": 560.0,
+      "node_count": 61,
+      "primitive_count": 31,
+      "elapsed_s": 87.28372049999598,
+      "usage": {
+        "input_tokens": 1285,
+        "output_tokens": 4213,
+        "total_tokens": 5498
+      },
+      "uncertainty_notes": "Single-view visual approximation, not measured or calibrated. Metric scale uses ordinary tabletop, dish, and robot-part size priors; focal length and camera tilt are jointly ambiguous. The table is estimated as receding upward in the image. Dark left structures are approximated as solid support housings; their hidden surfaces and attachment to the robot are uncertain. The partly occluded wooden structure is represented with separated back slats and a seat-like section. Bowl cavity and shallow plate recess are retained, but bowl curvature, burner grooves, dish markings, cables, small fasteners, and rounded housing transitions are omitted. Robot geometry above the frame and behind visible parts is not inferred in detail. Wall depth, tabletop extent, primitive thicknesses, and hidden undersides are hypotheses.",
+      "cabinet_nodes": [
+        {
+          "name": "dark_left_cabinet",
+          "op": "box",
+          "center_m": [
+            -0.345,
+            0.055,
+            1.04
+          ],
+          "rotation_xyzw": [
+            0.31622806601688475,
+            0.0,
+            0.0,
+            0.9486831980504454
+          ],
+          "size_m": [
+            0.15,
+            0.215,
+            0.235
+          ],
+          "left": null,
+          "right": null
+        }
+      ]
+    }
+  ]
+}

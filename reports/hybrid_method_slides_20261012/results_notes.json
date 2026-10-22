@@ -1,0 +1,1382 @@
+{
+  "schema_version": "hybrid-slides-results-evidence-v1",
+  "created_utc": "2026-10-12T17:03:23.830485+00:00",
+  "language": "English",
+  "scope": "Current Dijkstra goal-distance Hybrid family and its paired five-action Direct controls. Historical prompt/task extensions are disclosed. No compact-lattice, analytic-only, API-key or selected older Direct baseline is substituted.",
+  "metric": {
+    "name": "Recorded control time excluding measured video overhead",
+    "formula": "control_elapsed_s - timing_components.video_render_s",
+    "unit": "seconds",
+    "percentage_formula": "100 * (adjusted_direct - adjusted_hybrid) / adjusted_direct",
+    "is_retrospective_subtraction": true,
+    "recording_disabled_rerun": false,
+    "includes": [
+      "model/client processing and transport waiting",
+      "local planning and control",
+      "simulator steps and observation-image generation",
+      "remaining control-loop logging/overhead"
+    ],
+    "excludes": [
+      "measured synchronous decision/executed recording overhead",
+      "startup/reset and terminal video finalization already outside control_elapsed_s"
+    ],
+    "note": "Component timers overlap; do not sum model_pipeline, field expansion and decision timings."
+  },
+  "shared_setup": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "billing": "chatgpt_subscription",
+    "api_key_calls": 0,
+    "direct_actions_per_model_response": 5,
+    "hybrid_grid_shape": [
+      33,
+      33,
+      33
+    ],
+    "hybrid_grid_spacing_m": 0.005,
+    "hybrid_local_path_strategy": "dijkstra_distance_field",
+    "feedback_history": "block_summary",
+    "no_episode_time_or_action_cap": true,
+    "no_model_declared_completion_stop": true,
+    "observation_input": "Task text, paired external/wrist RGB, measured robot state and observable history; one immutable external demo only for explicitly marked rows. Evaluator object poses/contact telemetry never enter policy input."
+  },
+  "slide_table_rows": [
+    {
+      "condition": "Drawer: open top drawer and put bowl inside",
+      "demo_count": 1,
+      "hybrid_outcome": "LIBERO goal reached",
+      "direct_outcome": "LIBERO goal reached",
+      "hybrid_s_excluding_video": 836.699235572014,
+      "direct_s_excluding_video": 997.2963470672257,
+      "hybrid_requests": 63,
+      "direct_requests": 85,
+      "hybrid_actions": 421,
+      "direct_actions": 425,
+      "hybrid_percent_less_time": 16.103248745218377,
+      "completion_speed_comparison_valid": true,
+      "criterion": "libero_goal_only"
+    },
+    {
+      "condition": "Bowl to plate: original layout",
+      "demo_count": 1,
+      "hybrid_outcome": "LIBERO goal reached",
+      "direct_outcome": "LIBERO goal reached",
+      "hybrid_s_excluding_video": 176.96915007196367,
+      "direct_s_excluding_video": 237.77697548596188,
+      "hybrid_requests": 15,
+      "direct_requests": 21,
+      "hybrid_actions": 131,
+      "direct_actions": 101,
+      "hybrid_percent_less_time": 25.573470807979156,
+      "completion_speed_comparison_valid": true,
+      "criterion": "libero_goal_only"
+    },
+    {
+      "condition": "Bowl to plate: relocated objects",
+      "demo_count": 1,
+      "hybrid_outcome": "LIBERO goal reached",
+      "direct_outcome": "LIBERO goal reached",
+      "hybrid_s_excluding_video": 215.76188612775877,
+      "direct_s_excluding_video": 220.02943946188316,
+      "hybrid_requests": 17,
+      "direct_requests": 19,
+      "hybrid_actions": 142,
+      "direct_actions": 91,
+      "hybrid_percent_less_time": 1.9395374294282455,
+      "completion_speed_comparison_valid": true,
+      "criterion": "libero_goal_only"
+    },
+    {
+      "condition": "Bowl to plate: ketchup/milk obstacles, one demo",
+      "demo_count": 1,
+      "hybrid_outcome": "Failure: ketchup collision (retrospective review)",
+      "direct_outcome": "Failure: ketchup collision (retrospective review)",
+      "hybrid_s_excluding_video": 400.5465177395381,
+      "direct_s_excluding_video": 529.6287745651789,
+      "hybrid_requests": 31,
+      "direct_requests": 40,
+      "hybrid_actions": 243,
+      "direct_actions": 198,
+      "hybrid_percent_less_time": null,
+      "completion_speed_comparison_valid": false,
+      "criterion": "goal_and_no_ketchup_collision_retrospective"
+    },
+    {
+      "condition": "Bowl to plate: same obstacles, zero-shot",
+      "demo_count": 0,
+      "hybrid_outcome": "Failure: forbidden contact",
+      "direct_outcome": "Incomplete: explicitly stopped by user",
+      "hybrid_s_excluding_video": 592.0913546159863,
+      "direct_s_excluding_video": 1506.7439364395104,
+      "hybrid_requests": 44,
+      "direct_requests": 102,
+      "hybrid_actions": 310,
+      "direct_actions": 505,
+      "hybrid_percent_less_time": null,
+      "completion_speed_comparison_valid": false,
+      "criterion": "goal_and_no_forbidden_contact_online"
+    }
+  ],
+  "paired_conditions": [
+    {
+      "id": "drawer_one_demo",
+      "condition": "Drawer: open top drawer and put bowl inside",
+      "criterion": "libero_goal_only",
+      "external_demo_count": 1,
+      "hybrid": {
+        "run": "/workspace/gpt_field/runs/drawer_distance_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 916.7475451491773,
+        "video_render_s": 80.04830957716331,
+        "control_excluding_video_s": 836.699235572014,
+        "control_excluding_video_min": 13.944987259533567,
+        "timing_label": "goal-completion time",
+        "executed_actions": 421,
+        "requests_started": 63,
+        "validated_responses": 63,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 198,
+        "direct_actions": 223,
+        "field_responses": 18,
+        "direct_responses": 45,
+        "local_plan_count": 30,
+        "model_pipeline_s": 805.5673259845935,
+        "audit": {
+          "passed": true,
+          "checks": 29224,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_goal",
+        "task_id": 3,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "open the top drawer and put the bowl inside",
+        "benchmark_variant": "official_initial_state",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "4df612388a99671674d44b10783c860805681b5a3e9e2cbac71b38d95663e1d4",
+        "demo_steps": 170,
+        "demo_image_count": 48,
+        "prompt_version": "astra-distance-field-local-feedback-drawer-one-demo-v1",
+        "field_representation": "goal-distance-feedback-drawer-v1",
+        "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+        "local_path_strategy": "dijkstra_distance_field",
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/drawer_distance_medium_one_demo_001/summary.json",
+          "runs/drawer_distance_medium_one_demo_001/manifest.json",
+          "runs/drawer_distance_medium_one_demo_001_audit/audit.json"
+        ]
+      },
+      "direct": {
+        "run": "/workspace/gpt_field/runs/drawer_direct_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 1060.0890137129463,
+        "video_render_s": 62.7926666457206,
+        "control_excluding_video_s": 997.2963470672257,
+        "control_excluding_video_min": 16.621605784453763,
+        "timing_label": "goal-completion time",
+        "executed_actions": 425,
+        "requests_started": 85,
+        "validated_responses": 85,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 0,
+        "direct_actions": 425,
+        "field_responses": 0,
+        "direct_responses": 85,
+        "local_plan_count": 0,
+        "model_pipeline_s": 975.9606052306481,
+        "audit": {
+          "passed": true,
+          "checks": 16555,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_goal",
+        "task_id": 3,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "open the top drawer and put the bowl inside",
+        "benchmark_variant": "official_initial_state",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "4df612388a99671674d44b10783c860805681b5a3e9e2cbac71b38d95663e1d4",
+        "demo_steps": 170,
+        "demo_image_count": 48,
+        "prompt_version": "astra-direct-drawer-one-demo-v1",
+        "field_representation": "direct-actions-drawer-one-demo-v1",
+        "policy_class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+        "local_path_strategy": null,
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/drawer_direct_medium_one_demo_001/summary.json",
+          "runs/drawer_direct_medium_one_demo_001/manifest.json",
+          "runs/drawer_direct_medium_one_demo_001_audit/audit.json"
+        ]
+      },
+      "successful_completion_speed_comparison_valid": true,
+      "hybrid_time_saved_s": 160.59711149521172,
+      "hybrid_time_reduction_percent_of_direct": 16.103248745218377,
+      "matched_conditions": {
+        "recorded_pair_audit_passed": true,
+        "actual_initial_observation_equal": true,
+        "shared_task_guidance_equal": true,
+        "same_task_init_seed": true,
+        "same_demo_bytes_if_present": true,
+        "same_recorded_source_modules": false,
+        "source_module_differences": [
+          "demo_direct_subscription.py",
+          "demo_direct_video.py"
+        ],
+        "hybrid_then_direct": true
+      },
+      "comparison_source": "runs/drawer_one_demo_matched_comparison_001/comparison.json",
+      "row_caveats": [
+        "One completed episode per arm; no repeated-trial variance or significance estimate.",
+        "These runs used the original goal predicate, not the later collision-free criterion.",
+        "Both stopped with closing gripper intent; release and post-release stability were not separately verified.",
+        "Direct client/video modules were added after the Hybrid run; all other source module hashes agree. Actual initial observations, demo and shared guidance match."
+      ]
+    },
+    {
+      "id": "bowl_original_one_demo",
+      "condition": "Bowl to plate: original layout",
+      "criterion": "libero_goal_only",
+      "external_demo_count": 1,
+      "hybrid": {
+        "run": "/workspace/gpt_field/runs/bowl_distance_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 202.75583411194384,
+        "video_render_s": 25.786684039980173,
+        "control_excluding_video_s": 176.96915007196367,
+        "control_excluding_video_min": 2.949485834532728,
+        "timing_label": "goal-completion time",
+        "executed_actions": 131,
+        "requests_started": 15,
+        "validated_responses": 15,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 93,
+        "direct_actions": 38,
+        "field_responses": 7,
+        "direct_responses": 8,
+        "local_plan_count": 12,
+        "model_pipeline_s": 166.3162560579367,
+        "audit": {
+          "passed": true,
+          "checks": 8991,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "official_initial_state",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-distance-field-local-feedback-bowl-plate-one-demo-v1",
+        "field_representation": "goal-distance-feedback-v1",
+        "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+        "local_path_strategy": "dijkstra_distance_field",
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_distance_medium_one_demo_001/summary.json",
+          "runs/bowl_distance_medium_one_demo_001/manifest.json",
+          "runs/bowl_distance_medium_one_demo_001_audit/audit.json"
+        ]
+      },
+      "direct": {
+        "run": "/workspace/gpt_field/runs/bowl_direct_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 252.80053167929873,
+        "video_render_s": 15.023556193336844,
+        "control_excluding_video_s": 237.77697548596188,
+        "control_excluding_video_min": 3.962949591432698,
+        "timing_label": "goal-completion time",
+        "executed_actions": 101,
+        "requests_started": 21,
+        "validated_responses": 21,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 0,
+        "direct_actions": 101,
+        "field_responses": 0,
+        "direct_responses": 21,
+        "local_plan_count": 0,
+        "model_pipeline_s": 232.1377789140679,
+        "audit": {
+          "passed": true,
+          "checks": 4179,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "official_initial_state",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-direct-bowl-plate-one-demo-v1",
+        "field_representation": "direct-actions-bowl-plate-one-demo-v1",
+        "policy_class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+        "local_path_strategy": null,
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_direct_medium_one_demo_001/summary.json",
+          "runs/bowl_direct_medium_one_demo_001/manifest.json",
+          "runs/bowl_direct_medium_one_demo_001_audit/audit.json"
+        ]
+      },
+      "successful_completion_speed_comparison_valid": true,
+      "hybrid_time_saved_s": 60.807825413998216,
+      "hybrid_time_reduction_percent_of_direct": 25.573470807979156,
+      "matched_conditions": {
+        "recorded_pair_audit_passed": true,
+        "actual_initial_observation_equal": true,
+        "shared_task_guidance_equal": true,
+        "same_task_init_seed": true,
+        "same_demo_bytes_if_present": true,
+        "same_recorded_source_modules": true,
+        "source_module_differences": [],
+        "hybrid_then_direct": true
+      },
+      "comparison_source": "runs/bowl_one_demo_matched_comparison_001/comparison.json",
+      "row_caveats": [
+        "One completed episode per arm; no repeated-trial variance or significance estimate.",
+        "These runs used the original goal predicate, not the later collision-free criterion.",
+        "Both stopped with closing gripper intent; release and post-release stability were not separately verified."
+      ]
+    },
+    {
+      "id": "bowl_relocated_one_demo",
+      "condition": "Bowl to plate: relocated objects",
+      "criterion": "libero_goal_only",
+      "external_demo_count": 1,
+      "hybrid": {
+        "run": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_002",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 243.4508629362099,
+        "video_render_s": 27.688976808451116,
+        "control_excluding_video_s": 215.76188612775877,
+        "control_excluding_video_min": 3.5960314354626464,
+        "timing_label": "goal-completion time",
+        "executed_actions": 142,
+        "requests_started": 17,
+        "validated_responses": 17,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 89,
+        "direct_actions": 53,
+        "field_responses": 6,
+        "direct_responses": 11,
+        "local_plan_count": 11,
+        "model_pipeline_s": 204.75481227133423,
+        "audit": {
+          "passed": true,
+          "checks": 10109,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_layout",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-distance-field-local-feedback-bowl-plate-one-demo-v1",
+        "field_representation": "goal-distance-feedback-v1",
+        "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+        "local_path_strategy": "dijkstra_distance_field",
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_relayout_distance_medium_one_demo_002/summary.json",
+          "runs/bowl_relayout_distance_medium_one_demo_002/manifest.json",
+          "runs/bowl_relayout_distance_medium_one_demo_002_audit/audit.json"
+        ]
+      },
+      "direct": {
+        "run": "/workspace/gpt_field/runs/bowl_relayout_direct_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "LIBERO goal reached",
+        "task_success_under_row_criterion": true,
+        "scoring": "scored_success_under_goal_only_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": true,
+        "control_elapsed_s": 233.9351848969236,
+        "video_render_s": 13.905745435040444,
+        "control_excluding_video_s": 220.02943946188316,
+        "control_excluding_video_min": 3.667157324364719,
+        "timing_label": "goal-completion time",
+        "executed_actions": 91,
+        "requests_started": 19,
+        "validated_responses": 19,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 0,
+        "direct_actions": 91,
+        "field_responses": 0,
+        "direct_responses": 19,
+        "local_plan_count": 0,
+        "model_pipeline_s": 214.8178213289939,
+        "audit": {
+          "passed": true,
+          "checks": 4125,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_layout",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-direct-bowl-plate-one-demo-v1",
+        "field_representation": "direct-actions-bowl-plate-one-demo-v1",
+        "policy_class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+        "local_path_strategy": null,
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_relayout_direct_medium_one_demo_001/summary.json",
+          "runs/bowl_relayout_direct_medium_one_demo_001/manifest.json",
+          "runs/bowl_relayout_direct_medium_one_demo_001_audit/audit.json"
+        ]
+      },
+      "successful_completion_speed_comparison_valid": true,
+      "hybrid_time_saved_s": 4.267553334124386,
+      "hybrid_time_reduction_percent_of_direct": 1.9395374294282455,
+      "matched_conditions": {
+        "recorded_pair_audit_passed": true,
+        "actual_initial_observation_equal": true,
+        "shared_task_guidance_equal": true,
+        "same_task_init_seed": true,
+        "same_demo_bytes_if_present": true,
+        "same_recorded_source_modules": true,
+        "source_module_differences": [],
+        "hybrid_then_direct": true
+      },
+      "comparison_source": "runs/bowl_relayout_one_demo_matched_comparison_001/comparison.json",
+      "row_caveats": [
+        "One completed episode per arm; no repeated-trial variance or significance estimate.",
+        "These runs used the original goal predicate, not the later collision-free criterion.",
+        "Both stopped with closing gripper intent; release and post-release stability were not separately verified.",
+        "Custom reset layout, not an official benchmark initial state.",
+        "The displayed 1.94% gain is after recording-cost subtraction; raw control time was 9.515678 s slower for Hybrid.",
+        "The earlier one-action infrastructure failure is preserved separately and excluded from completion timing."
+      ]
+    },
+    {
+      "id": "bowl_obstacles_one_demo",
+      "condition": "Bowl to plate: ketchup/milk obstacles, one demo",
+      "criterion": "goal_and_no_ketchup_collision_retrospective",
+      "external_demo_count": 1,
+      "hybrid": {
+        "run": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "Failure: ketchup collision (retrospective review)",
+        "task_success_under_row_criterion": false,
+        "scoring": "scored_failure_under_reviewed_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": false,
+        "control_elapsed_s": 445.68141272012144,
+        "video_render_s": 45.13489498058334,
+        "control_excluding_video_s": 400.5465177395381,
+        "control_excluding_video_min": 6.675775295658968,
+        "timing_label": "attempt duration only",
+        "executed_actions": 243,
+        "requests_started": 31,
+        "validated_responses": 31,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 132,
+        "direct_actions": 111,
+        "field_responses": 8,
+        "direct_responses": 23,
+        "local_plan_count": 16,
+        "model_pipeline_s": 382.42003285931423,
+        "audit": {
+          "passed": true,
+          "checks": 17787,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_scene",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-distance-field-local-feedback-bowl-plate-one-demo-v1",
+        "field_representation": "goal-distance-feedback-v1",
+        "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+        "local_path_strategy": "dijkstra_distance_field",
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_obstacle_distance_medium_one_demo_001/summary.json",
+          "runs/bowl_obstacle_distance_medium_one_demo_001/manifest.json",
+          "runs/bowl_obstacle_distance_medium_one_demo_001_audit/audit.json",
+          "runs/bowl_obstacle_distance_medium_one_demo_001/task_evaluation.json"
+        ]
+      },
+      "direct": {
+        "run": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_one_demo_001",
+        "raw_recorded_status": "success",
+        "display_outcome": "Failure: ketchup collision (retrospective review)",
+        "task_success_under_row_criterion": false,
+        "scoring": "scored_failure_under_reviewed_criterion",
+        "raw_libero_success": true,
+        "libero_success_ever_observed": true,
+        "completion_time_eligible_under_row_criterion": false,
+        "control_elapsed_s": 558.6497041573748,
+        "video_render_s": 29.0209295921959,
+        "control_excluding_video_s": 529.6287745651789,
+        "control_excluding_video_min": 8.827146242752981,
+        "timing_label": "attempt duration only",
+        "executed_actions": 198,
+        "requests_started": 40,
+        "validated_responses": 40,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 0,
+        "direct_actions": 198,
+        "field_responses": 0,
+        "direct_responses": 40,
+        "local_plan_count": 0,
+        "model_pipeline_s": 518.7292341361754,
+        "audit": {
+          "passed": true,
+          "checks": 9124,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_scene",
+        "external_demo_count": 1,
+        "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+        "demo_steps": 98,
+        "demo_image_count": 48,
+        "prompt_version": "astra-direct-bowl-plate-one-demo-v1",
+        "field_representation": "direct-actions-bowl-plate-one-demo-v1",
+        "policy_class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+        "local_path_strategy": null,
+        "collision_check_mode": "none",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_obstacle_direct_medium_one_demo_001/summary.json",
+          "runs/bowl_obstacle_direct_medium_one_demo_001/manifest.json",
+          "runs/bowl_obstacle_direct_medium_one_demo_001_audit/audit.json",
+          "runs/bowl_obstacle_direct_medium_one_demo_001/task_evaluation.json"
+        ]
+      },
+      "successful_completion_speed_comparison_valid": false,
+      "hybrid_time_saved_s": null,
+      "hybrid_time_reduction_percent_of_direct": null,
+      "matched_conditions": {
+        "recorded_pair_audit_passed": true,
+        "actual_initial_observation_equal": true,
+        "shared_task_guidance_equal": true,
+        "same_task_init_seed": true,
+        "same_demo_bytes_if_present": true,
+        "same_recorded_source_modules": true,
+        "source_module_differences": [],
+        "hybrid_then_direct": true
+      },
+      "comparison_source": "runs/bowl_obstacle_one_demo_matched_comparison_001/comparison.json",
+      "row_caveats": [
+        "Both raw summaries say success because their online stop rule used only LIBERO. Reviewed task_evaluation.json overrides that status for the obstacle task.",
+        "User-confirmed RGB collision review; no online collision telemetry was collected in these two episodes.",
+        "Durations cover the original failed rollouts through their LIBERO-only endpoints, not time to collision.",
+        "Do not reuse the superseded 24.37% time saving as a successful-task speedup."
+      ],
+      "evidence_sources": [
+        "runs/bowl_obstacle_one_demo_matched_comparison_001/collision_review.json"
+      ]
+    },
+    {
+      "id": "bowl_obstacles_zero_shot",
+      "condition": "Bowl to plate: same obstacles, zero-shot",
+      "criterion": "goal_and_no_forbidden_contact_online",
+      "external_demo_count": 0,
+      "hybrid": {
+        "run": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001",
+        "raw_recorded_status": "collision_failure",
+        "display_outcome": "Failure: forbidden contact",
+        "task_success_under_row_criterion": false,
+        "scoring": "scored_failure",
+        "raw_libero_success": false,
+        "libero_success_ever_observed": false,
+        "completion_time_eligible_under_row_criterion": false,
+        "control_elapsed_s": 652.1900708861649,
+        "video_render_s": 60.098716270178556,
+        "control_excluding_video_s": 592.0913546159863,
+        "control_excluding_video_min": 9.868189243599772,
+        "timing_label": "attempt duration only",
+        "executed_actions": 310,
+        "requests_started": 44,
+        "validated_responses": 44,
+        "requests_with_unknown_usage": 0,
+        "field_actions": 155,
+        "direct_actions": 155,
+        "field_responses": 13,
+        "direct_responses": 31,
+        "local_plan_count": 23,
+        "model_pipeline_s": 566.0574579890817,
+        "audit": {
+          "passed": true,
+          "checks": 29307,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_scene",
+        "external_demo_count": 0,
+        "demo_bundle_sha256": null,
+        "demo_steps": null,
+        "demo_image_count": null,
+        "prompt_version": "astra-distance-field-bowl-plate-zero-shot-collision-free-v1",
+        "field_representation": "goal-distance-feedback-v1",
+        "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+        "local_path_strategy": "dijkstra_distance_field",
+        "collision_check_mode": "bowl_obstacles_v1",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_obstacle_distance_medium_zero_shot_001/summary.json",
+          "runs/bowl_obstacle_distance_medium_zero_shot_001/manifest.json",
+          "runs/bowl_obstacle_distance_medium_zero_shot_001_audit/audit.json",
+          "runs/bowl_obstacle_distance_medium_zero_shot_001/task_evaluation.json",
+          "runs/bowl_obstacle_distance_medium_zero_shot_001/collision.json"
+        ],
+        "collision": {
+          "detected": true,
+          "first_event": {
+            "action_index": 309,
+            "contact_distance_m": -9.514610222601095e-05,
+            "geom1": {
+              "body": "glazed_rim_porcelain_ramekin_1_main",
+              "id": 151,
+              "name": "glazed_rim_porcelain_ramekin_1_g8",
+              "object": "glazed_rim_porcelain_ramekin_1",
+              "role": "scene"
+            },
+            "geom2": {
+              "body": "gripper0_leftfinger",
+              "id": 74,
+              "name": "gripper0_finger1_collision",
+              "object": "robot0_gripper",
+              "role": "robot_finger"
+            },
+            "phase": "action",
+            "physics_substep": 7,
+            "reason": "robot_scene_contact"
+          },
+          "physics_substeps": 7733,
+          "forbidden_contact_points": 2
+        }
+      },
+      "direct": {
+        "run": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001",
+        "raw_recorded_status": "user_stop",
+        "display_outcome": "Incomplete: explicitly stopped by user",
+        "task_success_under_row_criterion": false,
+        "scoring": "unscored_incomplete",
+        "raw_libero_success": false,
+        "libero_success_ever_observed": false,
+        "completion_time_eligible_under_row_criterion": false,
+        "control_elapsed_s": 1583.7423262791708,
+        "video_render_s": 76.99838983966038,
+        "control_excluding_video_s": 1506.7439364395104,
+        "control_excluding_video_min": 25.112398940658508,
+        "timing_label": "attempt duration only",
+        "executed_actions": 505,
+        "requests_started": 102,
+        "validated_responses": 101,
+        "requests_with_unknown_usage": 1,
+        "field_actions": 0,
+        "direct_actions": 505,
+        "field_responses": 0,
+        "direct_responses": 101,
+        "local_plan_count": 0,
+        "model_pipeline_s": 1476.3245783052407,
+        "audit": {
+          "passed": true,
+          "checks": 41103,
+          "issues": [],
+          "shared_code_reconstruction": true
+        },
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "billing": "chatgpt_subscription",
+        "api_key_calls": 0,
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "base_episode_index": 0,
+        "seed": 7,
+        "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "benchmark_variant": "custom_scene",
+        "external_demo_count": 0,
+        "demo_bundle_sha256": null,
+        "demo_steps": null,
+        "demo_image_count": null,
+        "prompt_version": "astra-direct-bowl-plate-zero-shot-collision-free-v1",
+        "field_representation": "direct-actions-bowl-plate-zero-shot-collision-free-v1",
+        "policy_class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+        "local_path_strategy": null,
+        "collision_check_mode": "bowl_obstacles_v1",
+        "time_or_action_cap": false,
+        "stop_on_model_complete": false,
+        "evidence_sources": [
+          "runs/bowl_obstacle_direct_medium_zero_shot_001/summary.json",
+          "runs/bowl_obstacle_direct_medium_zero_shot_001/manifest.json",
+          "runs/bowl_obstacle_direct_medium_zero_shot_001_audit/audit.json",
+          "runs/bowl_obstacle_direct_medium_zero_shot_001/task_evaluation.json",
+          "runs/bowl_obstacle_direct_medium_zero_shot_001/collision.json"
+        ],
+        "collision": {
+          "detected": false,
+          "first_event": null,
+          "physics_substeps": 12625,
+          "forbidden_contact_points": 0
+        }
+      },
+      "successful_completion_speed_comparison_valid": false,
+      "hybrid_time_saved_s": null,
+      "hybrid_time_reduction_percent_of_direct": null,
+      "matched_conditions": {
+        "recorded_pair_audit_passed": true,
+        "actual_initial_observation_equal": true,
+        "shared_task_guidance_equal": true,
+        "same_task_init_seed": true,
+        "same_demo_bytes_if_present": true,
+        "same_recorded_source_modules": true,
+        "source_module_differences": [],
+        "hybrid_then_direct": true
+      },
+      "comparison_source": "runs/bowl_obstacle_zero_shot_matched_comparison_001/comparison.json",
+      "row_caveats": [
+        "Hybrid failed on left-finger/ramekin contact at action index 309, physics substep 7; Direct was user-stopped, not collision-failed.",
+        "Direct: 102 started requests, 101 accepted responses and one interrupted request with unreported usage.",
+        "No demonstrations, but shared hand-written task/grasp/placement guidance remains.",
+        "The prompt and collision stopping rule also changed relative to one-demo obstacles; this is not an isolated demonstration-removal ablation.",
+        "Neither arm provides an eligible task completion time; do not calculate or plot a speedup percentage."
+      ]
+    }
+  ],
+  "unmatched_or_infrastructure_runs": [
+    {
+      "run": "/workspace/gpt_field/runs/distance_field_medium_task_001",
+      "raw_recorded_status": "success",
+      "display_outcome": "LIBERO goal reached",
+      "task_success_under_row_criterion": true,
+      "scoring": "scored_success_under_goal_only_criterion",
+      "raw_libero_success": true,
+      "libero_success_ever_observed": true,
+      "completion_time_eligible_under_row_criterion": true,
+      "control_elapsed_s": 292.3765896749683,
+      "video_render_s": 34.992459358181804,
+      "control_excluding_video_s": 257.38413031678647,
+      "control_excluding_video_min": 4.289735505279775,
+      "timing_label": "goal-completion time",
+      "executed_actions": 184,
+      "requests_started": 23,
+      "validated_responses": 23,
+      "requests_with_unknown_usage": 0,
+      "field_actions": 106,
+      "direct_actions": 78,
+      "field_responses": 7,
+      "direct_responses": 16,
+      "local_plan_count": 14,
+      "model_pipeline_s": 242.89006797596812,
+      "audit": {
+        "passed": true,
+        "checks": 11974,
+        "issues": [],
+        "shared_code_reconstruction": true
+      },
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "billing": "chatgpt_subscription",
+      "api_key_calls": 0,
+      "suite": "libero_spatial",
+      "task_id": 0,
+      "base_episode_index": 0,
+      "seed": 7,
+      "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "benchmark_variant": "official_initial_state",
+      "external_demo_count": 0,
+      "demo_bundle_sha256": null,
+      "demo_steps": null,
+      "demo_image_count": null,
+      "prompt_version": "astra-distance-field-local-feedback-v7",
+      "field_representation": "goal-distance-feedback-v1",
+      "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+      "local_path_strategy": "dijkstra_distance_field",
+      "collision_check_mode": "none",
+      "time_or_action_cap": false,
+      "stop_on_model_complete": false,
+      "evidence_sources": [
+        "runs/distance_field_medium_task_001/summary.json",
+        "runs/distance_field_medium_task_001/manifest.json",
+        "runs/distance_field_medium_task_001_audit/audit.json"
+      ],
+      "exclusion_reason": "Current Dijkstra no-demo original-bowl Hybrid completed, but no matched current-protocol no-demo original-bowl Direct arm exists.",
+      "recommended_placement": "Appendix / transparent trial inventory"
+    },
+    {
+      "run": "/workspace/gpt_field/runs/drawer_distance_medium_task_001",
+      "raw_recorded_status": "user_stop",
+      "display_outcome": "Incomplete: explicitly stopped by user",
+      "task_success_under_row_criterion": false,
+      "scoring": "unscored_incomplete",
+      "raw_libero_success": null,
+      "libero_success_ever_observed": false,
+      "completion_time_eligible_under_row_criterion": false,
+      "control_elapsed_s": 1332.5104294409975,
+      "video_render_s": 107.36111601721495,
+      "control_excluding_video_s": 1225.1493134237826,
+      "control_excluding_video_min": 20.41915522372971,
+      "timing_label": "attempt duration only",
+      "executed_actions": 600,
+      "requests_started": 86,
+      "validated_responses": 85,
+      "requests_with_unknown_usage": 1,
+      "field_actions": 265,
+      "direct_actions": 335,
+      "field_responses": 18,
+      "direct_responses": 67,
+      "local_plan_count": 36,
+      "model_pipeline_s": 1172.773877252359,
+      "audit": {
+        "passed": true,
+        "checks": 40899,
+        "issues": [],
+        "shared_code_reconstruction": true
+      },
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "billing": "chatgpt_subscription",
+      "api_key_calls": 0,
+      "suite": "libero_goal",
+      "task_id": 3,
+      "base_episode_index": 0,
+      "seed": 7,
+      "task_prompt": "open the top drawer and put the bowl inside",
+      "benchmark_variant": "official_initial_state",
+      "external_demo_count": 0,
+      "demo_bundle_sha256": null,
+      "demo_steps": null,
+      "demo_image_count": null,
+      "prompt_version": "astra-distance-field-local-feedback-drawer-v1",
+      "field_representation": "goal-distance-feedback-drawer-v1",
+      "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+      "local_path_strategy": "dijkstra_distance_field",
+      "collision_check_mode": "none",
+      "time_or_action_cap": false,
+      "stop_on_model_complete": false,
+      "evidence_sources": [
+        "runs/drawer_distance_medium_task_001/summary.json",
+        "runs/drawer_distance_medium_task_001/manifest.json",
+        "runs/drawer_distance_medium_task_001_audit/audit.json"
+      ],
+      "exclusion_reason": "Current Dijkstra no-demo drawer Hybrid was user-stopped without success and has no completed matched Direct arm.",
+      "recommended_placement": "Appendix / transparent trial inventory"
+    },
+    {
+      "run": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001",
+      "raw_recorded_status": "infrastructure_error",
+      "display_outcome": "Infrastructure failure",
+      "task_success_under_row_criterion": false,
+      "scoring": "unscored_incomplete",
+      "raw_libero_success": null,
+      "libero_success_ever_observed": false,
+      "completion_time_eligible_under_row_criterion": false,
+      "control_elapsed_s": 14.62699665967375,
+      "video_render_s": 0.7348037539049983,
+      "control_excluding_video_s": 13.892192905768752,
+      "control_excluding_video_min": 0.2315365484294792,
+      "timing_label": "attempt duration only",
+      "executed_actions": 1,
+      "requests_started": 1,
+      "validated_responses": 1,
+      "requests_with_unknown_usage": 0,
+      "field_actions": 1,
+      "direct_actions": 0,
+      "field_responses": 1,
+      "direct_responses": 0,
+      "local_plan_count": 1,
+      "model_pipeline_s": 13.260192493908107,
+      "audit": {
+        "passed": true,
+        "checks": 313,
+        "issues": [],
+        "shared_code_reconstruction": true
+      },
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "billing": "chatgpt_subscription",
+      "api_key_calls": 0,
+      "suite": "libero_spatial",
+      "task_id": 0,
+      "base_episode_index": 0,
+      "seed": 7,
+      "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "benchmark_variant": "custom_layout",
+      "external_demo_count": 1,
+      "demo_bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+      "demo_steps": 98,
+      "demo_image_count": 48,
+      "prompt_version": "astra-distance-field-local-feedback-bowl-plate-one-demo-v1",
+      "field_representation": "goal-distance-feedback-v1",
+      "policy_class": "gpt_field.distance_policy.DistanceHybridPolicy",
+      "local_path_strategy": "dijkstra_distance_field",
+      "collision_check_mode": "none",
+      "time_or_action_cap": false,
+      "stop_on_model_complete": false,
+      "evidence_sources": [
+        "runs/bowl_relayout_distance_medium_one_demo_001/summary.json",
+        "runs/bowl_relayout_distance_medium_one_demo_001/manifest.json",
+        "runs/bowl_relayout_distance_medium_one_demo_001_audit/audit.json",
+        "runs/bowl_relayout_distance_medium_one_demo_001_audit/frozen_observe_transition_traceback.txt"
+      ],
+      "exclusion_reason": "Infrastructure failure after one action: integer-quaternion in-place normalization; fixed before the fresh successful relayout pair. This is not a task failure or a completion time.",
+      "recommended_placement": "Appendix / transparent trial inventory"
+    }
+  ],
+  "inventory": {
+    "current_method_run_count": 13,
+    "matched_conditions": 5,
+    "successful_goal_only_pairs": 3,
+    "obstacle_conditions_with_no_successful_pair": 2,
+    "matched_current_no_demo_original_bowl_pair_exists": false,
+    "no_demo_original_bowl_hybrid_only_adjusted_s": 257.38413031678647,
+    "historical_current_aggregate_source": "runs/current_hybrid_direct_no_video_comparison_001/comparison.json",
+    "latest_execution_analysis_source": "runs/bowl_obstacle_zero_shot_matched_comparison_001/analysis.json"
+  },
+  "recommended_included_cases": [
+    {
+      "slide": "Observed timing on completed goal-based pairs",
+      "include_ids": [
+        "drawer_one_demo",
+        "bowl_original_one_demo",
+        "bowl_relocated_one_demo"
+      ],
+      "headline": "In three one-demo goal-only pairs, adjusted Hybrid time was 16.1%, 25.6% and 1.9% lower.",
+      "required_footer": "One episode per method/condition; video overhead subtracted retrospectively. Original LIBERO goal success, not collision-free or post-release certification."
+    },
+    {
+      "slide": "Current obstacle results: speed is not success",
+      "include_ids": [
+        "bowl_obstacles_one_demo",
+        "bowl_obstacles_zero_shot"
+      ],
+      "headline": "No successful collision-free pair has been demonstrated.",
+      "required_footer": "One-demo: both failed retrospective ketchup-collision review. Zero-shot: Hybrid contact failure; Direct user-stopped incomplete. Times shown are attempt durations only; no speedup ratios."
+    },
+    {
+      "slide": "Appendix: unmatched and interrupted trials",
+      "include_runs": [
+        "/workspace/gpt_field/runs/distance_field_medium_task_001",
+        "/workspace/gpt_field/runs/drawer_distance_medium_task_001",
+        "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001"
+      ],
+      "headline": "No matched current no-demo original-bowl baseline; preserve incomplete and infrastructure trials."
+    }
+  ],
+  "caveats": [
+    "Do not present the three earlier goal-only pairs as evidence that the latest zero-shot collision-free protocol succeeds.",
+    "All rows are single episodes, with stochastic generation, subscription latency and caching; no confidence interval or general success-rate claim is supported.",
+    "The relayout adjusted gain is small and reverses the raw wall-time ordering; label the timing metric explicitly.",
+    "A passing offline audit establishes recorded protocol/accounting consistency using shared code. It is not independent physics verification or collision-free success certification.",
+    "The newest collision monitor observes discrete physics-substep contacts after they occur, and has documented allowed/excluded contacts. It is not predictive whole-arm collision avoidance or continuous swept-volume certification.",
+    "The original no-demo bowl Hybrid has an eligible goal-completion time but no matched Direct; do not pair it with an older compact/direct run.",
+    "One-demo obstacle corrected failures supersede the original LIBERO-only comparison; do not use comparison.superseded_libero_only_v1.json for slide outcomes.",
+    "Do not sum adjusted time across failure/incomplete and successful rows or pool them into an overall speedup."
+  ],
+  "evidence_catalog": {
+    "runs/drawer_distance_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_one_demo_001/summary.json",
+      "sha256": "d615a912864e0d29b8de396b43f89c4930101c5830395dcc4efdf9f0fd139ce3",
+      "bytes": 18925
+    },
+    "runs/drawer_distance_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_one_demo_001/manifest.json",
+      "sha256": "2a440265dcd8d83d0708dd56cd85ea639ce0dca546b4f1ab73b17fc0acef4a73",
+      "bytes": 24357
+    },
+    "runs/drawer_distance_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_one_demo_001_audit/audit.json",
+      "sha256": "cf395e26e651c07b2b78ec90a907091d36c7ac25e08e00261b3f77af47734932",
+      "bytes": 18470
+    },
+    "runs/drawer_direct_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/drawer_direct_medium_one_demo_001/summary.json",
+      "sha256": "3631e80a54ff24cc17ad8ff8fa9eca9a13ee922c7ee50c14c4e46bfd2b595adf",
+      "bytes": 18688
+    },
+    "runs/drawer_direct_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/drawer_direct_medium_one_demo_001/manifest.json",
+      "sha256": "eef8819a3bcb6b2cdd4f106d713a48d1bd578c1d511d3c2765bd8e8e6c3f1339",
+      "bytes": 24477
+    },
+    "runs/drawer_direct_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/drawer_direct_medium_one_demo_001_audit/audit.json",
+      "sha256": "2be8919e5a518c79ae7ff7486e12e3f58357b3e97db62a55035fe0ef34dd1178",
+      "bytes": 19112
+    },
+    "runs/drawer_one_demo_matched_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/drawer_one_demo_matched_comparison_001/comparison.json",
+      "sha256": "2ab2ac76f0d7c2d9b7c116ab2ae9c4c25c14cbe5295e21e04d9cfddae93c5d77",
+      "bytes": 15730
+    },
+    "runs/bowl_distance_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_distance_medium_one_demo_001/summary.json",
+      "sha256": "910bcd8a1f23690ce3212a3b08329056211674c7401393d9f468ddb06fe29816",
+      "bytes": 19008
+    },
+    "runs/bowl_distance_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_distance_medium_one_demo_001/manifest.json",
+      "sha256": "0a44839310551c36d5ef6565d8f7359059da07156e38a147a7f2ad89bd10f79a",
+      "bytes": 24577
+    },
+    "runs/bowl_distance_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_distance_medium_one_demo_001_audit/audit.json",
+      "sha256": "e24e5bc009a78bd2476ee1b671806d621c07b1da4d30eea618bf438fda5a9b5c",
+      "bytes": 18473
+    },
+    "runs/bowl_direct_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_direct_medium_one_demo_001/summary.json",
+      "sha256": "c02d99c05f636afc6ff263988cd4b30754a1b21c57bde207cfbe727de7b0f69f",
+      "bytes": 18768
+    },
+    "runs/bowl_direct_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_direct_medium_one_demo_001/manifest.json",
+      "sha256": "8ba6da09106296990ee56d6593ea48e725ecbae47262b36d1c7c4c5323301afa",
+      "bytes": 24501
+    },
+    "runs/bowl_direct_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_direct_medium_one_demo_001_audit/audit.json",
+      "sha256": "767f61bad3ae018307fde841396f57f89a4bbb359bf9252f043f72b039737c17",
+      "bytes": 19147
+    },
+    "runs/bowl_one_demo_matched_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/bowl_one_demo_matched_comparison_001/comparison.json",
+      "sha256": "f6143b5296e3533f795417919908ce0c55e44eaed1374ebc9f0151584a124153",
+      "bytes": 18444
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_002/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_002/summary.json",
+      "sha256": "6736c754bec26967376df28a98b7bb8a50a5a54f8e1f57bdadc2bc2c0fdf1d4b",
+      "bytes": 19540
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_002/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_002/manifest.json",
+      "sha256": "6f437163d5d30ad821a9974d2728ac75555c41b48fc2e0fbb188797b9585fb5c",
+      "bytes": 25265
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_002_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_002_audit/audit.json",
+      "sha256": "d65fa6128e11fdf7061ecc11363b43dd0825e0aae52a9358d80f2cd59b1bcfd3",
+      "bytes": 19225
+    },
+    "runs/bowl_relayout_direct_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_direct_medium_one_demo_001/summary.json",
+      "sha256": "8af51b24adaa12a236cb817b63c353d9d9ceb29b63f7e79a699d49ae70ff96d7",
+      "bytes": 19326
+    },
+    "runs/bowl_relayout_direct_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_direct_medium_one_demo_001/manifest.json",
+      "sha256": "79acc286ed7a7bf6e7b788c4781ccefc0f62a8311ca6ce6c4debeab5f41bbd84",
+      "bytes": 25210
+    },
+    "runs/bowl_relayout_direct_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_direct_medium_one_demo_001_audit/audit.json",
+      "sha256": "3545956d3753a7ae1af2bbee0407da89ae27d3e078f30a2a264d0f26f3e58166",
+      "bytes": 19907
+    },
+    "runs/bowl_relayout_one_demo_matched_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_one_demo_matched_comparison_001/comparison.json",
+      "sha256": "11f9473b7e7442ec231eb7d364e7f0ec9404cef2a7dfacef9b3de92e6affefe1",
+      "bytes": 20732
+    },
+    "runs/bowl_obstacle_distance_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_one_demo_001/summary.json",
+      "sha256": "445483f3acdcc31e6661a20d700146ae5b87bf00898d5dd45e1f203917784334",
+      "bytes": 19947
+    },
+    "runs/bowl_obstacle_distance_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_one_demo_001/manifest.json",
+      "sha256": "3e5a1db50a48a2365938f9a94f2d32bf64029b67819f72d1c17dc4aec4737eb9",
+      "bytes": 25800
+    },
+    "runs/bowl_obstacle_distance_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_one_demo_001_audit/audit.json",
+      "sha256": "94f1c0447fcd3542e622befe635eca5fd5484e545b7afbf7016f76d6b8712998",
+      "bytes": 20527
+    },
+    "runs/bowl_obstacle_distance_medium_one_demo_001/task_evaluation.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_one_demo_001/task_evaluation.json",
+      "sha256": "af29c278fbe2bf4ace8aaf2a9659ebf7d70fc4c95e481447312fc1a20a69dd32",
+      "bytes": 1785
+    },
+    "runs/bowl_obstacle_direct_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_one_demo_001/summary.json",
+      "sha256": "0e17dc5e270981782dc99962077739e166167a5d465efba100c539529e8cdaae",
+      "bytes": 19744
+    },
+    "runs/bowl_obstacle_direct_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_one_demo_001/manifest.json",
+      "sha256": "8d07d385b35947c22c6940867fd60de7df7726362387e77e281a17806786bbda",
+      "bytes": 25766
+    },
+    "runs/bowl_obstacle_direct_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_one_demo_001_audit/audit.json",
+      "sha256": "121155febf24febced83c9090537a15587a5aa061ac760f6d244b0521645fd79",
+      "bytes": 21531
+    },
+    "runs/bowl_obstacle_direct_medium_one_demo_001/task_evaluation.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_one_demo_001/task_evaluation.json",
+      "sha256": "342a7587222c20d7aeb83e547d9b3ccc1f1afa78082fa09e43e25d0fee1c4f42",
+      "bytes": 1785
+    },
+    "runs/bowl_obstacle_one_demo_matched_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_one_demo_matched_comparison_001/comparison.json",
+      "sha256": "43749b7314bdfecc5639ccb1b3b68506112885aaf716f27f3cc3e82f3e037037",
+      "bytes": 10601
+    },
+    "runs/bowl_obstacle_one_demo_matched_comparison_001/collision_review.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_one_demo_matched_comparison_001/collision_review.json",
+      "sha256": "fdee29b6222f7053970738891568dcbc955940685f0017550f82bf234b02ac25",
+      "bytes": 4816
+    },
+    "runs/bowl_obstacle_distance_medium_zero_shot_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001/summary.json",
+      "sha256": "ff8abbc703f5df038100ea2cf8687317b04ed4f13d5d3ad38cad560812975a6f",
+      "bytes": 7236
+    },
+    "runs/bowl_obstacle_distance_medium_zero_shot_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001/manifest.json",
+      "sha256": "8cfec66d61957269da042e0e9b1577ff1cbfaf84dedb184d0326efa88861f59c",
+      "bytes": 10674
+    },
+    "runs/bowl_obstacle_distance_medium_zero_shot_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001_audit/audit.json",
+      "sha256": "abd750f4f08b2152337d006c6d00d037566483c1626e0c37cc84dd46cc44a782",
+      "bytes": 7895
+    },
+    "runs/bowl_obstacle_distance_medium_zero_shot_001/task_evaluation.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001/task_evaluation.json",
+      "sha256": "51f312e4e7a8a6ab7a5e9c8c197ae17b09a05ae12b5206a4f2e5164bc0c5e7c9",
+      "bytes": 2061
+    },
+    "runs/bowl_obstacle_distance_medium_zero_shot_001/collision.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_distance_medium_zero_shot_001/collision.json",
+      "sha256": "2c76e8a62da529a9ec6503e1a90c25587e4009037d79e01041c223ae072a12f8",
+      "bytes": 1676
+    },
+    "runs/bowl_obstacle_direct_medium_zero_shot_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001/summary.json",
+      "sha256": "0711593b62833f70196334eb6b79dea61fc944072a0582bb24d7c0ec2e6bb94d",
+      "bytes": 6545
+    },
+    "runs/bowl_obstacle_direct_medium_zero_shot_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001/manifest.json",
+      "sha256": "cca6eac0f22694219d3bdd34586e823d5c25ae164c424e337a7e2743f658e9e6",
+      "bytes": 10679
+    },
+    "runs/bowl_obstacle_direct_medium_zero_shot_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001_audit/audit.json",
+      "sha256": "52d675f1be63d5c3b9be156aaebe663e2cd4bf14f6de8a29e949b366da118e7d",
+      "bytes": 8827
+    },
+    "runs/bowl_obstacle_direct_medium_zero_shot_001/task_evaluation.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001/task_evaluation.json",
+      "sha256": "4e1f770ec50c243ebbb63667e3456e953de4c0f7ee2788806e86e5a28f3c48e1",
+      "bytes": 1443
+    },
+    "runs/bowl_obstacle_direct_medium_zero_shot_001/collision.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_direct_medium_zero_shot_001/collision.json",
+      "sha256": "8fccfc0634378a6a76d9c86574446c7fdf6f81b03929fc2fe7618afb0e4c6a34",
+      "bytes": 1121
+    },
+    "runs/bowl_obstacle_zero_shot_matched_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_zero_shot_matched_comparison_001/comparison.json",
+      "sha256": "33c640d102ffd3e084c41c478465acaa35bd116ccf7416de6b8a9f2bb3ce31f9",
+      "bytes": 13256
+    },
+    "runs/distance_field_medium_task_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/distance_field_medium_task_001/summary.json",
+      "sha256": "16cd3f889b3019fca4fb755b343de55eb5a30b3cb3a9d299312f1217502cc364",
+      "bytes": 4276
+    },
+    "runs/distance_field_medium_task_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/distance_field_medium_task_001/manifest.json",
+      "sha256": "877d6af821be5be01822e9869a841172202510218ec91f23ef8398fe5a82d1e0",
+      "bytes": 8158
+    },
+    "runs/distance_field_medium_task_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/distance_field_medium_task_001_audit/audit.json",
+      "sha256": "17f94a9f66c4107c3e87c61fd0dc78c7b95a57fbeb5715106e259a169bc74ff3",
+      "bytes": 2996
+    },
+    "runs/drawer_distance_medium_task_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_task_001/summary.json",
+      "sha256": "12fae842473a1f70229a3b4a97e19fffbe85a8c7fc2c85a4fe9aaad720617e0d",
+      "bytes": 4396
+    },
+    "runs/drawer_distance_medium_task_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_task_001/manifest.json",
+      "sha256": "67f6dc193b6c33e3e879bbcac232b1df46b93bf0c4ee8d40ef79e721f2f1fae5",
+      "bytes": 8863
+    },
+    "runs/drawer_distance_medium_task_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/drawer_distance_medium_task_001_audit/audit.json",
+      "sha256": "a6ac36a3faf05015376d0a644995754bd20bfca647fcdd43f07233cc1f4a6e40",
+      "bytes": 3402
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_001/summary.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001/summary.json",
+      "sha256": "ff1f125be073efe7afba5de0b1735b726e23139e9931e2e992a685cf7eded9e8",
+      "bytes": 19425
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_001/manifest.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001/manifest.json",
+      "sha256": "db3dbeebd4ebbdbdecf1b14e6ffdbdca0b8fa0c0e8c7aa2f679e6ec36cd6451a",
+      "bytes": 25265
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_001_audit/audit.json": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001_audit/audit.json",
+      "sha256": "ecc8bd7aff829f4982b2baf701694cc04744c752368f2df3ecc26fe0e9acc734",
+      "bytes": 19279
+    },
+    "runs/bowl_relayout_distance_medium_one_demo_001_audit/frozen_observe_transition_traceback.txt": {
+      "path": "/workspace/gpt_field/runs/bowl_relayout_distance_medium_one_demo_001_audit/frozen_observe_transition_traceback.txt",
+      "sha256": "c47cc18ddeb084382b7094e800c89ff9d90928ea0557cfbb75cbf53c4d0e8727",
+      "bytes": 614
+    },
+    "runs/current_hybrid_direct_no_video_comparison_001/comparison.json": {
+      "path": "/workspace/gpt_field/runs/current_hybrid_direct_no_video_comparison_001/comparison.json",
+      "sha256": "58a3838819e01c893fe40e3b6695212bc6db2f108991706697c5afe8250823b1",
+      "bytes": 8645
+    },
+    "runs/bowl_obstacle_zero_shot_matched_comparison_001/analysis.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_zero_shot_matched_comparison_001/analysis.json",
+      "sha256": "149740d62ce59b070adee7fa4d6638ba7482501d62331f80253378fd9489eaba",
+      "bytes": 229644
+    },
+    "runs/bowl_obstacle_zero_shot_validation_001/frozen_source_hashes.json": {
+      "path": "/workspace/gpt_field/runs/bowl_obstacle_zero_shot_validation_001/frozen_source_hashes.json",
+      "sha256": "e147901febea23d663a3b97cb73228ece673586851feb249814284d45913647d",
+      "bytes": 4818
+    }
+  },
+  "work_performed": {
+    "new_model_calls": 0,
+    "new_simulator_runs": 0,
+    "new_tests": 0,
+    "source_or_run_mutations": false,
+    "created_notes_file_only": true
+  }
+}

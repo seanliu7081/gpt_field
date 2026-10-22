@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "reference_manifest_sha256": "254d44a3ff694c108482fef8fcef75babfd9f5100d3ae771d7f15b5cf44ab1aa",
+  "inference_rgb_manifest_sha256": "8d51752b8636890a2f5269ff5c533c3deaf0324fd8ce29f638d2f9d7826d0965",
+  "checks": [
+    {
+      "name": "bowl002_initial",
+      "reference_rgb_sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+      "inference_rgb_sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+      "png_bytes_identical": true,
+      "pixels_identical": true,
+      "source_hashes_unchanged": true,
+      "reference_artifacts_unchanged": true,
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 240116,
+        "target_bowl_visible": 3081,
+        "target_cabinet_visible": 33098,
+        "valid_depth": 262144
+      },
+      "camera_sample_time_s": 0.4980000000000004,
+      "endpoint_time_s": 0.5000000000000003,
+      "raw_actions_replayed": 0
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "reference_rgb_sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+      "inference_rgb_sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+      "png_bytes_identical": true,
+      "pixels_identical": true,
+      "source_hashes_unchanged": true,
+      "reference_artifacts_unchanged": true,
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 239969,
+        "target_bowl_visible": 2944,
+        "target_cabinet_visible": 36143,
+        "valid_depth": 262144
+      },
+      "camera_sample_time_s": 3.4979999999998364,
+      "endpoint_time_s": 3.499999999999836,
+      "raw_actions_replayed": 60
+    },
+    {
+      "name": "drawer003_open_step552",
+      "reference_rgb_sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+      "inference_rgb_sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+      "png_bytes_identical": true,
+      "pixels_identical": true,
+      "source_hashes_unchanged": true,
+      "reference_artifacts_unchanged": true,
+      "mask_pixel_counts": {
+        "visible_geometry": 262144,
+        "nonrobot_visible": 230328,
+        "target_bowl_visible": 2695,
+        "target_cabinet_visible": 45439,
+        "valid_depth": 262144
+      },
+      "camera_sample_time_s": 28.097999999995306,
+      "endpoint_time_s": 28.099999999995305,
+      "raw_actions_replayed": 552
+    }
+  ],
+  "camera_projection_independent_validation": {
+    "method": "non-MSAA OpenGL finite tilted box face against analytic plane equation",
+    "pixels": 5376,
+    "max_error_m": 2.2964179627216197e-05,
+    "gate_m": 0.0001
+  },
+  "test_suite": "6 tests passed"
+}

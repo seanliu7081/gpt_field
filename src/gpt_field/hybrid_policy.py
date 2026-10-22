@@ -162,10 +162,8 @@ No forced closure, grasp controller, automatic recovery, or reward input exists.
         api_latency = None
         if refreshed:
             started = time.monotonic()
-            envelope = validate_hybrid_prediction(
-                self.client.predict(allowed.to_dict(), self.grid, mode="hybrid"),
-                self.grid, chunk_size=self.direct_action_steps,
-                target_regions=getattr(self.client, "target_regions", ("black_bowl", "plate")))
+            envelope = self._validate_envelope(
+                self.client.predict(allowed.to_dict(), self.grid, mode="hybrid"))
             api_latency = time.monotonic() - started
             if (getattr(self.client, "stop_on_model_complete", False)
                     and self.client.last_task_complete):
@@ -267,6 +265,11 @@ No forced closure, grasp controller, automatic recovery, or reward input exists.
         self._pending = (allowed, decision)
         self.step_index += 1
         return decision
+
+    def _validate_envelope(self, value):
+        """Representation boundary; opt-in compact policies can avoid dense expansion."""
+        return validate_hybrid_prediction(value, self.grid, chunk_size=self.direct_action_steps,
+            target_regions=getattr(self.client, "target_regions", ("black_bowl", "plate")))
 
     def observe_transition(self, before, decision, after):
         feedback = DirectHistoryPolicy.observe_transition(self, before, decision, after)

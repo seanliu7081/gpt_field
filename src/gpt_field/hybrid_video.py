@@ -70,9 +70,7 @@ recorder does not infer success or contacts, and never makes a model request.
             self.details.pop("field_prediction", None)
             self.details.pop("field_center", None)
         elif fresh:
-            self.field = GridField(self.grid, self.details["field_center"],
-                                  FieldPrediction.from_dict(self.details["field_prediction"], self.grid))
-            self.field_step = self.step
+            self._set_fresh_field()
             self.chunk = []
         if fresh:
             self.hybrid_refresh_count += 1
@@ -85,7 +83,10 @@ recorder does not infer success or contacts, and never makes a model request.
             else:
                 self.direct_chunk_count += 1
                 self.refresh_count = self.direct_chunk_count
-                self.chunk = deepcopy(self.details["prediction"]["actions"])
+                # Explicit local operations contain an intent, not a predicted
+                # Direct action array. Render only the actual issued command.
+                self.chunk = ([] if self.details.get("execution_kind") == "local_gripper_settle"
+                              else deepcopy(self.details["prediction"]["actions"]))
             complete_details, complete_action = self.details, self.action
             plan_keys = {"plan", "plan_refreshed", "plan_start_step", "plan_step",
                          "plan_execution_steps", "planned_delta_xyz", "commanded_delta_xyz", "tracking"}
@@ -95,7 +96,9 @@ recorder does not infer success or contacts, and never makes a model request.
                 self._emit("routing_decision", max(1, round(self.writer.fps * .3)))
                 if self.previous_controller is not None and self.previous_controller != self.controller:
                     self._emit("controller_switch", max(1, round(self.writer.fps * .4)))
-                self._emit("field_refresh" if self.controller == "coarse_field" else "action_chunk",
+                self._emit("field_refresh" if self.controller == "coarse_field" else
+                           "gripper_operation" if self.details.get("execution_kind") == "local_gripper_settle"
+                           else "action_chunk",
                            max(1, round(self.writer.fps * .6)))
             finally:
                 self.details, self.action = complete_details, complete_action
@@ -103,8 +106,16 @@ recorder does not infer success or contacts, and never makes a model request.
             event = "local_replan" if self.details.get("plan_refreshed", True) else "field_action"
             pause_for_plan = self.details.get("plan_refreshed", fresh)
         else:
-            event, pause_for_plan = "direct_action", False
+            event = ("gripper_action" if self.details.get("execution_kind") == "local_gripper_settle"
+                     else "direct_action")
+            pause_for_plan = False
         self._emit(event, max(2, round(self.writer.fps * .15)) if pause_for_plan else 2)
+
+    def _set_fresh_field(self):
+        """Dense legacy display; lazy-field recorders can supply another view."""
+        self.field = GridField(self.grid, self.details["field_center"],
+                              FieldPrediction.from_dict(self.details["field_prediction"], self.grid))
+        self.field_step = self.step
 
     def model_completion(self, observation, *, step, completion_reason,
                          decision_latency_s=None, diagnostics):
@@ -184,9 +195,14 @@ recorder does not infer success or contacts, and never makes a model request.
         if event == "routing_decision":
             record["hybrid_prediction"] = deepcopy(self.details.get("hybrid_prediction"))
         if event == "field_refresh":
-            record["field_prediction"] = deepcopy(self.details["field_prediction"])
+            record["field_prediction"] = deepcopy(self.details.get("field_prediction"))
         if event == "action_chunk":
             record["actions"] = deepcopy(self.chunk)
+        if self.details.get("execution_kind") == "local_gripper_settle":
+            record["execution_kind"] = "local_gripper_settle"
+            record["local_gripper"] = deepcopy(self.details["local_gripper"])
+            record["local_gripper_metadata_scope"] = "pre_action_decision"
+            record["model_action_array"] = None
         self._events.write(json.dumps(record, allow_nan=False) + "\n")
         self._events.flush()
 
@@ -220,6 +236,23 @@ recorder does not infer success or contacts, and never makes a model request.
     def _chunk_panel(self, draw):
         """Page through a full chunk while keeping the issued action visible."""
         draw.rounded_rectangle((425, 139, 1576, 427), radius=12, fill=PANEL)
+        if self.details.get("execution_kind") == "local_gripper_settle":
+            operation = self.details["local_gripper"]
+            draw.text((446, 153), "LOCAL GRIPPER OPERATION | MODEL-SELECTED INTENT",
+                      font=_font(20, True), fill=TEXT)
+            draw.text((446, 191), f"{operation['command'].upper()} | hold the measured start pose | "
+                      f"{operation['min_actions']}-{operation['max_actions']} action budget",
+                      font=_font(19), fill=TEXT)
+            draw.text((446, 234), f"Feedback actions before this command: {operation['actions_executed']} | "
+                      f"finger motion observed: {operation['finger_motion_observed']}",
+                      font=_font(18), fill=MUTED)
+            draw.text((446, 274), "Current issued command: " + (_vector(self.action, 3) if self.action else "pending"),
+                      font=_font(18), fill=YELLOW)
+            draw.text((446, 318), "Future commands depend on measured robot feedback; no GPT action array.",
+                      font=_font(17), fill=MUTED)
+            draw.text((446, 361), "Finger settling does not certify grasp, release, or task success.",
+                      font=_font(17), fill=MUTED)
+            return
         label = "SCRIPTED RESPONSE" if self.offline_smoke else "ASTRA ACTION CHUNK"
         count = len(self.chunk)
         page_size = 5

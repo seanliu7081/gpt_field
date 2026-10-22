@@ -1,0 +1,124 @@
+{
+  "protocol": "gpt-field-libero-jsonl-v1",
+  "benchmark_variant": "LIBERO official layout (explicit checkout)",
+  "libero_source": {
+    "root": "/workspace/heading_flow_pub/third_party/LIBERO",
+    "git_commit": null,
+    "python_tree_sha256": "ddd318ab2a023ea09d68bdd7c581d22a064d7204471fb26a736c6f91ed9d014d",
+    "python_files": 100
+  },
+  "packages": {
+    "robosuite": "1.4.1",
+    "mujoco": "3.2.6",
+    "torch": "2.10.0",
+    "numpy": "1.26.4",
+    "Pillow": "12.3.0"
+  },
+  "python_executable": "/workspace/venvs/libero-plus/bin/python",
+  "suite": "libero_goal",
+  "task_order_index": 0,
+  "task_count": 10,
+  "seed": 7,
+  "initial_states_per_task": 50,
+  "max_policy_steps": null,
+  "settle_steps": 10,
+  "image_size": 512,
+  "render_size": 512,
+  "image_protocol": "render RGB -> rotate 180 degrees -> bilinear resize with centered black padding",
+  "mujoco_gl": "egl",
+  "controller": {
+    "type": "OSC_POSE",
+    "input_max": 1,
+    "input_min": -1,
+    "output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "output_min": [
+      -0.05,
+      -0.05,
+      -0.05,
+      -0.5,
+      -0.5,
+      -0.5
+    ],
+    "kp": 150,
+    "damping_ratio": 1,
+    "impedance_mode": "fixed",
+    "kp_limits": [
+      0,
+      300
+    ],
+    "damping_ratio_limits": [
+      0,
+      10
+    ],
+    "position_limits": null,
+    "orientation_limits": null,
+    "uncouple_pos_ori": true,
+    "control_delta": true,
+    "interpolation": null,
+    "ramp_ratio": 0.2
+  },
+  "controller_sources": {
+    "osc": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/controllers/osc.py",
+      "sha256": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb"
+    },
+    "control_utils": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/utils/control_utils.py",
+      "sha256": "1d0f1a063894b1e8289339e223665e14e8aec492c31e9e00f42edea8dc735f43"
+    },
+    "panda_gripper": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/grippers/panda_gripper.py",
+      "sha256": "a3760a8fc4599fa6f79914304b82466f3c1bda1a945943ca693bb57f00dc59eb"
+    },
+    "osc_pose_config": {
+      "path": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/controllers/config/osc_pose.json",
+      "sha256": "07f3a8b41d3eecc8a36700a85bd8207ee3fbc36eb73f6a2248340c96770d1e45"
+    }
+  },
+  "action_order": [
+    "dx/0.05",
+    "dy/0.05",
+    "dz/0.05",
+    "world_rotvec_x/0.5",
+    "world_rotvec_y/0.5",
+    "world_rotvec_z/0.5",
+    "gripper_minus1_open_plus1_close"
+  ],
+  "success_source": "OffScreenRenderEnv.check_success()",
+  "control_freq_hz": 20,
+  "collision_check_mode": "task_manipulation_v1",
+  "collision_monitoring": {
+    "sampling": "every actual physics substep and final control endpoint",
+    "task_key": "drawer_bowl",
+    "monitored_scope": [
+      "robot links and gripper versus scene geometry except the task's explicit intended contact pairs",
+      "target bowl versus distractors, fixtures and non-finger robot geometry except task supports",
+      "MuJoCo collision geoms with contact distance <= 0 at every physics substep and final endpoint"
+    ],
+    "allowances": [
+      "named Panda finger and finger-pad collision geoms versus target bowl for grasping",
+      "target bowl versus main table support-contact pairs",
+      "named Panda finger and finger-pad collision geoms versus the top-drawer handle only",
+      "target bowl versus top-drawer shell only for contact points within top_region plus 0.002 m tolerance"
+    ],
+    "excluded_scope": [
+      "robot-internal and self contacts, including adjacent robot links",
+      "scene-scene contacts without the robot or target bowl, including resting supports",
+      "positive-distance collision-margin proximity; no contact-force threshold is used",
+      "reset settling substeps; the final initial state is checked before policy execution"
+    ],
+    "stop_on_collision": false,
+    "collision_policy": "record_only",
+    "success_qualification": "raw_libero_goal"
+  },
+  "stop_on_collision": false,
+  "collision_policy": "record_only",
+  "success_qualification": "raw_libero_goal"
+}

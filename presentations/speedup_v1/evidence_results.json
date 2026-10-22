@@ -1,0 +1,1339 @@
+{
+  "scope": "Recorded speedup v1 runs, not new experiments; each selected task has one episode. Results are not a benchmark success-rate estimate.",
+  "sources": [
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/summary.json",
+      "sha256": "d577574189a9566e78359d6aa1c7352b9f40863a01c46bc963c6eafbbb93e53a"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/agent_stats.json",
+      "sha256": "f0e6eb352e0d2dadfb72f8ec188e721e08e17b524e04b69698b28184c7bc9343"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/manifest.json",
+      "sha256": "c64411a59c6898c864ab445276f8fe76bea21ecab90b2831256a0e6d4b7dffad"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/simulator.json",
+      "sha256": "67e48100c1dd28dd07bfe3c88253b6badceaf42a30c43e9cc23660dde1d889c2"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/trace.jsonl",
+      "sha256": "0ce73ea1e9f871c9c81bd6a1462a373a1f6a722587ed3beb3a0249248f4aef1a"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/episode.events.jsonl",
+      "sha256": "9d7a716530fbb3ee2a2c2ec22063e67967e5600c34b29e95376dc58dc4f551be"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_002/trial/episode.mp4",
+      "sha256": "d00f7a34cb77aed512f3af31e99f658a468c9937f6a93c5efaeda2bbdc73aadb"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/summary.json",
+      "sha256": "45b4b52d2dfeba2365772ba29dea33d9f24fb7fcfda2342d20f408aacf1c7eb9"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/agent_stats.json",
+      "sha256": "390108df6266bf6ce715c1e0e57ac5d45ffed1d23bb2f03eb95b584141e99d15"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/manifest.json",
+      "sha256": "ec831814b249a16c78187d4a3bfa1ee8fccbf872ecbde74cda8585ae03c545be"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/simulator.json",
+      "sha256": "1343213b5f44343a0d588686661ef5d2652dff87b80b6da1b2f641f81b7a2330"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/trace.jsonl",
+      "sha256": "25c3a9dd5e0c366ec15f4b2a031f32c85fb605158dfb9725c5a767c00214b350"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/episode.events.jsonl",
+      "sha256": "da0c9680415c914aedfbcfa446294494f2550a9b699e0ecaaa519e3324ccfb97"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_003/trial/episode.mp4",
+      "sha256": "dd5a4e7ac4b91d155ba219606e55516621b62010139c3f520ebca1cc5ab9ff2f"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_bowl_zero_shot_001/trial/summary.json",
+      "sha256": "7b1b4a9f32a32ee48b063a189e3e5b8c3962082adc32381eeee423ea0104affe"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_001/trial/summary.json",
+      "sha256": "2268f52e73a0601fe744375dea10ac2051ffd7caf89ca59d391bf148e34caf41"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/agent_speedup_v1_drawer_zero_shot_002/trial/summary.json",
+      "sha256": "e43c01dc5fbeb575697d4b350f6199c5bc0408adb53bb26e6e05a22c092cfbac"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/direct_medium_libero_success_002/summary.json",
+      "sha256": "c6652c339be4456bef54bd7a6ab51ff62f49e1f1318534258bf4e98628abe1e7"
+    },
+    {
+      "path": "/workspace/gpt_field/runs/direct_medium_libero_success_002/manifest.json",
+      "sha256": "e8d59ae684108794b91bb6528aa9fa7df71946e70304f3caf7d25af9cd9304b7"
+    }
+  ],
+  "runs": {
+    "bowl_zero_shot_002": {
+      "status": "success",
+      "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "suite": "libero_spatial",
+      "task_id": 0,
+      "episode_index": 0,
+      "seed": 7,
+      "libero_success": true,
+      "libero_success_observed": true,
+      "task_success": true,
+      "completion_time_eligible": true,
+      "steps": 449,
+      "api_calls": 11,
+      "calls_by_kind": {
+        "decision": 9,
+        "pointing_coarse": 1,
+        "pointing_fine": 1
+      },
+      "skill_decision_acts": 9,
+      "pointing_results": 2,
+      "macro_outcomes": 9,
+      "macro_outcome_counts": {
+        "calibrate:succeeded": 1,
+        "grasp_with:succeeded": 1,
+        "reach:succeeded": 5,
+        "transport:succeeded": 2
+      },
+      "macro_outcome_sequence": [
+        {
+          "n": 1,
+          "reason": "calibrated",
+          "skill": "calibrate",
+          "status": "succeeded",
+          "step": 89
+        },
+        {
+          "n": 2,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 107
+        },
+        {
+          "n": 3,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 123
+        },
+        {
+          "n": 4,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 140
+        },
+        {
+          "n": 5,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 155
+        },
+        {
+          "n": 6,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 170
+        },
+        {
+          "n": 7,
+          "reason": "hold_pass",
+          "skill": "grasp_with",
+          "status": "succeeded",
+          "step": 387
+        },
+        {
+          "n": 8,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 401
+        },
+        {
+          "n": 9,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 415
+        }
+      ],
+      "control_without_video_s": 135.40674033854157,
+      "control_elapsed_s": 183.51467467378825,
+      "elapsed_s": 193.13565233629197,
+      "startup_to_initial_observation_s": 7.722744347527623,
+      "timing_components": {
+        "decision_s": 82.6848863568157,
+        "model_pipeline_s": 81.55579613056034,
+        "observe_transition_s": 1.052526873536408,
+        "simulator_step_s": 49.8096931502223,
+        "video_render_s": 48.10793433524668
+      },
+      "timing_components_note": "model_pipeline_s (sum of api_latency_s over decision and pointing calls) is included in decision_s; observe_transition_s, simulator_step_s and video_render_s are separate. control_without_video_s = control_elapsed_s - video_render_s. Terminal video and cleanup are excluded from control_elapsed_s.",
+      "path_length_m": 1.3191304388445855,
+      "prompt_version": "agent-speedup-v1-prompt-2",
+      "final_macro": "place_release",
+      "final_primitive": "lower",
+      "model_declared_complete": false,
+      "local_retries": 2,
+      "history_stats": {
+        "accepted_by_kind": {
+          "decision": 9,
+          "pointing_coarse": 1,
+          "pointing_fine": 1
+        },
+        "accepted_requests": 11,
+        "calls_by_kind": {
+          "decision": 9,
+          "pointing_coarse": 1,
+          "pointing_fine": 1
+        },
+        "messages": 0,
+        "overload_retry_policy": "same-observation-overload-backoff-v1",
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "protocol": "agent-speedup-v1-stateless",
+        "retained_image_pairs": 0
+      },
+      "versions": {
+        "AGENT_PROMPT_VERSION": "agent-speedup-v1-prompt-2",
+        "AGENT_SPEEDUP_V1_VERSION": "agent-speedup-v1",
+        "AGENT_VIDEO_VERSION": "agent-speedup-v1-video-1",
+        "CONTACT_SKILLS_VERSION": "agent-speedup-v1-contact-skills-2",
+        "HISTORY_PROTOCOL": "agent-speedup-v1-stateless",
+        "MARK_PROTOCOL_VERSION": "agent-speedup-v1-marks-8x8-crop96x5-8x8",
+        "ORDERED_TRANSPORT_VERSION": "chatgpt-subscription-http-sse-ordered-v1",
+        "POLICY_VERSION": "agent-speedup-v1-policy-2",
+        "WRIST_SERVO_VERSION": "agent-speedup-v1-wrist-servo-2"
+      },
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "initial_status": {
+        "task_id": 0,
+        "episode_index": 0,
+        "steps": 0,
+        "success": false,
+        "terminated": false,
+        "horizon_reached": false,
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate.pruned_init",
+        "initial_state_sha256": "cbbc73792ce546c9bec181fd328a411d3183074840b282671dee481511381d0a",
+        "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+        "libero_success": false,
+        "collision": {
+          "enabled": true,
+          "mode": "task_manipulation_v1",
+          "detected": false,
+          "stop_on_collision": false,
+          "collision_policy": "record_only",
+          "success_qualification": "raw_libero_goal",
+          "first_event": null,
+          "counts": {
+            "checks": 1,
+            "physics_substeps": 0,
+            "forbidden_contact_points": 0,
+            "allowed_contact_points": 87,
+            "positive_distance_contacts_ignored": 0
+          },
+          "monitored_scope": [
+            "robot links and gripper versus scene geometry except the task's explicit intended contact pairs",
+            "target bowl versus distractors, fixtures and non-finger robot geometry except task supports",
+            "MuJoCo collision geoms with contact distance <= 0 at every physics substep and final endpoint"
+          ],
+          "allowances": [
+            "named Panda finger and finger-pad collision geoms versus target bowl for grasping",
+            "target bowl versus main table and target plate support-contact pairs"
+          ],
+          "excluded_scope": [
+            "robot-internal and self contacts, including adjacent robot links",
+            "scene-scene contacts without the robot or target bowl, including resting supports",
+            "positive-distance collision-margin proximity; no contact-force threshold is used",
+            "reset settling substeps; the final initial state is checked before policy execution"
+          ]
+        },
+        "collision_free_success": false
+      },
+      "initial_observation_sha256": "8626d3e51bf8618a2c2793dbac9121dc8c87106197b95a7a6e7f483ffed65835",
+      "primitive_action_counts": {
+        "align": 58,
+        "align_refresh": 14,
+        "axes_probe": 29,
+        "calibrate": 60,
+        "clearance": 2,
+        "grasp": 30,
+        "guarded_approach": 82,
+        "ladder_settle": 21,
+        "lower": 4,
+        "lower_fast": 20,
+        "place_hover": 10,
+        "reach": 81,
+        "transport": 28,
+        "verify_hold": 10
+      },
+      "primitive_action_count_sum": 449,
+      "local_retry_limit": 2,
+      "actual_retries_used": 0,
+      "counts": {
+        "decisions": 9,
+        "grasp_attempts": 1,
+        "grasp_with_calls": 1,
+        "hold_actions": 0,
+        "local_retries_used": 0,
+        "pointing_coarse": 1,
+        "pointing_fine": 1,
+        "rejected_decisions": 0
+      },
+      "collision": {
+        "allowances": [
+          "named Panda finger and finger-pad collision geoms versus target bowl for grasping",
+          "target bowl versus main table and target plate support-contact pairs"
+        ],
+        "collision_policy": "record_only",
+        "counts": {
+          "allowed_contact_points": 984634,
+          "checks": 11675,
+          "forbidden_contact_points": 1690,
+          "physics_substeps": 11225,
+          "positive_distance_contacts_ignored": 0
+        },
+        "detected": true,
+        "enabled": true,
+        "excluded_scope": [
+          "robot-internal and self contacts, including adjacent robot links",
+          "scene-scene contacts without the robot or target bowl, including resting supports",
+          "positive-distance collision-margin proximity; no contact-force threshold is used",
+          "reset settling substeps; the final initial state is checked before policy execution"
+        ],
+        "first_event": {
+          "action_index": 340,
+          "contact_distance_m": -0.00010270437398587856,
+          "geom1": {
+            "body": "akita_black_bowl_1_main",
+            "id": 106,
+            "name": "akita_black_bowl_1_g22",
+            "object": "akita_black_bowl_1",
+            "role": "target_bowl"
+          },
+          "geom2": {
+            "body": "gripper0_right_gripper",
+            "id": 72,
+            "name": "gripper0_hand_collision",
+            "object": "robot0_gripper",
+            "role": "robot"
+          },
+          "phase": "action",
+          "physics_substep": 16,
+          "reason": "robot_nonfinger_target_bowl_contact"
+        },
+        "mode": "task_manipulation_v1",
+        "monitored_scope": [
+          "robot links and gripper versus scene geometry except the task's explicit intended contact pairs",
+          "target bowl versus distractors, fixtures and non-finger robot geometry except task supports",
+          "MuJoCo collision geoms with contact distance <= 0 at every physics substep and final endpoint"
+        ],
+        "stop_on_collision": false,
+        "success_qualification": "raw_libero_goal"
+      },
+      "control_freq_hz": 20,
+      "simulation_actions_duration_s": 22.45,
+      "video_frames": 1958,
+      "video_fps": 20,
+      "request_files_count": 11,
+      "input_tokens": 36662,
+      "output_tokens": 1798,
+      "video_duration_s": 97.9,
+      "skill_decisions": [
+        {
+          "step": 89,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              0.075,
+              0.05
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 107,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              0.075,
+              0.0
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 123,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              0.05,
+              -0.075
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 140,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.025,
+              0.018,
+              -0.075
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 155,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              -0.075,
+              0.0316,
+              0.04
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 170,
+          "skill": "grasp_with",
+          "params": {
+            "target": "black_bowl",
+            "strategy": "rim_pinch",
+            "side": "wrist_right",
+            "approach": null,
+            "waypoint_offset_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 387,
+          "skill": "transport",
+          "params": {
+            "target": "plate",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              0.018,
+              0.015
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 401,
+          "skill": "transport",
+          "params": {
+            "target": "plate",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              -0.008,
+              0.03
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 415,
+          "skill": "place_release",
+          "params": {
+            "target": "plate",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.02,
+              -0.018,
+              0.0683
+            ],
+            "max_travel_m": null
+          }
+        }
+      ],
+      "final_executed": {
+        "event": "executed",
+        "step": 448,
+        "macro": "place_release",
+        "primitive": "lower",
+        "success": true
+      },
+      "final_primitive_feedback": {
+        "type": "primitive_step",
+        "primitive": "lower",
+        "step": 4,
+        "travel_m": 0.012741739775364413,
+        "ratio": 0.27925243150379586,
+        "rotation_step_rad": 0.0005088774641148677,
+        "inward_mm": [
+          -0.03232525708769807,
+          0.0028039168011775167
+        ],
+        "gap_mm": 4.523316134498754,
+        "gap_step_mm": 0.029521340286520648,
+        "lateral_error_m": 0.0005945876534707094,
+        "free_ratio": 0.26,
+        "done": false,
+        "status": null,
+        "reason": null
+      },
+      "terminal_semantics": "LIBERO success stops immediately while final place_release primitive is still incomplete (done=false). Bowl ends in lower, still closed; drawer ends on third release action before measured fingers stable. Do not claim completed release+retreat/fully completed macro.",
+      "completed_macro_note": "Macro outcomes include initial automatic calibrate but exclude final interrupted-by-success place_release. Model decisions exclude calibrate and include final place_release; matching counts are coincidental.",
+      "timing_nonoverlap_s": {
+        "decision_including_model": 82.6848863568157,
+        "simulator_call_wall": 49.8096931502223,
+        "observe_transition": 1.052526873536408,
+        "other_control_residual": 1.8596339579671621,
+        "video_render": 48.10793433524668
+      },
+      "final_collision_free_success": false,
+      "final_libero_success": true
+    },
+    "drawer_zero_shot_003": {
+      "status": "success",
+      "task": "open the top drawer and put the bowl inside",
+      "suite": "libero_goal",
+      "task_id": 3,
+      "episode_index": 0,
+      "seed": 7,
+      "libero_success": true,
+      "libero_success_observed": true,
+      "task_success": true,
+      "completion_time_eligible": true,
+      "steps": 967,
+      "api_calls": 21,
+      "calls_by_kind": {
+        "decision": 15,
+        "pointing_coarse": 3,
+        "pointing_fine": 3
+      },
+      "skill_decision_acts": 15,
+      "pointing_results": 6,
+      "macro_outcomes": 15,
+      "macro_outcome_counts": {
+        "calibrate:succeeded": 1,
+        "grasp_with:failed": 1,
+        "grasp_with:succeeded": 2,
+        "place_release:succeeded": 1,
+        "reach:failed": 1,
+        "reach:succeeded": 4,
+        "transport:succeeded": 5
+      },
+      "macro_outcome_sequence": [
+        {
+          "n": 1,
+          "reason": "calibrated",
+          "skill": "calibrate",
+          "status": "succeeded",
+          "step": 89
+        },
+        {
+          "n": 2,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 105
+        },
+        {
+          "n": 3,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 122
+        },
+        {
+          "n": 4,
+          "reason": "no_progress",
+          "skill": "reach",
+          "status": "failed",
+          "step": 150
+        },
+        {
+          "n": 5,
+          "reason": "hover_off_bar_across",
+          "skill": "grasp_with",
+          "status": "failed",
+          "step": 238
+        },
+        {
+          "n": 6,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 248
+        },
+        {
+          "n": 7,
+          "reason": "hold_pass_then_pull_bound",
+          "skill": "grasp_with",
+          "status": "succeeded",
+          "step": 441
+        },
+        {
+          "n": 8,
+          "reason": "released_handle",
+          "skill": "place_release",
+          "status": "succeeded",
+          "step": 552
+        },
+        {
+          "n": 9,
+          "reason": "goal_reached",
+          "skill": "reach",
+          "status": "succeeded",
+          "step": 568
+        },
+        {
+          "n": 10,
+          "reason": "hold_pass",
+          "skill": "grasp_with",
+          "status": "succeeded",
+          "step": 818
+        },
+        {
+          "n": 11,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 855
+        },
+        {
+          "n": 12,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 880
+        },
+        {
+          "n": 13,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 899
+        },
+        {
+          "n": 14,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 913
+        },
+        {
+          "n": 15,
+          "reason": "goal_reached",
+          "skill": "transport",
+          "status": "succeeded",
+          "step": 926
+        }
+      ],
+      "control_without_video_s": 234.53507156390697,
+      "control_elapsed_s": 340.7510831579566,
+      "elapsed_s": 348.96343254763633,
+      "startup_to_initial_observation_s": 6.37662095669657,
+      "timing_components": {
+        "decision_s": 133.93960955552757,
+        "model_pipeline_s": 132.1552593195811,
+        "observe_transition_s": 1.9315167125314474,
+        "simulator_step_s": 94.36633558012545,
+        "video_render_s": 106.21601159404963
+      },
+      "timing_components_note": "model_pipeline_s (sum of api_latency_s over decision and pointing calls) is included in decision_s; observe_transition_s, simulator_step_s and video_render_s are separate. control_without_video_s = control_elapsed_s - video_render_s. Terminal video and cleanup are excluded from control_elapsed_s.",
+      "path_length_m": 2.3111919859818815,
+      "prompt_version": "agent-speedup-v1-prompt-5",
+      "final_macro": "place_release",
+      "final_primitive": "release",
+      "model_declared_complete": false,
+      "local_retries": 2,
+      "history_stats": {
+        "accepted_by_kind": {
+          "decision": 15,
+          "pointing_coarse": 3,
+          "pointing_fine": 3
+        },
+        "accepted_requests": 21,
+        "calls_by_kind": {
+          "decision": 15,
+          "pointing_coarse": 3,
+          "pointing_fine": 3
+        },
+        "messages": 0,
+        "overload_retry_policy": "same-observation-overload-backoff-v1",
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "protocol": "agent-speedup-v1-stateless",
+        "retained_image_pairs": 0
+      },
+      "versions": {
+        "AGENT_PROMPT_VERSION": "agent-speedup-v1-prompt-5",
+        "AGENT_SPEEDUP_V1_VERSION": "agent-speedup-v1",
+        "AGENT_VIDEO_VERSION": "agent-speedup-v1-video-1",
+        "CONTACT_SKILLS_VERSION": "agent-speedup-v1-contact-skills-2",
+        "HISTORY_PROTOCOL": "agent-speedup-v1-stateless",
+        "MARK_PROTOCOL_VERSION": "agent-speedup-v1-marks-8x8-crop96x5|128x4-8x8-gravity-turn",
+        "ORDERED_TRANSPORT_VERSION": "chatgpt-subscription-http-sse-ordered-v1",
+        "POLICY_VERSION": "agent-speedup-v1-policy-2",
+        "WRIST_SERVO_VERSION": "agent-speedup-v1-wrist-servo-2"
+      },
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "initial_status": {
+        "task_id": 3,
+        "episode_index": 0,
+        "steps": 0,
+        "success": false,
+        "terminated": false,
+        "horizon_reached": false,
+        "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_goal/open_the_top_drawer_and_put_the_bowl_inside.pruned_init",
+        "initial_state_sha256": "1cd5354ade9ab9f323a518515f961df96123b7daeca017df1f62d3e9ff18794f",
+        "bddl_sha256": "3056e4dc72ee590432cfb18c610fd077a572c8b8f256e45328031005dd0b6757",
+        "libero_success": false,
+        "collision": {
+          "enabled": true,
+          "mode": "task_manipulation_v1",
+          "detected": false,
+          "stop_on_collision": false,
+          "collision_policy": "record_only",
+          "success_qualification": "raw_libero_goal",
+          "first_event": null,
+          "counts": {
+            "checks": 1,
+            "physics_substeps": 0,
+            "forbidden_contact_points": 0,
+            "allowed_contact_points": 37,
+            "positive_distance_contacts_ignored": 0
+          },
+          "monitored_scope": [
+            "robot links and gripper versus scene geometry except the task's explicit intended contact pairs",
+            "target bowl versus distractors, fixtures and non-finger robot geometry except task supports",
+            "MuJoCo collision geoms with contact distance <= 0 at every physics substep and final endpoint"
+          ],
+          "allowances": [
+            "named Panda finger and finger-pad collision geoms versus target bowl for grasping",
+            "target bowl versus main table support-contact pairs",
+            "named Panda finger and finger-pad collision geoms versus the top-drawer handle only",
+            "target bowl versus top-drawer shell only for contact points within top_region plus 0.002 m tolerance"
+          ],
+          "excluded_scope": [
+            "robot-internal and self contacts, including adjacent robot links",
+            "scene-scene contacts without the robot or target bowl, including resting supports",
+            "positive-distance collision-margin proximity; no contact-force threshold is used",
+            "reset settling substeps; the final initial state is checked before policy execution"
+          ]
+        },
+        "collision_free_success": false
+      },
+      "initial_observation_sha256": "c6853a2d01f24753fce9fe3b06dd05f78d5d667c258fd048144c908f29321eb8",
+      "primitive_action_counts": {
+        "align": 95,
+        "align_refresh": 43,
+        "axes_probe": 29,
+        "calibrate": 60,
+        "clearance": 6,
+        "grasp": 34,
+        "guarded_approach": 163,
+        "ladder_settle": 44,
+        "lower": 1,
+        "lower_fast": 37,
+        "orient": 55,
+        "orient_lift": 16,
+        "orient_settle": 12,
+        "orient_start": 51,
+        "pull": 46,
+        "reach": 87,
+        "release": 23,
+        "release_lift": 22,
+        "retreat": 14,
+        "transport": 108,
+        "verify_hold": 21
+      },
+      "primitive_action_count_sum": 967,
+      "local_retry_limit": 2,
+      "actual_retries_used": 0,
+      "counts": {
+        "decisions": 15,
+        "grasp_attempts": 3,
+        "grasp_with_calls": 3,
+        "hold_actions": 0,
+        "local_retries_used": 0,
+        "pointing_coarse": 3,
+        "pointing_fine": 3,
+        "rejected_decisions": 0
+      },
+      "collision": {
+        "allowances": [
+          "named Panda finger and finger-pad collision geoms versus target bowl for grasping",
+          "target bowl versus main table support-contact pairs",
+          "named Panda finger and finger-pad collision geoms versus the top-drawer handle only",
+          "target bowl versus top-drawer shell only for contact points within top_region plus 0.002 m tolerance"
+        ],
+        "collision_policy": "record_only",
+        "counts": {
+          "allowed_contact_points": 857585,
+          "checks": 25143,
+          "forbidden_contact_points": 4078,
+          "physics_substeps": 24175,
+          "positive_distance_contacts_ignored": 0
+        },
+        "detected": true,
+        "enabled": true,
+        "excluded_scope": [
+          "robot-internal and self contacts, including adjacent robot links",
+          "scene-scene contacts without the robot or target bowl, including resting supports",
+          "positive-distance collision-margin proximity; no contact-force threshold is used",
+          "reset settling substeps; the final initial state is checked before policy execution"
+        ],
+        "first_event": {
+          "action_index": 129,
+          "contact_distance_m": -6.569493108122571e-05,
+          "geom1": {
+            "body": "wooden_cabinet_1_base",
+            "id": 166,
+            "name": "wooden_cabinet_1_g4",
+            "object": "wooden_cabinet_1",
+            "role": "scene"
+          },
+          "geom2": {
+            "body": "gripper0_right_gripper",
+            "id": 72,
+            "name": "gripper0_hand_collision",
+            "object": "robot0_gripper",
+            "role": "robot"
+          },
+          "phase": "action",
+          "physics_substep": 6,
+          "reason": "robot_scene_contact"
+        },
+        "mode": "task_manipulation_v1",
+        "monitored_scope": [
+          "robot links and gripper versus scene geometry except the task's explicit intended contact pairs",
+          "target bowl versus distractors, fixtures and non-finger robot geometry except task supports",
+          "MuJoCo collision geoms with contact distance <= 0 at every physics substep and final endpoint"
+        ],
+        "stop_on_collision": false,
+        "success_qualification": "raw_libero_goal"
+      },
+      "control_freq_hz": 20,
+      "simulation_actions_duration_s": 48.35,
+      "video_frames": 4094,
+      "video_fps": 20,
+      "request_files_count": 21,
+      "input_tokens": 82511,
+      "output_tokens": 2998,
+      "video_duration_s": 204.7,
+      "skill_decisions": [
+        {
+          "step": 89,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              -0.075,
+              -0.075
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 105,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              0.0414,
+              -0.075
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 122,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              -0.04,
+              -0.05
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 150,
+          "skill": "grasp_with",
+          "params": {
+            "target": "top_drawer_handle",
+            "strategy": "frontal_bar_pinch",
+            "side": null,
+            "approach": "world_-y",
+            "waypoint_offset_m": null,
+            "more_waypoints_m": null,
+            "max_travel_m": 0.12
+          }
+        },
+        {
+          "step": 238,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              0.0,
+              0.048
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 248,
+          "skill": "grasp_with",
+          "params": {
+            "target": "top_drawer_handle",
+            "strategy": "frontal_bar_pinch",
+            "side": null,
+            "approach": "world_-y",
+            "waypoint_offset_m": null,
+            "more_waypoints_m": null,
+            "max_travel_m": 0.12
+          }
+        },
+        {
+          "step": 441,
+          "skill": "place_release",
+          "params": {
+            "target": "top_drawer_handle",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 552,
+          "skill": "reach",
+          "params": {
+            "target": null,
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              -0.04,
+              0.075,
+              0.0617
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 568,
+          "skill": "grasp_with",
+          "params": {
+            "target": "bowl",
+            "strategy": "rim_pinch",
+            "side": "wrist_left",
+            "approach": null,
+            "waypoint_offset_m": null,
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 818,
+          "skill": "transport",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              0.06,
+              0.0
+            ],
+            "more_waypoints_m": [
+              [
+                0.0,
+                0.0,
+                0.075
+              ],
+              [
+                0.0,
+                0.0,
+                0.075
+              ]
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 855,
+          "skill": "transport",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              0.0,
+              0.075
+            ],
+            "more_waypoints_m": [
+              [
+                0.0,
+                -0.075,
+                0.0
+              ]
+            ],
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 880,
+          "skill": "transport",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.06,
+              -0.075,
+              0.072
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 899,
+          "skill": "transport",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.075,
+              -0.02,
+              0.0044
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 913,
+          "skill": "transport",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.03,
+              0.007,
+              0.06
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        },
+        {
+          "step": 926,
+          "skill": "place_release",
+          "params": {
+            "target": "top_drawer_interior",
+            "strategy": null,
+            "side": null,
+            "approach": null,
+            "waypoint_offset_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "more_waypoints_m": null,
+            "max_travel_m": null
+          }
+        }
+      ],
+      "final_executed": {
+        "event": "executed",
+        "step": 966,
+        "macro": "place_release",
+        "primitive": "release",
+        "success": true
+      },
+      "final_primitive_feedback": {
+        "type": "primitive_step",
+        "primitive": "release",
+        "step": 3,
+        "command": "open",
+        "gap_mm": 13.843610830474098,
+        "settle_actions": 3,
+        "fingers_stable": false,
+        "finger_motion_observed": true,
+        "pose_error_m": 0.0028328977206905125,
+        "done": false,
+        "status": null,
+        "reason": null
+      },
+      "terminal_semantics": "LIBERO success stops immediately while final place_release primitive is still incomplete (done=false). Bowl ends in lower, still closed; drawer ends on third release action before measured fingers stable. Do not claim completed release+retreat/fully completed macro.",
+      "completed_macro_note": "Macro outcomes include initial automatic calibrate but exclude final interrupted-by-success place_release. Model decisions exclude calibrate and include final place_release; matching counts are coincidental.",
+      "timing_nonoverlap_s": {
+        "decision_including_model": 133.93960955552757,
+        "simulator_call_wall": 94.36633558012545,
+        "observe_transition": 1.9315167125314474,
+        "other_control_residual": 4.297609715722501,
+        "video_render": 106.21601159404963
+      },
+      "final_collision_free_success": false,
+      "final_libero_success": true
+    }
+  },
+  "historical_runs": [
+    {
+      "run": "agent_speedup_v1_bowl_zero_shot_001",
+      "status": "infrastructure_error",
+      "libero_success": false,
+      "steps": 2835,
+      "api_calls": 108,
+      "control_without_video_s": 1142.9884654227644,
+      "elapsed_s": 1532.691348171793,
+      "prompt_version": "agent-speedup-v1-prompt-1",
+      "error": {
+        "message": "User interrupted the agent_speedup_v1 episode",
+        "stage": "deciding",
+        "type": "KeyboardInterrupt"
+      },
+      "interpretation": "Earlier prompt version, user-interrupted/uncompleted; not a completed task timing or matched seed sweep."
+    },
+    {
+      "run": "agent_speedup_v1_drawer_zero_shot_001",
+      "status": "user_stop",
+      "libero_success": false,
+      "steps": 867,
+      "api_calls": 61,
+      "control_without_video_s": 614.7379020471126,
+      "elapsed_s": 722.7209209157154,
+      "prompt_version": "agent-speedup-v1-prompt-2",
+      "error": {
+        "message": "User interrupted the agent_speedup_v1 episode",
+        "source": "sigint",
+        "stage": "executing",
+        "type": "KeyboardInterrupt"
+      },
+      "interpretation": "Earlier prompt version, user-interrupted/uncompleted; not a completed task timing or matched seed sweep."
+    },
+    {
+      "run": "agent_speedup_v1_drawer_zero_shot_002",
+      "status": "user_stop",
+      "libero_success": false,
+      "steps": 4702,
+      "api_calls": 98,
+      "control_without_video_s": 1489.3493879009038,
+      "elapsed_s": 2028.1096684429795,
+      "prompt_version": "agent-speedup-v1-prompt-3",
+      "error": {
+        "message": "Operator stop requested; stopped at a complete-feedback boundary",
+        "source": "file",
+        "stage": "observed",
+        "type": "OperatorStopRequested"
+      },
+      "interpretation": "Earlier prompt version, user-interrupted/uncompleted; not a completed task timing or matched seed sweep."
+    }
+  ],
+  "historical_direct_bowl": {
+    "status": "success",
+    "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+    "suite": "libero_spatial",
+    "task_id": 0,
+    "episode_index": 0,
+    "seed": 7,
+    "libero_success": true,
+    "libero_success_observed": true,
+    "task_success": null,
+    "completion_time_eligible": null,
+    "steps": 127,
+    "api_calls": 26,
+    "calls_by_kind": null,
+    "skill_decision_acts": null,
+    "pointing_results": null,
+    "macro_outcomes": null,
+    "macro_outcome_counts": null,
+    "macro_outcome_sequence": null,
+    "control_without_video_s": null,
+    "control_elapsed_s": 268.4332117596641,
+    "elapsed_s": 276.5936165358871,
+    "startup_to_initial_observation_s": 6.2582393093034625,
+    "timing_components": {
+      "decision_s": 242.65403077518567,
+      "field_expansion_s": 0.0,
+      "local_planning_s": 0.0,
+      "model_pipeline_s": 242.22983576031402,
+      "simulator_step_s": 5.773442103527486,
+      "video_render_s": 18.988144022412598
+    },
+    "timing_components_note": "field_expansion_s is included in model_pipeline_s; model_pipeline_s and local_planning_s are included in decision_s. Terminal video and cleanup are excluded from control_elapsed_s.",
+    "path_length_m": 0.8355716334925046,
+    "prompt_version": null,
+    "final_macro": null,
+    "final_primitive": null,
+    "model_declared_complete": false,
+    "local_retries": null,
+    "history_stats": null,
+    "video_excluded_control_derived_s": 249.44506773725152,
+    "input_tokens": 256555,
+    "policy": {
+      "adapter_max_rotation_rad": 0.15,
+      "centered_placement_guidance": true,
+      "class": "gpt_field.hybrid_policy.HybridFieldDirectPolicy",
+      "controller_mode": "direct",
+      "controllers": [
+        "coarse_field",
+        "contact_direct"
+      ],
+      "direct_action_chunks": 5,
+      "direct_action_steps": 5,
+      "execution_mode": "fixed",
+      "feedback_history": "block_summary",
+      "field_execution_steps": 10,
+      "field_generation": false,
+      "field_representation": "analytic-goal-rbf-v1",
+      "field_update_steps": 30,
+      "grasp_settle_guidance": true,
+      "grid": {
+        "frame": "world",
+        "size": 33,
+        "spacing_m": 0.005
+      },
+      "initial_history_settings": {
+        "feedback_block_summaries": 0,
+        "feedback_history": "block_summary",
+        "feedback_records": 0,
+        "image_history_limit": 2,
+        "messages": 0,
+        "observations": 0,
+        "protocol": "responses_output_block_feedback_v1",
+        "reasoning_replay": "opaque_encrypted_output_items",
+        "retained_image_pairs": 0,
+        "text_history": "all_observations_validated_outputs_completed_block_summaries_and_incomplete_feedback"
+      },
+      "local_field_planning": false,
+      "local_plans_per_direct_action": 0,
+      "local_plans_per_field_action": 0.1,
+      "method": "hybrid_field_direct",
+      "object_state_feedback_to_policy": false,
+      "planner": {
+        "horizon": 10,
+        "plateau_tolerance": 0.0,
+        "step_m": 0.01,
+        "workspace_max": [
+          1.0,
+          1.0,
+          1.5
+        ],
+        "workspace_min": [
+          -1.0,
+          -1.0,
+          0.0
+        ]
+      },
+      "prompt_version": "astra-compact-field-direct-history-direct-fixed-block_summary-centered-placement-grasp-settle-v5",
+      "reasoning_effort": "medium",
+      "recent_image_observations": 2,
+      "reward_feedback_to_policy": false,
+      "routing_source": "fixed Direct comparison arm",
+      "success_feedback_to_policy": false,
+      "tracking_lookahead_m": null,
+      "tracking_max_command_m": null,
+      "update_steps": 30
+    },
+    "interpretation": "Historical successful same named bowl task and seed 7, different controller/prompt/history/contact monitoring and calibration workload. Not a controlled ablation or general speedup estimate.",
+    "derived_ratio_direct_div_v1_video_excluded": 1.8421909213204108
+  },
+  "timing_interpretation_zh": [
+    "135.41 秒属于 bowl002，不是 drawer003。",
+    "drawer003 去除视频渲染的控制墙钟时间 234.54 秒（3.91 分钟）；含渲染 340.75 秒；总墙钟 348.96 秒（5.82 分钟）。",
+    "drawer003 模拟控制时间 = 967 / 20 = 48.35 秒；视频 204.7 秒是添加动作前后帧与决策停顿后的回放长度，不是控制时间。",
+    "旧 drawer002 的 1489.35 秒约 24.82 分钟是未完成、被停止的另一条记录。",
+    "decision_s 包含 model_pipeline_s，不能叠加计数；video_render_s 可从 control_elapsed_s 扣除。",
+    "simulator_step_s 是主机执行模拟器调用的墙钟时间，不是 20 Hz 的模拟时间。"
+  ],
+  "result_caveats_zh": [
+    "两个选定成功运行各 1 次，且提示版本不同，不应宣称跨任务 100% 成功率。",
+    "两次运行都记录非允许接触；碰撞只记录，不阻断 raw LIBERO success。",
+    "forbidden_contact_points 是跨物理子步累积接触点，不能称为独立碰撞次数。",
+    "zero-shot 表示这些记录没有示范输入；局部技能、常量、提示已经过此前试验调整，不能解读为完全未经开发调试。"
+  ]
+}

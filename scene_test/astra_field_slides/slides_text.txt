@@ -1,0 +1,403 @@
+--- Page 1 ---
+EXPERIMENT REVIEW · LIBERO DRAWER003
+Astra 场景场
+从单张图像，到几何表示，再到机器人路径
+证据范围：drawer003 closed step60 / open step552；原有实验复核，未重新推理。 [S1–S8]
+01 / 17
+单张 RGB  →  CSG 隐式场
+三个需要分开回答的问题
+01
+场从哪里来
+Astra 估计几何参数；代码把参数变成可查询的场。
+02
+几何保留得多准确
+网格能保留多数模型表面；真实柜体仍有厘米级偏差。
+03
+规划怎样使用场
+关节空间搜索，候选机器人姿态通过场查询筛选。
+实验图：抽屉打开快照，Astra 的唯一视觉输入
+
+
+--- Page 2 ---
+01 / FIELD MEANING
+先区分：目标距离场与场景几何场
+相同的“热图”形式，可以表达完全不同的信息。
+[S10] drawer003 冻结规划代码；目标场为到目标区域的图距离，无障碍编码。Astra 语义据 [S1, S2]。
+02 / 17
+此前 speedup v1 的 waypoint 场
+“离目标还有多远”
+目标位置决定场值。颜色描述每个空间位置到当
+前路点目标区域的距离。
+它本身没有编码柜体、桌面和障碍物的表面。
+本次 Astra 场景场
+“哪里被物体占据”
+图像估计出的物体形状决定场值。零等值面表示
+预测表面，正负号区分内外。
+规划可用它检查机器人是否与预测环境重叠。
+本 PDF 讨论场景几何场；热图颜色由物体几何决定，与目标路点距离无关。
+
+
+--- Page 3 ---
+02 / CREATION PIPELINE
+Astra 输出几何描述，代码生成数值场
+模型没有逐个输出数百万个 voxel，也没有直接输出最终网格模型。
+[S1] prompt / schema / field_csg.py；[S2] build_fields.py 与 evaluation。
+03 / 17
+01
+单张 RGB
+512 × 512
+无深度输入
+02
+Astra JSON
+基元、位姿
+尺寸、布尔关系
+03
+解析场 φ(p)
+代码计算任意
+三维点的场值
+04
+保存数值网格
+float32
+4 mm / 2 mm
+05
+解码表面
+φ = 0
+Marching Cubes
+模型负责：几何估计
+从照片猜测尺寸、位置、方向、开口和不可见
+部分。
+本地代码负责：场求值、保存和解码
+解码器只读取保存的数值块，不读取 RGB、CSG JSON 或真值几何。
+本次生成器：gpt-6-astra / medium；每个快照独立输入、一次有效输出。
+
+
+--- Page 4 ---
+03 / PROMPT & OUTPUT
+输入没有真值几何；尺度和形状都由图像估计
+原始提示词要求估计场景几何，同时明确单张图像的尺度与遮挡歧义。
+[S1] instructions.txt、schema.json、fields/drawer003_closed_step60.json；未做 GT 尺度对齐。
+04 / 17
+输入约束（原提示词摘要）
+只提供一张正向 RGB；允许常识性的物体尺寸先验
+。
+不提供深度、相机标定、场景资产、任务历史或其
+他帧。
+输出 JSON：box / sphere / cylinder 加布尔组合。
+最多 32 个基元、64 个总节点；记录不确定和省略
+的细节。
+模型还报告焦距估计，但代码直接使用其三维参数建场，不用该焦距再
+反投影。
+真实输出片段：closed 快照
+name
+dark_left_cabinet
+op
+box
+center_m
+[-0.30, 0.09, 0.82]
+size_m
+[0.14, 0.115, 0.17]
+rotation_xyzw
+[0.316228, 0, 0, 0.948683]
+单位：米；box 的 size_m 是半尺寸。
+相机坐标：X 向右、Y 向下、Z 向前。
+
+
+--- Page 5 ---
+04 / FIELD DEFINITION
+场保存的是“实体在哪里”的隐式函数
+CSG = Constructive Solid Geometry：用简单实体和布尔关系组合复杂形状。
+[S1] field_csg.py；右侧为空腔概念示意，不是实验重建图。
+05 / 17
+场定义域内每个 p，都能查询 φ(p)
+φ(p) < 0
+实体内部：占据
+φ(p) = 0
+模型预测的表面
+φ(p) > 0
+实体外部：候选自由空间
+并集：min(a, b)       交集：max(a, b)
+差集：max(a, −b)     → 可以表达空腔
+实体
+空腔 / 自由空间
+示意：外部实体 − 内部实体
+零等值面同时包含外壁和内壁。
+注意：布尔组合后的 φ 不保证处处等于到最近表面的精确欧氏距离。
+
+
+--- Page 6 ---
+05 / WHAT IS ACTUALLY QUERIED
+重建测试与规划测试使用不同的读取路径
+两条路径来自同一次 Astra 几何估计，但不能把它们当作完全相同的数值实验。
+[S2] 保存场与解码；[S5] planning_fields.py:215–267；planning_001/settings.json。
+06 / 17
+Astra
+原始 CSG JSON
+包含场景
+以及可见机器人
+重建精度分支
+原始场 → 保存 2 mm 网格 → 解码 mesh → 评分
+检验数值表示是否保留模型形状，以及解码场景与真值差多远。
+当前 planning v2 分支
+移除 robot_* → 环境解析场 → 直接查询 φ(p)
+原 2 mm 网格仅提供查询域边界；规划没有读取网格值做插值。
+解析查询可避免网格插值误差，但不会纠正模型估计错的尺寸、位置或漏建物体。
+
+
+--- Page 7 ---
+06 / ERROR DEFINITION
+准确性必须分两层测量
+“模型给出的形状被保存得很好”，不等于“模型给出的形状就是真实场景”。
+[S2] evaluate_fields.py；comparison_summary.json。所有真值仅用于事后评估。
+07 / 17
+A / C：相对于真实场景的误差
+A：原始解析场 vs LIBERO 真值
+C：2 mm 网格解码表面 vs 真值
+同一真实相机射线，比较第一个交点的相机 Z 深度。
+B：场表示本身的保存误差
+原始解析场
+vs 保存网格后解码的表面
+6 个由模型边界生成的外部视角；不使用真值。检验同
+一预测几何的变化。
+e(u,v) = | z_pred(u,v) − z_GT(u,v) |
+单位：mm
+MAE / P95 只统计命中射线；同时报告覆盖率。≤5 mm 比例把漏失计为失败。
+这里不是三维最近表面距离，也没有验证所有隐藏表面；B 的射线集合与 A / C 不同。
+
+
+--- Page 8 ---
+07 / REPRESENTATION PRESERVATION
+2 mm 网格保留了多数已预测表面
+B：只比较“原始 Astra 形状”和“网格解码形状”，不比较真实场景。
+[S2] comparison_summary.json / preservation_B_six_views；[S3] grazing-wall diagnostic。
+08 / 17
+保存误差 B（2 mm）
+抽屉关闭 · step60
+抽屉打开 · step552
+有参考表面的射线数
+1,750
+1,897
+命中保留率
+100%
+98.735%
+命中 MAE
+0.0071 mm
+0.0034 mm
+命中最大误差
+8.395 mm
+0.539 mm
+丢失原始交点
+0
+24
+为什么均值很小？大量平面易于保留；均值还排除了没有命中的射线。
+打开快照的 24 条漏失都在背景墙上沿的掠射位置，不在抽屉；小均值仍不保证薄结构、隐藏空腔或拓扑完整。
+
+
+--- Page 9 ---
+08 / SCENE RECONSTRUCTION ACCURACY
+与真值相比：柜体仍有约 71–98 mm 深度误差
+C：2 mm 网格解码后，在整块可见目标柜体上评估；不是只测把手。
+[S2] comparison_summary.json；MAE / P95 为相机 Z 深度绝对误差。
+09 / 17
+相对 LIBERO 真值
+关闭 · step60
+打开 · step552
+柜体 MAE
+70.99 mm
+98.01 mm
+柜体 P95
+166.23 mm
+308.22 mm
+柜体误差 ≤ 5 mm
+0.830%
+1.213%
+柜体射线命中率
+100%
+100%
+整幅图像 MAE
+438.15 mm
+361.06 mm
+A → C：关闭 71.14 → 70.99 mm；打开 97.98 → 98.01 mm。主要偏差已存在于原始几何估计。
+100% 命中只表示射线撞上了某个预测表面，可能是错的墙或桌面；不代表 100% 几何正确。
+2 mm 是网格间距，不是本次重建精度。结论仅覆盖这两个单次预测快照。
+
+
+--- Page 10 ---
+09 / VISUAL EVIDENCE
+同一视角对比：布局可辨，深度与细节有偏差
+从保存场解码出的表面重新投射深度；未做尺度或位姿对齐。
+[S2] evaluation_001 保存的数值数组；本页据原始数组重画，见 figures manifest。
+10 / 17
+输入 RGB
+LIBERO 真值深度
+Astra 场解码深度
+绝对深度误差
+关闭
+打开
+深度 0 → 4 m
+误差 0 → 0.5 m（饱和）
+
+
+--- Page 11 ---
+10 / SELF-GEOMETRY FIX
+规划前先移除“机器人自己的重建”
+保留环境几何，再用原生机器人模型查询它，避免把自己当成障碍。
+[S5] planning_fields.py；RESULTS.txt；field_provenance.json。
+11 / 17
+原接入问题
+照片中的机器人也被建进了场
+原生机器人表面与 robot_* 组件重合。所有查询
+都在起点被拒绝，无法进入规划。
+当前 v2 处理
+移除完整的 robot_* 并集组件
+关闭快照移除 6 个，打开快照移除 14 个。保留其
+他环境实体、差集和重叠部分。
+修复后的环境场支持起点检查。但 robot_* 名称是模型判断，不是经过真值验证的语义分割。
+查询范围沿用原场边界；域外或符号不明确的点按未知拒绝。
+
+
+--- Page 12 ---
+11 / HOW PLANNING WORKS
+搜索在 7 维关节空间，场负责检查候选姿态
+先尝试关节直连；失败后用 RRT-Connect 搜索。当前没有沿场梯度导航。
+[S5] run_fixed_planning.py；[S6] robot_geometry.py / joint_planner.py；[S7] 原生碰撞评分。
+12 / 17
+候选关节角 q
+7 个机械臂关节
+手指固定
+正运动学 FK
+原生机器人表面
+变换到相机坐标
+查询 φ_env(p)
+任一点占据或未知
+拒绝该姿态
+连接与搜索
+关节插值检查边
+返回关节路径
+输入：预测环境场 + 已知机器人模型、关节与相机配准
+13 个原生碰撞几何体
+172,411 个表面点；覆盖半径 ≤5 mm。
+同时检查关节限位与机器人自碰撞。
+先保存全部路径，再用真值评分
+规划边最大关节步长 0.025 rad；
+事后真值检查细化至 0.005 rad。
+5 mm 是表面采样覆盖尺度，不是安全余量。有限姿态/表面采样不能证明连续路径绝对无碰撞。
+
+
+--- Page 13 ---
+12 / PLANNING RESULTS
+返回 40 条路径，其中 32 条通过真值采样
+两个静态快照 × 每个 10 组起终点 × 两个随机种子；共 20 组不同起终点组合。
+[S7] evaluation_001/metrics.json；[S5] RESULTS.txt；仅静态几何规划，没有执行抽屉操作任务。
+13 / 17
+通过真值采样
+真值发生碰撞
+关闭快照
+18
+2
+20 条返回
+打开快照
+14
+6
+20 条返回
+38 条关节直连
++
+2 条 RRT 搜索路径
+32/40 是这组路径的采样通过数，不是“80% 重建精度”，也不是抽屉任务成功率。
+两种种子下的相同直连路径并不构成独立的几何重建试验。
+
+
+--- Page 14 ---
+13 / RRT EXAMPLE
+一个 RRT 案例：场可以参与路径搜索
+打开快照 · base_negative · seed 17；已保存路径的运动学回放。
+[S7] evaluation metrics / plans；[S9] video_001/previews/22_030.png。没有保存搜索树轨迹。
+14 / 17
+20.11 s
+规划计算时间
+3
+保存的路径顶点
+4.725 mm
+92 个真值姿态样本中的最小间
+隙
+热图是当前末端高度的环境场水平切片；线是末端 XY 投影，不代表整臂间隙。
+同组真值场中直连也可行，因此这次绕行不能证明必要或最优。
+
+
+--- Page 15 ---
+14 / CONTACT DIAGNOSIS
+失败案例：场判为自由，原生夹爪却碰到柜体
+打开快照 · wrist_negative · seed 17 · 第 33 个真值采样姿态（零基编号）。
+[S8] failure_diagnostics_001/report.json；本页按原关节姿态重绘并复核原生接触，见 assets/collision_render_data.json。
+15 / 17
+红圈：原生接触位置投影
+图像为事后诊断，未进入规划。
+同一位置，两种判断
+真实几何
+已穿入 0.200 mm
+Astra 预测环境场
+φ = +150.580 mm
+此姿态的全部 172,411 个机器人表面采样
+点也被预测为空闲。
+这直接证实接触区域的预测几何有偏差。φ 数值不是实际安全间隙，也不是整场重建误差。
+
+
+--- Page 16 ---
+15 / WHAT THE EVIDENCE SUPPORTS
+本轮结论：场可查询、可规划，几何还不够准确
+区分“表示是否有效”和“输入图像能否提供足够准确的三维信息”。
+综合 [S1–S8]；下方为建议的后续实验，不是已经取得的结果。
+16 / 17
+表示能力
+可以表达与保存
+CSG 能表达实体和空腔；2 mm 网
+格在多数已预测表面上保留精度较
+好。
+重建精度
+仍有厘米级偏差
+可见柜体 MAE 约 71 / 98 mm；高
+网格分辨率不能修正模型猜错的形
+状。
+规划作用
+能搜索，尚不能保证安全
+原生机器人可用场做可行性检查；
+8 条返回路径仍在真值中碰撞。
+下一轮建议：固定相同查询，逐项改善几何信息
+① 提供已知相机标定和尺度，隔离尺度误差。
+② 加入多视角，单独评估抽屉开口、柜体边缘与遮挡区域。
+③ 显式记录未知和不确定区域，同时复测重建误差与真实碰撞。
+
+
+--- Page 17 ---
+APPENDIX / EVIDENCE INDEX
+数据来源与复现入口
+所有结论来自现有 drawer003 实验；本次只新增幻灯片、图表与生成脚本。
+项目根目录：/workspace/gpt_field；完整来源哈希保存在本幻灯片目录的 evidence_*.json / deck_manifest.json。
+17 / 17
+[S1]  生成约束与场定义
+scene_test/astra_scene/inferences_001/instructions.txt
+scene_test/astra_scene/field_csg.py
+[S2]  重建与保存精度
+scene_test/astra_scene/comparison_summary.json
+scene_test/astra_scene/evaluate_fields.py
+[S3]  掠射边界漏失诊断
+scene_test/astra_scene/runs/diagnostic_open_wall_misses_001/report.json
+[S4]  原始 Astra 场与保存网格
+scene_test/astra_scene/inferences_001/fields/
+scene_test/astra_scene/runs/fields_001/
+[S5]  规划接入与自体移除
+scene_test/field_planning_v2/RESULTS.txt
+scene_test/field_planning_v2/planning_fields.py
+[S6]  机器人表面与搜索算法
+scene_test/field_planning/robot_geometry.py
+scene_test/field_planning/joint_planner.py
+[S7]  路径和真值评分
+scene_test/field_planning_v2/runs/planning_001/plans.json
+scene_test/field_planning_v2/runs/evaluation_001/metrics.json
+[S8]  失败接触诊断
+scene_test/field_planning_v2/runs/failure_diagnostics_001/report.json
+[S9]  规划演示视频
+scene_test/field_planning_v2/video_001/planning_highlights.mp4
+scene_test/field_planning_v2/video_001/planning_all_queries.mp4
+[S10]  此前 waypoint 目标场
+runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/contact_skills.py
+runs/agent_speedup_v1_drawer_zero_shot_003/trial/frozen_source/fine_distance_planner.py

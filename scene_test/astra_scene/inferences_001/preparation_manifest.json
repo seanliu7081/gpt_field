@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "protocol": "astra-single-rgb-csg-field-v1",
+  "status": "prepared",
+  "model": "gpt-6-astra",
+  "reasoning_effort": "medium",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "billing": "chatgpt_subscription",
+  "transport_version": "chatgpt-subscription-http-sse-ordered-v1",
+  "max_inference_calls": 3,
+  "automatic_retries": 0,
+  "history": "none; each image independent",
+  "input_manifest": {
+    "path": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/rgb_inputs.json",
+    "sha256": "8d51752b8636890a2f5269ff5c533c3deaf0324fd8ce29f638d2f9d7826d0965"
+  },
+  "inputs": [
+    {
+      "name": "bowl002_initial",
+      "original": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/bowl002_initial.png",
+      "file": "inputs/bowl002_initial.png",
+      "sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "original": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_closed_step60.png",
+      "file": "inputs/drawer003_closed_step60.png",
+      "sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "drawer003_open_step552",
+      "original": "/workspace/gpt_field/scene_test/rgb_scene/inputs_001/drawer003_open_step552.png",
+      "file": "inputs/drawer003_open_step552.png",
+      "sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "sources": [
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/field_csg.py",
+      "sha256": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e",
+      "copy": "source/scene_test/astra_scene/field_csg.py",
+      "copy_sha256": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e"
+    },
+    {
+      "path": "/workspace/gpt_field/scene_test/astra_scene/infer_astra.py",
+      "sha256": "bbe93abd3cd370029d3272a3bb42549da5b179c8dbc2535810836e827a3dd752",
+      "copy": "source/scene_test/astra_scene/infer_astra.py",
+      "copy_sha256": "bbe93abd3cd370029d3272a3bb42549da5b179c8dbc2535810836e827a3dd752"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/__init__.py",
+      "sha256": "bd6ab62598007f8d792dd432ec445f8ac3d55347ef30f119eca553edcddd7771",
+      "copy": "source/src/gpt_field/__init__.py",
+      "copy_sha256": "bd6ab62598007f8d792dd432ec445f8ac3d55347ef30f119eca553edcddd7771"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/action.py",
+      "sha256": "535c8f7ed6c7869a752a515932b8af7ac07daca7191246491b5f0ec835d2331d",
+      "copy": "source/src/gpt_field/action.py",
+      "copy_sha256": "535c8f7ed6c7869a752a515932b8af7ac07daca7191246491b5f0ec835d2331d"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/astra.py",
+      "sha256": "3c1ae3860b77e6e88b052cda25b7f9197dffc99679758c436d196257cdae4321",
+      "copy": "source/src/gpt_field/astra.py",
+      "copy_sha256": "3c1ae3860b77e6e88b052cda25b7f9197dffc99679758c436d196257cdae4321"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/baselines.py",
+      "sha256": "0ec73dec0c61e08cd12905f704d36d31baf138e218f3a310544814ef6a453c07",
+      "copy": "source/src/gpt_field/baselines.py",
+      "copy_sha256": "0ec73dec0c61e08cd12905f704d36d31baf138e218f3a310544814ef6a453c07"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/chatgpt_auth.py",
+      "sha256": "d042664658abcde4f54e66b4f8656166d0f449e941dc2bac6d124ef81be22841",
+      "copy": "source/src/gpt_field/chatgpt_auth.py",
+      "copy_sha256": "d042664658abcde4f54e66b4f8656166d0f449e941dc2bac6d124ef81be22841"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py",
+      "sha256": "dcbeef68480a710345b570a1d01e86a23feedbbfe31a865a164045cf1430ca79",
+      "copy": "source/src/gpt_field/chatgpt_plan.py",
+      "copy_sha256": "dcbeef68480a710345b570a1d01e86a23feedbbfe31a865a164045cf1430ca79"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/direct_history.py",
+      "sha256": "3f6afa6aa3213f562a547534aa6437e4facfb7ef9fb26033b9c48be931062f8a",
+      "copy": "source/src/gpt_field/direct_history.py",
+      "copy_sha256": "3f6afa6aa3213f562a547534aa6437e4facfb7ef9fb26033b9c48be931062f8a"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/field.py",
+      "sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499",
+      "copy": "source/src/gpt_field/field.py",
+      "copy_sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/field_history.py",
+      "sha256": "34a8cbabfbf24cd8a433623d6d2344a79bf523be11036de74b363759897804cd",
+      "copy": "source/src/gpt_field/field_history.py",
+      "copy_sha256": "34a8cbabfbf24cd8a433623d6d2344a79bf523be11036de74b363759897804cd"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/observation.py",
+      "sha256": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e",
+      "copy": "source/src/gpt_field/observation.py",
+      "copy_sha256": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/ordered_transport.py",
+      "sha256": "e439eb2e832773a46f4a5ffe10f473dd9367b3d417161705661304d638e39410",
+      "copy": "source/src/gpt_field/ordered_transport.py",
+      "copy_sha256": "e439eb2e832773a46f4a5ffe10f473dd9367b3d417161705661304d638e39410"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/planner.py",
+      "sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1",
+      "copy": "source/src/gpt_field/planner.py",
+      "copy_sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/policy.py",
+      "sha256": "eb382bc6e9f90d5be9046566d3217ea58013f8ce4185c1af80fc98067d0e92cc",
+      "copy": "source/src/gpt_field/policy.py",
+      "copy_sha256": "eb382bc6e9f90d5be9046566d3217ea58013f8ce4185c1af80fc98067d0e92cc"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/schema.py",
+      "sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09",
+      "copy": "source/src/gpt_field/schema.py",
+      "copy_sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09"
+    },
+    {
+      "path": "/workspace/gpt_field/src/gpt_field/tracking.py",
+      "sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64",
+      "copy": "source/src/gpt_field/tracking.py",
+      "copy_sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64"
+    }
+  ],
+  "requests": [
+    {
+      "name": "bowl002_initial",
+      "file": "requests/bowl002_initial.json",
+      "sha256": "eba1e1646b06ed51bdf43407d81c0ba57119b840486f7b6a41cf756f223f873e",
+      "wire_file": "requests/bowl002_initial.wire.json",
+      "wire_sha256": "a61cabd83e891180d5fe7ac268fcbf6dab5390fe896fc7578c8320a9d1bc9117"
+    },
+    {
+      "name": "drawer003_closed_step60",
+      "file": "requests/drawer003_closed_step60.json",
+      "sha256": "7dc428c86e3dd48ec91fdb1fcc82befc04a6f741fb64d784e0a2ec3c9934b49c",
+      "wire_file": "requests/drawer003_closed_step60.wire.json",
+      "wire_sha256": "c6842840bdd9d2f903a4a90c71a3f1e37ea95ddd45059ff580760092949c6b15"
+    },
+    {
+      "name": "drawer003_open_step552",
+      "file": "requests/drawer003_open_step552.json",
+      "sha256": "7f077e9209f7cbb39207d622143ffdb9d499dfb1134d76f36e2a844356ca07f0",
+      "wire_file": "requests/drawer003_open_step552.wire.json",
+      "wire_sha256": "d2fa84709f52f9f70e0e98d620149c01beb65575000fd67cf82fedccc500cced"
+    }
+  ],
+  "api_key_calls": 0,
+  "subscription_inference_calls": 0,
+  "credentials_accessed": false,
+  "sealed_files": [
+    {
+      "file": "input_manifest.json",
+      "sha256": "8d51752b8636890a2f5269ff5c533c3deaf0324fd8ce29f638d2f9d7826d0965"
+    },
+    {
+      "file": "inputs/bowl002_initial.png",
+      "sha256": "dd9e3d9bdb41d39629473f18e4fcf32364bd42c3b637a9dd5e9e395dde725bd8"
+    },
+    {
+      "file": "inputs/drawer003_closed_step60.png",
+      "sha256": "5043e98208d0eb7a126dfd9e107130f4b811df594c0530e1841bf8e4ede665eb"
+    },
+    {
+      "file": "inputs/drawer003_open_step552.png",
+      "sha256": "aaea37852a9c7cb9c3b2166881d815aadea82683a14e9e3d99a5dad1fb1db10d"
+    },
+    {
+      "file": "instructions.txt",
+      "sha256": "1d01aae912d386546e49aa913fd9d2e1d85fecce84f53e4b32b3a7c644eab3ae"
+    },
+    {
+      "file": "requests/bowl002_initial.json",
+      "sha256": "eba1e1646b06ed51bdf43407d81c0ba57119b840486f7b6a41cf756f223f873e"
+    },
+    {
+      "file": "requests/bowl002_initial.wire.json",
+      "sha256": "a61cabd83e891180d5fe7ac268fcbf6dab5390fe896fc7578c8320a9d1bc9117"
+    },
+    {
+      "file": "requests/drawer003_closed_step60.json",
+      "sha256": "7dc428c86e3dd48ec91fdb1fcc82befc04a6f741fb64d784e0a2ec3c9934b49c"
+    },
+    {
+      "file": "requests/drawer003_closed_step60.wire.json",
+      "sha256": "c6842840bdd9d2f903a4a90c71a3f1e37ea95ddd45059ff580760092949c6b15"
+    },
+    {
+      "file": "requests/drawer003_open_step552.json",
+      "sha256": "7f077e9209f7cbb39207d622143ffdb9d499dfb1134d76f36e2a844356ca07f0"
+    },
+    {
+      "file": "requests/drawer003_open_step552.wire.json",
+      "sha256": "d2fa84709f52f9f70e0e98d620149c01beb65575000fd67cf82fedccc500cced"
+    },
+    {
+      "file": "schema.json",
+      "sha256": "b400d4e3e1be8256b89482629922df163cec0e52078c5cccacbf46661b8ec471"
+    },
+    {
+      "file": "source/scene_test/astra_scene/field_csg.py",
+      "sha256": "cf822e75276da4858c9d4121ec17562fe33b09dda4a2f1e56105f05e51cf8e7e"
+    },
+    {
+      "file": "source/scene_test/astra_scene/infer_astra.py",
+      "sha256": "bbe93abd3cd370029d3272a3bb42549da5b179c8dbc2535810836e827a3dd752"
+    },
+    {
+      "file": "source/src/gpt_field/__init__.py",
+      "sha256": "bd6ab62598007f8d792dd432ec445f8ac3d55347ef30f119eca553edcddd7771"
+    },
+    {
+      "file": "source/src/gpt_field/action.py",
+      "sha256": "535c8f7ed6c7869a752a515932b8af7ac07daca7191246491b5f0ec835d2331d"
+    },
+    {
+      "file": "source/src/gpt_field/astra.py",
+      "sha256": "3c1ae3860b77e6e88b052cda25b7f9197dffc99679758c436d196257cdae4321"
+    },
+    {
+      "file": "source/src/gpt_field/baselines.py",
+      "sha256": "0ec73dec0c61e08cd12905f704d36d31baf138e218f3a310544814ef6a453c07"
+    },
+    {
+      "file": "source/src/gpt_field/chatgpt_auth.py",
+      "sha256": "d042664658abcde4f54e66b4f8656166d0f449e941dc2bac6d124ef81be22841"
+    },
+    {
+      "file": "source/src/gpt_field/chatgpt_plan.py",
+      "sha256": "dcbeef68480a710345b570a1d01e86a23feedbbfe31a865a164045cf1430ca79"
+    },
+    {
+      "file": "source/src/gpt_field/direct_history.py",
+      "sha256": "3f6afa6aa3213f562a547534aa6437e4facfb7ef9fb26033b9c48be931062f8a"
+    },
+    {
+      "file": "source/src/gpt_field/field.py",
+      "sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499"
+    },
+    {
+      "file": "source/src/gpt_field/field_history.py",
+      "sha256": "34a8cbabfbf24cd8a433623d6d2344a79bf523be11036de74b363759897804cd"
+    },
+    {
+      "file": "source/src/gpt_field/observation.py",
+      "sha256": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e"
+    },
+    {
+      "file": "source/src/gpt_field/ordered_transport.py",
+      "sha256": "e439eb2e832773a46f4a5ffe10f473dd9367b3d417161705661304d638e39410"
+    },
+    {
+      "file": "source/src/gpt_field/planner.py",
+      "sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1"
+    },
+    {
+      "file": "source/src/gpt_field/policy.py",
+      "sha256": "eb382bc6e9f90d5be9046566d3217ea58013f8ce4185c1af80fc98067d0e92cc"
+    },
+    {
+      "file": "source/src/gpt_field/schema.py",
+      "sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09"
+    },
+    {
+      "file": "source/src/gpt_field/tracking.py",
+      "sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64"
+    }
+  ],
+  "prompt_sha256": "1d01aae912d386546e49aa913fd9d2e1d85fecce84f53e4b32b3a7c644eab3ae",
+  "schema_sha256": "b400d4e3e1be8256b89482629922df163cec0e52078c5cccacbf46661b8ec471"
+}

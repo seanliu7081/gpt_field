@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "robot": "original LIBERO Panda, native MuJoCo collision geometry",
+  "arm_joint_names": [
+    "robot0_joint1",
+    "robot0_joint2",
+    "robot0_joint3",
+    "robot0_joint4",
+    "robot0_joint5",
+    "robot0_joint6",
+    "robot0_joint7"
+  ],
+  "finger_joint_names": [
+    "gripper0_finger_joint1",
+    "gripper0_finger_joint2"
+  ],
+  "q_initial": [
+    0.0025682340910677375,
+    0.5169359511551379,
+    -0.0043780579924078905,
+    -1.5997556967619508,
+    0.005287650813237378,
+    2.065451833739141,
+    0.7816515284884364
+  ],
+  "finger_q_initial": [
+    0.03959056341978436,
+    -0.03999995985058484
+  ],
+  "joint_limits": [
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -1.7628,
+      1.7628
+    ],
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -3.0718,
+      -0.0698
+    ],
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -0.0175,
+      3.7525
+    ],
+    [
+      -2.8973,
+      2.8973
+    ]
+  ],
+  "T_camera_cv_from_world": [
+    [
+      -7.268184503297055e-08,
+      0.9999999999999858,
+      -1.521152659724862e-07,
+      2.928280429142419e-07
+    ],
+    [
+      0.6282664504107425,
+      -7.268184503297055e-08,
+      -0.777998243756553,
+      0.8390649290821589
+    ],
+    [
+      -0.777998243756553,
+      -1.5211526597248617e-07,
+      -0.6282664504107283,
+      1.5241287867393822
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "camera_transform_semantics": "explicit fixed rig extrinsics; no focal, depth or environment geometry",
+  "collision_geom_names": [
+    "robot0_link0_collision",
+    "robot0_link1_collision",
+    "robot0_link2_collision",
+    "robot0_link3_collision",
+    "robot0_link4_collision",
+    "robot0_link5_collision",
+    "robot0_link6_collision",
+    "robot0_link7_collision",
+    "gripper0_hand_collision",
+    "gripper0_finger1_collision",
+    "gripper0_finger1_pad_collision",
+    "gripper0_finger2_collision",
+    "gripper0_finger2_pad_collision"
+  ],
+  "native_mesh_semantics": "MuJoCo convex hull of original collision-mesh vertices; native pad boxes retained",
+  "assets": [
+    {
+      "mesh_name": "robot0_link0",
+      "file": "assets/dfc6d94330de8ddb.stl",
+      "sha256": "dfc6d94330de8ddb005b311bfdba9f3b8e1aa7c256b71592ee7ff32cb9a9a5aa"
+    },
+    {
+      "mesh_name": "robot0_link1",
+      "file": "assets/d24e332dffccf260.stl",
+      "sha256": "d24e332dffccf260b91d05dde17c5998bb9559d37da8608a8ee5213d9661f603"
+    },
+    {
+      "mesh_name": "robot0_link2",
+      "file": "assets/370f7605a0fae352.stl",
+      "sha256": "370f7605a0fae3529db169ded50f52f171024aa792d4d773bc84197301f6a039"
+    },
+    {
+      "mesh_name": "robot0_link3",
+      "file": "assets/0a8d638b9349c6c0.stl",
+      "sha256": "0a8d638b9349c6c0eefc4e888636ac4838c4b27170f18a51699321118af709c1"
+    },
+    {
+      "mesh_name": "robot0_link4",
+      "file": "assets/0180ebb5772ec984.stl",
+      "sha256": "0180ebb5772ec9840cb049750cffb29a9ddc90311752a16ea34757782ef9e48d"
+    },
+    {
+      "mesh_name": "robot0_link5",
+      "file": "assets/dd17e688c7870e72.stl",
+      "sha256": "dd17e688c7870e722283525879643d53a74c0024d328b0e14b034b54c8b6c31a"
+    },
+    {
+      "mesh_name": "robot0_link6",
+      "file": "assets/20b768e99a0e0440.stl",
+      "sha256": "20b768e99a0e0440b5754dcca108016434e57937cc356acd9c352ccd3cb27f77"
+    },
+    {
+      "mesh_name": "robot0_link7",
+      "file": "assets/92ac6afcf7574c03.stl",
+      "sha256": "92ac6afcf7574c034d3170d8a68e95ac9048ab9d0dd5bbd8311b86e551b9ab1c"
+    },
+    {
+      "mesh_name": "gripper0_hand",
+      "file": "assets/94493e94f30fe940.stl",
+      "sha256": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed"
+    },
+    {
+      "mesh_name": "gripper0_finger",
+      "file": "assets/2d07a740392f3b9b.stl",
+      "sha256": "2d07a740392f3b9b0816f65d64fff9927d3d57c897870fc4b6ff9c56fff3a0c8"
+    }
+  ],
+  "excluded_data": [
+    "environment geometry",
+    "object state",
+    "depth",
+    "segmentation",
+    "camera focal",
+    "task goal"
+  ],
+  "robot_xml_sha256": "b6bc1448de96b861b139ec1de164ffdbabb9e4a6bfe74470dd38f1b614bba460"
+}

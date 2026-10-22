@@ -1,0 +1,294 @@
+{
+  "status": "passed_with_documented_limits_and_concurrent_source_changes",
+  "auditor": "independent robot_geometry reviewer",
+  "scope": "saved planning_001 plus corrected native-distance evaluation_002; no model calls or motion execution",
+  "checks": {
+    "runs/planning_001": {
+      "manifest_sha256": "007ef304c62ae83d279fb738aebd7c91dfe542f9edd549a9c9f1f6b6ecdf5775",
+      "verified_hash_count": 336,
+      "mismatches": [],
+      "status": "complete",
+      "sources_unchanged": true,
+      "inputs_unchanged": true
+    },
+    "runs/evaluation_001": {
+      "manifest_sha256": "a27d3f6b06815cfdb792c8a9edeca430482fae7b8bed87c75cd6df2f9f9359fe",
+      "verified_hash_count": 144,
+      "mismatches": [],
+      "status": "complete",
+      "sources_unchanged": true,
+      "inputs_unchanged": true
+    },
+    "runs/evaluation_002": {
+      "manifest_sha256": "2d30942d42ac2ebed20876163eefbad03850c384416dc3314cd09a5ac2146ac5",
+      "verified_hash_count": 149,
+      "mismatches": [],
+      "status": "complete",
+      "sources_unchanged": true,
+      "inputs_unchanged": true
+    },
+    "runs/analysis_002": {
+      "manifest_sha256": "26b613071c663b086f4e650bd6d45df85158bf4ce9b628bf6fb4262f47873291",
+      "verified_hash_count": 13,
+      "mismatches": [],
+      "status": "complete",
+      "sources_unchanged": null,
+      "inputs_unchanged": {
+        "/workspace/gpt_field/scene_test/field_planning/runs/evaluation_002/manifest.json": true,
+        "/workspace/gpt_field/scene_test/field_planning/runs/evaluation_002/metrics.json": true,
+        "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_closed_step60/agentview_upright.png": true,
+        "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_closed_step60/evaluator/calibration.json": true,
+        "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/agentview_upright.png": true,
+        "/workspace/gpt_field/scene_test/rgb_scene/references_004/snapshots/drawer003_open_step552/evaluator/calibration.json": true,
+        "/workspace/gpt_field/scene_test/field_planning/runs/planning_001/diagnostics/drawer003_closed_step60_astra.npz": true,
+        "/workspace/gpt_field/scene_test/field_planning/runs/planning_001/diagnostics/drawer003_closed_step60_depthpro.npz": true,
+        "/workspace/gpt_field/scene_test/field_planning/runs/planning_001/diagnostics/drawer003_open_step552_astra.npz": true,
+        "/workspace/gpt_field/scene_test/field_planning/runs/planning_001/diagnostics/drawer003_open_step552_depthpro.npz": true
+      }
+    },
+    "query_pairing": {
+      "record_count": 120,
+      "methods": {
+        "astra": {
+          "invalid_start": 40
+        },
+        "depthpro": {
+          "invalid_start": 40
+        },
+        "oracle": {
+          "planned": 32,
+          "invalid_goal": 8
+        }
+      },
+      "matched_query_count_per_method": 40,
+      "unique_endpoint_pairs": 20,
+      "same_planner_settings": true,
+      "distance_only_rerun_preserves_status_path_and_original_contact_classification": true
+    },
+    "summary_metrics": {
+      "all_six_rows_recomputed": true,
+      "no_nonfinite_json_values": true,
+      "prediction_collision_rates": null,
+      "oracle_valid_sampled_paths": 32,
+      "oracle_invalid_goals": 8
+    },
+    "robot_geometry": [
+      {
+        "snapshot": "drawer003_closed_step60",
+        "geom_count": 13,
+        "native_mesh_geoms": 11,
+        "native_pad_box_geoms": 2,
+        "surface_samples": 172411,
+        "maximum_surface_cover_radius_m": 0.004999933219570455,
+        "fingers_frozen": [
+          0.03940796741144354,
+          -0.039405780430818244
+        ],
+        "saved_diagnostics_reproduced_bitwise": true
+      },
+      {
+        "snapshot": "drawer003_open_step552",
+        "geom_count": 13,
+        "native_mesh_geoms": 11,
+        "native_pad_box_geoms": 2,
+        "surface_samples": 172411,
+        "maximum_surface_cover_radius_m": 0.004999933219570455,
+        "fingers_frozen": [
+          0.03959056341978436,
+          -0.03999995985058484
+        ],
+        "saved_diagnostics_reproduced_bitwise": true
+      }
+    ],
+    "independent_path_recheck": {
+      "unique_successful_paths": 16,
+      "seed_replicas": 32,
+      "sample_count": 1227,
+      "rows": [
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "base_positive",
+          "sample_count": 91,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "shoulder_positive",
+          "sample_count": 61,
+          "minimum_environment_distance_m": 0.011424367954985715,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "shoulder_negative",
+          "sample_count": 62,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "elbow_positive",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "elbow_negative",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "wrist_positive",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "wrist_negative",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "combined_positive",
+          "sample_count": 71,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_closed_step60",
+          "case_id": "combined_negative",
+          "sample_count": 71,
+          "minimum_environment_distance_m": 0.05,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "base_positive",
+          "sample_count": 91,
+          "minimum_environment_distance_m": 0.010354959615500812,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "base_negative",
+          "sample_count": 91,
+          "minimum_environment_distance_m": 0.004724959615500568,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "shoulder_negative",
+          "sample_count": 61,
+          "minimum_environment_distance_m": 0.01052177130049575,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "elbow_positive",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.01052177130049575,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "wrist_positive",
+          "sample_count": 81,
+          "minimum_environment_distance_m": 0.01052177130049575,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "combined_positive",
+          "sample_count": 71,
+          "minimum_environment_distance_m": 0.01052177130049575,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        },
+        {
+          "snapshot": "drawer003_open_step552",
+          "case_id": "combined_negative",
+          "sample_count": 71,
+          "minimum_environment_distance_m": 0.01052177130049575,
+          "native_contacts_clear": true,
+          "independently_recomputed_minimum_difference_m": 0.0
+        }
+      ],
+      "method": "fresh NativeDistanceGroundTruthEvaluator per snapshot; independently expanded np.linspace q edges at <=0.005rad; check every original contact and minimum distance",
+      "all_original_contact_checks_clear": true,
+      "all_corrected_distances_match_exactly": true,
+      "all_four_unique_invalid_goals_rechecked_invalid": true,
+      "continuous_certificate": false
+    },
+    "preexisting_sources": {
+      "tracked_files": 836,
+      "unchanged_count": 832,
+      "changed": [
+        {
+          "path": "scripts/evaluate_agent_speedup_v2.py",
+          "before_sha256": "e5f7f517c229d046bd1adf61e9c5139a7db32c92f9f2f1a87d7a8fbfbb4ec605",
+          "after_sha256": "16ea3b70a89dfe2445b13255354f0fda45eef1e9e8f0b97b492071b02d7a7efd"
+        },
+        {
+          "path": "src/gpt_field/agent_speedup_v2_relations.py",
+          "before_sha256": "7d8c293635701935393d16ffd0953d1803c81cce4ba70d5693b4d8d0eb0a747c",
+          "after_sha256": "6514e6b35e313341091c2b63369654c69999f65313b8d97004b5d36b2c846d19"
+        },
+        {
+          "path": "tests/test_agent_speedup_v2_chain.py",
+          "before_sha256": "90912ea2f8941fb2f875057360a1b8b688f3cca01fcc62078c942b58db17e24a",
+          "after_sha256": "67e3353f2510415ba44bf618f051043f936b03ff056ce469b483c8cab7023549"
+        },
+        {
+          "path": "tests/test_agent_speedup_v2_relations.py",
+          "before_sha256": "f8177c74c822279004145c5c560172dfe71284ecd825ef26a0785cf6bc6c90ca",
+          "after_sha256": "e637b1c7650cfd0dd428246b581be262ad56ce75c0648f5813e83fc05ca7afb3"
+        }
+      ],
+      "interpretation": "Concurrent v2 work changed these pre-existing files; this experiment only wrote new field_planning files. Count is a snapshot at audit time, not a blanket unchanged-workspace claim."
+    },
+    "tests": {
+      "validation_file": "validation_003.json",
+      "sha256": "2e2572d38c7d6c530b2fb3cf4d6cb36217537267a75cfdfbe7a037f82e916d0b",
+      "observed_output": "59 passed in 4.55s",
+      "all_tested_source_hashes_match": true
+    },
+    "planning_truth_boundary": {
+      "ground_truth_environment_paths_in_planning_consumed_inputs": [],
+      "robot_registration": "explicit fixed camera extrinsics and measured initial joints only",
+      "geometry_callback": "all13originalrobotgeoms plus saved predictedfield arrays; no GT scene queries",
+      "oracle_runs_after_plan_manifest_frozen": true
+    }
+  },
+  "authoritative_evaluation": "runs/evaluation_002",
+  "superseded_distance_evaluation": "runs/evaluation_001",
+  "legacy_distance_diagnostic_sha256": "81181ca40f4e5791ac6390e28b413d94a16bbff000ce6a2c0cc3b95f60d2b575",
+  "failures": [],
+  "limitations": [
+    "Finite5mm surface samples and0.005rad joint interpolation do not certify whole volume or continuous clearance.",
+    "All32successful oracle records use straight joint-space edges; successful RRT detours were not exercised.",
+    "Both predicted methods refuse every initial state; returned-path collision rates are undefined, not zero.",
+    "Original evaluation001 is preserved but legacyMPR distance reports superseded by scopednativeGJK evaluation002.",
+    "Fullscene truth is separate from planner inputs; calibration extrinsics are explicit additional robot-rig information."
+  ]
+}

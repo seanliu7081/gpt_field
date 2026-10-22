@@ -1,0 +1,63 @@
+{
+  "version": "astranomy-codex-libero-v1",
+  "reference": "https://research.nvidia.com/labs/srl/projects/astranomy/",
+  "status": "prepared_awaiting_user_approval",
+  "full_test_started": false,
+  "task": "open the top drawer and put the bowl inside",
+  "suite": "libero_goal",
+  "task_id": 3,
+  "episode_index": 0,
+  "seed": 7,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "medium",
+  "billing": "chatgpt_subscription",
+  "api_key_fallback": false,
+  "runtime": "persistent_codex_app_server_thread",
+  "action": "one absolute EEF pose; 1-5 native control steps",
+  "inputs": [
+    "two upright 512x512 RGB images",
+    "measured robot pose and arm joints",
+    "fixed gripper geometry and synchronized camera calibration",
+    "prior observations, plans, proposals and measured motion feedback"
+  ],
+  "excluded_inputs": [
+    "demonstrations",
+    "object poses",
+    "depth",
+    "segmentation",
+    "contact identities",
+    "reward",
+    "subtask progress"
+  ],
+  "optional_tools": false,
+  "episode_caps": null,
+  "success": "raw LIBERO goal predicate only",
+  "collisions": "record only",
+  "stopping": [
+    "LIBERO success",
+    "operator stop",
+    "infrastructure/subscription error"
+  ],
+  "adaptations": [
+    "LIBERO Panda instead of DROID/Robotiq",
+    "two 512x512 cameras instead of three 384x216 cameras",
+    "20 Hz OSC instead of 15 Hz damped-least-squares joint control",
+    "world grip-site position/right-hand orientation instead of robot-root flange pose",
+    "no privileged subtask progress; no episode cap"
+  ],
+  "approval_scope": "one fresh drawer_bowl episode only; no automatic retry or other task",
+  "local_preflight": {
+    "codex_executable": "/opt/nvm/versions/node/v24.20.0/bin/codex",
+    "supervisord_executable": "/usr/local/bin/supervisord",
+    "simulator_python": "/workspace/venvs/libero-plus/bin/python",
+    "simulator_python_exists": true,
+    "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+    "libero_root_exists": true,
+    "catalog_sha256": "ef818409cf77de096a8994dcc8350ce0514c8bed89cfa823f6350b28016bd7d0",
+    "credentials_read": false,
+    "model_calls": 0,
+    "simulator_started": false,
+    "codex_version": "codex-cli 0.153.4"
+  },
+  "launch_after_approval": "cd /workspace/gpt_field && PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. .venv/bin/python -m astranomy.launch --approved-full-test --name drawer_bowl_001"
+}

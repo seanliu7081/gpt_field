@@ -1,0 +1,488 @@
+{
+  "schema_version": "libero-demonstration-download-provenance-v1",
+  "created_at_utc": "2026-10-12T13:00:43.635765+00:00",
+  "repo_id": "yifengzhu-hf/LIBERO-datasets",
+  "repo_type": "dataset",
+  "revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+  "repository_source_evidence": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/utils/download_utils.py:108",
+  "repository_file": "libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+  "resolved_url": "https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets/resolve/f13aa24a3da8c43c7225569f28c562979fa0e35a/libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+  "local_hdf5": "/workspace/gpt_field/data/libero_demonstrations/libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+  "download_bytes": 508779600,
+  "sha256": "ff6f26121653c77280eb40a38773a74141c11a8509f3466058cb56dd2cc60ead",
+  "sha256_verified_against_hub_lfs_etag": true,
+  "download_scope": "One exact official task HDF5 containing50episodes; only independently preselected demo_0 is exported as policy reference.",
+  "source_episode_count": 50,
+  "selected_demo_key": "demo_0",
+  "selection_rule": "Select demo_0 independently by fixed episode index; no search for the best demonstration and no selection based on live task outcomes.",
+  "task_key": "bowl_plate",
+  "suite": "libero_spatial",
+  "task_id": 0,
+  "source_task_language": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+  "observable_schema": {
+    "actions": {
+      "shape": [
+        98,
+        7
+      ],
+      "dtype": "float64"
+    },
+    "obs/agentview_rgb": {
+      "shape": [
+        98,
+        128,
+        128,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "obs/eye_in_hand_rgb": {
+      "shape": [
+        98,
+        128,
+        128,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "obs/ee_pos": {
+      "shape": [
+        98,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "obs/ee_ori": {
+      "shape": [
+        98,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "obs/gripper_states": {
+      "shape": [
+        98,
+        2
+      ],
+      "dtype": "float64"
+    }
+  },
+  "source_image_convention": "opengl",
+  "image_preprocessing": "Raw opengl RGB uses the same existing policy helper as live observations: rotate180degrees, bilinear resize/padding to224x224. Source resolution128x128.",
+  "axisangle_conversion": {
+    "method": "Convert stored axisangle to quaternion, then live quaternion_to_axisangle principal equivalent; physical rotations unchanged.",
+    "source_rows_with_norm_above_pi": 47,
+    "maximum_source_norm_rad": 3.243533204313214
+  },
+  "post_action_observation_verification": {
+    "source": "/workspace/heading_flow_pub/third_party/LIBERO/scripts/create_dataset.py",
+    "source_sha256": "6ff09687a6ca8cb5df16b828cce2326467099da2b4dd6e5af557644d3e60f37f",
+    "env_step_line": 177,
+    "proprio_append_line": 203,
+    "image_append_line": 220,
+    "retained_action_indices_line": 227,
+    "source_initial_actions_discarded": 5,
+    "conclusion": "Official builder calls env.step(action) before appending RGB and robot observations. Stored obs[i] is AFTER retained actions[i]. Export contains normalized_action[i],after_state[i], and explicitly labeled after_action_index keyframes."
+  },
+  "offline_initial_state_comparison": {
+    "purpose": "Initialization distinctness audit only; hidden state vectors and comparison data do not enter the policy reference.",
+    "eval_initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate.pruned_init",
+    "eval_initial_state_sha256": "cbbc73792ce546c9bec181fd328a411d3183074840b282671dee481511381d0a",
+    "eval_initial_state_index": 0,
+    "exact_equal_to_eval_init0": false,
+    "equal_excluding_timestamp": false,
+    "allclose_to_eval_init0_atol_1e_9": false,
+    "max_absolute_difference_excluding_timestamp": 0.1380849820458782,
+    "limitation": "Recorded state inequality is not a claim about a particular object pose or contact geometry. Selection remains fixed demo_0."
+  },
+  "excluded_from_policy_reference": [
+    "states",
+    "robot_states",
+    "joint_states",
+    "object poses",
+    "model XML",
+    "init_state",
+    "rewards",
+    "dones",
+    "success labels",
+    "offline initial-state comparison"
+  ],
+  "reference_path": "/workspace/gpt_field/data/demo_references/bowl_one_demo_001.json",
+  "reference_bytes": 2582360,
+  "reference_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+  "reference_metadata": {
+    "action_count": 98,
+    "all_steps_included": true,
+    "bundle_bytes": 2582360,
+    "bundle_sha256": "78c0567e474b3383acb849747046f495465a097110eb4075cfb236ff5e078b37",
+    "demo_key": "demo_0",
+    "frame_hashes": [
+      {
+        "after_action_index": 0,
+        "external": {
+          "pixel_sha256": "d26ff0f3d3120a8a711bbb97774afe0eba6177285ba734191111f19f58b282ed",
+          "png_bytes": 37732,
+          "png_sha256": "87c46b9eacdfca65042be0bc17366e114739b54cd4d1f5cdcb6e501cd46033ff"
+        },
+        "wrist": {
+          "pixel_sha256": "1542d116f4cb6bf229d4f5e867712c8b761184411f2747d97c866178674c0391",
+          "png_bytes": 34723,
+          "png_sha256": "b1f9c7cd9e3d33ea913a99a9f81e19e862f6bdda939109370d1445062e03effe"
+        }
+      },
+      {
+        "after_action_index": 4,
+        "external": {
+          "pixel_sha256": "aee72d0dd406509b0dc6b4bab2d69ef3f3997fe60e6b5130f3d024609e16b2a4",
+          "png_bytes": 37678,
+          "png_sha256": "25c5e25afcd712458e0127479f9b89f105ad6bc498748c08aa1b605b7028e05c"
+        },
+        "wrist": {
+          "pixel_sha256": "13e01b2bccba0694ee90b849b53c12dff4b15602c4b5fac389721d7c57634566",
+          "png_bytes": 35455,
+          "png_sha256": "5ede916868dd1269b6aea65575f1fa52987312dfe066f464f8ace5259504e07c"
+        }
+      },
+      {
+        "after_action_index": 8,
+        "external": {
+          "pixel_sha256": "8f3d456b9734a8a0465018f9c004065be5e23e9d2b57303de20ff1f6b535368e",
+          "png_bytes": 37821,
+          "png_sha256": "bc941d50d899acfbd92752cd49a72417b01d1d0e125c8c25e73439f115618e0f"
+        },
+        "wrist": {
+          "pixel_sha256": "4eefd594585126f0099816891f430941ab98e07b7ece9317aee760f55f02b105",
+          "png_bytes": 37063,
+          "png_sha256": "c3b40d820b44a266db59edfba5ebc3882657f705df8c9308b62f72f00759d760"
+        }
+      },
+      {
+        "after_action_index": 12,
+        "external": {
+          "pixel_sha256": "6c6ee0cd3dabc452af71fe8596b87ad6da66e9f30ce226fd5b4bd8a2a703a713",
+          "png_bytes": 38167,
+          "png_sha256": "02c2344979d83def4b8b23d3ded16575a181b4f8b831ea45f1b94523f2f2211e"
+        },
+        "wrist": {
+          "pixel_sha256": "d42250d3323b97e3480060c289932d1b5e51f405c31d0bcece70c944515c67df",
+          "png_bytes": 37271,
+          "png_sha256": "45be3aa392aca71d7802acf7b3bc6a9f9a8e4910a5d8b9fc568fffffd1ce6382"
+        }
+      },
+      {
+        "after_action_index": 17,
+        "external": {
+          "pixel_sha256": "bbe6f0478fd1345484e32313c9d91cbaa1fd6ce5c1cf0d462a66cf3444415f04",
+          "png_bytes": 39239,
+          "png_sha256": "2d86f740f1dc146a9f5fe3bb8d4fd1453f683f44f5f614ed6af8439b205ac14e"
+        },
+        "wrist": {
+          "pixel_sha256": "fe04bb1be3ee7ba5dd4a2c5980a77700ac620019c5ce5da75720cd7a0a482578",
+          "png_bytes": 35901,
+          "png_sha256": "a70c57ea2962be88e443730b73186509b7c8f0a4a09a555005ea9ba4d345734e"
+        }
+      },
+      {
+        "after_action_index": 21,
+        "external": {
+          "pixel_sha256": "eff8a0e6bdb4dbb2b7b101cde60cd41ee8295b2d65f24888a893e4b20ff0c8f3",
+          "png_bytes": 40408,
+          "png_sha256": "b8c334ddf8b13e27083af99db8a588466d7a70b58352c6f83b14f51cf2d69814"
+        },
+        "wrist": {
+          "pixel_sha256": "7aeb07e2d3ba77e506a9e259112d48cce8ff42608df67791dce3d5e13b96ac18",
+          "png_bytes": 35583,
+          "png_sha256": "ffaa086bc0743762bb38d0a6dcb35b239c6dbba1c9616b9328ca7931bb9c1a23"
+        }
+      },
+      {
+        "after_action_index": 26,
+        "external": {
+          "pixel_sha256": "0f7ef5e15cff9cd4872fa1e32ec92358c51cb52d2d9f619b937542c24e1fe34b",
+          "png_bytes": 40431,
+          "png_sha256": "bca5b27c08648e14eff9efb17458b50184f56a31d264d68628e0af557948bc8e"
+        },
+        "wrist": {
+          "pixel_sha256": "70de964c5219b0701029e692cc5923bee9eea43d89bbdb6dee6d6cf4f577aaa5",
+          "png_bytes": 38961,
+          "png_sha256": "a1f3b33b9eecafdaf76b79d5c8f1f38f2dc2d78135990bd2fc3467be2152d1c0"
+        }
+      },
+      {
+        "after_action_index": 30,
+        "external": {
+          "pixel_sha256": "f80e2fce78ea72ed0c8a6855b3e2c7794189700fc809f6548ff244bce8d456a1",
+          "png_bytes": 40077,
+          "png_sha256": "c1b590df0756838e1ed762a446024004fb6ccb1d9ed6f543dcc0506e9d742974"
+        },
+        "wrist": {
+          "pixel_sha256": "9799255c94f7db4acf4d7ed62c1541638855b7fd565dec8cc15221824022677f",
+          "png_bytes": 42201,
+          "png_sha256": "e16f24e4bb843aee894e430b13b193122ba742e778ae81e4b733e5f7b5b9f4a7"
+        }
+      },
+      {
+        "after_action_index": 35,
+        "external": {
+          "pixel_sha256": "e1b3552f2cb6b30d1056476ff68f4c0758b3d22298fffe2cbd02b4b3207d2991",
+          "png_bytes": 39519,
+          "png_sha256": "0d82f345722ef933b17a0eb52da6c3fd0cdee6fd679b508cb74f87ede844af00"
+        },
+        "wrist": {
+          "pixel_sha256": "1ef44cd23ae7570d640546995a657fc436d01af872e811ed3b0884145a6d957b",
+          "png_bytes": 41245,
+          "png_sha256": "06b059364ed7aa08d830ca7f273b068a41ef63114abf2088a883ff854a52ac65"
+        }
+      },
+      {
+        "after_action_index": 36,
+        "external": {
+          "pixel_sha256": "4dd92259b17c1b5324cfa2ad550409c1ee491114563554ae1174b6545de1e751",
+          "png_bytes": 39526,
+          "png_sha256": "3eff0b1692d2d5e7b81a121696b2267a1d917e2c723652c865e1aba90e4a76e8"
+        },
+        "wrist": {
+          "pixel_sha256": "ed920c04bef649aae49787e9600a15afb4c0d2f4c93c473767d35d605a9b51ad",
+          "png_bytes": 41815,
+          "png_sha256": "840116b8f2f88874f196b28a1dd2398234362da1e47eaee3f8bbb9f6c3e389fe"
+        }
+      },
+      {
+        "after_action_index": 39,
+        "external": {
+          "pixel_sha256": "03feb51c05bdffb6c970727c90b6ffcda61c27cda9ffacea748c30429f9f399f",
+          "png_bytes": 39493,
+          "png_sha256": "e91b60734134ca89a306936bbaab49c69dffa68be63e4d3783c57b9f3c5edc88"
+        },
+        "wrist": {
+          "pixel_sha256": "bbed8307f7acba4d725314b3156082c7e12e0869ea14d94cd8ce6fc2e727765b",
+          "png_bytes": 43849,
+          "png_sha256": "4c6877653a55b28028bb2d79fe9d1c7d8690ceed216b0f6ef8a0ae9067b7b3f8"
+        }
+      },
+      {
+        "after_action_index": 42,
+        "external": {
+          "pixel_sha256": "02b93d17bdf7925bb6fdc4452d5d4e034635bdb28586177533bb8160ca9287b9",
+          "png_bytes": 39453,
+          "png_sha256": "60db0a857230d8e013731ba2382113e46d8e85cae990bf17c1066a52b7eb6572"
+        },
+        "wrist": {
+          "pixel_sha256": "cde8ac3c94e37e5d25f5bd113675d3e4b227015b301f3d62c878104f815d5a76",
+          "png_bytes": 43616,
+          "png_sha256": "2992c566b1b94fcc9b88bcfb06aaa087d25fdee850759b1d81b83cc67b9d65db"
+        }
+      },
+      {
+        "after_action_index": 45,
+        "external": {
+          "pixel_sha256": "2b8e2624a1dbd9672998e75344f9574f4e61fb6f15ab4e5eefaabbf04baec2f5",
+          "png_bytes": 39541,
+          "png_sha256": "9f9adac4f96a3e159e7c4d752db9c9ba1651b0d6dfb2d42543527c3d22fb4bed"
+        },
+        "wrist": {
+          "pixel_sha256": "e064feed452a60f5a0687af84d132175c60164ff31b12f141d34fe4cd7b62fdb",
+          "png_bytes": 40591,
+          "png_sha256": "595b07c37170bae271239a1a8b1c35f10246fb7d765823b8122a4fb56e1c6105"
+        }
+      },
+      {
+        "after_action_index": 48,
+        "external": {
+          "pixel_sha256": "cfc65e3af1e9290e1861b245f54788bbe5051b5534dcf380eff83f74556afbfa",
+          "png_bytes": 39521,
+          "png_sha256": "294132261f08de5ac77b0f8c68cdb69b25d967aa18cdcfc671f55cac26ab1b8f"
+        },
+        "wrist": {
+          "pixel_sha256": "78dccbdcf7a73f2c2a9f362b41fea67b26d6e3f79961d08299d55b546c8eea57",
+          "png_bytes": 38427,
+          "png_sha256": "b4efa00d2b4a0ad905fd40ffbd588e507a69db2c10298d8be7acc4924716eb59"
+        }
+      },
+      {
+        "after_action_index": 51,
+        "external": {
+          "pixel_sha256": "28a71f1cc553e2185175e29f677248c6ef5dbfce5663962350af8e86f312f93b",
+          "png_bytes": 39721,
+          "png_sha256": "dd460e6f6c3998a337890da25c32e6a51c374ab461b8f254c2d7d6f5ca2cba32"
+        },
+        "wrist": {
+          "pixel_sha256": "796bc54a8072c48eb5607e822f1c91a911fd72d7c2b06f7011f13af57bffa739",
+          "png_bytes": 40088,
+          "png_sha256": "2aa76c28c0b5e27b224c0609a509f4646f3ba3bca93919ec6544dc3702411d1c"
+        }
+      },
+      {
+        "after_action_index": 54,
+        "external": {
+          "pixel_sha256": "36e231c03670b19de9adb4165a8dbcbd3da941b45473e0008173ae16225a7786",
+          "png_bytes": 39778,
+          "png_sha256": "1fbd566c9c9ba23bcdc159ca976932f3dd3eb7d19b8a3780ab6febc13f33b756"
+        },
+        "wrist": {
+          "pixel_sha256": "1c4d000629010679129772409b58d6ed3457f2b376f5a35b5cb9be7e2282dbb2",
+          "png_bytes": 46142,
+          "png_sha256": "c71bb3ab860c72277004b7c51a767a52cc1e00a7d52949627e34a58ee2169487"
+        }
+      },
+      {
+        "after_action_index": 60,
+        "external": {
+          "pixel_sha256": "6cec050cd65188e83a2728ccf49ed955065e768f7ae31892f98e662dad54ed39",
+          "png_bytes": 39872,
+          "png_sha256": "26ba287e94e6ae8f174f8c13710cea0bf86527cbfdeddc16158ad81a44f1b918"
+        },
+        "wrist": {
+          "pixel_sha256": "e8bb69bc33a0c4f50ab4d9a51e62a78bf21b4a1080f325baa8ab3d0d63d885e4",
+          "png_bytes": 45222,
+          "png_sha256": "abfd0a270799eed247899aaa9d33ac148925ed886303444e6671ca3b45a8bb5c"
+        }
+      },
+      {
+        "after_action_index": 66,
+        "external": {
+          "pixel_sha256": "5b792f7687347a5c3fbb63bd8a08a996205bc9958047d9053e72ced9bb63b955",
+          "png_bytes": 40395,
+          "png_sha256": "eec7059543247a71cb3d874fb46397bedc878d929cf1c99b1bb57f30e93153ec"
+        },
+        "wrist": {
+          "pixel_sha256": "bcad84f638f01f3cd8d3ca122b8bde0454f8e22ce6550ca8194d95d837668af5",
+          "png_bytes": 43669,
+          "png_sha256": "168472ea2c90faa83070fc3ae214b2c8936e2b26d40dc4e8b557833e86ec339d"
+        }
+      },
+      {
+        "after_action_index": 72,
+        "external": {
+          "pixel_sha256": "5cd75cba2ff683afe0ab5667c3cfdb42f7bbac5e022a2c7c544bd60856a3015e",
+          "png_bytes": 40882,
+          "png_sha256": "86f0cce03f745dbe1081728e891fcdc0f3a27364e3e64f70e48edebf4a70487e"
+        },
+        "wrist": {
+          "pixel_sha256": "2d98b6f3a601131ec3170a12a00c76771f4ad9f328a872588a835fa17c4707a3",
+          "png_bytes": 39485,
+          "png_sha256": "2d6ce562d2e92b7204d209a18e78f9fb97c9679e7158bbb1d95679f31614fd4e"
+        }
+      },
+      {
+        "after_action_index": 78,
+        "external": {
+          "pixel_sha256": "eb591148d513252942a72bd4c7c49a8ad887a0512047665a582635ff317d2c78",
+          "png_bytes": 40816,
+          "png_sha256": "5adf862c0a02ba80554b9a223523b1307927905c09426385a563eb7d862fa3e9"
+        },
+        "wrist": {
+          "pixel_sha256": "36700ad0e32dc8eff69ef981944cf96e2b89721e1969496c481d90ab166a21ec",
+          "png_bytes": 37881,
+          "png_sha256": "9906ca21b6bf540b4955a997b60ae01b1385186f3417b5b3c516fd15052f1c95"
+        }
+      },
+      {
+        "after_action_index": 84,
+        "external": {
+          "pixel_sha256": "83ea0a1dc825ec32d7f4c21e63b084122554c0b65e70422a6d4adc1e5c21f865",
+          "png_bytes": 40758,
+          "png_sha256": "e8510fd7d22084988d04391a452f76f39715b020d3d0ee15558faa66e538764a"
+        },
+        "wrist": {
+          "pixel_sha256": "0fe4ada0ffbb7a6406d38fb4e80413be06639dcc06e1ac6504a8f0fdd50ab173",
+          "png_bytes": 41422,
+          "png_sha256": "531b351a796a0438c91f6cc7c4efa89a7ad8b175ddd9cdfab24b7071e998ea16"
+        }
+      },
+      {
+        "after_action_index": 85,
+        "external": {
+          "pixel_sha256": "37db72ff662e61d504921a8aafe3201e69a2c0c2a0eee25636fae2ce0ad16221",
+          "png_bytes": 40863,
+          "png_sha256": "d2ca7e3d103886fbd78d3f5a87f7637a49e01c82b0494d4b804ea24382b30ba1"
+        },
+        "wrist": {
+          "pixel_sha256": "ff5a93c6296dc5d5f27fb9764feda6b42268d7dc77998d17e1fb670014d92e15",
+          "png_bytes": 41638,
+          "png_sha256": "d37b0174360f12890bf8ea370f59faf358bfdbd9a11b0f76339d65f99d72cc38"
+        }
+      },
+      {
+        "after_action_index": 91,
+        "external": {
+          "pixel_sha256": "9e6ca2350b9aca7c4284334e87aec3dae864fb077d7c0b44628091364edfd0fc",
+          "png_bytes": 41140,
+          "png_sha256": "6362eafe8db196039cbdab43f5c8d97da8a7c73ffa180840497da80c3eb515b4"
+        },
+        "wrist": {
+          "pixel_sha256": "6f999f98ab0cd29371bc381cb58b101481ede52545f9ca5e0f65b4343eecb6ba",
+          "png_bytes": 43393,
+          "png_sha256": "ed27acfc66712ba0836cf1117d073fe089f7d36ff6ae03ba5e36fcb01f2e28ac"
+        }
+      },
+      {
+        "after_action_index": 97,
+        "external": {
+          "pixel_sha256": "e088915bba7c58fc33ca474e4c810e12e09b98ff2f2318d438086534bad84209",
+          "png_bytes": 41119,
+          "png_sha256": "28126801610a52b83eb1038574a062c32372f8f81510e4fca1593020086f8e6a"
+        },
+        "wrist": {
+          "pixel_sha256": "dcc0b477367b26893a08bb037d7c17b9c01baf76b664029a8180d098abfb3f46",
+          "png_bytes": 41006,
+          "png_sha256": "b972f28145e37dfd5a52824473c87836077de19186ef70db999c934c0982e2b4"
+        }
+      }
+    ],
+    "full_step_sha256": "722c3ddb0dec2fec5bdf6b284bbe188a7d5bac77483d5ebf4b555d3c78b1d5bb",
+    "image_count": 48,
+    "image_sampling": "keyframes_only",
+    "keyframe_count": 24,
+    "keyframe_indices": [
+      0,
+      4,
+      8,
+      12,
+      17,
+      21,
+      26,
+      30,
+      35,
+      36,
+      39,
+      42,
+      45,
+      48,
+      51,
+      54,
+      60,
+      66,
+      72,
+      78,
+      84,
+      85,
+      91,
+      97
+    ],
+    "preprocess": {
+      "action_layout": "normalized_world_osc_pose_7",
+      "image_orientation": "rotate_180",
+      "image_size": 224,
+      "keyframe_selection": "uniform_plus_gripper_transitions_v1",
+      "numeric_decimals": 6,
+      "observation_timing": "after_action",
+      "orientation_conversion": "axisangle_shortest_equivalent",
+      "state_layout": "eef_xyz_axisangle_gripper_qpos"
+    },
+    "schema_version": "libero-observable-demo-v1",
+    "source_episode_step_count": 98,
+    "source_file_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+    "source_file_sha256": "ff6f26121653c77280eb40a38773a74141c11a8509f3466058cb56dd2cc60ead",
+    "source_suite": "libero_spatial",
+    "source_task_id": 0,
+    "state_count": 98,
+    "task_key": "bowl_plate",
+    "task_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate"
+  },
+  "preparation_script": "/workspace/gpt_field/scripts/prepare_libero_demonstration.py",
+  "preparation_script_sha256": "7647e866f780814d70128893b37e9253ff34cd7260cacc90c047019738f259ec",
+  "model_calls_during_preparation": 0,
+  "simulator_calls_during_preparation": 0,
+  "source_edits_required": false
+}

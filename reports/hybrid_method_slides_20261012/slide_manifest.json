@@ -1,0 +1,1696 @@
+{
+  "pdf": "/workspace/gpt_field/reports/hybrid_method_slides_20261012/hybrid_method_current_en.pdf",
+  "sha256": "d2abf28b98d21034fc60e5c6c7aff2b7f2d0ac807e14da256fdd5a6fea079fb5",
+  "pages": [
+    {
+      "page": 1,
+      "title": "Hybrid robot control with distance fields"
+    },
+    {
+      "page": 2,
+      "title": "The division of work"
+    },
+    {
+      "page": 3,
+      "title": "What the model sees\u2014and what it predicts"
+    },
+    {
+      "page": 4,
+      "title": "A real compact Field output"
+    },
+    {
+      "page": 5,
+      "title": "Expand locally into a bounded planning domain"
+    },
+    {
+      "page": 6,
+      "title": "Definition: graph distance-to-go"
+    },
+    {
+      "page": 7,
+      "title": "Three fields that should not be conflated"
+    },
+    {
+      "page": 8,
+      "title": "Real data: predicted masks and solved distance"
+    },
+    {
+      "page": 9,
+      "title": "Planning returns one route, not a trajectory bank"
+    },
+    {
+      "page": 10,
+      "title": "Convert the geometric path into robot actions"
+    },
+    {
+      "page": 11,
+      "title": "How stages and controller switches work"
+    },
+    {
+      "page": 12,
+      "title": "Ground the goal and correct it when evidence allows"
+    },
+    {
+      "page": 13,
+      "title": "Real data: a plan is not the measured motion"
+    },
+    {
+      "page": 14,
+      "title": "Evaluation protocol and the timing metric"
+    },
+    {
+      "page": 15,
+      "title": "Earlier matched pairs reached the LIBERO goal"
+    },
+    {
+      "page": 16,
+      "title": "A completed bowl pair illustrates the mechanism"
+    },
+    {
+      "page": 17,
+      "title": "Obstacle tasks expose a different failure mode"
+    },
+    {
+      "page": 18,
+      "title": "Latest zero-shot test: no successful pair"
+    },
+    {
+      "page": 19,
+      "title": "What the evidence supports\u2014and what is missing"
+    },
+    {
+      "page": 20,
+      "title": "Appendix: exact potential and distance semantics"
+    },
+    {
+      "page": 21,
+      "title": "Appendix: all paired conditions at a glance"
+    },
+    {
+      "page": 22,
+      "title": "Appendix: source and reproducibility map"
+    }
+  ],
+  "layout_boxes": [
+    {
+      "page": 1,
+      "x": 38,
+      "y": 142,
+      "w": 530,
+      "h": 124.19999999999999,
+      "text": "Use GPT for local task intent.<br/>Use a local planner for repeated motion."
+    },
+    {
+      "page": 1,
+      "x": 39,
+      "y": 278,
+      "w": 505,
+      "h": 82.8,
+      "text": "Compact scene description \u2192 graph distance-to-go \u2192 measured-pose tracking, with Direct control near contact."
+    },
+    {
+      "page": 1,
+      "x": 39,
+      "y": 410,
+      "w": 505,
+      "h": 33.12,
+      "text": "Current Dijkstra version \u00b7 Astra medium \u00b7 ChatGPT subscription<br/>Source and recorded experiments reviewed on October 12, 2026"
+    },
+    {
+      "page": 1,
+      "x": 640,
+      "y": 435,
+      "w": 270,
+      "h": 45.54,
+      "text": "Real obstacle-scene observation.<br/>No synthetic scene or trajectory is used in the data figures."
+    },
+    {
+      "page": 2,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "The acceleration hypothesis is fewer model calls during free-space motion."
+    },
+    {
+      "page": 2,
+      "x": 56,
+      "y": 167,
+      "w": 166,
+      "h": 23.459999999999997,
+      "text": "Observe"
+    },
+    {
+      "page": 2,
+      "x": 56,
+      "y": 210,
+      "w": 166,
+      "h": 110.39999999999999,
+      "text": "Task + two RGB views<br/>Measured robot pose<br/>Observable history"
+    },
+    {
+      "page": 2,
+      "x": 283,
+      "y": 167,
+      "w": 166,
+      "h": 23.459999999999997,
+      "text": "GPT decision"
+    },
+    {
+      "page": 2,
+      "x": 283,
+      "y": 210,
+      "w": 166,
+      "h": 88.32,
+      "text": "Route + local goal<br/>Predicted obstacles<br/>Orientation + gripper"
+    },
+    {
+      "page": 2,
+      "x": 510,
+      "y": 167,
+      "w": 166,
+      "h": 23.459999999999997,
+      "text": "Local planning"
+    },
+    {
+      "page": 2,
+      "x": 510,
+      "y": 210,
+      "w": 166,
+      "h": 66.24,
+      "text": "Build valid grid<br/>Solve distance-to-go<br/>Extract one path"
+    },
+    {
+      "page": 2,
+      "x": 737,
+      "y": 167,
+      "w": 166,
+      "h": 23.459999999999997,
+      "text": "Robot control"
+    },
+    {
+      "page": 2,
+      "x": 737,
+      "y": 210,
+      "w": 166,
+      "h": 132.48,
+      "text": "Track measured pose<br/>Execute bounded action<br/>Read new observation"
+    },
+    {
+      "page": 2,
+      "x": 320,
+      "y": 390,
+      "w": 580,
+      "h": 46.919999999999995,
+      "text": "Local feedback continues every action. A model refresh occurs at a controller boundary or an observable event."
+    },
+    {
+      "page": 3,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Zero-shot means no demonstration episode; common hand-written task guidance is still present."
+    },
+    {
+      "page": 3,
+      "x": 56,
+      "y": 164,
+      "w": 388,
+      "h": 23.459999999999997,
+      "text": "Input"
+    },
+    {
+      "page": 3,
+      "x": 56,
+      "y": 207,
+      "w": 388,
+      "h": 198.71999999999997,
+      "text": "Task instruction<br/>External camera + wrist RGB<br/>8D robot state: end-effector xyz, axis-angle, two finger joints<br/>Recent live images + summarized action feedback<br/><br/>Optional one-demo prefix only in marked experiments."
+    },
+    {
+      "page": 3,
+      "x": 508,
+      "y": 164,
+      "w": 396,
+      "h": 23.459999999999997,
+      "text": "Output"
+    },
+    {
+      "page": 3,
+      "x": 508,
+      "y": 207,
+      "w": 396,
+      "h": 176.64,
+      "text": "<b>Field branch:</b> compact geometry/cost parameters, pose/gripper intent and control context.<br/><br/><b>Direct branch:</b> five normalized 7D actions.<br/><br/>No ground-truth object pose, depth, contact or success signal enters the model."
+    },
+    {
+      "page": 4,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Snapshot A \u00b7 zero-shot obstacle Hybrid \u00b7 decision before action index 201 (indices are zero-based)."
+    },
+    {
+      "page": 4,
+      "x": 576,
+      "y": 158,
+      "w": 332,
+      "h": 99.35999999999999,
+      "text": "<b>Small structured output</b><br/>Goal, up to four Gaussian repulsors, up to four blocked boxes and four unknown boxes."
+    },
+    {
+      "page": 4,
+      "x": 576,
+      "y": 299,
+      "w": 332,
+      "h": 93.83999999999999,
+      "text": "All offsets are in meters along world axes, relative to the end-effector position when this Field was generated."
+    },
+    {
+      "page": 4,
+      "x": 576,
+      "y": 410,
+      "w": 332,
+      "h": 44.16,
+      "text": "GPT does not emit 35,937 scalar distances."
+    },
+    {
+      "page": 5,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "The grid is centered once per Field refresh. Reuse does not expand known space."
+    },
+    {
+      "page": 5,
+      "x": 56,
+      "y": 211,
+      "w": 236,
+      "h": 16.56,
+      "text": "35,937 grid vertices"
+    },
+    {
+      "page": 5,
+      "x": 362,
+      "y": 211,
+      "w": 236,
+      "h": 16.56,
+      "text": "Spacing along each grid axis"
+    },
+    {
+      "page": 5,
+      "x": 668,
+      "y": 211,
+      "w": 236,
+      "h": 16.56,
+      "text": "Span per axis: \u00b18 cm about the center"
+    },
+    {
+      "page": 5,
+      "x": 56,
+      "y": 295,
+      "w": 510,
+      "h": 140.76,
+      "text": "<b>Coordinates:</b> x<sub>ijk</sub> = c + 0.005 \u00b7 (i\u221216, j\u221216, k\u221216)<br/><br/><b>Validity:</b> inside workspace AND outside predicted blocked / unknown regions.<br/>Check graph edges and tracking chords against masks and closed boxes."
+    },
+    {
+      "page": 5,
+      "x": 626,
+      "y": 283,
+      "w": 286,
+      "h": 187.67999999999998,
+      "text": "<b>Unknown is not free.</b><br/><br/>Repulsors add soft cost; they do not create collision geometry.<br/><br/>5 mm resolution is a sampling choice, not 5 mm perception accuracy."
+    },
+    {
+      "page": 6,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Distance is to a local goal region through predicted valid space\u2014not distance to an obstacle surface."
+    },
+    {
+      "page": 6,
+      "x": 56,
+      "y": 188,
+      "w": 551,
+      "h": 28.979999999999997,
+      "text": "\u03c1(x) = 1 + \u03a3<sub>k</sub> \u03b2<sub>k</sub> exp(\u2212\u2016x\u2212r<sub>k</sub>\u2016\u00b2 / (2\u03c3<sub>k</sub>\u00b2))"
+    },
+    {
+      "page": 6,
+      "x": 56,
+      "y": 281,
+      "w": 551,
+      "h": 28.979999999999997,
+      "text": "w(u,v) = \u2016x<sub>v</sub>\u2212x<sub>u</sub>\u2016 \u00b7 [\u03c1(x<sub>u</sub>)+\u03c1(x<sub>v</sub>)] / 2"
+    },
+    {
+      "page": 6,
+      "x": 56,
+      "y": 374,
+      "w": 551,
+      "h": 28.979999999999997,
+      "text": "D(v) = min<sub>P: v\u2192G</sub> \u03a3<sub>(u,z)\u2208P</sub> w(u,z)"
+    },
+    {
+      "page": 6,
+      "x": 658,
+      "y": 154,
+      "w": 254,
+      "h": 264.96,
+      "text": "<b>26-neighbor graph</b><br/>Reverse multi-source Dijkstra stores D and a successor toward the goal.<br/><br/><b>Units</b><br/>Meters with no repulsors; weighted meters with repulsors.<br/><br/>Invalid / unreachable: +\u221e.<br/>Goal endpoints: D = 0."
+    },
+    {
+      "page": 7,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "The current path objective is D. The compatibility potential U is still stored but does not drive Dijkstra."
+    },
+    {
+      "page": 7,
+      "x": 48,
+      "y": 159,
+      "w": 170,
+      "h": 15.18,
+      "text": "Quantity"
+    },
+    {
+      "page": 7,
+      "x": 238,
+      "y": 159,
+      "w": 268,
+      "h": 15.18,
+      "text": "Meaning"
+    },
+    {
+      "page": 7,
+      "x": 526,
+      "y": 159,
+      "w": 390,
+      "h": 15.18,
+      "text": "Role / limitation"
+    },
+    {
+      "page": 7,
+      "x": 48,
+      "y": 197,
+      "w": 170,
+      "h": 20.7,
+      "text": "<b>Legacy potential U</b>"
+    },
+    {
+      "page": 7,
+      "x": 238,
+      "y": 197,
+      "w": 268,
+      "h": 41.4,
+      "text": "Weighted goal attraction + Gaussian bumps; dimensionless."
+    },
+    {
+      "page": 7,
+      "x": 526,
+      "y": 197,
+      "w": 390,
+      "h": 41.4,
+      "text": "Expanded into GridField for compatibility. Current Dijkstra ignores U and attraction_weights."
+    },
+    {
+      "page": 7,
+      "x": 48,
+      "y": 288,
+      "w": 170,
+      "h": 20.7,
+      "text": "<b>Current distance D</b>"
+    },
+    {
+      "page": 7,
+      "x": 238,
+      "y": 288,
+      "w": 268,
+      "h": 41.4,
+      "text": "Minimum weighted route length to the local goal region."
+    },
+    {
+      "page": 7,
+      "x": 526,
+      "y": 288,
+      "w": 390,
+      "h": 62.099999999999994,
+      "text": "Computed locally on the valid graph. Exact for that finite augmented graph; not exact continuous geodesic distance."
+    },
+    {
+      "page": 7,
+      "x": 48,
+      "y": 379,
+      "w": 170,
+      "h": 20.7,
+      "text": "<b>Conventional SDF</b>"
+    },
+    {
+      "page": 7,
+      "x": 238,
+      "y": 379,
+      "w": 268,
+      "h": 41.4,
+      "text": "Signed distance to the nearest obstacle surface."
+    },
+    {
+      "page": 7,
+      "x": 526,
+      "y": 379,
+      "w": 390,
+      "h": 62.099999999999994,
+      "text": "Different quantity. This implementation does not reconstruct a surface-distance field from sensor geometry."
+    },
+    {
+      "page": 7,
+      "x": 38,
+      "y": 470,
+      "w": 884,
+      "h": 17.939999999999998,
+      "text": "No claim of a full-scene metric, a Riemannian neural field, or a certified robot configuration-space planner."
+    },
+    {
+      "page": 8,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "A slice of the full 3D solve at the recorded start Y; the selected path lies in this XZ plane."
+    },
+    {
+      "page": 8,
+      "x": 40,
+      "y": 446,
+      "w": 884,
+      "h": 35.879999999999995,
+      "text": "Snapshot A has no Gaussian repulsors: \u03c1 = 1. The plot shows the model\u2019s local masks and graph distances, not recovered physical obstacle geometry."
+    },
+    {
+      "page": 9,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "35,937 possible grid vertices are not 35,937 candidate trajectories."
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 151,
+      "w": 814,
+      "h": 26.22,
+      "text": "Connect the measured start"
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 185,
+      "w": 814,
+      "h": 20.7,
+      "text": "Validate connections to enclosing grid corners; choose start-edge cost + D."
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 245,
+      "w": 814,
+      "h": 26.22,
+      "text": "Follow stored successors"
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 279,
+      "w": 814,
+      "h": 20.7,
+      "text": "Extract a shortest graph route. Reuse cached D while the field and goal are unchanged."
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 339,
+      "w": 814,
+      "h": 26.22,
+      "text": "Keep a short executable prefix"
+    },
+    {
+      "page": 9,
+      "x": 88,
+      "y": 373,
+      "w": 814,
+      "h": 20.7,
+      "text": "Merge only collinear edges. At most 10 segments, each \u22641 cm; at most 10 cm of geometric path."
+    },
+    {
+      "page": 9,
+      "x": 54,
+      "y": 447,
+      "w": 850,
+      "h": 34.5,
+      "text": "<b>Current tolerances:</b> 2.5 mm goal-region radius + 2.5 mm tracking endpoint tolerance; outer arrival check = 5 mm and 0.05 rad. Invalid/out-of-map goals request a new observation."
+    },
+    {
+      "page": 10,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Geometric segments, control ticks and model calls are different quantities."
+    },
+    {
+      "page": 10,
+      "x": 56,
+      "y": 167,
+      "w": 387,
+      "h": 23.459999999999997,
+      "text": "Measured-pose path tracking"
+    },
+    {
+      "page": 10,
+      "x": 56,
+      "y": 210,
+      "w": 387,
+      "h": 176.64,
+      "text": "Project actual end-effector position onto the remaining path.<br/><br/>Choose a checked point up to <b>3 cm ahead</b>.<br/><br/>Command position error, bounded to <b>5 cm norm</b>. Shorten the reference if its chord crosses a predicted mask."
+    },
+    {
+      "page": 10,
+      "x": 507,
+      "y": 169,
+      "w": 396,
+      "h": 27.599999999999998,
+      "text": "\u03b4x = bounded(x<sub>reference</sub> \u2212 x<sub>measured</sub>)"
+    },
+    {
+      "page": 10,
+      "x": 507,
+      "y": 245,
+      "w": 396,
+      "h": 24.839999999999996,
+      "text": "a = [\u03b4x / 0.05, \u03b4\u03b8 / 0.5, gripper]"
+    },
+    {
+      "page": 10,
+      "x": 507,
+      "y": 310,
+      "w": 396,
+      "h": 62.099999999999994,
+      "text": "Rotation error is capped at 0.15 rad.<br/>Gripper: open \u22121, close +1, hold previous.<br/>Actions go to the 20 Hz OSC controller."
+    },
+    {
+      "page": 10,
+      "x": 38,
+      "y": 445,
+      "w": 884,
+      "h": 17.939999999999998,
+      "text": "Track for at most 10 control ticks per local plan, or replan earlier. A \u201c10-step path\u201d does not guarantee 10 cm of actual robot travel."
+    },
+    {
+      "page": 11,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "GPT selects phase and branch. Typical uses are shown below; phase names do not impose a fixed controller mapping."
+    },
+    {
+      "page": 11,
+      "x": 56,
+      "y": 169,
+      "w": 384,
+      "h": 23.459999999999997,
+      "text": "Field branch"
+    },
+    {
+      "page": 11,
+      "x": 56,
+      "y": 212,
+      "w": 384,
+      "h": 140.76,
+      "text": "Approach / transport / alignment.<br/>Local path tracking; initially up to <b>30 actions</b> per model response.<br/><br/>Reliable visual progress may extend reuse to 60, 90, then 120 actions."
+    },
+    {
+      "page": 11,
+      "x": 518,
+      "y": 169,
+      "w": 386,
+      "h": 23.459999999999997,
+      "text": "Direct branch"
+    },
+    {
+      "page": 11,
+      "x": 518,
+      "y": 212,
+      "w": 386,
+      "h": 140.76,
+      "text": "Grasp / release / contact recovery.<br/><b>Five model-generated actions</b> per response, executed unchanged.<br/><br/>Task termination can interrupt the final chunk."
+    },
+    {
+      "page": 11,
+      "x": 40,
+      "y": 423,
+      "w": 882,
+      "h": 41.4,
+      "text": "<b>Refresh early:</b> measured arrival, invalid path/reference, boundary, low realized motion, lost tracking, or placement verification concerns. A phase label or \u201cnear_target\u201d prediction is not proof of contact or success."
+    },
+    {
+      "page": 12,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "These mechanisms are conditional. Their existence in code does not mean they activated in a rollout."
+    },
+    {
+      "page": 12,
+      "x": 56,
+      "y": 164,
+      "w": 388,
+      "h": 23.459999999999997,
+      "text": "Account for the held bowl"
+    },
+    {
+      "page": 12,
+      "x": 56,
+      "y": 207,
+      "w": 388,
+      "h": 144.9,
+      "text": "g = c + d \u2212 R<sub>target</sub> R<sub>current</sub><super>T</super> r<br/><br/>c: Field center; d: desired bowl offset.<br/>r: current bowl offset from the gripper.<br/><br/>Subtract the rotated grasp offset from the bowl goal. Assumes a visually estimated, rigid grasp."
+    },
+    {
+      "page": 12,
+      "x": 508,
+      "y": 164,
+      "w": 396,
+      "h": 23.459999999999997,
+      "text": "Optional image-based XY correction"
+    },
+    {
+      "page": 12,
+      "x": 508,
+      "y": 207,
+      "w": 396,
+      "h": 154.56,
+      "text": "Track model-specified image points.<br/>Fit a local 2\u00d72 image Jacobian from measured XY motion.<br/>Apply a validated correction \u22641 cm.<br/><br/>No depth reconstruction; masks and original grid center stay fixed."
+    },
+    {
+      "page": 12,
+      "x": 55,
+      "y": 417,
+      "w": 850,
+      "h": 44.16,
+      "text": "<b>Latest zero-shot run:</b> all 13 Field outputs had no visual anchor; all 310 feedback records reported anchor unavailable. No local visual goal corrections or reuse extensions occurred."
+    },
+    {
+      "page": 13,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Recorded actions 201\u2013214, including local replanning; no simulated trajectory was substituted."
+    },
+    {
+      "page": 13,
+      "x": 39,
+      "y": 454,
+      "w": 884,
+      "h": 35.879999999999995,
+      "text": "A 10-segment geometric prefix can be shorter than 10 cm. Tracking uses feedback to reduce error; commanded displacement is not equal to realized displacement."
+    },
+    {
+      "page": 14,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Do not mix different success criteria or count failed-attempt durations as completed-task speedups."
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 154,
+      "w": 210,
+      "h": 15.18,
+      "text": "Common condition"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 154,
+      "w": 638,
+      "h": 15.18,
+      "text": "Setting"
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 192,
+      "w": 210,
+      "h": 19.32,
+      "text": "Model / channel"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 192,
+      "w": 638,
+      "h": 19.32,
+      "text": "gpt-6-astra \u00b7 medium \u00b7 ChatGPT subscription OAuth \u00b7 zero API-key calls"
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 246,
+      "w": 210,
+      "h": 19.32,
+      "text": "Within each paired condition"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 246,
+      "w": 638,
+      "h": 19.32,
+      "text": "Same task, initial state/scene, demo if present, shared guidance and observable feedback"
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 300,
+      "w": 210,
+      "h": 19.32,
+      "text": "Timing"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 300,
+      "w": 638,
+      "h": 19.32,
+      "text": "T = recorded control_elapsed_s \u2212 video_render_s"
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 354,
+      "w": 210,
+      "h": 19.32,
+      "text": "Earlier completed pairs"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 354,
+      "w": 638,
+      "h": 38.64,
+      "text": "Original LIBERO goal only; release/stability and collision freedom were not separately certified"
+    },
+    {
+      "page": 14,
+      "x": 48,
+      "y": 408,
+      "w": 210,
+      "h": 19.32,
+      "text": "Latest zero-shot obstacles"
+    },
+    {
+      "page": 14,
+      "x": 278,
+      "y": 408,
+      "w": 638,
+      "h": 19.32,
+      "text": "LIBERO goal AND no forbidden contact; immediate failure at first forbidden physics contact"
+    },
+    {
+      "page": 14,
+      "x": 38,
+      "y": 462,
+      "w": 884,
+      "h": 17.939999999999998,
+      "text": "One trial per arm and condition. Video subtraction is retrospective accounting, not a recording-disabled rerun."
+    },
+    {
+      "page": 15,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "One demonstration per method. These runs did not use the later collision-free success criterion."
+    },
+    {
+      "page": 15,
+      "x": 48,
+      "y": 157,
+      "w": 252,
+      "h": 15.18,
+      "text": "Task / condition"
+    },
+    {
+      "page": 15,
+      "x": 320,
+      "y": 157,
+      "w": 125,
+      "h": 15.18,
+      "text": "Hybrid"
+    },
+    {
+      "page": 15,
+      "x": 465,
+      "y": 157,
+      "w": 125,
+      "h": 15.18,
+      "text": "Direct"
+    },
+    {
+      "page": 15,
+      "x": 610,
+      "y": 157,
+      "w": 150,
+      "h": 15.18,
+      "text": "Less time"
+    },
+    {
+      "page": 15,
+      "x": 780,
+      "y": 157,
+      "w": 136,
+      "h": 15.18,
+      "text": "Calls H / D"
+    },
+    {
+      "page": 15,
+      "x": 48,
+      "y": 195,
+      "w": 252,
+      "h": 23.459999999999997,
+      "text": "Drawer + bowl"
+    },
+    {
+      "page": 15,
+      "x": 320,
+      "y": 195,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "13:57"
+    },
+    {
+      "page": 15,
+      "x": 465,
+      "y": 195,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "16:37"
+    },
+    {
+      "page": 15,
+      "x": 610,
+      "y": 195,
+      "w": 150,
+      "h": 23.459999999999997,
+      "text": "16.1%"
+    },
+    {
+      "page": 15,
+      "x": 780,
+      "y": 195,
+      "w": 136,
+      "h": 23.459999999999997,
+      "text": "63 / 85"
+    },
+    {
+      "page": 15,
+      "x": 48,
+      "y": 260,
+      "w": 252,
+      "h": 23.459999999999997,
+      "text": "Bowl: original layout"
+    },
+    {
+      "page": 15,
+      "x": 320,
+      "y": 260,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "2:57"
+    },
+    {
+      "page": 15,
+      "x": 465,
+      "y": 260,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "3:58"
+    },
+    {
+      "page": 15,
+      "x": 610,
+      "y": 260,
+      "w": 150,
+      "h": 23.459999999999997,
+      "text": "25.6%"
+    },
+    {
+      "page": 15,
+      "x": 780,
+      "y": 260,
+      "w": 136,
+      "h": 23.459999999999997,
+      "text": "15 / 21"
+    },
+    {
+      "page": 15,
+      "x": 48,
+      "y": 325,
+      "w": 252,
+      "h": 23.459999999999997,
+      "text": "Bowl: relocated objects"
+    },
+    {
+      "page": 15,
+      "x": 320,
+      "y": 325,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "3:36"
+    },
+    {
+      "page": 15,
+      "x": 465,
+      "y": 325,
+      "w": 125,
+      "h": 23.459999999999997,
+      "text": "3:40"
+    },
+    {
+      "page": 15,
+      "x": 610,
+      "y": 325,
+      "w": 150,
+      "h": 23.459999999999997,
+      "text": "1.9%"
+    },
+    {
+      "page": 15,
+      "x": 780,
+      "y": 325,
+      "w": 136,
+      "h": 23.459999999999997,
+      "text": "17 / 19"
+    },
+    {
+      "page": 15,
+      "x": 42,
+      "y": 397,
+      "w": 877,
+      "h": 46.919999999999995,
+      "text": "Times are min:sec after removing measured video overhead. Hybrid used fewer model requests in all three pairs; the gain ranged from 1.9% to 25.6%."
+    },
+    {
+      "page": 15,
+      "x": 42,
+      "y": 458,
+      "w": 877,
+      "h": 17.25,
+      "text": "Single trials\u2014not a reliability estimate. The 1.9% result is small; raw recorded control time actually favored Direct before video subtraction."
+    },
+    {
+      "page": 16,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Less model interaction, even with more executed actions. This is one observed pair."
+    },
+    {
+      "page": 16,
+      "x": 56,
+      "y": 263,
+      "w": 390,
+      "h": 66.24,
+      "text": "<b>15 requests</b> \u00b7 131 actions<br/>93 Field actions / 38 Direct actions<br/>Model/client pipeline: 166.3 s"
+    },
+    {
+      "page": 16,
+      "x": 512,
+      "y": 263,
+      "w": 390,
+      "h": 66.24,
+      "text": "<b>21 requests</b> \u00b7 101 actions<br/>0 Field actions / 101 Direct actions<br/>Model/client pipeline: 232.1 s"
+    },
+    {
+      "page": 16,
+      "x": 38,
+      "y": 457,
+      "w": 884,
+      "h": 35.879999999999995,
+      "text": "Pipeline time includes client/transport work and local expansion. It is not pure GPU inference latency; timer components must not be added blindly."
+    },
+    {
+      "page": 17,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Both reached the original placement predicate, but both collided with the ketchup bottle: both are failures."
+    },
+    {
+      "page": 17,
+      "x": 644,
+      "y": 153,
+      "w": 275,
+      "h": 234.59999999999997,
+      "text": "<b>Adjusted attempt duration</b><br/>Hybrid: 6:41<br/>Direct: 8:50<br/><br/><b>No valid task speedup.</b><br/>A goal-only success flag did not enforce obstacle preservation.<br/><br/>Review corrected both outcomes to collision failure."
+    },
+    {
+      "page": 17,
+      "x": 38,
+      "y": 457,
+      "w": 884,
+      "h": 35.879999999999995,
+      "text": "Recorded RGB excerpts show the bottle displaced/tilted. Earlier Hybrid: all eight Field responses had empty obstacle/unknown/repulsor lists."
+    },
+    {
+      "page": 18,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Same frozen obstacle scene; explicit no-collision guidance; actual physics-substep contact monitoring."
+    },
+    {
+      "page": 18,
+      "x": 48,
+      "y": 153,
+      "w": 150,
+      "h": 15.18,
+      "text": "Method"
+    },
+    {
+      "page": 18,
+      "x": 218,
+      "y": 153,
+      "w": 293,
+      "h": 15.18,
+      "text": "Outcome"
+    },
+    {
+      "page": 18,
+      "x": 531,
+      "y": 153,
+      "w": 115,
+      "h": 15.18,
+      "text": "Time*"
+    },
+    {
+      "page": 18,
+      "x": 666,
+      "y": 153,
+      "w": 100,
+      "h": 15.18,
+      "text": "Actions"
+    },
+    {
+      "page": 18,
+      "x": 786,
+      "y": 153,
+      "w": 130,
+      "h": 15.18,
+      "text": "Requests"
+    },
+    {
+      "page": 18,
+      "x": 48,
+      "y": 191,
+      "w": 150,
+      "h": 22.08,
+      "text": "Hybrid"
+    },
+    {
+      "page": 18,
+      "x": 218,
+      "y": 191,
+      "w": 293,
+      "h": 22.08,
+      "text": "Collision failure: left finger\u2013ramekin"
+    },
+    {
+      "page": 18,
+      "x": 531,
+      "y": 191,
+      "w": 115,
+      "h": 22.08,
+      "text": "9:52"
+    },
+    {
+      "page": 18,
+      "x": 666,
+      "y": 191,
+      "w": 100,
+      "h": 22.08,
+      "text": "310"
+    },
+    {
+      "page": 18,
+      "x": 786,
+      "y": 191,
+      "w": 130,
+      "h": 22.08,
+      "text": "44"
+    },
+    {
+      "page": 18,
+      "x": 48,
+      "y": 258,
+      "w": 150,
+      "h": 22.08,
+      "text": "Direct"
+    },
+    {
+      "page": 18,
+      "x": 218,
+      "y": 258,
+      "w": 293,
+      "h": 22.08,
+      "text": "User-stopped; no goal reached"
+    },
+    {
+      "page": 18,
+      "x": 531,
+      "y": 258,
+      "w": 115,
+      "h": 22.08,
+      "text": "25:07"
+    },
+    {
+      "page": 18,
+      "x": 666,
+      "y": 258,
+      "w": 100,
+      "h": 22.08,
+      "text": "505"
+    },
+    {
+      "page": 18,
+      "x": 786,
+      "y": 258,
+      "w": 130,
+      "h": 22.08,
+      "text": "102\u2020"
+    },
+    {
+      "page": 18,
+      "x": 379,
+      "y": 341,
+      "w": 537,
+      "h": 111.78,
+      "text": "Neither reached LIBERO success. Direct remained incomplete and unscored, with no forbidden contact before the user stop.<br/><br/><b>Allowed:</b> finger\u2013target bowl grasp; bowl\u2013table/plate support.<br/><b>Excluded:</b> robot self/internal and scene-scene-only contact.<br/>Monitoring detects contact; it does not prevent first contact."
+    },
+    {
+      "page": 18,
+      "x": 41,
+      "y": 299,
+      "w": 879,
+      "h": 15.87,
+      "text": "* Video-excluded attempt duration, not completion time.  \u2020 101 valid responses + one interrupted request."
+    },
+    {
+      "page": 19,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Fewer model requests do not by themselves establish successful or collision-free execution."
+    },
+    {
+      "page": 19,
+      "x": 56,
+      "y": 163,
+      "w": 389,
+      "h": 23.459999999999997,
+      "text": "Supported by these recordings"
+    },
+    {
+      "page": 19,
+      "x": 56,
+      "y": 206,
+      "w": 389,
+      "h": 211.14,
+      "text": "Fewer model requests in three earlier completed goal-only pairs.<br/><br/>Compact outputs avoid writing a dense 35,937-value response.<br/><br/>Current local planning is a well-defined shortest-path computation over predicted valid space."
+    },
+    {
+      "page": 19,
+      "x": 508,
+      "y": 163,
+      "w": 396,
+      "h": 23.459999999999997,
+      "text": "Not demonstrated yet"
+    },
+    {
+      "page": 19,
+      "x": 508,
+      "y": 206,
+      "w": 396,
+      "h": 187.67999999999998,
+      "text": "Reliable collision-free manipulation in the harder scene.<br/><br/>Correct target identification from zero-shot RGB.<br/><br/>Whole-arm / payload swept-volume safety, or consistent activation of local visual correction."
+    },
+    {
+      "page": 19,
+      "x": 38,
+      "y": 462,
+      "w": 884,
+      "h": 17.939999999999998,
+      "text": "Priority: verifiable target localization \u2192 usable visual anchors \u2192 gripper/payload geometry checks \u2192 repeated matched trials."
+    },
+    {
+      "page": 20,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "The code retains the legacy potential representation alongside the new distance objective."
+    },
+    {
+      "page": 20,
+      "x": 56,
+      "y": 165,
+      "w": 848,
+      "h": 28.979999999999997,
+      "text": "U(x) = \u221a[\u03a3<sub>a</sub> \u03b1<sub>a</sub>((x<sub>a</sub>\u2212g<sub>a</sub>)/\u2113)\u00b2] + \u03a3<sub>k</sub> \u03b2<sub>k</sub> exp(\u2212\u2016x\u2212r<sub>k</sub>\u2016\u00b2 / (2\u03c3<sub>k</sub>\u00b2))"
+    },
+    {
+      "page": 20,
+      "x": 57,
+      "y": 241,
+      "w": 844,
+      "h": 17.939999999999998,
+      "text": "\u2113 = 0.08 m. U is dimensionless. Attraction weights \u03b1 affect U, but not current Dijkstra edge weights."
+    },
+    {
+      "page": 20,
+      "x": 59,
+      "y": 303,
+      "w": 857,
+      "h": 23.459999999999997,
+      "text": "<b>Distance is goal-conditioned</b>"
+    },
+    {
+      "page": 20,
+      "x": 59,
+      "y": 330.46,
+      "w": 857,
+      "h": 22.08,
+      "text": "D is a cost-to-go to one terminal region. It is not a scalar clearance to nearby obstacle surfaces."
+    },
+    {
+      "page": 20,
+      "x": 59,
+      "y": 380,
+      "w": 857,
+      "h": 23.459999999999997,
+      "text": "<b>Optimality has a precise scope</b>"
+    },
+    {
+      "page": 20,
+      "x": 59,
+      "y": 407.46,
+      "w": 857,
+      "h": 44.16,
+      "text": "Reverse Dijkstra is exact on the constructed finite graph with endpoint-averaged density and valid terminal connections. It is not a continuous Eikonal/PDE solve."
+    },
+    {
+      "page": 21,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "Same current Dijkstra family; criterion and demonstration count are explicit for every row."
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 153,
+      "w": 190,
+      "h": 15.18,
+      "text": "Condition"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 153,
+      "w": 70,
+      "h": 15.18,
+      "text": "Demos"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 153,
+      "w": 258,
+      "h": 15.18,
+      "text": "Outcome H / D"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 153,
+      "w": 135,
+      "h": 15.18,
+      "text": "H seconds*"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 153,
+      "w": 135,
+      "h": 15.18,
+      "text": "D seconds*"
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 191,
+      "w": 190,
+      "h": 19.32,
+      "text": "Drawer"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 191,
+      "w": 70,
+      "h": 19.32,
+      "text": "1"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 191,
+      "w": 258,
+      "h": 19.32,
+      "text": "Goal / goal"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 191,
+      "w": 135,
+      "h": 19.32,
+      "text": "836.7"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 191,
+      "w": 135,
+      "h": 19.32,
+      "text": "997.3"
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 243,
+      "w": 190,
+      "h": 19.32,
+      "text": "Bowl / original"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 243,
+      "w": 70,
+      "h": 19.32,
+      "text": "1"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 243,
+      "w": 258,
+      "h": 19.32,
+      "text": "Goal / goal"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 243,
+      "w": 135,
+      "h": 19.32,
+      "text": "177.0"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 243,
+      "w": 135,
+      "h": 19.32,
+      "text": "237.8"
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 295,
+      "w": 190,
+      "h": 19.32,
+      "text": "Bowl / relocated"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 295,
+      "w": 70,
+      "h": 19.32,
+      "text": "1"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 295,
+      "w": 258,
+      "h": 19.32,
+      "text": "Goal / goal"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 295,
+      "w": 135,
+      "h": 19.32,
+      "text": "215.8"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 295,
+      "w": 135,
+      "h": 19.32,
+      "text": "220.0"
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 347,
+      "w": 190,
+      "h": 19.32,
+      "text": "Bowl / obstacles"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 347,
+      "w": 70,
+      "h": 19.32,
+      "text": "1"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 347,
+      "w": 258,
+      "h": 19.32,
+      "text": "Collision / collision"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 347,
+      "w": 135,
+      "h": 19.32,
+      "text": "400.5"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 347,
+      "w": 135,
+      "h": 19.32,
+      "text": "529.6"
+    },
+    {
+      "page": 21,
+      "x": 48,
+      "y": 399,
+      "w": 190,
+      "h": 19.32,
+      "text": "Bowl / obstacles"
+    },
+    {
+      "page": 21,
+      "x": 258,
+      "y": 399,
+      "w": 70,
+      "h": 19.32,
+      "text": "0"
+    },
+    {
+      "page": 21,
+      "x": 348,
+      "y": 399,
+      "w": 258,
+      "h": 19.32,
+      "text": "Collision / incomplete"
+    },
+    {
+      "page": 21,
+      "x": 626,
+      "y": 399,
+      "w": 135,
+      "h": 19.32,
+      "text": "592.1"
+    },
+    {
+      "page": 21,
+      "x": 781,
+      "y": 399,
+      "w": 135,
+      "h": 19.32,
+      "text": "1506.7"
+    },
+    {
+      "page": 21,
+      "x": 40,
+      "y": 450,
+      "w": 880,
+      "h": 34.5,
+      "text": "* Video-excluded time. First three rows: earlier goal-only completion. Last two rows: failed/incomplete attempts, excluded from completion-speed comparisons. No pooled average is meaningful across these criteria."
+    },
+    {
+      "page": 22,
+      "x": 37,
+      "y": 105,
+      "w": 884,
+      "h": 16.56,
+      "text": "All visuals and numbers are derived from local source or recorded experiment artifacts. No new robot test was run for this deck."
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 154,
+      "w": 106,
+      "h": 15.18,
+      "text": "Reference"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 154,
+      "w": 742,
+      "h": 15.18,
+      "text": "Where to verify"
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 192,
+      "w": 106,
+      "h": 17.25,
+      "text": "M1\u2013M7"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 192,
+      "w": 742,
+      "h": 34.5,
+      "text": "src/gpt_field/: distance_subscription.py, compact_field.py, distance_planner.py, distance_policy.py, tracking.py, action.py, field_grounding.py, local_visual_feedback.py"
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 245,
+      "w": 106,
+      "h": 17.25,
+      "text": "R1\u2013R3"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 245,
+      "w": 742,
+      "h": 34.5,
+      "text": "runs/{drawer_one_demo, bowl_one_demo, bowl_relayout_one_demo}_matched_comparison_001/ and paired raw summaries"
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 298,
+      "w": 106,
+      "h": 17.25,
+      "text": "R4"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 298,
+      "w": 742,
+      "h": 17.25,
+      "text": "runs/bowl_obstacle_one_demo_matched_comparison_001/comparison.json \u2014 corrected collision-aware report"
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 351,
+      "w": 106,
+      "h": 17.25,
+      "text": "R5 / S2"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 351,
+      "w": 742,
+      "h": 17.25,
+      "text": "runs/bowl_obstacle_zero_shot_matched_comparison_001/{comparison.json, analysis.json, evidence/}"
+    },
+    {
+      "page": 22,
+      "x": 48,
+      "y": 404,
+      "w": 106,
+      "h": 17.25,
+      "text": "S1"
+    },
+    {
+      "page": 22,
+      "x": 174,
+      "y": 404,
+      "w": 742,
+      "h": 17.25,
+      "text": "runs/bowl_obstacle_distance_medium_zero_shot_001/trace.jsonl \u2014 snapshot 201 and measured execution"
+    },
+    {
+      "page": 22,
+      "x": 40,
+      "y": 460,
+      "w": 877,
+      "h": 17.939999999999998,
+      "text": "Delivered with build source, numerical field/trajectory assets, provenance hashes, method_notes.json and results_notes.json."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "scene_distance_field_representation",
+  "version": "draft-1",
+  "status": "planned_not_implemented_or_run",
+  "input_choice": "user_selected_known_geometry",
+  "scope": "static_geometry_representation_and_surface_reconstruction",
+  "model_calls": 0,
+  "robotics": false,
+  "field": {
+    "type": "untruncated_euclidean_signed_distance",
+    "negative": "inside_solid_material",
+    "positive": "outside_solid_material",
+    "units": "m",
+    "storage_dtype": "float32",
+    "sampling": "grid_vertices",
+    "interpolation": "trilinear",
+    "surface_isovalue": 0.0,
+    "roi_min_m": [-0.12, -0.12, -0.12],
+    "roi_max_m": [0.12, 0.12, 0.12],
+    "minimum_geometry_boundary_margin_m": 0.02,
+    "spacing_m": [0.004, 0.002, 0.001],
+    "grid_sizes": [61, 121, 241]
+  },
+  "scene_classes": [
+    "sphere",
+    "rotated_box",
+    "open_hollow_container",
+    "thin_walls_and_narrow_gaps",
+    "separated_multi_object_scene"
+  ],
+  "scene_instance_seeds": [11, 23, 37],
+  "thin_wall_gap_pairs_mm": [[1, 4], [2, 2], [4, 1]],
+  "main_configuration_count": 45,
+  "geometry_manifest_status": "to_be_frozen_before_formal_runs",
+  "evaluation": {
+    "same_points_across_resolutions": true,
+    "uniform_roi_points_per_scene": 100000,
+    "near_surface_points_per_scene": 100000,
+    "near_surface_band_m": 0.005,
+    "surface_samples_per_direction": 100000,
+    "surface_distance_target": "continuous_surface_not_sparse_point_set",
+    "distance_statistics": ["mae", "rmse", "p95", "sampled_max"],
+    "distance_reporting_units": "mm",
+    "occupancy_statistics": ["iou", "precision", "recall"],
+    "sign_boundary_exclusion_m": 0.00001,
+    "also_report_unexcluded_sign_metrics": true,
+    "surface_tolerances_m": [0.001, 0.002, 0.005],
+    "surface_symmetric_mean": "half_sum_of_unsquared_bidirectional_mean_distances",
+    "empty_reconstruction": {
+      "surface_recall": 0,
+      "surface_f1": 0,
+      "surface_distances": null,
+      "status": "empty_reconstruction"
+    },
+    "aggregation": "per_scene_and_equal_scene_weight_with_worst_case"
+  },
+  "proposed_targets_not_results": {
+    "spacing_m": 0.001,
+    "applies_to": "ordinary_scenes_with_feature_size_at_least_4_grid_spacings",
+    "near_surface_distance_p95_m_max": 0.001,
+    "surface_f1_at_0_002m_min": 0.95,
+    "thin_feature_stress_cases": "report_separately_without_ordinary_scene_pass_gate"
+  },
+  "performance": {
+    "sequential_configurations": true,
+    "chunked_distance_queries": true,
+    "timing_repeats_after_warmup": 3,
+    "exclude_visualization_from_algorithm_timing": true
+  },
+  "references": [
+    "https://www.open3d.org/docs/latest/tutorial/geometry/distance_queries.html",
+    "https://www.open3d.org/docs/latest/cpp_api/classopen3d_1_1t_1_1geometry_1_1_raycasting_scene.html"
+  ]
+}

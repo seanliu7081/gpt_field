@@ -1,0 +1,310 @@
+{
+  "field_refresh_action_index_zero_based": 300,
+  "last_executed_action_index_zero_based": 309,
+  "source_action_trace_line_1based": 1293,
+  "source_request": "runs/bowl_obstacle_distance_medium_zero_shot_001/requests/000044-b3a18556d7524f72bf244ea43a08527c.request.json",
+  "source_request_sha256": "e94b7f5765f6eefa25ec52159de05f9838a66b79ecf189dc64992477a810a15b",
+  "raw_model_compact_prediction": {
+    "control_context": {
+      "phase": "approach",
+      "visual_reference": null
+    },
+    "controller": "coarse_field",
+    "direct": null,
+    "field": {
+      "attraction_weights": [
+        1,
+        1,
+        1
+      ],
+      "blocked_boxes": [
+        {
+          "lower_offset_m": [
+            0.035,
+            -0.08,
+            -0.08
+          ],
+          "upper_offset_m": [
+            0.08,
+            0.08,
+            0.015
+          ]
+        },
+        {
+          "lower_offset_m": [
+            -0.08,
+            -0.08,
+            -0.08
+          ],
+          "upper_offset_m": [
+            -0.025,
+            -0.035,
+            0.025
+          ]
+        }
+      ],
+      "goal_offset_m": [
+        -0.015,
+        0.015,
+        -0.06
+      ],
+      "goal_reference": {
+        "desired_object_center_offset_m": null,
+        "kind": "end_effector",
+        "object_center_offset_m": null,
+        "visual_anchor": null
+      },
+      "gripper_command": "open",
+      "motion_mode": "move",
+      "orientation_target_xyzw": [
+        0.99961,
+        -0.00091,
+        -0.02792,
+        0.00027
+      ],
+      "repulsors": [],
+      "stage": "bounded descent above black bowl away from ramekin",
+      "unknown_boxes": []
+    },
+    "near_target": false,
+    "routing_reason": "The wrist view now clearly shows the black bowl separated from the ramekin, and the external view retains vertical clearance above the bowl. Make a bounded descent with a small planar correction, preserving exclusions toward the ramekin and nearby bottle.",
+    "target_region": "black_bowl"
+  },
+  "effective_compact_field": {
+    "attraction_weights": [
+      1,
+      1,
+      1
+    ],
+    "blocked_boxes": [
+      {
+        "lower_offset_m": [
+          0.035,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          0.08,
+          0.08,
+          0.015
+        ]
+      },
+      {
+        "lower_offset_m": [
+          -0.08,
+          -0.08,
+          -0.08
+        ],
+        "upper_offset_m": [
+          -0.025,
+          -0.035,
+          0.025
+        ]
+      }
+    ],
+    "goal_offset_m": [
+      -0.015,
+      0.015,
+      -0.06
+    ],
+    "gripper_command": "open",
+    "motion_mode": "move",
+    "orientation_target_xyzw": [
+      0.99961,
+      -0.00091,
+      -0.02792,
+      0.00027
+    ],
+    "repulsors": [],
+    "stage": "bounded descent above black bowl away from ramekin",
+    "unknown_boxes": []
+  },
+  "field_center_world_xyz_m": [
+    -0.20694765056433712,
+    0.2068811742191525,
+    1.0058280301063212
+  ],
+  "goal_world_xyz_m": [
+    -0.22194765056433713,
+    0.2218811742191525,
+    0.9458280301063211
+  ],
+  "recorded_plan": {
+    "delta_xyz": [
+      -0.0050000000000000044,
+      0.0050000000000000044,
+      -0.004999999999999893
+    ],
+    "status": "move",
+    "candidate_count": 1,
+    "valid_count": 1,
+    "selected_index": 0,
+    "start_potential": 0.07098076211353326,
+    "predicted_improvement": 0.07098076211353326,
+    "reason": null,
+    "numerical_tie_tolerance": 0.0,
+    "candidates": [
+      {
+        "primitives": [
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path",
+          "distance_path"
+        ],
+        "positions": [
+          [
+            -0.20694765056433712,
+            0.2068811742191525,
+            1.0058280301063212
+          ],
+          [
+            -0.21194765056433712,
+            0.2118811742191525,
+            1.0008280301063213
+          ],
+          [
+            -0.21194765056433712,
+            0.2118811742191525,
+            0.9908280301063213
+          ],
+          [
+            -0.21194765056433712,
+            0.2118811742191525,
+            0.9808280301063212
+          ],
+          [
+            -0.21194765056433712,
+            0.2118811742191525,
+            0.9708280301063212
+          ],
+          [
+            -0.2177211532562334,
+            0.21765467691104876,
+            0.9650545274144249
+          ],
+          [
+            -0.22194765056433713,
+            0.2218811742191525,
+            0.9608280301063211
+          ],
+          [
+            -0.22194765056433713,
+            0.2218811742191525,
+            0.9508280301063211
+          ],
+          [
+            -0.22194765056433713,
+            0.2218811742191525,
+            0.9458280301063211
+          ]
+        ],
+        "path_length_m": 0.07098076211353326,
+        "valid": true,
+        "terminal_potential": 0.0,
+        "immediate_potential": 0.062320508075688924,
+        "invalid_reason": null
+      }
+    ],
+    "search": {
+      "method": "dijkstra_distance_field",
+      "connectivity": 26,
+      "candidate_semantics": "one_extracted_graph_shortest_path",
+      "distance_semantics": "weighted_graph_path_cost_to_goal_region",
+      "edge_cost": "euclidean_length_times_mean_endpoint_density",
+      "cost_unit": "m",
+      "density_minimum": 1.0,
+      "uses_attraction_potential": false,
+      "goal_xyz": [
+        -0.22194765056433713,
+        0.2218811742191525,
+        0.9458280301063211
+      ],
+      "goal_tolerance_m": 0.0025,
+      "goal_distance_m": 0.06363961030678933,
+      "goal_reached": false,
+      "endpoint_is_goal": true,
+      "endpoint_in_goal_region": true,
+      "boundary_clipped": false,
+      "direction_invalid": false,
+      "needs_observation": false,
+      "cache_hit": false,
+      "segment_count": 8,
+      "max_path_length_m": 0.1,
+      "settled_vertex_count": 26697,
+      "seed_count": 1,
+      "valid_vertex_count": 26697,
+      "start_cost_m": 0.07098076211353326,
+      "terminal_cost_m": 0.0,
+      "shortest_graph_path_length_m": 0.07098076211353326,
+      "endpoint_xyz": [
+        -0.22194765056433713,
+        0.2218811742191525,
+        0.9458280301063211
+      ],
+      "path_termination": "goal_region"
+    }
+  },
+  "expanded_field_exact_match": true,
+  "reconstructed_plan_exact_match": true,
+  "executed_control_count": 10,
+  "replan_action_indices_zero_based": [
+    300
+  ],
+  "initial_goal_distance_m": 0.06363961030678933,
+  "final_goal_distance_m": 0.005698173387424961,
+  "measured_path_length_m": 0.05888775552791098,
+  "measured_net_displacement_m": 0.05832162308754722,
+  "measured_y_offset_range_m": [
+    0.0,
+    0.01309778362309813
+  ],
+  "raw_rgb": [
+    {
+      "artifact": "block_300_input_external.png",
+      "sha256": "957e340b33e17b435d41e14165fd4eb6db896454cedd292fd2d3fbcb35ac0547",
+      "source_trace_line_1based": 1288,
+      "source_event": "executed",
+      "after_action_index_zero_based": 299,
+      "source_key": "observation/image",
+      "transformation": "base64 decode only; original PNG bytes"
+    },
+    {
+      "artifact": "block_300_input_wrist.png",
+      "sha256": "8af3b99477ca39dc526b0b9a16ad79fe75e91dce685e52e49654ce356a88b8c3",
+      "source_trace_line_1based": 1288,
+      "source_event": "executed",
+      "after_action_index_zero_based": 299,
+      "source_key": "observation/wrist_image",
+      "transformation": "base64 decode only; original PNG bytes"
+    }
+  ],
+  "terminal_collision": {
+    "phase": "action",
+    "action_index": 309,
+    "physics_substep": 7,
+    "contact_distance_m": -9.514610222601095e-05,
+    "geom1": {
+      "id": 151,
+      "name": "glazed_rim_porcelain_ramekin_1_g8",
+      "body": "glazed_rim_porcelain_ramekin_1_main",
+      "object": "glazed_rim_porcelain_ramekin_1",
+      "role": "scene"
+    },
+    "geom2": {
+      "id": 74,
+      "name": "gripper0_finger1_collision",
+      "body": "gripper0_leftfinger",
+      "object": "robot0_gripper",
+      "role": "robot_finger"
+    },
+    "reason": "robot_scene_contact"
+  },
+  "data_artifacts": [
+    "block_300_data.npz",
+    "block_300_eef_track.csv"
+  ]
+}

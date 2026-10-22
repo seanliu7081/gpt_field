@@ -1,0 +1,102 @@
+{
+  "width": 512,
+  "height": 512,
+  "camera_name": "agentview",
+  "fovy_deg": 45.0,
+  "K": [
+    [
+      618.0386719675123,
+      0.0,
+      255.5
+    ],
+    [
+      0.0,
+      618.0386719675123,
+      255.5
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "K_archived_mirrored": [
+    [
+      -618.0386719675123,
+      0.0,
+      255.5
+    ],
+    [
+      0.0,
+      618.0386719675123,
+      255.5
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_world_from_camera_cv": [
+    [
+      -7.268184498698815e-08,
+      0.6282664504107425,
+      -0.7779982437565529,
+      0.6586131746834771
+    ],
+    [
+      0.9999999999999858,
+      -7.268184498698815e-08,
+      -1.521152659944569e-07,
+      0.0
+    ],
+    [
+      -1.521152659944569e-07,
+      -0.7779982437565529,
+      -0.6282664504107283,
+      1.6103500240372424
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_camera_cv_from_world": [
+    [
+      -7.268184503297055e-08,
+      0.9999999999999858,
+      -1.521152659724862e-07,
+      2.928280429142419e-07
+    ],
+    [
+      0.6282664504107425,
+      -7.268184503297055e-08,
+      -0.777998243756553,
+      0.8390649290821589
+    ],
+    [
+      -0.777998243756553,
+      -1.5211526597248617e-07,
+      -0.6282664504107283,
+      1.5241287867393822
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "camera_axes": "x right, y down, z forward; right-handed",
+  "pixel_coordinates": "integer (u=column,v=row) locate pixel centres",
+  "upright_from_archived": "horizontal flip (array[:, ::-1])",
+  "upright_from_raw_opengl": "vertical flip (array[::-1])",
+  "depth_convention": "positive optical-axis z metres, not Euclidean ray range",
+  "access": "evaluation_only; primary reconstruction must estimate its own focal from RGB",
+  "near_clip_m": 0.01060981611847304,
+  "far_clip_m": 530.490780726692,
+  "raw_opengl_depth_conversion": "z=near/(1-buffer*(1-near/far))",
+  "reference_sampling": "first visual-geometry intersection at exact pixel centre; MSAA-independent scalar mj_ray"
+}

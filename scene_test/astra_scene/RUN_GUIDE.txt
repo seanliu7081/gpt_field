@@ -1,0 +1,64 @@
+Astra 场生成实验：复跑与审计入口
+================================
+
+此目录独立于 rgb_scene；只读复用相同三张 RGB 和已经校验的模拟器参考。
+真实相机参数、深度和掩码仅在 evaluate_fields.py 评分时读取。
+EXPERIMENT_PLAN.txt 记录在结果产生前固定的方法、容量和评分限制。
+
+从 /workspace/gpt_field 执行，使用 /workspace/venvs/libero-plus/bin/python。
+设置 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1，且加 -B 避免字节码缓存。
+下面 NEWDIR 都必须不存在，程序拒绝覆盖之前的实验。
+
+1. 冻结三次独立请求（没有网络调用或凭据访问）：
+python -B scene_test/astra_scene/infer_astra.py prepare --output NEW_PREPARED_DIR
+
+2. 审阅 NEW_PREPARED_DIR/instructions.txt、schema.json 和 requests/*.json 后，
+执行已冻结请求：
+python -B scene_test/astra_scene/infer_astra.py run --prepared NEW_PREPARED_DIR \
+  --output NEW_INFERENCE_DIR --timeout-s 300
+
+使用既有 ChatGPT subscription OAuth；gpt-6-astra，medium reasoning。
+每图最多一次请求，最多三次，无重试、模型切换或 API key 回退。
+原响应、原始 JSON、规范化后的场定义分别保存。
+仅允许已声明误差范围内的单位四元数数值归一化，记录于 _validation；
+其他几何或 JSON 错误不自动修复。
+
+3. 将原始模型场采样为保存的三维网格，再从保存数组解码：
+python -B scene_test/astra_scene/build_fields.py build \
+  --inferences NEW_INFERENCE_DIR/manifest.json --output NEW_FIELDS_DIR
+
+默认 4 mm、2 mm 间距。每块 32³ cells；values 是 float32 CSG 标量，
+lower_m/spacing_m 记录坐标。根包围盒完全来自模型场，不用真值裁剪。
+不含零面的块使用 1-Lipschitz 界跳过；certificate 记录这种计算筛选。
+未保存的块不是“没有障碍”的感知证明。所有采样及 mesh 记录 SHA256。
+
+4. 独立解码证明（无需图像、CSG、DepthPro 或模拟器）：
+python -B scene_test/astra_scene/build_fields.py decode \
+  --fields NEW_FIELDS_DIR/fields/bowl002_initial_h2mm --output NEW_DECODE_DIR
+
+独立解码只读取保存的数值网格。geometry NPZ 含 vertices_m 和 faces。
+
+5. 评分：
+python -B scene_test/astra_scene/evaluate_fields.py \
+  --fields NEW_FIELDS_DIR --output NEW_EVALUATION_DIR
+
+默认读取 rgb_scene/references_004/manifest.json；禁止把参考传给 Astra。
+主评分为原解析场 A、解码 mesh C 对同一真实像素中心射线的误差。
+表示损失 B 使用模型包围盒定义的六个外部视角，各 64×64 射线。
+MAE/P95 仅统计有命中射线，必须同时读覆盖率及全参考分母阈值通过率。
+此 B 与 rgb_scene 的双向表面采样指标不同，不能直接比较数值大小。
+
+6. 验证新增实现：
+python -B -m pytest -q -p no:cacheprovider scene_test/astra_scene/tests
+
+7. 出图：
+python -B scene_test/astra_scene/plot_results.py --fields NEW_FIELDS_DIR \
+  --evaluation NEW_EVALUATION_DIR --output NEW_ANALYSIS_DIR
+
+接口资料核对：
+https://developers.openai.com/api/docs/models/gpt-6-astra
+https://developers.openai.com/api/docs/guides/structured-outputs
+https://developers.openai.com/api/docs/guides/images-vision
+
+主模型只输出非可执行 JSON 字段；schema、提示词与所有几何公式均可审计。
+抽象表示中的背面、厚度及被遮挡形状是模型猜测，当前可见面指标不验证它们。

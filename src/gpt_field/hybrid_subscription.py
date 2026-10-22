@@ -409,6 +409,10 @@ class ChatGPTPlanHybridClient(ChatGPTPlanFieldClient):
         return validate_hybrid_prediction(data, grid, self.chunk_size,
             target_regions=getattr(self, "target_regions", HYBRID_TARGET_REGIONS))
 
+    def _history_input(self, payload: Mapping[str, Any]) -> list[dict]:
+        """Inputs committed as this episode's history after an accepted response."""
+        return payload["input"]
+
     def predict(self, observation: Mapping[str, Any], grid: GridSpec | None = None,
                 mode: str = "hybrid") -> dict[str, Any]:
         """One attempt using shared subscription machinery and hybrid validation."""
@@ -458,9 +462,10 @@ class ChatGPTPlanHybridClient(ChatGPTPlanFieldClient):
                         and self.clock() - self._started >= self.config.max_wall_time_s):
                     raise BudgetExceeded("max_wall_time_s reached while waiting for subscription response")
                 result = self.validate_response(self._extract(response), grid)
+                history_input = self._history_input(payload)
                 self._write_log(path.with_suffix(".result.json") if path is not None else None,
                                 {"status": "valid", "budget": self.budget_snapshot()})
-                self._history = payload["input"] + copy.deepcopy(response["output"])
+                self._history = history_input + copy.deepcopy(response["output"])
                 self._observation_count += 1
                 return copy.deepcopy(result)
             except BaseException as exc:

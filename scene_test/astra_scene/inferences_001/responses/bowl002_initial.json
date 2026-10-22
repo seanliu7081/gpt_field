@@ -1,0 +1,334 @@
+{
+  "id": "resp_0bca6f687c31bc05016ad675a4a61487d1b7cb2fdbffe88eb7",
+  "object": "response",
+  "created_at": 1792439716,
+  "status": "completed",
+  "access_programs": {
+    "cyber": "standard"
+  },
+  "background": false,
+  "completed_at": 1792439800,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": "You are estimating a three-dimensional scene implicit field from ONE RGB image.\nReturn only the requested structured JSON. Do not output code or a mesh, and do\nnot use tools, external depth models, simulator assets, hidden camera metadata,\nprevious frames, or memorized benchmark scene coordinates. Every geometric\nparameter must be your visual estimate from this image and ordinary size priors.\n\nThe purpose is geometry reconstruction, not robot actions or a waypoint potential.\nRepresent the visible scene, including large background/support surfaces, main\nobjects and visible robot parts if present. Do not spend the whole primitive\nbudget on a robot at the expense of the surrounding scene. No known\nobject list, dimensions, metric scale, camera pose, depth, or calibration is\nprovided. Infer metric scale and focal length yourself and acknowledge that one\nimage leaves these ambiguous. Do not claim measured or calibrated accuracy.\n\nCoordinates are CAMERA coordinates: origin at optical center, X to image right,\nY down, Z forward. Units are metres. Use a pinhole estimate with fx=fy equal to\nestimated_focal_px, image-center principal point and zero skew. The supplied RGB\nis upright; do not flip it. Place visible geometry at positive camera Z.\n\nYour output is a compact constructive-solid-geometry (CSG) scalar field. It uses\nanalytic primitive signed distances, negative inside solids and positive outside;\nunion=min, intersection=max, difference(A,B)=max(A,-B). This CSG field has a useful\nzero set but is not necessarily an exact Euclidean SDF near Boolean seams.\nThe decoder will sample ONLY this field, save samples, and extract its zero level.\n\nNodes are indexed by their position in the nodes array, starting at zero. A\ncompound node's left/right must refer to earlier nodes. root must be the last\nnode. All nodes must be reachable from root. Use at most 64 nodes, including at\nmost 32 primitive nodes and 32 Boolean nodes. Aim to use this budget effectively\nfor the main visible surfaces; approximate unresolvable detail and report it.\n\nEach node has exactly name, op, center_m, rotation_xyzw, size_m, left, right.\nPrimitives have null left/right. Their center_m is in camera metres. Their\nrotation_xyzw is a UNIT quaternion rotating local vectors into camera coordinates.\nA sphere uses size_m=[radius,0,0] and identity quaternion [0,0,0,1]. A box uses\nsize_m=[half_extent_x,half_extent_y,half_extent_z]. A cylinder has its axis along\nlocal Z and uses size_m=[radius,half_height,0]. All used dimensions are positive.\nFor union/intersection/difference, center_m, rotation_xyzw and size_m are null.\nAvoid zero-thickness primitives. Finite boxes can represent large planar surfaces.\n\nFor example, if a visibly hollow container appears, preserve its cavity with\ndifferences/intersections or a union of wall/base solids. If furniture has a\nvisible opening, preserve that empty space instead of filling the whole object.\nThese are generic representation examples, not a supplied scene inventory.\nUse only image-supported orientation and opening state; hidden backs, undersides,\nwall thicknesses and occluded surfaces are hypotheses. Describe uncertain scale,\nfocal length, omitted detail, approximation and hidden geometry in uncertainty_notes.\nDo not change the representation or invent precision because evaluation will\ncompare against withheld ground truth. Ground truth is not available to you.\n",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-6-astra",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0bca6f687c31bc05016ad675a5bf2087d1b2d1a057452887d9",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABq1nW5S6LGc55TmhuAeDRB4DEtt6vmR3tBy-_bqB0kBVLT15oWlH-7rKtnrr1CjylbLQJWmtBcZZmpuDsF8UFdjxyTunRCEBiRsFL6duc2ol6mmenLz1HEw5Jf9-ha3Qs8nR1Q0FdsfmcksQzmLjwxOF3if7SQzpsjeuddyfRVekqpBUgjpmtVK5NdCNo8h3k9ZExBUfNffN0Y-yuSRGrkBDklmdS9dcqDMC8ezSq2cWcDq-91NJQxusWJQJaxDxBaD7blNzxqSaFbFn09A9V5EIOb8WE5P4qXyiF7QpNVaWn5cpj2PLfy8gkHTOVE4mRPPAXStaduorqagd9cV2MHOy_-Va-ZyjUvFD-QEkC6t7atdKT6N1Ht7K_n61U8M6JWIXV26b3iuqd0yzzzooEA20bJN5Qfh89-c_D2oBVuGG9fDon2LkdC87cwrhNqmxL0KgQWaH4i1zPcPTGjqb6cmHtObL4UPEQL-s8bZ8a1dLLf1HZu84Ua8dwAlN1PEcERyvqDA64bWUe_Z3aIdM9pTR99GdOxboQXvwQVGQP3FZD7ed4LgBpSiVuQNJ0vCMenOGV8OU4DDja7u1Gz8dKw5W3vMuPGeNCK_76lVC5Z4ZHw9C2dTaByFnvQ2nFZpD7-NhtcBee0bucskVCpF_8AwnjfWRyQMHXCqLcB7hD1WYoe1HbnqLzzTtMBEygPpr96M5VZdaV8XTMQ6Wfd7WfUu3Z7JKFG5BQ4FxcaiD4Y-eZ2Rh2zd2yJ3atgYGXbEhgJVSFkaCqIEPfSTdsEikQxpI-8CJb2WnyUl8iaR50WmqYDXJyQmjlWGaJ_N2cxQgjEDz3Mb_3T5AMxeoOUkvy_lzWUOtzH_DQZUdSJmDkPF_NLkV1xt6HL6BQYYHzFVKbv5avI7R4C-bPhkCNup7GsW85L-k6c8MDMolIrTyssXcQl0wLzXRA1UseUZIJ18LmSYskzaaa0OC2AjFFIlQhpixI9q9esS58tRbZbe_Qh4b7_K4y4CLcI_pNlLmhbfqTCkLQ-pQ0EPPvXEgd1qDTG9aqJs7sgXqbjvh4OTIi-vRp1TSJkkfY3PzObAVl8s5yizxnt0h0P3TqS_i3y-IP_u8bq2ILlavtWsxkzSGbJ4dvvr9xq5gZhOxY76pEwS5gGvD_ytA8Cs2alExl5-VoCek-NSMf2AGJRzttx7oeHOIrHGLoCT5reK6jw71VgRJY8oSEIlE37glrD2ORGgypGbTlY2YzfrylIKDpvp4Xyom1TZFuBZ8Ed1ZFzu5kuvnNGVWGeyKVHDSYA9dswzkuYsa7wkX28abdlHyVas83KhqqQo25fKqYwPnoJmuquh4LzRycOdiffIf22y1b6IDjtE9-im7HtdKNiFWcBNwJUkMiOHtwyi3vddO0NLJPS_YKKjRWO2c6aRzfBofbNm7PRWskn3p0QpZLmcrKYkTs9XkpGP2j0cpuiUfvaKhKqPf_sB2wfmHqbLs3Spx5Z_Om0Xainrk36G8sUtyAUwb5iMmHP2mcHRVo9U6xuiUmNSu_fSsbwTvCCb5HeL6mtt-z7tcUBEEGnkIJn3EbO0-VpXtor7T5ezsqsVY_2inBrNFpMqmqGoyXNVBvuOdxce6t-Cu8Vp7cx5amn6rYy95Bf84L2gf_HbdYZT8Gk6eZHqFdTeL5x3wPh6piWRnyuuEYrqNTmTW0mraXCAV4Ke76H409NlZHd8upaKZFUA67Nrv_dmNoC2TbGKIRjqwh3e71mNIRiPf0lwszmkKcIU8jWjEvn3jH9ivs-HEAI88MKtt8aF5_yG3YD-7_ccofVDDFMTqBhz_MMcaQzcfR_BHCaTkqAu5QFzRGnioEYPH9BYYj7ft1SRhXW6kxa5Jklym2H6egxw8FkzZ442LbuTTger1g2bk0ECsG9xdpZQ7a1KgYeS9QYT93z9mLly-Wk5s1Z0Tq3_NYxqG84dSyEary07ychpXQECfxRWtqMZYB7_QFLDcgYVzxCEUn20JpUGq69lAjNEgZ32uYzikTJm6RxaZo4-h1HB_rPUGkdzyEUpjH10NAyxKdwoPBCmjNIa49YlRBTJXm2OPrCnYNFVyF-WUAyFpHnU53QLOHV_r1KjdxHzgHzKC_A930SN-4_PS0KzH5mw6o1-vc4ifStywYN6IiCkN2QPJ6QQoqnrk5wubjpsJ78XnvXtunpRMFrOMMOpj01tRwZ9PZckTquiLhbTvXcspGuXISLzdkYqvTg1on2nAjtRQteBTH9AfGn1xS7oiDPmK42QgYLTN_6FY8-dEduGvFH6wepbHfcVkgiomFJJWXFDFEe8FvsD8B76-_eQxG1S7M4hVYBJzPXpM8Dxp5qQ2yzQ8OJbC6FL02O_zBJjO1iTgM5awaZJkUCKq47_1Syr4oIBDl2RgEvPjgQxJ08jsGWO32bQXyCl8ZsazUsNXygQJLFXWAujuq2GwpU-riWjFBTyU4C8MzSULxUm-AeLfTwEpiWTu9aBGmv_Q50Tz2btuxBrXtsOhULmjHqATI7i1--CviohjpFyWdRwoJDuFtSJF2T2P4h-zAhi6qqF8srki_40dupPFoMi5CBYgpMzuCRsJR6PhVCa3QKHYxq0HVo6quQJeN4L6e3VG23IF4VHqyMTVo5d_9_lluSELZTcblybwmSgRSm_V6qzNDpNlQvxgL9y4nCuBAni6yXsnZQDV1rIskMvaEpkzjVL_pnwUhOqRHYcIRShI5ir7FFdJMp5qY_t9vKxWlQQx-kQN6sEkmk-Aj1Gbx0_syJrA25tOja4CQKBXUshJC8uyl2PmXSKGi8EKafNqlzxLDkyhH_Xp9N2DxFbr-9y2XEv4UudRSBFty6HjCWm6cNmIM22bC9niqFz9aIXuDfhKA3MJNObO0IlVyKBjkbHmRmckMQhuxKa10MfAMdCJEf7qMtxv2_SSOeq2lv2R24OW3nWoBJTjzIQmAbgF6oDbARib5TIfviNhYOh2tRTVKdbxUk--ebtLchJdzfYk4VppAhfoL2QR5EZfAn-AQx3NKtO7XZpIN6x3b0aVvB35Xn7a8sL4k1my2pW1khS1HUvOt0r--KGs0dO2gDgQhO2Y2AlNKaDhDf-QoJ1EUM6w897uZ91Ds8iBRHhU3beIi5cJz9LRK0GzJzuiJVb0ZgVA9TQ7KDE16TV7Ydhdyga7SCPsbvkiovCGng2CnlEmDC36ffmbICPajD5hjpIeLMi3a8RVFE5ZdN7Eo07dxxTlQUmtVh7EibyK30wgwpqD1xZT43Iu78zCCLrzhBPmddFdpUptnTt00QRZj16D3yiNinvzS9abO3KM6BKht27nOqEUFCJBoAZOVV6JqgRwqoilxyqIwCScpUXG9fxj5A18UJo64DlPsijxZBZWwdQVXrCK5DMsDIZ5ItHi0jwgEVeiYxy53o3gkEM70ZeudbVG5JGr5TrKVpvsvVkVfXFQU0HX8nO_SzixF4RBF5Ff5sS81iGe1yvw405c76xJmgHLLmtjrCy2dtCdBgvpIdvQkJcT22yBrOw6GrOdu-mKrxdfESTcDLnaggYPDOTBjnsZ0xe7XQgCSAMIIwtaBwAbs-gzq2ZbR1boZZ8Dak7-ncIXuIphrpBe3aac8WHHc7DslK7w0weLuuNFRmzS-XoxZHQX6aVTzFV3W5kQNyGm72j9koZIJqDuwyFDDMUgicuyWIj6l8H59fZVjnY4UwjPJsasFJS6c_Pw67NNbWvUfzhSsCTDlzvSuSibjERL4z2bV7psnAi1xU73fwOVMJiI0EIt4mTnTL7iOkx0eBR3EcOOEfZrgXKjzLHjkxeSpGm-nyKt2EY7NtwVgkRgbXgTVk9lkRUqI0CdfQlparvfb2_4J5H9iB-MXAotO_m7yVxZ63PEx1H1sFMj-vGLWuoSg2UxbROG_DJHEHcgLk-WgnmFxAVC35cs-3sAN2JYOwA2BYoKAqH25MZKEE4XmmAG-3L1qOldLmmgSj_b8_7xDa4LAv8M420J3YkTfUy8tIO0-s-ky85vXLuLzu6BkaCciMeHi6B4SxOdwRMlg1uC0WrgvwBcOc4XEzGKxIFoDHt-koG4PL6oiXWg9h2ec0SowHPnlu8XdrJeKFv_Hqc1TW4nLhgLD6ZosNxFs13mwf3zgzpuIGMGgWKdg9zNUsHoMPhjJvFf1d1MMsYQaaYRWwN5onMlg5uyC57TPUQgLzumztEMe4LZuBqxeRvooxgDBiPd9vfxFaSU-kAcwHls-0vJ5TNljvD6Vn2lQMhjCW76uiG135zr-k64d59vj9coAjO3LyZr1fDsQ-hA9SlT1z7LZZgXn5Uq8n82gsazNodtsVboyCJr486MhCos2oBrsH3Wx12MI7h2tUrN3zuS0yKfzkNTXmDn5O23RAP1-uyMwJVZZiwTVVONNa1n5haiFoGXqRsrem_ESRKDbP8QcNmENXPWsV3cRqNA8fzMdiAW6XdluavfYKzWYuDQ6rBd7rWxgEpnu0zDJGY3VW57WlEK1uzmqb5IHJZTXoaNUw4O0ahFY4mIOz_iPBRvkL8dgtni_q_RcU18nSnd7JYhOvdBb3t6RXfiSWvIC36Dsbz9VRkQIUrhULlvhjU2NsqVTi3l4VdLzjgSB1KurpI6M91HAMSFL-w2DRSjMkH5NCVyrv9OH4-3Vpl4lRdzK3Kjuz8Gy-gXBDBzLi-N8bx6ZA8TYuSkq1VUYrFvJwQEcL4RNKoJMgtBdAhxyTIjWL3eHlcj4QgAogA2qgU7h97aVoTJ7tTG3tmNkC4o6MtOU857flFpOg9R5sStSrnUwyn_Yd8vyvSvOZNLTspV07sCeuRfaudSoCaGqmiX9sXfHzhNDDKvrp2j2L6W8kDQz1c7rXk51Hieq-U16boKaymFNaEgtmd-qqUaagbmDs6BYhiI982_pnOS6bP5Cp6eE8oy70lPF9h4nR2j1TXXmZvy94uMMQvl375MA6lu7rT8jlolB_AXJLqVzTiBPWVetd-K9xWqAl43bZEn76heqjMCy1pd3tZlQfGcEm3qX0wHtcXmoDOziBTNxaNd-_-w90YTtPPpVZrbinTuxHA9zqT3RxLadH1pumBD075I0DjRbliF2WBSJPCfNV83CT904tmvkuS7UJcri9x4q4T3Ab27rhixY_Y1lHcF7TODme9nKNkk8F7kZVa1_BVYSc2ZmcrGYT7357DTGFpHe9UJrgmMoUXn_deb3J5E0xjK30IBzvqEXoMUzMs_9Dy9VFo9Rl5Sb98rwwG5SikWGmSkyV0wZtNlB6q5vIzvsc5BcoXGWG87Nw-OCwbTcHYhPiEiReqSpSeB1VGPNMAkqd_yANRZXemDn3aI3VExZ6VL-7ldSSnggyDwdn4p5aYbVqokhYbRE-qJ5rkSyI45A_PYkqVSSMJ_l-V1fyihY9ndeBfb0Ch43l08qzdEpxLLKXK0gu47du3_WqiDVeZYzNYAxq_91FCZQDcrStwduqW_OwWHAYbDhTVm6BIrL9nSZ2r6Ahf1075cAUiA4mAZanDmNZDDCQsuzHJAMCh_NQhyphCt9700qpwqxdMScyUnM_Obz_Ai8W-GsKBaHzscFbsgc51sr8PdkoQ1ql2uC_2hoAKa-k9CwfYs4gxKIC2b4iz76fVR7b3unaPY21KkCdXEeHDhb6QZE5jmnIJsnuUhzeNn5l0xnZveszVv5TaeJUs3P_iDeyNrJs5ORI2MCcD5bqwSs-R7_H59m6fzG5sTB_1gS4B8VZVzYtLIkDRRZO6B-06POc_ltL_R1erovaaE-IFmsOi30V_1lSeje4qJfotoRlFCfI_gocomsBVAAlubuCJeUfHiWMwscfTONx1txsth76r5kl4ARLDKAoE7qpgND60n6fH2TCxSfltps_xj5-hgMo5J1wc7o_TL60goO1LMl5TZRPo4F5DTXBrND6xMvZBGiDYHojG-oOK9RGnbObwPJH567PoEPY7cDIxxcP0Y07Pa2dJtmVUMJf86Pik_2_26QrmvB8v8QHccto3nFQ8h-Y2fSI4nPJ55V5ml5OY0RjXJF99Jayi4RWILhkG8U3b5vfiQy2WDdtfpBk8FGC7Dt2RG4oOgKzcucwvbIfUvQg-ZQ7-0hu_DMVXgW1PVqUkVUqrwYsrYQVPJEALC_sGnyu22lfgZF88nRfv52Wy6eG6LjYZ4CwU-NqIxPp6JHFMdqwLebRtfd5BhWh63jTVd-3Cdm5MHlRYPY_zSk4S82k3Bu2_lDfXFJy5cMnrAjSf6LiOciz2ghEDzaAli3VZ6Q3X3VBkPdDr1nLM0_U6NW_8BfyWh8f4HAT1ELjGgr20Jyt7AK6ef1F8e9Bzft4c4Ea5A5ot1_ZdRjVULyZqhKuG2rZLrStJfzkBShy8Ubjam8T5SqXCGSGkADJopVrxmG9agOmBBz3ssUU1R_NaJ7TQlCMelz_cOrQ90Az3mu3CCwLPPrvFOVFP8eE5zuqQHcC-3S9HmM1taHKSpE2hX5LuYuY0C9jXN39p3SyaFQxF9KvsUp_xTnEKLFAVGiHo3E5-VtgjSG5X00mF0-y5tZGKbNIuCnAckut1QJxBNkIgDty7JE0E3WaoJRlX4OvDrW4QHw9pWd1tqSTvFARQZfBk1-YzekfANg6YOMwh5s59bDBDKOyhBar7CWWZaAQIKqr7ZaEUdDXLAD1f_FZN2xvqrQPS9DSZUWhvMokWdTxobI3aflCbzk4AkQuLnZD9rhV33v6dVuVjpVxylcppPFCUhOqLc7BT56pdDa3Y8KZkAb5crv-FnPx38OoSPlenVA0nU6FV9Z9zzz4ZtIcKrbv0JOPBsYM9o8FIeAZWKPhgREYcNVAZIB2HNhwCBD3ETFmgVE-jG9S19ygM6Q0lLltc_3eXL7cUFqT988ZUa5KIoad9VimCiFaxbsOxpprUiAypHHjl_5nGaiLpTBUSpoRqQ8WuOwbtM1pVk0HudcOoB2-IWGGKWoHtk7Yxf63Kutig1zV6E9zibB8sU2nLX1i1WURBANaGw8GlpCRZgjj6NHelzGI_LmelCAEPmKNPDxKm6YEGERIynHfGbtTqzO4erhaOd--ip_bjPhVn9QAFdciwyjGzaDjEk6RPGL-5NuUHagI_-7R",
+      "summary": []
+    },
+    {
+      "id": "rs_0bca6f687c31bc05016ad675b9b64087d18747e2f217f9861d",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABq1nXG4otBcWa2FVRfAXhgGuocJ_iE5_AKsjYh9dvwErJrv5muHkBdmmbDPBsAq6kDZSTYqPc8aYcpZk04yeKUjNNKHZWtidp7c1KjDuEuXyg30t7hAsp5b9DdizlGhTkcTye2SMjxkwZ-rn6_omu0DTa4dSY3JRgf0yJS7QP1-hfNc9SbNyG2VWmmSZB5Mn2HMUS3X5CqiY6zdsQTcKwmxDTwiGwrfFobU6y0j_ZhOSUm_-ppwz0gOCM0UVD1KACnvVcizAR-1a_H4pmEkYXUEJb-4Qlqgc4wlrnBsjYvIQunvj0dzbyEHDPqtuNMJoLG3Bklz-LofBL-mFHmBGTFPuunZQkfv1wCahbNE75tR6fEByVMlKiDWs2hFwtQYoB1Rldq0xUC2IEMYMZEWidRewUQjrU-Ww3t866wbs66KTfzHSCZwTsvaURvS6BcAVwLSnMsQvfRMtvAlK4uqpYJjEL0_j65jFA3YrsjFVNB1zLAGANYPWuBn7AJn0Coig_iBaDf54UN9YfvG42ytjR9Uvl1h9QpmHnH4qlWRTSmr3Lw1bD7tYgtXPE5TPZWKJWdSYDuo4g_Pene6CfBfxhcbURTEgfqwYdvft-mXGpyi4GwK8Wsrd3nwh6fTVYU7L2aFLr-TBNpuEtpXWUTKGrrG2mZrvZmUab3nv9UQglxShdI1asrZm5Yhpa_ClTsTmaWdNdZerrLqfaDSoNxDRgXMa1DuVIJv200eNM5KvaRkzL8kRzPSqqLceQkR84kYdccP5htZu2jJn8yRO5PtEB5zRraYVn1aWJl8Z7lAnW4tdeP6QPv-u2bQobbTUubTMdkJPzcFxmNsquhTz3C_qQ2C84hbDoyFU3XPJsZNTiERAVQ4ObOuDc3WOGYl6Qb7uWgYKhYxgdz0FTgd4V0FA73pUt_jTj90n_snWValM9206GuD23_9HGsQIQiDW2FtGdVIUycS5ud6SMfYgB3Vzp6xPNSxaZer7ZaosAANMcZKP3_CUzjEiLzMZhlYYTti1-FrkW_x60M1LmyMP4c9o1krGFozmWHmFjtZnteQqfLdyihZSQLYhslTLbDNaebJ1rG40NXGOnxRxQtC1SHLLDxtTqukOpyeuOarVPC-YvLEVtl6hfjo-pfvT25hkcoJyMqp2vTkMOQR3t0OV3ik0lyzFh4QsErj8a7zseSheiaE7k4iE4ssuV1jry9UoSP2FgUCsk_At2IwxdEZE133rl4nfwi_8DHlmHwhrfa2Z3OtXUcLK_EnwA9M0NapeokbdaU-8w8vC_owJ2MMHHmCH2-X-SkZ0n1OZeY210rZqqsYUgMa5fuTzIh0bIA4mYoCqWW0ceDX04O1wVs40WJREJsAJZrxc6G101oOF7zAuxNOGxhxwzDszkMDAx9IC0hrG9PETt3mqtFN_ZwmYlGSiF_cuzrnO-mSrMAI7N_ATEQw7F49NoJ6OIdJdvygzhK7jzPBJ0TzmOZK_gHwgn0YzDoVZso3581V_dknydXZSuhYkncPjYsbRV1EsF13IQ0j6dyu1GcSReAG4FORG9lCJyA1AmRXhTOjUaVGGh4Fl0DPJAhYgnB34nRIMWh1R2yH5gUGpKrGCazdmc1eo3hmBTJs2CNHqbw0QkanSSUijxyI2x7a3k_Bp8tqArLFBlGTsEfLyvquEbnHotg8T-bNPVib_Jrrl1W7BUY2_Vz26enCLkfHevvONYx7A2TzwXhqOKIVBYC618LvPwwBGNIkWb6KhyDkclCmv1_LeNG42bluSXqgMPlo0buGC-dJl7ovZu6HC7pZ_XM8dXIRAffMGu4ep-6FIqNOPtTcQ9ottRXK1Ldv2B8h-79Y8sLzSOWQzRWyV6NqNg0TWiStb_9z4xkFTl_dQEbMkm4AjlhVV4pDUr_vkKC47o1LPbG5CzTO7AjDXcgb-W8PGz2VSvkVcpjbxiFWdQckYSDFDx9vx_zZXHGBy_X8sqjZ8--X3JtkBYpjQo-9GHActChPbmo4KtDTWWFfDJe6x3EKrxCgz1ba0MH9KblPellYQGGwssbwMAeJPe7L7vDtHUmecXgQW2LjVFmnLGz2xqYLJo0EYcneJzs-mgft1zRl8KPd_Hax-DV43Z-zhcvgFZKwUFl86mEpiEINr5m-Y4cdr-uj6dEeYTrj9oDDs-sjnI6NDNaPNZFLxpNJAk7K_-1jVkevIITb7GDYkHJ7NQ_pQMmEsSlrC7FfJ0v3GxIvY6GQT25r4UR_djT_TIoMhIntVh5Rq0tNHyUSRdDUjwu48Ucq7AsRU3ZH1eOuVzCobZHVDwqrVuXg0rsF2-pndbblLjU0LtIGnoc0Y1uMkhEupga3-UpNiU85tXMLy7OJ3prvO_ZpMUxfgfHE8A0kR8oqD6xqOIfmmHKFWkDEfZ7zmMZ_8ewUyHqwU12LFhDyUpA8iHAyNzdzEmazNz7-VL8Bevw1MEOb_nDhe3zD9H4Ax9kIbVR4AMg-DrEnI0mtTVk13plkEMEgqVJcK6s-chkOX9l9gO8Cm-df6HFmvB5OJIFmUPY7-64TN8BjGltEsDK1VYkjMuBthoG5cHrlJ4IDzkljDfuARgz7O8BWTnX8JhVawRpNoCvAZsoEhkoqnBtumizHWUyi4oAI3npjl2rHMGIgBgOIwg3jDR6D9RFU-aFhuuOMw17XKIZas2jm16SM_9qidW2OFYftXxZluWRuSHWIV-tibTcvix6OmRbuWee0Cv1NnuLCyBXRvqqmpUaJSgc4Kp2YrS50jSjoC8M9icHwjVKyi9Qh3qxy4tekeNsvL6xruAOdafqTBms4AKLo4BY-GARvD4Z4BfGwF3GyfXo2n7icKYCQ3GzoqAokGzHsm3MTUFRDoctyJaEuTkTyd95vhpbuezPJPAPNy4KfQ_bhLF-YYCOt7uOymJR-QwJFvVGGDHvMAgU5Q0EujLF2ctxsPFvykRHjCl6WLlcl94YjCPhV-w0jBD1Te_kL7AROyEfH6_8TP33GpdtAeXstZxFp-YBtqhRd2vOwngyuuLYpUkmP8RytihnXKUavL7BjChFc48XjqdqTqkuOjlmdMu0F7JWa8fjDYWNekEg-GQBn1YmSq67CzWbRAO7rTCHwx3lK6Ke91rIsjOCdn5Y4YTytcaLIjBS1iXlEB2MulrPYS5-ZCSi3jEQviUr4sn3QuRdirDUJLgeGiqWY61kHgEToxaGy4fNy3hSno-7J0sIgxA53_rDji6uAGV0wGsvcg2F9UyllTC4dcK0SVCoTlNUQXj1bouAEaAxwnqPufJOiwWMGfneoSgPgX3pGo3f9YzIA5nUHzM9weHwAz-VX0FWwUorMy1prQ8f-_NzLFrywu99pL_aSnHMj3mYrN7MfesYcQLQj2etQo-xOwkNARWsheUh6WfPO1OXXZ1JW294TZWKj0R3bOCzkeS0PQvaYP8F8cNME02tQnX0U0Fy-4aWdCYdMyhigdKPfTa7M7VaqIVlVoYBDM9wNX8a0_2v42QFAzGPozFdgqroGbNPzM0RpRRkTOx4MwbTn0i9cCgMWu1lFJOWoTdHNZfD1P4EnxQG6IBw0IAjKLmIN24Yb4g3xDQcMh6v09UFh__BjupaUrpxU9AejypIEycr2um-BsSnb0dSwfWHtarKqPGMNkRtg8C09HG3IgO25std4BsjqrKZTMnYTkEtOGBK-5UVI2XoimhJRsEqijcqwm4AdVrTmXsbGIHMgJ1NTgNYTcO_yXdR3a66L7OeQ-iq0nu2HbspI6HA6jfc257JQlhG-xsWgttf4AhRjc7ePbB2ERYMYEYjfir9HbxTF6429RnVWTXgfO8CoSIHgoI1h9Y6ry3sc0Js5Q8kuMed1om3RZdap4Lbws-dLr0mIB8dGRsg1r62stxzWCftB75hRbZWf0TrFZmVoIjJ53jN6Y5XQHsJvggZ1e90SRdUmJR_zecDcprkDc_GNwIlv720A_R53oni0m2xVD_MgvAAdUmBMUmk_u4o2d17gZ_AhPXzWyIWUbQ6D21pRvquDQ1teou19cKaItWED9y6sdghKwWNOL4c0Gols9Yb90aYC8vTpnsFrAim2G53xjArw1GlfFq56unBNwvqwfCHd9ea_3WEy6CsZSw0XhLCI0OVRSqchEAFNPGz4U2d6Eg99nYzp-Wcfygo1ywC9sXhlDSM1PHajfK1n4SpMSNnm0UrVv3UlQapZithJwllqx6iWImozl-XsZ26d7Sp-pjtI55amy00jgTYqhLA9p4seH9LeLzFW90XoqMA2iI68SW2zRElcVCTvlOs9dkQaaGlBnmMDlhAHcYK-bHrskKhXDHzvU99-z1JILFxjKYBknTEQ9igtpG5KZjg_f5sUAf0mAvFmwEuNkE99mCx9SMsFbYWZuFFUvLnosoKBVcXpAjn3cRK6aTY7zsOOlIZZTpJ7Tzgn6zwVE92hIDWNREJ9R5ptCvtAPi4DNh96V0AGpt8hxiN1JIxIK4bMSFGrMTlb-nraBnXMExHvLSovgLJUAcb6xj7pY9fYOHxVsX-QCgyKYXCi7Lf-zFFklfWkLkAnXAM49a29kESiowx7uQr7ER0vnHOM6xf9xjiaWLQ_ejiXmyNOqPdydCWTPYsHSPZP5eEr-Hj5y-C8vu9P8ZmpndOP2G9JOQE3lcn4M31PCipb3QuQYbGXYGxEgg0Gkp-7zXrDdqBpTT-hdp-EY8RVwQV79w8uVxWBa3aCQ76qSIupP4UHCESAd8qplAfIYfxxdNZnI3om0nWff75tW4Q6H8dXWsOnaAGfeoAACpGxEu4LLaG6e1J0CIqPzif0p27JpTn1lx9QSyEzb0B-_rndhlx2yfuoL527wRpKO4hjLE2daIT91WW89nQeqbP5tRklKDpZNuZ7HZpZQS8aHNypNSDWoWHP6SMtnCaKRuy2pKui3CYNkc-DQ71wnHi14HWBVB_sjJnU5Z-VKBn_n0lY6bhvAi3u5wBzGUthZDmzcJj-nI8SEUbvSjYguVnekua9hBL2fce7-fz78tIF7H9ffHMzt0zmDty_y73ptmabyGqGA-Fbb76WOxnhuiJ1sg39at3wvX50qZcq33hbpdzvGQ1K6fewjY_in4_FcGS4nstH1KHnCGxnyhMIkMUFIDgF7YDj7gRzo-OOfl41xpquh3Pn9LJRuY2GBXIMxjwWG1MQAPpU6gXo4j7Zj82Scu--8L2Rb_b79OlGQi773yhrHhBmPT3M0JGcanrQgvfd71-WnvArVlK4MfGaGPynVKgEA82LWxRRqrDGwTDPHgOh_F3QgitGwvlkmAlfyWdgSUAulr8lp_q9U7ThJjUmB1XqQWR1hkwvh689KKI-JNm2MnF5q_dkMfPBhFrIYZfRUa9MvEUIQ7KH1pbbTJa5yaPjxCQ0oFQKeZCLloi7iYZ2G9saHdKapMIDqLlpgyuCtKweCTwkZBrnN3_k6V030o1NA8pnkNc9Y9PzoIkoWtUZJELSGnEFpHWnDIcBBYFWL_auhUDCXcqVpKuFivrJROTsGiHfU9zrhrqsFTtcSzzplqzXFcQ8EXg6xjneBTkDJYXQSLB81E4j4VsYFGa-Jr6fnUaM2up_YlRwqJw5Hb_oVHO3C_T7SiQ9QwmuL4b5iyJ0FK6hkyaH6lvuqQo22JU9cOQ4WopfnCxHC0-Q69RWTcjO6TK3ur0nYvtC11cBO6Y6vfFwkyFaMc-HQg0HGdxv322xKOxfqkAfs_lYCWM7hxmSIMreXt6ITYBcDTSfEO26pzRJp_0fK6KZaxwf-4VjELpZVSrqdZdbNTQaFUPTmEGYSBQY-pNymZIsgKMWWRRR5IbNkg0d_X52_E7CLDSIIn2nKzwijaT_iawSdvF-qd1B15YA4gIE-tNpW6H87qCFq5O_Dm52akSEuKmEAUVV6I4XgHqnfUTCSYogXZrIg==",
+      "summary": []
+    },
+    {
+      "id": "msg_0bca6f687c31bc05016ad675c696f487d1a959de43d6644c1a",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"schema_version\":1,\"units\":\"m\",\"coordinate_frame\":\"camera_cv_xright_ydown_zforward\",\"estimated_focal_px\":470,\"nodes\":[{\"name\":\"tabletop\",\"op\":\"box\",\"center_m\":[0,0.056,1.02],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.86,0.025,0.66],\"left\":null,\"right\":null},{\"name\":\"rear_wall\",\"op\":\"box\",\"center_m\":[0,-0.51,1.55],\"rotation_xyzw\":[0,0,0,1],\"size_m\":[1.1,0.5,0.025],\"left\":null,\"right\":null},{\"name\":\"support_surfaces\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":0,\"right\":1},{\"name\":\"dark_drawer_cabinet\",\"op\":\"box\",\"center_m\":[-0.325,0.004,0.82],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.153,0.19,0.195],\"left\":null,\"right\":null},{\"name\":\"scene_cabinet\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":2,\"right\":3},{\"name\":\"upper_drawer_handle\",\"op\":\"cylinder\",\"center_m\":[-0.229,0.052,0.633],\"rotation_xyzw\":[0,0.707107,0,0.707107],\"size_m\":[0.009,0.052,0],\"left\":null,\"right\":null},{\"name\":\"scene_handle_1\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":4,\"right\":5},{\"name\":\"middle_drawer_handle\",\"op\":\"cylinder\",\"center_m\":[-0.229,0.119,0.68],\"rotation_xyzw\":[0,0.707107,0,0.707107],\"size_m\":[0.009,0.052,0],\"left\":null,\"right\":null},{\"name\":\"scene_handle_2\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":6,\"right\":7},{\"name\":\"lower_drawer_handle\",\"op\":\"cylinder\",\"center_m\":[-0.229,0.187,0.727],\"rotation_xyzw\":[0,0.707107,0,0.707107],\"size_m\":[0.009,0.052,0],\"left\":null,\"right\":null},{\"name\":\"scene_handle_3\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":8,\"right\":9},{\"name\":\"burner_support_slab\",\"op\":\"box\",\"center_m\":[-0.17,-0.052,1.115],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.108,0.015,0.095],\"left\":null,\"right\":null},{\"name\":\"scene_burner_slab\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":10,\"right\":11},{\"name\":\"round_dark_burner\",\"op\":\"cylinder\",\"center_m\":[-0.177,-0.076,1.102],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.073,0.009,0],\"left\":null,\"right\":null},{\"name\":\"scene_burner\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":12,\"right\":13},{\"name\":\"small_metal_cup_outer\",\"op\":\"cylinder\",\"center_m\":[0.237,-0.012,1.055],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.054,0.024,0],\"left\":null,\"right\":null},{\"name\":\"small_metal_cup_cavity\",\"op\":\"cylinder\",\"center_m\":[0.237,-0.0186,1.0504],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.049,0.025,0],\"left\":null,\"right\":null},{\"name\":\"small_metal_cup\",\"op\":\"difference\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":15,\"right\":16},{\"name\":\"scene_small_cup\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":14,\"right\":17},{\"name\":\"rear_bowl_outer\",\"op\":\"sphere\",\"center_m\":[0.416,-0.033,1.058],\"rotation_xyzw\":[0,0,0,1],\"size_m\":[0.074,0,0],\"left\":null,\"right\":null},{\"name\":\"rear_bowl_inner\",\"op\":\"sphere\",\"center_m\":[0.416,-0.0363,1.0557],\"rotation_xyzw\":[0,0,0,1],\"size_m\":[0.070,0,0],\"left\":null,\"right\":null},{\"name\":\"rear_bowl_shell\",\"op\":\"difference\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":19,\"right\":20},{\"name\":\"rear_bowl_lower_clip\",\"op\":\"box\",\"center_m\":[0.416,0.0079,1.0867],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.085,0.05,0.085],\"left\":null,\"right\":null},{\"name\":\"rear_open_bowl\",\"op\":\"intersection\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":21,\"right\":22},{\"name\":\"scene_rear_bowl\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":18,\"right\":23},{\"name\":\"front_bowl_outer\",\"op\":\"sphere\",\"center_m\":[0.245,0.067,0.909],\"rotation_xyzw\":[0,0,0,1],\"size_m\":[0.073,0,0],\"left\":null,\"right\":null},{\"name\":\"front_bowl_inner\",\"op\":\"sphere\",\"center_m\":[0.245,0.0637,0.9067],\"rotation_xyzw\":[0,0,0,1],\"size_m\":[0.069,0,0],\"left\":null,\"right\":null},{\"name\":\"front_bowl_shell\",\"op\":\"difference\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":25,\"right\":26},{\"name\":\"front_bowl_lower_clip\",\"op\":\"box\",\"center_m\":[0.245,0.108,0.938],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.085,0.05,0.085],\"left\":null,\"right\":null},{\"name\":\"front_open_bowl\",\"op\":\"intersection\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":27,\"right\":28},{\"name\":\"scene_front_bowl\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":24,\"right\":29},{\"name\":\"plate_outer\",\"op\":\"cylinder\",\"center_m\":[0.236,0.182,0.798],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.081,0.008,0],\"left\":null,\"right\":null},{\"name\":\"plate_recess\",\"op\":\"cylinder\",\"center_m\":[0.236,0.1754,0.7934],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.069,0.006,0],\"left\":null,\"right\":null},{\"name\":\"shallow_plate\",\"op\":\"difference\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":31,\"right\":32},{\"name\":\"scene_plate\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":30,\"right\":33},{\"name\":\"flat_printed_packet\",\"op\":\"box\",\"center_m\":[0.031,0.186,0.797],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.036,0.003,0.054],\"left\":null,\"right\":null},{\"name\":\"scene_packet\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":34,\"right\":35},{\"name\":\"robot_lower_column\",\"op\":\"cylinder\",\"center_m\":[-0.015,-0.337,1.178],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.081,0.088,0],\"left\":null,\"right\":null},{\"name\":\"scene_robot_column\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":36,\"right\":37},{\"name\":\"robot_front_housing\",\"op\":\"box\",\"center_m\":[-0.018,-0.399,1.084],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.145,0.048,0.065],\"left\":null,\"right\":null},{\"name\":\"scene_robot_housing\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":38,\"right\":39},{\"name\":\"robot_upper_joint\",\"op\":\"cylinder\",\"center_m\":[-0.018,-0.497,1.069],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.067,0.092,0],\"left\":null,\"right\":null},{\"name\":\"scene_robot_upper\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":40,\"right\":41},{\"name\":\"robot_top_cross_part\",\"op\":\"cylinder\",\"center_m\":[0,-0.583,1.056],\"rotation_xyzw\":[0,0.707107,0,0.707107],\"size_m\":[0.047,0.126,0],\"left\":null,\"right\":null},{\"name\":\"scene_robot_top\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":42,\"right\":43},{\"name\":\"black_guard_outer\",\"op\":\"cylinder\",\"center_m\":[0,-0.268,1.183],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.174,0.016,0],\"left\":null,\"right\":null},{\"name\":\"black_guard_opening\",\"op\":\"cylinder\",\"center_m\":[0,-0.268,1.183],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.139,0.03,0],\"left\":null,\"right\":null},{\"name\":\"black_open_guard\",\"op\":\"difference\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":45,\"right\":46},{\"name\":\"scene_guard\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":44,\"right\":47},{\"name\":\"left_hanging_robot_link\",\"op\":\"cylinder\",\"center_m\":[-0.156,-0.191,1.107],\"rotation_xyzw\":[0.887011,0,0,0.461749],\"size_m\":[0.017,0.061,0],\"left\":null,\"right\":null},{\"name\":\"scene_hanging_link\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":48,\"right\":49},{\"name\":\"left_robot_end_piece\",\"op\":\"box\",\"center_m\":[-0.16,-0.147,1.13],\"rotation_xyzw\":[0.301,0,0,0.95362],\"size_m\":[0.041,0.014,0.026],\"left\":null,\"right\":null},{\"name\":\"complete_scene\",\"op\":\"union\",\"center_m\":null,\"rotation_xyzw\":null,\"size_m\":null,\"left\":50,\"right\":51}],\"root\":52,\"uncertainty_notes\":\"Single-view visual estimate, not measured or calibrated. Metric scale and the 470 px focal estimate are ambiguous; ordinary bowl, plate and cabinet sizes set the approximate scale. The tabletop is estimated to recede upward at about 35 degrees in camera coordinates. Background extent, hidden cabinet surfaces and robot depth are hypotheses. Bowls retain open cavities using clipped spherical shells; the smaller cup and plate use cylindrical recesses. Cabinet drawers are represented by their shared exterior and simplified handles, without invented open compartments. Robot housings, guard and hanging part are coarse approximations; cables, fasteners, burner grooves, handle mounts, printed graphics and fine rim profiles are omitted. The robot continues outside the upper image boundary.\"}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "5805df9c-6021-4877-8d12-2b5ba91e2a43",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": "user-FxTtKqreaJ4ASj35duPnV9Nz",
+  "service_tier": "default",
+  "store": false,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "description": null,
+      "name": "astra_scene_field_v1",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_version": {
+            "type": "integer",
+            "enum": [
+              1
+            ]
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "m"
+            ]
+          },
+          "coordinate_frame": {
+            "type": "string",
+            "enum": [
+              "camera_cv_xright_ydown_zforward"
+            ]
+          },
+          "estimated_focal_px": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 10000.0
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 160
+                },
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "box",
+                    "cylinder",
+                    "difference",
+                    "intersection",
+                    "sphere",
+                    "union"
+                  ]
+                },
+                "center_m": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "rotation_xyzw": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 4,
+                      "maxItems": 4
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "size_m": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "left": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "right": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "center_m",
+                "left",
+                "name",
+                "op",
+                "right",
+                "rotation_xyzw",
+                "size_m"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "root": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          },
+          "uncertainty_notes": {
+            "type": "string",
+            "maxLength": 8000
+          }
+        },
+        "required": [
+          "coordinate_frame",
+          "estimated_focal_px",
+          "nodes",
+          "root",
+          "schema_version",
+          "uncertainty_notes",
+          "units"
+        ]
+      },
+      "strict": true
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_0bca6f687c31bc05016ad675a4b2d887d1abe0704537c19833": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 26,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 335,
+          "output_tokens": 0
+        },
+        "rs_0bca6f687c31bc05016ad675a5bf2087d1b2d1a057452887d9": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 516
+        },
+        "rs_0bca6f687c31bc05016ad675b9b64087d18747e2f217f9861d": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 381
+        },
+        "msg_0bca6f687c31bc05016ad675c696f487d1a959de43d6644c1a": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 0,
+              "output_tokens": 2853
+            }
+          ],
+          "input_tokens": 0,
+          "output_tokens": 2853
+        }
+      },
+      "request_fields": {
+        "text.format": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 239,
+          "output_tokens": 0
+        },
+        "instructions": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 709,
+          "output_tokens": 0
+        }
+      }
+    },
+    "input_tokens": 1285,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 3750,
+    "output_tokens_details": {
+      "reasoning_tokens": 897
+    },
+    "total_tokens": 5035
+  },
+  "user": null,
+  "metadata": {},
+  "_subscription_transport": {
+    "terminal_output_count": 0,
+    "completed_item_count": 3,
+    "output_assembly_source": "response.output_item.done",
+    "sse_completion_verified": true,
+    "response_media_type": "text/plain"
+  }
+}
