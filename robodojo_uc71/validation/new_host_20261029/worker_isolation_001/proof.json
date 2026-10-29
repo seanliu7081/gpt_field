@@ -1,0 +1,34 @@
+{
+  "prepared": {
+    "schema": "robodojo-worker-unix-isolation-1",
+    "worker_uid": 65534,
+    "worker_gid": 65534,
+    "supplementary_groups": [],
+    "attempt_dir": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/worker_isolation_001/attempt",
+    "worker_output": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/worker_isolation_001/attempt/worker",
+    "runtime_dir": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/worker_isolation_001/runtime",
+    "namespace_isolation": false,
+    "network_isolation": false,
+    "full_test_authorized": false
+  },
+  "proof": {
+    "schema": "robodojo-worker-unix-isolation-proof-1",
+    "pid": 36462,
+    "uid": 65534,
+    "gid": 65534,
+    "supplementary_groups": [],
+    "no_new_privs": true,
+    "effective_permitted_inheritable_ambient_capabilities": 0,
+    "access_denied": {
+      "credential_directory": true,
+      "parent_environment": true
+    },
+    "namespace_isolation": false,
+    "network_isolation": false,
+    "root_record_readable": true,
+    "root_record_write_denied": true,
+    "root_record_unlink_denied": true,
+    "worker_output_writable": true,
+    "no_gpu_or_model_launched": true
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "robodojo-native-preview-review-1",
+  "reviewed_at_utc": "2026-10-29T09:29:01.425532+00:00",
+  "raw_result": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/launch_result.json",
+    "sha256": "b5784877723bd2276b859f0593f8e979f8a4b3e07a85477c6af3feb014209e3b"
+  },
+  "raw_result_unchanged": true,
+  "diagnostic_render_passed": true,
+  "extension_startup_clean": true,
+  "sampled_peak_gpu_used_mib": 5726,
+  "sampled_minimum_free_mib": 18356,
+  "gpu_memory_released": true,
+  "returncode": 0,
+  "termination_signals": [],
+  "pause_validation": {
+    "requested_seconds": 300,
+    "performed": true,
+    "passed": true,
+    "path": "pause_validation.json",
+    "sha256": "9526cc171e3ea37cee22deb78e80df78dfddd7f8e39fa5b5d0221e860729e368",
+    "elapsed_monotonic_s": 300.000509949401,
+    "measurements_unchanged": true,
+    "before_pause_images": [
+      {
+        "camera": "cam_head",
+        "path": "before_pause/cam_head.png",
+        "sha256": "677cbd9370bd0fa3821370adcbacfff66ef4d0ef1db45ce9018a63c8ae2e7a23",
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "dtype": "uint8",
+        "std": 56.156826256673725,
+        "bytes": 407466
+      },
+      {
+        "camera": "cam_left_wrist",
+        "path": "before_pause/cam_left_wrist.png",
+        "sha256": "b4c67733ccf9f812818818196ad8f929126ea6e08f6193048b7c4f52aed7c895",
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "dtype": "uint8",
+        "std": 56.92049240799374,
+        "bytes": 380327
+      },
+      {
+        "camera": "cam_right_wrist",
+        "path": "before_pause/cam_right_wrist.png",
+        "sha256": "d8a1944ee6d676a3edd0f5640c24b49ff270c1e2c068090ba43c68407ef00f7f",
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "dtype": "uint8",
+        "std": 61.557810513730956,
+        "bytes": 343502
+      }
+    ]
+  },
+  "root_visual_review": {
+    "head": "Both arms, bread rack and toaster visible; no blank or corrupted frame.",
+    "left_wrist": "Inspected unchanged source RGB alongside robot-only scientific projection; visible finger-pad edges align closely.",
+    "right_wrist": "Native toaster and finger geometry visible; inspected original RGB and pad projection zoom.",
+    "pixel_accuracy_certified": false
+  },
+  "projection_review": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/visual_review.json",
+    "sha256": "8b2fb0d69c2ce6479f77fb6a0b13a6a3078490a9e2a0266678f0e5de29d3d76c"
+  },
+  "calibration_status": "uncalibrated_candidate",
+  "asset_fidelity_passed": false,
+  "standard_ready": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "limitations": [
+    "Published missing camera-stand normal map and out-of-scope robot material targets are unchanged.",
+    "Stock fast shutdown verified process/GPU release; full plugin teardown remains unproven.",
+    "Home-pose visual alignment does not establish dynamic control calibration."
+  ]
+}

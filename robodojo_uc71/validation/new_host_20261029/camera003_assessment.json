@@ -1,0 +1,190 @@
+{
+  "schema": "robodojo-new-host-camera-assessment-1",
+  "recorded_at_utc": "2026-10-29T08:00:12.410035+00:00",
+  "attempt": "camera_003",
+  "assessment_type": "posthoc_exit_accounting_correction_no_rerun",
+  "camera_gate_passed": true,
+  "corrected_runtime_compatibility_pass": true,
+  "scope": "Isaac Sim5.1.0.0 procedural RTX camera rendering on single RTX4090/driver580.82.09 using supported stock-fast process shutdown. Native RoboDojo/layout/control not validated.",
+  "raw_result": {
+    "path": "camera_003/launch_result.json",
+    "sha256": "bad29f09a410de9d9e4b50873dbb055ea35240b3dd53e53d3c669f10041d12a3",
+    "diagnostic_passed": false,
+    "termination": "RuntimeError",
+    "termination_detail": "Unexpected or ambiguous GPU process occupancy: [{'pid': 10169, 'type': 'C+G', 'process_name': '', 'used_memory_mib': 1998}, {'pid': 10169, 'type': 'C', 'process_name': '', 'used_memory_mib': 1998}]",
+    "returncode": 0,
+    "termination_signals": []
+  },
+  "correction_reason": "Live-member filtering removed the exiting child before the final NVML sample was classified; that sample still contained C+G and C rows for the same previously verified childPID10169. The child independently exited zero, no monitor signal was sent, and process/GPU resources returned to baseline. The exact last kernel state was not saved, so this establishes an exit/drain accounting race without asserting a directly recorded zombie state.",
+  "checks": {
+    "raw_failure_preserved": true,
+    "all_33_gpu_samples_only_known_child_pid": true,
+    "matching_kernel_and_cuda_start_tick": true,
+    "owned_descendants_have_stable_identity_in_child_group": true,
+    "gpu_identity_consistent": true,
+    "renderer_identity_verified": true,
+    "exit_zero_no_parent_signals": true,
+    "owned_processes_released": true,
+    "gpu_processes_and_memory_exactly_baseline": true,
+    "preclose_validation_and_explicit_cleanup_passed": true,
+    "eight_synchronous_capture_requests_and_returns": true,
+    "capture_chronology_before_preclose": true,
+    "no_capture_cleanup_error_events": true,
+    "rgb_preclose_hash_matches": true,
+    "camera_result_preclose_hash_matches": true,
+    "correct_rgb_dimensions_and_validation": true,
+    "frozen_scripts_match_launch_hashes": true,
+    "authorization_and_package_provenance_match": true,
+    "zero_model_and_benchmark_actions": true
+  },
+  "identity": {
+    "pid": 10169,
+    "start_ticks": 759390307,
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "pci_bus_id": "0000:01:00.0",
+    "driver_version": "580.82.09",
+    "monitor_samples": 33,
+    "observed_gpu_pids": [
+      10169
+    ],
+    "owned_process_start_ticks": {
+      "10169": 759390307,
+      "10219": 759390375
+    },
+    "owned_descendant_note": "One transient descendantPID10219 shared child process group10169 and had no GPU entry; final owned-process list is empty."
+  },
+  "memory": {
+    "baseline_used_mib": 17,
+    "final_used_mib": 17,
+    "peak_sampled_used_mib": 2828,
+    "scope": "Procedural camera only; not a native MakeToast peak-memory measurement"
+  },
+  "visual_review": {
+    "reviewed": true,
+    "rgb_sha256": "56a4d8e8f2645d76b047728716c9c603e7f3aef99219049ef2c37985ac45ab1c",
+    "observation": "Visible separate red and green cubes on a gray plane in intact640x480RGB; independently inspected by root and migration_audit."
+  },
+  "shutdown_mode": "stock-fast",
+  "full_teardown_returned": false,
+  "full_plugin_cleanup_proven": false,
+  "resource_release_verified": true,
+  "additional_simulator_launches": 0,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "full_test_approved": false,
+  "full_test_started": false,
+  "limitations": [
+    "Stock-fast skips full plugin/Python teardown; prior camera002 full teardown stall is not claimed fixed.",
+    "Single procedural camera does not validate native layout0, ARX control, three-camera peak memory, or full task.",
+    "No fourth diagnostic launched; this correction is bound solely to preserved camera003 evidence."
+  ],
+  "raw_provenance": {
+    "camera_003/launch_result.json": {
+      "sha256": "bad29f09a410de9d9e4b50873dbb055ea35240b3dd53e53d3c669f10041d12a3",
+      "bytes": 6299
+    },
+    "camera_003/launch.json": {
+      "sha256": "2c9fd00c3d91f78881c071b94848525d2a7789e4b343ade04164e2895494eb75",
+      "bytes": 3291
+    },
+    "camera_003/launcher_pid.json": {
+      "sha256": "32b8245bebe57e5d44e546d6cccbd5ee565b1fbc9a57b1ee5671346f1c269cb7",
+      "bytes": 183
+    },
+    "camera_003/cuda_identity.json": {
+      "sha256": "c123b3ff160dc5c295195d95659c013a6a615ffaf2cb0270c6ad360d6d4cf015",
+      "bytes": 227
+    },
+    "camera_003/camera_preclose_ready.json": {
+      "sha256": "ec1b54597e30c1841d7f608fa8ef90cf8a5b2f1ba360cb2ee3696df91a234be4",
+      "bytes": 726
+    },
+    "camera_003/camera_result.json": {
+      "sha256": "ec56c61ab3f8dd466ef5204b83fe595c6f39a234fb8b52921e46938ea6989ab3",
+      "bytes": 553
+    },
+    "camera_003/camera_progress.json": {
+      "sha256": "29a9e7108a193206278825cf64e5c4b60d10badfb9356ba41ca0dd7e40694b20",
+      "bytes": 110
+    },
+    "camera_003/camera_progress.jsonl": {
+      "sha256": "fa1a9dde98782d025ebf1d802c10070165672673e8caaa3c1e0ecebb63cfbc66",
+      "bytes": 2814
+    },
+    "camera_003/active_renderer_identity.json": {
+      "sha256": "6a637476b47faaa533c72c9aa4a7231026db7189222a0a6540379e6e30084cb9",
+      "bytes": 445
+    },
+    "camera_003/observed_gpu_settings.json": {
+      "sha256": "b8ebc0b9c0ba527706ff46b632b679554a504b9f76ab0aa04b06788cdf874d10",
+      "bytes": 171
+    },
+    "camera_003/simulation_app_configuration.json": {
+      "sha256": "9d528a729e1c3c4524e2ed598d8661fab8aa15fb2d4a15131479d8e29a1fcf5c",
+      "bytes": 1119
+    },
+    "camera_003/gpu_before.json": {
+      "sha256": "c90f0fbb341d03a90aef4d171b9cacea72d796febb93ce4b1eab1e8bbec21993",
+      "bytes": 271
+    },
+    "camera_003/gpu_after.json": {
+      "sha256": "c90f0fbb341d03a90aef4d171b9cacea72d796febb93ce4b1eab1e8bbec21993",
+      "bytes": 271
+    },
+    "camera_003/gpu_monitor.jsonl": {
+      "sha256": "fe2f645618cc49bc14754b451571ef8de4bdd1a8ab687dc15e1bdc12c93fba50",
+      "bytes": 22372
+    },
+    "camera_003/stdout_stderr.log": {
+      "sha256": "4a938a82343d919f74bbf45ba1c3c822c50a7656f554f7468db332c804e9e7bf",
+      "bytes": 47088
+    },
+    "camera_003/rgb.png": {
+      "sha256": "56a4d8e8f2645d76b047728716c9c603e7f3aef99219049ef2c37985ac45ab1c",
+      "bytes": 112740
+    },
+    "camera_003/rgb.npy": {
+      "sha256": "35c0e5805fac54f1bddb0b02698b97831ea7702fda6a87b4ee9054c95e19e8bc",
+      "bytes": 921728
+    },
+    "camera_003/new_host_camera.py": {
+      "sha256": "f36e5b097ec4553032be10db1930a586f1db13602a65869b7e63cbacae79e6d3",
+      "bytes": 17315
+    },
+    "camera_003/provision_new_host_camera.py": {
+      "sha256": "1274552ee3f9ea59cd2361679b98fc845be6c106b5abd5ea4cdb706bb419c558",
+      "bytes": 26682
+    },
+    "camera_003/setup_authorization.json": {
+      "sha256": "a2f777838b89a420f468e22c9e2952a7a66b531d7338d3075e14677980ed1a20",
+      "bytes": 1680
+    },
+    "camera_003/vendor_authorization.json": {
+      "sha256": "d579e5d33cc7daff746031e6dfee73d03a137d8c938be3220dc9f7ddca27c9a6",
+      "bytes": 513
+    },
+    "camera_003/install_status.json": {
+      "sha256": "7187398aa880703eb40db8e23bf49f3e56accb8c2ae379c0778938455900e52e",
+      "bytes": 1842
+    },
+    "camera_003/package_inventory.json": {
+      "sha256": "95d10706e88f929f5d1451b211d9e8c539c7b2d53dd3bd1660f5a3f698bd5705",
+      "bytes": 9633
+    },
+    "camera_003/requirements.lock": {
+      "sha256": "0ae7040817518bee2d44c969760935495e8e049ddf3918a474a62579eac8ffbc",
+      "bytes": 187376
+    },
+    "camera_003/kernel_driver.txt": {
+      "sha256": "f9ac619fab9e396ebb1ec0caa264b9de5d56d19bba882e6602aa42a6be150904",
+      "bytes": 208
+    }
+  },
+  "source_repair": {
+    "path": "scripts/provision_new_host_camera.py",
+    "sha256": "f1d33366b64a3ecaf71ed8659f3d8c8aae9c480097009a3f369fac327942d4ad",
+    "description": "Retain same-start-tick zombie identities and direct-unreaped-child aliases. Reject reused startticks, disappeared descendants and newPIDs. Deduplicate NVML C/C+G occupancy rows byPID.",
+    "offline_tests_passed": 15,
+    "gpu_execution_after_repair": false
+  }
+}

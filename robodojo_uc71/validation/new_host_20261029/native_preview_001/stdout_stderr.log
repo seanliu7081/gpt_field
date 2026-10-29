@@ -1,0 +1,458 @@
+{"phase": "cuda_identity_verified", "monotonic_s": 7596562.780964186}
+{"phase": "before_native_app_startup", "monotonic_s": 7596562.952482436}
+[INFO][AppLauncher]: Input keyword argument `livestream=0` has overridden the environment variable `LIVESTREAM=0`.
+[INFO][AppLauncher]: Using device: cpu
+[INFO][AppLauncher]: Loading experience file: /workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/apps/isaaclab.python.kit
+[Info] [carb] Logging to file: /workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/kit.log
+[0.073s] Failed to solve some dependencies locally, syncing with extension registry...
+[0.080s] [ext: omni.kit.async_engine-0.0.3] startup
+[0.085s] [ext: omni.client.lib-1.1.0] startup
+[0.110s] [ext: omni.kit.registry.nucleus-0.0.0] startup
+[5.010s] Pulling extension: `omni.kit.pip_archive-0.0.0` from the registry.
+[6.878s] Extension: `omni.kit.pip_archive-0.0.0` was installed.
+[6.878s] Pulling extension: `isaacsim.asset.importer.urdf-2.4.31` from the registry.
+[7.434s] Extension: `isaacsim.asset.importer.urdf-2.4.31` was installed.
+[7.463s] [ext: omni.metrics.core-0.0.3] startup
+[7.464s] [ext: omni.blobkey-1.1.2] startup
+[7.464s] [ext: omni.stats-1.0.1] startup
+[7.788s] [ext: omni.datastore-0.0.0] startup
+[7.795s] [ext: omni.client-1.3.0] startup
+[7.797s] [ext: omni.ujitso.default-1.0.0] startup
+[7.801s] [ext: omni.hsscclient-1.1.2] startup
+[7.805s] [ext: omni.gpu_foundation.shadercache.vulkan-1.0.0] startup
+[7.809s] [ext: omni.assets.plugins-0.0.0] startup
+[7.811s] [ext: omni.gpu_foundation-0.0.0] startup
+[7.823s] [ext: carb.windowing.plugins-1.0.0] startup
+2026-10-29T08:37:47Z [7,785ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T08:37:47Z [7,785ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[7.824s] [ext: omni.kit.renderer.init-0.0.0] startup
+2026-10-29T08:37:48Z [8,825ms] [Warning] [omni.platforminfo.plugin] failed to open the default display.  Can't verify X Server version.
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 580.82.09     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+| 0   | NVIDIA GeForce RTX 4090          | Yes: 0 |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | a9e034f8.. |
+|     |                                  |        |     |            | 1         |            |
+| OS: 24.04.5 LTS (Noble Numbat) ubuntu, Version: 24.04.5, Kernel: 5.15.0-139-generic
+| Processor: AMD EPYC 7542 32-Core Processor
+| Bare Metal Cores: 32 | Bare Metal Logical Cores: 64
+| Core Usage Quota: 15.36
+| Total Memory (MB): 123641 | Free Memory: 93987
+| Total Page/Swap (MB): 61034 | Free Page/Swap: 60458
+2026-10-29T08:37:49Z [9,664ms] [Warning] [gpu.foundation.plugin] PCIe link width current (8) and maximum (16) for device 0 don't match.
+2026-10-29T08:37:49Z [9,665ms] [Warning] [gpu.foundation.plugin] IOMMU is enabled.
+[10.172s] [ext: omni.kit.pipapi-0.0.0] startup
+[10.177s] [ext: omni.materialx.libs-1.0.7] startup
+[10.188s] [ext: omni.kit.pip_archive-0.0.0] startup
+[10.188s] [ext: omni.kit.loop-isaac-1.3.7] startup
+[10.190s] [ext: omni.kit.test-2.0.1] startup
+[10.388s] [ext: omni.kit.telemetry-0.5.2] startup
+[10.431s] [ext: omni.usd.config-1.0.6] startup
+[10.441s] [ext: omni.gpucompute.plugins-0.0.0] startup
+[10.442s] [ext: omni.usd.libs-1.0.1] startup
+[10.547s] [ext: omni.mdl-56.0.3] startup
+[10.994s] [ext: omni.iray.libs-0.0.0] startup
+[11.002s] [ext: omni.mdl.neuraylib-0.2.12] startup
+[11.007s] [ext: omni.kit.usd.mdl-1.1.5] startup
+[11.118s] [ext: omni.appwindow-1.1.10] startup
+2026-10-29T08:37:50Z [11,081ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T08:37:50Z [11,081ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[11.122s] [ext: omni.kit.renderer.core-1.1.0] startup
+[11.153s] [ext: omni.kit.renderer.capture-0.0.0] startup
+[11.158s] [ext: omni.kit.renderer.imgui-2.0.5] startup
+[11.279s] [ext: omni.ui-2.27.1] startup
+[11.296s] [ext: omni.kit.mainwindow-1.0.3] startup
+[11.298s] [ext: carb.audio-0.1.0] startup
+[11.330s] [ext: omni.uiaudio-1.0.0] startup
+[11.331s] [ext: omni.kit.uiapp-0.0.0] startup
+[11.331s] [ext: omni.usd.schema.metrics.assembler-107.3.1] startup
+[11.336s] [ext: omni.usd.schema.audio-0.0.0] startup
+[11.340s] [ext: omni.usd.schema.physx-107.3.26] startup
+[11.379s] [ext: omni.usd.schema.anim-0.0.0] startup
+[11.400s] [ext: omni.usd_resolver-1.0.0] startup
+[11.405s] [ext: omni.usd.core-1.5.3] startup
+[11.408s] [ext: omni.usd.schema.omni_sensors-0.0.0] startup
+[11.448s] [ext: omni.usd.schema.omnigraph-1.0.0] startup
+[11.455s] [ext: omni.usd.schema.semantics-0.0.0] startup
+[11.457s] [ext: isaacsim.robot.schema-3.6.0] startup
+[11.467s] [ext: omni.usd.schema.omniscripting-1.0.0] startup
+[11.471s] [ext: omni.usd.schema.render_settings.rtx-0.0.0] startup
+[11.473s] [ext: omni.usd.schema.geospatial-0.0.0] startup
+[11.476s] [ext: omni.kit.window.popup_dialog-2.0.24] startup
+[11.491s] [ext: omni.graph.exec-0.9.6] startup
+[11.492s] [ext: omni.kit.widget.nucleus_connector-2.0.1] startup
+[11.499s] [ext: omni.kit.usd_undo-0.1.8] startup
+[11.500s] [ext: omni.kit.exec.core-0.13.4] startup
+[11.502s] [ext: omni.kit.actions.core-1.0.0] startup
+[11.506s] [ext: omni.resourcemonitor-107.0.1] startup
+[11.509s] [ext: omni.activity.core-1.0.3] startup
+[11.510s] [ext: omni.timeline-1.0.14] startup
+[11.513s] [ext: omni.kit.commands-1.4.10] startup
+[11.522s] [ext: usdrt.scenegraph-7.6.1] startup
+[11.569s] [ext: omni.kit.audiodeviceenum-1.0.2] startup
+[11.571s] [ext: omni.hydra.usdrt_delegate-7.5.1] startup
+[11.579s] [ext: omni.hydra.scene_delegate-0.3.4] startup
+[11.585s] [ext: omni.usd-1.13.10] startup
+[11.669s] [ext: omni.kit.asset_converter-5.0.17] startup
+[11.686s] [ext: omni.usd.schema.omni_lens_distortion-0.0.0] startup
+[11.688s] [ext: omni.kit.property.adapter.core-1.0.2] startup
+[11.697s] [ext: omni.kit.helper.file_utils-0.1.9] startup
+[11.701s] [ext: omni.kit.notification_manager-1.0.10] startup
+[11.705s] [ext: omni.kit.clipboard-1.0.5] startup
+[11.706s] [ext: omni.kit.property.adapter.usd-1.0.2] startup
+[11.709s] [ext: omni.kit.menu.core-1.1.2] startup
+[11.712s] [ext: omni.kit.widget.filebrowser-2.12.3] startup
+[11.735s] [ext: omni.kit.widget.options_menu-1.1.6] startup
+[11.744s] [ext: omni.kit.widget.path_field-2.0.11] startup
+[11.748s] [ext: omni.kit.widget.context_menu-1.2.5] startup
+[11.752s] [ext: omni.kit.usd.layers-2.2.11] startup
+[11.779s] [ext: omni.ui.scene-1.11.5] startup
+[11.784s] [ext: omni.kit.widget.options_button-1.0.3] startup
+[11.786s] [ext: omni.kit.widget.browser_bar-2.0.10] startup
+[11.789s] [ext: omni.kit.context_menu-1.8.6] startup
+[11.797s] [ext: omni.inspect-1.0.2] startup
+[11.799s] [ext: omni.kit.window.filepicker-2.13.4] startup
+[11.871s] [ext: omni.kit.menu.utils-2.0.5] startup
+[11.901s] [ext: omni.kit.stage_template.core-1.1.22] startup
+[11.902s] [ext: omni.kit.window.content_browser_registry-0.0.6] startup
+[11.904s] [ext: omni.kit.widget.filter-1.1.4] startup
+[11.906s] [ext: omni.kit.hotkeys.core-1.3.10] startup
+[11.907s] [ext: omni.kit.window.file_importer-1.1.18] startup
+[11.911s] [ext: omni.kit.window.file_exporter-1.0.33] startup
+[11.914s] [ext: omni.kit.widget.searchfield-1.1.8] startup
+[11.918s] [ext: omni.kit.window.file-2.0.5] startup
+[11.931s] [ext: omni.kit.window.drop_support-1.0.5] startup
+[11.931s] [ext: omni.kit.widget.highlight_label-1.0.3] startup
+[11.933s] [ext: omni.kit.window.content_browser-3.1.3] startup
+[11.956s] [ext: omni.kit.widget.stage-3.1.4] startup
+[11.998s] [ext: omni.kit.property.adapter.fabric-1.0.3] startup
+[12.002s] [ext: omni.graph.core-2.184.5] startup
+[12.006s] [ext: omni.kit.window.property-1.12.1] startup
+[12.014s] [ext: omni.kit.widget.prompt-1.0.7] startup
+[12.017s] [ext: isaacsim.core.deprecation_manager-0.2.7] startup
+[12.019s] [ext: omni.kit.property.usd-4.5.12] startup
+[12.086s] [ext: omni.kit.widget.layers-1.8.6] startup
+[12.150s] [ext: omni.index.libs-380600.8087.0] startup
+[12.150s] [ext: omni.volume-0.5.2] startup
+[12.154s] [ext: omni.ujitso.client-0.0.0] startup
+[12.155s] [ext: isaacsim.gui.property-1.1.3] startup
+[12.161s] [ext: omni.kit.stagerecorder.core-107.0.3] startup
+[12.168s] [ext: omni.index-1.0.1] startup
+[12.169s] [ext: omni.hydra.rtx.shadercache.vulkan-1.0.0] startup
+[12.171s] [ext: omni.kit.stagerecorder.ui-107.0.1] startup
+[12.193s] [ext: omni.hydra.rtx-1.0.0] startup
+2026-10-29T08:37:51Z [12,177ms] [Warning] [omni.log] Source: omni.hydra was already registered.
+[12.241s] [ext: omni.hydra.engine.stats-1.0.3] startup
+[12.244s] [ext: omni.kit.material.library-2.0.7] startup
+[12.270s] [ext: semantics.schema.editor-2.0.2] startup
+2026-10-29T08:37:52Z [12,242ms] [Warning] [pxr.Semantics] pxr.Semantics is deprecated - please use Semantics instead
+[12.284s] [ext: omni.kit.stagerecorder.bundle-105.0.2] startup
+[12.284s] [ext: omni.kit.raycast.query-1.1.0] startup
+[12.291s] [ext: omni.kit.viewport.legacy_gizmos-1.0.19] startup
+[12.293s] [ext: omni.graph.image.core-0.6.1] startup
+[12.301s] [ext: omni.convexdecomposition-107.3.26] startup
+[12.311s] [ext: omni.kit.widget.searchable_combobox-1.0.6] startup
+[12.316s] [ext: omni.kvdb-107.3.26] startup
+[12.319s] [ext: omni.kit.viewport.scene_camera_model-1.0.6] startup
+[12.325s] [ext: omni.kit.hydra_texture-1.4.6] startup
+[12.329s] [ext: omni.kit.widget.settings-1.2.6] startup
+[12.339s] [ext: omni.physx.foundation-107.3.26] startup
+[12.342s] [ext: omni.localcache-107.3.26] startup
+[12.343s] [ext: omni.kit.widget.viewport-107.1.3] startup
+[12.361s] [ext: omni.kit.viewport.registry-104.0.6] startup
+[12.362s] [ext: omni.graph.tools-1.79.2] startup
+[12.469s] [ext: omni.kit.widget.text_editor-1.1.1] startup
+[12.477s] [ext: omni.graph-1.141.2] startup
+[12.603s] [ext: omni.usdphysics-107.3.26] startup
+[12.606s] [ext: omni.graph.scriptnode-1.50.0] startup
+[12.614s] [ext: omni.physx.cooking-107.3.26] startup
+[12.621s] [ext: omni.graph.image.nodes-1.3.1] startup
+[12.631s] [ext: omni.kit.window.preferences-1.8.0] startup
+[12.693s] [ext: omni.kit.viewport.window-107.2.0] startup
+[12.750s] [ext: omni.physics-107.3.26] startup
+[12.761s] [ext: omni.physx-107.3.26] startup
+[12.781s] [ext: omni.graph.action_core-1.1.7] startup
+[12.787s] [ext: omni.kit.viewport.menubar.core-107.2.1] startup
+[12.836s] [ext: omni.kit.viewport.utility-1.1.2] startup
+[12.843s] [ext: omni.kit.numpy.common-0.1.3] startup
+[12.849s] [ext: omni.physics.physx-107.3.26] startup
+2026-10-29T08:37:52Z [12,813ms] [Warning] [carb] Acquiring non optional plugin interface which is not listed as dependency: [omni::physx::IPhysxBenchmarks v1.0] (plugin: <default plugin>), by client: omni.physics.physx.plugin. Add it to CARB_PLUGIN_IMPL_DEPS() macro of a client.
+[12.852s] [ext: omni.graph.action_nodes-1.50.4] startup
+[12.858s] [ext: omni.physics.stageupdate-107.3.26] startup
+[12.864s] [ext: omni.syntheticdata-0.6.13] startup
+[12.959s] [ext: omni.kit.window.console-1.1.4] startup
+[12.980s] [ext: omni.videoencoding-0.1.2] startup
+[12.986s] [ext: omni.graph.action-1.130.0] startup
+[12.989s] [ext: omni.isaac.dynamic_control-2.0.7] startup
+2026-10-29T08:37:52Z [12,971ms] [Warning] [omni.isaac.dynamic_control] omni.isaac.dynamic_control is deprecated as of Isaac Sim 4.5. No action is needed from end-users.
+[13.012s] [ext: isaacsim.core.version-2.0.6] startup
+[13.032s] [ext: omni.kit.manipulator.transform-107.0.0] startup
+[13.114s] [ext: omni.kit.manipulator.selector-1.1.3] startup
+[13.130s] [ext: omni.debugdraw-0.1.4] startup
+[13.146s] [ext: omni.warp.core-1.8.2] startup
+[13.560s] [ext: isaacsim.storage.native-1.5.1] startup
+[13.599s] [ext: omni.kit.widget.toolbar-2.0.1] startup
+[13.706s] [ext: omni.graph.nodes-1.170.10] startup
+[13.730s] [ext: omni.kit.manipulator.tool.snap-1.5.13] startup
+[13.754s] [ext: omni.kit.viewport.menubar.lighting-107.3.1] startup
+[13.770s] [ext: omni.kit.viewport.manipulator.transform-107.0.4] startup
+[13.778s] [ext: omni.kit.manipulator.viewport-107.0.1] startup
+[13.786s] [ext: omni.kit.primitive.mesh-1.0.17] startup
+[13.805s] [ext: omni.kit.manipulator.prim.core-107.0.8] startup
+[13.829s] [ext: omni.fabric.commands-1.1.6] startup
+[13.846s] [ext: omni.kit.viewport.actions-107.0.2] startup
+[13.859s] [ext: omni.kit.manipulator.prim.usd-107.0.3] startup
+[13.866s] [ext: omni.kit.manipulator.prim.fabric-107.0.4] startup
+[13.877s] [ext: omni.kit.viewport.menubar.display-107.0.3] startup
+[13.886s] [ext: omni.kit.manipulator.selection-106.0.1] startup
+[13.894s] [ext: omni.kit.manipulator.prim-107.0.0] startup
+[13.895s] [ext: isaaclab-0.54.3] startup
+Traceback (most recent call last):
+  File "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.pipapi-0.0.0+69cbf6ad/omni/kit/pipapi/pipapi.py", line 63, in wrapper
+    r = f(*args, **kwds)
+        ^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.pipapi-0.0.0+69cbf6ad/omni/kit/pipapi/pipapi.py", line 373, in on_before_ext_enabled
+    ExtensionManagerPip._process_ext_pipapi_config(ext_id)
+  File "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.pipapi-0.0.0+69cbf6ad/omni/kit/pipapi/pipapi.py", line 413, in _process_ext_pipapi_config
+    install(line, module, extra_args=extra_args, use_online_index=use_online_index, ignore_import_check=ignore_import_check)
+  File "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.pipapi-0.0.0+69cbf6ad/omni/kit/pipapi/pipapi.py", line 269, in install
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'
+[13.968s] [ext: isaaclab_contrib-0.0.2] startup
+[13.971s] [ext: omni.usdphysics.ui-107.3.26] startup
+[14.051s] [ext: omni.physx.commands-107.3.26] startup
+[14.094s] [ext: omni.kit.widget.graph-2.0.0] startup
+[14.131s] [ext: omni.usd.metrics.assembler-107.3.1] startup
+[14.137s] [ext: omni.physx.ui-107.3.26] startup
+[14.243s] [ext: omni.kit.graph.delegate.default-1.2.3] startup
+[14.250s] [ext: omni.physics.tensors-107.3.26] startup
+[14.272s] [ext: omni.usd.metrics.assembler.physics-107.3.26] startup
+[14.289s] [ext: omni.graph.ui_nodes-1.50.5] startup
+[14.296s] [ext: omni.kit.graph.editor.core-1.5.3] startup
+[14.315s] [ext: isaacsim.core.utils-3.5.1] startup
+[14.326s] [ext: omni.physx.tensors-107.3.26] startup
+[14.336s] [ext: omni.kit.graph.usd.commands-1.3.1] startup
+[14.345s] [ext: omni.kit.widget.material_preview-1.0.16] startup
+[14.360s] [ext: isaacsim.core.simulation_manager-1.4.4] startup
+[17.812s] [ext: omni.kit.stage_templates-2.0.0] startup
+[17.834s] [ext: omni.kit.window.material_graph-1.9.1] startup
+[17.872s] [ext: omni.warp-1.8.2] startup
+[17.891s] [ext: isaacsim.core.prims-0.6.1] startup
+[18.007s] [ext: isaacsim.core.experimental.utils-0.3.0] startup
+[18.020s] [ext: isaacsim.test.docstring-1.1.0] startup
+[18.043s] [ext: omni.replicator.core-1.12.27] startup
+2026-10-29T08:37:58Z [18,475ms] [Warning] [omni.graph.core.plugin] Found duplicate of category 'Replicator' - was 'Annotators', adding 'Fabric Reader'
+2026-10-29T08:37:58Z [18,475ms] [Warning] [omni.graph.core.plugin] Category 'Replicator' not accepted on node type 'omni.replicator.core.FabricReader' in extension 'omni.replicator.core'
+2026-10-29T08:37:58Z [18,478ms] [Warning] [omni.replicator.core.scripts.extension] No material configuration file, adding configuration to material settings directly.
+[18.528s] [ext: isaacsim.core.api-4.8.0] startup
+[18.634s] [ext: isaacsim.core.experimental.prims-0.8.1] startup
+[18.757s] [ext: isaacsim.core.nodes-3.4.3] startup
+[18.783s] [ext: isaacsim.robot.surface_gripper-3.3.1] startup
+[18.822s] [ext: omni.kit.property.material-1.11.9] startup
+[19.018s] [ext: isaacsim.robot.manipulators-3.3.6] startup
+[19.144s] [ext: omni.kit.property.physx-107.3.26] startup
+[19.694s] [ext: omni.physx.demos-107.3.26] startup
+[20.146s] [ext: omni.asset_validator.core-1.1.6] startup
+[20.856s] [ext: omni.ui_query-1.1.8] startup
+[20.896s] [ext: omni.physx.vehicle-107.3.26] startup
+[21.202s] [ext: omni.physx.asset_validator-107.3.26] startup
+[21.279s] [ext: omni.kit.ui_test-1.3.7] startup
+[21.299s] [ext: omni.physx.camera-107.3.26] startup
+[21.341s] [ext: omni.kit.window.toolbar-2.0.0] startup
+[21.353s] [ext: omni.physx.cct-107.3.26] startup
+[21.381s] [ext: omni.physx.graph-107.3.26] startup
+[21.456s] [ext: omni.physx.supportui-107.3.26] startup
+[21.517s] [ext: omni.physx.telemetry-107.3.26] startup
+[21.605s] [ext: semantics.schema.property-2.0.1] startup
+[21.652s] [ext: isaacsim.app.about-2.0.11] startup
+[21.674s] [ext: omni.anim.curve.core-1.3.1] startup
+[21.850s] [ext: omni.physx.bundle-107.3.26] startup
+[21.857s] [ext: omni.kit.menu.create-2.0.1] startup
+[21.917s] [ext: omni.kit.widget.stage_icons-1.0.8] startup
+[21.936s] [ext: omni.kit.window.extensions-1.4.27] startup
+[22.003s] [ext: omni.graph.visualization.nodes-2.1.3] startup
+[22.025s] [ext: omni.kit.viewport.menubar.settings-107.0.3] startup
+[22.048s] [ext: omni.kit.window.stage-2.6.1] startup
+[22.064s] [ext: isaacsim.core.cloner-1.4.10] startup
+[22.085s] [ext: isaacsim.gui.components-1.2.1] startup
+[22.151s] [ext: isaacsim.robot.wheeled_robots-4.0.24] startup
+[22.185s] [ext: omni.kit.ui.actions-1.0.5] startup
+[22.197s] [ext: omni.kit.scripting-107.3.2] startup
+[22.222s] [ext: isaacsim.util.debug_draw-3.1.0] startup
+[22.229s] [ext: isaacsim.core.throttling-2.2.2] startup
+[22.235s] [ext: omni.usd.metrics.assembler.ui-107.3.1] startup
+[22.285s] [ext: omni.kit.window.script_editor-2.0.1] startup
+[22.360s] [ext: isaacsim.replicator.behavior-1.1.16] startup
+[22.370s] [ext: isaacsim.sensors.physx-2.3.2] startup
+[22.398s] [ext: omni.kit.window.status_bar-0.1.9] startup
+[22.414s] [ext: omni.hydra.scene_api-0.1.2] startup
+[22.432s] [ext: omni.kit.property.camera-1.0.10] startup
+[22.453s] [ext: omni.kit.property.render-1.2.1] startup
+[22.461s] [ext: omni.kit.property.transform-1.5.13] startup
+[22.503s] [ext: omni.kit.property.light-1.0.12] startup
+[22.510s] [ext: omni.kit.property.geometry-2.0.4] startup
+[22.527s] [ext: omni.kit.property.audio-1.0.16] startup
+[22.534s] [ext: omni.kit.usd.collect-2.4.5] startup
+[22.554s] [ext: omni.kit.widget.zoombar-1.0.6] startup
+[22.559s] [ext: omni.kit.property.bundle-1.4.1] startup
+[22.565s] [ext: omni.kit.usdz_export-1.0.9] startup
+[22.575s] [ext: omni.kit.browser.core-2.3.13] startup
+[22.598s] [ext: omni.sensors.nv.common-3.0.0] startup
+[22.616s] [ext: omni.kit.tool.collect-2.2.18] startup
+[22.629s] [ext: omni.kit.menu.stage-1.2.7] startup
+[22.636s] [ext: omni.kit.browser.folder.core-1.10.9] startup
+[22.665s] [ext: omni.sensors.nv.materials-2.0.0] startup
+[22.675s] [ext: omni.sensors.nv.wpm-3.0.0] startup
+[22.680s] [ext: omni.sensors.net-1.0.0] startup
+[22.685s] [ext: isaacsim.simulation_app-2.12.2] startup
+[22.687s] [ext: isaacsim.asset.browser-1.3.23] startup
+[22.854s] [ext: omni.replicator.replicator_yaml-2.0.11] startup
+[22.875s] [ext: omni.sensors.nv.radar-3.0.0] startup
+[22.889s] [ext: omni.sensors.nv.lidar-3.0.0] startup
+[22.905s] [ext: omni.sensors.nv.ids-2.0.0] startup
+[22.910s] [ext: omni.kit.tool.asset_importer-4.3.2] startup
+[22.933s] [ext: isaacsim.sensors.physics-0.4.3] startup
+[22.946s] [ext: isaacsim.sensors.camera-1.3.6] startup
+[22.980s] [ext: isaacsim.sensors.rtx-15.8.4] startup
+[23.015s] [ext: isaacsim.asset.importer.mjcf-2.5.13] startup
+[23.092s] [ext: omni.kit.viewport.menubar.render-107.0.10] startup
+[23.114s] [ext: isaacsim.robot.policy.examples-4.1.11] startup
+[23.118s] [ext: omni.ocio-0.1.1] startup
+[23.129s] [ext: omni.kit.selection-0.1.6] startup
+[23.137s] [ext: omni.rtx.window.settings-0.6.19] startup
+[23.165s] [ext: isaacsim.examples.browser-0.2.1] startup
+[23.182s] [ext: isaacsim.asset.importer.urdf-2.4.31] startup
+[23.237s] [ext: omni.kit.manipulator.camera-106.0.4] startup
+[23.271s] [ext: omni.kit.viewport.menubar.camera-107.0.6] startup
+[23.294s] [ext: isaacsim.gui.menu-2.4.4] startup
+[23.355s] [ext: omni.rtx.settings.core-0.6.5] startup
+[23.379s] [ext: isaaclab_assets-0.2.4] startup
+[25.038s] [ext: isaaclab_tasks-0.11.14] startup
+2026-10-29T08:38:05Z [25,541ms] [Error] [omni.ext._impl.custom_importer] Failed to import python module isaaclab_tasks. Error: No module named 'hid'. Traceback:
+Traceback (most recent call last):
+  File "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/ext/_impl/custom_importer.py", line 85, in import_module
+    return importlib.import_module(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/__init__.py", line 33, in <module>
+    from .utils import import_packages
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/utils/__init__.py", line 9, in <module>
+    from .parse_cfg import get_checkpoint_path, load_cfg_from_registry, parse_env_cfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/utils/parse_cfg.py", line 17, in <module>
+    from isaaclab.envs import DirectRLEnvCfg, ManagerBasedRLEnvCfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/envs/__init__.py", line 47, in <module>
+    from .direct_marl_env import DirectMARLEnv
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/envs/direct_marl_env.py", line 35, in <module>
+    from .direct_marl_env_cfg import DirectMARLEnvCfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/envs/direct_marl_env_cfg.py", line 8, in <module>
+    from isaaclab.devices.openxr import XrCfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/devices/__init__.py", line 29, in <module>
+    from .spacemouse import Se2SpaceMouse, Se2SpaceMouseCfg, Se3SpaceMouse, Se3SpaceMouseCfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/devices/spacemouse/__init__.py", line 8, in <module>
+    from .se2_spacemouse import Se2SpaceMouse, Se2SpaceMouseCfg
+  File "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/devices/spacemouse/se2_spacemouse.py", line 15, in <module>
+    import hid
+ModuleNotFoundError: No module named 'hid'
+
+2026-10-29T08:38:05Z [25,541ms] [Error] [carb.scripting-python.plugin] Exception: Extension python module: 'isaaclab_tasks' in '/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab_tasks' failed to load.
+At:
+  /workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/ext/_impl/_internal.py(222): startup
+  /workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/ext/_impl/_internal.py(337): startup_extension
+  PythonExtension.cpp::startup()(2): <module>
+  /workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py(534): _start_app
+  /workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py(270): __init__
+  /workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py(831): _create_app
+  /workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py(131): __init__
+  /workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py(235): run_preview
+  /workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py(439): main
+  /workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py(443): <module>
+2026-10-29T08:38:05Z [25,541ms] [Error] [omni.ext.plugin] [ext: isaaclab_tasks-0.11.14] Failed to startup python extension.
+[26.056s] [ext: isaaclab_rl-0.5.0] startup
+[26.059s] [ext: isaaclab_mimic-1.0.16] startup
+[26.061s] [ext: omni.kit.menu.common-2.0.1] startup
+[26.064s] [ext: isaaclab.python-2.3.2] startup
+[26.070s] Simulation App Starting
+2026-10-29T08:38:05Z [26,176ms] [Warning] [carb.audio.device] audio device is misconfigured or broken {deviceIndex = 0, name = 'default'} (The device is likely misconfigured, check your $HOME/.asoundrc)
+2026-10-29T08:38:05Z [26,176ms] [Warning] [carb.audio.output] failed to retrieve the capabilities for device 0 {result = eDeviceLost (2)}
+2026-10-29T08:38:05Z [26,176ms] [Warning] [carb.audio.context] failed to set the requested output during context creation.  Using a null streamer instead {result = eDeviceLost (2)}
+2026-10-29T08:38:06Z [26,216ms] [Warning] [omni.fabric.plugin] Warning: attribute viewportHandle not found for bucket id 9
+
+[26.294s] app ready
+[30.341s] Simulation App Startup Complete
+{"phase": "native_app_started", "monotonic_s": 7596593.311002635}
+{"phase": "before_native_layout0_reset", "monotonic_s": 7596594.03994627}
+[INFO]: Parsing configuration from: env.environment.isaac.isaac_rl_env:IsaacRLEnvCfg
+
+[36m======================================================================================[0m
+[36m[1m[INFO][IsaacLab]: Logging to file: /tmp/isaaclab/logs/isaaclab_2026-10-29_08-38-10.log[0m
+[33m08:38:10 [simulation_context.py] WARNING: The `enable_external_forces_every_iteration` parameter in the PhysxCfg is set to False. If you are experiencing noisy velocities, consider enabling this flag. You may need to slightly increase the number of velocity iterations (setting it to 1 or 2 rather than 0), together with this flag, to improve the accuracy of velocity updates.[0m
+[INFO]: Base environment:
+	Environment device    : cpu
+	Environment seed      : 0
+	Physics step-size     : 0.004
+	Rendering step-size   : 0.04
+	Environment step-size : 0.004
+2026-10-29T08:38:11Z [31,454ms] [Warning] [env.scene_manager.objects.background] `/omni/replicator/RTSubframes` must be > 3 to avoid blank textures while randomizing dome light texture. RTSubframes has been automatically increased from None to 3
+2026-10-29T08:38:11Z [31,642ms] [Warning] [isaacsim.sensors.camera.camera] 'verticalAperture' (1.5290800094604493) and 'horizontalAperture' (2.0954999923706055) are inconsistent with the pixel resolution aspect ratio (1.3333333333333333). Setting 'verticalAperture' to 1.571624994277954 to ensure square pixels.
+[INFO]: Time taken for scene creation : 0.543015 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 1
+	Environment spacing   : 7
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : False
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+2026-10-29T08:38:11Z [31,700ms] [Warning] [omni.usd] Warning: in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot0/camera/visuals/camera/World/mesh.material:binding>: The relationship target </OmniKit_Viewport_LightRig/Looks/Ground_Material> from </X5A/camera/visuals/camera/World/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot0>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot0/camera/visuals/camera/World/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+[PhysXMonitor] suppressed 1 repeated msgs for 
+
+2026-10-29T08:38:11Z [31,707ms] [Warning] [omni.usd] Warning: in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot1/camera/visuals/camera/World/mesh.material:binding>: The relationship target </OmniKit_Viewport_LightRig/Looks/Ground_Material> from </X5A/camera/visuals/camera/World/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot1>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot1/camera/visuals/camera/World/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+2026-10-29T08:38:13Z [33,829ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_21/World/mesh
+2026-10-29T08:38:13Z [33,955ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_22/World/mesh
+2026-10-29T08:38:15Z [35,669ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_3/World/mesh
+2026-10-29T08:38:16Z [36,422ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_2/World/mesh
+2026-10-29T08:38:17Z [37,732ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_9/World/mesh
+2026-10-29T08:38:19Z [39,412ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_23/World/mesh
+2026-10-29T08:38:19Z [39,634ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_18/World/mesh
+2026-10-29T08:38:20Z [40,661ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_10/World/mesh
+2026-10-29T08:38:21Z [41,190ms] [Warning] [omni.physx.cooking.plugin] ConvexDecompositionTask: failed to cook GPU-compatible mesh, collision detection will fall back to CPU. Collisions with particles and deformables will not work with this mesh. Prim /World/envs/env_0/articulation/toaster/toaster_1_7/base/collisions/original_19/World/mesh
+2026-10-29T08:38:24Z [44,712ms] [Warning] [omni.physx.plugin] PhysicsUSD: CreateJoint - found a joint with disjointed body transforms, the simulation will most likely snap objects together: /World/envs/env_0/articulation/toaster/toaster_1_7/base/FixedJoint
+2026-10-29T08:38:24Z [44,718ms] [Warning] [omni.usd] Warning: in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot1/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding>: The relationship target </Flattened_Prototype_9/camera/World/Looks/ID10> from </X5A/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot1>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot1/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+2026-10-29T08:38:24Z [44,718ms] [Warning] [omni.usd] Warning (secondary thread): in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot0/camera/visuals/camera/World/mesh.material:binding>: The relationship target </OmniKit_Viewport_LightRig/Looks/Ground_Material> from </X5A/camera/visuals/camera/World/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot0>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot0/camera/visuals/camera/World/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+2026-10-29T08:38:24Z [44,719ms] [Warning] [omni.usd] Warning (secondary thread): in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot0/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding>: The relationship target </Flattened_Prototype_9/camera/World/Looks/ID10> from </X5A/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot0>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot0/link3/visuals/link3/node_STL_BINARY_/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+2026-10-29T08:38:24Z [44,719ms] [Warning] [omni.usd] Warning (secondary thread): in _ReportErrors at line 3172 of /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp -- In </World/envs/env_0/robot1/camera/visuals/camera/World/mesh.material:binding>: The relationship target </OmniKit_Viewport_LightRig/Looks/Ground_Material> from </X5A/camera/visuals/camera/World/mesh.material:binding> in layer @/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd@ refers to a path outside the scope of the reference from </World/envs/env_0/robot1>.  Ignoring. (getting targets for relationship </World/envs/env_0/robot1/camera/visuals/camera/World/mesh.material:binding> on stage @anon:0x563d3f7f5010:World0.usd@ <0x563d4a9cb080>)
+[INFO]: Time taken for simulation start : 14.740554 seconds
+[INFO]: Completed setting up the environment...
+[INFO] Resetting all environments
+[PhysXMonitor] suppressed 5 repeated msgs for [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T08:38:28Z [48,538ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+[PhysXMonitor] suppressed 5 repeated msgs for [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T08:38:28Z [48,538ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T08:38:35Z [55,877ms] [Warning] [omni.fabric.plugin] USD->Fabric: Unhandled array type string[]
+2026-10-29T08:39:01Z [81,643ms] [Warning] [rtx.neuraylib.plugin] [MDLC:COMPILER]   1.0   MDLC   comp warn : file:/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Material/material_0122/Mahogany_Planks.mdl(49,24): C302 conversion from 'float' to 'float2' must be explicit
+2026-10-29T08:39:01Z [81,643ms] [Warning] [rtx.neuraylib.plugin] [MDLC:COMPILER]   1.0   MDLC   comp warn : file:/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Material/material_0122/Mahogany_Planks.mdl(51,20): C302 conversion from 'float' to 'float2' must be explicit
+2026-10-29T08:39:01Z [81,643ms] [Warning] [rtx.neuraylib.plugin] [MDLC:COMPILER]   1.0   MDLC   comp warn : file:/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Material/material_0122/Mahogany_Planks.mdl(52,31): C302 conversion from 'float' to 'float2' must be explicit
+2026-10-29T08:39:01Z [81,643ms] [Warning] [rtx.neuraylib.plugin] [MDLC:COMPILER]   1.0   MDLC   comp warn : file:/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Material/material_0122/Mahogany_Planks.mdl(54,27): C302 conversion from 'float' to 'float2' must be explicit
+[render_sync] zero-delay Kit settings active; one delivered frame per capture.
+2026-10-29T08:39:27Z [107,737ms] [Warning] [carb] Client gpu.foundation.plugin has acquired [gpu::unstable::IMemoryBudgetManagerFactory v0.1] 100 times. Consider accessing this interface with carb::getCachedInterface() (Performance warning)
+{"phase": "native_layout0_reset_returned", "monotonic_s": 7596671.558000303, "native_sim_step_calls": 800, "native_render_calls": 50}
+{"phase": "robot_inventory_recorded", "monotonic_s": 7596672.134786631, "status": "captured"}
+{"phase": "three_native_rgb_images_saved", "monotonic_s": 7596672.136997153, "images": ["cam_head.png", "cam_left_wrist.png", "cam_right_wrist.png"]}
+[PhysXMonitor] suppressed 2 repeated msgs for [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T08:39:29Z [110,085ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+[PhysXMonitor] suppressed 2 repeated msgs for [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T08:39:29Z [110,085ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+{"phase": "native_env_close_returned", "monotonic_s": 7596673.620367332}
+{"phase": "physx_monitor_shutdown_returned", "monotonic_s": 7596673.620683462}
+{"phase": "before_simulation_app_close", "monotonic_s": 7596673.623499253, "ready_for_shutdown": true}

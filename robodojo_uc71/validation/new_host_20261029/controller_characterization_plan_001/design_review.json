@@ -1,0 +1,36 @@
+{
+  "schema": "robodojo-controller-characterization-design-review-1",
+  "scope": "offline_robot_only_design",
+  "proposal_canonical_sha256": "a76fbc11c220c249a76c6297af7acd1b2e5423c8b69aa5d499440bbfe2550fdc",
+  "proposal_file_sha256": "8620736e67aa630d8d5b0bf9c260197ecc418856ddeb9c076843be93c565beed",
+  "source_sha256": {
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py": "70d2f765469bcfe3496ff63b7f632c119860c7eca5d432f9dfb6b38fd0e6a261",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/fragment_executor.py": "e66d21f616e7a1025430232995b2c25d3dfc3683083143443e23cc82b1f361da",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py": "5ac688e5c2246746f950a2060bfa879fbdc9c369731b348a97733c5b8f91718f",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py": "45a229cda651af8ecd968b467201cf36417e63478f09862207f9979ae5e9baca",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_characterization.py": "8380338e3d13daaeb7d1f3d0a982fee257f977044d9c77bb72345e83447c4d48"
+  },
+  "reviewed_rgb_sha256": {
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_head.png": "000c54301497c0defe3168fc7ce956d66a4d59035dab52df0fd6e1aee34d3f17",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_left_wrist.png": "06209720f74be160b575289dac7441114c48c27993ae88fb98b3f44baf976e56",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_right_wrist.png": "701ed8d7eb305dd38c580c3e293cbe2a9aa8a90fbdf2b224f058b95326d36164"
+  },
+  "findings": [
+    "Physical tool translation is explicit at about 149.3mm from link6; existing NativeMeasurements only accepts the zero-offset link6 candidate, so a separately gated explicit physical-offset adapter is required.",
+    "FragmentExecutor requires a real RUNNING EpisodeLifecycle; diagnostic commands use its DualArmController primitive and the neutral native observer without creating a benchmark lifecycle.",
+    "The 0.4m/s default reaches the 0.05rad joint target lead cap at recorded home. Linearized predicted translation is 0.01191m and rotational leakage is about 0.00524rad for that first candidate command; this is an offline prediction, not measured tracking.",
+    "The proposed conservative speed ladders are contact0.025/0.05m/s, transit0.10/0.20m/s, angular0.5/1.0rad/s. No setting is selected automatically.",
+    "Original head and wrist RGB do not establish an empty gripper region. A generic upward lift and negative initial tool-X retreat precede fresh root/operator visual clearance for any close.",
+    "Native close target remains -0.01m although recorded physical finger limits start at0m; measure actual response and stop on the declared observed-limit excess without changing the target.",
+    "Free-space contact-profile traces do not validate loaded contact behavior. Empty-gripper timing does not validate grasp-success or maintained-object gap-change thresholds.",
+    "Settling sweeps and rolling progress observations are reported from measured25Hz traces; genuine-obstruction stall detection and workspace-wide tracking remain untested."
+  ],
+  "focused_synthetic_tests_passed": 5,
+  "simulator_starts": 0,
+  "native_actions_dispatched": 0,
+  "model_calls": 0,
+  "benchmark_attempt_started": false,
+  "full_test_authorized": false,
+  "calibration_passed": false,
+  "standard_ready": false
+}

@@ -1,0 +1,58 @@
+{
+  "scope": "New-host isolated package setup; full test not approved",
+  "started_at_utc": "2026-10-29T07:29:40.528048+00:00",
+  "licence_provenance": "validation/provisioning/vendor_authorization.json",
+  "lock_sha256": "0ae7040817518bee2d44c969760935495e8e049ddf3918a474a62579eac8ffbc",
+  "python": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+  "events": [
+    {
+      "argv": [
+        "/usr/local/bin/uv",
+        "venv",
+        "--python",
+        "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/bin/python3.11",
+        "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env"
+      ],
+      "started_at_utc": "2026-10-29T07:29:40.528678+00:00",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/usr/local/bin/uv",
+        "pip",
+        "install",
+        "--python",
+        "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+        "--require-hashes",
+        "--default-index",
+        "https://pypi.org/simple",
+        "--extra-index-url",
+        "https://pypi.nvidia.com",
+        "--link-mode",
+        "copy",
+        "-r",
+        "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a1_requirements.lock"
+      ],
+      "started_at_utc": "2026-10-29T07:29:40.735445+00:00",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/usr/local/bin/uv",
+        "pip",
+        "check",
+        "--python",
+        "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python"
+      ],
+      "started_at_utc": "2026-10-29T07:31:39.344936+00:00",
+      "returncode": 0
+    }
+  ],
+  "ready_for_diagnostic": true,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "full_test_approved": false,
+  "free_bytes_after": 173657116672,
+  "completed_at_utc": "2026-10-29T07:31:39.555734+00:00"
+}

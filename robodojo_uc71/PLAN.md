@@ -4,7 +4,7 @@ Updated 2026-10-29. Implementation of **Make Toast Standard, seed-directory 0 / 
 
 ## Experiment and disclosed adaptations
 
-Use the official native `make_toast` task, `arx_x5` / `dual_x5`, one environment and one attempt. Pin native source, submodule gitlinks and assets to [source_pins.json](configs/source_pins.json). Use the exact frozen uc7.1 archive in `vendor/uc71`, verified against all 851 release file hashes. All adapters, runtime installations, caches and artifacts stay in this folder. Preserve training on GPUs 0–3 and the shared LIBERO source/environment.
+Use the official native `make_toast` task, `arx_x5` / `dual_x5`, one environment and one attempt. Pin native source, submodule gitlinks and assets to [source_pins.json](configs/source_pins.json). Use the exact frozen uc7.1 archive in `vendor/uc71`, verified against all 851 release file hashes. All adapters, runtime installations, caches and artifacts stay in this folder. The previous host's GPU 4 selection and training allocations are historical. Current setup binds the sole RTX 4090 at GPU 0, UUID `GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2`; preserve unrelated workloads and the shared LIBERO source/environment.
 
 The model is `gpt-6-astra`, reasoning `high`, through the frozen subscription/OAuth transport, with zero API-key calls and no fallback. Preserve the main-thread 180-second request deadline, finite request retries, accepted opaque response history, all accepted text and six synchronized image-bearing turns. Reset execution history for each attempt. No episode wall-time or model-call limit is added.
 
@@ -16,11 +16,13 @@ This is a versioned uc7.1 RoboDojo adapter, not the byte-identical Panda control
 2. Preserve the official **1,400-action hard stop**. Each native action is ten 0.004-second physics substeps, giving 56 seconds of simulated policy motion. This is neither model-call count nor wall time. Characterize both arms and grippers model-free, then freeze the physical speed mapping before a model attempt. No uncapped continuation is authorized. Any future extension needs separate approval and must be labeled an extended-horizon diagnostic, not a Standard success or an equivalent LIBERO result.
 3. Send all three cameras at native 640×480 without resize, crop or padding. Version the rectangular planning grid, pixel grounding and geometry validation.
 4. Implement a bounded live-smoke option, but do not execute it without a separate concrete approval. No automatic task retry, including a zero-action failure.
-5. Use candidate GPU 4, UUID `GPU-e1a460e9-e272-b227-222e-0dbb77c248c5`. Verify CUDA and Kit identity, active renderer and absence of allocation on other GPUs. NVIDIA licence acceptance is scoped to setup, not test start.
+5. Use current-host GPU 0, UUID `GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2`, PCI `0000:01:00.0`. Verify CUDA and Kit identity and active renderer. NVIDIA licence acceptance and the current implementation request cover setup; full-test approval remains pending.
 
 Native arm joint positions are measured; native gripper scalar state is the previous command. Read both physical finger joints and velocities explicitly. Do not infer grasp success from the command or fabricate Panda channels. `data_source: teleop` affects native physics stabilization and must be preserved even though no demonstrations enter the policy.
 
 ## A0: host compatibility gate
+
+New-host update: procedural rendering passed with driver 580.82.09 and NVIDIA's documented default `fast_shutdown=True`, using durable preclose capture/cleanup evidence plus independent exit-code/process/VRAM checks. The final raw launcher failure flag is preserved and independently reviewed as an ownership-monitor exit race; see [new-host evidence](validation/new_host_20261029/). Nondefault full teardown did not terminate Python and is not claimed fixed. The A0/A1 descriptions below are historical; do not reuse their old GPU bindings or occupied output directories.
 
 First install the minimal pinned Isaac Sim 5.1.0 stack in an isolated Python 3.11 environment. Run one model-free procedural RTX camera smoke on GPU 4 before downloading task assets. Record packages, licence acceptance, GPU identity, logs, exit status and the real image. No global driver changes, native shell retry loop or restart-on-crash is allowed.
 

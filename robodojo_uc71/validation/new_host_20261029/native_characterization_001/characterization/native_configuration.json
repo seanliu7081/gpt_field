@@ -1,0 +1,459 @@
+{
+  "sim": {
+    "decimation": 1,
+    "dt": 0.004,
+    "render_interval": 10,
+    "scene": {
+      "num_envs": 1,
+      "env_spacing": 7
+    },
+    "physx": {
+      "enable_stabilization": true
+    },
+    "seed": [
+      0
+    ]
+  },
+  "scene": {
+    "Room": {
+      "default": "Simple_Room_nolight",
+      "default_pos": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "default_ori": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "Table": {
+      "default": "material_0122",
+      "scale": [
+        1.4,
+        1.1,
+        0.05
+      ],
+      "default_pos": [
+        0.0,
+        -0.05,
+        0.74
+      ],
+      "default_ori": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "random": false
+    },
+    "Background": {
+      "intensity": 1000,
+      "default": "brown_photostudio_02_4k.hdr",
+      "random": false
+    },
+    "Ground": {
+      "geometry": "cube",
+      "thickness": 0.1,
+      "axis": "Z",
+      "default_pos": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": {
+        "type": "mdl",
+        "default": "material_0564",
+        "random": false
+      },
+      "physics_material": {
+        "static_friction": 1.0,
+        "dynamic_friction": 1.0,
+        "restitution": 0.0,
+        "friction_combine_mode": "multiply",
+        "restitution_combine_mode": "multiply",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      }
+    },
+    "Geometry": [
+      {
+        "common": {
+          "xlim": [
+            0.0,
+            0.0
+          ],
+          "ylim": [
+            -0.47,
+            -0.47
+          ],
+          "zlim": [
+            0.715,
+            0.715
+          ],
+          "qpos": [
+            0.707,
+            -0.707,
+            0.0,
+            0.0
+          ],
+          "rotate_rand": false,
+          "relative_plane": "Ground"
+        },
+        "category": [
+          {
+            "name": "camera_stand",
+            "index": [
+              0
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "unique",
+          "label": [
+            "camera_stand"
+          ]
+        }
+      }
+    ]
+  },
+  "camera": {
+    "annotator": {
+      "common": {
+        "enabled": true,
+        "rgb_capture": {
+          "type": "rgb",
+          "device": "cpu"
+        }
+      },
+      "cam_head": {
+        "enabled": true,
+        "rgb_capture": {
+          "type": "rgb",
+          "device": "cpu"
+        }
+      },
+      "cam_left_wrist": {
+        "enabled": true,
+        "rgb_capture": {
+          "type": "rgb",
+          "device": "cpu"
+        }
+      },
+      "cam_right_wrist": {
+        "enabled": true,
+        "rgb_capture": {
+          "type": "rgb",
+          "device": "cpu"
+        }
+      }
+    },
+    "cam_head": {
+      "camera": {
+        "type": "Gemini_345Lg",
+        "mesh": "pinhole",
+        "pos": [
+          0.0,
+          -0.41,
+          1.308
+        ],
+        "ori": [
+          30.0,
+          0,
+          0
+        ]
+      }
+    },
+    "default_frequency": 25
+  },
+  "robot": {
+    "robots": [
+      {
+        "robot_type": "arm",
+        "robot_name": "x5",
+        "coupled": false,
+        "default_root_pos": [
+          -0.3,
+          -0.45,
+          0.765
+        ],
+        "default_root_rot": [
+          0.707,
+          0,
+          0,
+          0.707
+        ],
+        "grasp_perfect_direction": "top_down_little_right",
+        "enabled_self_collisions": false,
+        "need_planner": false
+      },
+      {
+        "robot_type": "arm",
+        "robot_name": "x5",
+        "coupled": false,
+        "default_root_pos": [
+          0.3,
+          -0.45,
+          0.765
+        ],
+        "default_root_rot": [
+          0.707,
+          0,
+          0,
+          0.707
+        ],
+        "grasp_perfect_direction": "top_down_little_left",
+        "enabled_self_collisions": false,
+        "need_planner": false
+      }
+    ]
+  },
+  "task_env": {
+    "Articulation": [
+      {
+        "common": {
+          "xlim": [
+            0.04,
+            0.35
+          ],
+          "ylim": [
+            -0.12,
+            -0.03
+          ],
+          "zlim": [
+            0.08,
+            0.08
+          ],
+          "rotate_rand": true,
+          "rotate_deg": [
+            -105,
+            -75
+          ],
+          "relative_plane": "Table"
+        },
+        "category": [
+          {
+            "name": "toaster",
+            "index": [
+              0,
+              1
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "unique",
+          "label": [
+            "toaster"
+          ]
+        }
+      }
+    ],
+    "Geometry": [
+      {
+        "common": {
+          "xlim": [
+            -0.35,
+            0.0
+          ],
+          "ylim": [
+            -0.2,
+            0.0
+          ],
+          "rotate_rand": true,
+          "rotate_deg": 15,
+          "relative_plane": "Table"
+        },
+        "category": [
+          {
+            "name": "bread_shelf"
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "allow_duplicate",
+          "label": [
+            "bread_shelf"
+          ]
+        }
+      }
+    ],
+    "Rigid": [
+      {
+        "common": {
+          "xlim": [
+            -0.02,
+            -0.02
+          ],
+          "ylim": [
+            -0.007,
+            -0.007
+          ],
+          "rotate_rand": false,
+          "relative_plane": "bread_shelf/bread_shelf/0",
+          "check_mode": "none",
+          "place_tag": "up"
+        },
+        "category": [
+          {
+            "name": "bread",
+            "index": [
+              0
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "allow_duplicate",
+          "label": [
+            "bread_0"
+          ]
+        }
+      },
+      {
+        "common": {
+          "xlim": [
+            -0.02,
+            -0.02
+          ],
+          "ylim": [
+            -0.007,
+            -0.007
+          ],
+          "rotate_rand": false,
+          "relative_plane": "bread_shelf/bread_shelf/1",
+          "check_mode": "none",
+          "place_tag": "up"
+        },
+        "category": [
+          {
+            "name": "bread",
+            "index": [
+              0
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "allow_duplicate",
+          "label": [
+            "bread_1"
+          ]
+        }
+      },
+      {
+        "common": {
+          "xlim": [
+            -0.02,
+            -0.02
+          ],
+          "ylim": [
+            -0.007,
+            -0.007
+          ],
+          "rotate_rand": false,
+          "relative_plane": "bread_shelf/bread_shelf/2",
+          "check_mode": "none",
+          "place_tag": "up"
+        },
+        "category": [
+          {
+            "name": "bread",
+            "index": [
+              0
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "allow_duplicate",
+          "label": [
+            "bread_2"
+          ]
+        }
+      },
+      {
+        "common": {
+          "xlim": [
+            -0.02,
+            -0.02
+          ],
+          "ylim": [
+            -0.007,
+            -0.007
+          ],
+          "rotate_rand": false,
+          "relative_plane": "bread_shelf/bread_shelf/3",
+          "check_mode": "none",
+          "place_tag": "up"
+        },
+        "category": [
+          {
+            "name": "bread",
+            "index": [
+              0
+            ]
+          }
+        ],
+        "select_mode": {
+          "nums": 1,
+          "mode": "allow_duplicate",
+          "label": [
+            "bread_3"
+          ]
+        }
+      }
+    ]
+  },
+  "eval_cfg": {
+    "config_name": "arx_x5",
+    "config": {
+      "sim": "sim_config",
+      "scene": "default",
+      "robot": "dual_x5",
+      "camera": "camera_config"
+    },
+    "observation": {
+      "collect_freq": 25,
+      "robot": {
+        "joint_states": true,
+        "world_ee_state": true
+      },
+      "vision": {
+        "approximate_depth": false,
+        "depth": false,
+        "intrinsic_matrix": false,
+        "extrinsic_matrix": false,
+        "shape": true
+      }
+    },
+    "task_name": "make_toast",
+    "num_envs": 1,
+    "device_id": 0,
+    "eval_batch": false,
+    "policy_name": "uc71_reset_only_preview",
+    "additional_info": "characterization",
+    "seed": 0,
+    "physx_monitor_enabled": true,
+    "eval_num": 25
+  },
+  "deploy_cfg": {
+    "policy_name": "uc71_reset_only_preview",
+    "port": 1,
+    "host": "127.0.0.1",
+    "protocol": "ws",
+    "policy_server_url": "ws://127.0.0.1:1",
+    "evaluation_id": "characterization",
+    "trial_id": "make_toast-characterization",
+    "action_case_id": "make_toast_case",
+    "repeat_index": null
+  }
+}

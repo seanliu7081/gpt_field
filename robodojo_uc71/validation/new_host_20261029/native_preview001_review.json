@@ -1,0 +1,80 @@
+{
+  "schema": "robodojo-native-preview-review-1",
+  "reviewed_at_utc": "2026-10-29T08:46:06.911075+00:00",
+  "launch_result_sha256": "a1448cd1e49bd163c7548a2772c054f352eb39cb289e559b0a38eaaf28e2bfcc",
+  "preview_result_sha256": "7125534af25d04ff1314708bf7be51ba82ccb6523203712850d3ea2f101e316f",
+  "visual_review_passed": true,
+  "visual_review": "All three original640x480RGB images were inspected. Head view shows the table, bread rack and toaster, with both robots. Left wrist shows the bread/rack and right wrist the toaster, each with visible gripper fingers. No blank/corrupted frame was seen. This is visual usability review, not pixel-fidelity certification.",
+  "images": [
+    {
+      "camera": "cam_head",
+      "path": "cam_head.png",
+      "sha256": "7c163db2e614d534aac44e108eb04c7b792eee263cac077356ab5820d84b9493",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.20792209119417,
+      "bytes": 405884
+    },
+    {
+      "camera": "cam_left_wrist",
+      "path": "cam_left_wrist.png",
+      "sha256": "aecea0a1844465aed822c708dfb26f33c7b6196dd7dd5edddb62adb7d3f27cf1",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.976932528594844,
+      "bytes": 378734
+    },
+    {
+      "camera": "cam_right_wrist",
+      "path": "cam_right_wrist.png",
+      "sha256": "a9e86d6402972cc9ea0c59b6029305c10ef45442f05e15ba20936d953dc5703a",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.498986108911325,
+      "bytes": 342304
+    }
+  ],
+  "driver_version": "580.82.09",
+  "isaac_sim_version": "5.1.0.0",
+  "sampled_peak_gpu_used_mib": 5726,
+  "sampled_minimum_free_mib": 18356,
+  "gpu_returned_to_baseline": true,
+  "native_extension_startup_clean": false,
+  "known_startup_defects": [
+    {
+      "module": "hid",
+      "effect": "isaaclab_tasks eager spacemouse import failed"
+    },
+    {
+      "module": "pkg_resources",
+      "effect": "Isaac Lab Kit pipapi hook could not import the removed setuptools API"
+    }
+  ],
+  "known_authored_asset_issues": [
+    "Missing camera-stand normal texture at original author absolute path",
+    "Some robot material bindings target paths outside their USD reference scope"
+  ],
+  "native_physics_warnings": [
+    "Some toaster meshes use native CPU collision-cooking fallback"
+  ],
+  "native_setup_sim_step_calls": 800,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "full_test_authorized": false,
+  "standard_ready": false,
+  "asset_fidelity_passed": false,
+  "calibration_validated": false,
+  "interpretation": "Driver/rendering and observed scene memory capacity are demonstrated. Native extension dependencies, asset fidelity, calibration and full worker readiness remain separate gates."
+}

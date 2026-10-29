@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-10-29T07:51:25.475718+00:00",
+  "result": "rendering_passed_but_normal_process_exit_failed",
+  "peak_observed_total_gpu_memory_mib": 2951,
+  "image_visually_reviewed": true,
+  "image_sha256": "4bf33ec32914348f62c7da6ef3473b65d3dced5b90db7977babc94c0ea2eff97",
+  "visual_findings": "Correct red and green cubes on a gray plane with lighting and shadows,640x480 RGB.",
+  "findings": [
+    "Eight synchronous zero-delta-time captures succeeded.",
+    "SimulationApp.close returned after full extension shutdown, with no cleanup exception recorded.",
+    "Python process remained alive with36 threads and approximately302MiB GPU memory. Exact exit-wait cause was not established.",
+    "GDB attach unavailable due container ptrace restrictions.",
+    "Operator intentionally sent SIGABRT with core dumps disabled to obtain a Python fault-handler dump and end the retained process; no stack dump appeared. This signal was not a spontaneous driver crash.",
+    "GPU memory returned to baseline17MiB; no GPU process remained."
+  ],
+  "diagnostic_passed": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0
+}

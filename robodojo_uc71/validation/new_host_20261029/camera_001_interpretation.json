@@ -1,0 +1,17 @@
+{
+  "recorded_at_utc": "2026-10-29T07:42:09.137877+00:00",
+  "result": "failed_setup_diagnostic_not_driver_crash",
+  "peak_observed_total_gpu_memory_mib": 955,
+  "findings": [
+    "Stock SimulationApp startup returned and correct GPU identity verified.",
+    "libneuray.so failed to load because libGLU.so.1 was missing.",
+    "Diagnostic used app.update without an explicit Replicator capture request.",
+    "Cleanup passed a list of HydraTexture objects to detach, causing AttributeError.",
+    "After errors Python remained alive; operator stopped the launcher through its cleanup handler. GPU processes and memory were released."
+  ],
+  "identity_interpretation": "launch_result false identity fields result from a grouped-file-read fallback when camera_result.json was absent. Independent raw active_renderer_identity.json and cuda_identity.json establish this device identity; raw result is preserved.",
+  "diagnostic_passed": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0
+}

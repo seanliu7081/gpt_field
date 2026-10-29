@@ -1,0 +1,76 @@
+{
+  "schema": "robodojo-reset-comparison-policy-review-1",
+  "policy": {
+    "version": "native-rgb-reset-comparison-1",
+    "shape": [
+      480,
+      640,
+      3
+    ],
+    "mean_absolute_channel_difference_max": 1.0,
+    "percentile_99_channel_difference_max": 4.0,
+    "maximum_channel_difference_max": 32,
+    "resizing_alignment_cropping_or_color_adjustment": false
+  },
+  "policy_rationale": "Retain exact robot/camera state. Allow bounded renderer pixel noise measured in two fresh resets; no resize, alignment, crop, color change, or actual-image substitution. Raw fresh image hashes remain audited.",
+  "historical_pixel_comparisons": [
+    {
+      "camera": "head",
+      "images": [
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_head.png",
+          "sha256": "7c163db2e614d534aac44e108eb04c7b792eee263cac077356ab5820d84b9493"
+        },
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_head.png",
+          "sha256": "000c54301497c0defe3168fc7ce956d66a4d59035dab52df0fd6e1aee34d3f17"
+        }
+      ],
+      "mean_absolute_channel_difference": 0.4267339409722222,
+      "percentile_99_channel_difference": 2.0,
+      "maximum_channel_difference": 12,
+      "within_declared_policy": true
+    },
+    {
+      "camera": "left_wrist",
+      "images": [
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_left_wrist.png",
+          "sha256": "aecea0a1844465aed822c708dfb26f33c7b6196dd7dd5edddb62adb7d3f27cf1"
+        },
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_left_wrist.png",
+          "sha256": "06209720f74be160b575289dac7441114c48c27993ae88fb98b3f44baf976e56"
+        }
+      ],
+      "mean_absolute_channel_difference": 0.40408528645833336,
+      "percentile_99_channel_difference": 2.0,
+      "maximum_channel_difference": 22,
+      "within_declared_policy": true
+    },
+    {
+      "camera": "right_wrist",
+      "images": [
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_right_wrist.png",
+          "sha256": "a9e86d6402972cc9ea0c59b6029305c10ef45442f05e15ba20936d953dc5703a"
+        },
+        {
+          "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_right_wrist.png",
+          "sha256": "701ed8d7eb305dd38c580c3e293cbe2a9aa8a90fbdf2b224f058b95326d36164"
+        }
+      ],
+      "mean_absolute_channel_difference": 0.4284494357638889,
+      "percentile_99_channel_difference": 4.0,
+      "maximum_channel_difference": 20,
+      "within_declared_policy": true
+    }
+  ],
+  "historical_camera_repeatability_proven": false,
+  "limitation": "Preview001 lacks a camera inventory; these comparisons establish only image-noise observations. A future fresh launch must pass the complete exact-state and image check.",
+  "reference_self_check_passed": true,
+  "fresh_worker_verified": false,
+  "frozen_before_any_model_call": true,
+  "full_test_authorized": false,
+  "standard_ready": false
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "robodojo-native-preview-result-1",
+  "preview_render_passed": true,
+  "diagnostic_render_passed": true,
+  "standard_ready": false,
+  "asset_fidelity_passed": false,
+  "dependency_closure_complete": false,
+  "asset_diagnostic_assessment": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+    "sha256": "535718e3bf2efd4f70dc35440c54c73b6d989c8d5d290c7934ece9fa9e6b219c",
+    "raw_asset_manifest_sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419",
+    "classification_evidence_sha256": "7ca9ce5bd7e5d4a655cd04ef90a215599a2770f2fc7142c87cd7197076829937",
+    "static_missing_texture_evidence_sha256": "17e2b27a5f22b7764b31b1aacdc7cc42ceb020c6d8368cbe9d40fbe11f67bb3a",
+    "permitted_unresolved_count": 15,
+    "known_missing_reference": "/home/kaslensu/Desktop/textures/Image_0.png",
+    "source_assets_unchanged": true,
+    "standard_ready": false,
+    "asset_fidelity_passed": false,
+    "dependency_closure_complete": false
+  },
+  "loaded_module_provenance_sha256": "bb906d80fd60f62145c9b10eedc53198249e83c7ead401bde0bf5d99950ac577",
+  "completed_at_monotonic_s": 7598540.503304598,
+  "preparation_sha256": "290a4ff27e473fb0613728597ab20f160e63d15dbcca002d536de51c004f0d47",
+  "layout_path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Eval_Layout/RoboDojo/arx_x5/0/make_toast_0.json",
+  "layout_sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28",
+  "images": [
+    {
+      "camera": "cam_head",
+      "path": "cam_head.png",
+      "sha256": "000c54301497c0defe3168fc7ce956d66a4d59035dab52df0fd6e1aee34d3f17",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.158188372240964,
+      "bytes": 407976
+    },
+    {
+      "camera": "cam_left_wrist",
+      "path": "cam_left_wrist.png",
+      "sha256": "06209720f74be160b575289dac7441114c48c27993ae88fb98b3f44baf976e56",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.929353433056534,
+      "bytes": 380887
+    },
+    {
+      "camera": "cam_right_wrist",
+      "path": "cam_right_wrist.png",
+      "sha256": "701ed8d7eb305dd38c580c3e293cbe2a9aa8a90fbdf2b224f058b95326d36164",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.551859936149555,
+      "bytes": 343953
+    }
+  ],
+  "robot_inventory": {
+    "status": "captured",
+    "path": "robot_inventory.json",
+    "sha256": "716612770f6e9c2eb9e337296ef47de10cbc54769dfb0fd8abb8c58c8a6e2b9d",
+    "calibration_status": "uncalibrated_candidate"
+  },
+  "camera_inventory": {
+    "status": "captured",
+    "path": "camera_inventory.json",
+    "sha256": "a02236028a54de0d78687bd6dfed0033583a6a475d674f4d0ab86f95ae9eea2f",
+    "calibration_status": "uncalibrated_candidate"
+  },
+  "pause_seconds": 300,
+  "pause_validation": {
+    "requested_seconds": 300,
+    "performed": true,
+    "passed": true,
+    "path": "pause_validation.json",
+    "sha256": "9526cc171e3ea37cee22deb78e80df78dfddd7f8e39fa5b5d0221e860729e368"
+  },
+  "binding": {
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "pci_bus_id": "0000:01:00.0",
+    "kit_index": 0,
+    "cuda_ordinal": 0
+  },
+  "shutdown_mode": "stock-fast",
+  "reset_calls": 1,
+  "native_client_reset_calls": 1,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "native_take_action_count": [
+    0
+  ],
+  "native_setup_counts": {
+    "native_sim_step_calls": 800,
+    "native_render_calls": 52
+  },
+  "setup_counts_note": "Counts delegated env.sim_step/render calls; native backend initialization may additionally step internally.",
+  "capture_physics_time_before_s": 3.5640001692809165,
+  "capture_physics_time_after_s": 3.5640001692809165,
+  "reward_predicates_registered": true,
+  "task_success_assessed": false,
+  "policy_action_methods_guarded": [
+    "run_eval",
+    "eval_one_episode",
+    "eval_one_episode_batch",
+    "take_action",
+    "take_action_batch",
+    "step"
+  ],
+  "adaptations": {
+    "client_server.ws.model_client": "ResetOnlyClient: exactly one reset; no transport imported or constructed",
+    "env.planner_manager.curobo_planner": "DisabledPreviewPlanner: every constructor call raises; need_planner is false"
+  },
+  "physics_device": "cpu",
+  "use_fabric": false,
+  "native_planner_instances": 0,
+  "native_ik_solver_instances": 0,
+  "full_test_authorized": false,
+  "gpu_peak_source": "parent gpu_monitor.jsonl; child makes no peak-memory claim"
+}

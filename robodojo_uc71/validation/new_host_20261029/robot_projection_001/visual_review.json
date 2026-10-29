@@ -1,0 +1,144 @@
+{
+  "schema": "robodojo-robot-projection-visual-review-1",
+  "created_at_utc": "2026-10-29T09:22:32.833872+00:00",
+  "reviewer": "Codex migration_audit agent",
+  "review_method": "Direct view_image inspection of all three paired original/projection views and all eight original/projection finger-pad zooms",
+  "scope": "qualitative_robot_landmark_check_at_one_recorded_home_pose",
+  "analysis": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/analysis.json",
+    "sha256": "274b02ebecd42bf8c1d946bc0988b3f4f8f3acdc27c022d50fc170865c9408e0"
+  },
+  "reviewed_figures": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/head_projection.png",
+      "sha256": "b183541dec380e7e604a1fb6b87ec4dfdd5f1f6f2a2d4820bc042cd8d7e1dd46"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/head_left_arm_link7_zoom.png",
+      "sha256": "a5d3d78bb1b9606c1435c3eff69752e8071e25346d7f95c3172d51bb68fa3217"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/head_left_arm_link8_zoom.png",
+      "sha256": "fb577ab5248e026751f58a68a84cb58306340a87c62050293da2b5c55c24a6f8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/head_right_arm_link7_zoom.png",
+      "sha256": "8e1529b8baf6abc80d105d543a20ed76ed9cab732f87fe2b1bad148610a05a66"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/head_right_arm_link8_zoom.png",
+      "sha256": "4bf7a7e52c3d8c20df1b80574b5dbdffbee96a94d4d1ee3f754612533dea171f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/left_wrist_projection.png",
+      "sha256": "7dff6058dc20af63419832f89153f983f6939aa27adbe5bbfc6faf0cca23ce96"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/left_wrist_left_arm_link7_zoom.png",
+      "sha256": "8c4eafbd1388b55e57086f57ffddef3107b8179e9620934a6d9e7d08e544bb8c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/left_wrist_left_arm_link8_zoom.png",
+      "sha256": "2288a3321d4e8a088e782b3f2f11ec2bb44f7b424afabf7e2ad5b89e5cc4eca9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/right_wrist_projection.png",
+      "sha256": "db7e7ffab43d8dec563c12af6d8fc9c2281a952e9c89fda189bc47e10e0ff4cd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/right_wrist_right_arm_link7_zoom.png",
+      "sha256": "71c0cfa3a9a4520e64a463b871e5b77a8d6fad3cd7fdf8444a85a3e039cfa412"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_projection_001/right_wrist_right_arm_link8_zoom.png",
+      "sha256": "eb88b2b619db35d96665cad28da877a4725276537b240bb484e5938d5b568466"
+    }
+  ],
+  "qualitative_home_pose_landmark_check_passed": true,
+  "physical_nominal_tool_candidate_supported_at_recorded_home_pose": true,
+  "pixel_error_numerically_measured": false,
+  "subpixel_accuracy_claimed": false,
+  "physical_tool_point_directly_visible": false,
+  "live_multi_pose_validation_passed": false,
+  "controller_tracking_validated": false,
+  "full_calibration_passed": false,
+  "model_input_eligible": false,
+  "standard_ready": false,
+  "full_test_authorized": false,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "findings": [
+    {
+      "camera": "left_wrist",
+      "arm": "left_arm",
+      "links": [
+        "link7",
+        "link8"
+      ],
+      "assessment": "Both inner distal pad faces are visible. Projected quadrilaterals align closely with visible tip and face/silhouette edges in the original pixel zooms; centroids lie on the expected faces. No apparent image flip or gross optical-axis mismatch. This is a qualitative check, not a measured pixel-error bound."
+    },
+    {
+      "camera": "right_wrist",
+      "arm": "right_arm",
+      "links": [
+        "link7",
+        "link8"
+      ],
+      "assessment": "Both inner distal pad faces are visible. Projected quadrilaterals align closely with visible tip and face/silhouette edges. Some proximal boundaries are low-contrast black-on-black; they are not claimed as independently measured edges."
+    },
+    {
+      "camera": "head",
+      "arm": "left_arm",
+      "links": [
+        "link7"
+      ],
+      "assessment": "Front-facing inner pad projection is consistent with the visible distal finger region and tip at the lower head-camera pixel resolution. Small rasterized/antialiased edge differences are visible; no numerical error tolerance is inferred."
+    },
+    {
+      "camera": "head",
+      "arm": "right_arm",
+      "links": [
+        "link8"
+      ],
+      "assessment": "Front-facing inner pad projection is consistent with the visible distal finger region and tip at the lower head-camera pixel resolution; no subpixel or numerical error claim."
+    },
+    {
+      "camera": "head",
+      "arm": "left_arm",
+      "links": [
+        "link8"
+      ],
+      "assessment": "The inward pad face points away. The dashed polygon overlaps the finger backside/edge, which is not evidence that the inward face is visible; exclude this face from direct inner-pad validation."
+    },
+    {
+      "camera": "head",
+      "arm": "right_arm",
+      "links": [
+        "link7"
+      ],
+      "assessment": "The inward pad face points away. The visible finger backside/edge cannot independently validate the projected inward surface; exclude this face from direct inner-pad validation."
+    },
+    {
+      "camera": "left_wrist",
+      "arm": "right_arm",
+      "assessment": "Both opposite-arm pads project outside the native image; no visual validation is claimed."
+    },
+    {
+      "camera": "right_wrist",
+      "arm": "left_arm",
+      "assessment": "Both opposite-arm pads project outside the native image; no visual validation is claimed."
+    }
+  ],
+  "tool_definition_assessment": "The fixed nominal midpoint between the two opposed distal pad area centroids is supported by independently checked source geometry, recorded live finger transforms, and visible pad projections at this symmetric home pose. The midpoint itself is a virtual point with no visible fiducial; its apparent overlay location is not a directly measured pixel correspondence or evidence of contact.",
+  "nominal_vs_recorded_pad_midpoint_distance_m": {
+    "left_arm": 1.430992162790458e-08,
+    "right_arm": 1.430992162790458e-08
+  },
+  "limitations": [
+    "One recorded home pose only; separate engine finite-difference and motion/tracking validation remain necessary.",
+    "The fixed nominal point differs from the instantaneous pad midpoint when measured finger displacements differ.",
+    "No depth, segmentation, scene-object state, contact or reward data was used.",
+    "Separate annotated figures are operator-only; original native RGB is unchanged and remains the only imagery eligible for the eventual model flow."
+  ]
+}

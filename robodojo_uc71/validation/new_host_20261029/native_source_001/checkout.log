@@ -1,0 +1,32 @@
+["git", "init", "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo"]
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/.git/
+["git", "-C", "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo", "remote", "add", "origin", "https://github.com/RoboDojo-Benchmark/RoboDojo.git"]
+["git", "-C", "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo", "fetch", "--depth=1", "origin", "f57e1633ffed59761bc8e568cfe7530c4b33381c"]
+From https://github.com/RoboDojo-Benchmark/RoboDojo
+ * branch            f57e1633ffed59761bc8e568cfe7530c4b33381c -> FETCH_HEAD
+["git", "-C", "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo", "checkout", "--detach", "f57e1633ffed59761bc8e568cfe7530c4b33381c"]
+HEAD is now at f57e163 [scripts] chore: bump XPolicyLab submodule to latest main
+["git", "-C", "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo", "-c", "protocol.file.allow=never", "submodule", "update", "--init", "--recursive", "--depth=1"]
+Submodule 'XPolicyLab' (https://github.com/XPolicyLab/XPolicyLab.git) registered for path 'XPolicyLab'
+Submodule 'third_party/IsaacLab' (https://github.com/yuechen0614/IsaacLab.git) registered for path 'third_party/IsaacLab'
+Submodule 'third_party/curobo' (https://github.com/yuechen0614/curobo.git) registered for path 'third_party/curobo'
+Cloning into '/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/XPolicyLab'...
+Cloning into '/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab'...
+Cloning into '/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/curobo'...
+From https://github.com/XPolicyLab/XPolicyLab
+ * branch            5d0be1499634d3176258c8f2e31f5fe816497b0a -> FETCH_HEAD
+Submodule path 'XPolicyLab': checked out '5d0be1499634d3176258c8f2e31f5fe816497b0a'
+Submodule path 'third_party/IsaacLab': checked out 'afca7b09d60d8beb9c1cb28b43066499940b969b'
+From https://github.com/yuechen0614/curobo
+ * branch            d17b54ce32cba095c0b000c4c58777075d11de0e -> FETCH_HEAD
+Submodule path 'third_party/curobo': checked out 'd17b54ce32cba095c0b000c4c58777075d11de0e'

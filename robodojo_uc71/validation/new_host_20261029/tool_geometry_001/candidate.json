@@ -1,0 +1,214 @@
+{
+  "schema": "robodojo-physical-tool-candidate-1",
+  "created_at_utc": "2026-10-29T09:03:31.561167+00:00",
+  "scope": "robot_only_geometry_and_recorded_measurements",
+  "calibration_status": "uncalibrated_candidate",
+  "definition": "Fixed nominal midpoint of the two opposed distal inner-pad surface centroids under symmetric finger displacement",
+  "axes": {
+    "x": "along finger extension",
+    "y": "from link8 toward link7",
+    "z": "right-handed completion; unchanged link6 orientation"
+  },
+  "link6_from_tool": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.1493350448975541
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      -1.9999999999985307e-06
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      -0.0008539872259297808
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pad_geometry": {
+    "link7": {
+      "joint_name": "joint7",
+      "joint_origin_xyz": [
+        0.08657,
+        0.024896,
+        -0.0002436
+      ],
+      "joint_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "triangle_indices": [
+        113,
+        114
+      ],
+      "area_m2": 0.00021245941898313803,
+      "centroid_in_finger_link_m": [
+        0.06276504481536285,
+        -0.024494417011737823,
+        -0.0006103573608781577
+      ],
+      "centroid_in_link6_at_zero_joint_m": [
+        0.14933504481536286,
+        0.000401582988262178,
+        -0.0008539573608781577
+      ],
+      "pad_vertices_in_finger_link_m": [
+        [
+          0.0560000017285347,
+          -0.024494417011737823,
+          -0.010360768996179104
+        ],
+        [
+          0.0560000017285347,
+          -0.024494417011737823,
+          0.007967153564095497
+        ],
+        [
+          0.07100000232458115,
+          -0.024494417011737823,
+          -0.004896481987088919
+        ],
+        [
+          0.07100000232458115,
+          -0.024494417011737823,
+          0.005103516858071089
+        ]
+      ],
+      "native_visual_prim": "/X5A/link7/visuals/link7/node_STL_BINARY_/mesh",
+      "usd_stl_vertices_match": true
+    },
+    "link8": {
+      "joint_name": "joint8",
+      "joint_origin_xyz": [
+        0.08657,
+        -0.0249,
+        -0.00024366
+      ],
+      "joint_axis": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "triangle_indices": [
+        899,
+        900
+      ],
+      "area_m2": 0.00021245941898313803,
+      "centroid_in_finger_link_m": [
+        0.0627650449797453,
+        0.024494417011737823,
+        -0.0006103570909814038
+      ],
+      "centroid_in_link6_at_zero_joint_m": [
+        0.1493350449797453,
+        -0.00040558298826217504,
+        -0.0008540170909814038
+      ],
+      "pad_vertices_in_finger_link_m": [
+        [
+          0.0560000017285347,
+          0.024494417011737823,
+          -0.01036076806485653
+        ],
+        [
+          0.0560000017285347,
+          0.024494417011737823,
+          0.007967153564095497
+        ],
+        [
+          0.07100000232458115,
+          0.024494417011737823,
+          -0.004896482452750206
+        ],
+        [
+          0.07100000232458115,
+          0.024494417011737823,
+          0.005103517323732376
+        ]
+      ],
+      "native_visual_prim": "/X5A/link8/visuals/link8/node_STL_BINARY_/mesh",
+      "usd_stl_vertices_match": true
+    }
+  },
+  "selection": {
+    "normal_alignment_tolerance": 1e-06,
+    "minimum_face_centroid_x_m": 0.04,
+    "rationale": "Select the distal opposed planar pad surfaces, excluding the proximal sloped finger plates"
+  },
+  "recorded_pose_crosschecks": [
+    {
+      "arm": "left_arm",
+      "link": "link7",
+      "position_error_m": 1.5561389184993562e-08,
+      "rotation_matrix_error_norm": 4.517203102972329e-16
+    },
+    {
+      "arm": "left_arm",
+      "link": "link8",
+      "position_error_m": 3.114895222496981e-08,
+      "rotation_matrix_error_norm": 4.517203102972329e-16
+    },
+    {
+      "arm": "right_arm",
+      "link": "link7",
+      "position_error_m": 2.983983692260183e-08,
+      "rotation_matrix_error_norm": 4.517203102972329e-16
+    },
+    {
+      "arm": "right_arm",
+      "link": "link8",
+      "position_error_m": 4.105293938934363e-08,
+      "rotation_matrix_error_norm": 4.517203102972329e-16
+    }
+  ],
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    }
+  ],
+  "script_sha256": "a243f1d20150787add1bdc9f17c6c5d4f5c51fac4015e315a897a6d6130af235",
+  "inventory_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/robot_inventory.json",
+  "inventory_sha256": "e176f20200af6f55c4b5b971196ef33c97f6a53b95a9cc099a53f65954a0ae85",
+  "usd_vertices_sha256": "d20380d8230ac68d4ad5887c4881d30081ffaae55b6313ce0eb11e75dc0772e2",
+  "rendered_landmarks_validated": false,
+  "live_multi_pose_validation_passed": false,
+  "controller_tracking_validated": false,
+  "model_input_eligible": false,
+  "full_test_authorized": false,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "limitations": [
+    "One recorded home pose crosschecked; no live movement or image landmark validation",
+    "Fixed nominal tool point is not the instantaneous midpoint when finger displacements differ",
+    "Does not establish contact, grasp success, pad clearance, or task success"
+  ]
+}

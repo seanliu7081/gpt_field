@@ -1,0 +1,114 @@
+{
+  "schema": "robodojo-native-preview-result-1",
+  "preview_render_passed": true,
+  "diagnostic_render_passed": true,
+  "standard_ready": false,
+  "asset_fidelity_passed": false,
+  "dependency_closure_complete": false,
+  "asset_diagnostic_assessment": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+    "sha256": "535718e3bf2efd4f70dc35440c54c73b6d989c8d5d290c7934ece9fa9e6b219c",
+    "raw_asset_manifest_sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419",
+    "classification_evidence_sha256": "7ca9ce5bd7e5d4a655cd04ef90a215599a2770f2fc7142c87cd7197076829937",
+    "static_missing_texture_evidence_sha256": "17e2b27a5f22b7764b31b1aacdc7cc42ceb020c6d8368cbe9d40fbe11f67bb3a",
+    "permitted_unresolved_count": 15,
+    "known_missing_reference": "/home/kaslensu/Desktop/textures/Image_0.png",
+    "source_assets_unchanged": true,
+    "standard_ready": false,
+    "asset_fidelity_passed": false,
+    "dependency_closure_complete": false
+  },
+  "loaded_module_provenance_sha256": "ed12f524b9699068069b3b8b1edc83987b2d361dc3f350799ecdce8b04f98f5c",
+  "completed_at_monotonic_s": 7596672.135024849,
+  "preparation_sha256": "220500e0c3f9251b099e9861d5f8bb758723b105305d0f408e35f41029793468",
+  "layout_path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Eval_Layout/RoboDojo/arx_x5/0/make_toast_0.json",
+  "layout_sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28",
+  "images": [
+    {
+      "camera": "cam_head",
+      "path": "cam_head.png",
+      "sha256": "7c163db2e614d534aac44e108eb04c7b792eee263cac077356ab5820d84b9493",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.20792209119417,
+      "bytes": 405884
+    },
+    {
+      "camera": "cam_left_wrist",
+      "path": "cam_left_wrist.png",
+      "sha256": "aecea0a1844465aed822c708dfb26f33c7b6196dd7dd5edddb62adb7d3f27cf1",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.976932528594844,
+      "bytes": 378734
+    },
+    {
+      "camera": "cam_right_wrist",
+      "path": "cam_right_wrist.png",
+      "sha256": "a9e86d6402972cc9ea0c59b6029305c10ef45442f05e15ba20936d953dc5703a",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.498986108911325,
+      "bytes": 342304
+    }
+  ],
+  "robot_inventory": {
+    "status": "captured",
+    "path": "robot_inventory.json",
+    "sha256": "e176f20200af6f55c4b5b971196ef33c97f6a53b95a9cc099a53f65954a0ae85",
+    "calibration_status": "uncalibrated_candidate"
+  },
+  "binding": {
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "pci_bus_id": "0000:01:00.0",
+    "kit_index": 0,
+    "cuda_ordinal": 0
+  },
+  "shutdown_mode": "stock-fast",
+  "reset_calls": 1,
+  "native_client_reset_calls": 1,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "native_take_action_count": [
+    0
+  ],
+  "native_setup_counts": {
+    "native_sim_step_calls": 800,
+    "native_render_calls": 51
+  },
+  "setup_counts_note": "Counts delegated env.sim_step/render calls; native backend initialization may additionally step internally.",
+  "capture_physics_time_before_s": 3.5640001692809165,
+  "capture_physics_time_after_s": 3.5640001692809165,
+  "reward_predicates_registered": true,
+  "task_success_assessed": false,
+  "policy_action_methods_guarded": [
+    "run_eval",
+    "eval_one_episode",
+    "eval_one_episode_batch",
+    "take_action",
+    "take_action_batch",
+    "step"
+  ],
+  "adaptations": {
+    "client_server.ws.model_client": "ResetOnlyClient: exactly one reset; no transport imported or constructed",
+    "env.planner_manager.curobo_planner": "DisabledPreviewPlanner: every constructor call raises; need_planner is false"
+  },
+  "physics_device": "cpu",
+  "use_fabric": false,
+  "native_planner_instances": 0,
+  "native_ik_solver_instances": 0,
+  "full_test_authorized": false,
+  "gpu_peak_source": "parent gpu_monitor.jsonl; child makes no peak-memory claim"
+}

@@ -1,0 +1,19 @@
+{
+  "diagnostic_authorized": true,
+  "full_test_authorized": false,
+  "model_calls_authorized": false,
+  "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+  "user_message": "i need to implement the robodojo_uc71 robodojo make toast standard version test on layout 0. you need my approval before full test begin. first check the does the IsaacSim compatable with our driver version, also do we have enough gpu ram",
+  "scope": "Implementation and bounded model-free new-host compatibility check only. No full task, task actions or model calls.",
+  "licence_provenance": "../provisioning/vendor_authorization.json",
+  "recorded_at_utc": "2026-10-29T07:42:09.138208+00:00",
+  "reviewed_next_attempt": "camera_002",
+  "automatic_retry": false,
+  "basis": "Coordinator reviewed camera_001 logs and exact installed APIs; narrow setup repair within current implementation/compatibility scope.",
+  "changes": [
+    "Add task-local libGLU/libOpenGL with official Ubuntu hashes, using a new sysroot directory.",
+    "Use eight explicit Replicator capture steps with delta_time=0 and no benchmark actions.",
+    "Use supported annotator.detach() cleanup and retain separate cleanup error evidence.",
+    "Read result/identity files independently to prevent misleading identity-failure summaries."
+  ]
+}

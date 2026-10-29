@@ -1,0 +1,52 @@
+{
+  "schema": "robodojo-new-host-camera-1",
+  "started_at_utc": "2026-10-29T07:42:19.070932+00:00",
+  "argv": [
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+    "-X",
+    "faulthandler",
+    "-u",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/new_host_camera.py"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/home",
+    "PATH": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin:/usr/local/bin:/usr/bin:/bin",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+    "VK_ICD_FILENAMES": "/etc/vulkan/icd.d/nvidia_icd.json",
+    "OMNI_KIT_ACCEPT_EULA": "YES",
+    "UC71_CAMERA_AUTHORIZED_CHILD": "1",
+    "UC71_CAMERA_OUTPUT": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002",
+    "UC71_CAMERA_BINDING": "{\"gpu_uuid\": \"GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2\", \"pci_bus_id\": \"00000000:01:00.0\", \"kit_index\": 0, \"cuda_ordinal\": 0}",
+    "XDG_CACHE_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/cache",
+    "XDG_CONFIG_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/config",
+    "XDG_DATA_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/data",
+    "CUDA_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/cache/cuda",
+    "WARP_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_002/cache/warp",
+    "LD_LIBRARY_PATH": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu"
+  },
+  "binding": {
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "pci_bus_id": "00000000:01:00.0",
+    "kit_index": 0,
+    "cuda_ordinal": 0
+  },
+  "wall_time_limit_s": 600,
+  "minimum_free_mib": 16384,
+  "setup_authorization_sha256": "39ff87e235f6bb249437f860caf83c97f174e0207b9393edc2f26c105cc1222b",
+  "script_sha256": "d5b472cb745b337f0fb1848e48b54dcde4ae36e14dd698bc0864595eae9df1cc",
+  "launcher_sha256": "f630021c4a9dfd6654e6b7c3de216a9894bfd303824ab17ee0dd589e04539d14",
+  "install_record_sha256": "7187398aa880703eb40db8e23bf49f3e56accb8c2ae379c0778938455900e52e",
+  "lock_sha256": "0ae7040817518bee2d44c969760935495e8e049ddf3918a474a62579eac8ffbc",
+  "precreated_primary_cuda_context": false,
+  "identity_method": "NVML/kernel driver, CUDA metadata UUID/PCI, Kit renderer index/UUID prefix/PCI bus; no context bootstrap",
+  "nvml_namespace_note": "A lone inaccessible NVML PID may be a host-namespace candidate; temporal association is not PID attestation. Final empty GPU process list is required.",
+  "automatic_retry": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "limitations": "Environment filtering is not filesystem or network isolation. Camera diagnostic does not exercise native RoboDojo."
+}

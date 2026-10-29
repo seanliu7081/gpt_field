@@ -1,0 +1,22 @@
+{
+  "new_packages": [
+    {
+      "package": "libglu1-mesa",
+      "version": "9.0.2-1.1build1",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/libg/libglu/libglu1-mesa_9.0.2-1.1build1_amd64.deb",
+      "sha256": "4288833eebfbf6b00d1ae98159f429e1f7f6398288c9305edeeb185d9ed048d9",
+      "extraction_root": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002",
+      "system_install": false
+    },
+    {
+      "package": "libopengl0",
+      "version": "1.7.0-1build1",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/libg/libglvnd/libopengl0_1.7.0-1build1_amd64.deb",
+      "sha256": "da36bd4d30c13b40b697fa8b72cc09d309ff36a5bd9750341ef78492bf3f3966",
+      "extraction_root": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002",
+      "system_install": false
+    }
+  ],
+  "inherits": "../system_libraries_001/manifest.json",
+  "reason": "camera001 libneuray.so loader reports missing libGLU.so.1"
+}

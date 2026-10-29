@@ -1,0 +1,1731 @@
+{
+  "source": "https://pypi.org/pypi/hidapi/0.14.0.post2/json",
+  "metadata": {
+    "info": {
+      "author": "Pavol Rusnak",
+      "author_email": "pavol@rusnak.io",
+      "bugtrack_url": null,
+      "classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9"
+      ],
+      "description": "cython-hidapi\n=============\n\n.. contents::\n\nDescription\n-----------\n\nA Cython interface to `HIDAPI <https://github.com/libusb/hidapi>`_ library.\n\nThis has been tested with:\n\n* `TREZOR <https://trezor.io/>`_ Hardware Wallet\n* the PIC18F4550 on the development board from CCS with their example program\n* the Fine Offset WH3081 Weather Station\n\nIt works on Linux, Windows and macOS.\n\nSoftware Dependencies\n---------------------\n\n* `Python <http://python.org>`_\n* `Cython <http://cython.org>`_\n* hidraw or libusb+libudev on Linux\n\nLicense\n-------\n\ncython-hidapi may be used by one of three licenses as outlined in LICENSE.txt\n\nInstall\n-------\n\n::\n\n    $ sudo apt-get install python-dev libusb-1.0-0-dev libudev-dev\n    $ sudo pip install --upgrade setuptools\n    $ sudo pip install hidapi\n\nFor other download options visit the `PyPi page <https://pypi.python.org/pypi/hidapi/>`_.\n\nBuild from source\n-----------------\n\n1. Download cython-hidapi archive::\n\n    $ git clone --recursive https://github.com/trezor/cython-hidapi.git\n    $ cd cython-hidapi\n\n2. Build cython-hidapi extension module::\n\n    $ python setup.py build\n\n   On Linux, the hidraw API is now used by default, and the libusb API is not\n   included. That is, --without-libusb is now the default behavior.\n   To force the use of the libusb API instead, use the --with-libusb option::\n\n    $ python setup.py build --with-libusb\n\n   Or you can also use the environment variable::\n\n    $ export HIDAPI_WITH_LIBUSB=1\n    $ python setup.py build\n\n3. Install cython-hidapi module into your Python distribution::\n\n    $ sudo python setup.py install\n\n   **Alternatively**, you can run pip directly, which will call the necessary build and install commands::\n\n    $ pip install -e .\n\n4. Test install::\n\n    $ python\n    >>> import hid\n    >>>\n\n5. Try example script::\n\n    $ python try.py\n\nUdev rules\n----------\n\nFor correct functionality under Linux, you need to create a rule file similar\nto `this one <https://raw.githubusercontent.com/trezor/trezor-common/master/udev/51-trezor.rules>`_\nin your udev rules directory.\n\nAlso you might need to call ``udevadm control --reload-rules`` to reload the rules.\n\nDocumentation\n-------------\n\nDocumentation can be built using Sphinx::\n\n   $ cd docs && make html\n\nThe HTML output will be in ``docs/_build/html``.\n\nThe documentation is extracted from the code using ``autodoc``.\n\nNote that the build output is used. So rebuilt the package before generating documentation.\n\nBuilt documentation is also deployed to: `https://trezor.github.io/cython-hidapi/ <https://trezor.github.io/cython-hidapi/>`_.\n",
+      "description_content_type": null,
+      "docs_url": null,
+      "download_url": null,
+      "downloads": {
+        "last_day": -1,
+        "last_month": -1,
+        "last_week": -1
+      },
+      "dynamic": null,
+      "home_page": "https://github.com/trezor/cython-hidapi",
+      "keywords": null,
+      "license": null,
+      "license_expression": null,
+      "license_files": null,
+      "maintainer": "Pavol Rusnak",
+      "maintainer_email": "pavol@rusnak.io",
+      "name": "hidapi",
+      "package_url": "https://pypi.org/project/hidapi/",
+      "platform": null,
+      "project_url": "https://pypi.org/project/hidapi/",
+      "project_urls": {
+        "Homepage": "https://github.com/trezor/cython-hidapi"
+      },
+      "provides_extra": null,
+      "release_url": "https://pypi.org/project/hidapi/0.14.0.post2/",
+      "requires_dist": [
+        "setuptools>=19.0"
+      ],
+      "requires_python": null,
+      "summary": "A Cython interface to the hidapi from https://github.com/libusb/hidapi",
+      "version": "0.14.0.post2",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    "last_serial": 32882994,
+    "ownership": {
+      "organization": null,
+      "roles": [
+        {
+          "role": "Owner",
+          "user": "satoshilabs"
+        },
+        {
+          "role": "Owner",
+          "user": "stick"
+        },
+        {
+          "role": "Maintainer",
+          "user": "matejcik"
+        }
+      ]
+    },
+    "urls": [
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "e1ef63f83e8dbad9467bb0a19ac3c6a3d9d442c3ca521fa18d31c3738022c502",
+          "md5": "b9607e6672011eb20207dc7c862cb9e9",
+          "sha256": "023bca2a95856c185b01978b3794a8302e5a38cf1a8fa7b9c14c537b928ec762"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "b9607e6672011eb20207dc7c862cb9e9",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 69462,
+        "upload_time": "2024-07-23T21:24:47",
+        "upload_time_iso_8601": "2024-07-23T21:24:47.009860Z",
+        "url": "https://files.pythonhosted.org/packages/e1/ef/63f83e8dbad9467bb0a19ac3c6a3d9d442c3ca521fa18d31c3738022c502/hidapi-0.14.0.post2-cp310-cp310-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "eb7341b979989da9b98db5459f64d67587694b60aa3a786062e35b643dd5d550",
+          "md5": "54d6843d7bed622335c159f91a9ed4a1",
+          "sha256": "8f6c27a5efd629dde57c97bb621bfe87fd40ece01c3c80ca8f937cfd8023adbe"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-macosx_11_0_arm64.whl",
+        "has_sig": false,
+        "md5_digest": "54d6843d7bed622335c159f91a9ed4a1",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 67185,
+        "upload_time": "2024-07-23T21:24:48",
+        "upload_time_iso_8601": "2024-07-23T21:24:48.975441Z",
+        "url": "https://files.pythonhosted.org/packages/eb/73/41b979989da9b98db5459f64d67587694b60aa3a786062e35b643dd5d550/hidapi-0.14.0.post2-cp310-cp310-macosx_11_0_arm64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "952287b6742316d3bfad9860d467b5ef91411f52d1e2e61ef75fcd03f56f7669",
+          "md5": "de5a8a72ec99a9e4a79b5917e541c867",
+          "sha256": "5fe7645dfb3d577428023ea855664602d55dacdcf474c059217c6f5cc175bcd6"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "de5a8a72ec99a9e4a79b5917e541c867",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 690811,
+        "upload_time": "2024-07-23T21:24:51",
+        "upload_time_iso_8601": "2024-07-23T21:24:51.339818Z",
+        "url": "https://files.pythonhosted.org/packages/95/22/87b6742316d3bfad9860d467b5ef91411f52d1e2e61ef75fcd03f56f7669/hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "f19e1444fc493353a3a2efbad9f10afc7c1f3d70ae45d8dbfdb30a6f8a295284",
+          "md5": "26fd020a6679282894b13c1ac3728048",
+          "sha256": "b606a4123a296f63a0e8d9904ddbed6b90957f454cb3df315684eac43bedc1e6"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "26fd020a6679282894b13c1ac3728048",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 707487,
+        "upload_time": "2024-07-23T21:24:54",
+        "upload_time_iso_8601": "2024-07-23T21:24:54.553357Z",
+        "url": "https://files.pythonhosted.org/packages/f1/9e/1444fc493353a3a2efbad9f10afc7c1f3d70ae45d8dbfdb30a6f8a295284/hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "447278358428e11703082ecf4d3be17dce4a9059002ead03b1cf8e62021161ad",
+          "md5": "035550593a81ec6ac25a0610c302c2d4",
+          "sha256": "20b981c6828b92ac8c5e2fb3182fe95c528dc8355d298ec457ae8773dc1ffb2a"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "035550593a81ec6ac25a0610c302c2d4",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 684308,
+        "upload_time": "2024-07-23T21:24:56",
+        "upload_time_iso_8601": "2024-07-23T21:24:56.776640Z",
+        "url": "https://files.pythonhosted.org/packages/44/72/78358428e11703082ecf4d3be17dce4a9059002ead03b1cf8e62021161ad/hidapi-0.14.0.post2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "73352cb839ba8760591aaa726eb39db972609945c61710dcdf975abde5150e4d",
+          "md5": "140abb2066236b3e0a8dda7583455919",
+          "sha256": "8b000a44176e09ab2921aa1402efbaa84c708786c3e825b64fbac294353b373e"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "140abb2066236b3e0a8dda7583455919",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 312416,
+        "upload_time": "2024-07-23T21:24:58",
+        "upload_time_iso_8601": "2024-07-23T21:24:58.905688Z",
+        "url": "https://files.pythonhosted.org/packages/73/35/2cb839ba8760591aaa726eb39db972609945c61710dcdf975abde5150e4d/hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "578c8510a96dff8b25a422b0adb7e3a866a976114aff848c1c7b4ad692ff767d",
+          "md5": "2bd9d1d0303c90222e7483b5dafb7b4e",
+          "sha256": "fd985ca84d7abd0d8fa57a5f1639d14292429028588b19f58b729b02c0ea9928"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "2bd9d1d0303c90222e7483b5dafb7b4e",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 312514,
+        "upload_time": "2024-07-23T21:25:00",
+        "upload_time_iso_8601": "2024-07-23T21:25:00.839569Z",
+        "url": "https://files.pythonhosted.org/packages/57/8c/8510a96dff8b25a422b0adb7e3a866a976114aff848c1c7b4ad692ff767d/hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "c762c098e00fd27719fc3fb1893d43871e72ff9a93fc71fa142eb4c00df561e5",
+          "md5": "cb23977bb935818ddd5396939f19f732",
+          "sha256": "ad21f0da766df0177d2d8bc06c8fd65303a37f79d2890e8133980080e1159eb0"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "cb23977bb935818ddd5396939f19f732",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 318191,
+        "upload_time": "2024-07-23T21:25:02",
+        "upload_time_iso_8601": "2024-07-23T21:25:02.859895Z",
+        "url": "https://files.pythonhosted.org/packages/c7/62/c098e00fd27719fc3fb1893d43871e72ff9a93fc71fa142eb4c00df561e5/hidapi-0.14.0.post2-cp310-cp310-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "52df608d3c86255563be3649b8bbd9faa55b162ec6f14850c0cba6d0033265e1",
+          "md5": "d07db0cc4823df52c0e596e312b043b6",
+          "sha256": "4379f218712f9800c6d89c17902da5ebb06c1e6afde66aaf2d8bd0f5f6fb9232"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-win32.whl",
+        "has_sig": false,
+        "md5_digest": "d07db0cc4823df52c0e596e312b043b6",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 56953,
+        "upload_time": "2024-07-23T21:25:04",
+        "upload_time_iso_8601": "2024-07-23T21:25:04.210885Z",
+        "url": "https://files.pythonhosted.org/packages/52/df/608d3c86255563be3649b8bbd9faa55b162ec6f14850c0cba6d0033265e1/hidapi-0.14.0.post2-cp310-cp310-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "3c9d84f05fccaa8e72589ad1a76581d1fa305014b7064d9aa6366e61ef1881ef",
+          "md5": "8334a7c1c01e4eac65bbeed9b59345f2",
+          "sha256": "4635c294a2ccfe1e862ba324dc4a5c068fd989c138b09880052a5903b37e0d54"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp310-cp310-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "8334a7c1c01e4eac65bbeed9b59345f2",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp310",
+        "requires_python": null,
+        "size": 64058,
+        "upload_time": "2024-07-23T21:25:05",
+        "upload_time_iso_8601": "2024-07-23T21:25:05.829900Z",
+        "url": "https://files.pythonhosted.org/packages/3c/9d/84f05fccaa8e72589ad1a76581d1fa305014b7064d9aa6366e61ef1881ef/hidapi-0.14.0.post2-cp310-cp310-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "bcacf6009ddff800adcaf0f57b2ec4526d9ae9419d28391e5580904ce6115ba9",
+          "md5": "c462df7aec0a58588f4805932a7f9ac7",
+          "sha256": "4d3ca0ff9179bfa2337b36eaa6a4f1a3e4c8e643cf698adfef65700bffb6fe5c"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "c462df7aec0a58588f4805932a7f9ac7",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 69984,
+        "upload_time": "2024-07-23T21:25:07",
+        "upload_time_iso_8601": "2024-07-23T21:25:07.917873Z",
+        "url": "https://files.pythonhosted.org/packages/bc/ac/f6009ddff800adcaf0f57b2ec4526d9ae9419d28391e5580904ce6115ba9/hidapi-0.14.0.post2-cp311-cp311-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "e81d7a32933a022dc42d9a796843ceb05c038521318668400da5eada1ac66170",
+          "md5": "dc85350a5cf7c1bdf0451dd82ec6aa40",
+          "sha256": "3b1bca2741492c67a6cb4d7b57c0db734543556b369d3604505c62a47607767f"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-macosx_11_0_arm64.whl",
+        "has_sig": false,
+        "md5_digest": "dc85350a5cf7c1bdf0451dd82ec6aa40",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 67790,
+        "upload_time": "2024-07-23T21:25:09",
+        "upload_time_iso_8601": "2024-07-23T21:25:09.227543Z",
+        "url": "https://files.pythonhosted.org/packages/e8/1d/7a32933a022dc42d9a796843ceb05c038521318668400da5eada1ac66170/hidapi-0.14.0.post2-cp311-cp311-macosx_11_0_arm64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "f5d2ae65b9cecc3ba140b7eff02d3f67ed56203b3715926b3f1f13d82ce7a966",
+          "md5": "40efac71a59f9e23e01ebc1a334e9efe",
+          "sha256": "ef474da943187befd9a55270ba521f42930565b84bd59caa276adeda29669853"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "40efac71a59f9e23e01ebc1a334e9efe",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 711505,
+        "upload_time": "2024-07-23T21:25:11",
+        "upload_time_iso_8601": "2024-07-23T21:25:11.165714Z",
+        "url": "https://files.pythonhosted.org/packages/f5/d2/ae65b9cecc3ba140b7eff02d3f67ed56203b3715926b3f1f13d82ce7a966/hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "afc6d129b74e0028ca8401ecbeffb9cd1bca377262a5dcd882ea4999ba25d416",
+          "md5": "a5714494c57f3ca8a66683a29f963273",
+          "sha256": "4a6991f55aebd3f84cc924fd838e0052422a5a3921f5d7df0ce6c9600f09db9a"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "a5714494c57f3ca8a66683a29f963273",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 726946,
+        "upload_time": "2024-07-23T21:25:13",
+        "upload_time_iso_8601": "2024-07-23T21:25:13.421757Z",
+        "url": "https://files.pythonhosted.org/packages/af/c6/d129b74e0028ca8401ecbeffb9cd1bca377262a5dcd882ea4999ba25d416/hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "46070d773755e0c629cabd6fa10251929fbb6cba4c1936116d753e77a792eba1",
+          "md5": "fc9992e93b841d3a075cbea75118f32e",
+          "sha256": "f95340c0d69245820a2075d516df9a99c466d92db29fa78df5f13d9cfee4716d"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "fc9992e93b841d3a075cbea75118f32e",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 705420,
+        "upload_time": "2024-07-23T21:25:15",
+        "upload_time_iso_8601": "2024-07-23T21:25:15.750875Z",
+        "url": "https://files.pythonhosted.org/packages/46/07/0d773755e0c629cabd6fa10251929fbb6cba4c1936116d753e77a792eba1/hidapi-0.14.0.post2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "381345cac0a2952f1cc3f5674b599d083e81cc0816e877949dad897a51925dce",
+          "md5": "cd1e2d2ccc562a4424551dc76213d6e8",
+          "sha256": "5ebdc20915c6256c738116a3491bc5194d74233bb6a4ad7d05983dfec54a22f2"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "cd1e2d2ccc562a4424551dc76213d6e8",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 338866,
+        "upload_time": "2024-07-23T21:25:17",
+        "upload_time_iso_8601": "2024-07-23T21:25:17.768317Z",
+        "url": "https://files.pythonhosted.org/packages/38/13/45cac0a2952f1cc3f5674b599d083e81cc0816e877949dad897a51925dce/hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "ed5b25d7b9794b2017a315573464ea39617e40702acb82dec9c348a52d288433",
+          "md5": "84a8f5a80cf3c2418e25c1a1515f9a59",
+          "sha256": "04fd0c791af679dc6de02205f5fe321e46b7cae0e8d10d7f579abb8bcca0c595"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "84a8f5a80cf3c2418e25c1a1515f9a59",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 328261,
+        "upload_time": "2024-07-23T21:25:19",
+        "upload_time_iso_8601": "2024-07-23T21:25:19.597152Z",
+        "url": "https://files.pythonhosted.org/packages/ed/5b/25d7b9794b2017a315573464ea39617e40702acb82dec9c348a52d288433/hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "7279599df7f0d40725f2456fff05b99a75a68d150916031ef0e5b01333966d8c",
+          "md5": "4061801d9055c32eb013284fa4d602d8",
+          "sha256": "70038c3bd26c2ec7520964d9cfe5df81928ff34a2821e83914c28a9d4d8550b7"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "4061801d9055c32eb013284fa4d602d8",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 344917,
+        "upload_time": "2024-07-23T21:25:21",
+        "upload_time_iso_8601": "2024-07-23T21:25:21.118500Z",
+        "url": "https://files.pythonhosted.org/packages/72/79/599df7f0d40725f2456fff05b99a75a68d150916031ef0e5b01333966d8c/hidapi-0.14.0.post2-cp311-cp311-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "a2da148ffbeac51ca409f54568d016d67d7bc234d9cc39d4f44c1d415e7dac01",
+          "md5": "c83dca36eb9b8815a3492882e35e3cde",
+          "sha256": "bfe65ee33f0ecafde4e742fd7c8482a914bcd0bc69c04edf40788c714eec865d"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-win32.whl",
+        "has_sig": false,
+        "md5_digest": "c83dca36eb9b8815a3492882e35e3cde",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 56860,
+        "upload_time": "2024-07-23T21:25:22",
+        "upload_time_iso_8601": "2024-07-23T21:25:22.758230Z",
+        "url": "https://files.pythonhosted.org/packages/a2/da/148ffbeac51ca409f54568d016d67d7bc234d9cc39d4f44c1d415e7dac01/hidapi-0.14.0.post2-cp311-cp311-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "667ded6c213a04d1eaaf1cf1962872aba9821ce5fda2498793957c288ae07c32",
+          "md5": "9bb2cbd3b6e5d4d2380e855ef48a03ed",
+          "sha256": "c79d60d42b3437e0553052de108253db0e9e4a5c432996d95028d219afd4a3f3"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp311-cp311-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "9bb2cbd3b6e5d4d2380e855ef48a03ed",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp311",
+        "requires_python": null,
+        "size": 64193,
+        "upload_time": "2024-07-23T21:25:24",
+        "upload_time_iso_8601": "2024-07-23T21:25:24.436581Z",
+        "url": "https://files.pythonhosted.org/packages/66/7d/ed6c213a04d1eaaf1cf1962872aba9821ce5fda2498793957c288ae07c32/hidapi-0.14.0.post2-cp311-cp311-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "b4d610683f04a49cf6ccfa6186940732ed8d15e5c86ea1e399a4dadfec7c1ec2",
+          "md5": "804787a3360d6fd763f0d12fda8a4551",
+          "sha256": "5eaa04f8fb7b5d9d7e3eeb502317941559ecfc4a76d2527ee0d1d835794ac5aa"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "804787a3360d6fd763f0d12fda8a4551",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 70540,
+        "upload_time": "2024-07-23T21:25:26",
+        "upload_time_iso_8601": "2024-07-23T21:25:26.108861Z",
+        "url": "https://files.pythonhosted.org/packages/b4/d6/10683f04a49cf6ccfa6186940732ed8d15e5c86ea1e399a4dadfec7c1ec2/hidapi-0.14.0.post2-cp312-cp312-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "06a706ff3d65dbad868ff4bc21726823b1101b6a7b1281bc44e158b70a30638b",
+          "md5": "543996d664c761a495c3e08bcc9c6555",
+          "sha256": "c6e81890f51bae29ae81c3ff02fed754d05f69a408fa038ff1056aec90c56333"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-macosx_11_0_arm64.whl",
+        "has_sig": false,
+        "md5_digest": "543996d664c761a495c3e08bcc9c6555",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 67972,
+        "upload_time": "2024-07-23T21:25:27",
+        "upload_time_iso_8601": "2024-07-23T21:25:27.671045Z",
+        "url": "https://files.pythonhosted.org/packages/06/a7/06ff3d65dbad868ff4bc21726823b1101b6a7b1281bc44e158b70a30638b/hidapi-0.14.0.post2-cp312-cp312-macosx_11_0_arm64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "0b035c85e738936bf8b57f557970701fe65a0290a2d3693ee2c966bfc4cb09eb",
+          "md5": "84633df47d4a0d5d0d88c8365c5132d0",
+          "sha256": "511ccf1fa7f159b95d31d9fb718ebfc35322252d7355a3afaa724b65cdbbeff6"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "84633df47d4a0d5d0d88c8365c5132d0",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 717741,
+        "upload_time": "2024-07-23T21:25:29",
+        "upload_time_iso_8601": "2024-07-23T21:25:29.818349Z",
+        "url": "https://files.pythonhosted.org/packages/0b/03/5c85e738936bf8b57f557970701fe65a0290a2d3693ee2c966bfc4cb09eb/hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "8242ff6bf1a9ffb09d7d150bd144ea74774d8c303944cb51075190f224eb8964",
+          "md5": "b57191dbd149c3f5f469b6af235462e1",
+          "sha256": "eecc24722c561348c04f3f0819534028a7dd2e35a16f195625e2465f95fb8c6f"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "b57191dbd149c3f5f469b6af235462e1",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 738126,
+        "upload_time": "2024-07-23T21:25:32",
+        "upload_time_iso_8601": "2024-07-23T21:25:32.289292Z",
+        "url": "https://files.pythonhosted.org/packages/82/42/ff6bf1a9ffb09d7d150bd144ea74774d8c303944cb51075190f224eb8964/hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "4fa71ed1c4c0c153eac0a2cce1a0b6753eec35810dbd9e483cc49a8a7d84a3d9",
+          "md5": "09a2010912ab3f0d9f698b9483104189",
+          "sha256": "b5b979408ba1c65ea7e39e35e6cb9d29705265ebfca568627333876f7a030818"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "09a2010912ab3f0d9f698b9483104189",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 711615,
+        "upload_time": "2024-07-23T21:25:34",
+        "upload_time_iso_8601": "2024-07-23T21:25:34.526247Z",
+        "url": "https://files.pythonhosted.org/packages/4f/a7/1ed1c4c0c153eac0a2cce1a0b6753eec35810dbd9e483cc49a8a7d84a3d9/hidapi-0.14.0.post2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "1d10be6935a1e26f5d3a41c63b8b365741281034900ca56611366433f3413c2c",
+          "md5": "840126460ae5b54479a4a408e1bd89f7",
+          "sha256": "556f99a3887065f0e86fb4b3968800c34fa25e6ea54047ef850ee639c69032da"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "840126460ae5b54479a4a408e1bd89f7",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 346491,
+        "upload_time": "2024-07-23T21:25:36",
+        "upload_time_iso_8601": "2024-07-23T21:25:36.809190Z",
+        "url": "https://files.pythonhosted.org/packages/1d/10/be6935a1e26f5d3a41c63b8b365741281034900ca56611366433f3413c2c/hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "a6f7f6dfb43c37949a1300504569b18857d975f6d92c0a0de52247865356ae55",
+          "md5": "39ed977a1e60e96e947ec85b991cf024",
+          "sha256": "59465c87f028e70162f04d3e69014cd03bb2a4ceed7db6d0a160ec9627fb9324"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "39ed977a1e60e96e947ec85b991cf024",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 335719,
+        "upload_time": "2024-07-23T21:25:38",
+        "upload_time_iso_8601": "2024-07-23T21:25:38.332436Z",
+        "url": "https://files.pythonhosted.org/packages/a6/f7/f6dfb43c37949a1300504569b18857d975f6d92c0a0de52247865356ae55/hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "ce1cc1949180a8e9231148d6c7407653c1e2928cec0534e8039591a1188d1a7c",
+          "md5": "960328e514eb190edb79526a92603af3",
+          "sha256": "de561a9336aa92263a4a5757deffdacb0e04de84590e15a7d5413f574790a210"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "960328e514eb190edb79526a92603af3",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 349324,
+        "upload_time": "2024-07-23T21:25:39",
+        "upload_time_iso_8601": "2024-07-23T21:25:39.835693Z",
+        "url": "https://files.pythonhosted.org/packages/ce/1c/c1949180a8e9231148d6c7407653c1e2928cec0534e8039591a1188d1a7c/hidapi-0.14.0.post2-cp312-cp312-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "f4fee51acd3bae6917c667118aa5481cbf96c42ab6459ec0a58ed14e1a7b8469",
+          "md5": "4dec13f25a5ca4c38004631e3f289d82",
+          "sha256": "6f35ad2007e04d6dd80807d72a66781915da538818587f950cea3c3c36512aa7"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-win32.whl",
+        "has_sig": false,
+        "md5_digest": "4dec13f25a5ca4c38004631e3f289d82",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 57093,
+        "upload_time": "2024-07-23T21:25:42",
+        "upload_time_iso_8601": "2024-07-23T21:25:42.021772Z",
+        "url": "https://files.pythonhosted.org/packages/f4/fe/e51acd3bae6917c667118aa5481cbf96c42ab6459ec0a58ed14e1a7b8469/hidapi-0.14.0.post2-cp312-cp312-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "c9e7738e5915af08f9937acaf1b30a491dc5a7ca67717ce1ef2efddf702f3ad8",
+          "md5": "0677fe73f2d8ef6b09b141ec23719a73",
+          "sha256": "493aad5fe1630f547857ef93a150eb99c07e836b82a340bd0cfdf87f495c983d"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp312-cp312-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "0677fe73f2d8ef6b09b141ec23719a73",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": null,
+        "size": 64263,
+        "upload_time": "2024-07-23T21:25:44",
+        "upload_time_iso_8601": "2024-07-23T21:25:44.338204Z",
+        "url": "https://files.pythonhosted.org/packages/c9/e7/738e5915af08f9937acaf1b30a491dc5a7ca67717ce1ef2efddf702f3ad8/hidapi-0.14.0.post2-cp312-cp312-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "466739c846b825a6dd61c06f5b970429abd40b0d11530f48e958975efdde8c5a",
+          "md5": "81651c498cfd774033411416ea3f0a22",
+          "sha256": "6dba51ebd2c31c06f33fefc3cff0f48cb6a0e94015392f09e91a1504cb2b3a32"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "81651c498cfd774033411416ea3f0a22",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 68151,
+        "upload_time": "2024-07-23T21:25:45",
+        "upload_time_iso_8601": "2024-07-23T21:25:45.670571Z",
+        "url": "https://files.pythonhosted.org/packages/46/67/39c846b825a6dd61c06f5b970429abd40b0d11530f48e958975efdde8c5a/hidapi-0.14.0.post2-cp36-cp36m-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "6c304dd3d14829bb8290f3b769aada5aa9d8122a038a088dcb5f4c645828d73a",
+          "md5": "4e016abba14c2526ed79b9d961ff8bf4",
+          "sha256": "127e4f0b048ec9fc08e29596de411bbb856b6f224ecca26b32ded398340f9d4f"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "4e016abba14c2526ed79b9d961ff8bf4",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 658577,
+        "upload_time": "2024-07-23T21:25:47",
+        "upload_time_iso_8601": "2024-07-23T21:25:47.883494Z",
+        "url": "https://files.pythonhosted.org/packages/6c/30/4dd3d14829bb8290f3b769aada5aa9d8122a038a088dcb5f4c645828d73a/hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "5dbe1d462936f46bcf9ce965c3752fb9f52a119721e8e2983e0547079fdc84aa",
+          "md5": "a346646fbb2dd298fe1182a88cc65437",
+          "sha256": "f30df6f41d504a7bceeece097e2078ffccb91acdcdc0a553b27377c48f9cffbc"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "a346646fbb2dd298fe1182a88cc65437",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 673804,
+        "upload_time": "2024-07-23T21:25:50",
+        "upload_time_iso_8601": "2024-07-23T21:25:50.263451Z",
+        "url": "https://files.pythonhosted.org/packages/5d/be/1d462936f46bcf9ce965c3752fb9f52a119721e8e2983e0547079fdc84aa/hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "49b94f1210d00d744167836eb7fda59c6fcfdb4723e1e498d8adb78a3fc1ba25",
+          "md5": "783c88df1ee7a63852c8d32d051fb060",
+          "sha256": "826dc8b82a094e80538c68a3e0d6b252b765ea49daa9bfbde0221fdb1eead058"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "783c88df1ee7a63852c8d32d051fb060",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 652897,
+        "upload_time": "2024-07-23T21:25:52",
+        "upload_time_iso_8601": "2024-07-23T21:25:52.069609Z",
+        "url": "https://files.pythonhosted.org/packages/49/b9/4f1210d00d744167836eb7fda59c6fcfdb4723e1e498d8adb78a3fc1ba25/hidapi-0.14.0.post2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "6ccdd8d97947ed1e8841996ec83cc4dea1db9cc8053e164f09f608113f093ee1",
+          "md5": "eed28aad5684dc41d19e5bca0befda54",
+          "sha256": "ad280e0db1496d14c471d83c0157f1ac440c06cb143e05096940d397b3ab04ba"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "eed28aad5684dc41d19e5bca0befda54",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 285232,
+        "upload_time": "2024-07-23T21:25:53",
+        "upload_time_iso_8601": "2024-07-23T21:25:53.958980Z",
+        "url": "https://files.pythonhosted.org/packages/6c/cd/d8d97947ed1e8841996ec83cc4dea1db9cc8053e164f09f608113f093ee1/hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "da2a7f73244b5bd26bb4857fd947d53b3699c7fb7226e9740723c0d458448265",
+          "md5": "3f85b498a85835a207e401f08311c1ae",
+          "sha256": "84e921d9de9dfb39a0cbce4db94d9ea00365f1137f12f24b22fa14170d0efb4b"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "3f85b498a85835a207e401f08311c1ae",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 276259,
+        "upload_time": "2024-07-23T21:25:55",
+        "upload_time_iso_8601": "2024-07-23T21:25:55.884357Z",
+        "url": "https://files.pythonhosted.org/packages/da/2a/7f73244b5bd26bb4857fd947d53b3699c7fb7226e9740723c0d458448265/hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "feb52b7657d2b24bc3a73062edd6d623da4a31b8ce36d5af29b4ae5d5b57bbf1",
+          "md5": "fb36981f2afd3ef283ec7151d4f22b48",
+          "sha256": "b1c2eaa44f86700dba943bf6217157631e3ea836569b6494abfa3fff49f50b0e"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "fb36981f2afd3ef283ec7151d4f22b48",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 289838,
+        "upload_time": "2024-07-23T21:25:57",
+        "upload_time_iso_8601": "2024-07-23T21:25:57.689823Z",
+        "url": "https://files.pythonhosted.org/packages/fe/b5/2b7657d2b24bc3a73062edd6d623da4a31b8ce36d5af29b4ae5d5b57bbf1/hidapi-0.14.0.post2-cp36-cp36m-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "a350e2b9275d64d7c14a750a9aabdf51b08d61447d2807b8696d1d913a346103",
+          "md5": "b28495aa80a11fcefbc0c4b670fd3992",
+          "sha256": "a1cf34598f7642dc602de88ae1ed80ef5f4efb7e5b054528e33745bdfd93379e"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-win32.whl",
+        "has_sig": false,
+        "md5_digest": "b28495aa80a11fcefbc0c4b670fd3992",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 61477,
+        "upload_time": "2024-07-23T21:25:59",
+        "upload_time_iso_8601": "2024-07-23T21:25:59.809965Z",
+        "url": "https://files.pythonhosted.org/packages/a3/50/e2b9275d64d7c14a750a9aabdf51b08d61447d2807b8696d1d913a346103/hidapi-0.14.0.post2-cp36-cp36m-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "e8300b74ba6060045f1bc6d8be8b46f8c38afbabd2de3a0f7b717792f1eebf3a"
+        },
+        "digests": {
+          "blake2b_256": "110c3a9da7faf211d0326578d6234c35a74a84696c1f3ba6e15f754f8f6847b8",
+          "md5": "977c954ae38a650684eb2d825c446613",
+          "sha256": "5bd9b996882d9542cd1a927fbfc6c5ac34fe3290362050ad68d379b6a100c470"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp36-cp36m-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "977c954ae38a650684eb2d825c446613",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp36",
+        "requires_python": null,
+        "size": 70922,
+        "upload_time": "2024-07-23T21:26:01",
+        "upload_time_iso_8601": "2024-07-23T21:26:01.443453Z",
+        "url": "https://files.pythonhosted.org/packages/11/0c/3a9da7faf211d0326578d6234c35a74a84696c1f3ba6e15f754f8f6847b8/hidapi-0.14.0.post2-cp36-cp36m-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "500eb7f26f6c6cdd90faa132756553892b5d3c423d3e1d2a3a18a591a1ad319b",
+          "md5": "418633cc5ad9913ec7730f8baadb9b55",
+          "sha256": "251f93ae3e919bfc06217a2362239982b8d0913b38071b0a9253934275158e10"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "418633cc5ad9913ec7730f8baadb9b55",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 70181,
+        "upload_time": "2024-07-23T21:26:03",
+        "upload_time_iso_8601": "2024-07-23T21:26:03.232873Z",
+        "url": "https://files.pythonhosted.org/packages/50/0e/b7f26f6c6cdd90faa132756553892b5d3c423d3e1d2a3a18a591a1ad319b/hidapi-0.14.0.post2-cp37-cp37m-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "f828d5f1f738aaab8528d58621ef56db49bdcddae5abb9a662fa2e5a1be83151",
+          "md5": "e9765b63911945e3470e14daf8202685",
+          "sha256": "39104841a2dce697cb4deeefe0ec08710dfb4258c6b078656989e11d1c62e71a"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "e9765b63911945e3470e14daf8202685",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 662610,
+        "upload_time": "2024-07-23T21:26:04",
+        "upload_time_iso_8601": "2024-07-23T21:26:04.908337Z",
+        "url": "https://files.pythonhosted.org/packages/f8/28/d5f1f738aaab8528d58621ef56db49bdcddae5abb9a662fa2e5a1be83151/hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "e9722a16c56893beeb3fc7a89aceffc2101b8d7fb422aa8bcd0bcaf260593a4d",
+          "md5": "8c285da61b059332abdb48450b8954a3",
+          "sha256": "0a6e7570cee92762a9d6bc785d1ffb221081fc28ba2bcbbd89030cd2757b5773"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "8c285da61b059332abdb48450b8954a3",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 682242,
+        "upload_time": "2024-07-23T21:26:07",
+        "upload_time_iso_8601": "2024-07-23T21:26:07.695169Z",
+        "url": "https://files.pythonhosted.org/packages/e9/72/2a16c56893beeb3fc7a89aceffc2101b8d7fb422aa8bcd0bcaf260593a4d/hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "1d147f4e3a6b299a4f60b1f7e5990025156d4a4502c2c0c66e5ebdcecc642a15",
+          "md5": "1dd46b1e91a89ec081ef489d519f4a78",
+          "sha256": "92ac5a88cc56f2b30d13cfb4aa208b6c4874a1d3fe80855d092e1c33207eaf27"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "1dd46b1e91a89ec081ef489d519f4a78",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 659206,
+        "upload_time": "2024-07-23T21:26:09",
+        "upload_time_iso_8601": "2024-07-23T21:26:09.513700Z",
+        "url": "https://files.pythonhosted.org/packages/1d/14/7f4e3a6b299a4f60b1f7e5990025156d4a4502c2c0c66e5ebdcecc642a15/hidapi-0.14.0.post2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "520c8b55d95e8350cfaecf59ad4bfbfc01a33778c4afeea2171a1f003f5a4986",
+          "md5": "521e810492368b16889839934e208250",
+          "sha256": "fafef403f32514c069cefe9484f255ac6b2bfa11f9160f22da3ffae8c4b01dea"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "521e810492368b16889839934e208250",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 289354,
+        "upload_time": "2024-07-23T21:26:11",
+        "upload_time_iso_8601": "2024-07-23T21:26:11.286016Z",
+        "url": "https://files.pythonhosted.org/packages/52/0c/8b55d95e8350cfaecf59ad4bfbfc01a33778c4afeea2171a1f003f5a4986/hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "5a868a5609639c8d06a0e50e8f15fed0eaebc363e4ef7203e174e07b62d1a57a",
+          "md5": "8f5d025e6bc46412543f3ea050909694",
+          "sha256": "07841b71d78e21f15fd2ea9d7d313c7aa088c3415d6cefa1e932353fac6eb0b3"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "8f5d025e6bc46412543f3ea050909694",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 288084,
+        "upload_time": "2024-07-23T21:26:12",
+        "upload_time_iso_8601": "2024-07-23T21:26:12.949913Z",
+        "url": "https://files.pythonhosted.org/packages/5a/86/8a5609639c8d06a0e50e8f15fed0eaebc363e4ef7203e174e07b62d1a57a/hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "24f31446035fc730cacefebdb77d0d857f7dd29872416cbaef03e5cf99e17645",
+          "md5": "cdfb3157bc7a80472b7626a5e3188b9a",
+          "sha256": "44438fff75b4ccd158a0ed692dba828a3735ce4963d0ae3a03c4b6dc2a020f18"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "cdfb3157bc7a80472b7626a5e3188b9a",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 294272,
+        "upload_time": "2024-07-23T21:26:14",
+        "upload_time_iso_8601": "2024-07-23T21:26:14.772035Z",
+        "url": "https://files.pythonhosted.org/packages/24/f3/1446035fc730cacefebdb77d0d857f7dd29872416cbaef03e5cf99e17645/hidapi-0.14.0.post2-cp37-cp37m-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "8cda1192e0ec8a54426c08da2daae42e8478b18469d725faf744120aef002aeb",
+          "md5": "67326a46022bbc9d7108d9b43bd62fbc",
+          "sha256": "209208db37a061ca08786184bc7060aace9e38bc45de268e60ac808e0f42952c"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-win32.whl",
+        "has_sig": false,
+        "md5_digest": "67326a46022bbc9d7108d9b43bd62fbc",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 57458,
+        "upload_time": "2024-07-23T21:26:16",
+        "upload_time_iso_8601": "2024-07-23T21:26:16.210299Z",
+        "url": "https://files.pythonhosted.org/packages/8c/da/1192e0ec8a54426c08da2daae42e8478b18469d725faf744120aef002aeb/hidapi-0.14.0.post2-cp37-cp37m-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "6f1080d843c9a643ed08f7b53795e1bc30dd0079c2cc982da1b73f0cbdaae95e",
+          "md5": "dcb133cbc61177862feeafe64f072040",
+          "sha256": "466b4c2222ba58dd6603ca31777b8210d414751ae3a6e16d27d830e6d402a691"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp37-cp37m-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "dcb133cbc61177862feeafe64f072040",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp37",
+        "requires_python": null,
+        "size": 64701,
+        "upload_time": "2024-07-23T21:26:17",
+        "upload_time_iso_8601": "2024-07-23T21:26:17.405544Z",
+        "url": "https://files.pythonhosted.org/packages/6f/10/80d843c9a643ed08f7b53795e1bc30dd0079c2cc982da1b73f0cbdaae95e/hidapi-0.14.0.post2-cp37-cp37m-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "88a4ad061ad9ad4ca39f3466f9e194290b08f020068a79867b3d2731a0b6f701",
+          "md5": "d04c7ce20b8343ce25dc45365261b18d",
+          "sha256": "6110c47d531f9d5e2947619f11623371d3efaade5b1ad81501ed0b6767296bbb"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "d04c7ce20b8343ce25dc45365261b18d",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 70335,
+        "upload_time": "2024-07-23T21:26:18",
+        "upload_time_iso_8601": "2024-07-23T21:26:18.637424Z",
+        "url": "https://files.pythonhosted.org/packages/88/a4/ad061ad9ad4ca39f3466f9e194290b08f020068a79867b3d2731a0b6f701/hidapi-0.14.0.post2-cp38-cp38-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "1a5b6e53189089bcbd4c2aad77104b937ca6339a119dcd01e0d4e639ffec4ffa",
+          "md5": "9eefe04ad6d1ad6967f921d8d6997a03",
+          "sha256": "03926c1e788daff7e038f2d39460348ce5d624a98a72d9d291f619c9fbbb754e"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-macosx_11_0_arm64.whl",
+        "has_sig": false,
+        "md5_digest": "9eefe04ad6d1ad6967f921d8d6997a03",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 68125,
+        "upload_time": "2024-07-23T21:26:19",
+        "upload_time_iso_8601": "2024-07-23T21:26:19.860864Z",
+        "url": "https://files.pythonhosted.org/packages/1a/5b/6e53189089bcbd4c2aad77104b937ca6339a119dcd01e0d4e639ffec4ffa/hidapi-0.14.0.post2-cp38-cp38-macosx_11_0_arm64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "0453b898264e8c84afda7646783e3091ec6fb4c7ea5b1ece84b09495657e8c5c",
+          "md5": "f51d2f4a7dc853cef4a6242cab6edd28",
+          "sha256": "c5526d812a53e3050317003bfa6a923ab1e8d4bf10a75a3ec4e2a6361b9967d2"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "f51d2f4a7dc853cef4a6242cab6edd28",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 691197,
+        "upload_time": "2024-07-23T21:26:21",
+        "upload_time_iso_8601": "2024-07-23T21:26:21.730635Z",
+        "url": "https://files.pythonhosted.org/packages/04/53/b898264e8c84afda7646783e3091ec6fb4c7ea5b1ece84b09495657e8c5c/hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "400f4a0ffee5f9a9fc08d4c2340488ae0266273431fabb2b65d462a05359ac87",
+          "md5": "9702bcef5b935c309559ed9d603a2f8a",
+          "sha256": "f4b7c2e84ba004140d8555db302daf5d3f9d1d073cbc680b4cd384ee9a943395"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "9702bcef5b935c309559ed9d603a2f8a",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 710083,
+        "upload_time": "2024-07-23T21:26:23",
+        "upload_time_iso_8601": "2024-07-23T21:26:23.687069Z",
+        "url": "https://files.pythonhosted.org/packages/40/0f/4a0ffee5f9a9fc08d4c2340488ae0266273431fabb2b65d462a05359ac87/hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "aa7310505e614cfcd8b76a1f2156e7f8bb643d71ec90c012f7a9155ad3c49d5f",
+          "md5": "4a8ce28180cf496d31a0f0765a1c304f",
+          "sha256": "f87614ebc0cbc399eb7682a6f1f18f4afd522e2b76df888ddc4305f6ec3af186"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "4a8ce28180cf496d31a0f0765a1c304f",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 685432,
+        "upload_time": "2024-07-23T21:26:25",
+        "upload_time_iso_8601": "2024-07-23T21:26:25.815215Z",
+        "url": "https://files.pythonhosted.org/packages/aa/73/10505e614cfcd8b76a1f2156e7f8bb643d71ec90c012f7a9155ad3c49d5f/hidapi-0.14.0.post2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "1e6fdc8b835a1868c869204f0d01bc94add8282407ff3540a0e2090f0b5a4432",
+          "md5": "611e02013ddd23b8b02b54c183a117bc",
+          "sha256": "857b81b124e6602f77f711b11ce08cb809a7e7e698751b0e09fff26f40571ffe"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "611e02013ddd23b8b02b54c183a117bc",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 318769,
+        "upload_time": "2024-07-23T21:26:27",
+        "upload_time_iso_8601": "2024-07-23T21:26:27.459602Z",
+        "url": "https://files.pythonhosted.org/packages/1e/6f/dc8b835a1868c869204f0d01bc94add8282407ff3540a0e2090f0b5a4432/hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "9983d1d09078243f5a3d90ea7aa12cac5d3e39a44e7eded65424d566ba7b1cae",
+          "md5": "958fd853e215397ba59a2c563564644e",
+          "sha256": "0eab40fb174db083233d105fdae17e5efaeb41d887b48fe4cfe98bfe48c03617"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "958fd853e215397ba59a2c563564644e",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 313532,
+        "upload_time": "2024-07-23T21:26:30",
+        "upload_time_iso_8601": "2024-07-23T21:26:30.096686Z",
+        "url": "https://files.pythonhosted.org/packages/99/83/d1d09078243f5a3d90ea7aa12cac5d3e39a44e7eded65424d566ba7b1cae/hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "ccb939e00d1b19f561d46c61544c74e3d4a00cb3733ebfbcccbbce70a0078b0b",
+          "md5": "b3a851d1837e1e322f25f001fb2b7d28",
+          "sha256": "a9494327db1e6e5fd6630701cf4cc28da9dc2465d7903e9f2c1e9cf2228f3c50"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "b3a851d1837e1e322f25f001fb2b7d28",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 325064,
+        "upload_time": "2024-07-23T21:26:31",
+        "upload_time_iso_8601": "2024-07-23T21:26:31.711458Z",
+        "url": "https://files.pythonhosted.org/packages/cc/b9/39e00d1b19f561d46c61544c74e3d4a00cb3733ebfbcccbbce70a0078b0b/hidapi-0.14.0.post2-cp38-cp38-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "da53e3f9ae5a70e565aebb244f23c33550762d4f1052e4b9b6bddff1cfd3b8f2",
+          "md5": "a1f7102b16c9b35e6a945929792398d5",
+          "sha256": "10f015eb35e28f5101af5ac16df0f08e0a31912dc8a5704c828d8ff0c3776b0d"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-win32.whl",
+        "has_sig": false,
+        "md5_digest": "a1f7102b16c9b35e6a945929792398d5",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 57706,
+        "upload_time": "2024-07-23T21:26:33",
+        "upload_time_iso_8601": "2024-07-23T21:26:33.116262Z",
+        "url": "https://files.pythonhosted.org/packages/da/53/e3f9ae5a70e565aebb244f23c33550762d4f1052e4b9b6bddff1cfd3b8f2/hidapi-0.14.0.post2-cp38-cp38-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "60d4b96967e7af4aa84502ddeec514aec14d82309bbc839ecea0da746e4f7674",
+          "md5": "a94f797f6c723b01e2ee7f07d3937f27",
+          "sha256": "2e604d59634a6162fcfbf16b07d2c6cc6dc278ba260246aa22f0b4ae6dc0e586"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp38-cp38-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "a94f797f6c723b01e2ee7f07d3937f27",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp38",
+        "requires_python": null,
+        "size": 64796,
+        "upload_time": "2024-07-23T21:26:34",
+        "upload_time_iso_8601": "2024-07-23T21:26:34.578968Z",
+        "url": "https://files.pythonhosted.org/packages/60/d4/b96967e7af4aa84502ddeec514aec14d82309bbc839ecea0da746e4f7674/hidapi-0.14.0.post2-cp38-cp38-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "57aaee0d04463b4b591f0ac09d70cf28f9eaa3a4f497720e996fad7b0041994c",
+          "md5": "43042e4b65d879ba245b0ea442806cba",
+          "sha256": "dc991af741ca3caf582ad1c717ce81c6c4021cbcb237eae534701beb819f867c"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-macosx_10_9_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "43042e4b65d879ba245b0ea442806cba",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 70097,
+        "upload_time": "2024-07-23T21:26:35",
+        "upload_time_iso_8601": "2024-07-23T21:26:35.741608Z",
+        "url": "https://files.pythonhosted.org/packages/57/aa/ee0d04463b4b591f0ac09d70cf28f9eaa3a4f497720e996fad7b0041994c/hidapi-0.14.0.post2-cp39-cp39-macosx_10_9_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "14531ea797507b60d9b3212fd3da17f60c623bc86f8bc80a8506f8c914d9863a",
+          "md5": "e4aeea9596aa29508d758a4da8e357af",
+          "sha256": "8727975928662fa3d43abcc97acd581a3d4a62d6e701881e3296f40335f1778e"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-macosx_11_0_arm64.whl",
+        "has_sig": false,
+        "md5_digest": "e4aeea9596aa29508d758a4da8e357af",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 67873,
+        "upload_time": "2024-07-23T21:26:37",
+        "upload_time_iso_8601": "2024-07-23T21:26:37.438998Z",
+        "url": "https://files.pythonhosted.org/packages/14/53/1ea797507b60d9b3212fd3da17f60c623bc86f8bc80a8506f8c914d9863a/hidapi-0.14.0.post2-cp39-cp39-macosx_11_0_arm64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "b992ad1de6a47c54584731fbc1fb3192eacf0b99bb30e9679a2f51a2691bbc8d",
+          "md5": "9002434ce2957820bda2c73f5386fdcd",
+          "sha256": "27e68dc10e6a06ba818d5f0cdc90045332784cf485279c18d7a054b22344814f"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "9002434ce2957820bda2c73f5386fdcd",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 695031,
+        "upload_time": "2024-07-23T21:26:39",
+        "upload_time_iso_8601": "2024-07-23T21:26:39.778085Z",
+        "url": "https://files.pythonhosted.org/packages/b9/92/ad1de6a47c54584731fbc1fb3192eacf0b99bb30e9679a2f51a2691bbc8d/hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "d943904c1e92dfa36b7c69e694c136f663bf67868194ab76adf872f3db043a9c",
+          "md5": "568a1c01ccdcc23409ff08700398382b",
+          "sha256": "eccc63cd08142791ffa2c213c6f47f3094a267a3ab2c10261704bdad08ecd806"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "has_sig": false,
+        "md5_digest": "568a1c01ccdcc23409ff08700398382b",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 710655,
+        "upload_time": "2024-07-23T21:26:42",
+        "upload_time_iso_8601": "2024-07-23T21:26:42.550408Z",
+        "url": "https://files.pythonhosted.org/packages/d9/43/904c1e92dfa36b7c69e694c136f663bf67868194ab76adf872f3db043a9c/hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "7dbb5a58bc75b900c3df73e03d7ef6761d71d35b0a028952ea95346fdc5410f4",
+          "md5": "d3874b67f200842cb01d7038e0fadc18",
+          "sha256": "386a9df574ae5715f811eafe5d8207c2eec986543146c27b4beea9957ec95567"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "d3874b67f200842cb01d7038e0fadc18",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 687703,
+        "upload_time": "2024-07-23T21:26:44",
+        "upload_time_iso_8601": "2024-07-23T21:26:44.518194Z",
+        "url": "https://files.pythonhosted.org/packages/7d/bb/5a58bc75b900c3df73e03d7ef6761d71d35b0a028952ea95346fdc5410f4/hidapi-0.14.0.post2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "33d0a5ea75661429f0322dead7f25f4a322958595cc85bea0a6ae43c69391d6d",
+          "md5": "889330695106d5674ecda3ec58e0097d",
+          "sha256": "91695c2f5ab3f91e27b4e1782cea57a517472b2d57e49a3eec5c86b5fbecd13f"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_aarch64.whl",
+        "has_sig": false,
+        "md5_digest": "889330695106d5674ecda3ec58e0097d",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 315778,
+        "upload_time": "2024-07-23T21:26:46",
+        "upload_time_iso_8601": "2024-07-23T21:26:46.023622Z",
+        "url": "https://files.pythonhosted.org/packages/33/d0/a5ea75661429f0322dead7f25f4a322958595cc85bea0a6ae43c69391d6d/hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_aarch64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "5dab0da14a76376c4989a1658edb1ccc2d48db2b760fdbf95c60569df2abd3b6",
+          "md5": "2193b957b1b9c295c056ca7bc598752c",
+          "sha256": "9de52268c4f29f23061d97020b46d56b03047834897be3bfcb95ebd89d32d636"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_i686.whl",
+        "has_sig": false,
+        "md5_digest": "2193b957b1b9c295c056ca7bc598752c",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 315716,
+        "upload_time": "2024-07-23T21:26:47",
+        "upload_time_iso_8601": "2024-07-23T21:26:47.945568Z",
+        "url": "https://files.pythonhosted.org/packages/5d/ab/0da14a76376c4989a1658edb1ccc2d48db2b760fdbf95c60569df2abd3b6/hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_i686.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "6c45fde000651ab9c46abfe1d2adcc4fcc235f8f784840011ca708dec6f41455"
+        },
+        "digests": {
+          "blake2b_256": "d8e658754866d59605980b3a90a3552cdf84a4b834e67560bec67f5f0c09978d",
+          "md5": "a266c7e441329d361a9e719d7f3237e0",
+          "sha256": "7f1d6f11234b9a3fcfd1d81e328cd4af09ab4e7e9b251f9eb772542f1ae1fada"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "a266c7e441329d361a9e719d7f3237e0",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 321481,
+        "upload_time": "2024-07-23T21:26:49",
+        "upload_time_iso_8601": "2024-07-23T21:26:49.614347Z",
+        "url": "https://files.pythonhosted.org/packages/d8/e6/58754866d59605980b3a90a3552cdf84a4b834e67560bec67f5f0c09978d/hidapi-0.14.0.post2-cp39-cp39-musllinux_1_2_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "a6e08c94dd24844e008d65196d587ca604aef022177ea9fdd568f27b3aad5afa",
+          "md5": "513ae2072f559beca0ec5d2aebb8b179",
+          "sha256": "d678979fcffd93d1d2f69ca080f3af994ce8be032bff3d929f45f1cbf2ce74a3"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-win32.whl",
+        "has_sig": false,
+        "md5_digest": "513ae2072f559beca0ec5d2aebb8b179",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 57636,
+        "upload_time": "2024-07-23T21:26:51",
+        "upload_time_iso_8601": "2024-07-23T21:26:51.692547Z",
+        "url": "https://files.pythonhosted.org/packages/a6/e0/8c94dd24844e008d65196d587ca604aef022177ea9fdd568f27b3aad5afa/hidapi-0.14.0.post2-cp39-cp39-win32.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "ae5c6fef14110ed9b98cab9013d249d29b6717a3fba235177181b43211c2fe66"
+        },
+        "digests": {
+          "blake2b_256": "de3e2c683db6f5c7ff81ac288f55223aca7460ad6155e612f4e2d225af8a690f",
+          "md5": "d4bec38eee790bba56102d0a9eb1cc82",
+          "sha256": "8e1d0396f415cb5d1cd3a1dfa8c0aa15d14f8849e7e0f9b4782e614128ec15ad"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2-cp39-cp39-win_amd64.whl",
+        "has_sig": false,
+        "md5_digest": "d4bec38eee790bba56102d0a9eb1cc82",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp39",
+        "requires_python": null,
+        "size": 64620,
+        "upload_time": "2024-07-23T21:26:53",
+        "upload_time_iso_8601": "2024-07-23T21:26:53.365393Z",
+        "url": "https://files.pythonhosted.org/packages/de/3e/2c683db6f5c7ff81ac288f55223aca7460ad6155e612f4e2d225af8a690f/hidapi-0.14.0.post2-cp39-cp39-win_amd64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "bf6f90c536b020a8e860f047a2839830a1ade3e1490e67336ecf489b4856eb7b",
+          "md5": "335d18f62386fc4534517f88f6a3d4c7",
+          "sha256": "6c0e97ba6b059a309d51b495a8f0d5efbcea8756b640d98b6f6bb9fdef2458ac"
+        },
+        "downloads": -1,
+        "filename": "hidapi-0.14.0.post2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "335d18f62386fc4534517f88f6a3d4c7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 172542,
+        "upload_time": "2024-07-23T21:26:54",
+        "upload_time_iso_8601": "2024-07-23T21:26:54.838507Z",
+        "url": "https://files.pythonhosted.org/packages/bf/6f/90c536b020a8e860f047a2839830a1ade3e1490e67336ecf489b4856eb7b/hidapi-0.14.0.post2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "vulnerabilities": []
+  }
+}

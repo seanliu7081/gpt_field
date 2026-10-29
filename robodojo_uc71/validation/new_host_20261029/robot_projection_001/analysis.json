@@ -1,0 +1,1454 @@
+{
+  "schema": "robodojo-robot-projection-analysis-1",
+  "created_at_utc": "2026-10-29T09:19:21.239258+00:00",
+  "scope": "operator_only_recorded_robot_geometry_and_rgb",
+  "model_input_eligible": false,
+  "standard_ready": false,
+  "calibration_status": "uncalibrated_candidate",
+  "rendered_landmarks_validated": false,
+  "visual_review_required": true,
+  "live_multi_pose_validation_passed": false,
+  "full_test_authorized": false,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "original_rgb_unchanged": true,
+  "projection_convention": "uv=K*(optical_from_world*[world_xyz,1]) then divide by optical z; image origin upper left",
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/launch_result.json",
+      "sha256": "b5784877723bd2276b859f0593f8e979f8a4b3e07a85477c6af3feb014209e3b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/preview_result.json",
+      "sha256": "1bc81201b22eb1453a6f6fd831def408d4005d0e779af8d88360608eadc6f41c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/robot_inventory.json",
+      "sha256": "716612770f6e9c2eb9e337296ef47de10cbc54769dfb0fd8abb8c58c8a6e2b9d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/camera_inventory.json",
+      "sha256": "a02236028a54de0d78687bd6dfed0033583a6a475d674f4d0ab86f95ae9eea2f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_head.png",
+      "sha256": "000c54301497c0defe3168fc7ce956d66a4d59035dab52df0fd6e1aee34d3f17"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_left_wrist.png",
+      "sha256": "06209720f74be160b575289dac7441114c48c27993ae88fb98b3f44baf976e56"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_right_wrist.png",
+      "sha256": "701ed8d7eb305dd38c580c3e293cbe2a9aa8a90fbdf2b224f058b95326d36164"
+    }
+  ],
+  "original_robot_sources": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    }
+  ],
+  "script_sha256": "1c90415f394fc81396242bb9ba2c3214bc99fb3a3578e31713d4afc8db7dbcf5",
+  "usd_inspection_code_sha256": "97e626b0332c319ada5eaff4074ad64bbf3b02c9c4c811158297c6e1ca6e95a1",
+  "usd_topology_crosscheck": {
+    "link7": [
+      {
+        "prim": "/X5A/link7/visuals/link7/node_STL_BINARY_/mesh",
+        "orientation": "rightHanded",
+        "pad_faces": [
+          {
+            "face_index": 113,
+            "vertices": [
+              [
+                0.07100000232458115,
+                -0.024494417011737823,
+                -0.004896481987088919
+              ],
+              [
+                0.07100000232458115,
+                -0.024494417011737823,
+                0.005103516858071089
+              ],
+              [
+                0.0560000017285347,
+                -0.024494417011737823,
+                -0.010360768996179104
+              ]
+            ],
+            "normal": [
+              -0.0,
+              -1.0,
+              0.0
+            ],
+            "area_m2": 7.499999431893195e-05,
+            "centroid": [
+              0.06600000212589899,
+              -0.024494417011737823,
+              -0.0033845780417323112
+            ]
+          },
+          {
+            "face_index": 114,
+            "vertices": [
+              [
+                0.0560000017285347,
+                -0.024494417011737823,
+                -0.010360768996179104
+              ],
+              [
+                0.07100000232458115,
+                -0.024494417011737823,
+                0.005103516858071089
+              ],
+              [
+                0.0560000017285347,
+                -0.024494417011737823,
+                0.007967153564095497
+              ]
+            ],
+            "normal": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "area_m2": 0.00013745942466420608,
+            "centroid": [
+              0.06100000192721684,
+              -0.024494417011737823,
+              0.0009033004753291607
+            ]
+          }
+        ]
+      }
+    ],
+    "link8": [
+      {
+        "prim": "/X5A/link8/visuals/link8/node_STL_BINARY_/mesh",
+        "orientation": "rightHanded",
+        "pad_faces": [
+          {
+            "face_index": 899,
+            "vertices": [
+              [
+                0.07100000232458115,
+                0.024494417011737823,
+                0.005103517323732376
+              ],
+              [
+                0.07100000232458115,
+                0.024494417011737823,
+                -0.004896482452750206
+              ],
+              [
+                0.0560000017285347,
+                0.024494417011737823,
+                0.007967153564095497
+              ]
+            ],
+            "normal": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "area_m2": 7.500000130385154e-05,
+            "centroid": [
+              0.06600000212589899,
+              0.024494417011737823,
+              0.0027247294783592224
+            ]
+          },
+          {
+            "face_index": 900,
+            "vertices": [
+              [
+                0.0560000017285347,
+                0.024494417011737823,
+                0.007967153564095497
+              ],
+              [
+                0.07100000232458115,
+                0.024494417011737823,
+                -0.004896482452750206
+              ],
+              [
+                0.0560000017285347,
+                0.024494417011737823,
+                -0.01036076806485653
+              ]
+            ],
+            "normal": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "area_m2": 0.0001374594176792865,
+            "centroid": [
+              0.06100000192721684,
+              0.024494417011737823,
+              -0.002430032317837079
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "world_landmarks": {
+    "left_arm": {
+      "pads": {
+        "link7": {
+          "polygon_world_m": [
+            [
+              -0.3439734058080166,
+              -0.2097432790638841,
+              0.9108956589019551
+            ],
+            [
+              -0.3439779369712044,
+              -0.1947432792813969,
+              0.9163599462656512
+            ],
+            [
+              -0.34397793843177205,
+              -0.194743279518242,
+              0.9263599451108111
+            ],
+            [
+              -0.34397340848493396,
+              -0.209743279497972,
+              0.9292235814622295
+            ]
+          ],
+          "centroid_world_m": [
+            -0.3439754504397188,
+            -0.2029782365165389,
+            0.9206460706971843
+          ],
+          "inward_normal_world": [
+            0.9999999543906409,
+            0.00030202432743786645,
+            1.46063929199677e-07
+          ],
+          "body_pose_wxyz": [
+            -0.36845090985298157,
+            -0.2657506763935089,
+            0.921256422996521,
+            0.7069999575614929,
+            -4.327419134142474e-08,
+            -6.000607299938565e-08,
+            0.7072135210037231
+          ]
+        },
+        "link8": {
+          "polygon_world_m": [
+            [
+              -0.25516686379972636,
+              -0.20971644103915643,
+              0.9108955930731313
+            ],
+            [
+              -0.25517139496291397,
+              -0.19471644125666918,
+              0.9163598790398436
+            ],
+            [
+              -0.25517139642348174,
+              -0.1947164414935143,
+              0.9263598788163261
+            ],
+            [
+              -0.2551668664766436,
+              -0.2097164414732443,
+              0.9292235147020832
+            ]
+          ],
+          "centroid_world_m": [
+            -0.25516890843147805,
+            -0.20295139832742876,
+            0.9206460042069347
+          ],
+          "inward_normal_world": [
+            -0.9999999543906409,
+            -0.00030202432743786645,
+            -1.46063929199677e-07
+          ],
+          "body_pose_wxyz": [
+            -0.23065553605556488,
+            -0.2657090425491333,
+            0.9212563633918762,
+            0.7069999575614929,
+            -4.327419134142474e-08,
+            -6.000607299938565e-08,
+            0.7072135210037231
+          ]
+        }
+      },
+      "nominal_tool_point_world_m": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9206460434844203
+      ],
+      "measured_pad_centroid_midpoint_world_m": [
+        -0.29957217943559844,
+        -0.20296481742198383,
+        0.9206460374520595
+      ],
+      "nominal_minus_measured_midpoint_m": [
+        1.1211806483224507e-09,
+        -1.2927777653937156e-08,
+        6.032360722052488e-09
+      ]
+    },
+    "right_arm": {
+      "pads": {
+        "link7": {
+          "polygon_world_m": [
+            [
+              0.2560266329350025,
+              -0.2097432790638841,
+              0.9108956589019551
+            ],
+            [
+              0.2560221017718147,
+              -0.1947432792813969,
+              0.9163599462656512
+            ],
+            [
+              0.25602210031124706,
+              -0.194743279518242,
+              0.9263599451108111
+            ],
+            [
+              0.25602663025808514,
+              -0.209743279497972,
+              0.9292235814622295
+            ]
+          ],
+          "centroid_world_m": [
+            0.2560245883033003,
+            -0.2029782365165389,
+            0.9206460706971843
+          ],
+          "inward_normal_world": [
+            0.9999999543906409,
+            0.00030202432743786645,
+            1.46063929199677e-07
+          ],
+          "body_pose_wxyz": [
+            0.23154912889003754,
+            -0.2657506763935089,
+            0.921256422996521,
+            0.7069999575614929,
+            -4.327419134142474e-08,
+            -6.000607299938565e-08,
+            0.7072135210037231
+          ]
+        },
+        "link8": {
+          "polygon_world_m": [
+            [
+              0.34483314514097035,
+              -0.20971644103915643,
+              0.9108955930731313
+            ],
+            [
+              0.34482861397778275,
+              -0.19471644125666918,
+              0.9163598790398436
+            ],
+            [
+              0.34482861251721497,
+              -0.1947164414935143,
+              0.9263598788163261
+            ],
+            [
+              0.3448331424640531,
+              -0.2097164414732443,
+              0.9292235147020832
+            ]
+          ],
+          "centroid_world_m": [
+            0.34483110050921867,
+            -0.20295139832742876,
+            0.9206460042069347
+          ],
+          "inward_normal_world": [
+            -0.9999999543906409,
+            -0.00030202432743786645,
+            -1.46063929199677e-07
+          ],
+          "body_pose_wxyz": [
+            0.36934447288513184,
+            -0.2657090425491333,
+            0.9212563633918762,
+            0.7069999575614929,
+            -4.327419134142474e-08,
+            -6.000607299938565e-08,
+            0.7072135210037231
+          ]
+        }
+      },
+      "nominal_tool_point_world_m": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9206460434844203
+      ],
+      "measured_pad_centroid_midpoint_world_m": [
+        0.30042784440625947,
+        -0.20296481742198383,
+        0.9206460374520595
+      ],
+      "nominal_minus_measured_midpoint_m": [
+        1.1211806483224507e-09,
+        -1.2927777653937156e-08,
+        6.032360722052488e-09
+      ]
+    }
+  },
+  "projections": {
+    "head": {
+      "left_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.3439734058080166,
+                  0.025124805061668143,
+                  0.4440307868224328
+                ],
+                "uv_pixels": [
+                  96.7949130851956,
+                  259.03832082252563
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.3439779369712044,
+                  0.009402280987255374,
+                  0.4467985772419083
+                ],
+                "uv_pixels": [
+                  98.1746832030815,
+                  247.08044359699315
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.34397793843177205,
+                  0.004402280577696482,
+                  0.4381383248372448
+                ],
+                "uv_pixels": [
+                  93.79007782815466,
+                  243.38069116270648
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.34397340848493396,
+                  0.015960841972603446,
+                  0.4281583414469089
+                ],
+                "uv_pixels": [
+                  88.52037776041648,
+                  252.54268199427395
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.3439754504397188,
+                0.014390899806411672,
+                0.43896920532326
+              ],
+              "uv_pixels": [
+                94.21988082857496,
+                251.03044206765836
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.25516686379972636,
+                  0.025101595566903168,
+                  0.4440442628474247
+                ],
+                "uv_pixels": [
+                  154.42669528418236,
+                  259.0201565795647
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.25517139496291397,
+                  0.009379072190982385,
+                  0.44681205447672356
+                ],
+                "uv_pixels": [
+                  155.44942246152837,
+                  247.06275303405357
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.25517139642348174,
+                  0.004379071315762151,
+                  0.4381518012655111
+                ],
+                "uv_pixels": [
+                  152.19701066211192,
+                  243.36276438876968
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.2551668664766436,
+                  0.015937632943499813,
+                  0.42817181827844963
+                ],
+                "uv_pixels": [
+                  148.28884650404214,
+                  252.52404918010484
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.25516890843147805,
+                0.014367690500000196,
+                0.43898268200325463
+              ],
+              "uv_pixels": [
+                152.51625137198977,
+                251.01231434262843
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": false,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            -0.2995721783144178,
+            0.014379303332807736,
+            0.4389759319751898
+          ],
+          "uv_pixels": [
+            123.36850902931288,
+            251.02138462892935
+          ],
+          "positive_depth": true,
+          "inside_native_image": true
+        }
+      },
+      "right_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.2560266329350025,
+                  0.025124805061668143,
+                  0.4440307868224328
+                ],
+                "uv_pixels": [
+                  486.1362358014891,
+                  259.03832082252563
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.2560221017718147,
+                  0.009402280987255374,
+                  0.4467985772419083
+                ],
+                "uv_pixels": [
+                  485.10414688980467,
+                  247.08044359699315
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.25602210031124706,
+                  0.004402280577696482,
+                  0.4381383248372448
+                ],
+                "uv_pixels": [
+                  488.3675983690069,
+                  243.38069116270648
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.25602663025808514,
+                  0.015960841972603446,
+                  0.4281583414469089
+                ],
+                "uv_pixels": [
+                  492.295143152064,
+                  252.54268199427395
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.2560245883033003,
+                0.014390899806411672,
+                0.43896920532326
+              ],
+              "uv_pixels": [
+                488.05054542130614,
+                251.03044206765836
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": false,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.34483314514097035,
+                  0.025101595566903168,
+                  0.4440442628474247
+                ],
+                "uv_pixels": [
+                  543.7561827830127,
+                  259.0201565795647
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.34482861397778275,
+                  0.009379072190982385,
+                  0.44681205447672356
+                ],
+                "uv_pixels": [
+                  542.3671959393472,
+                  247.06275303405357
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.34482861251721497,
+                  0.004379071315762151,
+                  0.4381518012655111
+                ],
+                "uv_pixels": [
+                  546.7623754098018,
+                  243.36276438876968
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.3448331424640531,
+                  0.015937632943499813,
+                  0.42817181827844963
+                ],
+                "uv_pixels": [
+                  552.0508829133519,
+                  252.52404918010484
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.34483110050921867,
+                0.014367690500000196,
+                0.43898268200325463
+              ],
+              "uv_pixels": [
+                546.3348058813953,
+                251.01231434262843
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            0.3004278455274401,
+            0.014379303332807736,
+            0.4389759319751898
+          ],
+          "uv_pixels": [
+            517.1931289733149,
+            251.02138462892935
+          ],
+          "positive_depth": true,
+          "inside_native_image": true
+        }
+      }
+    },
+    "left_wrist": {
+      "left_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.04440190271216321,
+                  0.024432143274953022,
+                  0.08076641426684683
+                ],
+                "uv_pixels": [
+                  101.72378272753713,
+                  360.1064704025557
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.044402010964886884,
+                  0.012199580820349998,
+                  0.09102423512715574
+                ],
+                "uv_pixels": [
+                  126.32157639118351,
+                  293.2137065558188
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.04440201097501262,
+                  0.0035394985255411404,
+                  0.08602393986083479
+                ],
+                "uv_pixels": [
+                  115.0636717852481,
+                  256.33646349833424
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.04440190273072159,
+                  0.008560009675489422,
+                  0.07160191076652955
+                ],
+                "uv_pixels": [
+                  73.78607627273918,
+                  287.46628949951116
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.044401951541828244,
+                0.01260548375265258,
+                0.08174950390618868
+              ],
+              "uv_pixels": [
+                104.34845553986142,
+                301.2223549986511
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.04440464720817816,
+                  0.024431882840114216,
+                  0.08076702273008984
+                ],
+                "uv_pixels": [
+                  538.288064497578,
+                  360.1042853059283
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.04440453895545449,
+                  0.012199321595310786,
+                  0.09102484428893198
+                ],
+                "uv_pixels": [
+                  513.6881543045844,
+                  293.21221972227136
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.04440453894532875,
+                  0.003539238493968755,
+                  0.08602454855692221
+                ],
+                "uv_pixels": [
+                  524.9465458165012,
+                  256.3351477436294
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.044404647189619784,
+                  0.008559750047183567,
+                  0.07160251969546139
+                ],
+                "uv_pixels": [
+                  566.2270480787604,
+                  287.4644461740646
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.04440459837851196,
+                0.012605223808417887,
+                0.08175011284252087
+              ],
+              "uv_pixels": [
+                535.6627931945906,
+                301.22063647988915
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            1.3245357121105528e-06,
+            0.01260535502089688,
+            0.08174979416214656
+          ],
+          "uv_pixels": [
+            320.0064329865675,
+            301.22151240360296
+          ],
+          "positive_depth": true,
+          "inside_native_image": true
+        }
+      },
+      "right_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.555598136030856,
+                  0.024520666236444333,
+                  0.08061327414443342
+                ],
+                "uv_pixels": [
+                  3056.4647596112663,
+                  360.7706338210128
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.5555980277781323,
+                  0.012288103781841309,
+                  0.09087109500474233
+                ],
+                "uv_pixels": [
+                  2747.5633617137996,
+                  293.6901663330721
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.5555980277680065,
+                  0.003628021487032451,
+                  0.08587079973842138
+                ],
+                "uv_pixels": [
+                  2888.9214673705255,
+                  256.7749016668772
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.5555981360122975,
+                  0.008648532636980732,
+                  0.07144877064411614
+                ],
+                "uv_pixels": [
+                  3407.4622734173217,
+                  288.05994928050916
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.5555980872011909,
+                0.01269400671414389,
+                0.08159636378377527
+              ],
+              "uv_pixels": [
+                3023.495036253023,
+                301.7680026846878
+              ],
+              "positive_depth": true,
+              "inside_native_image": false
+            },
+            "inward_face_toward_camera": false,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.6444046561488749,
+                  0.0245204057972086,
+                  0.08061388261528302
+                ],
+                "uv_pixels": [
+                  3493.8359222469444,
+                  360.7684395273418
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.6444045478961512,
+                  0.01228784455240517,
+                  0.09087170417412527
+                ],
+                "uv_pixels": [
+                  3135.5650410729054,
+                  293.68867377619074
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.6444045478860254,
+                  0.0036277614510631384,
+                  0.08587140844211538
+                ],
+                "uv_pixels": [
+                  3299.5155120092586,
+                  256.77358043603317
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  0.6444046561303165,
+                  0.008648273004277951,
+                  0.07144937958065456
+                ],
+                "uv_pixels": [
+                  3900.9301350195333,
+                  288.05809691516583
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.6444046073192087,
+                0.01269374676551227,
+                0.08159697272771405
+              ],
+              "uv_pixels": [
+                3455.59692885385,
+                301.7662768414572
+              ],
+              "positive_depth": true,
+              "inside_native_image": false
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            0.60000134837757,
+            0.012693877980189727,
+            0.08159665404353644
+          ],
+          "uv_pixels": [
+            3239.547302684707,
+            301.76715655370543
+          ],
+          "positive_depth": true,
+          "inside_native_image": false
+        }
+      }
+    },
+    "right_wrist": {
+      "left_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.6444019265540211,
+                  0.02434357077281679,
+                  0.08091959820391958
+                ],
+                "uv_pixels": [
+                  -2841.8317242461444,
+                  359.44451308910055
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.6444020348067447,
+                  0.012111008318213767,
+                  0.0911774190642285
+                ],
+                "uv_pixels": [
+                  -2486.1136005063886,
+                  292.73860621464
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.6444020348168705,
+                  0.00345092602340491,
+                  0.08617712379790754
+                ],
+                "uv_pixels": [
+                  -2648.9340328788603,
+                  255.899347243287
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.6444019265725796,
+                  0.008471437173353191,
+                  0.0717550947036023
+                ],
+                "uv_pixels": [
+                  -3245.658351906937,
+                  286.8748609590315
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.6444019753836862,
+                0.01251691125051635,
+                0.08190268784326143
+              ],
+              "uv_pixels": [
+                -2803.88004397888,
+                300.67847517764244
+              ],
+              "positive_depth": true,
+              "inside_native_image": false
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.5555953766336797,
+                  0.024343310337977986,
+                  0.0809202066671626
+                ],
+                "uv_pixels": [
+                  -2406.0717359006726,
+                  359.44233710636973
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.5555954848864034,
+                  0.012110749093174555,
+                  0.09117802822600474
+                ],
+                "uv_pixels": [
+                  -2099.3803653287987,
+                  292.7371250532045
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.5555954848965292,
+                  0.0034506659918325244,
+                  0.08617773249399496
+                ],
+                "uv_pixels": [
+                  -2239.760217162626,
+                  255.89803691484983
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              },
+              {
+                "optical_xyz_m": [
+                  -0.5555953766522381,
+                  0.008471177545047337,
+                  0.07175570363253414
+                ],
+                "uv_pixels": [
+                  -2754.240472863871,
+                  286.8730265876578
+                ],
+                "positive_depth": true,
+                "inside_native_image": false
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.555595425463346,
+                0.012516651306281656,
+                0.08190329677959363
+              ],
+              "uv_pixels": [
+                -2373.350772431261,
+                300.67676391667936
+              ],
+              "positive_depth": true,
+              "inside_native_image": false
+            },
+            "inward_face_toward_camera": false,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            -0.5999986993061458,
+            0.01251678251876065,
+            0.08190297809921931
+          ],
+          "uv_pixels": [
+            -2588.6151072755592,
+            300.6776360859637
+          ],
+          "positive_depth": true,
+          "inside_native_image": false
+        }
+      },
+      "right_arm": {
+        "pads": {
+          "link7": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  -0.04440188781100202,
+                  0.024432093734308102,
+                  0.08076645808150618
+                ],
+                "uv_pixels": [
+                  101.7239743921747,
+                  360.10616170876443
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.04440199606372569,
+                  0.012199531279705078,
+                  0.09102427894181508
+                ],
+                "uv_pixels": [
+                  126.32173461633104,
+                  293.21346484865285
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.044401996073851424,
+                  0.0035394489848962207,
+                  0.08602398367549413
+                ],
+                "uv_pixels": [
+                  115.06384494150737,
+                  256.3362265242279
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  -0.044401887829560394,
+                  0.008559960134844502,
+                  0.0716019545811889
+                ],
+                "uv_pixels": [
+                  73.78630956462491,
+                  287.4659857452422
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                -0.04440193664066705,
+                0.01260543421200766,
+                0.08174954772084803
+              ],
+              "uv_pixels": [
+                104.34864349288623,
+                301.22208157675067
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          },
+          "link8": {
+            "vertices": [
+              {
+                "optical_xyz_m": [
+                  0.04440463230701697,
+                  0.02443183329507237,
+                  0.08076706655235577
+                ],
+                "uv_pixels": [
+                  538.2878728073993,
+                  360.1039765827218
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.04440452405429329,
+                  0.012199272050268939,
+                  0.09102488811119802
+                ],
+                "uv_pixels": [
+                  513.6879960596259,
+                  293.211977993813
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.04440452404416756,
+                  0.003539188948926908,
+                  0.08602459237918814
+                ],
+                "uv_pixels": [
+                  524.946372638141,
+                  256.33491075013194
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              },
+              {
+                "optical_xyz_m": [
+                  0.04440463228845859,
+                  0.00855970050214172,
+                  0.07160256351772731
+                ],
+                "uv_pixels": [
+                  566.2268147546702,
+                  287.4641423940833
+                ],
+                "positive_depth": true,
+                "inside_native_image": true
+              }
+            ],
+            "centroid": {
+              "optical_xyz_m": [
+                0.04440458347735077,
+                0.01260517426337604,
+                0.0817501566647868
+              ],
+              "uv_pixels": [
+                535.6626052168702,
+                301.22036303389524
+              ],
+              "positive_depth": true,
+              "inside_native_image": true
+            },
+            "inward_face_toward_camera": true,
+            "occlusion_assessed": false
+          }
+        },
+        "nominal_tool": {
+          "optical_xyz_m": [
+            1.3245357121105528e-06,
+            0.012605305478053497,
+            0.0817498379806092
+          ],
+          "uv_pixels": [
+            320.0064329831194,
+            301.2212389695992
+          ],
+          "positive_depth": true,
+          "inside_native_image": true
+        }
+      }
+    }
+  },
+  "figures": [
+    {
+      "path": "head_projection.png",
+      "sha256": "b183541dec380e7e604a1fb6b87ec4dfdd5f1f6f2a2d4820bc042cd8d7e1dd46",
+      "kind": "full_original_and_projection"
+    },
+    {
+      "path": "head_left_arm_link7_zoom.png",
+      "sha256": "a5d3d78bb1b9606c1435c3eff69752e8071e25346d7f95c3172d51bb68fa3217",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "head_left_arm_link8_zoom.png",
+      "sha256": "fb577ab5248e026751f58a68a84cb58306340a87c62050293da2b5c55c24a6f8",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "head_right_arm_link7_zoom.png",
+      "sha256": "8e1529b8baf6abc80d105d543a20ed76ed9cab732f87fe2b1bad148610a05a66",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "head_right_arm_link8_zoom.png",
+      "sha256": "4bf7a7e52c3d8c20df1b80574b5dbdffbee96a94d4d1ee3f754612533dea171f",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "left_wrist_projection.png",
+      "sha256": "7dff6058dc20af63419832f89153f983f6939aa27adbe5bbfc6faf0cca23ce96",
+      "kind": "full_original_and_projection"
+    },
+    {
+      "path": "left_wrist_left_arm_link7_zoom.png",
+      "sha256": "8c4eafbd1388b55e57086f57ffddef3107b8179e9620934a6d9e7d08e544bb8c",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "left_wrist_left_arm_link8_zoom.png",
+      "sha256": "2288a3321d4e8a088e782b3f2f11ec2bb44f7b424afabf7e2ad5b89e5cc4eca9",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "right_wrist_projection.png",
+      "sha256": "db7e7ffab43d8dec563c12af6d8fc9c2281a952e9c89fda189bc47e10e0ff4cd",
+      "kind": "full_original_and_projection"
+    },
+    {
+      "path": "right_wrist_right_arm_link7_zoom.png",
+      "sha256": "71c0cfa3a9a4520e64a463b871e5b77a8d6fad3cd7fdf8444a85a3e039cfa412",
+      "kind": "original_and_projection_zoom"
+    },
+    {
+      "path": "right_wrist_right_arm_link8_zoom.png",
+      "sha256": "eb88b2b619db35d96665cad28da877a4725276537b240bb484e5938d5b568466",
+      "kind": "original_and_projection_zoom"
+    }
+  ],
+  "limitations": [
+    "No renderer depth/segmentation or scene-object truth accessed",
+    "Positive depth, in-frame coordinates and face orientation do not prove visibility or pixel alignment",
+    "Nominal tool point is a virtual geometry-defined point, not a directly visible marker",
+    "No live perturbation, actuator tracking or multi-pose calibration performed"
+  ]
+}

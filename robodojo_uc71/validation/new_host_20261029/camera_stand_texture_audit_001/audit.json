@@ -1,0 +1,623 @@
+{
+  "asset": {
+    "bytes": 8103315,
+    "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Object/RoboDojo/Geometry/camera_stand/00000/object.usd",
+    "sha256": "6c4b9ec4cd325f6e47d862b87e7dddbe9adc5e9a5aa0f04224c47d0f16a600a8"
+  },
+  "asset_fidelity_passed": false,
+  "asset_manifest": {
+    "bytes": 1372957,
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets_002/asset_manifest.json",
+    "sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419"
+  },
+  "assets_modified": false,
+  "benchmark_actions": 0,
+  "bound_material_relationships": [
+    {
+      "prim": "/root/base_br/Camera_stand/base/Mesh_1",
+      "relationship": "material:binding",
+      "targets": [
+        "/root/base_br/_materials/wrought_iron"
+      ]
+    },
+    {
+      "prim": "/root/base_br/Camera_stand/\u7b2c\u4e00\u89c6\u89d2\u94dd\u65b9\u7ba1_1/Mesh_2",
+      "relationship": "material:binding",
+      "targets": [
+        "/root/base_br/_materials/wrought_iron_1"
+      ]
+    }
+  ],
+  "checks": {
+    "affected_material_is_bound": true,
+    "camera_stand_pinned_directory_has_only_usd_and_metadata": true,
+    "missing_texture_connected_to_surface_normal": true,
+    "native_loader_retains_authored_material": true,
+    "selected_layout_has_no_visual_override": true
+  },
+  "code_evidence": [
+    {
+      "excerpts": [
+        {
+          "first_line": 157,
+          "text": "        for key, value in env_config.items():\n            if key in [\"Rigid\", \"Dynamic\", \"Geometry\", \"Articulation\", \"Garment\", \"Fluid\"]:\n                for cat, inst_list in value.items():\n                    for inst in inst_list:\n                        cat_idx = inst.get(\"category_idx\", None)\n                        prim_path, inst_name = self._generate_object_paths(env_idx, cat, cat_idx, type=key.lower())\n                        if key in [\"Rigid\", \"Dynamic\", \"Garment\", \"Articulation\", \"Geometry\", \"Fluid\"]:\n                            if \"type\" in inst and inst[\"type\"] == \"cluttered\":\n                                usd_path = f\"{OBJECTS_PATH}/Clutter/{cat}/{cat_idx:05d}/object.usdz\"\n                            else:\n                                usd_path = f\"{OBJECTS_PATH}/{key}/{cat}/{cat_idx:05d}/object.usdz\"\n                            if not os.path.exists(usd_path):\n                                usd_path = f\"{OBJECTS_PATH}/{key}/{cat}/{cat_idx:05d}/object.usd\"\n                        if \"visual\" in inst:\n                            visual_cfg = inst.get(\"visual\")\n                            if isinstance(visual_cfg, DictConfig):\n                                visual_cfg = OmegaConf.to_container(visual_cfg, resolve=True)\n                            if isinstance(visual_cfg, dict):\n                                visual_usd_path = visual_cfg.get(\"visual_usd_path\", None)\n                                if isinstance(visual_usd_path, str) and \"$\" in visual_usd_path:\n                                    visual_cfg[\"visual_usd_path\"] = resolve_path(visual_usd_path)\n                                visual_mdl_path = visual_cfg.get(\"visual_mdl_path\", None)\n                                if isinstance(visual_mdl_path, str) and \"$\" in visual_mdl_path:\n                                    visual_cfg[\"visual_mdl_path\"] = resolve_path(visual_mdl_path)\n                                inst[\"visual\"] = visual_cfg\n                        inst[\"prim_path\"] = prim_path\n                        inst[\"usd_path\"] = usd_path\n                        inst[\"inst_name\"] = inst_name"
+        }
+      ],
+      "finding": "Loads the saved USD and passes the saved visual dictionary; only explicit $ visual paths are resolved.",
+      "line_ranges": [
+        [
+          157,
+          184
+        ]
+      ],
+      "source": {
+        "bytes": 39510,
+        "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/env/scene_manager/layout_manager.py",
+        "sha256": "7f244bec972e09236a94d8b4761b248ba19ec3f61c631d3c83c00b82912a14b8"
+      }
+    },
+    {
+      "excerpts": [
+        {
+          "first_line": 46,
+          "text": "        if usd_path:\n            prim = add_reference_to_stage(usd_path=usd_path, prim_path=prim_path)\n        else:\n            prim = get_prim_at_path(prim_path)"
+        },
+        {
+          "first_line": 101,
+          "text": "            disable_stablization=disable_stablization,\n            contact_filter_prim_paths_expr=contact_filter_prim_paths_expr,\n        )\n        self._remove_rigid_body_if_exists(prim_path)\n        self._current_color = self.visual_config.get(\"color\", None)\n        if self._current_color is not None:\n            self._apply_color_material(self._current_color)\n        else:\n            self.visual_usd_path = self.visual_config.get(\"visual_usd_path\", None)\n            if self.visual_usd_path:\n                self._apply_visual_material(self.visual_usd_path)\n            elif not usd_path:\n                self._apply_default_material()"
+        }
+      ],
+      "finding": "References authored USD; rebinds only explicit color/visual_usd_path, otherwise retains original material.",
+      "line_ranges": [
+        [
+          46,
+          49
+        ],
+        [
+          101,
+          113
+        ]
+      ],
+      "source": {
+        "bytes": 14727,
+        "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/env/scene_manager/objects/geometry.py",
+        "sha256": "3100d61b152b894b3b59be0b3be1d2708f2d8f363ddb8311dabfb5411c731f3d"
+      }
+    },
+    {
+      "excerpts": [
+        {
+          "first_line": 4,
+          "text": "def ensure_usd_path(obj):\n    if USD_PATH is None:\n        return\n    new_prefix = USD_PATH\n    CDN_PREFIX = \"https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0\"\n\n    if hasattr(obj, \"__dict__\"):\n        for key, value in obj.__dict__.items():\n            if isinstance(value, str) and value.startswith(CDN_PREFIX):\n                suffix = value.split(\"Assets/Isaac/5.0\", 1)[1]\n                new_path = f\"file://{new_prefix}/Assets/Isaac/5.0{suffix}\"\n                setattr(obj, key, new_path)\n            else:\n                ensure_usd_path(value)"
+        }
+      ],
+      "finding": "Only rewrites the Isaac/5.0 CDN prefix; no absolute author-home texture resolver.",
+      "line_ranges": [
+        [
+          4,
+          17
+        ]
+      ],
+      "source": {
+        "bytes": 831,
+        "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/utils/ensure_usd_path.py",
+        "sha256": "7c8e71cf91636e630b1b174098fe0b38740857daeaf207e2fae772c4727b11bf"
+      }
+    }
+  ],
+  "conclusion": "The public pinned camera-stand asset contains a live unavailable author-local normal map. No authoritative remap or replacement identity was found. Render unchanged only as an explicitly incomplete-fidelity model-free diagnostic.",
+  "dependency_closure_complete": false,
+  "full_test_authorized": false,
+  "layout": {
+    "bytes": 8679,
+    "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Eval_Layout/RoboDojo/arx_x5/0/make_toast_0.json",
+    "sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28"
+  },
+  "limitations": [
+    "Directory/source audit does not prove no unrelated file with the same basename exists elsewhere; basename equality would not establish identity.",
+    "No rendering was performed; the actual renderer fallback appearance remains unmeasured."
+  ],
+  "metadata": {
+    "bytes": 2414,
+    "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Object/RoboDojo/Geometry/camera_stand/00000/metadata.json",
+    "sha256": "981392df89e5a45a28c0240ef0cb289b778550ec7ad49e98419a813865bb3d30"
+  },
+  "metadata_has_visual_override": false,
+  "missing_reference": "/home/kaslensu/Desktop/textures/Image_0.png",
+  "model_calls": 0,
+  "native_loader_remaps_missing_reference": false,
+  "pinned_dataset_directory_evidence": [
+    {
+      "entries": [
+        "Assets/Background",
+        "Assets/Eval_Layout",
+        "Assets/Material",
+        "Assets/Object",
+        "Assets/Robots",
+        "Assets/Room",
+        "Assets/Sensor",
+        "Assets/Traj"
+      ],
+      "folder": "Assets",
+      "pagination_link": null,
+      "response": {
+        "bytes": 824,
+        "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_stand_texture_audit_001/directory_0.json",
+        "sha256": "8f66b480c0990785ad3d3e14fa65ebd2667fafb11723c31455141a65e7356c56"
+      },
+      "url": "https://huggingface.co/api/datasets/RoboDojo-Benchmark/RoboDojo/tree/269457a3b42d8d0ae69898a601f2c1487c2f826e/Assets?limit=1000"
+    },
+    {
+      "entries": [
+        "Assets/Object/RoboDojo/Geometry/camera_stand/00000"
+      ],
+      "folder": "Assets/Object/RoboDojo/Geometry/camera_stand",
+      "pagination_link": null,
+      "response": {
+        "bytes": 140,
+        "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_stand_texture_audit_001/directory_1.json",
+        "sha256": "078592a050b9bfd57db0a4caa8620b0dd93c637e14931eb3e1536c4a6ce2e8ed"
+      },
+      "url": "https://huggingface.co/api/datasets/RoboDojo-Benchmark/RoboDojo/tree/269457a3b42d8d0ae69898a601f2c1487c2f826e/Assets/Object/RoboDojo/Geometry/camera_stand?limit=1000"
+    },
+    {
+      "entries": [
+        "Assets/Object/RoboDojo/Geometry/camera_stand/00000/metadata.json",
+        "Assets/Object/RoboDojo/Geometry/camera_stand/00000/object.usd"
+      ],
+      "folder": "Assets/Object/RoboDojo/Geometry/camera_stand/00000",
+      "pagination_link": null,
+      "response": {
+        "bytes": 682,
+        "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_stand_texture_audit_001/directory_2.json",
+        "sha256": "488ead4d6d993dd2095b182c4bfba8b8d36af530616c9be0df4a4775a7474912"
+      },
+      "url": "https://huggingface.co/api/datasets/RoboDojo-Benchmark/RoboDojo/tree/269457a3b42d8d0ae69898a601f2c1487c2f826e/Assets/Object/RoboDojo/Geometry/camera_stand/00000?limit=1000"
+    }
+  ],
+  "recorded_at_utc": "2026-10-29T08:25:38.041928+00:00",
+  "schema": "robodojo-native-camera-stand-texture-audit-1",
+  "selected_layout_visual": {},
+  "shader_graph": [
+    {
+      "attributes": {
+        "outputs:displacement": {
+          "connections": [],
+          "value": "None"
+        },
+        "outputs:surface": {
+          "connections": [
+            "/root/_materials/wrought_iron/\u539f\u7406\u5316_BSDF.outputs:surface"
+          ],
+          "value": "None"
+        },
+        "outputs:volume": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron",
+      "type": "Material"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPreviewSurface"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:clearcoat": {
+          "connections": [],
+          "value": "0.0"
+        },
+        "inputs:clearcoatRoughness": {
+          "connections": [],
+          "value": "0.029999999329447746"
+        },
+        "inputs:diffuseColor": {
+          "connections": [],
+          "value": "(0.010960095, 0.010960095, 0.010960095)"
+        },
+        "inputs:ior": {
+          "connections": [],
+          "value": "1.5"
+        },
+        "inputs:metallic": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:normal": {
+          "connections": [
+            "/root/_materials/wrought_iron/\u56fe\u50cf\u7eb9\u7406.outputs:rgb"
+          ],
+          "value": "None"
+        },
+        "inputs:opacity": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:roughness": {
+          "connections": [],
+          "value": "0.18400000035762787"
+        },
+        "inputs:specular": {
+          "connections": [],
+          "value": "0.5"
+        },
+        "outputs:surface": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron/\u539f\u7406\u5316_BSDF",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdUVTexture"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:bias": {
+          "connections": [],
+          "value": "(-1, -1, -1, -1)"
+        },
+        "inputs:file": {
+          "connections": [],
+          "value": "@/home/kaslensu/Desktop/textures/Image_0.png@"
+        },
+        "inputs:scale": {
+          "connections": [],
+          "value": "(2, 2, 2, 2)"
+        },
+        "inputs:sourceColorSpace": {
+          "connections": [],
+          "value": "raw"
+        },
+        "inputs:st": {
+          "connections": [
+            "/root/_materials/wrought_iron/uvmap.outputs:result"
+          ],
+          "value": "None"
+        },
+        "inputs:wrapS": {
+          "connections": [],
+          "value": "repeat"
+        },
+        "inputs:wrapT": {
+          "connections": [],
+          "value": "repeat"
+        },
+        "outputs:rgb": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron/\u56fe\u50cf\u7eb9\u7406",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPrimvarReader_float2"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:varname": {
+          "connections": [],
+          "value": "st"
+        },
+        "outputs:result": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron/uvmap",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "outputs:displacement": {
+          "connections": [],
+          "value": "None"
+        },
+        "outputs:surface": {
+          "connections": [
+            "/root/_materials/wrought_iron_1/\u539f\u7406\u5316_BSDF.outputs:surface"
+          ],
+          "value": "None"
+        },
+        "outputs:volume": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron_1",
+      "type": "Material"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPreviewSurface"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:clearcoat": {
+          "connections": [],
+          "value": "0.0"
+        },
+        "inputs:clearcoatRoughness": {
+          "connections": [],
+          "value": "0.029999999329447746"
+        },
+        "inputs:diffuseColor": {
+          "connections": [],
+          "value": "(0.010960095, 0.010960095, 0.010960095)"
+        },
+        "inputs:ior": {
+          "connections": [],
+          "value": "1.5"
+        },
+        "inputs:metallic": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:opacity": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:roughness": {
+          "connections": [],
+          "value": "0.18400000035762787"
+        },
+        "inputs:specular": {
+          "connections": [],
+          "value": "0.5"
+        },
+        "outputs:surface": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/_materials/wrought_iron_1/\u539f\u7406\u5316_BSDF",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "outputs:displacement": {
+          "connections": [],
+          "value": "None"
+        },
+        "outputs:surface": {
+          "connections": [
+            "/root/base_br/_materials/wrought_iron/\u539f\u7406\u5316_BSDF.outputs:surface"
+          ],
+          "value": "None"
+        },
+        "outputs:volume": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron",
+      "type": "Material"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPreviewSurface"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:clearcoat": {
+          "connections": [],
+          "value": "0.0"
+        },
+        "inputs:clearcoatRoughness": {
+          "connections": [],
+          "value": "0.029999999329447746"
+        },
+        "inputs:diffuseColor": {
+          "connections": [],
+          "value": "(0.010960095, 0.010960095, 0.010960095)"
+        },
+        "inputs:ior": {
+          "connections": [],
+          "value": "1.5"
+        },
+        "inputs:metallic": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:normal": {
+          "connections": [
+            "/root/base_br/_materials/wrought_iron/\u56fe\u50cf\u7eb9\u7406.outputs:rgb"
+          ],
+          "value": "None"
+        },
+        "inputs:opacity": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:roughness": {
+          "connections": [],
+          "value": "0.18400000035762787"
+        },
+        "inputs:specular": {
+          "connections": [],
+          "value": "0.5"
+        },
+        "outputs:surface": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron/\u539f\u7406\u5316_BSDF",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdUVTexture"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:bias": {
+          "connections": [],
+          "value": "(-1, -1, -1, -1)"
+        },
+        "inputs:file": {
+          "connections": [],
+          "value": "@/home/kaslensu/Desktop/textures/Image_0.png@"
+        },
+        "inputs:scale": {
+          "connections": [],
+          "value": "(2, 2, 2, 2)"
+        },
+        "inputs:sourceColorSpace": {
+          "connections": [],
+          "value": "raw"
+        },
+        "inputs:st": {
+          "connections": [
+            "/root/base_br/_materials/wrought_iron/uvmap.outputs:result"
+          ],
+          "value": "None"
+        },
+        "inputs:wrapS": {
+          "connections": [],
+          "value": "repeat"
+        },
+        "inputs:wrapT": {
+          "connections": [],
+          "value": "repeat"
+        },
+        "outputs:rgb": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron/\u56fe\u50cf\u7eb9\u7406",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPrimvarReader_float2"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:varname": {
+          "connections": [],
+          "value": "st"
+        },
+        "outputs:result": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron/uvmap",
+      "type": "Shader"
+    },
+    {
+      "attributes": {
+        "outputs:displacement": {
+          "connections": [],
+          "value": "None"
+        },
+        "outputs:surface": {
+          "connections": [
+            "/root/base_br/_materials/wrought_iron_1/\u539f\u7406\u5316_BSDF.outputs:surface"
+          ],
+          "value": "None"
+        },
+        "outputs:volume": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron_1",
+      "type": "Material"
+    },
+    {
+      "attributes": {
+        "info:id": {
+          "connections": [],
+          "value": "UsdPreviewSurface"
+        },
+        "info:implementationSource": {
+          "connections": [],
+          "value": "id"
+        },
+        "inputs:clearcoat": {
+          "connections": [],
+          "value": "0.0"
+        },
+        "inputs:clearcoatRoughness": {
+          "connections": [],
+          "value": "0.029999999329447746"
+        },
+        "inputs:diffuseColor": {
+          "connections": [],
+          "value": "(0.010960095, 0.010960095, 0.010960095)"
+        },
+        "inputs:ior": {
+          "connections": [],
+          "value": "1.5"
+        },
+        "inputs:metallic": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:opacity": {
+          "connections": [],
+          "value": "1.0"
+        },
+        "inputs:roughness": {
+          "connections": [],
+          "value": "0.18400000035762787"
+        },
+        "inputs:specular": {
+          "connections": [],
+          "value": "0.5"
+        },
+        "outputs:surface": {
+          "connections": [],
+          "value": "None"
+        }
+      },
+      "path": "/root/base_br/_materials/wrought_iron_1/\u539f\u7406\u5316_BSDF",
+      "type": "Shader"
+    }
+  ],
+  "simulator_starts": 0,
+  "source_files_modified": false,
+  "source_manifest": {
+    "bytes": 3881,
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_source_001/source_manifest.json",
+    "sha256": "86a3684dc9fbc62604c5437d64cbef28df579e585d1bfb6fd3fd93275d39be04"
+  },
+  "standard_ready": false
+}

@@ -1,0 +1,144 @@
+{
+  "schema": "robodojo-reset-repeatability-observation-1",
+  "image_comparisons": [
+    {
+      "camera": "cam_head",
+      "comparison": "fresh_reset",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_head.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_head.png",
+      "left_sha256": "7c163db2e614d534aac44e108eb04c7b792eee263cac077356ab5820d84b9493",
+      "right_sha256": "677cbd9370bd0fa3821370adcbacfff66ef4d0ef1db45ce9018a63c8ae2e7a23",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.4213747829861111,
+      "maximum_channel_difference": 12,
+      "fraction_channels_equal": 0.6218608940972222
+    },
+    {
+      "camera": "cam_head",
+      "comparison": "paused_recapture",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_head.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_head.png",
+      "left_sha256": "677cbd9370bd0fa3821370adcbacfff66ef4d0ef1db45ce9018a63c8ae2e7a23",
+      "right_sha256": "000c54301497c0defe3168fc7ce956d66a4d59035dab52df0fd6e1aee34d3f17",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.06563259548611111,
+      "maximum_channel_difference": 5,
+      "fraction_channels_equal": 0.9346473524305555
+    },
+    {
+      "camera": "cam_left_wrist",
+      "comparison": "fresh_reset",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_left_wrist.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_left_wrist.png",
+      "left_sha256": "aecea0a1844465aed822c708dfb26f33c7b6196dd7dd5edddb62adb7d3f27cf1",
+      "right_sha256": "b4c67733ccf9f812818818196ad8f929126ea6e08f6193048b7c4f52aed7c895",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.40033854166666666,
+      "maximum_channel_difference": 21,
+      "fraction_channels_equal": 0.6431076388888889
+    },
+    {
+      "camera": "cam_left_wrist",
+      "comparison": "paused_recapture",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_left_wrist.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_left_wrist.png",
+      "left_sha256": "b4c67733ccf9f812818818196ad8f929126ea6e08f6193048b7c4f52aed7c895",
+      "right_sha256": "06209720f74be160b575289dac7441114c48c27993ae88fb98b3f44baf976e56",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.07079318576388889,
+      "maximum_channel_difference": 4,
+      "fraction_channels_equal": 0.9293522135416666
+    },
+    {
+      "camera": "cam_right_wrist",
+      "comparison": "fresh_reset",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_001/preview/cam_right_wrist.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_right_wrist.png",
+      "left_sha256": "a9e86d6402972cc9ea0c59b6029305c10ef45442f05e15ba20936d953dc5703a",
+      "right_sha256": "d8a1944ee6d676a3edd0f5640c24b49ff270c1e2c068090ba43c68407ef00f7f",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.41177842881944443,
+      "maximum_channel_difference": 20,
+      "fraction_channels_equal": 0.6910362413194444
+    },
+    {
+      "camera": "cam_right_wrist",
+      "comparison": "paused_recapture",
+      "left_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/before_pause/cam_right_wrist.png",
+      "right_path": "robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/cam_right_wrist.png",
+      "left_sha256": "d8a1944ee6d676a3edd0f5640c24b49ff270c1e2c068090ba43c68407ef00f7f",
+      "right_sha256": "701ed8d7eb305dd38c580c3e293cbe2a9aa8a90fbdf2b224f058b95326d36164",
+      "equal": false,
+      "mean_absolute_channel_difference": 0.10913411458333333,
+      "maximum_channel_difference": 12,
+      "fraction_channels_equal": 0.896103515625
+    }
+  ],
+  "robot_comparisons": [
+    {
+      "arm": "left_arm",
+      "field": "joint_positions",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "left_arm",
+      "field": "joint_velocities",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "left_arm",
+      "field": "body_link_pose_w",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "left_arm",
+      "field": "root_link_pose_w",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "left_arm",
+      "field": "root_physx_view_jacobians",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "right_arm",
+      "field": "joint_positions",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "right_arm",
+      "field": "joint_velocities",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "right_arm",
+      "field": "body_link_pose_w",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "right_arm",
+      "field": "root_link_pose_w",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "arm": "right_arm",
+      "field": "root_physx_view_jacobians",
+      "equal": true,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "tolerance_binding_approved": false,
+  "standard_ready": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0
+}
