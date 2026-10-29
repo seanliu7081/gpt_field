@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "26ebf77ec8420577727d8c99b23f8a0c0323971b6da3d6d6351dfad9297bba9f",
+  "plan_sha256": "5638ae4e23c51e2f1980b68a03e1e99d5d52f22082cec5b2a6e6b403d9d20528",
+  "stage_index": 34,
+  "active_arm": "right",
+  "native_action_counter": [
+    845
+  ],
+  "image_sha256": {
+    "stage_034/cam_head.png": "2cc409e8fa0c76dd011db696a9f10ce7cf1c08661edc6a9ba8a3d90b4c6527d8",
+    "stage_034/cam_left_wrist.png": "6b73658cc31cbb491188e72bb8591cf1d3ff1db55d03abd124565c4d3582129f",
+    "stage_034/cam_right_wrist.png": "f80ad9316d080dc443161ae96004b34257223845dc65131b4da5da95eec1c546"
+  },
+  "reviewer": "root/operator",
+  "decision": "clear_for_empty_gripper_timing",
+  "reason": "Inspected all three fresh hash-bound stage034 RGB views. The head view shows visible tabletop separating the entire active right inner fingertip and closing span from the toaster silhouette. The right wrist view shows unobstructed near finger surfaces and supports the separation, although that view alone is not a depth proof. This authorizes only the fixed-pose right empty-gripper timing stage; no object-state or contact truth was used.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

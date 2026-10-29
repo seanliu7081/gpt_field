@@ -1,0 +1,77 @@
+{
+  "arm_id": "left",
+  "belief": "Both grippers are open at their recorded start poses. The bread is upright in a rack left of the toaster; slice A is the far-left slice. RGB geometry suggests a forward approach with the left gripper, but grasp depth still needs refinement.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_to_pose",
+        "xyz_m": [
+          -0.32,
+          -0.183,
+          0.921
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_to_pose",
+        "xyz_m": [
+          -0.34,
+          -0.163,
+          0.921
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_to_pose",
+        "xyz_m": [
+          -0.35,
+          -0.138,
+          0.921
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_to_pose",
+        "xyz_m": [
+          -0.35,
+          -0.11,
+          0.921
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": true,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_to_pose",
+        "xyz_m": [
+          -0.35,
+          -0.082,
+          0.921
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Approach A with the left arm, grasp and test attachment, place A in the bread-side slot, then place B in the opposite slot. Press and release the lever and return both arms to their recorded starting poses.",
+  "type": "execute",
+  "why": "Advance through visible free space toward the bread while retaining the current finger orientation and obtaining a closer wrist view before contact."
+}

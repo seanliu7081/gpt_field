@@ -1,0 +1,277 @@
+{
+  "accepted_bundle_gate": {
+    "actual_bundle_issued": false,
+    "minimum_completed_actions": 960,
+    "plan_content_sha256": "5638ae4e23c51e2f1980b68a03e1e99d5d52f22082cec5b2a6e6b403d9d20528",
+    "plan_file_sha256": "1b196b2f6f3ebe2455e03d8e578814b7b6831021b5d1dd5e7bcd290cdff0532d",
+    "preview_260_actions_rejected": true
+  },
+  "actual_preview_visual_interpretation": "All six actual endpoint views were inspected. The left endpoint is over clear tabletop; the right head view shows the inner fingertip separated from the toaster silhouette. Wrist perspective still overlaps distant objects, so these views support the measured preparation pose rather than certify depth, a collision envelope, or future closing clearance.",
+  "all_other_guards_counts_speeds_grippers_profiles_and_targets_unchanged": true,
+  "changed_stage_target_poses_only": [
+    {
+      "index": 26,
+      "label": "left_generic_negative_toolX_retreat",
+      "native_actions": 40
+    },
+    {
+      "index": 27,
+      "label": "left_visual_clearance_checkpoint",
+      "native_actions": 0
+    },
+    {
+      "index": 28,
+      "label": "left_gripper_close",
+      "native_actions": 25
+    },
+    {
+      "index": 29,
+      "label": "left_gripper_open",
+      "native_actions": 25
+    },
+    {
+      "index": 33,
+      "label": "right_generic_negative_toolX_retreat",
+      "native_actions": 40
+    },
+    {
+      "index": 34,
+      "label": "right_visual_clearance_checkpoint",
+      "native_actions": 0
+    },
+    {
+      "index": 35,
+      "label": "right_gripper_close",
+      "native_actions": 25
+    },
+    {
+      "index": 36,
+      "label": "right_gripper_open",
+      "native_actions": 25
+    }
+  ],
+  "clearance_preview_basis": {
+    "candidate": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_plan_001/candidate.json",
+      "sha256": "a8519ba2d63f5698902d4b3626df9ec33bf56205551a9a36b179e5268edefc9b"
+    },
+    "closing_authorized_by_preview": false,
+    "full_test_authorized": false,
+    "future_fresh_three_view_gates_required": true,
+    "geometry_analysis": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_open_clearance_preview_geometry_001/analysis.json",
+      "sha256": "cf0362d8234c9a378731b8349e7404c1ae830c51f560d9defd88ec8a937d59ad"
+    },
+    "launch_result": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_open_clearance_preview_001/launch_result.json",
+      "sha256": "fc9efc11c2271d8c01e3096999be49f68f809f7acac395f6af9d072fda16a87a"
+    },
+    "preview_plan": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_plan_001/proposal.json",
+      "sha256": "7c97f997681dd4963624b2c721fef40328f9b03eaddce080087296334d7271fd"
+    },
+    "visual_review": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/root_open_clearance_visual_review_001/review.json",
+      "sha256": "9fd5172fadf31e2d51956e5c0264c3a1c8dedae3835d98304acdfcf7f7959174"
+    }
+  },
+  "controller_characterization_passed": false,
+  "controller_solver_source_unchanged": true,
+  "exact_authorized_transformation_verified": true,
+  "execution_authorized": false,
+  "fresh_three_RGB_gates_still_required": true,
+  "full_calibration_passed": false,
+  "full_default_plan004_unchanged": true,
+  "full_test_authorized": false,
+  "helper_change": "An explicit three-record completed-preview adapter rechecks the clean 260-action launch, archived program bytes, exact six RGBs/root review, independent 1058-arm-state geometry analysis, and source hashes; only the eight held clearance poses and explicit candidate envelope are transferred. The child authorization binds all three evidence hashes and the exact envelope. Default full builder and preview builder remain separately validated.",
+  "independent_actual_geometry": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_open_clearance_preview_geometry_001/analysis.json",
+    "sha256": "cf0362d8234c9a378731b8349e7404c1ae830c51f560d9defd88ec8a937d59ad"
+  },
+  "joint_home_excursion_rad": {
+    "after": 0.5,
+    "before": 0.35
+  },
+  "limitations": [
+    "The 0.50 rad envelope is explicit and was exercised by the open-only preview; it is not an unchanged guard or a workspace-wide calibration.",
+    "A completed 39-stage/960-action characterization with fresh live three-view close gates remains required; the new full sequence is not yet measured.",
+    "Open-only endpoint stability supplies no gripper closing/opening timing or loaded-contact calibration.",
+    "No runtime bundle, complete controller selection, full-test approval, or Standard readiness follows from this review."
+  ],
+  "native_actions": 960,
+  "new_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/proposal.json",
+    "sha256": "1b196b2f6f3ebe2455e03d8e578814b7b6831021b5d1dd5e7bcd290cdff0532d"
+  },
+  "new_plan_content_sha256": "5638ae4e23c51e2f1980b68a03e1e99d5d52f22082cec5b2a6e6b403d9d20528",
+  "old_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+    "sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744"
+  },
+  "physics_substeps": 9600,
+  "preview_authorizes_future_closing": false,
+  "schema": "robodojo-controller-plan-independent-review-1",
+  "scope": "Offline review of the measured open-preview basis and exact full diagnostic proposal changes",
+  "selection_supported_by_completed_measurements": false,
+  "simulated_time_s": 38.4,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/new_host_camera.py",
+      "sha256": "f36e5b097ec4553032be10db1930a586f1db13602a65869b7e63cbacae79e6d3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+      "sha256": "0071f05546ae0c62a75c4a03b7f9bd2d60a63679bc3ea0dd315fb3191505bec0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_native_characterization.py",
+      "sha256": "264cf079e2404298857e91ea39cf817db2b81c129565a96c8cf5b5b8a9dadb70"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py",
+      "sha256": "fe4216f5a62e60628cbed481ef29f57430fd56ea15b1a5969318e2326e0eaceb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_runtime_bundle.py",
+      "sha256": "61947c39973e029aad007865e59f9d533d3bf8a5ec938dbe8a2872745a6faf30"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+      "sha256": "3317ae47426f37926435cae51cd82a9ae0dd4351ca5a365f9f5f7af3c5e04a74"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_characterization.py",
+      "sha256": "5e8856dd598aa7ec18c5d7d00bb77a9c86e4f43fca2a9539cddd9d6d32a32d7b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_common.py",
+      "sha256": "856a9b6556adc5bfde39e4f4ef4c68dd84c0a20c8232b6a86ebfdfb153f59325"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_compatibility.py",
+      "sha256": "79b9bbcd0eacc920ed509f0e45a7f3420ad3a611e9fc6aab63d0c1908e6a6f07"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_dependencies.py",
+      "sha256": "c04141cdf26bb30aae2ce2ce9bb24938f302d301c610f26902ab1b15ebddc5cc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_preview.py",
+      "sha256": "f7538d3d5c2c590f2855ddcf0b58ecf9e4cfeaef9bf0251fed29ab4be2f217bd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_new_host_camera.py",
+      "sha256": "f1d33366b64a3ecaf71ed8659f3d8c8aae9c480097009a3f369fac327942d4ad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py",
+      "sha256": "71a0d08146659a35c80613dee335088532f09f639542beda2da3a2679d3f5078"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py",
+      "sha256": "45a229cda651af8ecd968b467201cf36417e63478f09862207f9979ae5e9baca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_characterization.py",
+      "sha256": "8380338e3d13daaeb7d1f3d0a982fee257f977044d9c77bb72345e83447c4d48"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_config.py",
+      "sha256": "6d2787451c377ec0aa5d55549d42688e685ce238930387b452bba77a877c5ad2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_measurements.py",
+      "sha256": "7faab6c76a4f36bf8fcbc104a9fdafd9878074e5f7efa44937e1e6466d92e424"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_robot_inventory.py",
+      "sha256": "f9e8ea25aa218b1e31554bf62bde4180114d5371f7f2cbd9730e6df72452362e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_runtime_bundle.py",
+      "sha256": "fb0b6eadcda0c7ea70cbd3e4d1eb831cd65e201c32d3823bf8977ff555601294"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/worker_isolation.py",
+      "sha256": "3c46bf7226c4140cb10a8c8be57ddc1e2e2d5529e5c03ad04a537a4b1dd650c8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_preview_basis.py",
+      "sha256": "e0e87a01430d9355bf175f0b0aa4c94d9f59c3fd5e4890db6b508e3bb7a9cbd3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_native_runtime_bundle.py",
+      "sha256": "9ee5595adc57d71231137a01b7e4a0907027808f1d74cc98229eef2a0f768e3b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_prepare_runtime_bundle.py",
+      "sha256": "800c56a23b0a03702d46c7d7cb8d1287da65ea15efb90c9600b5d430bb6a213d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+      "sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/command_009_review.json",
+      "sha256": "83171ebe14bb70e14e5de89f5ba8d60b72c1c71c6aaede0f0e16819ae62b2bae"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/design_review.json",
+      "sha256": "58912353f59f6f2f3d7f187cd7404ef3d9bc1eca5ca1bedb8f731ae3ec69132b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/focused_tests.xml",
+      "sha256": "af4da29fe97dfbc17d0f554fe49d306dd3dbdc622af82ac26f16d8d211912886"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/proposal.json",
+      "sha256": "1b196b2f6f3ebe2455e03d8e578814b7b6831021b5d1dd5e7bcd290cdff0532d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/scope_009_proposal.json",
+      "sha256": "4d8d29a472c9a7aae0c19b9eecb6e1d5063eef45064bc41bdcee8a00669cc141"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_plan_review_005/review_validation.py",
+      "sha256": "03620f7d2fab954051a071bccadf6f3579eef5b62520153f09cceefed42aa38a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_open_clearance_preview_001/launch_result.json",
+      "sha256": "fc9efc11c2271d8c01e3096999be49f68f809f7acac395f6af9d072fda16a87a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_open_clearance_preview_geometry_001/analysis.json",
+      "sha256": "cf0362d8234c9a378731b8349e7404c1ae830c51f560d9defd88ec8a937d59ad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_operator_review_001/review.json",
+      "sha256": "fb6bb64ef8331c7bb28f4d80114bf0d60198f8d12074a0cefe8331c8e547a4b3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_plan_001/candidate.json",
+      "sha256": "a8519ba2d63f5698902d4b3626df9ec33bf56205551a9a36b179e5268edefc9b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_plan_001/proposal.json",
+      "sha256": "7c97f997681dd4963624b2c721fef40328f9b03eaddce080087296334d7271fd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/root_open_clearance_visual_review_001/review.json",
+      "sha256": "9fd5172fadf31e2d51956e5c0264c3a1c8dedae3835d98304acdfcf7f7959174"
+    }
+  ],
+  "stage_count": 39,
+  "standard_ready": false,
+  "validation": {
+    "bundle_and_assembler_tests_passed": 50,
+    "bundle_test_command": "PYTHONPATH=robodojo_uc71/src:robodojo_uc71/runtime/new_host_testdeps robodojo_uc71/runtime/new_host_env/bin/python -B -m pytest robodojo_uc71/tests/test_native_runtime_bundle.py robodojo_uc71/tests/test_prepare_runtime_bundle.py -q",
+    "driver_focused_tests_passed": 83,
+    "model_calls": 0,
+    "native_actions": 0,
+    "simulator_starts": 0
+  }
+}

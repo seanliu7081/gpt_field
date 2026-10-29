@@ -1,0 +1,77 @@
+{
+  "arm_id": "left",
+  "belief": "The approach remains contact-free. The fully open right jaw would otherwise extend toward the inner slices, so a centered grasp at the current x risks enclosing more than A.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.008,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.008,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.006,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": true,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Offset the hand 22 mm toward the outside of the rack, then advance only 18 mm. Use an off-center front-edge pinch of A, inspecting before closure.",
+  "type": "execute",
+  "why": "The outward offset places the right jaw nearer the gap immediately beside A instead of among the inner slices."
+}

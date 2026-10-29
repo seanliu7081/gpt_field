@@ -1,0 +1,5151 @@
+{
+  "schema": "robodojo-offline-finger-sweep-projection-1",
+  "created_at_utc": "2026-10-29T12:10:36.980626+00:00",
+  "scope": "operator_only_predicted_robot_geometry_on_saved_rgb",
+  "source_inputs": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+      "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/clearance_right/request.json",
+      "sha256": "64b8c0688c5d2232276dcfc4ad4a32db6f6f349be38c8f77f913b2df4148633f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/camera_inventory.json",
+      "sha256": "8b06eff63cb3b8f7adcb50372680712e2eb85c06f2ee3bd24b7687618a5ea2e9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/robot_measurement.json",
+      "sha256": "9f99fe3d2eaa89ad9c0f2805c265799cf34cfc3dd278b48b5782a91862c5f3e4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/cam_head.png",
+      "sha256": "d4ecaf64ab26451638d36c41e3edd4b672141dc2d94217ec80ad0d0f4d346525"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/analyze_joint_probe.py",
+      "sha256": "3254117d0f8ed7c7fd49a332436da278a8621ebd6a55021d0a6810daa0c91ddf"
+    }
+  ],
+  "analysis_program": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/analysis.py",
+    "sha256": "a9cfdad2830907e9f5c6880a8d55006111568bcf86b2b94b28f7ff4099fb8ae4"
+  },
+  "artifacts": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.png",
+      "sha256": "a16960c6d8ef2d4bc2abb09c75e6b09344341d9d4092ef21a46de6dbc9e26db2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.pdf",
+      "sha256": "a2c4699da8074600bec7b20e74f1b7c64a732f36e73f1abff3bd476a48ef1d20"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.png",
+      "sha256": "a20f471934a0ddb898b5ba09760b516178d702e2066ee1e5bcca7db59b1e4b9b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.pdf",
+      "sha256": "5965ada4f494ec732bbe900140ed456fe06d5a83e04811bbe842602479829695"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/scene_context.png",
+      "sha256": "9f16e1e88006ef562758f34cf338eef1fc06753722b1d2b20bafc15210093deb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/scene_context.pdf",
+      "sha256": "641690399ec689a7de5e2103cbfe9534bc2c8876f429724048c2d07121ac7172"
+    }
+  ],
+  "method": "URDF FK at source-bound candidate arm joints;41 finger samples from stage034 measured joint7/8 opening to0m. Whole-finger visual triangles translated between endpoints; union of projected triangle-prism convex hulls rasterized at3x image resolution. Pad-face sweep uses only the two bound distal triangles per finger.",
+  "units": "joint1..6 radians; joint7..8 metres despite upstream full_q_rad field name",
+  "camera_intrinsics": [
+    [
+      288.1325378417969,
+      0.0,
+      320.0
+    ],
+    [
+      0.0,
+      336.4643249511719,
+      240.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "optical_from_world": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      -0.8660253286361694,
+      -0.5000001192092896,
+      0.29892975091934204
+    ],
+    [
+      0.0,
+      0.5000001192092896,
+      -0.8660253286361694,
+      1.3377611637115479
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_close_target_control_fact_m": -0.01,
+  "negative_physical_finger_positions_projected": false,
+  "checks": [
+    {
+      "arm": "left",
+      "link": "link6",
+      "measured_fk_matrix_max_abs_error": 3.6408081442495167e-07
+    },
+    {
+      "arm": "left",
+      "link": "link7",
+      "measured_fk_matrix_max_abs_error": 3.6408076417743893e-07
+    },
+    {
+      "arm": "left",
+      "link": "link8",
+      "measured_fk_matrix_max_abs_error": 3.6408076417743893e-07
+    },
+    {
+      "arm": "right",
+      "link": "link6",
+      "measured_fk_matrix_max_abs_error": 8.960994666203004e-08
+    },
+    {
+      "arm": "right",
+      "link": "link7",
+      "measured_fk_matrix_max_abs_error": 8.960995922163143e-08
+    },
+    {
+      "arm": "right",
+      "link": "link8",
+      "measured_fk_matrix_max_abs_error": 9.267249168054548e-08
+    }
+  ],
+  "cases": {
+    "left": {
+      "0": {
+        "arm_joint_positions_rad": {
+          "joint1": -4.894434013635873e-08,
+          "joint2": 1.2132126357755624e-05,
+          "joint3": 1.926650980976774e-07,
+          "joint4": 1.3000992112210952e-05,
+          "joint5": -6.311807254633095e-08,
+          "joint6": -4.791887135979778e-07
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            -0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          -0.29957218924226153,
+          -0.20296413325018964,
+          0.9206465336784301
+        ],
+        "tool_uv_pixels": [
+          123.3684678268834,
+          251.02073594949366
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399989917874336,
+              "joint8": 0.04399999976158142
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34397566938497937,
+                -0.20297754114578798,
+                0.9206465422658312
+              ],
+              "link8": [
+                -0.2551686085167103,
+                -0.20295072532421998,
+                0.9206465250910774
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899901699274774,
+              "joint8": 0.042899999767541885
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3428756719556577,
+                -0.20297720899704202,
+                0.9206465427929376
+              ],
+              "link8": [
+                -0.25626860846060273,
+                -0.20295105747372527,
+                0.9206465245639697
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179990421980619,
+              "joint8": 0.04179999977350235
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3417756745263361,
+                -0.20297687684829607,
+                0.920646543320044
+              ],
+              "link8": [
+                -0.2573686084044952,
+                -0.2029513896232305,
+                0.920646524036862
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.04069990674033761,
+              "joint8": 0.040699999779462814
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3406756770970145,
+                -0.20297654469955012,
+                0.9206465438471505
+              ],
+              "link8": [
+                -0.2584686083483877,
+                -0.20295172177273574,
+                0.9206465235097544
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959990926086903,
+              "joint8": 0.03959999978542328
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33957567966769286,
+                -0.2029762125508041,
+                0.920646544374257
+              ],
+              "link8": [
+                -0.2595686082922801,
+                -0.20295205392224097,
+                0.9206465229826467
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849991178140044,
+              "joint8": 0.03849999979138374
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33847568223837127,
+                -0.20297588040205816,
+                0.9206465449013634
+              ],
+              "link8": [
+                -0.26066860823617255,
+                -0.20295238607174626,
+                0.920646522455539
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.037399914301931854,
+              "joint8": 0.03739999979734421
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3373756848090496,
+                -0.2029755482533122,
+                0.9206465454284699
+              ],
+              "link8": [
+                -0.26176860818006503,
+                -0.2029527182212515,
+                0.9206465219284313
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629991682246327,
+              "joint8": 0.03629999980330467
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.336275687379728,
+                -0.20297521610456626,
+                0.9206465459555763
+              ],
+              "link8": [
+                -0.2628686081239575,
+                -0.20295305037075673,
+                0.9206465214013237
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519991934299469,
+              "joint8": 0.03519999980926514
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33517568995040636,
+                -0.2029748839558203,
+                0.9206465464826827
+              ],
+              "link8": [
+                -0.26396860806784994,
+                -0.20295338252026196,
+                0.9206465208742161
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.03409992186352611,
+              "joint8": 0.0340999998152256
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33407569252108477,
+                -0.2029745518070743,
+                0.9206465470097892
+              ],
+              "link8": [
+                -0.2650686080117424,
+                -0.20295371466976725,
+                0.9206465203471084
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.03299992438405752,
+              "joint8": 0.032999999821186066
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33297569509176317,
+                -0.20297421965832835,
+                0.9206465475368957
+              ],
+              "link8": [
+                -0.26616860795563485,
+                -0.20295404681927248,
+                0.9206465198200008
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.031899926904588934,
+              "joint8": 0.03189999982714653
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3318756976624415,
+                -0.2029738875095824,
+                0.9206465480640021
+              ],
+              "link8": [
+                -0.26726860789952733,
+                -0.20295437896877772,
+                0.9206465192928931
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.030799929425120352,
+              "joint8": 0.03079999983310699
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3307757002331199,
+                -0.20297355536083644,
+                0.9206465485911086
+              ],
+              "link8": [
+                -0.26836860784341976,
+                -0.20295471111828295,
+                0.9206465187657854
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.02969993194565177,
+              "joint8": 0.029699999839067463
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3296757028037983,
+                -0.2029732232120905,
+                0.920646549118215
+              ],
+              "link8": [
+                -0.26946860778731224,
+                -0.20295504326778824,
+                0.9206465182386778
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.028599934466183183,
+              "joint8": 0.02859999984502792
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32857570537447667,
+                -0.20297289106334454,
+                0.9206465496453214
+              ],
+              "link8": [
+                -0.2705686077312047,
+                -0.20295537541729347,
+                0.9206465177115701
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.0274999369867146,
+              "joint8": 0.027499999850988388
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32747570794515507,
+                -0.20297255891459853,
+                0.9206465501724279
+              ],
+              "link8": [
+                -0.27166860767509715,
+                -0.2029557075667987,
+                0.9206465171844624
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399939507246017,
+              "joint8": 0.026399999856948853
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3263757105158334,
+                -0.20297222676585258,
+                0.9206465506995344
+              ],
+              "link8": [
+                -0.2727686076189896,
+                -0.20295603971630394,
+                0.9206465166573549
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299942027777432,
+              "joint8": 0.025299999862909314
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3252757130865118,
+                -0.20297189461710663,
+                0.9206465512266409
+              ],
+              "link8": [
+                -0.27386860756288206,
+                -0.20295637186580923,
+                0.9206465161302472
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.02419994454830885,
+              "joint8": 0.024199999868869785
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3241757156571902,
+                -0.20297156246836068,
+                0.9206465517537473
+              ],
+              "link8": [
+                -0.2749686075067745,
+                -0.20295670401531446,
+                0.9206465156031395
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099947068840262,
+              "joint8": 0.023099999874830243
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32307571822786857,
+                -0.20297123031961473,
+                0.9206465522808537
+              ],
+              "link8": [
+                -0.27606860745066697,
+                -0.2029570361648197,
+                0.9206465150760318
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199994958937168,
+              "joint8": 0.02199999988079071
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32197572079854697,
+                -0.20297089817086877,
+                0.9206465528079602
+              ],
+              "link8": [
+                -0.2771686073945594,
+                -0.20295736831432493,
+                0.9206465145489242
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899952109903096,
+              "joint8": 0.020899999886751175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3208757233692253,
+                -0.20297056602212277,
+                0.9206465533350666
+              ],
+              "link8": [
+                -0.2782686073384519,
+                -0.20295770046383016,
+                0.9206465140218165
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.01979995463043451,
+              "joint8": 0.019799999892711636
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3197757259399037,
+                -0.20297023387337682,
+                0.9206465538621731
+              ],
+              "link8": [
+                -0.27936860728234436,
+                -0.20295803261333545,
+                0.9206465134947088
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.018699957150965927,
+              "joint8": 0.0186999998986721
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3186757285105821,
+                -0.20296990172463086,
+                0.9206465543892796
+              ],
+              "link8": [
+                -0.2804686072262368,
+                -0.20295836476284068,
+                0.9206465129676012
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599959671497342,
+              "joint8": 0.017599999904632565
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31757573108126047,
+                -0.2029695695758849,
+                0.920646554916386
+              ],
+              "link8": [
+                -0.28156860717012927,
+                -0.20295869691234592,
+                0.9206465124404936
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.01649996219202876,
+              "joint8": 0.016499999910593033
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3164757336519389,
+                -0.20296923742713896,
+                0.9206465554434924
+              ],
+              "link8": [
+                -0.2826686071140217,
+                -0.20295902906185115,
+                0.9206465119133859
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399964712560176,
+              "joint8": 0.015399999916553496
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3153757362226172,
+                -0.20296890527839295,
+                0.9206465559705989
+              ],
+              "link8": [
+                -0.2837686070579142,
+                -0.20295936121135644,
+                0.9206465113862783
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.014299967233091591,
+              "joint8": 0.01429999992251396
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3142757387932956,
+                -0.202968573129647,
+                0.9206465564977053
+              ],
+              "link8": [
+                -0.2848686070018066,
+                -0.20295969336086167,
+                0.9206465108591706
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199969753623007,
+              "joint8": 0.013199999928474423
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.313175741363974,
+                -0.20296824098090105,
+                0.9206465570248118
+              ],
+              "link8": [
+                -0.2859686069456991,
+                -0.2029600255103669,
+                0.9206465103320629
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.01209997227415442,
+              "joint8": 0.012099999934434887
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31207574393465237,
+                -0.2029679088321551,
+                0.9206465575519183
+              ],
+              "link8": [
+                -0.2870686068895915,
+                -0.20296035765987214,
+                0.9206465098049553
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.01099997479468584,
+              "joint8": 0.010999999940395355
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3109757465053308,
+                -0.20296757668340915,
+                0.9206465580790247
+              ],
+              "link8": [
+                -0.288168606833484,
+                -0.20296068980937743,
+                0.9206465092778476
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899977315217256,
+              "joint8": 0.009899999946355818
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3098757490760091,
+                -0.2029672445346632,
+                0.9206465586061311
+              ],
+              "link8": [
+                -0.2892686067773764,
+                -0.20296102195888266,
+                0.92064650875074
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799979835748671,
+              "joint8": 0.008799999952316282
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3087757516466875,
+                -0.2029669123859172,
+                0.9206465591332376
+              ],
+              "link8": [
+                -0.2903686067212689,
+                -0.2029613541083879,
+                0.9206465082236324
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0076999823562800855,
+              "joint8": 0.007699999958276746
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3076757542173659,
+                -0.20296658023717123,
+                0.920646559660344
+              ],
+              "link8": [
+                -0.29146860666516133,
+                -0.20296168625789313,
+                0.9206465076965247
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599984876811501,
+              "joint8": 0.006599999964237209
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3065757567880443,
+                -0.20296624808842528,
+                0.9206465601874505
+              ],
+              "link8": [
+                -0.2925686066090538,
+                -0.20296201840739841,
+                0.920646507169417
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.00549998739734292,
+              "joint8": 0.005499999970197678
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3054757593587227,
+                -0.20296591593967933,
+                0.920646560714557
+              ],
+              "link8": [
+                -0.29366860655294624,
+                -0.20296235055690365,
+                0.9206465066423093
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.0043999899178743355,
+              "joint8": 0.004399999976158141
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3043757619294011,
+                -0.20296558379093338,
+                0.9206465612416634
+              ],
+              "link8": [
+                -0.2947686064968387,
+                -0.20296268270640888,
+                0.9206465061152017
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999924384057504,
+              "joint8": 0.0032999999821186044
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3032757645000794,
+                -0.20296525164218743,
+                0.9206465617687698
+              ],
+              "link8": [
+                -0.29586860644073115,
+                -0.20296301485591411,
+                0.920646505588094
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199994958937165,
+              "joint8": 0.002199999988079068
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.30217576707075783,
+                -0.20296491949344142,
+                0.9206465622958763
+              ],
+              "link8": [
+                -0.29696860638462363,
+                -0.2029633470054194,
+                0.9206465050609863
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999974794685802,
+              "joint8": 0.0010999999940395316
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3010757696414362,
+                -0.20296458734469547,
+                0.9206465628229827
+              ],
+              "link8": [
+                -0.2980686063285161,
+                -0.20296367915492464,
+                0.9206465045338788
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.2999757722121146,
+                -0.20296425519594952,
+                0.9206465633500892
+              ],
+              "link8": [
+                -0.29916860627240854,
+                -0.20296401130442987,
+                0.9206465040067711
+              ]
+            }
+          }
+        ]
+      },
+      "0.01": {
+        "arm_joint_positions_rad": {
+          "joint1": 0.22497195244991405,
+          "joint2": -0.1474072442287148,
+          "joint3": 0.14742076103529317,
+          "joint4": -0.29482631812784965,
+          "joint5": 0.22497287173368682,
+          "joint6": -2.5931989581687906e-07
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            -0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          -0.3095642532561411,
+          -0.22796474306004114,
+          0.9506460429940327
+        ],
+        "tool_uv_pixels": [
+          97.28689139153211,
+          257.66761902632385
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399989917874336,
+              "joint8": 0.04399999976158142
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3539677333969005,
+                -0.22797815742210042,
+                0.9506460663875527
+              ],
+              "link8": [
+                -0.2651606725325482,
+                -0.22795132866759585,
+                0.9506460196005274
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899901699274774,
+              "joint8": 0.042899999767541885
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35286773596762716,
+                -0.22797782511316156,
+                0.9506460665478704
+              ],
+              "link8": [
+                -0.2662606724763924,
+                -0.22795166097729444,
+                0.9506460194402093
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179990421980619,
+              "joint8": 0.04179999977350235
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3517677385383538,
+                -0.22797749280422264,
+                0.9506460667081883
+              ],
+              "link8": [
+                -0.2673606724202366,
+                -0.22795199328699298,
+                0.9506460192798911
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.04069990674033761,
+              "joint8": 0.040699999779462814
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35066774110908044,
+                -0.22797716049528371,
+                0.9506460668685061
+              ],
+              "link8": [
+                -0.2684606723640808,
+                -0.22795232559669157,
+                0.9506460191195729
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959990926086903,
+              "joint8": 0.03959999978542328
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3495677436798071,
+                -0.2279768281863448,
+                0.9506460670288238
+              ],
+              "link8": [
+                -0.26956067230792496,
+                -0.2279526579063901,
+                0.9506460189592548
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849991178140044,
+              "joint8": 0.03849999979138374
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3484677462505337,
+                -0.22797649587740587,
+                0.9506460671891417
+              ],
+              "link8": [
+                -0.27066067225176915,
+                -0.2279529902160887,
+                0.9506460187989366
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.037399914301931854,
+              "joint8": 0.03739999979734421
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34736774882126037,
+                -0.22797616356846695,
+                0.9506460673494594
+              ],
+              "link8": [
+                -0.27176067219561334,
+                -0.22795332252578723,
+                0.9506460186386184
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629991682246327,
+              "joint8": 0.03629999980330467
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34626775139198707,
+                -0.22797583125952808,
+                0.9506460675097772
+              ],
+              "link8": [
+                -0.2728606721394575,
+                -0.22795365483548582,
+                0.9506460184783003
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519991934299469,
+              "joint8": 0.03519999980926514
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3451677539627137,
+                -0.22797549895058916,
+                0.9506460676700951
+              ],
+              "link8": [
+                -0.2739606720833017,
+                -0.22795398714518436,
+                0.9506460183179821
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.03409992186352611,
+              "joint8": 0.0340999998152256
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34406775653344035,
+                -0.22797516664165024,
+                0.9506460678304128
+              ],
+              "link8": [
+                -0.2750606720271459,
+                -0.22795431945488295,
+                0.9506460181576639
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.03299992438405752,
+              "joint8": 0.032999999821186066
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.342967759104167,
+                -0.22797483433271132,
+                0.9506460679907306
+              ],
+              "link8": [
+                -0.2761606719709901,
+                -0.2279546517645815,
+                0.9506460179973458
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.031899926904588934,
+              "joint8": 0.03189999982714653
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34186776167489363,
+                -0.2279745020237724,
+                0.9506460681510485
+              ],
+              "link8": [
+                -0.2772606719148343,
+                -0.22795498407428008,
+                0.9506460178370276
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.030799929425120352,
+              "joint8": 0.03079999983310699
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3407677642456203,
+                -0.22797416971483347,
+                0.9506460683113662
+              ],
+              "link8": [
+                -0.27836067185867847,
+                -0.22795531638397862,
+                0.9506460176767094
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.02969993194565177,
+              "joint8": 0.029699999839067463
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33966776681634697,
+                -0.2279738374058946,
+                0.950646068471684
+              ],
+              "link8": [
+                -0.27946067180252265,
+                -0.2279556486936772,
+                0.9506460175163913
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.028599934466183183,
+              "joint8": 0.02859999984502792
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3385677693870736,
+                -0.2279735050969557,
+                0.9506460686320019
+              ],
+              "link8": [
+                -0.28056067174636684,
+                -0.22795598100337575,
+                0.9506460173560731
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.0274999369867146,
+              "joint8": 0.027499999850988388
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33746777195780026,
+                -0.22797317278801676,
+                0.9506460687923196
+              ],
+              "link8": [
+                -0.28166067169021103,
+                -0.22795631331307434,
+                0.9506460171957549
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399939507246017,
+              "joint8": 0.026399999856948853
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3363677745285269,
+                -0.22797284047907784,
+                0.9506460689526375
+              ],
+              "link8": [
+                -0.2827606716340552,
+                -0.22795664562277287,
+                0.9506460170354368
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299942027777432,
+              "joint8": 0.025299999862909314
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33526777709925354,
+                -0.22797250817013892,
+                0.9506460691129552
+              ],
+              "link8": [
+                -0.2838606715778994,
+                -0.22795697793247147,
+                0.9506460168751186
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.02419994454830885,
+              "joint8": 0.024199999868869785
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3341677796699802,
+                -0.2279721758612,
+                0.950646069273273
+              ],
+              "link8": [
+                -0.2849606715217436,
+                -0.22795731024217,
+                0.9506460167148004
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099947068840262,
+              "joint8": 0.023099999874830243
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3330677822407068,
+                -0.22797184355226113,
+                0.9506460694335909
+              ],
+              "link8": [
+                -0.2860606714655878,
+                -0.2279576425518686,
+                0.9506460165544823
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199994958937168,
+              "joint8": 0.02199999988079071
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33196778481143346,
+                -0.2279715112433222,
+                0.9506460695939086
+              ],
+              "link8": [
+                -0.28716067140943197,
+                -0.22795797486156713,
+                0.9506460163941641
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899952109903096,
+              "joint8": 0.020899999886751175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3308677873821601,
+                -0.2279711789343833,
+                0.9506460697542264
+              ],
+              "link8": [
+                -0.28826067135327615,
+                -0.22795830717126572,
+                0.9506460162338459
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.01979995463043451,
+              "joint8": 0.019799999892711636
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3297677899528868,
+                -0.22797084662544437,
+                0.9506460699145443
+              ],
+              "link8": [
+                -0.28936067129712034,
+                -0.22795863948096426,
+                0.9506460160735278
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.018699957150965927,
+              "joint8": 0.0186999998986721
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32866779252361344,
+                -0.22797051431650545,
+                0.950646070074862
+              ],
+              "link8": [
+                -0.29046067124096453,
+                -0.22795897179066285,
+                0.9506460159132096
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599959671497342,
+              "joint8": 0.017599999904632565
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3275677950943401,
+                -0.22797018200756652,
+                0.9506460702351798
+              ],
+              "link8": [
+                -0.2915606711848087,
+                -0.2279593041003614,
+                0.9506460157528914
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.01649996219202876,
+              "joint8": 0.016499999910593033
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32646779766506673,
+                -0.22796984969862766,
+                0.9506460703954976
+              ],
+              "link8": [
+                -0.2926606711286529,
+                -0.22795963641005998,
+                0.9506460155925733
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399964712560176,
+              "joint8": 0.015399999916553496
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32536780023579337,
+                -0.22796951738968874,
+                0.9506460705558154
+              ],
+              "link8": [
+                -0.2937606710724971,
+                -0.22795996871975852,
+                0.9506460154322551
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.014299967233091591,
+              "joint8": 0.01429999992251396
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32426780280652,
+                -0.22796918508074981,
+                0.9506460707161332
+              ],
+              "link8": [
+                -0.2948606710163413,
+                -0.2279603010294571,
+                0.950646015271937
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199969753623007,
+              "joint8": 0.013199999928474423
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32316780537724665,
+                -0.2279688527718109,
+                0.950646070876451
+              ],
+              "link8": [
+                -0.29596067096018547,
+                -0.22796063333915564,
+                0.9506460151116188
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.01209997227415442,
+              "joint8": 0.012099999934434887
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32206780794797335,
+                -0.22796852046287197,
+                0.9506460710367688
+              ],
+              "link8": [
+                -0.29706067090402966,
+                -0.22796096564885424,
+                0.9506460149513006
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.01099997479468584,
+              "joint8": 0.010999999940395355
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3209678105187,
+                -0.22796818815393305,
+                0.9506460711970866
+              ],
+              "link8": [
+                -0.29816067084787384,
+                -0.22796129795855277,
+                0.9506460147909825
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899977315217256,
+              "joint8": 0.009899999946355818
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31986781308942663,
+                -0.22796785584499418,
+                0.9506460713574044
+              ],
+              "link8": [
+                -0.29926067079171803,
+                -0.22796163026825136,
+                0.9506460146306643
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799979835748671,
+              "joint8": 0.008799999952316282
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3187678156601533,
+                -0.22796752353605526,
+                0.9506460715177222
+              ],
+              "link8": [
+                -0.3003606707355622,
+                -0.2279619625779499,
+                0.9506460144703461
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0076999823562800855,
+              "joint8": 0.007699999958276746
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3176678182308799,
+                -0.22796719122711634,
+                0.95064607167804
+              ],
+              "link8": [
+                -0.3014606706794064,
+                -0.2279622948876485,
+                0.950646014310028
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599984876811501,
+              "joint8": 0.006599999964237209
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31656782080160656,
+                -0.22796685891817742,
+                0.9506460718383578
+              ],
+              "link8": [
+                -0.3025606706232506,
+                -0.22796262719734703,
+                0.9506460141497098
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.00549998739734292,
+              "joint8": 0.005499999970197678
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3154678233723332,
+                -0.2279665266092385,
+                0.9506460719986756
+              ],
+              "link8": [
+                -0.3036606705670948,
+                -0.22796295950704562,
+                0.9506460139893916
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.0043999899178743355,
+              "joint8": 0.004399999976158141
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31436782594305984,
+                -0.22796619430029957,
+                0.9506460721589934
+              ],
+              "link8": [
+                -0.30476067051093897,
+                -0.22796329181674416,
+                0.9506460138290735
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999924384057504,
+              "joint8": 0.0032999999821186044
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31326782851378654,
+                -0.2279658619913607,
+                0.9506460723193112
+              ],
+              "link8": [
+                -0.30586067045478316,
+                -0.22796362412644275,
+                0.9506460136687553
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199994958937165,
+              "joint8": 0.002199999988079068
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3121678310845132,
+                -0.22796552968242179,
+                0.950646072479629
+              ],
+              "link8": [
+                -0.30696067039862734,
+                -0.22796395643614129,
+                0.9506460135084371
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999974794685802,
+              "joint8": 0.0010999999940395316
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3110678336552398,
+                -0.22796519737348286,
+                0.9506460726399468
+              ],
+              "link8": [
+                -0.30806067034247153,
+                -0.22796428874583988,
+                0.950646013348119
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.30996783622596646,
+                -0.22796486506454394,
+                0.9506460728002646
+              ],
+              "link8": [
+                -0.3091606702863157,
+                -0.2279646210555384,
+                0.9506460131878008
+              ]
+            }
+          }
+        ]
+      },
+      "0.015": {
+        "arm_joint_positions_rad": {
+          "joint1": 0.33083793313111975,
+          "joint2": -0.1353670066170881,
+          "joint3": 0.14509437130332556,
+          "joint4": -0.280458853028452,
+          "joint5": 0.33083868535526206,
+          "joint6": -5.036331571509999e-07
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            -0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          -0.3145638638484015,
+          -0.22796456691812556,
+          0.9506460428248672
+        ],
+        "tool_uv_pixels": [
+          93.6900181301944,
+          257.6674870509116
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399989917874336,
+              "joint8": 0.04399999976158142
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35896734398809454,
+                -0.22797798480969306,
+                0.9506460662331763
+              ],
+              "link8": [
+                -0.2701602831258751,
+                -0.2279511489961641,
+                0.9506460194165727
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899901699274774,
+              "joint8": 0.042899999767541885
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3578673465588476,
+                -0.2279776524133184,
+                0.9506460663931277
+              ],
+              "link8": [
+                -0.27126028306969285,
+                -0.22795148139329852,
+                0.950646019256621
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179990421980619,
+              "joint8": 0.04179999977350235
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3567673491296007,
+                -0.22797732001694382,
+                0.950646066553079
+              ],
+              "link8": [
+                -0.2723602830135106,
+                -0.227951813790433,
+                0.9506460190966691
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.04069990674033761,
+              "joint8": 0.040699999779462814
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35566735170035374,
+                -0.22797698762056917,
+                0.9506460667130305
+              ],
+              "link8": [
+                -0.2734602829573284,
+                -0.22795214618756748,
+                0.9506460189367173
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959990926086903,
+              "joint8": 0.03959999978542328
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3545673542711068,
+                -0.22797665522419458,
+                0.9506460668729819
+              ],
+              "link8": [
+                -0.27456028290114615,
+                -0.22795247858470197,
+                0.9506460187767655
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849991178140044,
+              "joint8": 0.03849999979138374
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35346735684185987,
+                -0.22797632282781993,
+                0.9506460670329334
+              ],
+              "link8": [
+                -0.2756602828449639,
+                -0.22795281098183645,
+                0.9506460186168137
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.037399914301931854,
+              "joint8": 0.03739999979734421
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35236735941261293,
+                -0.22797599043144529,
+                0.9506460671928848
+              ],
+              "link8": [
+                -0.2767602827887817,
+                -0.22795314337897093,
+                0.9506460184568619
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629991682246327,
+              "joint8": 0.03629999980330467
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.351267361983366,
+                -0.2279756580350707,
+                0.9506460673528362
+              ],
+              "link8": [
+                -0.27786028273259944,
+                -0.22795347577610542,
+                0.9506460182969101
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519991934299469,
+              "joint8": 0.03519999980926514
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.35016736455411906,
+                -0.22797532563869605,
+                0.9506460675127877
+              ],
+              "link8": [
+                -0.27896028267641726,
+                -0.2279538081732399,
+                0.9506460181369584
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.03409992186352611,
+              "joint8": 0.0340999998152256
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34906736712487213,
+                -0.2279749932423214,
+                0.9506460676727391
+              ],
+              "link8": [
+                -0.280060282620235,
+                -0.2279541405703744,
+                0.9506460179770065
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.03299992438405752,
+              "joint8": 0.032999999821186066
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3479673696956252,
+                -0.2279746608459468,
+                0.9506460678326906
+              ],
+              "link8": [
+                -0.2811602825640528,
+                -0.22795447296750881,
+                0.9506460178170547
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.031899926904588934,
+              "joint8": 0.03189999982714653
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34686737226637826,
+                -0.22797432844957216,
+                0.950646067992642
+              ],
+              "link8": [
+                -0.28226028250787055,
+                -0.2279548053646433,
+                0.9506460176571029
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.030799929425120352,
+              "joint8": 0.03079999983310699
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3457673748371313,
+                -0.22797399605319757,
+                0.9506460681525933
+              ],
+              "link8": [
+                -0.2833602824516883,
+                -0.22795513776177778,
+                0.9506460174971512
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.02969993194565177,
+              "joint8": 0.029699999839067463
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3446673774078844,
+                -0.22797366365682292,
+                0.9506460683125448
+              ],
+              "link8": [
+                -0.2844602823955061,
+                -0.22795547015891227,
+                0.9506460173371993
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.028599934466183183,
+              "joint8": 0.02859999984502792
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34356737997863745,
+                -0.22797333126044828,
+                0.9506460684724962
+              ],
+              "link8": [
+                -0.28556028233932385,
+                -0.22795580255604675,
+                0.9506460171772475
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.0274999369867146,
+              "joint8": 0.027499999850988388
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3424673825493905,
+                -0.22797299886407368,
+                0.9506460686324477
+              ],
+              "link8": [
+                -0.2866602822831416,
+                -0.22795613495318123,
+                0.9506460170172958
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399939507246017,
+              "joint8": 0.026399999856948853
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3413673851201436,
+                -0.22797266646769904,
+                0.9506460687923991
+              ],
+              "link8": [
+                -0.2877602822269594,
+                -0.22795646735031572,
+                0.950646016857344
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299942027777432,
+              "joint8": 0.025299999862909314
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.34026738769089665,
+                -0.2279723340713244,
+                0.9506460689523506
+              ],
+              "link8": [
+                -0.2888602821707772,
+                -0.2279567997474502,
+                0.9506460166973921
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.02419994454830885,
+              "joint8": 0.024199999868869785
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3391673902616497,
+                -0.2279720016749498,
+                0.950646069112302
+              ],
+              "link8": [
+                -0.28996028211459496,
+                -0.22795713214458468,
+                0.9506460165374404
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099947068840262,
+              "joint8": 0.023099999874830243
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3380673928324028,
+                -0.22797166927857515,
+                0.9506460692722534
+              ],
+              "link8": [
+                -0.2910602820584127,
+                -0.2279574645417191,
+                0.9506460163774886
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199994958937168,
+              "joint8": 0.02199999988079071
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3369673954031559,
+                -0.22797133688220056,
+                0.9506460694322049
+              ],
+              "link8": [
+                -0.2921602820022305,
+                -0.2279577969388536,
+                0.9506460162175367
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899952109903096,
+              "joint8": 0.020899999886751175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33586739797390897,
+                -0.2279710044858259,
+                0.9506460695921563
+              ],
+              "link8": [
+                -0.29326028194604825,
+                -0.22795812933598808,
+                0.9506460160575849
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.01979995463043451,
+              "joint8": 0.019799999892711636
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33476740054466203,
+                -0.22797067208945127,
+                0.9506460697521077
+              ],
+              "link8": [
+                -0.294360281889866,
+                -0.22795846173312256,
+                0.9506460158976332
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.018699957150965927,
+              "joint8": 0.0186999998986721
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3336674031154151,
+                -0.22797033969307667,
+                0.9506460699120591
+              ],
+              "link8": [
+                -0.2954602818336838,
+                -0.22795879413025705,
+                0.9506460157376814
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599959671497342,
+              "joint8": 0.017599999904632565
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.33256740568616816,
+                -0.22797000729670203,
+                0.9506460700720105
+              ],
+              "link8": [
+                -0.29656028177750154,
+                -0.22795912652739153,
+                0.9506460155777295
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.01649996219202876,
+              "joint8": 0.016499999910593033
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3314674082569212,
+                -0.22796967490032738,
+                0.950646070231962
+              ],
+              "link8": [
+                -0.2976602817213193,
+                -0.22795945892452602,
+                0.9506460154177778
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399964712560176,
+              "joint8": 0.015399999916553496
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3303674108276743,
+                -0.2279693425039528,
+                0.9506460703919134
+              ],
+              "link8": [
+                -0.29876028166513713,
+                -0.2279597913216605,
+                0.950646015257826
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.014299967233091591,
+              "joint8": 0.01429999992251396
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32926741339842736,
+                -0.22796901010757814,
+                0.9506460705518649
+              ],
+              "link8": [
+                -0.2998602816089549,
+                -0.22796012371879493,
+                0.9506460150978742
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199969753623007,
+              "joint8": 0.013199999928474423
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3281674159691804,
+                -0.22796867771120355,
+                0.9506460707118163
+              ],
+              "link8": [
+                -0.30096028155277266,
+                -0.2279604561159294,
+                0.9506460149379223
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.01209997227415442,
+              "joint8": 0.012099999934434887
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3270674185399335,
+                -0.2279683453148289,
+                0.9506460708717677
+              ],
+              "link8": [
+                -0.3020602814965904,
+                -0.2279607885130639,
+                0.9506460147779706
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.01099997479468584,
+              "joint8": 0.010999999940395355
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32596742111068655,
+                -0.22796801291845425,
+                0.9506460710317192
+              ],
+              "link8": [
+                -0.3031602814404082,
+                -0.22796112091019838,
+                0.9506460146180188
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899977315217256,
+              "joint8": 0.009899999946355818
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3248674236814396,
+                -0.22796768052207966,
+                0.9506460711916705
+              ],
+              "link8": [
+                -0.30426028138422595,
+                -0.22796145330733286,
+                0.950646014458067
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799979835748671,
+              "joint8": 0.008799999952316282
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3237674262521927,
+                -0.22796734812570502,
+                0.950646071351622
+              ],
+              "link8": [
+                -0.3053602813280437,
+                -0.22796178570446735,
+                0.9506460142981152
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0076999823562800855,
+              "joint8": 0.007699999958276746
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.32266742882294575,
+                -0.22796701572933037,
+                0.9506460715115734
+              ],
+              "link8": [
+                -0.3064602812718615,
+                -0.22796211810160183,
+                0.9506460141381634
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599984876811501,
+              "joint8": 0.006599999964237209
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3215674313936988,
+                -0.22796668333295578,
+                0.9506460716715249
+              ],
+              "link8": [
+                -0.30756028121567924,
+                -0.2279624504987363,
+                0.9506460139782116
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.00549998739734292,
+              "joint8": 0.005499999970197678
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3204674339644519,
+                -0.22796635093658113,
+                0.9506460718314763
+              ],
+              "link8": [
+                -0.308660281159497,
+                -0.2279627828958708,
+                0.9506460138182599
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.0043999899178743355,
+              "joint8": 0.004399999976158141
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31936743653520494,
+                -0.22796601854020654,
+                0.9506460719914277
+              ],
+              "link8": [
+                -0.3097602811033148,
+                -0.22796311529300523,
+                0.950646013658308
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999924384057504,
+              "joint8": 0.0032999999821186044
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.318267439105958,
+                -0.2279656861438319,
+                0.9506460721513792
+              ],
+              "link8": [
+                -0.3108602810471326,
+                -0.2279634476901397,
+                0.9506460134983562
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199994958937165,
+              "joint8": 0.002199999988079068
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31716744167671107,
+                -0.22796535374745724,
+                0.9506460723113306
+              ],
+              "link8": [
+                -0.31196028099095036,
+                -0.2279637800872742,
+                0.9506460133384044
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999974794685802,
+              "joint8": 0.0010999999940395316
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.31606744424746414,
+                -0.22796502135108265,
+                0.9506460724712821
+              ],
+              "link8": [
+                -0.3130602809347681,
+                -0.22796411248440868,
+                0.9506460131784527
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                -0.3149674468182172,
+                -0.227964688954708,
+                0.9506460726312335
+              ],
+              "link8": [
+                -0.3141602808785859,
+                -0.22796444488154316,
+                0.9506460130185008
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "right": {
+      "0": {
+        "arm_joint_positions_rad": {
+          "joint1": 3.4984623198397458e-06,
+          "joint2": -0.15657489001750946,
+          "joint3": 0.14925505220890045,
+          "joint4": -0.3058297634124756,
+          "joint5": 4.365725089883199e-06,
+          "joint6": 1.3764401840532514e-09
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          0.3004353648617319,
+          -0.22796471424893353,
+          0.9506461649575991
+        ],
+        "tool_uv_pixels": [
+          536.1454644078026,
+          257.6675508562891
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399999976158142,
+              "joint8": 0.04399997740983963
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.25603178413973166,
+                -0.22797813390758298,
+                0.9506461908933717
+              ],
+              "link8": [
+                0.3448389232319913,
+                -0.22795129459703917,
+                0.9506461390218246
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899999767541885,
+              "joint8": 0.04289997797459364
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.25713178408353643,
+                -0.22797780146742608,
+                0.9506461909907108
+              ],
+              "link8": [
+                0.34373892384698007,
+                -0.2279516270370272,
+                0.9506461389244856
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179999977350235,
+              "joint8": 0.041799978539347644
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2582317840273412,
+                -0.22797746902726912,
+                0.9506461910880499
+              ],
+              "link8": [
+                0.3426389244619688,
+                -0.2279519594770153,
+                0.9506461388271464
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.040699999779462814,
+              "joint8": 0.04069997910410166
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.259331783971146,
+                -0.22797713658711216,
+                0.9506461911853891
+              ],
+              "link8": [
+                0.34153892507695754,
+                -0.22795229191700334,
+                0.9506461387298073
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959999978542328,
+              "joint8": 0.039599979668855666
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.26043178391495075,
+                -0.2279768041469552,
+                0.9506461912827282
+              ],
+              "link8": [
+                0.3404389256919463,
+                -0.22795262435699143,
+                0.9506461386324683
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849999979138374,
+              "joint8": 0.038499980233609676
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.26153178385875553,
+                -0.2279764717067983,
+                0.9506461913800675
+              ],
+              "link8": [
+                0.339338926306935,
+                -0.22795295679697947,
+                0.9506461385351291
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03739999979734421,
+              "joint8": 0.03739998079836369
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2626317838025603,
+                -0.22797613926664134,
+                0.9506461914774066
+              ],
+              "link8": [
+                0.33823892692192375,
+                -0.22795328923696756,
+                0.95064613843779
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629999980330467,
+              "joint8": 0.03629998136311769
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2637317837463651,
+                -0.22797580682648438,
+                0.9506461915747457
+              ],
+              "link8": [
+                0.3371389275369125,
+                -0.2279536216769556,
+                0.9506461383404509
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519999980926514,
+              "joint8": 0.03519998192787171
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.26483178369016985,
+                -0.22797547438632748,
+                0.9506461916720849
+              ],
+              "link8": [
+                0.33603892815190123,
+                -0.2279539541169437,
+                0.9506461382431118
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.0340999998152256,
+              "joint8": 0.03409998249262571
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2659317836339746,
+                -0.22797514194617052,
+                0.950646191769424
+              ],
+              "link8": [
+                0.33493892876688997,
+                -0.22795428655693173,
+                0.9506461381457727
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.032999999821186066,
+              "joint8": 0.03299998305737972
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2670317835777794,
+                -0.22797480950601356,
+                0.9506461918667631
+              ],
+              "link8": [
+                0.3338389293818787,
+                -0.22795461899691982,
+                0.9506461380484336
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.03189999982714653,
+              "joint8": 0.03189998362213373
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2681317835215842,
+                -0.2279744770658566,
+                0.9506461919641023
+              ],
+              "link8": [
+                0.3327389299968675,
+                -0.22795495143690786,
+                0.9506461379510945
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.03079999983310699,
+              "joint8": 0.03079998418688774
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.269231783465389,
+                -0.2279741446256997,
+                0.9506461920614414
+              ],
+              "link8": [
+                0.33163893061185623,
+                -0.22795528387689595,
+                0.9506461378537554
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.029699999839067463,
+              "joint8": 0.02969998475164175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2703317834091937,
+                -0.22797381218554275,
+                0.9506461921587807
+              ],
+              "link8": [
+                0.33053893122684497,
+                -0.227955616316884,
+                0.9506461377564163
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.02859999984502792,
+              "joint8": 0.028599985316395755
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27143178335299856,
+                -0.2279734797453858,
+                0.9506461922561198
+              ],
+              "link8": [
+                0.3294389318418337,
+                -0.22795594875687208,
+                0.9506461376590772
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.027499999850988388,
+              "joint8": 0.02749998588114977
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2725317832968033,
+                -0.22797314730522883,
+                0.9506461923534589
+              ],
+              "link8": [
+                0.32833893245682244,
+                -0.22795628119686012,
+                0.9506461375617381
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399999856948853,
+              "joint8": 0.026399986445903776
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2736317832406081,
+                -0.22797281486507193,
+                0.9506461924507981
+              ],
+              "link8": [
+                0.3272389330718112,
+                -0.22795661363684822,
+                0.950646137464399
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299999862909314,
+              "joint8": 0.025299987010657787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2747317831844129,
+                -0.22797248242491497,
+                0.9506461925481372
+              ],
+              "link8": [
+                0.3261389336867999,
+                -0.22795694607683625,
+                0.9506461373670599
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.024199999868869785,
+              "joint8": 0.024199987575411797
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2758317831282176,
+                -0.227972149984758,
+                0.9506461926454763
+              ],
+              "link8": [
+                0.32503893430178865,
+                -0.22795727851682435,
+                0.9506461372697208
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099999874830243,
+              "joint8": 0.0230999881401658
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27693178307202243,
+                -0.22797181754460105,
+                0.9506461927428155
+              ],
+              "link8": [
+                0.3239389349167774,
+                -0.22795761095681238,
+                0.9506461371723817
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199999988079071,
+              "joint8": 0.021999988704919815
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27803178301582715,
+                -0.22797148510444415,
+                0.9506461928401546
+              ],
+              "link8": [
+                0.3228389355317662,
+                -0.22795794339680048,
+                0.9506461370750426
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899999886751175,
+              "joint8": 0.020899989269673822
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.279131782959632,
+                -0.2279711526642872,
+                0.9506461929374939
+              ],
+              "link8": [
+                0.3217389361467549,
+                -0.22795827583678852,
+                0.9506461369777035
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.019799999892711636,
+              "joint8": 0.019799989834427833
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28023178290343675,
+                -0.22797082022413023,
+                0.950646193034833
+              ],
+              "link8": [
+                0.32063893676174365,
+                -0.2279586082767766,
+                0.9506461368803644
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0186999998986721,
+              "joint8": 0.01869999039918184
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28133178284724153,
+                -0.22797048778397333,
+                0.9506461931321721
+              ],
+              "link8": [
+                0.3195389373767324,
+                -0.22795894071676465,
+                0.9506461367830253
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599999904632565,
+              "joint8": 0.017599990963935847
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2824317827910463,
+                -0.22797015534381637,
+                0.9506461932295113
+              ],
+              "link8": [
+                0.3184389379917211,
+                -0.22795927315675274,
+                0.9506461366856862
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.016499999910593033,
+              "joint8": 0.01649999152868986
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2835317827348511,
+                -0.2279698229036594,
+                0.9506461933268504
+              ],
+              "link8": [
+                0.31733893860670986,
+                -0.22795960559674078,
+                0.9506461365883471
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399999916553496,
+              "joint8": 0.01539999209344387
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28463178267865585,
+                -0.22796949046350246,
+                0.9506461934241895
+              ],
+              "link8": [
+                0.3162389392216986,
+                -0.22795993803672887,
+                0.950646136491008
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.01429999992251396,
+              "joint8": 0.014299992658197877
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28573178262246063,
+                -0.22796915802334555,
+                0.9506461935215287
+              ],
+              "link8": [
+                0.31513893983668734,
+                -0.2279602704767169,
+                0.9506461363936689
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199999928474423,
+              "joint8": 0.013199993222951886
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2868317825662654,
+                -0.2279688255831886,
+                0.9506461936188678
+              ],
+              "link8": [
+                0.31403894045167613,
+                -0.227960602916705,
+                0.9506461362963298
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.012099999934434887,
+              "joint8": 0.012099993787705895
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2879317825100702,
+                -0.22796849314303164,
+                0.9506461937162071
+              ],
+              "link8": [
+                0.31293894106666487,
+                -0.22796093535669304,
+                0.9506461361989906
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.010999999940395355,
+              "joint8": 0.010999994352459908
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28903178245387495,
+                -0.22796816070287468,
+                0.9506461938135462
+              ],
+              "link8": [
+                0.3118389416816536,
+                -0.22796126779668113,
+                0.9506461361016516
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899999946355818,
+              "joint8": 0.009899994917213916
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2901317823976797,
+                -0.22796782826271778,
+                0.9506461939108853
+              ],
+              "link8": [
+                0.31073894229664234,
+                -0.22796160023666917,
+                0.9506461360043125
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799999952316282,
+              "joint8": 0.008799995481967924
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2912317823414845,
+                -0.22796749582256082,
+                0.9506461940082245
+              ],
+              "link8": [
+                0.3096389429116311,
+                -0.22796193267665726,
+                0.9506461359069733
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.007699999958276746,
+              "joint8": 0.0076999960467219325
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2923317822852893,
+                -0.22796716338240386,
+                0.9506461941055636
+              ],
+              "link8": [
+                0.3085389435266198,
+                -0.2279622651166453,
+                0.9506461358096343
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599999964237209,
+              "joint8": 0.0065999966114759405
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29343178222909405,
+                -0.2279668309422469,
+                0.9506461942029028
+              ],
+              "link8": [
+                0.30743894414160855,
+                -0.2279625975566334,
+                0.9506461357122952
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.005499999970197678,
+              "joint8": 0.005499997176229954
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2945317821728988,
+                -0.22796649850209,
+                0.9506461943002419
+              ],
+              "link8": [
+                0.3063389447565973,
+                -0.22796292999662143,
+                0.950646135614956
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.004399999976158141,
+              "joint8": 0.004399997740983962
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2956317821167036,
+                -0.22796616606193304,
+                0.950646194397581
+              ],
+              "link8": [
+                0.3052389453715861,
+                -0.22796326243660953,
+                0.950646135517617
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999999821186044,
+              "joint8": 0.0032999983057379703
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2967317820605084,
+                -0.22796583362177608,
+                0.9506461944949203
+              ],
+              "link8": [
+                0.3041389459865748,
+                -0.22796359487659756,
+                0.9506461354202779
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199999988079068,
+              "joint8": 0.0021999988704919787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29783178200431315,
+                -0.22796550118161912,
+                0.9506461945922594
+              ],
+              "link8": [
+                0.30303894660156355,
+                -0.22796392731658566,
+                0.9506461353229387
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999999940395316,
+              "joint8": 0.0010999994352459868
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2989317819481179,
+                -0.22796516874146222,
+                0.9506461946895985
+              ],
+              "link8": [
+                0.3019389472165523,
+                -0.2279642597565737,
+                0.9506461352255997
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3000317818919227,
+                -0.22796483630130526,
+                0.9506461947869377
+              ],
+              "link8": [
+                0.300838947831541,
+                -0.2279645921965618,
+                0.9506461351282606
+              ]
+            }
+          }
+        ]
+      },
+      "0.01": {
+        "arm_joint_positions_rad": {
+          "joint1": -0.22443494045053164,
+          "joint2": -0.1454403346501037,
+          "joint3": 0.14703551431648335,
+          "joint4": -0.2924774840891671,
+          "joint5": -0.22443389062894423,
+          "joint6": -2.5039862498881536e-07
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          0.3104350514693464,
+          -0.22796475241460543,
+          0.9506460423969267
+        ],
+        "tool_uv_pixels": [
+          543.3395985638471,
+          257.6676262667294
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399999976158142,
+              "joint8": 0.04399997740983963
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2660314707438113,
+                -0.22797816037648683,
+                0.9506460657631353
+              ],
+              "link8": [
+                0.3548386098431407,
+                -0.22795134445947324,
+                0.950646019030715
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899999767541885,
+              "joint8": 0.04289997797459364
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2671314706877036,
+                -0.2279778282260912,
+                0.9506460659241296
+              ],
+              "link8": [
+                0.35373861045804195,
+                -0.22795167660970017,
+                0.9506460188697207
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179999977350235,
+              "joint8": 0.041799978539347644
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2682314706315959,
+                -0.22797749607569556,
+                0.950646066085124
+              ],
+              "link8": [
+                0.35263861107294314,
+                -0.22795200875992705,
+                0.9506460187087263
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.040699999779462814,
+              "joint8": 0.04069997910410166
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.26933147057548823,
+                -0.22797716392529987,
+                0.9506460662461184
+              ],
+              "link8": [
+                0.3515386116878444,
+                -0.22795234091015398,
+                0.9506460185477321
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959999978542328,
+              "joint8": 0.039599979668855666
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2704314705193805,
+                -0.22797683177490424,
+                0.9506460664071128
+              ],
+              "link8": [
+                0.3504386123027456,
+                -0.22795267306038092,
+                0.9506460183867378
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849999979138374,
+              "joint8": 0.038499980233609676
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2715314704632728,
+                -0.2279764996245086,
+                0.9506460665681071
+              ],
+              "link8": [
+                0.3493386129176468,
+                -0.22795300521060785,
+                0.9506460182257435
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03739999979734421,
+              "joint8": 0.03739998079836369
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2726314704071651,
+                -0.22797616747411292,
+                0.9506460667291016
+              ],
+              "link8": [
+                0.34823861353254804,
+                -0.22795333736083473,
+                0.9506460180647491
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629999980330467,
+              "joint8": 0.03629998136311769
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2737314703510574,
+                -0.2279758353237173,
+                0.9506460668900959
+              ],
+              "link8": [
+                0.34713861414744923,
+                -0.22795366951106166,
+                0.9506460179037549
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519999980926514,
+              "joint8": 0.03519998192787171
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2748314702949497,
+                -0.22797550317332166,
+                0.9506460670510903
+              ],
+              "link8": [
+                0.3460386147623504,
+                -0.2279540016612886,
+                0.9506460177427606
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.0340999998152256,
+              "joint8": 0.03409998249262571
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.275931470238842,
+                -0.22797517102292603,
+                0.9506460672120847
+              ],
+              "link8": [
+                0.3449386153772517,
+                -0.22795433381151547,
+                0.9506460175817663
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.032999999821186066,
+              "joint8": 0.03299998305737972
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2770314701827343,
+                -0.22797483887253034,
+                0.9506460673730791
+              ],
+              "link8": [
+                0.3438386159921529,
+                -0.2279546659617424,
+                0.9506460174207719
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.03189999982714653,
+              "joint8": 0.03189998362213373
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2781314701266266,
+                -0.2279745067221347,
+                0.9506460675340734
+              ],
+              "link8": [
+                0.3427386166070541,
+                -0.22795499811196934,
+                0.9506460172597777
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.03079999983310699,
+              "joint8": 0.03079998418688774
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2792314700705189,
+                -0.22797417457173907,
+                0.9506460676950678
+              ],
+              "link8": [
+                0.3416386172219553,
+                -0.22795533026219622,
+                0.9506460170987834
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.029699999839067463,
+              "joint8": 0.02969998475164175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2803314700144112,
+                -0.2279738424213434,
+                0.9506460678560622
+              ],
+              "link8": [
+                0.3405386178368565,
+                -0.22795566241242315,
+                0.950646016937789
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.02859999984502792,
+              "joint8": 0.028599985316395755
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28143146995830354,
+                -0.22797351027094775,
+                0.9506460680170565
+              ],
+              "link8": [
+                0.33943861845175777,
+                -0.2279559945626501,
+                0.9506460167767947
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.027499999850988388,
+              "joint8": 0.02749998588114977
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2825314699021958,
+                -0.22797317812055212,
+                0.950646068178051
+              ],
+              "link8": [
+                0.33833861906665896,
+                -0.22795632671287702,
+                0.9506460166158005
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399999856948853,
+              "joint8": 0.026399986445903776
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2836314698460881,
+                -0.2279728459701565,
+                0.9506460683390453
+              ],
+              "link8": [
+                0.3372386196815602,
+                -0.2279566588631039,
+                0.9506460164548062
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299999862909314,
+              "joint8": 0.025299987010657787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28473146978998043,
+                -0.2279725138197608,
+                0.9506460685000397
+              ],
+              "link8": [
+                0.3361386202964614,
+                -0.22795699101333083,
+                0.9506460162938118
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.024199999868869785,
+              "joint8": 0.024199987575411797
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2858314697338727,
+                -0.22797218166936517,
+                0.9506460686610341
+              ],
+              "link8": [
+                0.3350386209113626,
+                -0.22795732316355777,
+                0.9506460161328175
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099999874830243,
+              "joint8": 0.0230999881401658
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.286931469677765,
+                -0.22797184951896954,
+                0.9506460688220285
+              ],
+              "link8": [
+                0.33393862152626386,
+                -0.22795765531378465,
+                0.9506460159718233
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199999988079071,
+              "joint8": 0.021999988704919815
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2880314696216573,
+                -0.2279715173685739,
+                0.9506460689830228
+              ],
+              "link8": [
+                0.33283862214116505,
+                -0.22795798746401158,
+                0.950646015810829
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899999886751175,
+              "joint8": 0.020899989269673822
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28913146956554964,
+                -0.22797118521817822,
+                0.9506460691440173
+              ],
+              "link8": [
+                0.33173862275606625,
+                -0.2279583196142385,
+                0.9506460156498346
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.019799999892711636,
+              "joint8": 0.019799989834427833
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29023146950944195,
+                -0.2279708530677826,
+                0.9506460693050116
+              ],
+              "link8": [
+                0.3306386233709675,
+                -0.2279586517644654,
+                0.9506460154888403
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0186999998986721,
+              "joint8": 0.01869999039918184
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2913314694533342,
+                -0.22797052091738695,
+                0.950646069466006
+              ],
+              "link8": [
+                0.3295386239858687,
+                -0.22795898391469233,
+                0.9506460153278461
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599999904632565,
+              "joint8": 0.017599990963935847
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29243146939722653,
+                -0.22797018876699127,
+                0.9506460696270004
+              ],
+              "link8": [
+                0.32843862460076995,
+                -0.22795931606491926,
+                0.9506460151668518
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.016499999910593033,
+              "joint8": 0.01649999152868986
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29353146934111884,
+                -0.22796985661659563,
+                0.9506460697879948
+              ],
+              "link8": [
+                0.32733862521567114,
+                -0.2279596482151462,
+                0.9506460150058574
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399999916553496,
+              "joint8": 0.01539999209344387
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29463146928501116,
+                -0.2279695244662,
+                0.9506460699489891
+              ],
+              "link8": [
+                0.3262386258305724,
+                -0.22795998036537307,
+                0.9506460148448631
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.01429999992251396,
+              "joint8": 0.014299992658197877
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2957314692289034,
+                -0.22796919231580437,
+                0.9506460701099836
+              ],
+              "link8": [
+                0.3251386264454736,
+                -0.2279603125156,
+                0.9506460146838689
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199999928474423,
+              "joint8": 0.013199993222951886
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29683146917279574,
+                -0.22796886016540868,
+                0.9506460702709779
+              ],
+              "link8": [
+                0.3240386270603748,
+                -0.22796064466582694,
+                0.9506460145228746
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.012099999934434887,
+              "joint8": 0.012099993787705895
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29793146911668805,
+                -0.22796852801501305,
+                0.9506460704319724
+              ],
+              "link8": [
+                0.32293862767527604,
+                -0.22796097681605382,
+                0.9506460143618802
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.010999999940395355,
+              "joint8": 0.010999994352459908
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29903146906058037,
+                -0.22796819586461742,
+                0.9506460705929667
+              ],
+              "link8": [
+                0.32183862829017723,
+                -0.22796130896628075,
+                0.9506460142008859
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899999946355818,
+              "joint8": 0.009899994917213916
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30013146900447263,
+                -0.22796786371422173,
+                0.9506460707539611
+              ],
+              "link8": [
+                0.3207386289050784,
+                -0.22796164111650769,
+                0.9506460140398917
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799999952316282,
+              "joint8": 0.008799995481967924
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30123146894836494,
+                -0.2279675315638261,
+                0.9506460709149555
+              ],
+              "link8": [
+                0.3196386295199797,
+                -0.22796197326673456,
+                0.9506460138788974
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.007699999958276746,
+              "joint8": 0.0076999960467219325
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30233146889225726,
+                -0.22796719941343047,
+                0.9506460710759499
+              ],
+              "link8": [
+                0.3185386301348809,
+                -0.2279623054169615,
+                0.950646013717903
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599999964237209,
+              "joint8": 0.0065999966114759405
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3034314688361496,
+                -0.22796686726303483,
+                0.9506460712369442
+              ],
+              "link8": [
+                0.3174386307497821,
+                -0.22796263756718843,
+                0.9506460135569087
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.005499999970197678,
+              "joint8": 0.005499997176229954
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30453146878004184,
+                -0.22796653511263915,
+                0.9506460713979387
+              ],
+              "link8": [
+                0.3163386313646833,
+                -0.22796296971741536,
+                0.9506460133959145
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.004399999976158141,
+              "joint8": 0.004399997740983962
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30563146872393415,
+                -0.2279662029622435,
+                0.950646071558933
+              ],
+              "link8": [
+                0.3152386319795845,
+                -0.22796330186764224,
+                0.9506460132349202
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999999821186044,
+              "joint8": 0.0032999983057379703
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30673146866782647,
+                -0.22796587081184788,
+                0.9506460717199274
+              ],
+              "link8": [
+                0.31413863259448577,
+                -0.22796363401786918,
+                0.9506460130739258
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199999988079068,
+              "joint8": 0.0021999988704919787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3078314686117188,
+                -0.22796553866145225,
+                0.9506460718809218
+              ],
+              "link8": [
+                0.31303863320938696,
+                -0.2279639661680961,
+                0.9506460129129315
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999999940395316,
+              "joint8": 0.0010999994352459868
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30893146855561104,
+                -0.22796520651105656,
+                0.9506460720419162
+              ],
+              "link8": [
+                0.3119386338242882,
+                -0.227964298318323,
+                0.9506460127519373
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.31003146849950336,
+                -0.22796487436066093,
+                0.9506460722029105
+              ],
+              "link8": [
+                0.3108386344391894,
+                -0.22796463046854992,
+                0.950646012590943
+              ]
+            }
+          }
+        ]
+      },
+      "0.015": {
+        "arm_joint_positions_rad": {
+          "joint1": -0.3297263131397146,
+          "joint2": -0.13246223159834475,
+          "joint3": 0.14454829055056417,
+          "joint4": -0.27701298935660107,
+          "joint5": -0.3297252842605835,
+          "joint6": -4.88873879089215e-07
+        },
+        "world_from_base_link": [
+          [
+            -0.00030194002101779915,
+            -0.9999999544161108,
+            0.0,
+            0.30000001192092896
+          ],
+          [
+            0.9999999544161108,
+            -0.00030194002101779915,
+            0.0,
+            -0.44999998807907104
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7649999856948853
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "tool_world_m": [
+          0.31543469163406984,
+          -0.2279645935285527,
+          0.9506460415545227
+        ],
+        "tool_uv_pixels": [
+          546.936497558732,
+          257.66750748378195
+        ],
+        "finger_samples": [
+          {
+            "closing_fraction": 0.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.04399999976158142,
+              "joint8": 0.04399997740983963
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27103111090754967,
+                -0.2279779982277753,
+                0.9506460649070728
+              ],
+              "link8": [
+                0.3598382500088493,
+                -0.22795118883607768,
+                0.9506460182019693
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.025,
+            "finger_joint_positions_m": {
+              "joint7": 0.042899999767541885,
+              "joint8": 0.04289997797459364
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27213111085146635,
+                -0.22797766615820475,
+                0.9506460650684055
+              ],
+              "link8": [
+                0.3587382506237261,
+                -0.2279515209054795,
+                0.9506460180406366
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.05,
+            "finger_joint_positions_m": {
+              "joint7": 0.04179999977350235,
+              "joint8": 0.041799978539347644
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2732311107953831,
+                -0.22797733408863424,
+                0.9506460652297384
+              ],
+              "link8": [
+                0.35763825123860293,
+                -0.22795185297488135,
+                0.9506460178793039
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.07500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.040699999779462814,
+              "joint8": 0.04069997910410166
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2743311107392998,
+                -0.22797700201906368,
+                0.9506460653910711
+              ],
+              "link8": [
+                0.35653825185347976,
+                -0.22795218504428322,
+                0.9506460177179713
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.1,
+            "finger_joint_positions_m": {
+              "joint7": 0.03959999978542328,
+              "joint8": 0.039599979668855666
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27543111068321646,
+                -0.22797666994949317,
+                0.9506460655524038
+              ],
+              "link8": [
+                0.3554382524683565,
+                -0.22795251711368503,
+                0.9506460175566387
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.125,
+            "finger_joint_positions_m": {
+              "joint7": 0.03849999979138374,
+              "joint8": 0.038499980233609676
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2765311106271332,
+                -0.2279763378799226,
+                0.9506460657137366
+              ],
+              "link8": [
+                0.3543382530832333,
+                -0.2279528491830869,
+                0.950646017395306
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.15000000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03739999979734421,
+              "joint8": 0.03739998079836369
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2776311105710499,
+                -0.2279760058103521,
+                0.9506460658750693
+              ],
+              "link8": [
+                0.3532382536981101,
+                -0.2279531812524887,
+                0.9506460172339734
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.17500000000000002,
+            "finger_joint_positions_m": {
+              "joint7": 0.03629999980330467,
+              "joint8": 0.03629998136311769
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.27873111051496663,
+                -0.2279756737407816,
+                0.950646066036402
+              ],
+              "link8": [
+                0.35213825431298695,
+                -0.22795351332189057,
+                0.9506460170726407
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.2,
+            "finger_joint_positions_m": {
+              "joint7": 0.03519999980926514,
+              "joint8": 0.03519998192787171
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2798311104588833,
+                -0.22797534167121103,
+                0.9506460661977347
+              ],
+              "link8": [
+                0.3510382549278638,
+                -0.22795384539129243,
+                0.950646016911308
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.225,
+            "finger_joint_positions_m": {
+              "joint7": 0.0340999998152256,
+              "joint8": 0.03409998249262571
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2809311104028,
+                -0.22797500960164052,
+                0.9506460663590675
+              ],
+              "link8": [
+                0.3499382555427406,
+                -0.22795417746069424,
+                0.9506460167499754
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.25,
+            "finger_joint_positions_m": {
+              "joint7": 0.032999999821186066,
+              "joint8": 0.03299998305737972
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28203111034671674,
+                -0.22797467753206996,
+                0.9506460665204002
+              ],
+              "link8": [
+                0.34883825615761743,
+                -0.2279545095300961,
+                0.9506460165886427
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.275,
+            "finger_joint_positions_m": {
+              "joint7": 0.03189999982714653,
+              "joint8": 0.03189998362213373
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2831311102906334,
+                -0.22797434546249945,
+                0.950646066681733
+              ],
+              "link8": [
+                0.34773825677249426,
+                -0.22795484159949797,
+                0.9506460164273101
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.30000000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.03079999983310699,
+              "joint8": 0.03079998418688774
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2842311102345501,
+                -0.2279740133929289,
+                0.9506460668430657
+              ],
+              "link8": [
+                0.3466382573873711,
+                -0.22795517366889978,
+                0.9506460162659774
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.325,
+            "finger_joint_positions_m": {
+              "joint7": 0.029699999839067463,
+              "joint8": 0.02969998475164175
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28533111017846685,
+                -0.22797368132335838,
+                0.9506460670043985
+              ],
+              "link8": [
+                0.3455382580022479,
+                -0.22795550573830164,
+                0.9506460161046447
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.35000000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.02859999984502792,
+              "joint8": 0.028599985316395755
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28643111012238354,
+                -0.22797334925378782,
+                0.9506460671657312
+              ],
+              "link8": [
+                0.3444382586171246,
+                -0.22795583780770345,
+                0.9506460159433121
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.375,
+            "finger_joint_positions_m": {
+              "joint7": 0.027499999850988388,
+              "joint8": 0.02749998588114977
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2875311100663002,
+                -0.2279730171842173,
+                0.9506460673270639
+              ],
+              "link8": [
+                0.34333825923200145,
+                -0.22795616987710532,
+                0.9506460157819794
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.4,
+            "finger_joint_positions_m": {
+              "joint7": 0.026399999856948853,
+              "joint8": 0.026399986445903776
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28863111001021696,
+                -0.2279726851146468,
+                0.9506460674883966
+              ],
+              "link8": [
+                0.3422382598468783,
+                -0.22795650194650718,
+                0.9506460156206468
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.42500000000000004,
+            "finger_joint_positions_m": {
+              "joint7": 0.025299999862909314,
+              "joint8": 0.025299987010657787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.28973110995413365,
+                -0.22797235304507624,
+                0.9506460676497294
+              ],
+              "link8": [
+                0.3411382604617551,
+                -0.227956834015909,
+                0.9506460154593142
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.45,
+            "finger_joint_positions_m": {
+              "joint7": 0.024199999868869785,
+              "joint8": 0.024199987575411797
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29083110989805033,
+                -0.22797202097550573,
+                0.9506460678110621
+              ],
+              "link8": [
+                0.34003826107663193,
+                -0.22795716608531086,
+                0.9506460152979814
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.47500000000000003,
+            "finger_joint_positions_m": {
+              "joint7": 0.023099999874830243,
+              "joint8": 0.0230999881401658
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2919311098419671,
+                -0.22797168890593517,
+                0.9506460679723949
+              ],
+              "link8": [
+                0.33893826169150876,
+                -0.22795749815471267,
+                0.9506460151366488
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5,
+            "finger_joint_positions_m": {
+              "joint7": 0.02199999988079071,
+              "joint8": 0.021999988704919815
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29303110978588376,
+                -0.22797135683636466,
+                0.9506460681337277
+              ],
+              "link8": [
+                0.3378382623063856,
+                -0.22795783022411453,
+                0.9506460149753162
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.525,
+            "finger_joint_positions_m": {
+              "joint7": 0.020899999886751175,
+              "joint8": 0.020899989269673822
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29413110972980044,
+                -0.2279710247667941,
+                0.9506460682950604
+              ],
+              "link8": [
+                0.3367382629212624,
+                -0.2279581622935164,
+                0.9506460148139835
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.55,
+            "finger_joint_positions_m": {
+              "joint7": 0.019799999892711636,
+              "joint8": 0.019799989834427833
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2952311096737172,
+                -0.2279706926972236,
+                0.9506460684563931
+              ],
+              "link8": [
+                0.33563826353613924,
+                -0.2279584943629182,
+                0.9506460146526509
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.5750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0186999998986721,
+              "joint8": 0.01869999039918184
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.29633110961763387,
+                -0.22797036062765308,
+                0.9506460686177258
+              ],
+              "link8": [
+                0.33453826415101595,
+                -0.22795882643232007,
+                0.9506460144913181
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.6000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.017599999904632565,
+              "joint8": 0.017599990963935847
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2974311095615506,
+                -0.22797002855808252,
+                0.9506460687790586
+              ],
+              "link8": [
+                0.3334382647658928,
+                -0.22795915850172188,
+                0.9506460143299855
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.625,
+            "finger_joint_positions_m": {
+              "joint7": 0.016499999910593033,
+              "joint8": 0.01649999152868986
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.2985311095054673,
+                -0.227969696488512,
+                0.9506460689403913
+              ],
+              "link8": [
+                0.3323382653807696,
+                -0.22795949057112375,
+                0.9506460141686529
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.65,
+            "finger_joint_positions_m": {
+              "joint7": 0.015399999916553496,
+              "joint8": 0.01539999209344387
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.299631109449384,
+                -0.22796936441894144,
+                0.950646069101724
+              ],
+              "link8": [
+                0.33123826599564643,
+                -0.2279598226405256,
+                0.9506460140073202
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.675,
+            "finger_joint_positions_m": {
+              "joint7": 0.01429999992251396,
+              "joint8": 0.014299992658197877
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3007311093933007,
+                -0.22796903234937094,
+                0.9506460692630567
+              ],
+              "link8": [
+                0.33013826661052326,
+                -0.22796015470992742,
+                0.9506460138459876
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7000000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.013199999928474423,
+              "joint8": 0.013199993222951886
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3018311093372174,
+                -0.22796870027980037,
+                0.9506460694243896
+              ],
+              "link8": [
+                0.3290382672254001,
+                -0.22796048677932929,
+                0.950646013684655
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.7250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.012099999934434887,
+              "joint8": 0.012099993787705895
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3029311092811341,
+                -0.22796836821022987,
+                0.9506460695857223
+              ],
+              "link8": [
+                0.3279382678402769,
+                -0.2279608188487311,
+                0.9506460135233222
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.75,
+            "finger_joint_positions_m": {
+              "joint7": 0.010999999940395355,
+              "joint8": 0.010999994352459908
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30403110922505083,
+                -0.2279680361406593,
+                0.950646069747055
+              ],
+              "link8": [
+                0.32683826845515374,
+                -0.22796115091813296,
+                0.9506460133619896
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.775,
+            "finger_joint_positions_m": {
+              "joint7": 0.009899999946355818,
+              "joint8": 0.009899994917213916
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3051311091689675,
+                -0.2279677040710888,
+                0.9506460699083877
+              ],
+              "link8": [
+                0.32573826907003056,
+                -0.22796148298753482,
+                0.9506460132006569
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8,
+            "finger_joint_positions_m": {
+              "joint7": 0.008799999952316282,
+              "joint8": 0.008799995481967924
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3062311091128842,
+                -0.2279673720015183,
+                0.9506460700697205
+              ],
+              "link8": [
+                0.3246382696849074,
+                -0.22796181505693663,
+                0.9506460130393243
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8250000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.007699999958276746,
+              "joint8": 0.0076999960467219325
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30733110905680094,
+                -0.22796703993194772,
+                0.9506460702310532
+              ],
+              "link8": [
+                0.3235382702997841,
+                -0.2279621471263385,
+                0.9506460128779917
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.8500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.006599999964237209,
+              "joint8": 0.0065999966114759405
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.30843110900071763,
+                -0.22796670786237722,
+                0.9506460703923859
+              ],
+              "link8": [
+                0.32243827091466093,
+                -0.2279624791957403,
+                0.9506460127166589
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.875,
+            "finger_joint_positions_m": {
+              "joint7": 0.005499999970197678,
+              "joint8": 0.005499997176229954
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3095311089446343,
+                -0.22796637579280665,
+                0.9506460705537186
+              ],
+              "link8": [
+                0.32133827152953776,
+                -0.22796281126514217,
+                0.9506460125553263
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9,
+            "finger_joint_positions_m": {
+              "joint7": 0.004399999976158141,
+              "joint8": 0.004399997740983962
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.31063110888855106,
+                -0.22796604372323614,
+                0.9506460707150515
+              ],
+              "link8": [
+                0.3202382721444146,
+                -0.22796314333454404,
+                0.9506460123939937
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.925,
+            "finger_joint_positions_m": {
+              "joint7": 0.0032999999821186044,
+              "joint8": 0.0032999983057379703
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.31173110883246774,
+                -0.22796571165366558,
+                0.9506460708763842
+              ],
+              "link8": [
+                0.3191382727592914,
+                -0.22796347540394585,
+                0.950646012232661
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9500000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.002199999988079068,
+              "joint8": 0.0021999988704919787
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.3128311087763844,
+                -0.22796537958409507,
+                0.9506460710377169
+              ],
+              "link8": [
+                0.31803827337416823,
+                -0.2279638074733477,
+                0.9506460120713284
+              ]
+            }
+          },
+          {
+            "closing_fraction": 0.9750000000000001,
+            "finger_joint_positions_m": {
+              "joint7": 0.0010999999940395316,
+              "joint8": 0.0010999994352459868
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.31393110872030117,
+                -0.2279650475145245,
+                0.9506460711990496
+              ],
+              "link8": [
+                0.31693827398904506,
+                -0.22796413954274952,
+                0.9506460119099956
+              ]
+            }
+          },
+          {
+            "closing_fraction": 1.0,
+            "finger_joint_positions_m": {
+              "joint7": 0.0,
+              "joint8": 0.0
+            },
+            "pad_centroid_world_m": {
+              "link7": [
+                0.31503110866421785,
+                -0.227964715444954,
+                0.9506460713603824
+              ],
+              "link8": [
+                0.3158382746039219,
+                -0.2279644716121514,
+                0.950646011748663
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "Visual-mesh footprints are not USD physics collision envelopes.",
+    "Projection ignores scene depth and occlusion; cannot establish contact, separation, or clearance.",
+    "No source object poses, object geometry, contacts, rewards, or model inference were used.",
+    "Only fingers are projected; link6, robot arms, camera housings and dynamic tracking uncertainty are not swept.",
+    "Original recorded robot image remains visible beneath predicted ghost geometry.",
+    "Left predicted endpoints are from the left-arm feasibility path; saved stage034 left arm is at its later returned pose.",
+    "These are hypothetical endpoint closing sweeps, not the swept arm path to the endpoint.",
+    "Fresh future RGB and separate operator review remain mandatory."
+  ],
+  "input_image_unchanged": true,
+  "clearance_approved": false,
+  "diagnostic_launch_authorized": false,
+  "full_test_authorized": false,
+  "calibration_status": "unchanged_candidate",
+  "model_input_eligible": false,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "native_actions": 0,
+  "packages": {
+    "numpy": "1.26.0",
+    "trimesh": "4.5.1",
+    "matplotlib": "3.10.3",
+    "opencv": "4.11.0"
+  }
+}

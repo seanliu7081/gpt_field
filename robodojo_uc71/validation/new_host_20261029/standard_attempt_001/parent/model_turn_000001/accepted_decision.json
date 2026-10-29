@@ -1,0 +1,25 @@
+{
+  "arm_id": "left",
+  "belief": "The initial diagonal approach stopped after one step with ik_unavailable, well before any object contact. The bread and toaster remain undisturbed.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 100,
+        "observation_after": true,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.008,
+          -0.012
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Use a smaller forward-and-down waypoint to leave the starting kinematic configuration, then reassess the approach to A. All placement, lever, and return goals remain unfinished.",
+  "type": "execute",
+  "why": "This changes the failed path rather than repeating its target, testing a short motion toward the lower bread grasp height in clear space."
+}

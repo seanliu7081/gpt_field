@@ -1,0 +1,120 @@
+{
+  "controller_characterization_passed": false,
+  "controller_implementation_unchanged": true,
+  "exact_authorized_transformation_verified": true,
+  "explicit_parameter_change": {
+    "angular_speed_rad_s": {
+      "new": 0.5,
+      "old": 1.0
+    }
+  },
+  "full_calibration_passed": false,
+  "full_test_authorized": false,
+  "limitations": [
+    "The0.5rad/s candidate is an explicit manual selection for the new complete39-stage diagnostic; partial005 does not establish both-arm or empty-gripper validation.",
+    "No actual runtime bundle or live READY is issued by this plan review."
+  ],
+  "new_native_actions": 960,
+  "new_physics_substeps": 9600,
+  "new_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_002/proposal.json",
+    "sha256": "fa4fd6d3224610adb20ce277c8b5848de25558b1d5b22b2bb2f22c2dfd7048d6"
+  },
+  "new_plan_content_sha256": "14e59539c58fd4350f37300d57ece3df664700e8fc28a6814347d58be5767cf8",
+  "new_simulated_time_s": 38.4,
+  "new_stage_count": 39,
+  "old_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_001/proposal.json",
+    "sha256": "8620736e67aa630d8d5b0bf9c260197ecc418856ddeb9c076843be93c565beed"
+  },
+  "partial005_is_not_a_completed_characterization": true,
+  "prior_failed_diagnostic": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_005/launch_result.json",
+    "sha256": "60bd7e439a6388c39908f1d743eff9869862c1112f657961ed20b8adbde55e9d"
+  },
+  "prior_failed_diagnostic_completed": false,
+  "removed_stages": [
+    {
+      "label": "left_worldZ_rotation_1.0_pulse",
+      "native_actions": 20,
+      "old_index": 12
+    },
+    {
+      "label": "left_worldZ_rotation_1.0_return",
+      "native_actions": 20,
+      "old_index": 13
+    },
+    {
+      "label": "right_worldZ_rotation_1.0_pulse",
+      "native_actions": 20,
+      "old_index": 26
+    },
+    {
+      "label": "right_worldZ_rotation_1.0_return",
+      "native_actions": 20,
+      "old_index": 27
+    }
+  ],
+  "retained_counts_targets_grippers_profiles_limits_unchanged": true,
+  "review_scope": "offline_plan_revision_and_source_diff_only",
+  "schema": "robodojo-controller-plan-independent-review-1",
+  "selection_supported_by_completed_measurements": false,
+  "sequential_indices_renumbered": true,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_001/proposal.json",
+      "sha256": "8620736e67aa630d8d5b0bf9c260197ecc418856ddeb9c076843be93c565beed"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_002/proposal.json",
+      "sha256": "fa4fd6d3224610adb20ce277c8b5848de25558b1d5b22b2bb2f22c2dfd7048d6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_002/design_review.json",
+      "sha256": "312c24a6ec5227688bafaff22814f10d5f733e750741a51972549e7dc21d85df"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_005/launch_result.json",
+      "sha256": "60bd7e439a6388c39908f1d743eff9869862c1112f657961ed20b8adbde55e9d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_partial_005/analysis.json",
+      "sha256": "cf9e2acd8bed1fa0de8f8be75aa8b984b424c99330b6b835fc21f9f7ff489f40"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py",
+      "sha256": "549bbb1c51860afe86c7127cc583be5ccba147213383ad323b70d5258221db36"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+      "sha256": "cd5cddcdef2bc6f60924b3767860c47f50e8b81c707f0d8bccae430a82e65fb3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+      "sha256": "81f8e2de848073dd5ebdde9b3ab8547630a39b4c2e96749d21e8190603e25caf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization.py",
+      "sha256": "276e7b9edaa5442db1f66374b05a6650f2983171ee3a6546bb5c08e6b1d0de45"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization_supervisor.py",
+      "sha256": "36f64a335f1c9257380668aeac7b856ebce7281c1901ce84c48afbbfde19cac2"
+    }
+  ],
+  "standard_ready": false,
+  "validation": {
+    "focused_offline_tests_passed": 13,
+    "model_calls": 0,
+    "native_actions": 0,
+    "simulator_starts": 0,
+    "test_files": [
+      "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization.py",
+      "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization_supervisor.py"
+    ]
+  }
+}

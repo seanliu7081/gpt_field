@@ -251,6 +251,47 @@ def test_capture_returns_exact_three_verified_pngs_and_public_measurements(case)
     assert case.env.live_steps == 0 and case.env.actions == []
 
 
+@pytest.mark.parametrize("mismatch", ["translation", "rotation"])
+def test_capture_rejects_public_tool_frame_inconsistent_with_control_measurement(case, mismatch):
+    case.rpc("ready")
+    original = case.capture
+    def changed(directory):
+        case.capture_override = None
+        captured = original(directory)
+        tools = deepcopy(captured.calibration)
+        transform = tools["tools"]["left"]["link6_from_tool"]
+        if mismatch == "translation":
+            transform[0][3] = .001
+        else:
+            transform[0][:3] = [0., -1., 0.]
+            transform[1][:3] = [1., 0., 0.]
+        return replace(captured, calibration=tools)
+    case.capture_override = changed
+    with pytest.raises(RemoteError, match="tool_frame_control_mismatch"):
+        case.rpc("capture")
+    assert not case.env.actions
+
+
+def test_capture_accepts_consistent_nonzero_physical_offset_with_roundoff(case):
+    case.rpc("ready")
+    original = case.capture
+    offset = np.array([.1493350448975541, -.000002, -.0008539872259298])
+    def changed(directory):
+        case.capture_override = None
+        captured = original(directory)
+        tools = deepcopy(captured.calibration)
+        measured = deepcopy(captured.measurement)
+        for arm in ("left", "right"):
+            for axis in range(3):
+                tools["tools"][arm]["link6_from_tool"][axis][3] = float(offset[axis])
+            measured.arms[arm] = replace(measured.arms[arm], tcp_offset_link6=offset+1e-10)
+        return replace(captured, calibration=tools, measurement=measured)
+    case.capture_override = changed
+    response = case.rpc("capture")
+    assert response["public"]["robot"]["left"]["tool_pose_wxyz"][:3] == pytest.approx(offset+1e-10, abs=1e-12)
+    assert not case.env.actions
+
+
 def test_capture_cannot_pass_through_unrestricted_native_observations(case):
     case.rpc("ready")
     case.capture_override = lambda directory: {"reward": 1, "object_poses": {}}

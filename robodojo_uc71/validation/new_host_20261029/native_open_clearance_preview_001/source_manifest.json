@@ -1,0 +1,92 @@
+{
+  "benchmark_actions": 0,
+  "commands": [
+    [
+      "git",
+      "init",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo"
+    ],
+    [
+      "git",
+      "-C",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+      "remote",
+      "add",
+      "origin",
+      "https://github.com/RoboDojo-Benchmark/RoboDojo.git"
+    ],
+    [
+      "git",
+      "-C",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+      "fetch",
+      "--depth=1",
+      "origin",
+      "f57e1633ffed59761bc8e568cfe7530c4b33381c"
+    ],
+    [
+      "git",
+      "-C",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+      "checkout",
+      "--detach",
+      "f57e1633ffed59761bc8e568cfe7530c4b33381c"
+    ],
+    [
+      "git",
+      "-C",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+      "-c",
+      "protocol.file.allow=never",
+      "submodule",
+      "update",
+      "--init",
+      "--recursive",
+      "--depth=1"
+    ]
+  ],
+  "complete": true,
+  "finished_at_utc": "2026-10-29T08:05:59.837951+00:00",
+  "full_test_authorized": false,
+  "gate": {
+    "assessment": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera003_assessment.json",
+      "raw_diagnostic_passed": false,
+      "sha256": "6cdf56eef1d0242b8cc386b1af65e1e47d1a6f4de54e0c5a50f81a7e3065bbd6",
+      "type": "posthoc_exit_accounting_correction_no_rerun"
+    },
+    "full_test_authorized": false,
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "result": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_003/launch_result.json",
+    "result_sha256": "bad29f09a410de9d9e4b50873dbb055ea35240b3dd53e53d3c669f10041d12a3",
+    "shutdown_mode": "stock-fast",
+    "visual_review": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera003_visual_review.json",
+    "visual_review_sha256": "789ad573e8c518c63b51c64ae87dda4b867d52c12bffe129a37773980174d5dd"
+  },
+  "model_calls": 0,
+  "pins_sha256": "16ef215298f1edc8eafd43e2cdee7ca5f73bf11816bca364aee9ec63ed874d96",
+  "recursive_submodule_status": " 5d0be1499634d3176258c8f2e31f5fe816497b0a XPolicyLab (5d0be14)\n afca7b09d60d8beb9c1cb28b43066499940b969b third_party/IsaacLab (heads/main)\n d17b54ce32cba095c0b000c4c58777075d11de0e third_party/curobo (d17b54c)\n",
+  "root": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+  "schema": "robodojo-native-source-1",
+  "simulator_starts": 0,
+  "started_at_utc": "2026-10-29T08:05:18.147227+00:00",
+  "verification": {
+    "gitlinks": {
+      "XPolicyLab": "5d0be1499634d3176258c8f2e31f5fe816497b0a",
+      "third_party/IsaacLab": "afca7b09d60d8beb9c1cb28b43066499940b969b",
+      "third_party/curobo": "d17b54ce32cba095c0b000c4c58777075d11de0e"
+    },
+    "native_commit": "f57e1633ffed59761bc8e568cfe7530c4b33381c",
+    "source_sha256": {
+      "env/observation_manager/obs_manager.py": "771d6cda443b591f3e7850b901a06b4e653a2feefcbabd23608042377fe9be4b",
+      "env/reward_manager/func_parser.py": "eb928a05c3eb6bae429a922c59e64272c2c3851c22d779143d45627e47b3a504",
+      "env/reward_manager/reward_manager.py": "bc56efd3aaa861b4b38960dc4fb7778a9b4da9cf131f815ac3170300dd233a41",
+      "env/seed_manager/seed_manager.py": "292eee4003de1c22b288ec3bc1d04d95c7aee5368f30991679ea1cc4c37247b3",
+      "env_cfg/sim/sim_config.yml": "e442ede1c3d90fcfb50b9461c854d31b22dad9bfbb23397db228b27a6a486963",
+      "src/eval_client/eval_env.py": "3ae75304d8a840ede2589441f987824f50b2a89cc2ef37f4d43ce0a8dbc4fd88",
+      "task/RoboDojo/config/_task.yml": "655a87cd59fa6272bf352d32deb8ade162737b49a9824e16d428fecf0803380b",
+      "task/RoboDojo/config/make_toast.yml": "d190a26233db174538ff0052b4c2958a3b107f0ccc63d0fdfe28da4c7f5dc57b",
+      "task/RoboDojo/tasks/make_toast.py": "1047f484a73d1f92304393879b51f87e33d661b6ad7937198352fe37a0d3233d"
+    }
+  }
+}

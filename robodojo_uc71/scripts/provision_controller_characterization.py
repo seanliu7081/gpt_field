@@ -18,8 +18,9 @@ import numpy as np
 
 from new_host_camera import normalize_pci, renderer_table_identity
 from prepare_controller_characterization import (MAX_ACTIONS, SCOPE, accumulated_time_tolerance,
-    check_authorization, program_files, verify_first_probe, content_hash, validate_controller_probe_proposal,
-    physical_arm_states, measured_envelope, stage_controller, stage_joint_command, validate_operator_review)
+    check_authorization, program_files, verify_first_probe, content_hash, diagnostic_contract, validate_diagnostic_plan,
+    physical_arm_states, measured_envelope, stage_controller, stage_joint_command, validate_operator_review,
+    private_runtime_paths)
 from prepare_native_preview import EXPECTED_CAMERAS, verify_manifests
 from provision_native_preview import exact_fields, read_json, verify_dependencies
 from provision_native_common import digest, pins
@@ -28,9 +29,137 @@ from provision_native_characterization import _artifact
 from provision_new_host_camera import (child_environment, classify_terminal_exit, gpu_process_aliases,
     gpu_snapshot, owned_processes, process_record, terminate_owned, validate_single_gpu, write_json)
 from robodojo_uc71.worker_isolation import popen_identity, WORKER_UID, WORKER_GID
+from robodojo_uc71.controller import measured_tcp_pose, orientation_error_world
+from robodojo_uc71.native_action_observer import clean_joint_action
 
 BASE = Path(__file__).resolve().parents[1]
 SCRIPTS = BASE / "scripts"
+
+
+def verify_preview_open_action(action):
+    """Independently normalize the recorded dispatched command and forbid close."""
+    actual = clean_joint_action(action)
+    if any(actual[f"{arm}_ee_joint_state"] != [1.0] for arm in ("left", "right")):
+        raise ValueError("Open-only preview recorded a non-open native command")
+
+
+def verify_preview_open_fingers(measurement):
+    for arm in ("left", "right"):
+        fingers = np.asarray(measurement["arms"][arm]["finger_positions"], dtype=float)
+        if (fingers.shape != (2,) or not np.isfinite(fingers).all()
+                or np.max(np.abs(fingers-.044)) > .001):
+            raise ValueError("Preview endpoint fingers are not physically open")
+
+
+def verify_preview_endpoint(measurements, stage, geometry):
+    """Require five acknowledged final samples, never manufacture settling steps."""
+    if len(measurements) != 5:
+        raise ValueError("Preview endpoint requires five final acknowledged samples")
+    target = np.asarray(stage["target_tool_pose_wxyz"], dtype=float)
+    if target.shape != (7,) or not np.isfinite(target).all():
+        raise ValueError("Preview endpoint target is invalid")
+    positions, rotations, fingers = [], [], []
+    for measured in measurements:
+        states = physical_arm_states(measured, geometry)
+        position, quaternion = measured_tcp_pose(states[stage["active_arm"]])
+        position_error = np.linalg.norm(position-target[:3])
+        rotation_error = np.linalg.norm(orientation_error_world(quaternion, target[3:]))
+        if (not np.isfinite(position_error) or not np.isfinite(rotation_error)
+                or position_error > .002 or rotation_error > .02):
+            raise ValueError("Preview endpoint did not settle for five final samples")
+        verify_preview_open_fingers(measured)
+        positions.append(float(position_error)); rotations.append(float(rotation_error))
+        fingers.extend(float(np.max(np.abs(np.asarray(measured["arms"][arm]["finger_positions"])-.044)))
+                       for arm in ("left", "right"))
+    return {"passed": True, "samples_checked": 5, "extra_settling_actions": 0,
+        "maximum_position_error_m": max(positions), "maximum_orientation_error_rad": max(rotations),
+        "maximum_open_finger_error_m": max(fingers)}
+
+
+def verify_diagnostic_mode_evidence(plan, preparation, result, ready, diagnostic_kind):
+    """Keep short preview completion distinct from full controller qualification."""
+    contract = diagnostic_contract(diagnostic_kind)
+    limit, preview = contract["actions"], contract["open_only"]
+    if (len(plan["stages"]) != contract["stages"]
+            or any(type(stage.get("native_actions")) is not int or stage["native_actions"] < 0
+                   for stage in plan["stages"])
+            or sum(stage["native_actions"] for stage in plan["stages"]) != limit
+            or (len(plan["stages"])+1)*3 != contract["images"]):
+        raise ValueError("Diagnostic plan does not match the explicit mode ceiling")
+    if not exact_fields(preparation, {"schema": contract["preparation_schema"],
+            "diagnostic_native_actions_planned": limit}):
+        raise ValueError("Diagnostic preparation mode differs")
+    if not exact_fields(result, {"schema": contract["result_schema"], "diagnostic_completed": not preview,
+            "diagnostic_native_actions": limit, "diagnostic_physics_substeps": limit*10,
+            "image_count": contract["images"], "native_take_action_count": [limit]}):
+        raise ValueError("Diagnostic result mode/count differs")
+    if not exact_fields(ready, {"schema": contract["preclose_schema"],
+            "diagnostic_native_actions": limit, "image_count": contract["images"]}):
+        raise ValueError("Diagnostic preclose mode/count differs")
+    if preview and (not exact_fields(result, {"clearance_preview_completed": True,
+            "controller_characterization_completed": False})
+            or not exact_fields(ready, {"clearance_preview_completed": True,
+                "controller_characterization_completed": False, "diagnostic_completed": False})):
+        raise ValueError("Preview evidence must not claim full controller qualification")
+    if preview:
+        for record in (preparation, result):
+            if not exact_fields(record, {"diagnostic_kind": diagnostic_kind, "open_only": True,
+                    "candidate": plan["candidate"], "endpoint_validation": plan["endpoint_validation"],
+                    "candidate_abort_envelopes": plan["candidate_abort_envelopes"]}):
+                raise ValueError("Preview candidate or endpoint rule binding differs")
+        if not exact_fields(ready, {"diagnostic_kind": diagnostic_kind, "open_only": True,
+                "candidate_abort_envelopes": plan["candidate_abort_envelopes"]}):
+            raise ValueError("Preview preclose mode binding differs")
+    return contract
+
+
+def prepare_worker_git_config(output, native, pin_data):
+    """Permit read-only Git inspection of only the root-owned pinned checkouts."""
+    paths = [native, *(native/entry["path"] for entry in pin_data["gitlinks"])]
+    if any(any(c in str(path) for c in "\r\n") for path in paths): raise ValueError("Invalid Git source path")
+    path = output/"home/.gitconfig"
+    with path.open("x") as stream:
+        stream.write("[safe]\n"+"".join("\tdirectory = "+str(p)+"\n" for p in paths))
+    os.chmod(path, 0o644)
+    return {"path":str(path), "sha256":digest(path), "safe_directories":[str(p) for p in paths],
+        "scope":"fresh_private_HOME_only", "optional_git_locks":False}
+
+
+def write_operator_review(request_path, *, expected_request_sha256, decision, reason):
+    """Root/operator calls only after inspecting the exact request's fresh RGB."""
+    if os.getuid() != 0 or os.geteuid() != 0: raise ValueError("Root/operator review required")
+    request_path = Path(request_path).resolve(strict=True)
+    if digest(request_path) != expected_request_sha256: raise ValueError("Reviewed request changed")
+    request = read_json(request_path)
+    arm = request.get("active_arm")
+    child = request_path.parent.parent
+    if (arm not in ("left", "right") or request_path != child/f"clearance_{arm}/request.json"
+            or child.name != "controller" or child.parent.name != "worker"
+            or request.get("schema") != "robodojo-controller-clearance-request-1"):
+        raise ValueError("Unexpected controller clearance request path/schema")
+    for image in request["capture"]["images"]:
+        _artifact(child, image)
+    reviews = child.parents[1]/"operator_reviews"
+    info = reviews.lstat()
+    if (not stat.S_ISDIR(info.st_mode) or reviews.is_symlink() or info.st_uid != 0
+            or info.st_gid != WORKER_GID or stat.S_IMODE(info.st_mode) != 0o750):
+        raise ValueError("Root-owned worker-read-only review directory required")
+    value = {"schema":"robodojo-controller-clearance-review-1", "request_sha256":expected_request_sha256,
+        "plan_sha256":request["plan_sha256"], "stage_index":request["stage_index"], "active_arm":arm,
+        "native_action_counter":request["native_action_counter"], "image_sha256":request["image_sha256"],
+        "reviewer":"root/operator", "decision":decision, "reason":reason,
+        "full_test_authorized":False, "benchmark_attempt_started":False, "object_truth_used":False}
+    validate_operator_review(value, request, expected_request_sha256)
+    path = reviews/f"{arm}.json"
+    fd = os.open(path, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW, 0o640)
+    with os.fdopen(fd, "w") as stream:
+        os.fchown(stream.fileno(), 0, WORKER_GID); os.fchmod(stream.fileno(), 0o640)
+        json.dump(value, stream, indent=2, allow_nan=False); stream.write("\n")
+        stream.flush(); os.fsync(stream.fileno())
+    directory_fd = os.open(reviews, os.O_RDONLY|os.O_DIRECTORY)
+    try: os.fsync(directory_fd)
+    finally: os.close(directory_fd)
+    return {"path":str(path), "sha256":digest(path), "decision":decision}
 
 
 def verify_capture(child, capture, label, plan, geometry):
@@ -101,32 +230,41 @@ def verify_clearance(child, spec, stage, capture, plan):
 
 
 def verify_controller_evidence(child, binding, identity, preparation_expected, source_hashes,
-                               parent_log, python, authorization, plan, first_probe):
-    result = read_json(child / "controller_result.json"); ready = read_json(child / "controller_preclose_ready.json")
+                               parent_log, python, authorization, plan, first_probe,
+                               *, diagnostic_kind="controller-characterization"):
+    contract = diagnostic_contract(diagnostic_kind)
+    validate_diagnostic_plan(plan, diagnostic_kind)
+    actions_limit, preview = contract["actions"], contract["open_only"]
+    result_path, ready_path = child/contract["result_filename"], child/contract["preclose_filename"]
+    result = read_json(result_path); ready = read_json(ready_path)
     preparation = read_json(child / "preparation.json"); log_text = parent_log.read_text(errors="replace")
     if re.search(r"ModuleNotFoundError:|ImportError:|Failed to import python module|Failed to startup python extension", log_text):
         raise ValueError("Native extension startup/import failure remains")
-    image_count = (len(plan["stages"])+1)*3
-    if not exact_fields(result, {**SCOPE, "schema": "robodojo-controller-characterization-result-1",
-            "diagnostic_completed": True, "diagnostic_native_actions": MAX_ACTIONS,
-            "diagnostic_physics_substeps": MAX_ACTIONS*10, "image_count": image_count,
-            "native_take_action_count": [MAX_ACTIONS], "reset_calls": 1, "native_client_reset_calls": 1,
+    if re.search(r"PermissionError:|Failed to create local file data store|Failed to acquire exclusive lock to data store", log_text):
+        raise ValueError("Native private logging/cache startup failure remains")
+    image_count = contract["images"]
+    verify_diagnostic_mode_evidence(plan, preparation, result, ready, diagnostic_kind)
+    if not exact_fields(result, {**SCOPE, "schema": contract["result_schema"],
+            "diagnostic_completed": not preview, "diagnostic_native_actions": actions_limit,
+            "diagnostic_physics_substeps": actions_limit*10, "image_count": image_count,
+            "native_take_action_count": [actions_limit], "reset_calls": 1, "native_client_reset_calls": 1,
             "task_success_assessed": False, "reward_predicates_registered": True, "binding": binding,
             "shutdown_mode": "stock-fast", "physics_device": "cpu", "use_fabric": False,
             "native_planner_instances": 0, "native_ik_solver_instances": 0, "automatic_configuration_selection": False}):
         raise ValueError("Controller diagnostic result scope differs")
-    if not exact_fields(ready, {"schema": "robodojo-controller-characterization-preclose-1",
+    if not exact_fields(ready, {"schema": contract["preclose_schema"],
             "ready_for_shutdown": True, "no_pending_exception": True, "native_env_close_returned": True,
-            "physx_monitor_healthy": True, "cleanup_errors": [], "diagnostic_native_actions": MAX_ACTIONS,
+            "physx_monitor_healthy": True, "cleanup_errors": [], "diagnostic_native_actions": actions_limit,
             "child_pid": identity["pid"], "binding": binding, "shutdown_mode": "stock-fast", "image_count": image_count,
             "full_plugin_cleanup_proven": False, "full_teardown_returned": False,
             "benchmark_attempt_started": False, "full_test_authorized": False, "model_calls": 0, "benchmark_actions": 0,
             "standard_ready": False, "asset_fidelity_passed": False}):
         raise ValueError("Durable controller preclose evidence is not clean")
-    if any((child/name).exists() for name in ("controller_failure.json", "controller_close_failure.json")):
+    if any((child/name).exists() for name in (contract["failure_filename"], "controller_failure.json",
+            "controller_close_failure.json", "clearance_preview_close_failure.json")):
         raise ValueError("Child recorded a controller execution/cleanup failure")
-    result_hash, prep_hash = digest(child/"controller_result.json"), digest(child/"preparation.json")
-    if (ready.get("controller_result_sha256") != result_hash or ready.get("preparation_sha256") != prep_hash
+    result_hash, prep_hash = digest(result_path), digest(child/"preparation.json")
+    if (ready.get(contract["result_hash_key"]) != result_hash or ready.get("preparation_sha256") != prep_hash
             or result.get("preparation_sha256") != prep_hash or preparation.get("authorization") != authorization
             or preparation.get("source_file_sha256") != source_hashes or preparation.get("first_probe") != first_probe
             or result.get("first_probe") != first_probe or result.get("plan_sha256") != content_hash(plan)
@@ -152,6 +290,28 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
     if (result.get("loaded_graphics_library_paths_sha256") != digest(child/"loaded_graphics_library_paths.json")
             or graphics.get("pid") != identity["pid"] or graphics.get("source") != "/proc/self/maps"
             or not graphics.get("paths")): raise ValueError("Child graphics-library provenance missing")
+    expected_paths = private_runtime_paths(child)
+    path_preparation = preparation.get("private_runtime_paths", {})
+    runtime_paths = read_json(child/"runtime_paths.json")
+    logging_paths = read_json(child/"native_logging_paths.json")
+    if (not exact_fields(path_preparation, {**expected_paths,
+            "schema": "robodojo-private-runtime-path-preparation-1", "pid": identity["pid"],
+            "uid": WORKER_UID, "temporary_file_write_passed": True, "kit_runtime_resolution_checked": False})
+            or result.get("runtime_paths_sha256") != digest(child/"runtime_paths.json")
+            or not exact_fields(runtime_paths, {**expected_paths, "schema": "robodojo-private-runtime-paths-1",
+                "pid": identity["pid"], "uid": WORKER_UID, "resolved_tokens": expected_paths["tokens"],
+                "verified_before_native_reset": True})
+            or result.get("native_logging_paths_sha256") != digest(child/"native_logging_paths.json")
+            or not exact_fields(logging_paths, {"schema": "robodojo-private-native-logging-1",
+                "pid": identity["pid"], "uid": WORKER_UID,
+                "directory": expected_paths["isaaclab_log_directory"], "verified_after_native_reset": True})
+            or not 0 < runtime_paths["monotonic_s"] <= logging_paths["monotonic_s"] < result["completed_at_monotonic_s"]):
+        raise ValueError("Worker-private effective cache/log path evidence differs")
+    logs = logging_paths.get("file_paths", [])
+    if (not logs or any(Path(p).parent != Path(expected_paths["isaaclab_log_directory"])
+            or Path(p).resolve() != Path(p) or not Path(p).is_file()
+            or Path(p).stat().st_uid != WORKER_UID for p in logs)):
+        raise ValueError("Native logger did not write to worker-private TMPDIR")
     cuda = read_json(child/"cuda_identity.json"); renderer = read_json(child/"renderer_identity.json")
     if (not exact_fields(cuda, {"gpu_uuid": binding["gpu_uuid"], "cuda_ordinal": 0, "device_count": 1,
             "primary_context_created": False, "child_pid": identity["pid"], "child_start_ticks": identity["start_ticks"]})
@@ -162,19 +322,33 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
             or parsed.get("uuid_prefix_and_pci_bus_match") is not True or renderer.get("active_rows") != parsed.get("active_rows")):
         raise ValueError("Actual Kit renderer identity differs")
     captures, actions, stages = result["captures"], result["actions"], result["stages"]
-    if len(captures) != len(plan["stages"])+1 or len(actions) != MAX_ACTIONS or len(stages) != len(plan["stages"]):
+    if len(captures) != len(plan["stages"])+1 or len(actions) != actions_limit or len(stages) != len(plan["stages"]):
         raise ValueError("Controller action/stage/capture counts differ")
     geometry = read_json(Path(plan["geometry_candidate_path"]))
     previous, paths = verify_capture(child, captures[0], "before", plan, geometry)
+    if previous["native_action_counter"] != [0]:
+        raise ValueError("Diagnostic initial capture must precede all native actions")
+    if preview:
+        verify_preview_open_fingers(previous)
+        if (result.get("clearances") != {}
+                or any((child/f"clearance_{arm}").exists() for arm in ("left", "right"))
+                or any((child.parents[1]/"operator_reviews"/f"{arm}.json").exists() for arm in ("left", "right"))):
+            raise ValueError("Open-only preview cannot consume gripper-closing clearances")
     start_time = previous["native_physics_time_s"]; start_counter = previous["native_physics_counter"]
     index = 0; clearances = {}
     for stage, entry in zip(plan["stages"], stages):
         if not exact_fields(entry, {"stage_index": stage["index"], "label": stage["label"],
                 "native_actions": stage["native_actions"], "first_action_index": index+1,
                 "last_action_index": index+stage["native_actions"]}): raise ValueError("Controller stage ordering differs")
+        if preview and (stage["kind"] != "translation"
+                or stage["active_gripper_command"] != 1.0 or stage["other_gripper_command"] != 1.0
+                or stage.get("operator_clearance_required_before") is not False
+                or "clearance" in entry):
+            raise ValueError("Open-only preview contains a closing or clearance-wait stage")
         states = physical_arm_states(previous, geometry)
         inactive = {arm: np.asarray(states[arm].joint_positions).copy() for arm in ("left", "right") if arm != stage["active_arm"]}
         controller = None if stage["kind"] in ("visual_checkpoint", "joint_hold") else stage_controller(stage, states)
+        tail = []
         for local_index in range(1, stage["native_actions"]+1):
             index += 1; row = actions[index-1]
             if row.get("index") != index or row.get("stage_index") != stage["index"] or row["receipt"]["path"] != f"native_action_{index:04d}.json":
@@ -182,6 +356,7 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
             receipt = read_json(_artifact(child, row["receipt"]))
             if not exact_fields(receipt, {**SCOPE, "schema": "robodojo-controller-native-action-1",
                     "native_action_index": index, "stage_index": stage["index"], "stage_action_index": local_index,
+                    "measured_envelope_passed": True, "measurement_validation_error": None,
                     "plan_sha256": content_hash(plan), "authorization_sha256": authorization["sha256"]}):
                 raise ValueError("Controller action receipt scope differs")
             before, after = receipt["before"], receipt["after"]
@@ -200,6 +375,10 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
             if (set(receipt["target"]) != set(expected_action)
                     or any(not np.allclose(receipt["target"][k], expected_action[k], atol=1e-12, rtol=1e-10) for k in expected_action)):
                 raise ValueError("Native command differs from independently reconstructed controller output")
+            if preview:
+                verify_preview_open_action(receipt["target"])
+                tail.append(after)
+                tail = tail[-5:]
             accounting = receipt["native_accounting"]
             if (not exact_fields(accounting, {"native_counter_before": index-1, "native_counter_after": index,
                     "native_sim_step_calls": 10, "physics_dt_s": .004, "native_terminal_callback_calls": 1,
@@ -219,7 +398,12 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
         capture = entry["capture"]
         observed, images = verify_capture(child, capture, f"stage_{stage['index']:03d}", plan, geometry)
         if (observed["arms"] != previous["arms"] or observed["native_physics_time_s"] != previous["native_physics_time_s"]
+                or observed["native_physics_counter"] != previous["native_physics_counter"]
+                or observed["native_action_counter"] != previous["native_action_counter"]
                 or capture != captures[stage["index"]+1]): raise ValueError("Stage RGB differs from acknowledged robot state")
+        if preview:
+            endpoint = verify_preview_endpoint(tail, stage, geometry)
+            verify_preview_open_fingers(observed)
         paths.extend(images)
         if stage["kind"] == "visual_checkpoint":
             verify_clearance(child, entry["clearance"], stage, capture, plan)
@@ -230,13 +414,21 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
                     "stage": stage["label"], "calibration_passed": False, "standard_ready": False,
                     "benchmark_attempt_started": False, "automatic_configuration_selection": False}):
                 raise ValueError("Stage analysis improperly claims automatic calibration")
+            if preview:
+                reported = analysis.get("endpoint_validation", {})
+                if (not exact_fields(reported, {"passed": True, "samples_checked": 5, "extra_settling_actions": 0})
+                        or set(reported) != set(endpoint)
+                        or any(type(reported.get(key)) is not float
+                               or not math.isclose(reported[key], endpoint[key], abs_tol=1e-12, rel_tol=1e-10)
+                               for key in endpoint if key.startswith("maximum_"))):
+                    raise ValueError("Reported preview endpoint differs from independently measured states")
         previous = observed
     actual_time = previous["native_physics_time_s"]-start_time
-    if (index != MAX_ACTIONS or previous["native_physics_counter"]-start_counter != MAX_ACTIONS*10
-            or result["clearances"] != clearances or set(clearances) != {"left", "right"}
-            or not math.isclose(actual_time, MAX_ACTIONS*.04, rel_tol=0, abs_tol=accumulated_time_tolerance(MAX_ACTIONS))
+    if (index != actions_limit or previous["native_physics_counter"]-start_counter != actions_limit*10
+            or result["clearances"] != clearances or set(clearances) != (set() if preview else {"left", "right"})
+            or not math.isclose(actual_time, actions_limit*.04, rel_tol=0, abs_tol=accumulated_time_tolerance(actions_limit))
             or result["diagnostic_simulated_time_s"] != actual_time
-            or result["accumulated_dt_tolerance_s"] != accumulated_time_tolerance(MAX_ACTIONS)):
+            or result["accumulated_dt_tolerance_s"] != accumulated_time_tolerance(actions_limit)):
         raise ValueError("Controller total count/time/clearance evidence differs")
     code = "import json,sys,numpy as np; from PIL import Image; rows=[]\nfor p in sys.argv[1:]:\n with Image.open(p) as im:\n  im.load(); a=np.asarray(im); rows.append({'path':p,'format':im.format,'mode':im.mode,'shape':list(a.shape),'dtype':str(a.dtype),'std':float(a.std())})\nprint(json.dumps(rows))"
     decoded = json.loads(subprocess.check_output([str(python), "-I", "-B", "-c", code, *paths], text=True, timeout=60,
@@ -245,8 +437,306 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
         raise ValueError("Independent RGB decoding failed")
     return {"preclose_ready_verified": True, "native_render_verified": True, "diagnostic_actions_verified": True,
         "cuda_identity_verified": True, "renderer_identity_verified": True, "extension_startup_clean": True,
-        "worker_isolation_verified": True, "operator_clearances_verified": True,
-        "diagnostic_native_actions": MAX_ACTIONS, "diagnostic_physics_substeps": MAX_ACTIONS*10,
-        "diagnostic_simulated_time_s": actual_time, "controller_result_sha256": result_hash,
+        "worker_isolation_verified": True, "operator_clearances_verified": not preview,
+        "open_only_actions_verified": preview, "stable_open_endpoints_verified": preview,
+        "diagnostic_native_actions": actions_limit, "diagnostic_physics_substeps": actions_limit*10,
+        "diagnostic_simulated_time_s": actual_time, contract["result_hash_key"]: result_hash,
         "preparation_sha256": prep_hash, "independent_image_decoding": decoded,
         "child_loaded_graphics_library_paths": graphics["paths"], "image_visual_review_required": True}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("authorization", "install-record", "dependency-record", "source-manifest", "asset-manifest",
+                 "output", "python", "library-path", "plan", "first-probe-result", "first-probe-analysis"):
+        parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--gpu-uuid")
+    parser.add_argument("--pci-bus-id")
+    parser.add_argument("--diagnostic-kind", choices=("controller-characterization", "open-clearance-preview"),
+                        default="controller-characterization")
+    parser.add_argument("--launch", action="store_true", help="Execute the explicitly bound diagnostic; default only reviews inputs")
+    parser.add_argument("--compatibility-record", type=Path, required=True,
+                        help="Reviewed isolated hidapi/setuptools compatibility installation")
+    parser.add_argument("--asset-diagnostic-assessment", type=Path, required=True,
+                        help="Exact reviewed upstream-asset diagnostic assessment; strict closure is the default")
+    parser.add_argument("--timeout-s", type=int)
+    parser.add_argument("--minimum-free-mib", type=int, default=16384)
+    parser.add_argument("--vk-icd", type=Path, default=Path("/etc/vulkan/icd.d/nvidia_icd.json"))
+    parser.add_argument("--eula-record", type=Path, default=BASE / "validation/provisioning/vendor_authorization.json")
+    args = parser.parse_args()
+    contract = diagnostic_contract(args.diagnostic_kind)
+    preview = contract["open_only"]
+    if args.timeout_s is None:
+        args.timeout_s = contract["max_wall_time_s"]
+    python, output = args.python.absolute(), args.output.resolve()
+    if (not python.is_file() or not os.access(python, os.X_OK) or not 30 <= args.timeout_s <= contract["max_wall_time_s"]
+            or args.minimum_free_mib < 16384 or not args.vk_icd.is_file()):
+        parser.error("Valid interpreter/ICD, the mode's bounded deadline, and at least 16384MiB free are required")
+    library_path = args.library_path.resolve(strict=True)
+    if (not library_path.is_dir() or not library_path.is_relative_to(BASE / "runtime")
+            or output.exists() or not output.is_relative_to(BASE / "validation")
+            or any(char.isspace() for char in str(output))):
+        parser.error("Use task-local runtime libraries and a fresh validation output without whitespace")
+    auth_path = args.authorization.resolve(strict=True)
+    auth = read_json(auth_path)
+    binding = {"gpu_uuid": args.gpu_uuid or auth.get("gpu_uuid"),
+               "pci_bus_id": args.pci_bus_id or auth.get("pci_bus_id"), "kit_index": 0, "cuda_ordinal": 0}
+    if not binding["gpu_uuid"] or not binding["pci_bus_id"]:
+        parser.error("GPU UUID and PCI address are required in authorization or explicit flags")
+    plan_path = args.plan.resolve(strict=True)
+    probe_path, analysis_path = args.first_probe_result.resolve(strict=True), args.first_probe_analysis.resolve(strict=True)
+    plan = read_json(plan_path)
+    validate_diagnostic_plan(plan, args.diagnostic_kind)
+    first_probe = verify_first_probe(probe_path, analysis_path, plan)
+    authorization = check_authorization(auth_path, plan, binding, first_probe=first_probe,
+                                         launch=False, output_parent=output, diagnostic_kind=args.diagnostic_kind)
+    authorized_deadline = auth["maximum_wall_time_s"]
+    if (auth.get("diagnostic_native_actions_authorized") is not True
+            or auth.get("automatic_retry", False) is not False
+            or auth.get("shutdown_mode", "stock-fast") != "stock-fast"
+            or type(authorized_deadline) is not int or args.timeout_s > authorized_deadline
+            or (auth.get("pci_bus_id") is not None
+                and normalize_pci(auth["pci_bus_id"]) != normalize_pci(binding["pci_bus_id"]))):
+        parser.error("Authorization must bind only fixed diagnostic actions and forbid retries and bind this PCI address, shutdown mode and deadline")
+    if read_json(args.eula_record).get("nvidia_eula_accepted") is not True:
+        parser.error("Preserved NVIDIA licence acceptance is required")
+    source_path, assets_path = args.source_manifest.resolve(strict=True), args.asset_manifest.resolve(strict=True)
+    asset_assessment = args.asset_diagnostic_assessment.resolve(strict=True) if args.asset_diagnostic_assessment else None
+    native = Path(read_json(source_path)["root"]).resolve(strict=True)
+    preparation = verify_manifests(native, source_path, assets_path, pins(), asset_assessment)
+    if preparation["camera_gate"]["gpu_uuid"] != binding["gpu_uuid"]:
+        parser.error("Native preparation gate is bound to another GPU")
+    dependency_info = verify_dependencies(python, args.install_record.resolve(strict=True), args.dependency_record.resolve(strict=True))
+    compatibility_path = args.compatibility_record.resolve(strict=True) if args.compatibility_record else None
+    compatibility_info = verify_compatibility_record(python, compatibility_path, dependency_info) if compatibility_path else None
+    before = gpu_snapshot()
+    gpu = validate_single_gpu(before, binding, require_idle=True)
+    if int(gpu["memory_free"].split()[0]) < args.minimum_free_mib:
+        parser.error("Insufficient free GPU memory for the bounded native characterization")
+    kernel = Path("/proc/driver/nvidia/version").read_text()
+    if not re.search(r"\b" + re.escape(gpu["driver_version"]) + r"\b", kernel):
+        parser.error("Injected kernel and NVML driver versions differ")
+    helpers = program_files()
+    source_hashes = {str(path): digest(path) for path in helpers}
+    if not args.launch:
+        print(json.dumps({"inputs_verified": True, "simulator_starts": 0, "diagnostic_native_actions": 0,
+            "diagnostic_kind": args.diagnostic_kind, "diagnostic_native_actions_planned": contract["actions"],
+            "plan_sha256": content_hash(plan), "source_file_sha256": source_hashes,
+            "output": str(output), "reviewed_command": [sys.executable, str(Path(__file__).resolve()), *sys.argv[1:], "--launch"],
+            "benchmark_attempt_started": False, "full_test_authorized": False}), flush=True)
+        return 0
+    output.mkdir(parents=True, exist_ok=False)
+    os.chown(output, 0, WORKER_GID); os.chmod(output, 0o750)
+    for name in ("home", "cache", "config", "data", "worker", "tmp"):
+        path = output / name; path.mkdir(mode=0o700)
+        os.chown(path, WORKER_UID, WORKER_GID)
+    for name in ("scripts_snapshot", "operator_reviews"):
+        path = output / name; path.mkdir(mode=0o750)
+        os.chown(path, 0, WORKER_GID); os.chmod(path, 0o750)
+    child_output = output / "worker/controller"  # Worker creates only this fresh child directory.
+    worker_git = prepare_worker_git_config(output, native, pins())
+    write_json(output / "program_binding.json", source_hashes)
+    for path in helpers:
+        shutil.copyfile(path, output / "scripts_snapshot" / path.name)
+    for path, name in ((auth_path, "authorization.json"), (args.install_record, "base_install_status.json"),
+                       (args.dependency_record, "dependency_install_status.json"), (source_path, "source_manifest.json"),
+                       (assets_path, "asset_manifest.json"), (args.eula_record, "vendor_authorization.json"),
+                       (plan_path, "plan.json"), (probe_path, "first_probe_result.json"), (analysis_path, "first_probe_analysis.json")):
+        shutil.copyfile(path, output / name)
+    if asset_assessment is not None:
+        shutil.copyfile(asset_assessment, output / "asset_diagnostic_assessment.json")
+    if compatibility_path is not None:
+        shutil.copyfile(compatibility_path, output / "compatibility_install_status.json")
+    for name, value in (("gpu_before.json", before), ("preflight_preparation.json", preparation),
+                        ("dependency_binding.json", dependency_info)):
+        write_json(output / name, value)
+    (output / "kernel_driver.txt").write_text(kernel)
+    environment = child_environment(python, output, binding, args.vk_icd.resolve(), library_path, "stock-fast")
+    environment = {key: value for key, value in environment.items() if not key.startswith("UC71_CAMERA_")}
+    import_path = dependency_info["overlay_target"]
+    if compatibility_info is not None:
+        import_path = compatibility_info["target"] + os.pathsep + import_path
+    environment.update(PYTHONPATH=import_path,
+        UC71_CONTROLLER_PARENT_PID=str(os.getpid()), GIT_OPTIONAL_LOCKS="0", TMPDIR=str(output/"tmp"))
+    for name in ("UC71_CONTROLLER_CHARACTERIZATION_AUTHORIZED_CHILD", "UC71_OPEN_CLEARANCE_PREVIEW_AUTHORIZED_CHILD"):
+        environment.pop(name, None)
+    environment[contract["authorized_child_env"]] = "1"
+    parent_log = output / "stdout_stderr.log"
+    argv = [str(python), "-B", "-X", "faulthandler", "-u", str(SCRIPTS / "prepare_controller_characterization.py"),
+            "--native-root", str(native), "--source-manifest", str(source_path), "--asset-manifest", str(assets_path),
+            "--authorization", str(auth_path), "--output", str(child_output), "--gpu-uuid", binding["gpu_uuid"],
+            "--pci-bus-id", binding["pci_bus_id"], "--kit-index", "0", "--cuda-ordinal", "0",
+            "--shutdown-mode", "stock-fast", "--parent-log", str(parent_log),
+            "--diagnostic-kind", args.diagnostic_kind, "--launch"]
+    argv.extend(("--plan", str(plan_path), "--first-probe-result", str(probe_path), "--first-probe-analysis", str(analysis_path), "--operator-review-directory", str(output / "operator_reviews"), "--program-binding", str(output / "program_binding.json")))
+    if asset_assessment is not None:
+        argv.extend(("--asset-diagnostic-assessment", str(asset_assessment)))
+    record = {"schema": contract["launch_schema"], "started_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "diagnostic_kind": args.diagnostic_kind, "clearance_preview_completed": False,
+        "controller_characterization_completed": False, "diagnostic_completed": False,
+        "argv": argv, "environment": environment, "binding": binding, "source_file_sha256": source_hashes,
+        "authorization_sha256": digest(auth_path), "dependency_binding": dependency_info,
+        "compatibility_binding": compatibility_info,
+        "plan_sha256": content_hash(plan), "plan_file_sha256": digest(plan_path), "first_probe": first_probe,
+        "diagnostic_native_actions_planned": contract["actions"], "benchmark_attempt_started": False,
+        "operator_visual_clearance_required": contract["operator_visual_clearance_required"],
+        "preparation": preparation, "wall_time_limit_s": args.timeout_s, "minimum_free_mib": args.minimum_free_mib,
+        "local_library_sha256": {path.name: digest(path) for path in library_path.iterdir() if path.is_file()},
+        "shutdown_mode": "stock-fast", "full_plugin_cleanup_proven": False, "full_teardown_returned": False,
+        "shutdown_limitation": "NVIDIA stock fast exit skips complete plugin/Python teardown; successful preclose and process/GPU release are required.",
+        "automatic_retry": False, "full_test_authorized": False, "model_calls": 0, "benchmark_actions": 0,
+        "standard_ready": False, "asset_fidelity_passed": False,
+        "dependency_closure_complete": preparation["dependency_closure_complete"],
+        "asset_diagnostic_assessment": preparation["asset_diagnostic_assessment"],
+        "worker_identity": {"uid":WORKER_UID,"gid":WORKER_GID,"supplementary_groups":[],"parent_pid":os.getpid()},
+        "worker_git_configuration": worker_git,
+        "limitations": "Bounded local controller diagnostic; no automatic calibration/task-success claim. Separate Unix UID protects credentials; no filesystem namespace or network isolation; peak VRAM is sampled."}
+    if preview:
+        record.update(open_only=True, candidate=plan["candidate"], endpoint_validation=plan["endpoint_validation"],
+            candidate_abort_envelopes=plan["candidate_abort_envelopes"],
+            operator_review_after_exit=True, collision_free_path_proven=False)
+    write_json(output / "launch.json", record)
+    known, sent, previous_handlers, observed_libraries = {}, [], {}, set()
+    proc = initial = None
+    namespace_candidate = None
+    peak = int(gpu["memory_used"].split()[0])
+    minimum_free = int(gpu["memory_free"].split()[0])
+    started = time.monotonic()
+
+    def interrupt(signum, _frame):
+        raise InterruptedError(f"Native characterization supervisor received signal {signum}")
+
+    try:
+        for signum in (signal.SIGINT, signal.SIGTERM):
+            previous_handlers[signum] = signal.signal(signum, interrupt)
+        with parent_log.open("x") as log, (output / "gpu_monitor.jsonl").open("x") as monitor:
+            proc = subprocess.Popen(argv, cwd=output, env=environment, stdout=log,
+                                    stderr=subprocess.STDOUT, **popen_identity())
+            record["pid"] = proc.pid
+            initial = process_record(proc.pid)
+            if initial is None:
+                raise RuntimeError("Could not capture the directly owned child's kernel identity")
+            known[proc.pid] = initial["start_ticks"]
+            write_json(output / "launcher_pid.json", {"launcher_pid": os.getpid(), "child": initial})
+            while proc.poll() is None:
+                remaining = args.timeout_s - (time.monotonic() - started)
+                if remaining <= 0:
+                    raise TimeoutError("Native characterization wall-time deadline reached")
+                members = owned_processes(proc.pid, known)
+                snapshot = gpu_snapshot(timeout_s=min(10, max(0.1, remaining)))
+                exit_code = proc.poll()
+                monitor.write(json.dumps({"elapsed_s": time.monotonic() - started,
+                    "child_returncode": exit_code, "owned_processes": members, "gpus": snapshot}) + "\n")
+                monitor.flush()
+                current_gpu = validate_single_gpu(snapshot, binding)
+                peak = max(peak, int(current_gpu["memory_used"].split()[0]))
+                minimum_free = min(minimum_free, int(current_gpu["memory_free"].split()[0]))
+                if exit_code is not None:
+                    break  # Preserve actual exit while NVML bookkeeping drains.
+                aliases = gpu_process_aliases(known, child_identity=initial, child_unreaped=proc.returncode is None)
+                unknown = [row for row in current_gpu["processes"] if row["pid"] not in aliases]
+                if unknown and proc.poll() is None:
+                    if (len({row["pid"] for row in current_gpu["processes"]}) != 1
+                            or len({row["pid"] for row in unknown}) != 1
+                            or process_record(unknown[0]["pid"]) is not None):
+                        raise RuntimeError(f"Unexpected or ambiguous GPU process occupancy: {unknown}")
+                    candidate = unknown[0]["pid"]
+                    if namespace_candidate is not None and namespace_candidate != candidate:
+                        raise RuntimeError("Inaccessible NVML process candidate changed")
+                    namespace_candidate = candidate
+                    record["nvml_namespace_candidate"] = {"pid": candidate, "binding_proven": False,
+                        "basis": "Sole inaccessible process on initially idle GPU; final release required"}
+                for member in members:
+                    try:
+                        maps = Path(f"/proc/{member['pid']}/maps").read_text()
+                    except OSError:
+                        continue
+                    for line in maps.splitlines():
+                        fields = line.split(maxsplit=5)
+                        if len(fields) == 6 and re.search(r"/(?:libcuda|libnvidia|libGLX|libEGL|libGLU|libvulkan)", fields[5]):
+                            observed_libraries.add(fields[5])
+                time.sleep(0.5)
+            record["returncode"] = proc.wait(timeout=5)
+    except BaseException as error:
+        record["termination"] = type(error).__name__
+        record["termination_detail"] = str(error)
+    finally:
+        for signum in previous_handlers:
+            signal.signal(signum, signal.SIG_IGN)
+        if proc is not None:
+            if proc.poll() is None or owned_processes(proc.pid, known):
+                try:
+                    sent.extend(terminate_owned(proc, known))
+                except Exception as error:
+                    record["cleanup_error"] = repr(error)
+            record["returncode"] = proc.poll()
+        for signum, handler in previous_handlers.items():
+            signal.signal(signum, handler)
+    record.update(elapsed_s=time.monotonic() - started, termination_signals=sent,
+        remaining_owned_pids=[row["pid"] for row in owned_processes(proc.pid, known)] if proc else [],
+        loaded_graphics_library_paths=sorted(observed_libraries), sampled_peak_gpu_used_mib=peak,
+        sampled_peak_gpu_used_delta_mib=peak - int(gpu["memory_used"].split()[0]), sampled_minimum_free_mib=minimum_free)
+    try:
+        after = gpu_snapshot()
+        deadline = time.monotonic() + 10
+        while any(item["processes"] for item in after) and time.monotonic() < deadline:
+            time.sleep(0.5)
+            after = gpu_snapshot(timeout_s=3)
+        write_json(output / "gpu_after.json", after)
+        final_gpu = validate_single_gpu(after, binding)
+        record["gpu_processes_released"] = not final_gpu["processes"]
+        record["gpu_memory_used_delta_mib"] = int(final_gpu["memory_used"].split()[0]) - int(gpu["memory_used"].split()[0])
+        record["gpu_memory_released"] = record["gpu_memory_used_delta_mib"] <= 256
+    except Exception as error:
+        record["gpu_cleanup_check_error"] = repr(error)
+    try:
+        if initial is None:
+            raise ValueError("Owned child identity is missing")
+        record.update(verify_controller_evidence(child_output, binding, initial, preparation, source_hashes,
+                                             parent_log, python, authorization, plan, first_probe,
+                                             diagnostic_kind=args.diagnostic_kind))
+        if digest(plan_path) != record["plan_file_sha256"] or verify_first_probe(probe_path, analysis_path, plan) != first_probe:
+            raise ValueError("Controller proposal/first-probe analysis changed")
+        if digest(auth_path) != record["authorization_sha256"]:
+            raise ValueError("Characterization authorization changed during this attempt")
+        if digest(Path(worker_git["path"])) != worker_git["sha256"]:
+            raise ValueError("Fresh worker Git configuration changed")
+        if any(digest(Path(name)) != value for name, value in source_hashes.items()):
+            raise ValueError("A launcher/child/helper changed during this attempt")
+        if verify_manifests(native, source_path, assets_path, pins(), asset_assessment) != preparation:
+            raise ValueError("Native source/assets changed during this attempt")
+        if verify_dependencies(python, args.install_record.resolve(), args.dependency_record.resolve()) != dependency_info:
+            raise ValueError("Package metadata or dependency records changed during this attempt")
+        if compatibility_path is not None and verify_compatibility_record(python, compatibility_path, dependency_info) != compatibility_info:
+            raise ValueError("Compatibility metadata or installation record changed during this attempt")
+        record["bindings_unchanged_after_clearance_preview" if preview else "bindings_unchanged_after_controller_characterization"] = True
+    except Exception as error:
+        record["evidence_validation_error"] = f"{type(error).__name__}: {error}"
+    record["shutdown_contract_satisfied"] = bool(record.get("preclose_ready_verified") is True
+        and record.get("returncode") == 0 and not sent and "termination" not in record)
+    record["clean_shutdown_confirmed"] = bool(record["shutdown_contract_satisfied"]
+        and record.get("gpu_processes_released") is True and record.get("gpu_memory_released") is True
+        and not record["remaining_owned_pids"] and "cleanup_error" not in record)
+    completed = bool(record["clean_shutdown_confirmed"]
+        and record.get("native_render_verified") is True and record.get("diagnostic_actions_verified") is True
+        and record.get("bindings_unchanged_after_clearance_preview" if preview else "bindings_unchanged_after_controller_characterization") is True
+        and (not preview or (record.get("open_only_actions_verified") is True
+                             and record.get("stable_open_endpoints_verified") is True))
+        and "evidence_validation_error" not in record)
+    record["diagnostic_completed"] = completed and not preview
+    record["controller_characterization_completed"] = completed and not preview
+    record["clearance_preview_completed"] = completed and preview
+    if proc is not None and record.get("returncode") is not None:
+        record["terminal_exit"] = classify_terminal_exit(record["returncode"], record.get("termination"), sent, child_pid=proc.pid)
+    write_json(output / "launch_result.json", record)
+    print(json.dumps({"output": str(output), "diagnostic_completed": record["diagnostic_completed"],
+                      "clearance_preview_completed": record["clearance_preview_completed"],
+                      "controller_characterization_completed": record["controller_characterization_completed"],
+                      "asset_fidelity_passed": record["asset_fidelity_passed"], "standard_ready": record["standard_ready"],
+                      "returncode": record.get("returncode"), "termination": record.get("termination"),
+                      "evidence_validation_error": record.get("evidence_validation_error")}), flush=True)
+    return 0 if completed else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

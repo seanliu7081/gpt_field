@@ -38,7 +38,7 @@ from .controller import ControllerConfig
 from .fragment_executor import FragmentExecutionError, FragmentExecutor, MonitoringSettings
 from .native_worker_client import (NativeWorkerClient, ParentCapture, VerifiedActionFollowupError,
                                   WorkerClientError, write_private_record)
-from .schema import ExecutionLimits, public_json, validate_decision, validate_feedback
+from .schema import ExecutionLimits, public_json, validate_controller_capabilities, validate_decision, validate_feedback
 
 
 class EpisodeRunnerError(RuntimeError):
@@ -46,11 +46,22 @@ class EpisodeRunnerError(RuntimeError):
 
 
 def execution_configuration(*, controller_config: ControllerConfig, monitoring: MonitoringSettings,
-                            limits: ExecutionLimits, initial_gripper_commands) -> dict:
+                            limits: ExecutionLimits, initial_gripper_commands, controller_capabilities) -> dict:
     controller_config.validate()
     if not isinstance(limits, ExecutionLimits): raise TypeError("ExecutionLimits required")
+    capability = validate_controller_capabilities(controller_capabilities)
+    c = controller_config
+    expected = {"version": "robodojo-uc71-robot-only-controller-1", "status": capability.get("status"),
+        "action_translation_m": {"transit": c.transit_translation_speed_m_s/c.control_hz,
+                                 "contact": c.contact_translation_speed_m_s/c.control_hz},
+        "action_rotation_rad": c.angular_speed_rad_s/c.control_hz,
+        "max_joint_step_rad": c.joint_target_lead_rad, "joint_target_lead_rad": c.joint_target_lead_rad,
+        **monitoring.checked()}
+    if capability != expected or capability.get("status") not in ("candidate_unvalidated", "validated"):
+        raise EpisodeRunnerError("controller_capabilities_do_not_match_execution_settings")
     return {"controller": asdict(controller_config), "monitoring": monitoring.checked(),
-            "limits": asdict(limits), "initial_gripper_commands": dict(initial_gripper_commands)}
+            "limits": asdict(limits), "initial_gripper_commands": dict(initial_gripper_commands),
+            "controller_capabilities": capability}
 
 
 class NativeEpisodeRunner:
@@ -62,11 +73,14 @@ class NativeEpisodeRunner:
             from .client import NativeExecutiveClient
             if not isinstance(model_client, NativeExecutiveClient):
                 raise TypeError("Frozen native executive client or explicit offline mock required")
-        if (not callable(getattr(model_client, "request_agent", None))
-                or model_client.limits != limits or model_client.controller_capabilities != monitoring.checked()):
+            log_dir = getattr(model_client, "log_dir", None)
+            if log_dir is None or not Path(log_dir).resolve().is_relative_to(worker.output):
+                raise EpisodeRunnerError("model_request_logs_require_parent_private_directory")
+        if not callable(getattr(model_client, "request_agent", None)) or model_client.limits != limits:
             raise EpisodeRunnerError("executive_execution_contract_mismatch")
         expected = execution_configuration(controller_config=controller_config, monitoring=monitoring,
-            limits=limits, initial_gripper_commands=worker.initial_gripper_commands)
+            limits=limits, initial_gripper_commands=worker.initial_gripper_commands,
+            controller_capabilities=model_client.controller_capabilities)
         if worker.manifest["configuration"].get("execution") != expected:
             raise EpisodeRunnerError("execution_configuration_not_in_approved_manifest")
         if stop_requested is not None and not callable(stop_requested): raise TypeError("stop callback required")
@@ -95,6 +109,14 @@ class NativeEpisodeRunner:
             self.lifecycle.persist_terminal(self.output / "terminal.json")
             self._terminal_saved = True
 
+    def _infrastructure_stop(self):
+        self.lifecycle.stop("infrastructure_error")
+        try:
+            self._persist_terminal()
+        finally:
+            self.worker.abort()
+            self._closed = True
+
     def _video_frame(self, index: int, capture: ParentCapture):
         write_private_record(self._video / f"frame_{index:04d}.json", {
             "schema": "robodojo-parent-video-frame-1", "scope": "operator_evidence",
@@ -114,8 +136,7 @@ class NativeEpisodeRunner:
                 monitoring=self._monitoring, controller_config=self._controller, limits=self._limits,
                 stop_requested=self._stopped)
         except BaseException:
-            self.lifecycle.stop("infrastructure_error")
-            self._persist_terminal(); self.worker.abort(); self._closed = True
+            self._infrastructure_stop()
             raise
 
     def _dispatch(self, ticket, action):
@@ -140,8 +161,7 @@ class NativeEpisodeRunner:
             if result is not None:
                 # No ActionReceipt reaches FragmentExecutor on this path.
                 self.lifecycle.complete_action(ticket, result)
-            self.lifecycle.stop("infrastructure_error")
-            self._persist_terminal(); self.worker.abort()
+            self._infrastructure_stop()
             raise FragmentExecutionError("post_action_evidence_unavailable") from None
 
     def run_next(self) -> dict:
@@ -200,8 +220,7 @@ class NativeEpisodeRunner:
             return {"state": self.lifecycle.state, "model_decision_performed": True,
                     "feedback": deepcopy(self._feedback)}
         except BaseException:
-            self.lifecycle.stop("infrastructure_error")
-            self._persist_terminal(); self.worker.abort(); self._closed = True
+            self._infrastructure_stop()
             raise
         finally:
             self._busy = False

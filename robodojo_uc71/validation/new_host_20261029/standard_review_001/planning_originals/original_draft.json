@@ -1,0 +1,92 @@
+{
+  "hold_true": [],
+  "parts": [
+    {
+      "id": "A",
+      "move": "free",
+      "r": 0,
+      "text": "leftmost bread slice: whole slice farthest from toaster",
+      "w": 35,
+      "x": 26
+    },
+    {
+      "id": "B",
+      "move": "free",
+      "r": 0,
+      "text": "rightmost bread slice: whole slice nearest toaster",
+      "w": 36,
+      "x": 27
+    },
+    {
+      "id": "C",
+      "move": "free",
+      "r": 19,
+      "text": "toaster: top slot on the bread side of the divider",
+      "w": 0,
+      "x": 30
+    },
+    {
+      "id": "D",
+      "move": "free",
+      "r": 20,
+      "text": "toaster: top slot opposite bread across the divider",
+      "w": 0,
+      "x": 31
+    },
+    {
+      "id": "E",
+      "move": "sliding",
+      "r": 59,
+      "text": "toaster: protruding lever in the front vertical track",
+      "w": 0,
+      "x": 38
+    }
+  ],
+  "placement_goals": [],
+  "regions": [],
+  "scene": "Bread beside a two-slot toaster; return both arms to start after release.",
+  "steps": [
+    {
+      "do": "place_in",
+      "grip": [],
+      "keep": [],
+      "obj": "A",
+      "ref": "C",
+      "sense": "any",
+      "until": []
+    },
+    {
+      "do": "place_in",
+      "grip": [],
+      "keep": [],
+      "obj": "B",
+      "ref": "D",
+      "sense": "any",
+      "until": []
+    },
+    {
+      "do": "slide",
+      "grip": [],
+      "keep": [],
+      "obj": "E",
+      "ref": null,
+      "sense": "close",
+      "until": [
+        {
+          "o": "stop",
+          "p": null,
+          "txt": null
+        }
+      ]
+    },
+    {
+      "do": "release",
+      "grip": [],
+      "keep": [],
+      "obj": "E",
+      "ref": null,
+      "sense": "any",
+      "until": []
+    }
+  ]
+}

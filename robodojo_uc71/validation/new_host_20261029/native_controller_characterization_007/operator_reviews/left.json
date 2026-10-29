@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "5f555c13dcafef4990f4fdf894f5fcc2420f9f7b746885484b869781ceb74c2e",
+  "plan_sha256": "0ddc7fd440d6d39aea6f5b0f2a1b0cc4036fbad5d04fd06e68ef633aac2b79ea",
+  "stage_index": 27,
+  "active_arm": "left",
+  "native_action_counter": [
+    665
+  ],
+  "image_sha256": {
+    "stage_027/cam_head.png": "635ba29af4f6276c34ce209d63741a3f2403e5f4d942c22cd2c2e5b194b2e7d8",
+    "stage_027/cam_left_wrist.png": "acdc23111b27105d902eebd5ad7fe15011336f54d5267f275b3d033865150136",
+    "stage_027/cam_right_wrist.png": "9c6618bafcd46ac512aed6772a4dc267d674a4425ecc34bb5a7c491f37373f29"
+  },
+  "reviewer": "root/operator",
+  "decision": "clear_for_empty_gripper_timing",
+  "reason": "Inspected all three fresh hash-bound RGB views. The head view shows both left fingertips and their lateral closing span separated from the bread rack by visible table space; the left wrist view shows no object at the near finger surfaces or within that near closing span. The distant rack appears between the jaws only in the wrist projection. The right arm remains inactive. This supports only this fixed-pose empty closing timing diagnostic; no object state or contact truth was used.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

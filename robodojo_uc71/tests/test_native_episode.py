@@ -9,6 +9,7 @@ import pytest
 from robodojo_uc71.lifecycle import EpisodeLifecycle
 from robodojo_uc71.native_episode import (NativeEpisodeActionAdapter, NativeEpisodeError,
                                          validate_joint_action)
+import robodojo_uc71.native_episode as native_episode_module
 
 
 def running():
@@ -118,6 +119,21 @@ def setup(tmp_path, verifier=None, configure=None):
         expected_layout_path=layout, expected_layout_sha256=hashlib.sha256(layout.read_bytes()).hexdigest(),
         registration_evidence_id="synthetic-registration", episode_evidence_id="synthetic-episode")
     return env, lifecycle, adapter, verifications
+
+
+def test_receipt_wall_clock_uses_actual_begin_dispatch_and_callback_boundaries(tmp_path,monkeypatch):
+    ticks = iter((100.,110.,112.,113.,120.,122.,123.))
+    monkeypatch.setattr(native_episode_module,"monotonic",lambda:next(ticks))
+    env,lifecycle,adapter,_ = setup(tmp_path)
+    for ticket,expected in ((1,(110.,112.,113.)),(2,(120.,122.,123.))):
+        assert lifecycle.reserve_action() == ticket
+        receipt = adapter.dispatch(ticket,action())
+        lifecycle.complete_action(ticket,receipt.native_result)
+        timing = receipt.evaluator_receipt["timing"]
+        assert timing == {"clock":"time.monotonic","policy_begin_monotonic_s":100.,
+            "dispatch_started_monotonic_s":expected[0],"native_callback_completed_monotonic_s":expected[1],
+            "dispatch_completed_monotonic_s":expected[2]}
+    assert env.reward_manager.calls == 2 and env.terminal_calls == 2
 
 
 def dispatch(lifecycle, adapter):

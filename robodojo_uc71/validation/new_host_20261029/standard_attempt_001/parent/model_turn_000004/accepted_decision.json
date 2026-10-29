@@ -1,0 +1,51 @@
+{
+  "arm_id": "left",
+  "belief": "The 3 mm pure forward test tracked accurately, with no object motion or contact. Small single-axis moves are feasible from the current configuration.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": true,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Continue the free-space approach along +y using slow bounded execution, then align leftward to A before contact.",
+  "type": "execute",
+  "why": "The contact profile limits controller increments to 2 mm, extending the successful small-step approach without replaying failed diagonal targets."
+}

@@ -16,6 +16,13 @@ class ControllerError(RuntimeError):
     """Generic local status code suitable for nonprivileged feedback."""
 
 
+# Native metre-scale link poses/quaternions are float32 (about 1e-7 resolution).
+# These numerical hold floors absorb pose quantization; operational arrival and
+# settling remain the caller's separate, much larger measured tolerances.
+POSITION_NUMERICAL_RESOLUTION_M = 1e-6
+ORIENTATION_NUMERICAL_RESOLUTION_RAD = 1e-6
+
+
 @dataclass(frozen=True)
 class ControllerConfig:
     control_hz: float = 25.0
@@ -178,7 +185,8 @@ def joint_target(state: ArmState, target_position: object, target_quaternion_wxy
     rotation_error = orientation_error_world(quat, target_quaternion_wxyz)
     position_error = target - position
     position_norm, rotation_norm = float(np.linalg.norm(position_error)), float(np.linalg.norm(rotation_error))
-    if position_norm < 1e-10 and rotation_norm < 1e-10:
+    if (position_norm <= POSITION_NUMERICAL_RESOLUTION_M
+            and rotation_norm <= ORIENTATION_NUMERICAL_RESOLUTION_RAD):
         return JointTarget(tuple(q), "at_target", position_norm, rotation_norm, (0.,)*3, (0.,)*3)
     speed = config.transit_translation_speed_m_s if profile == "transit" else config.contact_translation_speed_m_s
     translation_cap = speed / config.control_hz

@@ -1,0 +1,2409 @@
+{
+  "schema": "robodojo-controller-characterization-launch-1",
+  "started_at_utc": "2026-10-29T14:25:22.063660+00:00",
+  "diagnostic_kind": "controller-characterization",
+  "clearance_preview_completed": false,
+  "controller_characterization_completed": true,
+  "diagnostic_completed": true,
+  "argv": [
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+    "-B",
+    "-X",
+    "faulthandler",
+    "-u",
+    "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+    "--native-root",
+    "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+    "--source-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_source_001/source_manifest.json",
+    "--asset-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets_002/asset_manifest.json",
+    "--authorization",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_010.json",
+    "--output",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller",
+    "--gpu-uuid",
+    "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "--pci-bus-id",
+    "0000:01:00.0",
+    "--kit-index",
+    "0",
+    "--cuda-ordinal",
+    "0",
+    "--shutdown-mode",
+    "stock-fast",
+    "--parent-log",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/stdout_stderr.log",
+    "--diagnostic-kind",
+    "controller-characterization",
+    "--launch",
+    "--plan",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_005/proposal.json",
+    "--first-probe-result",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/launch_result.json",
+    "--first-probe-analysis",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+    "--operator-review-directory",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/operator_reviews",
+    "--program-binding",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/program_binding.json",
+    "--asset-diagnostic-assessment",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/home",
+    "PATH": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin:/usr/local/bin:/usr/bin:/bin",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+    "VK_ICD_FILENAMES": "/etc/vulkan/icd.d/nvidia_icd.json",
+    "OMNI_KIT_ACCEPT_EULA": "YES",
+    "XDG_CACHE_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/cache",
+    "XDG_CONFIG_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/config",
+    "XDG_DATA_HOME": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/data",
+    "CUDA_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/cache/cuda",
+    "WARP_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/cache/warp",
+    "LD_LIBRARY_PATH": "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu",
+    "PYTHONPATH": "/workspace/gpt_field/robodojo_uc71/runtime/native_compat:/workspace/gpt_field/robodojo_uc71/runtime/native_overlay",
+    "UC71_CONTROLLER_PARENT_PID": "100088",
+    "GIT_OPTIONAL_LOCKS": "0",
+    "TMPDIR": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/tmp",
+    "UC71_CONTROLLER_CHARACTERIZATION_AUTHORIZED_CHILD": "1"
+  },
+  "binding": {
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "pci_bus_id": "0000:01:00.0",
+    "kit_index": 0,
+    "cuda_ordinal": 0
+  },
+  "source_file_sha256": {
+    "/workspace/gpt_field/robodojo_uc71/scripts/prepare_native_characterization.py": "264cf079e2404298857e91ea39cf817db2b81c129565a96c8cf5b5b8a9dadb70",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_characterization.py": "5e8856dd598aa7ec18c5d7d00bb77a9c86e4f43fca2a9539cddd9d6d32a32d7b",
+    "/workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py": "fe4216f5a62e60628cbed481ef29f57430fd56ea15b1a5969318e2326e0eaceb",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_preview.py": "f7538d3d5c2c590f2855ddcf0b58ecf9e4cfeaef9bf0251fed29ab4be2f217bd",
+    "/workspace/gpt_field/robodojo_uc71/scripts/new_host_camera.py": "f36e5b097ec4553032be10db1930a586f1db13602a65869b7e63cbacae79e6d3",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_new_host_camera.py": "f1d33366b64a3ecaf71ed8659f3d8c8aae9c480097009a3f369fac327942d4ad",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_common.py": "856a9b6556adc5bfde39e4f4ef4c68dd84c0a20c8232b6a86ebfdfb153f59325",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_dependencies.py": "c04141cdf26bb30aae2ce2ce9bb24938f302d301c610f26902ab1b15ebddc5cc",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_compatibility.py": "79b9bbcd0eacc920ed509f0e45a7f3420ad3a611e9fc6aab63d0c1908e6a6f07",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_config.py": "6d2787451c377ec0aa5d55549d42688e685ce238930387b452bba77a877c5ad2",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_robot_inventory.py": "f9e8ea25aa218b1e31554bf62bde4180114d5371f7f2cbd9730e6df72452362e",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_measurements.py": "7faab6c76a4f36bf8fcbc104a9fdafd9878074e5f7efa44937e1e6466d92e424",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py": "45a229cda651af8ecd968b467201cf36417e63478f09862207f9979ae5e9baca",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_characterization.py": "8380338e3d13daaeb7d1f3d0a982fee257f977044d9c77bb72345e83447c4d48",
+    "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py": "0071f05546ae0c62a75c4a03b7f9bd2d60a63679bc3ea0dd315fb3191505bec0",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py": "3317ae47426f37926435cae51cd82a9ae0dd4351ca5a365f9f5f7af3c5e04a74",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py": "71a0d08146659a35c80613dee335088532f09f639542beda2da3a2679d3f5078",
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/worker_isolation.py": "3c46bf7226c4140cb10a8c8be57ddc1e2e2d5529e5c03ad04a537a4b1dd650c8"
+  },
+  "authorization_sha256": "ae31dc737ee9f48619a16247d92995a5eeee562a1130262b910acb5604fddd80",
+  "dependency_binding": {
+    "base_inventory": {
+      "python": "3.11.16 (main, Sep 29 2026, 14:59:26) [Clang 22.1.3 ]",
+      "python_version": [
+        3,
+        11,
+        16
+      ],
+      "packages": [
+        {
+          "name": "aioboto3",
+          "version": "15.1.0"
+        },
+        {
+          "name": "aiobotocore",
+          "version": "2.24.0"
+        },
+        {
+          "name": "aiodns",
+          "version": "3.1.1"
+        },
+        {
+          "name": "aiofiles",
+          "version": "23.2.1"
+        },
+        {
+          "name": "aiohappyeyeballs",
+          "version": "2.4.4"
+        },
+        {
+          "name": "aiohttp",
+          "version": "3.11.11"
+        },
+        {
+          "name": "aioitertools",
+          "version": "0.11.0"
+        },
+        {
+          "name": "aiosignal",
+          "version": "1.3.2"
+        },
+        {
+          "name": "annotated-types",
+          "version": "0.8.0"
+        },
+        {
+          "name": "anyio",
+          "version": "4.14.2"
+        },
+        {
+          "name": "asteval",
+          "version": "1.0.6"
+        },
+        {
+          "name": "async-timeout",
+          "version": "5.0.1"
+        },
+        {
+          "name": "attrs",
+          "version": "25.1.0"
+        },
+        {
+          "name": "awscrt",
+          "version": "0.23.8"
+        },
+        {
+          "name": "azure-core",
+          "version": "1.28.0"
+        },
+        {
+          "name": "azure-identity",
+          "version": "1.13.0"
+        },
+        {
+          "name": "azure-storage-blob",
+          "version": "12.17.0"
+        },
+        {
+          "name": "boto3",
+          "version": "1.39.11"
+        },
+        {
+          "name": "botocore",
+          "version": "1.39.11"
+        },
+        {
+          "name": "certifi",
+          "version": "2026.10.23"
+        },
+        {
+          "name": "cffi",
+          "version": "2.1.1"
+        },
+        {
+          "name": "charset-normalizer",
+          "version": "3.3.2"
+        },
+        {
+          "name": "click",
+          "version": "8.1.7"
+        },
+        {
+          "name": "contourpy",
+          "version": "1.3.1"
+        },
+        {
+          "name": "coverage",
+          "version": "7.4.4"
+        },
+        {
+          "name": "cryptography",
+          "version": "44.0.0"
+        },
+        {
+          "name": "cycler",
+          "version": "0.11.0"
+        },
+        {
+          "name": "fastapi",
+          "version": "0.115.7"
+        },
+        {
+          "name": "filelock",
+          "version": "3.13.1"
+        },
+        {
+          "name": "fonttools",
+          "version": "4.55.3"
+        },
+        {
+          "name": "frozenlist",
+          "version": "1.5.0"
+        },
+        {
+          "name": "fsspec",
+          "version": "2024.6.1"
+        },
+        {
+          "name": "gunicorn",
+          "version": "23.0.0"
+        },
+        {
+          "name": "h11",
+          "version": "0.16.0"
+        },
+        {
+          "name": "httptools",
+          "version": "0.6.1"
+        },
+        {
+          "name": "idna",
+          "version": "3.10"
+        },
+        {
+          "name": "idna-ssl",
+          "version": "1.1.0"
+        },
+        {
+          "name": "imageio",
+          "version": "2.37.0"
+        },
+        {
+          "name": "isaacsim",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-app",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-asset",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-benchmark",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-code-editor",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-core",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-cortex",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-example",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-extscache-kit",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-extscache-kit-sdk",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-extscache-physics",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-gui",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-kernel",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-replicator",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-rl",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-robot",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-robot-motion",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-robot-setup",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-ros1",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-ros2",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-sensor",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-storage",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-template",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-test",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isaacsim-utils",
+          "version": "5.1.0.0"
+        },
+        {
+          "name": "isodate",
+          "version": "0.6.1"
+        },
+        {
+          "name": "Jinja2",
+          "version": "3.1.6"
+        },
+        {
+          "name": "jmespath",
+          "version": "1.0.1"
+        },
+        {
+          "name": "kiwisolver",
+          "version": "1.4.4"
+        },
+        {
+          "name": "llvmlite",
+          "version": "0.42.0"
+        },
+        {
+          "name": "MarkupSafe",
+          "version": "2.1.3"
+        },
+        {
+          "name": "matplotlib",
+          "version": "3.10.3"
+        },
+        {
+          "name": "mpmath",
+          "version": "1.3.0"
+        },
+        {
+          "name": "msal",
+          "version": "1.27.0"
+        },
+        {
+          "name": "msal-extensions",
+          "version": "1.0.0"
+        },
+        {
+          "name": "multidict",
+          "version": "6.1.0"
+        },
+        {
+          "name": "nest-asyncio",
+          "version": "1.5.6"
+        },
+        {
+          "name": "networkx",
+          "version": "3.3"
+        },
+        {
+          "name": "numba",
+          "version": "0.59.1"
+        },
+        {
+          "name": "numpy",
+          "version": "1.26.0"
+        },
+        {
+          "name": "nvidia-cublas-cu12",
+          "version": "12.8.3.14"
+        },
+        {
+          "name": "nvidia-cuda-cupti-cu12",
+          "version": "12.8.57"
+        },
+        {
+          "name": "nvidia-cuda-nvrtc-cu12",
+          "version": "12.8.61"
+        },
+        {
+          "name": "nvidia-cuda-runtime-cu12",
+          "version": "12.8.57"
+        },
+        {
+          "name": "nvidia-cudnn-cu12",
+          "version": "9.7.1.26"
+        },
+        {
+          "name": "nvidia-cufft-cu12",
+          "version": "11.3.3.41"
+        },
+        {
+          "name": "nvidia-cufile-cu12",
+          "version": "1.13.0.11"
+        },
+        {
+          "name": "nvidia-curand-cu12",
+          "version": "10.3.9.55"
+        },
+        {
+          "name": "nvidia-cusolver-cu12",
+          "version": "11.7.2.55"
+        },
+        {
+          "name": "nvidia-cusparse-cu12",
+          "version": "12.5.7.53"
+        },
+        {
+          "name": "nvidia-cusparselt-cu12",
+          "version": "0.6.3"
+        },
+        {
+          "name": "nvidia-nccl-cu12",
+          "version": "2.26.2"
+        },
+        {
+          "name": "nvidia-nvjitlink-cu12",
+          "version": "12.8.61"
+        },
+        {
+          "name": "nvidia-nvtx-cu12",
+          "version": "12.8.55"
+        },
+        {
+          "name": "oauthlib",
+          "version": "3.2.2"
+        },
+        {
+          "name": "opencv-python-headless",
+          "version": "4.11.0.86"
+        },
+        {
+          "name": "osqp",
+          "version": "0.6.7.post3"
+        },
+        {
+          "name": "packaging",
+          "version": "23.0"
+        },
+        {
+          "name": "pillow",
+          "version": "11.3.0"
+        },
+        {
+          "name": "Pint",
+          "version": "0.20.1"
+        },
+        {
+          "name": "portalocker",
+          "version": "2.7.0"
+        },
+        {
+          "name": "propcache",
+          "version": "0.2.1"
+        },
+        {
+          "name": "psutil",
+          "version": "5.9.8"
+        },
+        {
+          "name": "pycares",
+          "version": "4.8.0"
+        },
+        {
+          "name": "pycparser",
+          "version": "3.12"
+        },
+        {
+          "name": "pydantic",
+          "version": "2.11.10"
+        },
+        {
+          "name": "pydantic_core",
+          "version": "2.33.2"
+        },
+        {
+          "name": "PyJWT",
+          "version": "2.15.1"
+        },
+        {
+          "name": "pyparsing",
+          "version": "3.0.9"
+        },
+        {
+          "name": "pyperclip",
+          "version": "1.8.0"
+        },
+        {
+          "name": "pypng",
+          "version": "0.20220715.0"
+        },
+        {
+          "name": "python-dateutil",
+          "version": "2.9.0.post0"
+        },
+        {
+          "name": "python-multipart",
+          "version": "0.0.20"
+        },
+        {
+          "name": "pytz",
+          "version": "2024.1"
+        },
+        {
+          "name": "PyYAML",
+          "version": "6.0.2"
+        },
+        {
+          "name": "qdldl",
+          "version": "0.1.7.post5"
+        },
+        {
+          "name": "qrcode",
+          "version": "7.4.2"
+        },
+        {
+          "name": "requests",
+          "version": "2.32.3"
+        },
+        {
+          "name": "requests-oauthlib",
+          "version": "1.3.1"
+        },
+        {
+          "name": "Rtree",
+          "version": "1.3.0"
+        },
+        {
+          "name": "s3transfer",
+          "version": "0.13.1"
+        },
+        {
+          "name": "scipy",
+          "version": "1.15.3"
+        },
+        {
+          "name": "sentry-sdk",
+          "version": "2.29.1"
+        },
+        {
+          "name": "setuptools",
+          "version": "84.2.1"
+        },
+        {
+          "name": "six",
+          "version": "1.17.0"
+        },
+        {
+          "name": "starlette",
+          "version": "0.45.3"
+        },
+        {
+          "name": "sympy",
+          "version": "1.13.3"
+        },
+        {
+          "name": "toml",
+          "version": "0.10.2"
+        },
+        {
+          "name": "torch",
+          "version": "2.7.0+cu128"
+        },
+        {
+          "name": "torchaudio",
+          "version": "2.7.0+cu128"
+        },
+        {
+          "name": "torchvision",
+          "version": "0.22.0+cu128"
+        },
+        {
+          "name": "tornado",
+          "version": "6.5.1"
+        },
+        {
+          "name": "trimesh",
+          "version": "4.5.1"
+        },
+        {
+          "name": "triton",
+          "version": "3.3.0"
+        },
+        {
+          "name": "typing-inspection",
+          "version": "0.4.2"
+        },
+        {
+          "name": "typing_extensions",
+          "version": "4.12.2"
+        },
+        {
+          "name": "urllib3",
+          "version": "2.8.0"
+        },
+        {
+          "name": "uvicorn",
+          "version": "0.29.0"
+        },
+        {
+          "name": "watchdog",
+          "version": "4.0.0"
+        },
+        {
+          "name": "websockets",
+          "version": "12.0"
+        },
+        {
+          "name": "wrapt",
+          "version": "1.16.0"
+        },
+        {
+          "name": "yarl",
+          "version": "1.18.3"
+        }
+      ]
+    },
+    "overlay_inventory": {
+      "python": "3.11.16 (main, Sep 29 2026, 14:59:26) [Clang 22.1.3 ]",
+      "python_version": [
+        3,
+        11,
+        16
+      ],
+      "packages": [
+        {
+          "name": "antlr4-python3-runtime",
+          "version": "4.9.3"
+        },
+        {
+          "name": "cloudpickle",
+          "version": "3.1.2"
+        },
+        {
+          "name": "Farama-Notifications",
+          "version": "0.0.4"
+        },
+        {
+          "name": "flatdict",
+          "version": "4.0.0"
+        },
+        {
+          "name": "gymnasium",
+          "version": "1.2.1"
+        },
+        {
+          "name": "h5py",
+          "version": "3.15.1"
+        },
+        {
+          "name": "omegaconf",
+          "version": "2.3.0"
+        },
+        {
+          "name": "prettytable",
+          "version": "3.3.0"
+        },
+        {
+          "name": "shapely",
+          "version": "2.1.2"
+        },
+        {
+          "name": "tqdm",
+          "version": "4.67.1"
+        },
+        {
+          "name": "transforms3d",
+          "version": "0.4.2"
+        },
+        {
+          "name": "wcwidth",
+          "version": "0.2.14"
+        }
+      ]
+    },
+    "overlay_target": "/workspace/gpt_field/robodojo_uc71/runtime/native_overlay",
+    "install_record_sha256": "7187398aa880703eb40db8e23bf49f3e56accb8c2ae379c0778938455900e52e",
+    "dependency_record_sha256": "c3241752b6ffcf6dfaba45505f35ed3c959c0c064f6bbd38b5db014465a2e9b9",
+    "base_lock_sha256": "0ae7040817518bee2d44c969760935495e8e049ddf3918a474a62579eac8ffbc",
+    "overlay_lock_sha256": "6a02d0e02e83cd484bc7f83a749b9738fa6c879b7b764afe1a0bacbe90ba2af6"
+  },
+  "compatibility_binding": {
+    "record": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_compatibility_001/install_status.json",
+    "record_sha256": "499a254d85953d2a715259d84176b6cdbb3422f215170ac893c0ea9ba678df02",
+    "target": "/workspace/gpt_field/robodojo_uc71/runtime/native_compat",
+    "pins": {
+      "hidapi": "0.14.0.post2",
+      "setuptools": "80.9.0"
+    },
+    "overrides": {
+      "setuptools": {
+        "base_version": "84.2.1",
+        "effective_version": "80.9.0",
+        "reason": "Kit pipapi requires the removed pkg_resources API"
+      }
+    },
+    "physical_distribution_count": 2,
+    "effective_distribution_count": 153,
+    "inventory": {
+      "python": "3.11.16 (main, Sep 29 2026, 14:59:26) [Clang 22.1.3 ]",
+      "python_version": [
+        3,
+        11,
+        16
+      ],
+      "packages": [
+        {
+          "name": "hidapi",
+          "version": "0.14.0.post2"
+        },
+        {
+          "name": "setuptools",
+          "version": "80.9.0"
+        }
+      ]
+    },
+    "import_check_sha256": "ea7d64b1a119c9bd2229b6003a393c32541c6bd04fb3d2b7590a2bbd898ee099"
+  },
+  "plan_sha256": "5638ae4e23c51e2f1980b68a03e1e99d5d52f22082cec5b2a6e6b403d9d20528",
+  "plan_file_sha256": "1b196b2f6f3ebe2455e03d8e578814b7b6831021b5d1dd5e7bcd290cdff0532d",
+  "first_probe": {
+    "launch_result_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/launch_result.json",
+    "launch_result_sha256": "0a38dabbde49723dbfdb380498aa9cafb4bd976f3e536f552a384f2cdced5b1d",
+    "analysis_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+    "analysis_sha256": "57d413012fab94df425397a482bfd6a5290eeaddb6c374898feb824f4e81a697",
+    "fixed_probe_plan_sha256": "06ae58d5fdc4e41be3db77234f0a3534b19b2eb3d53b333a3274d45974a2dbf8"
+  },
+  "diagnostic_native_actions_planned": 960,
+  "benchmark_attempt_started": false,
+  "operator_visual_clearance_required": true,
+  "preparation": {
+    "asset_diagnostic_assessment": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+      "sha256": "535718e3bf2efd4f70dc35440c54c73b6d989c8d5d290c7934ece9fa9e6b219c",
+      "raw_asset_manifest_sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419",
+      "classification_evidence_sha256": "7ca9ce5bd7e5d4a655cd04ef90a215599a2770f2fc7142c87cd7197076829937",
+      "static_missing_texture_evidence_sha256": "17e2b27a5f22b7764b31b1aacdc7cc42ceb020c6d8368cbe9d40fbe11f67bb3a",
+      "permitted_unresolved_count": 15,
+      "known_missing_reference": "/home/kaslensu/Desktop/textures/Image_0.png",
+      "source_assets_unchanged": true,
+      "standard_ready": false,
+      "asset_fidelity_passed": false,
+      "dependency_closure_complete": false
+    },
+    "standard_ready": false,
+    "asset_fidelity_passed": false,
+    "dependency_closure_complete": false,
+    "source_manifest": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_source_001/source_manifest.json",
+    "source_manifest_sha256": "86a3684dc9fbc62604c5437d64cbef28df579e585d1bfb6fd3fd93275d39be04",
+    "asset_manifest": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets_002/asset_manifest.json",
+    "asset_manifest_sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419",
+    "asset_files_verified": 214,
+    "source": {
+      "native_commit": "f57e1633ffed59761bc8e568cfe7530c4b33381c",
+      "gitlinks": {
+        "XPolicyLab": "5d0be1499634d3176258c8f2e31f5fe816497b0a",
+        "third_party/IsaacLab": "afca7b09d60d8beb9c1cb28b43066499940b969b",
+        "third_party/curobo": "d17b54ce32cba095c0b000c4c58777075d11de0e"
+      },
+      "source_sha256": {
+        "task/RoboDojo/tasks/make_toast.py": "1047f484a73d1f92304393879b51f87e33d661b6ad7937198352fe37a0d3233d",
+        "task/RoboDojo/config/make_toast.yml": "d190a26233db174538ff0052b4c2958a3b107f0ccc63d0fdfe28da4c7f5dc57b",
+        "task/RoboDojo/config/_task.yml": "655a87cd59fa6272bf352d32deb8ade162737b49a9824e16d428fecf0803380b",
+        "src/eval_client/eval_env.py": "3ae75304d8a840ede2589441f987824f50b2a89cc2ef37f4d43ce0a8dbc4fd88",
+        "env/observation_manager/obs_manager.py": "771d6cda443b591f3e7850b901a06b4e653a2feefcbabd23608042377fe9be4b",
+        "env/seed_manager/seed_manager.py": "292eee4003de1c22b288ec3bc1d04d95c7aee5368f30991679ea1cc4c37247b3",
+        "env/reward_manager/reward_manager.py": "bc56efd3aaa861b4b38960dc4fb7778a9b4da9cf131f815ac3170300dd233a41",
+        "env/reward_manager/func_parser.py": "eb928a05c3eb6bae429a922c59e64272c2c3851c22d779143d45627e47b3a504",
+        "env_cfg/sim/sim_config.yml": "e442ede1c3d90fcfb50b9461c854d31b22dad9bfbb23397db228b27a6a486963"
+      }
+    },
+    "camera_gate": {
+      "result": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_003/launch_result.json",
+      "result_sha256": "bad29f09a410de9d9e4b50873dbb055ea35240b3dd53e53d3c669f10041d12a3",
+      "visual_review": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera003_visual_review.json",
+      "visual_review_sha256": "789ad573e8c518c63b51c64ae87dda4b867d52c12bffe129a37773980174d5dd",
+      "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+      "shutdown_mode": "stock-fast",
+      "assessment": {
+        "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera003_assessment.json",
+        "sha256": "6cdf56eef1d0242b8cc386b1af65e1e47d1a6f4de54e0c5a50f81a7e3065bbd6",
+        "type": "posthoc_exit_accounting_correction_no_rerun",
+        "raw_diagnostic_passed": false
+      },
+      "full_test_authorized": false
+    },
+    "layout_path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Eval_Layout/RoboDojo/arx_x5/0/make_toast_0.json",
+    "layout_sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28"
+  },
+  "wall_time_limit_s": 1800,
+  "minimum_free_mib": 16384,
+  "local_library_sha256": {
+    "libXt.so.6.0.0": "267143b6258b866a522e9cff8db1e11ed95acb4fe23c56d9224e71afe617b0b8",
+    "libXt.so.6": "267143b6258b866a522e9cff8db1e11ed95acb4fe23c56d9224e71afe617b0b8",
+    "libICE.so.6.3.0": "899ff245d50d4f1a7bb114d13b6200f42f93696ad93f38020c6ed7c84a5a943e",
+    "libICE.so.6": "899ff245d50d4f1a7bb114d13b6200f42f93696ad93f38020c6ed7c84a5a943e",
+    "libSM.so.6.0.1": "c9301f0ff852c0edcfc766f91c5df4f73b1b300c0303ac188524154588892fd0",
+    "libSM.so.6": "c9301f0ff852c0edcfc766f91c5df4f73b1b300c0303ac188524154588892fd0",
+    "libGLU.so.1.3.1": "af791d1ee2acf25417f612290e634248fd716cf5da0374ba21160fb264eaeab4",
+    "libGLU.so.1": "af791d1ee2acf25417f612290e634248fd716cf5da0374ba21160fb264eaeab4",
+    "libOpenGL.so.0.0.0": "9a0a6024499300f918ef1b42d581427cdb20bbc17a7d8239a4b7434833a98d4a",
+    "libOpenGL.so.0": "9a0a6024499300f918ef1b42d581427cdb20bbc17a7d8239a4b7434833a98d4a"
+  },
+  "shutdown_mode": "stock-fast",
+  "full_plugin_cleanup_proven": false,
+  "full_teardown_returned": false,
+  "shutdown_limitation": "NVIDIA stock fast exit skips complete plugin/Python teardown; successful preclose and process/GPU release are required.",
+  "automatic_retry": false,
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "standard_ready": false,
+  "asset_fidelity_passed": false,
+  "dependency_closure_complete": false,
+  "asset_diagnostic_assessment": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+    "sha256": "535718e3bf2efd4f70dc35440c54c73b6d989c8d5d290c7934ece9fa9e6b219c",
+    "raw_asset_manifest_sha256": "d031d8bd55746879907ce36e2e7fe8e55d2864ceac1848a061e2a681bc870419",
+    "classification_evidence_sha256": "7ca9ce5bd7e5d4a655cd04ef90a215599a2770f2fc7142c87cd7197076829937",
+    "static_missing_texture_evidence_sha256": "17e2b27a5f22b7764b31b1aacdc7cc42ceb020c6d8368cbe9d40fbe11f67bb3a",
+    "permitted_unresolved_count": 15,
+    "known_missing_reference": "/home/kaslensu/Desktop/textures/Image_0.png",
+    "source_assets_unchanged": true,
+    "standard_ready": false,
+    "asset_fidelity_passed": false,
+    "dependency_closure_complete": false
+  },
+  "worker_identity": {
+    "uid": 65534,
+    "gid": 65534,
+    "supplementary_groups": [],
+    "parent_pid": 100088
+  },
+  "worker_git_configuration": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/home/.gitconfig",
+    "sha256": "a1bc35794019902a1f96cfaaefcc6672ccc5ba1812330a21318e958486915fe0",
+    "safe_directories": [
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/XPolicyLab",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab",
+      "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/curobo"
+    ],
+    "scope": "fresh_private_HOME_only",
+    "optional_git_locks": false
+  },
+  "limitations": "Bounded local controller diagnostic; no automatic calibration/task-success claim. Separate Unix UID protects credentials; no filesystem namespace or network isolation; peak VRAM is sampled.",
+  "pid": 100213,
+  "returncode": 0,
+  "elapsed_s": 631.6334064677358,
+  "termination_signals": [],
+  "remaining_owned_pids": [],
+  "loaded_graphics_library_paths": [],
+  "sampled_peak_gpu_used_mib": 5726,
+  "sampled_peak_gpu_used_delta_mib": 5709,
+  "sampled_minimum_free_mib": 18356,
+  "gpu_processes_released": true,
+  "gpu_memory_used_delta_mib": 0,
+  "gpu_memory_released": true,
+  "preclose_ready_verified": true,
+  "native_render_verified": true,
+  "diagnostic_actions_verified": true,
+  "cuda_identity_verified": true,
+  "renderer_identity_verified": true,
+  "extension_startup_clean": true,
+  "worker_isolation_verified": true,
+  "operator_clearances_verified": true,
+  "open_only_actions_verified": false,
+  "stable_open_endpoints_verified": false,
+  "diagnostic_native_actions": 960,
+  "diagnostic_physics_substeps": 9600,
+  "diagnostic_simulated_time_s": 38.40000182390213,
+  "controller_result_sha256": "037323c88379c7c05e8a7c37cc443ff3dbd47bb348eb27f7ed2c1b30f351f208",
+  "preparation_sha256": "b8f8b9a556fea11143cd87171a4a58655e8b7869c050fc4d907e94a8e90a1431",
+  "independent_image_decoding": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/before/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.1452940179665
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/before/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.98323263103633
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/before/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.57321927044082
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_000/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.139866589190824
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_000/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.98245896436847
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_000/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.56715885636622
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_001/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.20062969805754
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_001/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.7230619205696
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_001/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.56459062311134
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_002/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.13423559699386
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_002/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.90596500116539
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_002/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.55783106113387
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_003/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.17936011638388
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_003/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.78225452058137
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_003/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.55229960275068
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_004/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.11446540100823
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_004/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.96361494080256
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_004/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.54982045387207
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_005/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.14005751471361
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_005/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.022689317233755
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_005/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.55311056488509
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_006/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.14102196381944
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_006/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.947846513189724
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_006/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.560353790752636
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_007/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.12666389713891
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_007/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.07854271831068
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_007/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.568093279831515
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_008/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.15733952836488
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_008/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.94876864807839
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_008/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.57270946494149
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_009/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.14385176582497
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_009/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.043957627671354
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_009/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.58271092019788
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_010/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.171029810483844
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_010/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.94688854688434
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_010/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.59240305172501
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_011/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.16004002766813
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_011/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.008419374166486
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_011/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.5857920319454
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_012/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.17955203514572
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_012/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.877877516295634
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_012/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.57885778121523
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_013/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.209594966315386
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_013/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.94365122183602
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_013/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 61.200551855891675
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_014/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.21461162765025
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_014/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.96589034297122
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_014/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.85612094244907
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_015/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.219697401040165
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_015/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.98663943348469
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_015/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.71716676021341
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_016/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.22109535103718
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_016/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.013356122638555
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_016/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.48141175582479
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_017/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.1620453953591
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_017/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.04161297703226
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_017/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.65471387538948
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_018/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.25103305621167
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_018/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.04651162758036
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_018/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.197417798965
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_019/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.1933601232336
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_019/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.062709000336596
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_019/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.5149681851986
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_020/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.22391201971979
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_020/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.07204252103248
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_020/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.05429706102086
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_021/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.16908717412541
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_021/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.07017038849404
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_021/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.36979341717283
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_022/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.228935337483485
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_022/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.07523022064157
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_022/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.305307404776826
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_023/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.20130497685387
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_023/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.072230318419884
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_023/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.571457959157
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_024/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.255827871179925
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_024/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.07557849215461
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_024/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.15344542905215
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_025/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.292120327557356
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_025/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.09303287356367
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_025/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.318757055136786
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_026/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.78714331462567
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_026/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 53.48584804315128
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_026/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.370525922342964
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_027/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.784902961746354
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_027/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 53.50686506758984
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_027/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.43981460122356
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_028/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.76873554693042
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_028/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 47.964239577923344
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_028/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.50584558190494
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_029/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.806072048058994
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_029/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 53.52130799974851
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_029/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.56048730368884
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_030/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.349484192579354
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_030/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.01197221848685
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_030/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.62466851507245
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_031/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.336402122860605
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_031/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.957010313985634
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_031/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.69161507974953
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_032/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.288560345655554
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_032/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.999166957647454
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_032/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.949333852810305
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_033/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.74458876366752
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_033/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.01122365268745
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_033/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.49887239597219
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_034/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.746396634305505
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_034/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.019653509880804
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_034/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.47789236450966
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_035/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.72645879978967
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_035/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.040116773152235
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_035/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.75884312712751
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_036/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 55.75370466355604
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_036/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.04829560532703
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_036/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.56770837209758
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_037/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.32095096444611
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_037/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.05557341503248
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_037/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 59.51209375067725
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_038/cam_head.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 56.34457432537835
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_038/cam_left_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 57.06829203970851
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/stage_038/cam_right_wrist.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "std": 60.02772826757946
+    }
+  ],
+  "child_loaded_graphics_library_paths": [
+    "/usr/lib/x86_64-linux-gnu/libEGL.so.1.1.0",
+    "/usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0.0.0",
+    "/usr/lib/x86_64-linux-gnu/libEGL_nvidia.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libGLX.so.0.0.0",
+    "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libcuda.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-allocator.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-egl-gbm.so.1.1.2",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-eglcore.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-glcore.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-glsi.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-glvkspirv.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-gpucomp.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-ngx.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-ptxjitcompiler.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-rtcore.so.580.82.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-tls.so.580.82.09",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libvulkan.so.1",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvidia-ngx-dlss.so.310.1.0",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvidia-ngx-dlssd.so.310.1.0",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvidia-ngx-dlssg.so.310.2.2",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/nvidia/cuda_runtime/lib/libcudart.so.12",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu/libGLU.so.1.3.1"
+  ],
+  "image_visual_review_required": true,
+  "bindings_unchanged_after_controller_characterization": true,
+  "shutdown_contract_satisfied": true,
+  "clean_shutdown_confirmed": true,
+  "terminal_exit": {
+    "returncode": 0,
+    "signal": null,
+    "guard_signals_sent": false,
+    "child_signals_sent": false,
+    "kind": "child_completed"
+  }
+}

@@ -1,0 +1,73 @@
+"""Explicit offline robot-only pose grid; no simulator or model invocation."""
+from pathlib import Path
+import sys,json,hashlib,shutil,itertools
+import numpy as np
+from scipy.spatial.transform import Rotation
+BASE=Path('/workspace/gpt_field/robodojo_uc71')
+sys.path[:0]=[str(BASE/'src'),str(BASE/'scripts')]
+from analyze_joint_probe import URDF,pose_matrix
+from robodojo_uc71.controller import ArmState,ControllerConfig,joint_target,measured_tcp_pose,orientation_error_world
+VAL=BASE/'validation/new_host_20261029'; CHILD=VAL/'native_controller_characterization_008/worker/controller'
+OUT=VAL/'controller_clearance_feasibility_002'; assert not OUT.exists()
+sources={}
+def read(path):
+    path=Path(path).resolve(strict=True);sources[str(path)]=hashlib.sha256(path.read_bytes()).hexdigest()
+    return json.loads(path.read_text())
+plan=read(VAL/'controller_characterization_plan_004/proposal.json');geometry=read(plan['geometry_candidate_path'])
+for item in geometry['source_files']:
+    p=Path(item['path']);h=hashlib.sha256(p.read_bytes()).hexdigest();assert h==item['sha256'];sources[str(p)]=h
+for p in [BASE/'src/robodojo_uc71/controller.py',BASE/'scripts/analyze_joint_probe.py']:
+    sources[str(p)]=hashlib.sha256(p.read_bytes()).hexdigest()
+urdf=URDF(next(x['path'] for x in geometry['source_files'] if Path(x['path']).suffix=='.urdf'))
+tool=np.asarray(geometry['link6_from_tool']);offset=tool[:3,3]
+entries={a:read(CHILD/f'native_action_{i:04d}.json')['before'] for a,i in [('left',601),('right',781)]}
+old=read(VAL/'controller_clearance_feasibility_001/comparison.json')
+root_positions={a:np.asarray(next(r for r in entries[a]['raw_robot_inventory']['robots'] if r['arm_name']==a+'_arm')['root_link_pose_w']['values'][0][:3]) for a in entries}
+midpoint=(root_positions['left']+root_positions['right'])/2
+grid=list(itertools.product([.02,.03,.04],[.01,.02,.025],[.025,.03,.035],[.08,.1]))
+results=[]
+for arm in ['left','right']:
+    robot=next(r for r in entries[arm]['raw_robot_inventory']['robots'] if r['arm_name']==arm+'_arm')
+    ids=robot['native_arm_joint_indices'];names=robot['joint_names'];root=pose_matrix(robot['root_link_pose_w']['values'][0]);full_q=np.asarray(robot['joint_positions']['values'][0])
+    q_entry=full_q[ids].copy();home=np.asarray(plan['home'][arm]['joint_positions']);p=np.asarray(plan['home'][arm]['tool_pose_wxyz'][:3]);quat=np.asarray(plan['home'][arm]['tool_pose_wxyz'][3:]);home_rotation=Rotation.from_quat(quat,scalar_first=True)
+    tool_x=home_rotation.as_matrix()[:,0];outward=root_positions[arm]-midpoint;outward[2]=0;outward/=np.linalg.norm(outward)
+    # World-Z sign rotates the initial tool-X direction toward the base-derived outward direction.
+    yaw_sign=1. if np.dot(np.cross([0.,0.,1.],tool_x),outward)>0 else -1.
+    limits=np.asarray(robot['joint_position_limits_lower_upper']['values'][0])[ids];velocity=np.asarray(robot['joint_velocity_limits']['values'][0])[ids]
+    gain=old['actual007_retreat_measurements'][arm]['projected_response_gain_min_median_max'][1]
+    def state(q,dq):
+        q_all=full_q.copy();q_all[ids]=q;links,frames=urdf.forward(dict(zip(names,q_all)),root);m=links['link6']
+        return ArmState(q,dq,m[:3,3],Rotation.from_matrix(m[:3,:3]).as_quat(scalar_first=True),urdf.jacobian(m[:3,3],frames,[names[i] for i in ids]),limits[:,0],limits[:,1],velocity,offset)
+    for lift,retreat,lateral,yaw in grid:
+        raised=p+[0,0,lift];endpoint=raised-retreat*tool_x+lateral*outward
+        endquat=(Rotation.from_rotvec([0,0,yaw_sign*yaw])*home_rotation).as_quat(scalar_first=True)
+        q=q_entry.copy();dq=np.zeros(6);maxq=maxcommand=maxdistance=maxrotation=maxrate=0.;stages=[];failure=None;end_q=None;count=0
+        sequence=[('raise',raised,quat,25,'transit',.1),('clearance',endpoint,endquat,40,'contact',.05),('hold',endpoint,endquat,50,'transit',.2),('return',raised,quat,40,'contact',.05),('lower',p,quat,25,'transit',.1)]
+        try:
+            for label,target,target_quat,n,profile,speed in sequence:
+                errors=[]
+                config=ControllerConfig(transit_translation_speed_m_s=speed if profile=='transit' else .2,contact_translation_speed_m_s=.05,angular_speed_rad_s=.5)
+                for i in range(n):
+                    command=np.asarray(joint_target(state(q,dq),target,target_quat,profile=profile,config=config).joint_positions)
+                    next_q=q+gain*(command-q);dq=(next_q-q)/.04;q=next_q;position,orientation=measured_tcp_pose(state(q,dq));count+=1
+                    maxq=max(maxq,float(np.max(abs(q-home))));maxcommand=max(maxcommand,float(np.max(abs(command-home))));maxdistance=max(maxdistance,float(np.linalg.norm(position-p)));maxrotation=max(maxrotation,float(np.linalg.norm(orientation_error_world(orientation,quat))));maxrate=max(maxrate,float(np.max(abs(dq))))
+                    if maxq>.35 or maxcommand>.35 or maxdistance>.065 or maxrotation>.12 or maxrate>2 or np.any(q<limits[:,0]) or np.any(q>limits[:,1]):
+                        raise ValueError('nominal_declared_robot_envelope_crossed')
+                    errors.append((float(np.linalg.norm(position-target)),float(np.linalg.norm(orientation_error_world(orientation,target_quat)))))
+                first=next((i+1 for i in range(len(errors)-4) if all(a<=.001 and b<=.01 for a,b in errors[i:])),None)
+                stages.append({'stage':label,'first_stable_suffix_sample':first,'samples_remaining_after_first':None if first is None else n-first,'final_position_error_m':errors[-1][0],'final_orientation_error_rad':errors[-1][1]})
+                if label=='clearance':end_q=q.copy()
+        except Exception as error:
+            failure=type(error).__name__+':'+str(error)
+        record={'arm':arm,'lift_m':lift,'retreat_m':retreat,'outward_m':lateral,'outward_yaw_rad':yaw,'world_yaw_sign':yaw_sign,'response_gain_sensitivity':gain,'numerical_updates':count,'failure':failure,'max_joint_home_rad':maxq,'max_command_home_rad':maxcommand,'max_tool_home_m':maxdistance,'max_orientation_home_rad':maxrotation,'max_kinematic_joint_rate_rad_s':maxrate,'joint_margin_rad':.35-max(maxq,maxcommand),'tool_margin_m':.065-maxdistance,'orientation_margin_rad':.12-maxrotation,'stages':stages,'outward_world_unit':outward.tolist(),'target_tool_pose_wxyz':[*endpoint,*endquat]}
+        if end_q is not None:
+            record['candidate_endpoint']={'q_rad':end_q.tolist(),'all_joint_names':names,'full_q_rad':[float(end_q[ids.index(i)]) if i in ids else float(full_q[i]) for i in range(len(names))],'world_from_base_link':root.tolist(),'target_tool_pose_wxyz':[*endpoint,*endquat]}
+        results.append(record)
+OUT.mkdir();shutil.copyfile(__file__,OUT/'analysis_method.py');sources[str(OUT/'analysis_method.py')]=hashlib.sha256((OUT/'analysis_method.py').read_bytes()).hexdigest()
+report={'schema':'robodojo-clearance-lift-retreat-outward-yaw-grid-1','scope':'offline_robot_kinematics_only','native_actions_executed':0,'model_calls':0,'execution_authorized':False,'candidate_selected_for_execution':None,'full_test_authorized':False,'standard_ready':False,'grid_values':{'lift_m':[.02,.03,.04],'retreat_m':[.01,.02,.025],'outward_m':[.025,.03,.035],'outward_yaw_rad':[.08,.1]},'outward_formula':'normalize(horizontal(recorded_robot_base_position - midpoint_of_two_robot_bases))','yaw_sign_formula':'sign(dot(cross(world_Z,initial_tool_X),outward_direction))','unchanged_guards':plan['candidate_abort_envelopes'],'actual008_entry_states':entries,'results':results,'source_files':[{'path':p,'sha256':h} for p,h in sorted(sources.items())],'limitations':['No scene/object geometry or contact truth used.','Scalar response gain comes from previous near-home measurements and is not a validated model for these directions.','Numerical feasibility does not establish native dynamics or visual clearance.','No plan/source change or new execution is authorized by this grid.']}
+(OUT/'grid.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+print('grid',OUT/'grid.json',hashlib.sha256((OUT/'grid.json').read_bytes()).hexdigest())
+for params in grid:
+    pair=[r for r in results if (r['lift_m'],r['retreat_m'],r['outward_m'],r['outward_yaw_rad'])==params]
+    if all(r['failure'] is None for r in pair):
+        print(json.dumps({'lift_retreat_outward_yaw':params,'joint_margin_min':min(r['joint_margin_rad'] for r in pair),'tool_margin_min':min(r['tool_margin_m'] for r in pair),'orientation_margin_min':min(r['orientation_margin_rad'] for r in pair),'clearance_samples_remaining_min':min(r['stages'][1]['samples_remaining_after_first'] or -1 for r in pair)}))

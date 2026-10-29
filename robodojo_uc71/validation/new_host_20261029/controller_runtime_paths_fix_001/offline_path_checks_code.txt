@@ -1,0 +1,42 @@
+
+import json,logging,os,tempfile
+from pathlib import Path
+import prepare_controller_characterization as c
+output=Path(os.environ['TMPDIR']).parent/'worker/controller'
+expected=c.private_runtime_paths(output)
+checks=[]
+args=c.private_kit_arguments(output)
+assert args[:3]==['--portable','--portable-root',expected['portable_root']]
+assert len([a for a in args if a.startswith('--/app/tokens/')])==9
+checks.append('portable_two_argument_and_nine_token_bindings')
+resolve=lambda key:expected['tokens'][key[2:-1]]
+assert c.verify_effective_runtime_paths(output,resolve)['resolved_tokens']==expected['tokens']
+checks.append('effective_tokens_accept_exact_private_paths')
+try:c.verify_effective_runtime_paths(output,lambda key:'/tmp/shared' if key=='${cache}' else resolve(key))
+except RuntimeError:checks.append('effective_token_escape_rejected')
+else:raise AssertionError('accepted escaped cache')
+previous=tempfile.tempdir;tempfile.tempdir='/tmp'
+try:
+ try:c.prepare_private_runtime_paths(output)
+ except RuntimeError:checks.append('cached_tempdir_escape_rejected')
+ else:raise AssertionError('accepted /tmp fallback')
+finally:tempfile.tempdir=previous
+logdir=Path(expected['isaaclab_log_directory']);logdir.mkdir(parents=True)
+h=logging.FileHandler(logdir/'isaaclab_offline_fixture.log')
+try:assert c.verify_native_logging_paths(output,[h])['file_paths']==[str(logdir/'isaaclab_offline_fixture.log')]
+finally:h.close()
+checks.append('actual_worker_log_filehandler_private_path_pass')
+h=logging.FileHandler(Path(expected['tmpdir'])/'isaaclab_outside_expected_directory.log')
+try:
+ try:c.verify_native_logging_paths(output,[h])
+ except RuntimeError:checks.append('filehandler_wrong_directory_rejected')
+ else:raise AssertionError('accepted escaped FileHandler')
+finally:h.close()
+prep=json.loads((output/'preparation.json').read_text());plan=json.loads(Path(prep['plan_path']).read_text())
+os.environ['UC71_CONTROLLER_CHARACTERIZATION_AUTHORIZED_CHILD']='1'
+try:c.check_authorization(Path(prep['authorization']['path']),plan,prep['binding'],first_probe=prep['first_probe'],launch=True,output_parent=output.parents[1])
+except ValueError:checks.append('preparation_only_scope_rejects_native_launch')
+else:raise AssertionError('read-only scope authorized native launch')
+assert not any(x=='isaacsim' or x.startswith('isaaclab') or x.startswith('carb') for x in __import__('sys').modules)
+checks.append('no_isaacsim_isaaclab_carb_imports')
+print(json.dumps({'passed':True,'checks':checks,'uid':os.geteuid(),'simulator_starts':0}))

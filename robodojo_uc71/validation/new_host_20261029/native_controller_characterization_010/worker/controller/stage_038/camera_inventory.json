@@ -1,0 +1,265 @@
+{
+  "schema": "robodojo-native-camera-inventory-1",
+  "scope": "setup_evaluator_only",
+  "captured_at_utc": "2026-10-29T14:35:48.600408+00:00",
+  "captured_monotonic_s": 7618051.794474056,
+  "calibration_status": "uncalibrated_candidate",
+  "standard_ready": false,
+  "model_input_eligible": false,
+  "rendered_landmark_validation_passed": false,
+  "native_physics_time_s": 41.96400199318305,
+  "synchronization_source": "caller after native render_for_capture; no independent freshness proof",
+  "source_interfaces": [
+    "Camera.get_intrinsics_matrix",
+    "Camera.get_view_matrix_ros",
+    "CameraManager.camera_names/cameras/camera_config"
+  ],
+  "cameras": {
+    "head": {
+      "native_name": "cam_head",
+      "native_camera_index": 0,
+      "prim_path": "/World/envs/env_0/Camera_0/cam_head",
+      "mount_link": null,
+      "width": 640,
+      "height": 480,
+      "intrinsics": [
+        [
+          288.1325378417969,
+          0.0,
+          320.0
+        ],
+        [
+          0.0,
+          336.4643249511719,
+          240.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_optical": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0,
+          -0.8660253381202823,
+          0.5000001246849464,
+          -0.41000001004031805
+        ],
+        [
+          -0.0,
+          -0.5000001246849465,
+          -0.8660253381202823,
+          1.3079999768591866
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_from_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.8660253286361694,
+          -0.5000001192092896,
+          0.29892975091934204
+        ],
+        [
+          0.0,
+          0.5000001192092896,
+          -0.8660253286361694,
+          1.3377611637115479
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_axes": "+X right, +Y down, +Z forward",
+      "pose_source": "synchronized native Camera.get_view_matrix_ros inverse; candidate",
+      "fixed_world_frame_candidate": true,
+      "static_across_frames_validated": false,
+      "frame_alignment_validated": false
+    },
+    "left_wrist": {
+      "native_name": "cam_left_wrist",
+      "native_camera_index": 1,
+      "prim_path": "/World/envs/env_0/robot0/camera/Camera_1/cam_left_wrist",
+      "mount_link": "robot0/camera",
+      "width": 640,
+      "height": 480,
+      "intrinsics": [
+        [
+          397.041259765625,
+          0.0,
+          320.0
+        ],
+        [
+          0.0,
+          397.041259765625,
+          240.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_optical": [
+        [
+          0.9999999131345927,
+          0.0001474460760674698,
+          -0.0002551961197258293,
+          -0.29955448900685067
+        ],
+        [
+          0.0002947293667970405,
+          -0.5000291807901173,
+          0.8660085356412268,
+          -0.2674571251658834
+        ],
+        [
+          8.404494179721488e-08,
+          -0.8660084916333383,
+          -0.5000292242682576,
+          0.972440008652358
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_from_world": [
+        [
+          1.0,
+          0.00029472936876118183,
+          8.405373819186934e-08,
+          0.2996332347393036
+        ],
+        [
+          0.0001474460877943784,
+          -0.5000292062759399,
+          -0.8660085797309875,
+          0.7084491848945618
+        ],
+        [
+          -0.0002551961224526167,
+          0.866008460521698,
+          -0.5000292062759399,
+          0.7177920937538147
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_axes": "+X right, +Y down, +Z forward",
+      "pose_source": "synchronized native Camera.get_view_matrix_ros inverse; candidate",
+      "fixed_world_frame_candidate": false,
+      "static_across_frames_validated": false,
+      "frame_alignment_validated": false
+    },
+    "right_wrist": {
+      "native_name": "cam_right_wrist",
+      "native_camera_index": 2,
+      "prim_path": "/World/envs/env_0/robot1/camera/Camera_2/cam_right_wrist",
+      "mount_link": "robot1/camera",
+      "width": 640,
+      "height": 480,
+      "intrinsics": [
+        [
+          397.041259765625,
+          0.0,
+          320.0
+        ],
+        [
+          0.0,
+          397.041259765625,
+          240.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_optical": [
+        [
+          0.9999999129136975,
+          0.00014791887898529736,
+          -0.0002553552613385141,
+          0.30044552273564484
+        ],
+        [
+          0.00029510357255335364,
+          -0.5000290246748208,
+          0.8660085751481329,
+          -0.2674571880284541
+        ],
+        [
+          4.139475300310819e-07,
+          -0.8660086504431588,
+          -0.5000291280365675,
+          0.9724399822567215
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_from_world": [
+        [
+          1.0,
+          0.00029510361491702497,
+          4.1397535710530065e-07,
+          -0.30036699771881104
+        ],
+        [
+          0.0001479188649682328,
+          -0.5000290870666504,
+          -0.8660085797309875,
+          0.7083605527877808
+        ],
+        [
+          -0.0002553552621975541,
+          0.8660085797309875,
+          -0.5000290274620056,
+          0.7179451584815979
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "optical_axes": "+X right, +Y down, +Z forward",
+      "pose_source": "synchronized native Camera.get_view_matrix_ros inverse; candidate",
+      "fixed_world_frame_candidate": false,
+      "static_across_frames_validated": false,
+      "frame_alignment_validated": false
+    }
+  }
+}

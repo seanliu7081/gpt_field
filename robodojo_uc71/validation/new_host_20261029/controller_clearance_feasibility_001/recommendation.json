@@ -1,0 +1,65 @@
+{
+  "schema": "robodojo-clearance-candidate-recommendation-1",
+  "status": "proposal_for_root_review",
+  "recommended_outward_distance_m": 0.015,
+  "direction": "normalize(horizontal(recorded_robot_base_position - midpoint_of_both_robot_base_positions))",
+  "unchanged_lift_m": 0.03,
+  "unchanged_negative_initial_toolX_retreat_m": 0.025,
+  "unchanged_guards": {
+    "joint_distance_from_home_rad": 0.35,
+    "tool_distance_from_home_m": 0.065
+  },
+  "intended_plan_change": "Apply the same robot-only outward component to both arms clearance endpoints and their checkpoint/close/open held targets; retain all39 stages,960 actions, speeds, solver, limits, clearance gates, and native gripper targets.",
+  "worst_numerical_joint_guard_margin_rad": 0.01914607283818681,
+  "observed007_command_to_next_state_joint_residual_rad": 0.0027602772339891807,
+  "worst_numerical_margin_minus_observed_lag_context_rad": 0.01638579560419763,
+  "worst_numerical_retreat_samples_remaining_after_first_1mm_0_01rad_suffix": 6,
+  "operator_visual_assessment": "On the unchanged stage034 head RGB, the predicted15mm outward finger/pad sweep provides more distinct projected separation at the right inner fingertip than10mm; this is a comparative image assessment, not a depth, collision, or contact measurement.",
+  "required_next_step": "Root review and exact source/plan-binding review before any newly scoped diagnostic; fresh all-three-RGB clearance still decides before either close.",
+  "production_source_changed": false,
+  "execution_authorized": false,
+  "new_native_actions_executed": 0,
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "standard_ready": false,
+  "model_calls": 0,
+  "automatic_tuning": false,
+  "automatic_retry": false,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+      "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/model_residuals.json",
+      "sha256": "6bf310952f2415fa8d58b3fdc89ae75df11ac485a1a94f7f2af2673b18748dde"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/archived_sources.json",
+      "sha256": "8785878f015ebe413a1c37fced770139705487f31df316ec61beaed07e900937"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_review_001/review.json",
+      "sha256": "7aebc7a60af1d6335d87f89ff087957d0aa9529613e4c7d5cb9d3dcae38d808e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/projection.json",
+      "sha256": "302acd0c6cabad7fc076ce6cd15031ee052f8b81505fe17e3df3e1a7fb8ed1da"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.png",
+      "sha256": "a16960c6d8ef2d4bc2abb09c75e6b09344341d9d4092ef21a46de6dbc9e26db2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.png",
+      "sha256": "a20f471934a0ddb898b5ba09760b516178d702e2066ee1e5bcca7db59b1e4b9b"
+    }
+  ],
+  "limitations": [
+    "The response model is fitted and checked on007 baseline motion only; lateral dynamics remain unmeasured.",
+    "The15mm candidate has less joint margin than10mm; unchanged measured guards must remain active.",
+    "Projected visual meshes are not collision envelopes and ignore depth occlusion.",
+    "No task object coordinates or contact truth were used to construct or assess kinematic targets.",
+    "007 remains an845-action incomplete diagnostic; its right stop is not reclassified."
+  ]
+}

@@ -1,0 +1,1155 @@
+{
+  "actual_fk_jacobian_arm_state_checks": 320,
+  "actual_fk_jacobian_checks_passed": true,
+  "all_source_hashes_verified": true,
+  "archived_sources": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/archived_sources.json",
+    "sha256": "8785878f015ebe413a1c37fced770139705487f31df316ec61beaed07e900937"
+  },
+  "candidate_kinematic_checks": [
+    {
+      "cases_checked": 8,
+      "maximum_command_home_rad": 0.29485594675535465,
+      "maximum_joint_home_rad": 0.29520950497647097,
+      "maximum_kinematic_joint_rate_rad_s": 0.7084309565879728,
+      "maximum_orientation_error_rad": 7.685426019997716e-05,
+      "maximum_tool_home_m": 0.040313507454683074,
+      "minimum_native_joint_limit_margin_rad": 3.139998745093403,
+      "outward_m": 0.01,
+      "updates_checked": 1440
+    },
+    {
+      "cases_checked": 8,
+      "maximum_command_home_rad": 0.33085392716181317,
+      "maximum_joint_home_rad": 0.33085392716181317,
+      "maximum_kinematic_joint_rate_rad_s": 0.8370498591665859,
+      "maximum_orientation_error_rad": 9.225094250544014e-05,
+      "maximum_tool_home_m": 0.04183699930285297,
+      "minimum_native_joint_limit_margin_rad": 3.139998466275594,
+      "outward_m": 0.015,
+      "updates_checked": 1440
+    }
+  ],
+  "candidate_selected_for_execution": null,
+  "comparison": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+    "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+  },
+  "fresh_empty_gripper_clearance_validated": false,
+  "full_test_authorized": false,
+  "guard_note": "The producer nominal_guard_checks_passed field checks joint/tool home distances. This review additionally checked recorded command home distance, orientation error, rate proxies, and native joint limits. Inactive-arm and finger dynamics are not simulated.",
+  "historical_program_resolution": "Original analysis-time program paths resolve to the byte-identical archived sources listed in archived_sources.json; historical reports are unchanged.",
+  "independent_baseline_residual_recomputation": {
+    "actual_actions": 245,
+    "all_per_action_errors_and_maxima_reproduced_within": 1e-12,
+    "method": "Compare archived zero-outward model states to actual007 after states; independently recompute one-step response residuals from actual before/command/after joints and source-defined physical TCP."
+  },
+  "independent_numerical_replay": {
+    "maximum_command_difference_rad": 0.0,
+    "maximum_joint_difference_rad": 0.0,
+    "maximum_pose_component_difference": 0.0,
+    "method": "Reconstruct measured entry joints/root poses; recompute URDF FK and world actor Jacobian; call unchanged joint_target; apply each declared scalar gain; compare every archived command and next state.",
+    "updates": 2880
+  },
+  "limitations": [
+    "The scalar response gains are sensitivity cases; the fitted0.8768 gain and residuals are in-sample007 observations, not error bounds for lateral motion.",
+    "The10mm candidate has more numerical joint margin than15mm; root must still inspect robot projections and explicitly choose any new diagnostic.",
+    "Finger dynamics, object clearance, inactive-arm dynamics, and continuous within-action velocities are not certified by these kinematic traces.",
+    "A fresh three-camera gate may still reject a future close; no incomplete007 run is accepted as a completed characterization."
+  ],
+  "model_calls": 0,
+  "model_residuals": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/model_residuals.json",
+    "sha256": "6bf310952f2415fa8d58b3fdc89ae75df11ac485a1a94f7f2af2673b18748dde"
+  },
+  "native_actions": 0,
+  "native_dynamic_validation_passed": false,
+  "observed_baseline_residuals": [
+    {
+      "arm": "left",
+      "max_errors": {
+        "max_joint_prediction_residual_rad": 0.0018364932021870672,
+        "max_one_step_response_prediction_residual_rad": 0.00019562798996390976,
+        "tool_orientation_prediction_residual_rad": 0.0002489115767710215,
+        "tool_position_prediction_residual_m": 0.0005048527097679722
+      },
+      "recorded_actions_compared": 180
+    },
+    {
+      "arm": "right",
+      "max_errors": {
+        "max_joint_prediction_residual_rad": 0.0018362650971226052,
+        "max_one_step_response_prediction_residual_rad": 0.00019560991683878481,
+        "tool_orientation_prediction_residual_rad": 0.00023805941557026903,
+        "tool_position_prediction_residual_m": 0.0005048710299670929
+      },
+      "recorded_actions_compared": 65
+    }
+  ],
+  "schema": "robodojo-controller-clearance-independent-review-1",
+  "scope": "offline_robot_kinematics_and_historical_measurement_comparison",
+  "simulator_starts": 0,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/source_snapshot/analyze_joint_probe.py",
+      "sha256": "3254117d0f8ed7c7fd49a332436da278a8621ebd6a55021d0a6810daa0c91ddf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/source_snapshot/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/source_snapshot/controller_characterization.py",
+      "sha256": "a14f11609e0f1792202b86b697c8231f2ca6c69034d6984252f49f39ec4d4eff"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_partial_007/analysis.json",
+      "sha256": "42287a246d818313322010fccc16c7b8d9d7b81ff904afca7052371412104c9b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_003/proposal.json",
+      "sha256": "a75d980c739b87096a1ae1d9278fe88b910ee07bf1cfbdb8d98e90716329a0e6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/actual_geometry_checks.json",
+      "sha256": "67dd2c3e2ed39772761e6d8aed9dc776bf9f46338575557b1d6d6828c9024ebc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/analysis_method.py",
+      "sha256": "b4e676c44db86a4fd090483a281a48b7ec59d36571248c12ae0e487bbb3b7491"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/numerical_traces.json",
+      "sha256": "bea75b89b133ac16bee21732d93028ab5afbbc004064a452208dcf4c39bd15f8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+      "sha256": "57d413012fab94df425397a482bfd6a5290eeaddb6c374898feb824f4e81a697"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/launch_result.json",
+      "sha256": "98d4f4166bd07edd13d1ea88961616004e53b63ae13fea45ec05132b5236a917"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/before/robot_measurement.json",
+      "sha256": "fdde35700c34d62590d447053b47c61fa199f4add763562eac5089fa07339b91"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0601.json",
+      "sha256": "f15ffb8ef9fdefd88a8c9123c0f5f15a0d7e41fa2b76639ba8dc4ff3e8ae9f93"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0626.json",
+      "sha256": "34d6f1f99d1e562fd817a4acedc06b2d67d5fcb07c95272f3336d4169aae839d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0627.json",
+      "sha256": "1f559ba3e68470d74d0cde9f1f61a807146f99625e4beef08a8ac60a1d493b19"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0628.json",
+      "sha256": "d3cfb7135efafb4a8778428e1140e508af6f39340aab9a204ac8ae7e8d898373"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0629.json",
+      "sha256": "a823b1687c979a1c626a3cfbebd93bddd635388b5511b4c1abb3becc300ae79c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0630.json",
+      "sha256": "cb28fed5824e88b09096a1dac7432ac14027fad115a6018ac7c4584ebba7411e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0631.json",
+      "sha256": "fb5bb755851418c674c19a626df4e8aa48486cd58a523727381988e83dc9a5e7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0632.json",
+      "sha256": "62bdd70589d2590d13a287cceadb457b180770096e911bd1943d6fc57df1055f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0633.json",
+      "sha256": "87659539d3973e77a9731f95e323c451bda303098d77f6be57cc46067d2cd94f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0634.json",
+      "sha256": "52944669b4d37d5e350f68715ab617fb7bc24b1f7b02827421deb09addcf4251"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0635.json",
+      "sha256": "577268d680dd4d33988aee238e875a226716bf66e0575198ecac53e2a6427030"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0636.json",
+      "sha256": "4f01a510f066bf9cff403f863e2595640b2856e8165cb4dc45b78ba75e71d684"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0637.json",
+      "sha256": "01bfe6ec64ab98125947d834384c3dec80a043d9e13647d9ed5003b69e86d6c8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0638.json",
+      "sha256": "2ab4540d0df047f9dad86597e3ab918c06c4a31a82a8e3c3568f523659252607"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0639.json",
+      "sha256": "8e825625008aed9bedb6adc6022ab536d17793a66e252a4a24d47ca6df8da215"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0640.json",
+      "sha256": "4906bf74afabea75720615bf88b4cf0799bceea5bad3c9b6c6078c3e8a6ef9c0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0641.json",
+      "sha256": "cb9b4e85569ee14f7eccc85908325df1fa980b5017ed9978487a79b242a96966"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0642.json",
+      "sha256": "ffaf93889f2b625db04dd221fb8fb2d89105ae6fcf6f0c9b38afaea8e1be909f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0643.json",
+      "sha256": "0b91f688655b729dbe6b98272bd536d03b6d20aa5c947a2e33c76e2c76373d28"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0644.json",
+      "sha256": "1823ef25710d2645fd3397fe9529c42777f12d360f62a09959ab94b9a5a95034"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0645.json",
+      "sha256": "31ddde6bbb214bfd9e5f132909637f62a8e9b6dd71e69fa57310ee29882103e6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0646.json",
+      "sha256": "a60e264c67fabbdc16eed1808f735ac883e60b7c5533b09e8f7dda4799de8b6a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0647.json",
+      "sha256": "1b4b3014c5dbcd2ea14eb2f9a10d28869ccebe3682f1771687c38e3eaba5a3bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0648.json",
+      "sha256": "9b3f711f534e66972397e507976fcd092e0e480c8cf6e706340d59c9a2eff8d5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0649.json",
+      "sha256": "0a13d5427e2f476be5bce6ee2699f406fe4e8303a7c19cc3fa5074d1539c9175"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0650.json",
+      "sha256": "cd21b75e4163f38083ada66d6cf8345547558b1185480177d72573525103e3f1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0651.json",
+      "sha256": "b05565bfeb9f5bf6d22da508e532d6ee8ea9cdfd5b97485b9d3e1e51e86077d0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0652.json",
+      "sha256": "12a28b76f7a4425fe99fd1027577c9997dda6c30e424a3648f66c508201885ce"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0653.json",
+      "sha256": "a28c3da4f83dd24a30511790cbe755edb1670d26d00deb44e89c9dee2b17dc1e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0654.json",
+      "sha256": "ea5d7a6f173df9e6cb97682e94d1eca567f96e76300f787ce0128e9ba5e4b49a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0655.json",
+      "sha256": "c9f1ca819a505e0e2f0343064d618d71a18e47f3e6e9fa72b191cea7cc2e4c3d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0656.json",
+      "sha256": "1f8c9bfbd14a7a8c317d4de3764b526c6562f79747cac14ed9bb304358820206"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0657.json",
+      "sha256": "8b8f021378d6acbab93aac781585eadedb917f50ad6252730ecb58bbfc4470c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0658.json",
+      "sha256": "37fb082ebec64deac68aeca5223eba2587fe7b6b063661cd6eadd217802850f1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0659.json",
+      "sha256": "83a760e21daff4b429b6aa80de3c111dae41c330e39c1cef08a9d33e283827e7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0660.json",
+      "sha256": "cd968f266720798c8b1f6db170b77a3d36d2859f135ea2a33ea1f003ec38e4ae"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0661.json",
+      "sha256": "45cc92ba5b9bf65aa866c877706308dc6375d8aca669218d81cb5480a104c9c2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0662.json",
+      "sha256": "84d8c2ad4742b0983a60097ba9c3ce40b155994f475341111fd83be27813d03b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0663.json",
+      "sha256": "a324b11e542fd91f2e34a4e57863c97eec5c050f46865a86bc35246c4d1cb926"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0664.json",
+      "sha256": "f2584d7c2275647ab7b2f3c48a3a79e4e796cfff939b313b68a111925b57301e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0665.json",
+      "sha256": "9a34eb16f8a5e17ccb01fec422b22d39761d64a69c86f04dd5f36f75c6c9b81a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0781.json",
+      "sha256": "fb6136ed3c840e40078ba1d64612e7face44f34aeb6e1f95dac1b78af2047cd5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0806.json",
+      "sha256": "27e6f2f1a14220d180d53c8b51c809dffb730eb008de07571388fa14aba6f588"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0807.json",
+      "sha256": "99d65b695555fb8e42a8c8879c19be5d0b2187592e5287199e2500def47c904c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0808.json",
+      "sha256": "c5c9c4ba4e1beefaec9c237fcccce4378090c952711e5cd3dcef504d8d8d6a15"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0809.json",
+      "sha256": "69cfee4486ac220cdedcf70e9547edde455af50f5963f2e38ee3aa724ca6223d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0810.json",
+      "sha256": "f56be7c6ac672f32e83c6c4d23063e8d66ee0fabf0e28f75317610d85eea54ec"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0811.json",
+      "sha256": "34ef96a44025b649552ea1bf9571616c396badefbd69e4d1606efede19c732d8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0812.json",
+      "sha256": "1918716191fd3b3fe61d0226cd47482d97d95459d7ac3cc8a1a2b5533c70bda2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0813.json",
+      "sha256": "e3db375d8129553bc472c7ef01689c0e09434641e1555b7432f916fcdac00166"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0814.json",
+      "sha256": "5fbbe6b26eaf305e2142d7a9cfec78b32c1f240d1b22713cffe93226a8f7c764"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0815.json",
+      "sha256": "f70a4d996192eb20fa4eb1895d09f6824659469153a3b67e53d2d0ee2fcc1541"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0816.json",
+      "sha256": "4518749d4d80034a070fb1780c33a4a82f7faf9fb92ff9f17c10ca98ed8dffec"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0817.json",
+      "sha256": "ab761e67b42d61c3379a8a2a53eb3a9fb20f6b9fb20398b3011f59e321aacf36"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0818.json",
+      "sha256": "d851f92ec008519b102b25b20994385a4b3b0cc5b2035a083b3f756e83e02ea3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0819.json",
+      "sha256": "8601d859a00f9cd614678d42fb9e62762438982c693bc61b76b8fb6fd3dd799e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0820.json",
+      "sha256": "43a836b77de58fc8f1b2b4dd8396b8f174e7a3320a8a69204ec1edc4043c3b84"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0821.json",
+      "sha256": "e756e8b59a497e2e9dfc01c6f8853dbf120d6db604804b39d30a56735f9e3042"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0822.json",
+      "sha256": "43a90f18bf2983ad244b8cdbe933c23d5e54228859399fe0823d488c062156d7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0823.json",
+      "sha256": "f6840fa1636d7680e35d9c007719307a4952c9a7df8035f49d684337a221ad72"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0824.json",
+      "sha256": "c38d30bf5e50f56678c322c5f4700aac61c9366c0a5bd0c1c5858e78fea4e3e4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0825.json",
+      "sha256": "b28568682d44f6f5f4c46d30501c2c70b1d48954d9f381179f3665adc55b274a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0826.json",
+      "sha256": "7f5105b0598908e41a210376e6e8d92e6d6d73c314656352cf2198e33372687a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0827.json",
+      "sha256": "9d99d2b3484aa8259ab3440992566394f39b859cc8830aae05449edf482a5793"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0828.json",
+      "sha256": "6f2b3fac6642cffe13eb25349dc6b0f41d1b80a042e31909eb91faac2755591d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0829.json",
+      "sha256": "dbd0d6ddfd4ad8491c772021453fa9cabc21d026289477cb13817f886750a5b2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0830.json",
+      "sha256": "18779d2927896351810d42f99c7ee8c8b094bbc9afd7308fe3b9a871b684a2c5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0831.json",
+      "sha256": "fb96fc2801b0802b7c51316d84c0e04a6087a5bdbe5d34b168036828920b87b3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0832.json",
+      "sha256": "f30f060994b8f3b5a9df1c4b23699603491ceb4469c708a1d305a4519a24b778"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0833.json",
+      "sha256": "8cd09f4b929cedcc2b3b20744c3d30377e62c31dbc8c52765ce492909ff2efdd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0834.json",
+      "sha256": "55c2d631eb7cb1a3f7fc3f0fec5f012da2d58240a0713bbc2debc42e6278b439"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0835.json",
+      "sha256": "3b51d72664d029c0f9785041c0670248f0150750bfc7dcdfbf20b3dbd23263aa"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0836.json",
+      "sha256": "fd89175251aec0ab77e33c5799f2d671a338b6ea8c2fa413afd05dc4c32e722a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0837.json",
+      "sha256": "f875c61d8f65416a75c339ddcfb85e4e4f23893ab04d76884e175d37bbecb8dc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0838.json",
+      "sha256": "c7286fc28df5d0b4c0c7c971b1c85b2d1dbd7a05d46bd05d41214fe8d151fce2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0839.json",
+      "sha256": "4027406b15ba118cd051e5ff162b8230504722c698f2d5f372dced1efbab53f7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0840.json",
+      "sha256": "35f12d31fcd3929b3e3a1b97088e8fb1d6908d8a1672b0ef988df805307eb15b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0841.json",
+      "sha256": "5da29dbbbd40d803bc5a706e2817393c89f4069d7c1b040ea365cdf8ea131a44"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0842.json",
+      "sha256": "68dae3215331877921bee863e1642a90a5609ecda42666a817bd30acf7c49636"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0843.json",
+      "sha256": "e08f50d1af9a5c957c78419f6f5f358dbf8816813626d115245fe0147d14b90f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0844.json",
+      "sha256": "e209686cd06ac4a1fb9405d67b00c4e4f83162ed689132002bbcbaa59eabc9f4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0845.json",
+      "sha256": "1054d276b1bc2f577510e17f751ca02edb397781250215b4ba5c70495544547a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+      "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0602.json",
+      "sha256": "b0525927af425e49225e0a44ff26b2f23c6f70e2c40cfa2bc62d6bb8b27ef651"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0603.json",
+      "sha256": "a1ba4778e07871c165336a816dafa3e9292de1b5e5c9bf40ad22f6e9aa34016b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0604.json",
+      "sha256": "8c203ae43178c8d77b0d68e17b3d45af7e19e398536b4b064d194a02ecd2990f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0605.json",
+      "sha256": "4978a36c81caa9dcd96d2df3b881e7c12f529f2cb33aff722e4b8e34cc7822da"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0606.json",
+      "sha256": "16cab441ed77fc0550ce5c69299caa06e4450ccef4bfb3f943bd24ef665b84ea"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0607.json",
+      "sha256": "a781704b725a65bc2fbf535fb98d681d8bde3e59cc57a8d532fce893543972a7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0608.json",
+      "sha256": "882fd27114eab61141d4a27b3711bd9a02c2d9200e18a66c4127f3a833f288f3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0609.json",
+      "sha256": "56bad9c24b68660bbabc02e6733d1acd25c63e513fbe1dd7d5557c028da95c99"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0610.json",
+      "sha256": "519ac8aa92f8b5f8fa14ca6ec6e0d4c15324f7899468ad29ca81e2c6dcea3029"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0611.json",
+      "sha256": "7a805ed2b31217a9bbaa9ebe5bf77b3d213517403bd2e5a073afc5cf44d3ff91"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0612.json",
+      "sha256": "8f507dc5b0b13af393a1cac3321b214e303caf57fe53132e47851a9111298d20"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0613.json",
+      "sha256": "66a90888083912d74c755f9a96cbcbda082cbc38d4f55f2fb9910ac2d8cee716"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0614.json",
+      "sha256": "54fc7ae8dda4625cb3bfca06112d49dd1e5cd80a84df4d51c1d6ce6930570a53"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0615.json",
+      "sha256": "adc9b899abbe4d3e4957f8903daddcc286eb64516325d33026ca3fff65e69fed"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0616.json",
+      "sha256": "e10950e4496c0d90b1ba8bc95b94f42e98fa378f4fa5b3c743ce22d9ea8cb479"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0617.json",
+      "sha256": "eb31e2a8a120f1a38f60424ead51fa47631bfc12c471037ec7f006745535cc81"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0618.json",
+      "sha256": "91b77a8cfbe248567cc9f72a3bae1b8b4f12032f540059bcbba2041d5a85f360"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0619.json",
+      "sha256": "e24a6c7781389d114ceb307e85ce78243c6e53de93086148ee85967ed4d6e448"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0620.json",
+      "sha256": "e9a0c0e64693e8311cd0fd9c251c0e6fa140fabac1f94e970b4a9e7170b93983"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0621.json",
+      "sha256": "bc08ca1658272cee2fb64bf99542a90d29f7463e7845d781683726130961d023"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0622.json",
+      "sha256": "6d69cf1ec06039a2f53e2cd36a81d7fef55697b8a6857dd3f077ff233a000339"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0623.json",
+      "sha256": "898f51464d7555abb7ac809bd39d2db714ebeada311ae933b5b0a6d5cdaf9a7d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0624.json",
+      "sha256": "f0e432070d861d4c9c7a5dc6cdbf5593298eb1e67fd9d3c0657e2826630cdd6c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0625.json",
+      "sha256": "21ac6bfad1b0291b32f6be9c65ce39782e072dcd7c9009145e5bd48419ffd072"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0666.json",
+      "sha256": "f1daf25539382923fe4c287e506eb3cee90c9a73d3077d7c87d809babd78a0d2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0667.json",
+      "sha256": "84bbe7e3549457d31b4dd422632d3e5cccc88edcdcea35b6e70b90a9866fb450"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0668.json",
+      "sha256": "05ba67fbaf71480ff63418d08dff53bc5d38d5336b95136d21408b96967742bf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0669.json",
+      "sha256": "8abfc2c6d98bdb9ba31a70c9a9cdc9fa1852c1e1f7e457d9861d5e9707cc7fcf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0670.json",
+      "sha256": "0d25a7d537bb207d72ddc6dc1da2cb0b44c997df27834ac34fd4bf4f77701198"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0671.json",
+      "sha256": "096444d8dd6d7dcac60d1a249070776c3446b9cfc4d6ed11a2dd7c2b0409828c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0672.json",
+      "sha256": "f5555903c2f8dd6aa74e400bc61e6e99626c3517f61bf2e2cdd1e43f8c437718"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0673.json",
+      "sha256": "592d493e9850dddcff56e0648fc3cf93af3a9b4ad732b82661fbe5cb25218434"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0674.json",
+      "sha256": "cf40a29127f716536fad6bdfdc5905bd1d6dd1d62dce2d6ebceac8d0040788a3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0675.json",
+      "sha256": "5ba8f1d6138918a3d020a5c7afc500abcb94367d78a3e740b59ea9d5f501b48c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0676.json",
+      "sha256": "7759f780d79f74c4d5c259efeaa200f613a3cf4d88796d62f5d6ab15a4f32a60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0677.json",
+      "sha256": "7b7dcab36ea57266c9937a528e74e2260f160b19fac6fdbd8c8580ee85e54e8c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0678.json",
+      "sha256": "5300680fdc97f14bff838a5cd286187d57d200a5e8f13e2e31a65e7a4f342348"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0679.json",
+      "sha256": "a6440eb83bcfbb068d6314097ba454fa03a25c70b3a99898ba347f1a2e0efa57"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0680.json",
+      "sha256": "a8dd4311c1fbdc2c97b26b90bb13f334d9bb2bd9a62d455b349b4f3aaca96c6f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0681.json",
+      "sha256": "0beb1e49e684942cbd260cbd9ff9e5f3da51779c203ca789c512ff5870f099e4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0682.json",
+      "sha256": "02a8e5ee6ed36fb5d7b27f8c008863a3bca432a7091b3dac00b4ea6c51362d7f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0683.json",
+      "sha256": "2bb3bd281e1996fdf4355d32f9f16b6be04c039e7dd7e052645d6ba5ebb2d959"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0684.json",
+      "sha256": "79c7a67a1f83e790a67f134a13777224c86acd01185e5d68380b8fbb8a404784"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0685.json",
+      "sha256": "6e2971289585fa2b6fc8c20a58d2d0701b23fa69b4ab52c7c60c980b0448e0cc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0686.json",
+      "sha256": "8aecf9b24e65464d6356398f38b880d7d84d6c470f27e3d9fa81c8d925bf8904"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0687.json",
+      "sha256": "144408c27aa9e97d38a3b0038c74553b749d56c53e0ba4a3592b01e3a007ceb4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0688.json",
+      "sha256": "ad1e7ba658715b3d456b5b393af820d1b638aadf9abad3226ffd2d16eb636c94"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0689.json",
+      "sha256": "5958e0633ca04d6f6832d88d2e11c5e27777387cc805c0d3e5dd94726c20e7e7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0690.json",
+      "sha256": "bab5d4b6c78faff3873bc2f86d521b2658311feafc64e3304db43769d787e457"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0691.json",
+      "sha256": "cf0419b47a02a2dc345ac942b48e32296566dbfbb5f70596d06dc5dbd3380978"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0692.json",
+      "sha256": "b251f4149e27bc246736e2877c695be6b558c87bad07852876404928ace92ae8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0693.json",
+      "sha256": "dbb17c350bf86a7f13b68eac81eba1a408fe083727b59196c280e57d7094c277"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0694.json",
+      "sha256": "f640abe00c372b56a76cdc09b468533a01433cc713aee37f125ffa27fae9700c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0695.json",
+      "sha256": "ad51e936be047f295d4f8d58a718a53da00bdfd4555a6f328dad4b45c6bfeb52"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0696.json",
+      "sha256": "a70c2a1a23cceef7daa979b41b6130b78ddc1e368f815ca021b6f81f5d13428c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0697.json",
+      "sha256": "6bed7ef6cc3a692ce48c6b98ef5dc3ab413c795e845a9d64248fbc2d9a59a9c1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0698.json",
+      "sha256": "4e5e02f511d95ec9544d3948c977a3c68541d02a9fe50317d9a26f3c15057fc8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0699.json",
+      "sha256": "caf0f73541587cb428e50aeb61f1d408d1b2632659e8a1d00ba6d8109d5bfe22"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0700.json",
+      "sha256": "3f73a8bc1fe041ad73832d8e4f3e880923b2795cab34ae2b286d6c90d3f88e7a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0701.json",
+      "sha256": "ca68f2cb6649e075687b63feae51fc767f361fb04a72f71f9d8a5629d704ecac"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0702.json",
+      "sha256": "6696abd44abce67051704b53a1bc2e6026b0a5a0b7f36a0ddffbfbc69d43d6bb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0703.json",
+      "sha256": "96958421cf45585a600e69c3ca58e63cdec2a6dc05449db19c58a39d096cf92d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0704.json",
+      "sha256": "15cf5b009fe2890198d3549544ecb98a9371fb31080484a52553c4e3cebae574"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0705.json",
+      "sha256": "4bb0de2f03f08d592143deee1f0aae620da1cc84a6becc6757327f6fd7811862"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0706.json",
+      "sha256": "080f625de806818f65d963c250448efe0bf9734e0c84a4d8911a1605fe34b555"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0707.json",
+      "sha256": "69023a5de6e6f3ee820f184cb363ff48d42f5bfc47f95a006896510326d20e37"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0708.json",
+      "sha256": "e78a03c283ac412455c5e9e366a1b3ce23e575cd30518830e6ca53dd23819d4c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0709.json",
+      "sha256": "1d02ca1c14b839976546b869cb8c9de813a82bb782df90af322a7ebc8db67dad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0710.json",
+      "sha256": "54bc7897233130b16881bdc69961cd5ae264c67a7ead04a9070416d45c485b49"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0711.json",
+      "sha256": "fdf58168ba163544bc9d4d92925619cd692d0e1897737bc31d8a63173c62a377"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0712.json",
+      "sha256": "083ee303d41c7c8011f7b6285bf466dd89191f4edd3788d608a24553397eabb4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0713.json",
+      "sha256": "ded0da684b470b9b0b121b55f41e306919cd6b493cb8aa3ab20960b115654296"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0714.json",
+      "sha256": "6f70d3f9dce904b940b88b5b138f290fbaab86d4af1c020dfaaa1b7becf264c6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0715.json",
+      "sha256": "1a4f4869c7260c9a4bdf1ffe1d942ee0fc6bddd274d129057c4bcb63cbcf902b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0716.json",
+      "sha256": "50ca2d6fa0ce9112fd3872a4f8c6e96bc80317f2d0b74b7d6bae72b083d86405"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0717.json",
+      "sha256": "01c09e4b7832245cbc602a2b29b51242a1d9013c7223c7f7957723bfb9356f23"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0718.json",
+      "sha256": "8bd81e53d875b35fff8b7cd601a8fa5baebd4cc228400ca16096187660220e00"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0719.json",
+      "sha256": "22d01440da7e9cdb9d205e6bdadda13f395b349c60d481100c19897240352a99"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0720.json",
+      "sha256": "20d546de4186a8e7b398f2b48f9ba6947e7bda99f7276af0acf2770abfbc4e60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0721.json",
+      "sha256": "fa43863e1f688e897a46a7ec90da3d784aeed8a0853fd86de792f1f39899401d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0722.json",
+      "sha256": "fbc270724ea8d039260fd8785355911b5f85eb2ad954d860be9b472b2b824725"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0723.json",
+      "sha256": "a9b9321dd68b02258cf167209d7d8bfe162f5a66f979808d9ec5ef9ef82058c5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0724.json",
+      "sha256": "3d1d217cff3df71778a63a495f0fecdd680eb82f1584a0350d42fb84c3997e80"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0725.json",
+      "sha256": "4cdd97e47e938e3384fe36540ee034d344156b8287c113d94c243dfd4b5c0ac5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0726.json",
+      "sha256": "a791b21ad2eb464115fe4ff486fd9aefef1826fe784b8df835c76769431042da"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0727.json",
+      "sha256": "dbcd97f4d2ede0ae6a8ed4c4dcd98bc537176f9ac0789fe34dcd19d73573fd6e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0728.json",
+      "sha256": "5ce6f6fe01b0a8eef18d42a9a97fe25926029a4e16057dc94ff353778b5fb7f6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0729.json",
+      "sha256": "b63e53e9b63b1f1b5be17a1b48c86136ad56be6bbf7eef57c15bcd0c1f0df9e9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0730.json",
+      "sha256": "1747841c086c2665435e1d7b4767bdfc2c6458cf2f1d6efa0016c2180ae4c8a1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0731.json",
+      "sha256": "e39f20c0193a2c2bf7f2e55598b51b64dbc65a7a4c52e9600515cec1e8d90bca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0732.json",
+      "sha256": "dde81e5099a14eb7644f1960709c43af2e977cf8364c5f183cc23e6a294c1d86"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0733.json",
+      "sha256": "bd33724c611cfdaf327853842ed984910ecf40e2155387da8282a351eb78355a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0734.json",
+      "sha256": "9cd9a78071bf09d7a2c25052dd0634e046e81918e3b1a0058f6529a5d85af30e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0735.json",
+      "sha256": "6c8c150100f80cded9af0029ecb9756688dda5716cd862081cbd1dd4f7d585ed"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0736.json",
+      "sha256": "d9ae9e6c29d656a1872ab41f99fdcdb889123f79d0cd1b910e95f726d5ecfe81"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0737.json",
+      "sha256": "57035a0aa783edbc4fabd9074dde9c497488e09aecfd8abd8af499786d7be12a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0738.json",
+      "sha256": "3312d7a580b48bc836fb5bf34578d21b7fb166561de0516a6b650f3029c1608b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0739.json",
+      "sha256": "0023a2c470eb3a3b2ef654180b49a081191c4dfdd12b59e45aa28590f2df592d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0740.json",
+      "sha256": "af346fc78a6b7b91e38ed5acb9fb916d0a2025cd48f1068c9c43a701e72f75d6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0741.json",
+      "sha256": "4fda3c7440a6fb003433412096297df9f4cf1c56232ca5a56087b3369a8675e0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0742.json",
+      "sha256": "8e72b9302cb458d5914ddb127537c4e05d20d953d244b97adfabf0bbcc0c70a7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0743.json",
+      "sha256": "037628d04733b7031ab8cddee03dc8c2e18fc5ec4cc5d3ad4bf3ade92c630aac"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0744.json",
+      "sha256": "0803e255238f0cdf1587697d659e7bc0695547d5da56780e74647f318f4de64c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0745.json",
+      "sha256": "f329486af625980da892c65c2782890d28f1a3c311e6e407b56907076e0d9b9a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0746.json",
+      "sha256": "b4d8f128cdb3835059c08cfd205871ca907ef07364618dd46b31a8e43112c9ec"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0747.json",
+      "sha256": "5a4da954f44388727d313c61193570e3123426e372c1de2e3bba1148af9772e8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0748.json",
+      "sha256": "bf41c50181b76119641ebb45ff836301158738dacd5e1cb37914b2d486e81bc8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0749.json",
+      "sha256": "24eb2a0d64e4f9da12d8b821effc5fecff5fcfe6f847f2729f3dfd4bb5752037"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0750.json",
+      "sha256": "d3b0160e389f71d8bf257884c5365d25e4a91ac2f0f34cb5c4fde568f58cca88"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0751.json",
+      "sha256": "dcf375b138d445c04532fad97a4504602776e29b34091ebf6077ac0a8202ca81"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0752.json",
+      "sha256": "fc33ec8fe8e97ff9a0d70bbe93b961c636915a9b80a5bf25d4e282b268b5acde"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0753.json",
+      "sha256": "cd271393fe8c6efae4663176003a2f7b795b54150ae308668aa22ba1a9fba8a1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0754.json",
+      "sha256": "80ee3ad09828fa3de8c2c764d04f663463de524bfd1d91698b191deda92c469d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0755.json",
+      "sha256": "480fe5879ae9ef03224ecbb89871cdec5855e5ef209aefb57b9ea4df22cd09bf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0756.json",
+      "sha256": "eea75db3b031c47dca06623344c3cbaa31d3e8b0eca4faf7fabd92da2255e89d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0757.json",
+      "sha256": "68b12be8eb74183908769b4932938b0cf6059636b4158fc3322902d701f85719"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0758.json",
+      "sha256": "6f923e9e9cc5ac67ac27f8b5d4fc708f668967aa32e9984f215b959d48e08ba5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0759.json",
+      "sha256": "05e00d50a1525424fff1041cd5eb9d7259818702260936d48b76064965989072"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0760.json",
+      "sha256": "1cedfb139c8a2ea9143fd94bd97560cf730c1717300463f807cb7821a9db1d0d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0761.json",
+      "sha256": "fddec1787e3b7048fe229bbe9103b4562dbdcabaecbeb7580348d0acf9d136a6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0762.json",
+      "sha256": "687d1664a2d506ef44189a384d6bf70e19b8f68d52377af30f2b22bc756e3268"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0763.json",
+      "sha256": "a8d9d8cd785faafd9b256ae09f9a35ec0ba2e3cc8b2fec015104a4b6172a069b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0764.json",
+      "sha256": "5193c87b090d7f372703718d35172f53834fd3d4b993e4dab11376c15ed55249"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0765.json",
+      "sha256": "92be57a5d671b2a7fb23d82e4cdf08a8d0004e1c85c5cabdd39e6ffcfc2390c8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0766.json",
+      "sha256": "60fe050069a90199008df07decfeeb2e26d732c1c0ed7ed0269c39a977087e9a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0767.json",
+      "sha256": "08a5ebb29bfde74721ae90d00affa759c9023039b7db0fbda78eb95505ea6074"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0768.json",
+      "sha256": "95b2a6a6b2ff5f958cc2c42f972522a6d4357507368af525da8088a843cb6716"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0769.json",
+      "sha256": "79627ef0efa6dd4bbbc8e445d44425211607cee4f7d4e077fb4a9f83a0db33ed"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0770.json",
+      "sha256": "c08500f83ff2605fe5b3dd714f4f721574e5012f43c64f9a6778fa8e9913bdbe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0771.json",
+      "sha256": "eb6597ff6029722029449b6ce3617b29b171470429a0c67d67d881548775e429"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0772.json",
+      "sha256": "2ef2b3411d96343fcffd630f22a568e0203a66a0e99b5c4742de088cf1d3b344"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0773.json",
+      "sha256": "8380cb4ce866b5b55f6ac0f4d681398624d465ca801468400b1f1686a610df86"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0774.json",
+      "sha256": "8f5388e897b969523d94a7b33daa185b992c5e135942b64f8a5ee769fce3a4b7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0775.json",
+      "sha256": "5ece0efb3bdc43d2dd663d271758589b0e230494e10a19d8aaefab4853dbb23a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0776.json",
+      "sha256": "fb19c1ca02c40f87351e237f8320f61880e8c21ad19ebc82d3b9fbdf1c4776c4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0777.json",
+      "sha256": "c88a13c25248efa41231006e9f0a61cf2d274b2199b2570c437f0a47486ecb6d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0778.json",
+      "sha256": "77c6211a509dd72077c6680d3a599a83e7bccaa63c7e8e545a5e70f1f71d8a5a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0779.json",
+      "sha256": "165807283f034faed76955f0dcd5a1c25734e35653052f2b54bb65158412c2c2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0780.json",
+      "sha256": "61fa02452d348e4788642ccd3f1f6e2dc872d5a39641ac1ef5066edd72b48f48"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0782.json",
+      "sha256": "3cff1d29c53b25996a2014b308de4d3abdd0fd2ef27a2566aca7231d7797d0b9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0783.json",
+      "sha256": "c1e9f3f56b9f9891e4eb2124e6bb31fef91f6798bff55787aa139889d3ca5d2b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0784.json",
+      "sha256": "a6ccd2f51c0134ba2af05b2b963842b5ec469145a592d4bacf2c98216465f2e9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0785.json",
+      "sha256": "8ddbb568df2c8b618c5a974ef49961a4875724703ed2c3e315746d6fe445d8eb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0786.json",
+      "sha256": "4a212c4b0ab4ed04dbd2bb1eeb74a3dc780cab9f402725e74870c950b2470ef2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0787.json",
+      "sha256": "713a3adae679d70e4d5656fd52d9f6c62696e6f053fa630917993e8931e56e10"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0788.json",
+      "sha256": "71432839e0df3592a3577f1c160a2b4ce8616113bb0818f8acc593f370ece6f9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0789.json",
+      "sha256": "e569cdf9db42fffd308d8399bc7d359c64e18ccb4a38b1410491f10773f4ca7d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0790.json",
+      "sha256": "750d7e37b53d8594721caeb8ae549302a30f24965ff4619d4675df02c36a6f50"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0791.json",
+      "sha256": "f326893cf1e1ecd02060791765d8d72563eaf77ef2a1f7d06e3cb42bb853bb57"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0792.json",
+      "sha256": "f8c782c4af42133f2abce66e9b0e603a39effbe12fe1690b4f887dc9d19273ca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0793.json",
+      "sha256": "53ba8a9c0b11a6572b348af318f9f7cdbe70ad7d017c8362047906b2329308db"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0794.json",
+      "sha256": "8e4cf446b6185b28401a5570acc0c1d6ce0025c5a2569be32104e8ee7dc2da1a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0795.json",
+      "sha256": "6dd7b01bfcd88b20b1bd48ca3d0bb383d735150beddb1e1fdcb4a4c7254ed1bd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0796.json",
+      "sha256": "c24250bfaf38670ed42c37b5b6e9788568d1e0adb79feb4bc4568e2d4bf93394"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0797.json",
+      "sha256": "f7c7be88b7f3c2ce21596aa25d4da60638c08ebb0e9f8900d6303e4df32f43de"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0798.json",
+      "sha256": "1f4c8b3f69a8e9f17c5727babbca842568a06a415ea4373e19040452d7f96aad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0799.json",
+      "sha256": "09ed9478d64a27e0dec8701b104701a5b816fc0719b51b2cfab2cbec4e6359b2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0800.json",
+      "sha256": "0025fba28a27f37788d170acef46b3318d837ea6059780f0d280aa3d20df056c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0801.json",
+      "sha256": "968d28f654902f27e0c869eab7b0c6d8ef266702fad889312d878c31f869ee09"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0802.json",
+      "sha256": "4c532c9deefae39c236b9e2c5ab6e76ac474a38582e9a8e9530bebd683719145"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0803.json",
+      "sha256": "b04e850487176abae78a7d1a32b916a1ef71ade4270a76f2be4288c8e93893ed"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0804.json",
+      "sha256": "5f868023272afb1675ef897e633e4361abb033c29718dee0c110405103f73b42"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/native_action_0805.json",
+      "sha256": "e4503bd887ef6e017c2a258614b8028c231c2c54b2903726adbcb2e6c86995eb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/model_residuals.json",
+      "sha256": "6bf310952f2415fa8d58b3fdc89ae75df11ac485a1a94f7f2af2673b18748dde"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/archived_sources.json",
+      "sha256": "8785878f015ebe413a1c37fced770139705487f31df316ec61beaed07e900937"
+    }
+  ],
+  "standard_ready": false
+}

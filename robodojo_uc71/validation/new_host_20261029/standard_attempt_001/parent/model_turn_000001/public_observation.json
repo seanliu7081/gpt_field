@@ -1,0 +1,514 @@
+{
+  "calibration": {
+    "cameras": {
+      "head": {
+        "height": 480,
+        "intrinsics": [
+          [
+            288.1325378417969,
+            0.0,
+            320.0
+          ],
+          [
+            0.0,
+            336.4643249511719,
+            240.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_source": "native Camera.get_view_matrix_ros; synchronized after render_for_capture",
+        "width": 640,
+        "world_from_optical": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -0.8660253381202823,
+            0.5000001246849464,
+            -0.41000001004031805
+          ],
+          [
+            -0.0,
+            -0.5000001246849465,
+            -0.8660253381202823,
+            1.3079999768591866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "left_wrist": {
+        "height": 480,
+        "intrinsics": [
+          [
+            397.041259765625,
+            0.0,
+            320.0
+          ],
+          [
+            0.0,
+            397.041259765625,
+            240.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_source": "native Camera.get_view_matrix_ros; synchronized after render_for_capture",
+        "width": 640,
+        "world_from_optical": [
+          [
+            0.9999996873269793,
+            0.0005838778370696799,
+            -0.0005194062086010105,
+            -0.3027643603122908
+          ],
+          [
+            0.0007431125614754642,
+            -0.5048022936170401,
+            0.8632346762944173,
+            -0.2645167290964838
+          ],
+          [
+            0.0002418261895034745,
+            -0.8632348018654962,
+            -0.5048024954822246,
+            0.9709678604998293
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "right_wrist": {
+        "height": 480,
+        "intrinsics": [
+          [
+            397.041259765625,
+            0.0,
+            320.0
+          ],
+          [
+            0.0,
+            397.041259765625,
+            240.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_source": "native Camera.get_view_matrix_ros; synchronized after render_for_capture",
+        "width": 640,
+        "world_from_optical": [
+          [
+            0.9999999130883157,
+            0.00014753824751334886,
+            -0.0002552335122678763,
+            0.3004455265254386
+          ],
+          [
+            0.00029480782051961586,
+            -0.5000295144077699,
+            0.8660082556750317,
+            -0.26745784055439614
+          ],
+          [
+            1.450573473577458e-07,
+            -0.8660083308984723,
+            -0.5000295579402264,
+            0.9724396783888718
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "tools": {
+      "left": {
+        "finger_gap_formula": "sum_of_measured_finger_joint_positions",
+        "finger_gap_semantics": "joint_separation_proxy",
+        "link6_from_tool": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.1493350448975541
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -1.9999999999985307e-06
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -0.0008539872259297808
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "link_name": "link6",
+        "source_sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+      },
+      "right": {
+        "finger_gap_formula": "sum_of_measured_finger_joint_positions",
+        "finger_gap_semantics": "joint_separation_proxy",
+        "link6_from_tool": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.1493350448975541
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -1.9999999999985307e-06
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -0.0008539872259297808
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "link_name": "link6",
+        "source_sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+      }
+    },
+    "version": "robodojo-uc71-calibration-1"
+  },
+  "execution": {
+    "decision": {
+      "arm_id": "left",
+      "belief": "Both grippers are open at their recorded start poses. The bread is upright in a rack left of the toaster; slice A is the far-left slice. RGB geometry suggests a forward approach with the left gripper, but grasp depth still needs refinement.",
+      "execution": {
+        "segments": [
+          {
+            "gripper": "keep",
+            "max_steps": 50,
+            "observation_after": false,
+            "profile": "transit",
+            "quaternion_wxyz": null,
+            "skill": "move_to_pose",
+            "xyz_m": [
+              -0.32,
+              -0.183,
+              0.921
+            ]
+          },
+          {
+            "gripper": "keep",
+            "max_steps": 50,
+            "observation_after": false,
+            "profile": "transit",
+            "quaternion_wxyz": null,
+            "skill": "move_to_pose",
+            "xyz_m": [
+              -0.34,
+              -0.163,
+              0.921
+            ]
+          },
+          {
+            "gripper": "keep",
+            "max_steps": 50,
+            "observation_after": false,
+            "profile": "transit",
+            "quaternion_wxyz": null,
+            "skill": "move_to_pose",
+            "xyz_m": [
+              -0.35,
+              -0.138,
+              0.921
+            ]
+          },
+          {
+            "gripper": "keep",
+            "max_steps": 50,
+            "observation_after": false,
+            "profile": "transit",
+            "quaternion_wxyz": null,
+            "skill": "move_to_pose",
+            "xyz_m": [
+              -0.35,
+              -0.11,
+              0.921
+            ]
+          },
+          {
+            "gripper": "keep",
+            "max_steps": 50,
+            "observation_after": true,
+            "profile": "transit",
+            "quaternion_wxyz": null,
+            "skill": "move_to_pose",
+            "xyz_m": [
+              -0.35,
+              -0.082,
+              0.921
+            ]
+          }
+        ]
+      },
+      "motion": null,
+      "plan": "Approach A with the left arm, grasp and test attachment, place A in the bread-side slot, then place B in the opposite slot. Press and release the lever and return both arms to their recorded starting poses.",
+      "type": "execute",
+      "why": "Advance through visible free space toward the bread while retaining the current finger orientation and obtaining a closer wrist view before contact."
+    },
+    "progress": {
+      "arm_id": "left",
+      "completed_segment_indices": [],
+      "entry_tool_pose_wxyz": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999913976501,
+        -4.327419341247484e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ],
+      "executed_steps": 1,
+      "finger_gap_m": 0.08796598762273788,
+      "gripper_command": "open",
+      "last_tool_pose_wxyz": [
+        -0.30279812616449875,
+        -0.20031074523340459,
+        0.9188190583242831,
+        0.7068389708624226,
+        -0.0020379368372830256,
+        0.0018655081656151098,
+        0.7073690945771398
+      ],
+      "measurements": [
+        {
+          "finger_gap_m": 0.08796598762273788,
+          "finger_position_m": [
+            0.04398372769355774,
+            0.043982259929180145
+          ],
+          "orientation_error_rad": 0.005543818148826589,
+          "position_error_m": 0.024501487109586256,
+          "tool_pose_wxyz": [
+            -0.30279812616449875,
+            -0.20031074523340459,
+            0.9188190583242831,
+            0.7068389708624226,
+            -0.0020379368372830256,
+            0.0018655081656151098,
+            0.7073690945771398
+          ]
+        }
+      ],
+      "orientation_error_rad": 0.005543818148826589,
+      "pending_segment_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "position_error_m": 0.024501487109586256,
+      "reason": "ik_unavailable",
+      "skill": "move_to_pose",
+      "status": "blocked",
+      "target_tool_pose_wxyz": [
+        -0.32,
+        -0.183,
+        0.921,
+        0.7069999913976501,
+        -4.327419341247484e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    }
+  },
+  "feedback": {
+    "arm_id": "left",
+    "completed_segment_indices": [],
+    "entry_tool_pose_wxyz": [
+      -0.2995721783144178,
+      -0.20296483034976148,
+      0.9206460434844203,
+      0.7069999913976501,
+      -4.327419341247484e-08,
+      -6.000607587120324e-08,
+      0.7072135548501012
+    ],
+    "executed_steps": 1,
+    "finger_gap_m": 0.08796598762273788,
+    "gripper_command": "open",
+    "last_tool_pose_wxyz": [
+      -0.30279812616449875,
+      -0.20031074523340459,
+      0.9188190583242831,
+      0.7068389708624226,
+      -0.0020379368372830256,
+      0.0018655081656151098,
+      0.7073690945771398
+    ],
+    "measurements": [
+      {
+        "finger_gap_m": 0.08796598762273788,
+        "finger_position_m": [
+          0.04398372769355774,
+          0.043982259929180145
+        ],
+        "orientation_error_rad": 0.005543818148826589,
+        "position_error_m": 0.024501487109586256,
+        "tool_pose_wxyz": [
+          -0.30279812616449875,
+          -0.20031074523340459,
+          0.9188190583242831,
+          0.7068389708624226,
+          -0.0020379368372830256,
+          0.0018655081656151098,
+          0.7073690945771398
+        ]
+      }
+    ],
+    "orientation_error_rad": 0.005543818148826589,
+    "pending_segment_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "position_error_m": 0.024501487109586256,
+    "reason": "ik_unavailable",
+    "skill": "move_to_pose",
+    "status": "blocked",
+    "target_tool_pose_wxyz": [
+      -0.32,
+      -0.183,
+      0.921,
+      0.7069999913976501,
+      -4.327419341247484e-08,
+      -6.000607587120324e-08,
+      0.7072135548501012
+    ]
+  },
+  "images": {
+    "head": {
+      "bytes": 408056,
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/standard_attempt_001/worker/capture_000002/cam_head.png",
+      "sha256": "e45de444feb396529600d3ad72957ab09f2787051437cb8d63581a3b77228a94"
+    },
+    "left_wrist": {
+      "bytes": 361845,
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/standard_attempt_001/worker/capture_000002/cam_left_wrist.png",
+      "sha256": "6303483e313c18f5e42dc5687b3e4a46fe855f24ef13a25fce3eeae496af17e8"
+    },
+    "right_wrist": {
+      "bytes": 342966,
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/standard_attempt_001/worker/capture_000002/cam_right_wrist.png",
+      "sha256": "a961b23071b206f7704d55225d147d01b0b43cb697f5c86a1ebdb597ae29e567"
+    }
+  },
+  "robot": {
+    "left": {
+      "finger_gap_m": 0.08796598762273788,
+      "finger_position_m": [
+        0.04398372769355774,
+        0.043982259929180145
+      ],
+      "gripper_command": "open",
+      "joint_position_rad": [
+        0.044027090072631836,
+        0.044069137424230576,
+        -0.005058306735008955,
+        0.043602123856544495,
+        0.04357922077178955,
+        -1.4060026387596736e-06
+      ],
+      "joint_velocity_rad_s": [
+        0.8036719560623169,
+        0.8126762509346008,
+        -0.11571548134088516,
+        0.7108321785926819,
+        0.7105940580368042,
+        -0.000642104190774262
+      ],
+      "tool_pose_wxyz": [
+        -0.30279812616449875,
+        -0.20031074523340459,
+        0.9188190583242831,
+        0.7068389708624226,
+        -0.0020379368372830256,
+        0.0018655081656151098,
+        0.7073690945771398
+      ]
+    },
+    "right": {
+      "finger_gap_m": 0.08799941092729568,
+      "finger_position_m": [
+        0.04399970546364784,
+        0.04399970546364784
+      ],
+      "gripper_command": "open",
+      "joint_position_rad": [
+        1.5095566940556693e-12,
+        -1.6824199326376829e-15,
+        4.909580839204848e-16,
+        7.826956597730935e-16,
+        -1.713563752697711e-12,
+        -9.05858200950238e-12
+      ],
+      "joint_velocity_rad_s": [
+        2.6434440747458154e-10,
+        -5.5441728410900865e-14,
+        8.761649852905354e-14,
+        -1.4745218663691356e-13,
+        -1.0930675808928925e-10,
+        3.687621985548617e-09
+      ],
+      "tool_pose_wxyz": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999913976501,
+        -4.327419341247484e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    }
+  },
+  "step": 1
+}

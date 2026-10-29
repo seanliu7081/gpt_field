@@ -340,7 +340,17 @@ class NativeWorkerSession:
                         raise WorkerSessionError("native_rgb_capture_format_required")
                     picture.verify()
                 images[camera] = {"path": str(path), "sha256": file_sha256(path), "bytes": path.stat().st_size}
-            response["public"].update(images=images, calibration=validate_calibration(dict(capture.calibration)))
+            calibration = validate_calibration(dict(capture.calibration))
+            for arm in ARMS:
+                transform = np.asarray(calibration["tools"][arm]["link6_from_tool"], dtype=float)
+                offset = np.asarray(capture.measurement.arms[arm].tcp_offset_link6, dtype=float)
+                # Current ArmState/controller uses link6 orientation and a
+                # fixed translation. Public geometry must describe that same
+                # point/frame; schema validity alone does not establish this.
+                if (not np.allclose(transform[:3, :3], np.eye(3), atol=1e-9, rtol=0)
+                        or not np.allclose(transform[:3, 3], offset, atol=1e-9, rtol=0)):
+                    raise WorkerSessionError("tool_frame_control_mismatch")
+            response["public"].update(images=images, calibration=calibration)
             response["public"] = public_json(response["public"])
             return response
         if self.state != "RUNNING":

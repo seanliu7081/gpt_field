@@ -1,0 +1,31 @@
+{
+  "schema": "robodojo-private-runtime-path-fix-review-1",
+  "changed_programs": {
+    "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py": "b9b9aa8414ae8e052f83faf65c215dc8c74fccc2bec3a5834d5c73197b81b62e",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py": "81f8e2de848073dd5ebdde9b3ab8547630a39b4c2e96749d21e8190603e25caf"
+  },
+  "upstream_source_sha256": {
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/kit/kernel/config/kit-core.json": "34f44e3169839980fccb47194d18393c5b2c95f5f64ed283006d3325b165144f",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/tokens/_tokens.pyi": "84cd375838d33d8d937260213dda04bff6a6da24ad2ac2b82445c80892613550",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py": "7cbaa6f00e935a6f14bf1c28ec0db089fd924e931f3b0deee07a822f9b7d0090",
+    "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/third_party/IsaacLab/source/isaaclab/isaaclab/utils/logger.py": "1c800c9876973ced42850af89fba68676a920eda27cde94e254d454db32ad63e"
+  },
+  "documentation": [
+    "https://docs.omniverse.nvidia.com/kit/docs/kit-manual/107.3.0/guide/tokens.html#overriding-tokens",
+    "https://docs.omniverse.nvidia.com/kit/docs/kit-manual/107.3.0/guide/configuring.html#portable-mode"
+  ],
+  "checks": {
+    "existing_controller_tests_passed": 12,
+    "additional_uid65534_path_checks_passed": 8,
+    "complete_uid65534_preparation_passed": true,
+    "first_probe_analysis_closure_unchanged": true,
+    "attempt001_002_evidence_unchanged": true,
+    "only_two_authorized_programs_changed": true
+  },
+  "runtime_effective_tokens_checked": false,
+  "native_scene_reset_executed": false,
+  "simulator_starts": 0,
+  "diagnostic_native_actions": 0,
+  "full_test_authorized": false,
+  "limitations": "Only the next separately reviewed native launch can demonstrate effective live Kit tokens and native logging. The real guards record those paths before native reset and after reset respectively; synthetic resolver tests do not establish runtime success."
+}

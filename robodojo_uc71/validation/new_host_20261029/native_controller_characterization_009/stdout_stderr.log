@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py", line 760, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py", line 715, in main
+    auth = check_authorization(args.authorization, plan, binding, first_probe=prior,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py", line 231, in check_authorization
+    value = json.loads(path.read_text())
+                       ^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_009.json'

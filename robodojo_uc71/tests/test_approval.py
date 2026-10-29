@@ -1,11 +1,13 @@
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 import json
+import os
 
 import pytest
 
 from robodojo_uc71.approval import (ApprovalError, authorize, build_manifest,
     consume_authorization, file_sha256, verify_manifest)
+import robodojo_uc71.approval as approval_module
 
 
 def setup_case(tmp_path, *, reuse=False):
@@ -127,3 +129,80 @@ def test_copied_approval_cannot_start_another_output_directory(tmp_path):
     with pytest.raises(ApprovalError, match="directory differs"):
         approve(manifest, copied)
     assert not (copied / "consumed.json").exists()
+
+
+def test_manifest_file_hashes_are_cached_but_canonical_content_is_always_checked(tmp_path, monkeypatch):
+    _, manifest, _, _, _ = setup_case(tmp_path)
+    calls = []
+    def counted(path):
+        calls.append(str(path)); return file_sha256(path)
+    monkeypatch.setattr(approval_module, "file_sha256", counted)
+    monkeypatch.setattr(approval_module, "_manifest_file_cache", approval_module.VerifiedFileHashCache())
+    verify_manifest(manifest)
+    assert len(calls) == 2
+    verify_manifest(manifest); verify_manifest(manifest)
+    assert len(calls) == 2
+    manifest["configuration"]["native_limit"] = 1401
+    with pytest.raises(ApprovalError, match="Manifest content changed"):
+        verify_manifest(manifest)
+
+
+def test_manifest_cache_rejects_same_size_write_with_restored_mtime(tmp_path):
+    code, manifest, _, _, _ = setup_case(tmp_path)
+    verify_manifest(manifest)
+    before, expected = code.stat(), file_sha256(code)
+    code.write_bytes(code.read_bytes().replace(b"frozen", b"Frozen"))
+    os.utime(code, ns=(before.st_atime_ns, before.st_mtime_ns))
+    assert code.stat().st_size == before.st_size
+    assert file_sha256(code) != expected  # Public helper is still uncached.
+    with pytest.raises(ApprovalError, match="Bound file changed"):
+        verify_manifest(manifest)
+
+
+@pytest.mark.parametrize("same_bytes", [False, True])
+def test_inode_replacement_is_rehashed_even_with_identical_size_and_mtime(tmp_path, monkeypatch, same_bytes):
+    code, manifest, _, _, _ = setup_case(tmp_path)
+    verify_manifest(manifest)
+    before = code.stat()
+    replacement = tmp_path / "replacement"
+    content = code.read_bytes()
+    replacement.write_bytes(content if same_bytes else content.replace(b"frozen", b"Frozen"))
+    os.utime(replacement, ns=(before.st_atime_ns, before.st_mtime_ns))
+    replacement.replace(code)
+    calls = []
+    def counted(path):
+        calls.append(str(path)); return file_sha256(path)
+    monkeypatch.setattr(approval_module, "file_sha256", counted)
+    if same_bytes:
+        verify_manifest(manifest)
+    else:
+        with pytest.raises(ApprovalError, match="Bound file changed"):
+            verify_manifest(manifest)
+    assert calls == [str(code)]
+
+
+def test_pre_post_hash_stat_race_is_rejected_even_if_hasher_returns_expected_digest(tmp_path, monkeypatch):
+    code, manifest, _, _, _ = setup_case(tmp_path)
+    def raced(path):
+        digest = file_sha256(path)
+        if str(path) == str(code):
+            code.write_bytes(code.read_bytes().replace(b"frozen", b"Frozen"))
+        return digest
+    monkeypatch.setattr(approval_module, "file_sha256", raced)
+    monkeypatch.setattr(approval_module, "_manifest_file_cache", approval_module.VerifiedFileHashCache())
+    with pytest.raises(ApprovalError, match="changed during verification"):
+        verify_manifest(manifest)
+
+
+def test_forked_cache_identity_forces_first_full_hash(tmp_path, monkeypatch):
+    code, _, _, _, _ = setup_case(tmp_path)
+    cache = approval_module.VerifiedFileHashCache()
+    expected = file_sha256(code)
+    cache.verify(code, expected)
+    cache._pid = -1
+    calls = []
+    def counted(path):
+        calls.append(str(path)); return file_sha256(path)
+    monkeypatch.setattr(approval_module, "file_sha256", counted)
+    cache.verify(code, expected)
+    assert calls == [str(code)]

@@ -1,0 +1,14 @@
+{"phase": "cuda_identity_verified", "monotonic_s": 7603846.052961105}
+{"phase": "before_native_app_startup", "monotonic_s": 7603846.15490725}
+{"phase": "native_app_started", "monotonic_s": 7603964.424204235}
+{"phase": "private_runtime_paths_verified", "monotonic_s": 7603964.427497303}
+{"phase": "before_native_layout0_reset", "monotonic_s": 7603964.739049046}
+{"phase": "native_layout0_reset_returned", "monotonic_s": 7604043.440794077, "native_sim_step_calls": 800, "native_render_calls": 50}
+{"phase": "controller_action_recorded", "monotonic_s": 7604044.314861314, "native_action_index": 1, "stage_index": 0, "native_physics_time_s": 3.6040001711808145}
+{"phase": "controller_action_recorded", "monotonic_s": 7604046.274754498, "native_action_index": 10, "stage_index": 0, "native_physics_time_s": 3.964000188279897}
+{"phase": "controller_action_recorded", "monotonic_s": 7604048.485034334, "native_action_index": 20, "stage_index": 0, "native_physics_time_s": 4.3640002072788775}
+{"phase": "controller_stage_recorded", "monotonic_s": 7604049.034526834, "stage_index": 0, "label": "baseline_hold", "native_action_index": 20}
+{"phase": "controller_failed", "monotonic_s": 7604049.090745556, "error": {"type": "NativeActionObservationError", "message": "finite_native_joint_values_required", "traceback": "Traceback (most recent call last):\n  File \"/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py\", line 498, in run_controller_characterization\n    diagnostic = execute_stages(env, counters, output, plan, preparation, permitted, progress, verify_runtime)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py\", line 341, in execute_stages\n    accounting = observe_native_joint_action_once(env, action, verify_authorization=authorize)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py\", line 56, in observe_native_joint_action_once\n    action = clean_joint_action(action)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py\", line 29, in clean_joint_action\n    raise NativeActionObservationError(\"finite_native_joint_values_required\")\nrobodojo_uc71.native_action_observer.NativeActionObservationError: finite_native_joint_values_required\n"}}
+{"phase": "native_env_close_returned", "monotonic_s": 7604050.557666354}
+{"phase": "physx_monitor_shutdown_returned", "monotonic_s": 7604050.558007295}
+{"phase": "before_simulation_app_close", "monotonic_s": 7604050.561244501, "ready_for_shutdown": false}

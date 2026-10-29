@@ -1,0 +1,156 @@
+{
+  "schema": "robodojo-open-clearance-preview-design-1",
+  "status": "proposal_only_pending_candidate_and_source_review",
+  "production_files_changed": false,
+  "candidate_parameters_selected": false,
+  "execution_authorized": false,
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "model_calls": 0,
+  "candidate_binding": "Exact reviewed candidate artifact and SHA256, regenerated from recorded robot bases, tool axes and fixed source geometry.",
+  "schedule": [
+    {
+      "arm": "left",
+      "kind": "raise",
+      "native_actions": 25,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "left",
+      "kind": "clearance_translation_and_outward_yaw",
+      "native_actions": 40,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "left",
+      "kind": "return_open_to_raised_home_orientation",
+      "native_actions": 40,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "left",
+      "kind": "lower_open_to_home",
+      "native_actions": 25,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "right",
+      "kind": "raise",
+      "native_actions": 25,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "right",
+      "kind": "clearance_translation_and_outward_yaw",
+      "native_actions": 40,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "right",
+      "kind": "return_open_to_raised_home_orientation",
+      "native_actions": 40,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    },
+    {
+      "arm": "right",
+      "kind": "lower_open_to_home",
+      "native_actions": 25,
+      "both_gripper_commands": [
+        1.0,
+        1.0
+      ],
+      "RGB_after": true
+    }
+  ],
+  "maximum_native_actions": 260,
+  "maximum_physics_substeps": 2600,
+  "nominal_simulated_time_s": 10.4,
+  "maximum_wall_time_s": 900,
+  "RGB_count": 27,
+  "endpoint_RGB_stage_indices": [
+    1,
+    5
+  ],
+  "capture_contract": "Before plus each of8 stage boundaries: clean synchronized head/left-wrist/right-wrist RGB, raw robot measurement and camera calibration, all hashes, unchanged physics during capture.",
+  "operator_review": "No closing and no live wait. Root/operator reviews both endpoint image sets after clean exit. Later full characterization still requires its own fresh three-view gates.",
+  "code_proposal": {
+    "files": [
+      "scripts/prepare_controller_characterization.py",
+      "scripts/provision_controller_characterization.py",
+      "src/robodojo_uc71/controller_characterization.py"
+    ],
+    "explicit_mode": "--diagnostic-kind open-clearance-preview; default controller-characterization retains strict960.",
+    "bootstrap": "Reuse existing isolated UID65534 startup, private token/tmp/log paths, pinned manifests/dependencies, GPU identity, reset, monitor, stock-fast preclose and parent cleanup. No monkeypatching or fabricated lifecycle.",
+    "plan": "Separate strict8-stage preview builder/validator. Existing39-stage builder and960 gate stay unchanged until a separately reviewed full-plan revision.",
+    "authorization": "Distinct robodojo-open-clearance-preview-authorization-1 schema, exact260 ceiling, open-only flag, candidate/plan/program hashes, model/benchmark/full-test false. Disabled by default. Use a distinct preview child authorization environment flag; never interpret it as the full characterization flag.",
+    "dispatch": "Pass the validated per-mode ceiling explicitly. Enforce both actual ee arrays exactly[1.0] before every neutral observer call; reject all non-open commands before dispatch. Preserve all per-action lead/native/robot guards and ten-substep receipts. Recheck the actual normalized ee arrays inside the neutral observer authorization callback, not only during plan or command generation.",
+    "evidence": "Separate preview result/preclose schemas and filenames, clearance_preview_completed flag, controller_characterization_completed:false. Full parent/bundle validators must reject preview evidence. Distinct preview launch and preparation schemas as well as result and preclose schemas.",
+    "supervision": "Same PID/start-tick ownership, bounded deadline, no retries, no signals for passing exit, actual GPU release and before/after source hashes."
+  },
+  "unchanged_guards": {
+    "joint_home_rad": 0.35,
+    "tool_home_m": 0.065,
+    "orientation_home_rad": 0.12,
+    "joint_velocity_rad_s": 2.0,
+    "command_lead_rad": 0.05,
+    "inactive_hold_rad": 0.015,
+    "finger_limit_excess_m": 0.001
+  },
+  "required_tests": [
+    "Default full mode still requires39 stages/960 actions and rejects preview schemas/counts.",
+    "Preview admits exactly8 stages/260 actions and rejects any closing command or extra action.",
+    "Non-open command rejected at the final authorization/dispatch boundary before native action.",
+    "Scope/candidate hash changes fail closed; no policy/model/full-test authorization.",
+    "Parent verifies260 receipts/2600 substeps,27 images, isolation, preclose, GPU identities and release.",
+    "Existing controller characterization/supervision regressions still pass.",
+    "Last-five endpoint pose/open-finger conditions are required; drift or absent stability rejects preview without added actions."
+  ],
+  "limitations": [
+    "Numerical paths and image projections screen candidates; they do not prove collision/contact clearance.",
+    "Preview does not complete gripper timing or the960-action characterization.",
+    "No task success or Standard readiness claim."
+  ],
+  "supersedes": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_design_001/proposal.json",
+    "sha256": "b5f9e3eed5d85368ac9bb6d1d72b3d88c10a5446d0f4783cd41e89ce2e8e7a48"
+  },
+  "endpoint_acceptance": {
+    "last_measured_samples_required": 5,
+    "all5_position_errors_max_m": 0.002,
+    "all5_orientation_errors_max_rad": 0.02,
+    "both_arms_all5_finger_position_error_from_0_044_max_m": 0.001,
+    "require_both_actual_normalized_ee_arrays_exactly": [
+      1.0
+    ],
+    "extra_settling_actions_authorized": false,
+    "failure_behavior": "Preserve receipts and fail closed; no added wait/steps/retry."
+  }
+}

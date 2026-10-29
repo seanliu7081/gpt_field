@@ -12,6 +12,8 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
+import time
 import uuid
 
 
@@ -34,6 +36,60 @@ def file_sha256(path: str | Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+class VerifiedFileHashCache:
+    """Cryptographically verify once per unchanged regular-file identity.
+
+    Evidence/code is protected from the unprivileged worker. Cache reuse requires
+    the same device, inode, size, mtime_ns and ctime_ns. A metadata change forces
+    hashing, including after same-size writes with restored mtime. A new cache
+    entry requires ctime at least one second old: this host's roughly 4ms kernel
+    timestamp ticks can otherwise hide an immediate same-size write. First
+    verification waits at most 1.25s for metadata to settle, then fails closed.
+    Pre/post stat disagreement rejects hashing races. This does not defend against privileged
+    host access rewriting file data and kernel metadata together. Public
+    file_sha256 remains uncached. A forked child starts with an empty cache.
+    """
+    def __init__(self):
+        self._pid = os.getpid()
+        self._records = {}
+
+    def verify(self, filename, expected):
+        if self._pid != os.getpid():
+            self._records.clear()
+            self._pid = os.getpid()
+        _digest(expected, "bound file")
+        try:
+            path = Path(filename)
+            if not path.is_absolute() or path.resolve(strict=True) != path:
+                raise ApprovalError("Bound file must be canonical and nonsymlinked")
+            def identity():
+                s = path.lstat()
+                if not stat.S_ISREG(s.st_mode):
+                    raise ApprovalError("Bound file must remain regular")
+                return s.st_dev, s.st_ino, s.st_size, s.st_mtime_ns, s.st_ctime_ns
+            before = identity()
+            cached = self._records.get(str(path))
+            if cached is None or cached[0] != before:
+                deadline = time.monotonic() + 1.25
+                while time.time_ns() - before[4] < 1_000_000_000:
+                    if time.monotonic() >= deadline:
+                        raise ApprovalError("Bound file metadata did not stabilize")
+                    time.sleep(.05)
+                    before = identity()
+                digest = file_sha256(path)
+                if identity() != before or path.resolve(strict=True) != path:
+                    raise ApprovalError("Bound file changed during verification")
+                cached = (before, digest)
+                self._records[str(path)] = cached
+            if cached[1] != expected:
+                raise ApprovalError("Bound file changed")
+        except (OSError, TypeError, ValueError) as error:
+            raise ApprovalError("Bound file unavailable") from error
+
+
+_manifest_file_cache = VerifiedFileHashCache()
 
 
 def _digest(value: object, name: str) -> str:
@@ -115,12 +171,7 @@ def verify_manifest(manifest: Mapping, *, verify_files: bool = True) -> None:
         raise ApprovalError("Manifest content changed")
     if verify_files:
         for entry in manifest["files"].values():
-            try:
-                actual = file_sha256(entry["path"])
-            except (OSError, ValueError) as error:
-                raise ApprovalError("Bound file unavailable") from error
-            if actual != entry["sha256"]:
-                raise ApprovalError("Bound file changed")
+            _manifest_file_cache.verify(entry["path"], entry["sha256"])
 
 
 def authorize(manifest: Mapping, attempt_dir: str | Path, *, user_message: str,

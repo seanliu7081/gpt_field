@@ -47,13 +47,38 @@ def _physical_offset(geometry):
     return transform[:3, 3]
 
 
-def build_controller_probe_proposal(fixed_probe_plan_path):
-    """Build a fixed 1040-action maximum proposal; it grants no execution."""
+def _base_outward_directions(inventory):
+    """Horizontal directions away from the two recorded robot bases' midpoint."""
+    bases = {}
+    for robot in inventory["robots"]:
+        arm = {"left_arm": "left", "right_arm": "right"}[robot["arm_name"]]
+        pose = np.asarray(robot["root_link_pose_w"]["values"], float)
+        if arm in bases or pose.shape != (1, 7) or not np.isfinite(pose).all():
+            raise ValueError("Two finite recorded robot base poses required")
+        bases[arm] = pose[0, :3]
+    if set(bases) != set(ARMS):
+        raise ValueError("Both recorded robot bases required")
+    midpoint = (bases["left"]+bases["right"])/2
+    directions = {}
+    for arm in ARMS:
+        direction = bases[arm]-midpoint
+        direction[2] = 0.
+        norm = np.linalg.norm(direction)
+        if norm <= 1e-6:
+            raise ValueError("Distinct horizontal robot base positions required")
+        directions[arm] = direction/norm
+    return directions
+
+
+def build_controller_probe_proposal(fixed_probe_plan_path, *, clearance_preview_path=None,
+                                    clearance_visual_review_path=None, clearance_geometry_review_path=None):
+    """Build the reviewed 960-action proposal; it grants no execution."""
     fixed_path = Path(fixed_probe_plan_path).resolve(strict=True)
     fixed = json.loads(fixed_path.read_text()); validate_probe_plan(fixed)
     inventory = json.loads(Path(fixed["initial_inventory_path"]).read_text())
     geometry = json.loads(Path(fixed["geometry_candidate_path"]).read_text())
     offset = _physical_offset(geometry)
+    outward = _base_outward_directions(inventory)
     home = {}
     for robot in inventory["robots"]:
         arm = {"left_arm": "left", "right_arm": "right"}[robot["arm_name"]]
@@ -62,7 +87,7 @@ def build_controller_probe_proposal(fixed_probe_plan_path):
                      "joint_positions": fixed["initial"][arm]["joint_positions"]}
     stages = []
     candidate = ControllerConfig(transit_translation_speed_m_s=.2, contact_translation_speed_m_s=.05,
-        angular_speed_rad_s=1., joint_target_lead_rad=.05, damping=.02)
+        angular_speed_rad_s=.5, joint_target_lead_rad=.05, damping=.02)
 
     def stage(label, arm, kind, count, position=None, quaternion=None, profile="transit", speed=None, angular=None, grip=1.):
         config = asdict(candidate)
@@ -84,7 +109,7 @@ def build_controller_probe_proposal(fixed_probe_plan_path):
                           target.tolist(), q, profile, speed)
         raised = p+[0., 0., .03]
         stage(f"{arm}_orientation_raise", arm, "translation", 25, raised.tolist(), q, speed=.1)
-        for angular in (.5, 1.):
+        for angular in (.5,):
             for suffix, target_q in (("pulse", _world_z_rotation(q, .08)), ("return", q)):
                 stage(f"{arm}_worldZ_rotation_{angular}_{suffix}", arm, "orientation", 20,
                       raised.tolist(), target_q, angular=angular)
@@ -94,7 +119,8 @@ def build_controller_probe_proposal(fixed_probe_plan_path):
     for arm in ARMS:
         p = np.asarray(home[arm]["tool_pose_wxyz"][:3]); q = home[arm]["tool_pose_wxyz"][3:]
         raised = p+[0., 0., .03]
-        retreated = raised - .04*_rotation(q)[:, 0]
+        # Root-reviewed generic clearance: 15mm away from the robot-base midpoint.
+        retreated = raised - .025*_rotation(q)[:, 0] + .015*outward[arm]
         stage(f"{arm}_gripper_raise", arm, "translation", 25, raised.tolist(), q, speed=.1)
         stage(f"{arm}_generic_negative_toolX_retreat", arm, "translation", 40,
               retreated.tolist(), q, "contact", .05)
@@ -105,8 +131,9 @@ def build_controller_probe_proposal(fixed_probe_plan_path):
               raised.tolist(), q, "contact", .05)
         stage(f"{arm}_gripper_lower_open", arm, "translation", 25, p.tolist(), q, speed=.1)
     total = sum(row["native_actions"] for row in stages)
-    if total != 1040 or total >= 1400: raise ValueError("Unexpected diagnostic action ceiling")
-    return {"schema": "robodojo-controller-characterization-proposal-1", "scope": "diagnostic_native_actions",
+    if total != 960 or len(stages) != 39 or total >= 1400:
+        raise ValueError("Unexpected diagnostic action/stage ceiling")
+    proposal = {"schema": "robodojo-controller-characterization-proposal-1", "scope": "diagnostic_native_actions",
         "fixed_probe_plan_path": str(fixed_path), "fixed_probe_plan_file_sha256": file_hash(fixed_path),
         "geometry_candidate_path": fixed["geometry_candidate_path"], "source_sha256": fixed["source_sha256"],
         "binding": fixed["binding"], "home": home, "stages": stages,
@@ -140,11 +167,207 @@ def build_controller_probe_proposal(fixed_probe_plan_path):
             "Empty-gripper timing requires a fresh visual clearance determination at the declared retreat",
             "A failed higher-speed candidate does not authorize tuning or rerunning it",
             "The real FragmentExecutor remains approval-gated; this proposal uses only its DualArmController primitive"]}
+    paths = (clearance_preview_path, clearance_visual_review_path, clearance_geometry_review_path)
+    if any(path is not None for path in paths):
+        if not all(path is not None for path in paths):
+            raise ValueError("Completed preview, actual visual review and geometry analysis are all required")
+        _apply_completed_clearance_preview(proposal, *paths)
+    return proposal
 
 
 def validate_controller_probe_proposal(plan):
-    if plan != build_controller_probe_proposal(plan["fixed_probe_plan_path"]):
+    basis = plan.get("clearance_preview_basis")
+    options = {} if basis is None else {
+        "clearance_preview_path": basis["launch_result"]["path"],
+        "clearance_visual_review_path": basis["visual_review"]["path"],
+        "clearance_geometry_review_path": basis["geometry_analysis"]["path"]}
+    if plan != build_controller_probe_proposal(plan["fixed_probe_plan_path"], **options):
         raise ValueError("Controller diagnostic proposal differs from its fixed robot-only sources")
+
+
+def _apply_completed_clearance_preview(proposal, launch_path, visual_path, geometry_path):
+    """Change only the fixed clearance poses/envelope using completed open evidence.
+
+    These records support a new diagnostic proposal. Its independent fresh image
+    gates remain mandatory before either gripper closes.
+    """
+    launch_path, visual_path, geometry_path = (Path(p).resolve(strict=True)
+                                               for p in (launch_path, visual_path, geometry_path))
+    launch, visual, geometry = (json.loads(p.read_text()) for p in (launch_path, visual_path, geometry_path))
+    expected = {"schema": "robodojo-open-clearance-preview-launch-1", "clearance_preview_completed": True,
+        "controller_characterization_completed": False, "diagnostic_completed": False,
+        "diagnostic_native_actions": 260, "diagnostic_physics_substeps": 2600,
+        "open_only_actions_verified": True, "stable_open_endpoints_verified": True,
+        "bindings_unchanged_after_clearance_preview": True, "clean_shutdown_confirmed": True,
+        "gpu_processes_released": True, "gpu_memory_released": True, "returncode": 0,
+        "termination_signals": [], "remaining_owned_pids": [], "benchmark_attempt_started": False,
+        "full_test_authorized": False, "model_calls": 0}
+    if (any(type(launch.get(k)) is not type(v) or launch.get(k) != v for k, v in expected.items())
+            or "evidence_validation_error" in launch or "cleanup_error" in launch or "termination" in launch):
+        raise ValueError("A completed clean open-only preview is required for revised clearance")
+    argv = launch["argv"]
+    child = Path(argv[argv.index("--output")+1]).resolve(strict=True)
+    preview_path = Path(argv[argv.index("--plan")+1]).resolve(strict=True)
+    if child != launch_path.parent/"worker/controller":
+        raise ValueError("Unexpected completed preview child location")
+    preview = json.loads(preview_path.read_text())
+    validate_open_clearance_preview_proposal(preview)
+    result_path = child/"clearance_preview_result.json"
+    result = json.loads(result_path.read_text())
+    if (file_hash(result_path) != launch.get("clearance_preview_result_sha256")
+            or content_hash(preview) != launch.get("plan_sha256")
+            or file_hash(preview_path) != launch.get("plan_file_sha256")
+            or result.get("plan_sha256") != content_hash(preview)
+            or result.get("candidate") != preview["candidate"]
+            or preview["fixed_probe_plan_file_sha256"] != proposal["fixed_probe_plan_file_sha256"]
+            or preview["binding"] != proposal["binding"]):
+        raise ValueError("Completed preview does not bind this exact robot plan/candidate")
+    # Verify the original program bytes through the actual run's snapshots. An
+    # authorized later helper edit must not rewrite historical program evidence.
+    for original, expected_hash in launch["source_file_sha256"].items():
+        if file_hash(launch_path.parent/"scripts_snapshot"/Path(original).name) != expected_hash:
+            raise ValueError("Completed preview program snapshot changed")
+    launch_ref = {"path": str(launch_path), "sha256": file_hash(launch_path)}
+    expected_visual_sources = [launch_ref]
+    for index in (1, 5):
+        for image in result["stages"][index]["capture"]["images"]:
+            path = (child/image["path"]).resolve(strict=True)
+            if (not path.is_relative_to(child/f"stage_{index:03d}")
+                    or file_hash(path) != image["sha256"]):
+                raise ValueError("Actual preview endpoint RGB binding changed")
+            expected_visual_sources.append({"path": str(path), "sha256": image["sha256"]})
+    if (visual.get("schema") != "robodojo-open-clearance-visual-review-1"
+            or visual.get("reviewer") != "root" or visual.get("all_six_actual_endpoint_images_viewed") is not True
+            or visual.get("supports_candidate_for_fresh_characterization") is not True
+            or visual.get("full_test_authorized") is not False
+            or visual.get("controller_characterization_completed") is not False
+            or visual.get("model_calls") != 0 or visual.get("source_files") != expected_visual_sources
+            or len(expected_visual_sources) != 7):
+        raise ValueError("Root review of the exact six actual endpoint RGBs is required")
+    geometry_expected = {"schema": "robodojo-native-open-preview-geometry-analysis-1",
+        "geometry_and_endpoints_passed": True, "native_actions_analyzed": 260, "arm_pose_checks": 1058,
+        "thresholds_unchanged_from_predeclared37_action_analysis": True,
+        "all260_actual_commands_both_grippers_open": True, "native_clearance_approved_by_this_analysis": False,
+        "gripper_timing_validated": False, "full_controller_characterization_completed": False,
+        "full_test_authorized": False, "standard_ready": False, "model_calls": 0}
+    sources = geometry.get("source_files")
+    if (any(type(geometry.get(k)) is not type(v) or geometry.get(k) != v for k, v in geometry_expected.items())
+            or geometry.get("source_launch_result") != launch_ref
+            or not isinstance(sources, list) or not sources
+            or any(set(row) != {"path", "sha256"} or file_hash(row["path"]) != row["sha256"] for row in sources)):
+        raise ValueError("Independent actual-preview geometry/endpoint evidence is required")
+    if (proposal["candidate_controller"] != preview["candidate_controller"]
+            or {**preview["candidate_abort_envelopes"], "joint_distance_from_home_rad": .35}
+               != proposal["candidate_abort_envelopes"]):
+        raise ValueError("Preview cannot change controller parameters or unrelated diagnostic guards")
+    for arm, index in (("left", 0), ("right", 4)):
+        # The full plan retains its fixed raise/return/lower targets and counts.
+        # Require the preview to have measured these same physical endpoints.
+        for suffix, preview_index in (("gripper_raise", index), ("return_from_retreat_open", index+2),
+                                       ("gripper_lower_open", index+3)):
+            stage = next(s for s in proposal["stages"] if s["label"] == f"{arm}_{suffix}")
+            a, b = stage["target_tool_pose_wxyz"], preview["stages"][preview_index]["target_tool_pose_wxyz"]
+            if (not np.allclose(a[:3], b[:3], atol=1e-12, rtol=0)
+                    or not np.allclose(_rotation(a[3:]), _rotation(b[3:]), atol=1e-12, rtol=0)):
+                raise ValueError("Preview raise/return/lower differs from the fixed full diagnostic")
+        endpoint = preview["stages"][index+1]["target_tool_pose_wxyz"]
+        for stage in proposal["stages"]:
+            if stage["label"] in {f"{arm}_{suffix}" for suffix in
+                    ("generic_negative_toolX_retreat", "visual_clearance_checkpoint", "gripper_close", "gripper_open")}:
+                stage["target_tool_pose_wxyz"] = list(endpoint)
+    proposal["candidate_abort_envelopes"] = dict(preview["candidate_abort_envelopes"])
+    proposal["clearance_preview_basis"] = {"launch_result": launch_ref,
+        "preview_plan": {"path": str(preview_path), "sha256": file_hash(preview_path)},
+        "candidate": preview["candidate"],
+        "visual_review": {"path": str(visual_path), "sha256": file_hash(visual_path)},
+        "geometry_analysis": {"path": str(geometry_path), "sha256": file_hash(geometry_path)},
+        "future_fresh_three_view_gates_required": True, "closing_authorized_by_preview": False,
+        "full_test_authorized": False}
+
+
+def build_open_clearance_preview_proposal(fixed_probe_plan_path, candidate_path):
+    """Regenerate one separately authorized, strictly open-only 260-action plan."""
+    candidate_path = Path(candidate_path).resolve(strict=True)
+    candidate = json.loads(candidate_path.read_text())
+    keys = {"schema", "parameters", "fixed_probe_plan_file_sha256", "source_files", "joint_home_excursion_rad",
+            "native_execution_authorized", "full_test_authorized", "model_calls", "selection_basis"}
+    if (set(candidate) != keys or candidate["schema"] != "robodojo-open-clearance-candidate-1"
+            or candidate["native_execution_authorized"] is not False
+            or candidate["full_test_authorized"] is not False
+            or type(candidate["joint_home_excursion_rad"]) is not float
+            or candidate["joint_home_excursion_rad"] not in (.35, .50)
+            or type(candidate["model_calls"]) is not int or candidate["model_calls"] != 0
+            or not isinstance(candidate["selection_basis"], str) or not candidate["selection_basis"].strip()):
+        raise ValueError("Exact robot-only preview candidate with no execution authority required")
+    parameters = candidate["parameters"]
+    names = {"lift_m", "negative_tool_x_retreat_m", "outward_m", "outward_yaw_rad"}
+    if (not isinstance(parameters, dict) or set(parameters) != names
+            or any(type(v) not in (int, float) or not np.isfinite(v) or v < 0 for v in parameters.values())
+            or any(parameters[k] > .065 for k in names-{ "outward_yaw_rad" })
+            or parameters["outward_yaw_rad"] > .12):
+        raise ValueError("Finite bounded generic clearance parameters required")
+    sources = candidate["source_files"]
+    if (not isinstance(sources, list) or not sources
+            or any(not isinstance(row, dict) or set(row) != {"path", "sha256"}
+                   or file_hash(row["path"]) != row["sha256"] for row in sources)):
+        raise ValueError("Preview candidate evidence binding changed")
+    plan = build_controller_probe_proposal(fixed_probe_plan_path)
+    # This is an explicit candidate-bound preview envelope. The full builder and
+    # its accepted 39-stage proposal retain 0.35rad; no default/global is changed.
+    plan["candidate_abort_envelopes"]["joint_distance_from_home_rad"] = candidate["joint_home_excursion_rad"]
+    if candidate["fixed_probe_plan_file_sha256"] != plan["fixed_probe_plan_file_sha256"]:
+        raise ValueError("Preview candidate belongs to another initial robot state")
+    fixed = json.loads(Path(plan["fixed_probe_plan_path"]).read_text())
+    inventory = json.loads(Path(fixed["initial_inventory_path"]).read_text())
+    outward = _base_outward_directions(inventory)
+    stages = []
+    for arm in ARMS:
+        p = np.asarray(plan["home"][arm]["tool_pose_wxyz"][:3])
+        q = np.asarray(plan["home"][arm]["tool_pose_wxyz"][3:])
+        q = q/np.linalg.norm(q)
+        tool_x = _rotation(q)[:, 0]
+        raised = p+[0., 0., parameters["lift_m"]]
+        endpoint = raised-parameters["negative_tool_x_retreat_m"]*tool_x+parameters["outward_m"]*outward[arm]
+        if np.linalg.norm(endpoint-p) > plan["candidate_abort_envelopes"]["tool_distance_from_home_m"]:
+            raise ValueError("Preview endpoint exceeds the unchanged tool envelope")
+        yaw_direction = float(np.dot(np.cross([0., 0., 1.], tool_x), outward[arm]))
+        if parameters["outward_yaw_rad"] and abs(yaw_direction) < 1e-8:
+            raise ValueError("Initial robot geometry does not define an outward world-Z yaw")
+        yaw_sign = float(np.sign(yaw_direction))
+        end_q = _world_z_rotation(q, yaw_sign*parameters["outward_yaw_rad"])
+        for label, target, quaternion, count, profile, speed in (
+                ("raise", raised, q, 25, "transit", .1),
+                ("endpoint", endpoint, end_q, 40, "contact", .05),
+                ("return_from_retreat_open", raised, q, 40, "contact", .05),
+                ("lower_open", p, q, 25, "transit", .1)):
+            config = dict(plan["candidate_controller"])
+            config[profile+"_translation_speed_m_s"] = speed
+            stages.append({"index": len(stages), "label": f"{arm}_clearance_preview_{label}",
+                "active_arm": arm, "kind": "translation", "native_actions": count,
+                "target_tool_pose_wxyz": [*target.tolist(), *list(quaternion)],
+                "profile": profile, "controller_config": config,
+                "active_gripper_command": 1., "other_gripper_command": 1.,
+                "rgb_checkpoint_after": True, "operator_clearance_required_before": False})
+    plan.update(schema="robodojo-open-clearance-preview-proposal-1",
+        diagnostic_kind="open-clearance-preview", stages=stages, maximum_native_actions=260,
+        maximum_physics_substeps=2600, maximum_simulated_time_s=10.4,
+        candidate={"path": str(candidate_path), "sha256": file_hash(candidate_path)},
+        open_only=True, operator_review_after_exit=True,
+        endpoint_validation={"samples": 5, "position_tolerance_m": .002,
+            "orientation_tolerance_rad": .02, "open_finger_tolerance_m": .001, "extra_settling_actions": 0},
+        controller_characterization_completed=False,
+        limitations=["Open-only endpoint preview; no closing, policy or benchmark execution",
+            "Candidate numerics and projections do not establish contact or collision clearance",
+            "Every endpoint must pass its fixed last-five-state pose/open-finger checks without extra actions",
+            "The later full characterization still requires 39 stages, 960 actions and fresh visual gates"])
+    plan.pop("visual_clearance_checkpoint")
+    return plan
+
+
+def validate_open_clearance_preview_proposal(plan):
+    if (plan.get("schema") != "robodojo-open-clearance-preview-proposal-1"
+            or plan != build_open_clearance_preview_proposal(plan["fixed_probe_plan_path"], plan["candidate"]["path"])):
+        raise ValueError("Open-only preview proposal differs from its exact robot-only candidate")
 
 
 def physical_arm_states(measurement, geometry):
@@ -184,7 +407,8 @@ def stage_joint_command(stage, controller, states):
     pose = stage["target_tool_pose_wxyz"]
     result = controller.command(states, pose[:3], pose[3:], profile=stage["profile"],
                                 gripper_commands={stage["active_arm"]: stage["active_gripper_command"]})
-    action = {f"{arm}_arm_joint_state": list(result.joint_positions[arm]) for arm in ARMS}
+    # The native boundary accepts exact built-in numbers, not NumPy scalars.
+    action = {f"{arm}_arm_joint_state": [float(value) for value in result.joint_positions[arm]] for arm in ARMS}
     action.update({f"{arm}_ee_joint_state": [result.gripper_commands[arm]] for arm in ARMS})
     return action, asdict(result.active_result)
 

@@ -1,0 +1,20 @@
+{
+  "arm_id": "left",
+  "belief": "Retraction also stopped after one control step. The left hand moved downward but did not track the requested translation; there is still clear separation from the bread. This suggests a local controller/IK limitation rather than object obstruction.",
+  "execution": null,
+  "motion": {
+    "frame": "world",
+    "gripper": "keep",
+    "position_mode": "relative",
+    "quaternion_wxyz": null,
+    "steps": 5,
+    "xyz_m": [
+      0.0,
+      0.003,
+      0.0
+    ]
+  },
+  "plan": "Test a very small pure forward displacement with direct monitored motion before selecting another continuous approach.",
+  "type": "motion",
+  "why": "The 3 mm single-axis target isolates whether small forward motion is feasible without combining translation axes."
+}

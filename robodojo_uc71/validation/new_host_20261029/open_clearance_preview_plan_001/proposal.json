@@ -1,0 +1,375 @@
+{
+  "automatic_retry": false,
+  "automatic_tuning": false,
+  "benchmark_attempt_started": false,
+  "binding": {
+    "cuda_ordinal": 0,
+    "gpu_uuid": "GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2",
+    "kit_index": 0,
+    "pci_bus_id": "0000:01:00.0"
+  },
+  "calibration_passed": false,
+  "candidate": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_plan_001/candidate.json",
+    "sha256": "a8519ba2d63f5698902d4b3626df9ec33bf56205551a9a36b179e5268edefc9b"
+  },
+  "candidate_abort_envelopes": {
+    "inactive_joint_distance_from_latched_hold_rad": 0.015,
+    "joint_distance_from_home_rad": 0.5,
+    "measured_joint_velocity_rad_s": 2.0,
+    "observed_finger_limit_excess_m": 0.001,
+    "tool_distance_from_home_m": 0.065,
+    "tool_orientation_from_home_rad": 0.12
+  },
+  "candidate_controller": {
+    "angular_speed_rad_s": 0.5,
+    "calibration_status": "uncalibrated_candidate",
+    "contact_translation_speed_m_s": 0.05,
+    "control_hz": 25.0,
+    "damping": 0.02,
+    "joint_target_lead_rad": 0.05,
+    "transit_translation_speed_m_s": 0.2
+  },
+  "control_hz": 25,
+  "controller_characterization_completed": false,
+  "diagnostic_kind": "open-clearance-preview",
+  "endpoint_validation": {
+    "extra_settling_actions": 0,
+    "open_finger_tolerance_m": 0.001,
+    "orientation_tolerance_rad": 0.02,
+    "position_tolerance_m": 0.002,
+    "samples": 5
+  },
+  "execution_authorized": false,
+  "fixed_probe_plan_file_sha256": "83a983ed13229295a141380bce1931771d89d5ed0e9b5c95b664027bc8deca03",
+  "fixed_probe_plan_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_characterization_plan_001/plan.json",
+  "full_test_authorized": false,
+  "geometry_candidate_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+  "home": {
+    "left": {
+      "joint_positions": [
+        3.316730841796539e-13,
+        -6.916448589596173e-16,
+        5.2023483144770895e-17,
+        3.71725173462878e-16,
+        -5.522293776774601e-13,
+        2.4330637331260174e-12
+      ],
+      "tool_pose_wxyz": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999575614929,
+        -4.327419134142474e-08,
+        -6.000607299938565e-08,
+        0.7072135210037231
+      ]
+    },
+    "right": {
+      "joint_positions": [
+        3.316735178605229e-13,
+        -6.9164867060788e-16,
+        5.203013367689582e-17,
+        3.7173173796821923e-16,
+        -5.522291608370256e-13,
+        2.4330689372964454e-12
+      ],
+      "tool_pose_wxyz": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999575614929,
+        -4.327419134142474e-08,
+        -6.000607299938565e-08,
+        0.7072135210037231
+      ]
+    }
+  },
+  "limitations": [
+    "Open-only endpoint preview; no closing, policy or benchmark execution",
+    "Candidate numerics and projections do not establish contact or collision clearance",
+    "Every endpoint must pass its fixed last-five-state pose/open-finger checks without extra actions",
+    "The later full characterization still requires 39 stages, 960 actions and fresh visual gates"
+  ],
+  "maximum_native_actions": 260,
+  "maximum_physics_substeps": 2600,
+  "maximum_simulated_time_s": 10.4,
+  "model_calls": 0,
+  "native_gripper_contract": {
+    "close_normalized": 0.0,
+    "finger_sum_semantics": "joint-separation proxy; not physical inner-pad clearance or grasp success",
+    "native_close_target_m": -0.01,
+    "native_open_target_m": 0.044,
+    "open_normalized": 1.0,
+    "recorded_physical_limits_m": [
+      0.0,
+      0.044
+    ],
+    "target_clipping_or_replacement": false
+  },
+  "open_only": true,
+  "operator_review_after_exit": true,
+  "physics_dt_s": 0.004,
+  "required_before_execution": [
+    "Separate source-bound diagnostic scope; no benchmark approval is consumed",
+    "Successful fixed37 native accounting and reviewed multi-pose FK/Jacobian evidence",
+    "Synchronized physical-tool measurements bound to the exact geometry candidate",
+    "Fresh setup home joints and tool poses must match recorded initial state",
+    "Per-action authorization, native accounting, physics monitor and bounded parent supervision"
+  ],
+  "schema": "robodojo-open-clearance-preview-proposal-1",
+  "scope": "diagnostic_native_actions",
+  "source_sha256": {
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/preparation.json": "290a4ff27e473fb0613728597ab20f160e63d15dbcca002d536de51c004f0d47",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/robot_inventory.json": "716612770f6e9c2eb9e337296ef47de10cbc54769dfb0fd8abb8c58c8a6e2b9d",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+  },
+  "stages": [
+    {
+      "active_arm": "left",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.1
+      },
+      "index": 0,
+      "kind": "translation",
+      "label": "left_clearance_preview_raise",
+      "native_actions": 25,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "transit",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9506460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    },
+    {
+      "active_arm": "left",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.2
+      },
+      "index": 1,
+      "kind": "translation",
+      "label": "left_clearance_preview_endpoint",
+      "native_actions": 40,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "contact",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        -0.32456009734132013,
+        -0.24296482852538756,
+        0.9506460425388044,
+        0.6781534676276243,
+        -4.083997565217059e-08,
+        -6.168858359284151e-08,
+        0.7349203183642585
+      ]
+    },
+    {
+      "active_arm": "left",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.2
+      },
+      "index": 2,
+      "kind": "translation",
+      "label": "left_clearance_preview_return_from_retreat_open",
+      "native_actions": 40,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "contact",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9506460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    },
+    {
+      "active_arm": "left",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.1
+      },
+      "index": 3,
+      "kind": "translation",
+      "label": "left_clearance_preview_lower_open",
+      "native_actions": 25,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "transit",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        -0.2995721783144178,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    },
+    {
+      "active_arm": "right",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.1
+      },
+      "index": 4,
+      "kind": "translation",
+      "label": "right_clearance_preview_raise",
+      "native_actions": 25,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "transit",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9506460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    },
+    {
+      "active_arm": "right",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.2
+      },
+      "index": 5,
+      "kind": "translation",
+      "label": "right_clearance_preview_endpoint",
+      "native_actions": 40,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "contact",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        0.3254399265005378,
+        -0.24296482852538756,
+        0.9506460425388044,
+        0.7347154660000607,
+        -4.563918169465473e-08,
+        -5.822757122878451e-08,
+        0.6783754005123623
+      ]
+    },
+    {
+      "active_arm": "right",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.2
+      },
+      "index": 6,
+      "kind": "translation",
+      "label": "right_clearance_preview_return_from_retreat_open",
+      "native_actions": 40,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "contact",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9506460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    },
+    {
+      "active_arm": "right",
+      "active_gripper_command": 1.0,
+      "controller_config": {
+        "angular_speed_rad_s": 0.5,
+        "calibration_status": "uncalibrated_candidate",
+        "contact_translation_speed_m_s": 0.05,
+        "control_hz": 25.0,
+        "damping": 0.02,
+        "joint_target_lead_rad": 0.05,
+        "transit_translation_speed_m_s": 0.1
+      },
+      "index": 7,
+      "kind": "translation",
+      "label": "right_clearance_preview_lower_open",
+      "native_actions": 25,
+      "operator_clearance_required_before": false,
+      "other_gripper_command": 1.0,
+      "profile": "transit",
+      "rgb_checkpoint_after": true,
+      "target_tool_pose_wxyz": [
+        0.3004278455274401,
+        -0.20296483034976148,
+        0.9206460434844203,
+        0.7069999913976501,
+        -4.327419341247485e-08,
+        -6.000607587120324e-08,
+        0.7072135548501012
+      ]
+    }
+  ],
+  "standard_ready": false,
+  "tool_offset_link6_m": [
+    0.1493350448975541,
+    -1.9999999999985307e-06,
+    -0.0008539872259297808
+  ]
+}

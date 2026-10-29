@@ -1,0 +1,25 @@
+{
+  "arm_id": "left",
+  "belief": "The smaller approach also encountered an IK failure after limited motion. The arm is still near its straight starting configuration, with no contact; forward reach at the retained orientation may be locally infeasible.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 120,
+        "observation_after": true,
+        "profile": "transit",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          -0.018,
+          -0.018
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "First retract and lower slightly in empty space to establish a bent-arm configuration, then resume the bread approach using measured reachability.",
+  "type": "execute",
+  "why": "A backward/downward waypoint reduces extension instead of asking for additional forward reach from the near-straight configuration."
+}

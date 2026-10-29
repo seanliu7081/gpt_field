@@ -1,0 +1,247 @@
+{
+  "all_counts_bounds_speeds_grippers_profiles_and_other_fields_unchanged": true,
+  "changed_stage_target_positions_only": [
+    {
+      "index": 26,
+      "label": "left_generic_negative_toolX_retreat",
+      "native_actions": 40
+    },
+    {
+      "index": 27,
+      "label": "left_visual_clearance_checkpoint",
+      "native_actions": 0
+    },
+    {
+      "index": 28,
+      "label": "left_gripper_close",
+      "native_actions": 25
+    },
+    {
+      "index": 29,
+      "label": "left_gripper_open",
+      "native_actions": 25
+    },
+    {
+      "index": 33,
+      "label": "right_generic_negative_toolX_retreat",
+      "native_actions": 40
+    },
+    {
+      "index": 34,
+      "label": "right_visual_clearance_checkpoint",
+      "native_actions": 0
+    },
+    {
+      "index": 35,
+      "label": "right_gripper_close",
+      "native_actions": 25
+    },
+    {
+      "index": 36,
+      "label": "right_gripper_open",
+      "native_actions": 25
+    }
+  ],
+  "controller_characterization_passed": false,
+  "controller_solver_source_unchanged": true,
+  "exact_authorized_transformation_verified": true,
+  "fresh_empty_gripper_clearance_validated": false,
+  "fresh_three_RGB_gates_still_required": true,
+  "full_calibration_passed": false,
+  "full_test_authorized": false,
+  "helper_change": "Add finite/distinct recorded-base direction validation and the fixed15mm outward endpoint term only.",
+  "limitations": [
+    "Worst15mm numerical joint margin is0.019146rad; historical response residuals are contextual observations, not a dynamics error bound.",
+    "The unchanged home/tool/velocity guards and fresh three-view visual gates can still stop the new diagnostic.",
+    "No complete runtime bundle or passing controller-selection review is issued from this plan review."
+  ],
+  "native_actions": 960,
+  "negative_initial_toolX_retreat_m": 0.025,
+  "new_lateral_dynamics_validated": false,
+  "new_outward_distance_m": 0.015,
+  "new_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+    "sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744"
+  },
+  "new_plan_content_sha256": "dfa361c4cceeb5bd6eced1b1dc310dcae010896204439e53e22273b662bda11f",
+  "numerical_basis_review": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_review_001/review.json",
+    "sha256": "7aebc7a60af1d6335d87f89ff087957d0aa9529613e4c7d5cb9d3dcae38d808e"
+  },
+  "old_plan": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_003/proposal.json",
+    "sha256": "a75d980c739b87096a1ae1d9278fe88b910ee07bf1cfbdb8d98e90716329a0e6"
+  },
+  "outward_direction": "normalized horizontal vector from the midpoint of the two recorded robot base positions toward each robot base",
+  "partial007_is_not_a_completed_characterization": true,
+  "physics_substeps": 9600,
+  "prior_failed_diagnostic": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/launch_result.json",
+    "sha256": "98d4f4166bd07edd13d1ea88961616004e53b63ae13fea45ec05132b5236a917"
+  },
+  "schema": "robodojo-controller-plan-independent-review-1",
+  "selection_supported_by_completed_measurements": false,
+  "simulated_time_s": 38.4,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_003/proposal.json",
+      "sha256": "a75d980c739b87096a1ae1d9278fe88b910ee07bf1cfbdb8d98e90716329a0e6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+      "sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/design_review.json",
+      "sha256": "6887118957a731b26b23185b72d87d2a2e3900b66979c4165d2db128a22a1f29"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py",
+      "sha256": "be9622fc128a5107baf755d83aeeaccaaf05d6b2eee8d11a28670dd6c7d00974"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+      "sha256": "cd5cddcdef2bc6f60924b3767860c47f50e8b81c707f0d8bccae430a82e65fb3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+      "sha256": "81f8e2de848073dd5ebdde9b3ab8547630a39b4c2e96749d21e8190603e25caf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization.py",
+      "sha256": "51883990e9b93b71474066acf420907d97a3ecd1f484db84ddd88276ea1715a5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_characterization_supervisor.py",
+      "sha256": "36f64a335f1c9257380668aeac7b856ebce7281c1901ce84c48afbbfde19cac2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_controller_numerical_resolution.py",
+      "sha256": "0e1b49cd0fd526c35aa858fb98536ab6c1a05e1db4a516f2def7de0987b5cd1e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+      "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/model_residuals.json",
+      "sha256": "6bf310952f2415fa8d58b3fdc89ae75df11ac485a1a94f7f2af2673b18748dde"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/archived_sources.json",
+      "sha256": "8785878f015ebe413a1c37fced770139705487f31df316ec61beaed07e900937"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/recommendation.json",
+      "sha256": "373f4a0a4e35cc3ce7c462f4c8054dc004c6ed4bb5558f9264eb4eb2d7d2ea98"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_review_001/review.json",
+      "sha256": "7aebc7a60af1d6335d87f89ff087957d0aa9529613e4c7d5cb9d3dcae38d808e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/projection.json",
+      "sha256": "302acd0c6cabad7fc076ce6cd15031ee052f8b81505fe17e3df3e1a7fb8ed1da"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/clearance_right/request.json",
+      "sha256": "64b8c0688c5d2232276dcfc4ad4a32db6f6f349be38c8f77f913b2df4148633f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/camera_inventory.json",
+      "sha256": "8b06eff63cb3b8f7adcb50372680712e2eb85c06f2ee3bd24b7687618a5ea2e9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/robot_measurement.json",
+      "sha256": "9f99fe3d2eaa89ad9c0f2805c265799cf34cfc3dd278b48b5782a91862c5f3e4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/worker/controller/stage_034/cam_head.png",
+      "sha256": "d4ecaf64ab26451638d36c41e3edd4b672141dc2d94217ec80ad0d0f4d346525"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/analyze_joint_probe.py",
+      "sha256": "3254117d0f8ed7c7fd49a332436da278a8621ebd6a55021d0a6810daa0c91ddf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/analysis.py",
+      "sha256": "a9cfdad2830907e9f5c6880a8d55006111568bcf86b2b94b28f7ff4099fb8ae4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.png",
+      "sha256": "a16960c6d8ef2d4bc2abb09c75e6b09344341d9d4092ef21a46de6dbc9e26db2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.pdf",
+      "sha256": "a2c4699da8074600bec7b20e74f1b7c64a732f36e73f1abff3bd476a48ef1d20"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.png",
+      "sha256": "a20f471934a0ddb898b5ba09760b516178d702e2066ee1e5bcca7db59b1e4b9b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.pdf",
+      "sha256": "5965ada4f494ec732bbe900140ed456fe06d5a83e04811bbe842602479829695"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/scene_context.png",
+      "sha256": "9f16e1e88006ef562758f34cf338eef1fc06753722b1d2b20bafc15210093deb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/scene_context.pdf",
+      "sha256": "641690399ec689a7de5e2103cbfe9534bc2c8876f429724048c2d07121ac7172"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_007/launch_result.json",
+      "sha256": "98d4f4166bd07edd13d1ea88961616004e53b63ae13fea45ec05132b5236a917"
+    }
+  ],
+  "stage_count": 39,
+  "standard_ready": false,
+  "validation": {
+    "focused_offline_tests_passed": 30,
+    "model_calls": 0,
+    "native_actions": 0,
+    "simulator_starts": 0
+  },
+  "visual_figures_inspected": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/left_sweep_comparison.png",
+      "sha256": "a20f471934a0ddb898b5ba09760b516178d702e2066ee1e5bcca7db59b1e4b9b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/right_sweep_comparison.png",
+      "sha256": "a16960c6d8ef2d4bc2abb09c75e6b09344341d9d4092ef21a46de6dbc9e26db2"
+    }
+  ],
+  "visual_interpretation": "The predicted15mm right sweep separates farther from the toaster corner in the fixed head projection than10mm. This is a source-bound hypothetical visual-mesh projection over unchanged007 RGB; it is not a live image of the new pose or a depth/contact clearance certificate. Left prediction also remains hypothetical.",
+  "world_z_lift_m": 0.03
+}

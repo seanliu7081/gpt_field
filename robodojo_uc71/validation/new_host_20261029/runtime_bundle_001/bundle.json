@@ -1,0 +1,161 @@
+{
+  "asset_fidelity_passed": false,
+  "created_at_utc": "2026-10-29T14:55:25.227726+00:00",
+  "evidence": {
+    "asset_assessment": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+      "sha256": "535718e3bf2efd4f70dc35440c54c73b6d989c8d5d290c7934ece9fa9e6b219c"
+    },
+    "controller_independent_review": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_selection_independent_review_001/review.json",
+      "sha256": "2f009fd13f2cffb98e0c5a20ea0dfd794b206ae6bfb16c02de4fc2aac0f7b812"
+    },
+    "controller_launch": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/launch_result.json",
+      "sha256": "178d017c76db6c935a6d1f7ecac19c84cd382ab123abdea29189603e1558623d"
+    },
+    "controller_review": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_review_001/review.json",
+      "sha256": "a51d374c76a5d9abd97f5d70606a38e22b1c36ff41f1141687a1f0be16de0814"
+    },
+    "geometry": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    },
+    "joint_analysis": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+      "sha256": "57d413012fab94df425397a482bfd6a5290eeaddb6c374898feb824f4e81a697"
+    },
+    "joint_projection_review": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_projection_001/visual_review.json",
+      "sha256": "b9c3503347c0a5b786338bc3a3b8363a26231892d6c4d816dc58a62b0994866d"
+    },
+    "native_isolation": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_010/worker/controller/worker_isolation.json",
+      "sha256": "6431be01cce02857089707b315095e72fba72a2b125e75b00fcc7ceea89d0ad9"
+    },
+    "pause": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/pause_validation.json",
+      "sha256": "9526cc171e3ea37cee22deb78e80df78dfddd7f8e39fa5b5d0221e860729e368"
+    },
+    "reset_check": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_001/fresh_probe001_check.json",
+      "sha256": "50827a8b05e5f15a6f0162f485cbaa075ac638ab1431c2d5232436401c325e7d"
+    },
+    "reset_closure": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_closure_001/closure.json",
+      "sha256": "4d17d0dcec28aecf58f8fdb5de16861c509b8f4c83b9a9a7628f1c4da69d362e"
+    },
+    "reset_reference": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_001/reference.json",
+      "sha256": "4f3d07e082f4283281b62ea1e5c02ef11669103c23eb65b19c9c45f94a8002d0"
+    }
+  },
+  "full_test_authorized": false,
+  "limitations": [
+    "Robot geometry/camera projection measured near home; control settings characterize the recorded free-space stages.",
+    "Empty-gripper timing does not certify loaded grasps or contact behavior.",
+    "Published asset defect remains unchanged and disclosed.",
+    "A fresh reset, actual worker READY, exact human approval and one-shot claim are still required before model actions."
+  ],
+  "loaded_contact_validated": false,
+  "parameters": {
+    "controller": {
+      "angular_speed_rad_s": 0.5,
+      "calibration_status": "uncalibrated_candidate",
+      "contact_translation_speed_m_s": 0.05,
+      "control_hz": 25.0,
+      "damping": 0.02,
+      "joint_target_lead_rad": 0.05,
+      "transit_translation_speed_m_s": 0.2
+    },
+    "execution_limits": {
+      "contact_rotation_rad": 0.08,
+      "contact_translation_m": 0.01,
+      "control_hz": 25,
+      "direct_max_steps": 5,
+      "direct_rotation_rad": 0.08,
+      "direct_translation_m": 0.03,
+      "max_execution_steps": 300,
+      "max_segment_steps": 150,
+      "max_segments": 6,
+      "min_close_steps": 15,
+      "min_open_steps": 20,
+      "transit_rotation_rad": 0.08,
+      "transit_translation_m": 0.03
+    },
+    "monitoring": {
+      "arrival_stable_samples": 5,
+      "gap_rise_samples": 2,
+      "gap_rise_yield_m": 0.002,
+      "gap_stable_range_m": 0.0005,
+      "gap_stable_samples": 5,
+      "orientation_error_weight_m_per_rad": 0.05,
+      "orientation_tolerance_rad": {
+        "contact": 0.01,
+        "transit": 0.02
+      },
+      "position_tolerance_m": {
+        "contact": 0.001,
+        "transit": 0.002
+      },
+      "stall_min_steps": 10,
+      "stall_progress_m": 0.0001,
+      "stall_window_steps": 10
+    }
+  },
+  "preparation_checks": {
+    "bounded_rgb_reset": true,
+    "clean_process_and_gpu_release": true,
+    "empty_gripper_timing": true,
+    "exact_robot_and_camera_reset": true,
+    "inactive_arm_holds": true,
+    "isolated_native_worker": true,
+    "native_action_accounting": true,
+    "paused_300_seconds": true,
+    "robot_geometry_and_jacobian": true,
+    "selected_free_space_controller_settings": true,
+    "synchronized_camera_projection": true
+  },
+  "program_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_runtime_bundle.py",
+      "sha256": "fb0b6eadcda0c7ea70cbd3e4d1eb831cd65e201c32d3823bf8977ff555601294"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/approval.py",
+      "sha256": "34cbbc1b24ead94669cee168a505b4a24c350b49abb1135a1ec05a313327421b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/fragment_executor.py",
+      "sha256": "e66d21f616e7a1025430232995b2c25d3dfc3683083143443e23cc82b1f361da"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_measurements.py",
+      "sha256": "7faab6c76a4f36bf8fcbc104a9fdafd9878074e5f7efa44937e1e6466d92e424"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/native_robot_inventory.py",
+      "sha256": "f9e8ea25aa218b1e31554bf62bde4180114d5371f7f2cbd9730e6df72452362e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/reset_binding.py",
+      "sha256": "5c3d34261428f2f7ed068b98549ee376a1ccd07f58918bc89a374ac9a572073f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/schema.py",
+      "sha256": "01e3a44a6efeccb27c3c7fe861f54b43924599c02dff8a2e04da7e69c59d3f9f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_runtime_bundle.py",
+      "sha256": "61947c39973e029aad007865e59f9d533d3bf8a5ec938dbe8a2872745a6faf30"
+    }
+  ],
+  "schema": "robodojo-runtime-bundle-1",
+  "scope": "measured_robot_geometry_and_free_space_characterization",
+  "workspace_wide_tracking_validated": false
+}

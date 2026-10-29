@@ -38,6 +38,7 @@ import math
 from pathlib import Path
 import re
 from threading import Lock
+from time import monotonic
 
 from .lifecycle import EpisodeLifecycle, NativeResult
 from .schema import vector
@@ -110,6 +111,10 @@ class NativeEpisodeActionAdapter:
     def __init__(self, env, *, lifecycle: EpisodeLifecycle, verify_authorization,
                  expected_layout_path: str | Path, expected_layout_sha256: str,
                  registration_evidence_id: str, episode_evidence_id: str):
+        # NativeWorkerSession constructs this immediately after consumed BEGIN.
+        # This is evaluator-only wall time; it neither advances nor times replay.
+        self._policy_begin_monotonic = monotonic()
+        self._last_dispatch_completed = self._policy_begin_monotonic
         if not callable(verify_authorization):
             raise NativeEpisodeError("per_dispatch_authorization_verifier_required")
         if not isinstance(lifecycle, EpisodeLifecycle) or lifecycle.action_limit != ACTION_LIMIT:
@@ -211,6 +216,7 @@ class NativeEpisodeActionAdapter:
             self._poisoned = True
             raise NativeEpisodeError("concurrent_dispatch_forbidden")
         try:
+            dispatch_started = monotonic()
             self._check_live()
             if type(ticket) is not int or ticket != self._last_ticket + 1:
                 raise NativeEpisodeError("monotonic_reserved_ticket_required")
@@ -221,7 +227,7 @@ class NativeEpisodeActionAdapter:
                 raise NativeEpisodeError("dispatch_not_authorized")
             self._check_live()  # authorization cannot silently alter environment/configuration
             self._check_reserved(ticket)
-            return self._dispatch_once(ticket, clean)
+            return self._dispatch_once(ticket, clean, dispatch_started)
         except NativeEpisodeError:
             self._poisoned = True
             raise
@@ -234,7 +240,7 @@ class NativeEpisodeActionAdapter:
         finally:
             self._lock.release()
 
-    def _dispatch_once(self, ticket: int, action: dict) -> NativeActionReceipt:
+    def _dispatch_once(self, ticket: int, action: dict, dispatch_started: float) -> NativeActionReceipt:
         env, manager = self.env, self._reward_manager
         time_before, physics_before = self._clock(), self._physics_counter()
         state = {"step_calls": 0, "end_calls": 0, "reward_calls": 0, "inside_end": False}
@@ -278,6 +284,7 @@ class NativeEpisodeActionAdapter:
             state["inside_end"] = True
             try:
                 returned = self._native_end(*args, **kwargs)
+                state["callback_completed_monotonic"] = monotonic()
             finally:
                 state["inside_end"] = False
             ended = _one(env.end_flag, bool, "invalid_native_end_flag")
@@ -301,6 +308,15 @@ class NativeEpisodeActionAdapter:
             raise NativeEpisodeError("native_action_accounting_mismatch")
         result = NativeResult(ticket, callback["reward"], callback["end_flag"], True, True,
                               f"{self._episode_id}:native-action:{ticket}", callback["partial_score"])
+        timing = {"clock":"time.monotonic","policy_begin_monotonic_s":self._policy_begin_monotonic,
+            "dispatch_started_monotonic_s":dispatch_started,
+            "native_callback_completed_monotonic_s":state["callback_completed_monotonic"],
+            "dispatch_completed_monotonic_s":monotonic()}
+        values = [timing[key] for key in timing if key != "clock"]
+        if (any(type(value) not in (int,float) or not math.isfinite(value) or value < 0 for value in values)
+                or values != sorted(values) or dispatch_started < self._last_dispatch_completed):
+            raise NativeEpisodeError("invalid_native_policy_wall_timing")
+        self._last_dispatch_completed = timing["dispatch_completed_monotonic_s"]
         receipt = {"schema": "robodojo-native-action-receipt-1", "scope": "evaluator_only",
             "model_input_eligible": False, "calibration_status": "uncalibrated_candidate",
             "episode_evidence_id": self._episode_id, "registration_evidence_id": self._registration_id,
@@ -309,5 +325,5 @@ class NativeEpisodeActionAdapter:
             "native_physics_counter_before": physics_before, "native_physics_counter_after": self._physics_counter(),
             "physics_time_before_s": time_before, "physics_time_after_s": self._clock(),
             "native_terminal_callback_calls": state["end_calls"], "native_reward_callback_calls": state["reward_calls"],
-            "native_callback_state": callback, "native_result": asdict(result)}
+            "native_callback_state": callback, "native_result": asdict(result),"timing":timing}
         return NativeActionReceipt(result, receipt)

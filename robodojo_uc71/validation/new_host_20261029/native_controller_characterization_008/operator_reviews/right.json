@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "39df7e7d7bcb9a911768055bed6ef04e0309d761833c18e6b53eaab442075410",
+  "plan_sha256": "dfa361c4cceeb5bd6eced1b1dc310dcae010896204439e53e22273b662bda11f",
+  "stage_index": 34,
+  "active_arm": "right",
+  "native_action_counter": [
+    845
+  ],
+  "image_sha256": {
+    "stage_034/cam_head.png": "6639c763a5eb59e27753188b299d69b1647ae9ef147d32d7a27d6313f033eab6",
+    "stage_034/cam_left_wrist.png": "35567fb3dd1799ba03e3db3826700c69c91cd606ddf4a2ed4cbadd09e52f7dec",
+    "stage_034/cam_right_wrist.png": "b52c12a7db3ab79f147fd0abbe61248403d71c93c490b32f5a5106e0afd10314"
+  },
+  "reviewer": "root/operator",
+  "decision": "ambiguous_or_not_clear",
+  "reason": "Inspected all three fresh hash-bound stage034 views, including the native-resolution head view. The outward shift is visible, but I could not confidently establish sufficient separation at the inner right fingertip from the toaster edge in the head image; the wrist projection does not resolve depth. No collision or contact is claimed. Treat the right closing sweep as ambiguous and stop without closing, return, or retry.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

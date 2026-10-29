@@ -1,0 +1,116 @@
+{
+  "schema": "robodojo-controller-characterization-command-review-1",
+  "review_only_argv": [
+    "/usr/bin/python3",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+    "--authorization",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_008.json",
+    "--install-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/install_001/install_status.json",
+    "--dependency-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_dependencies_001/install_status.json",
+    "--compatibility-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_compatibility_001/install_status.json",
+    "--source-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_source_001/source_manifest.json",
+    "--asset-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets_002/asset_manifest.json",
+    "--asset-diagnostic-assessment",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+    "--plan",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+    "--first-probe-result",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/launch_result.json",
+    "--first-probe-analysis",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+    "--python",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+    "--library-path",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu",
+    "--output",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008",
+    "--timeout-s",
+    "1800"
+  ],
+  "launch_argv": [
+    "/usr/bin/python3",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+    "--authorization",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_008.json",
+    "--install-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/install_001/install_status.json",
+    "--dependency-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_dependencies_001/install_status.json",
+    "--compatibility-record",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_compatibility_001/install_status.json",
+    "--source-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_source_001/source_manifest.json",
+    "--asset-manifest",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets_002/asset_manifest.json",
+    "--asset-diagnostic-assessment",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_assets002_diagnostic_assessment.json",
+    "--plan",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+    "--first-probe-result",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/launch_result.json",
+    "--first-probe-analysis",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+    "--python",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_env/bin/python",
+    "--library-path",
+    "/workspace/gpt_field/robodojo_uc71/runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu",
+    "--output",
+    "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008",
+    "--timeout-s",
+    "1800",
+    "--launch"
+  ],
+  "scope_proposal": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/scope_008_proposal.json",
+  "scope_to_be_written_by_root": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_008.json",
+  "changed_programs": {
+    "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py": "be9622fc128a5107baf755d83aeeaccaaf05d6b2eee8d11a28670dd6c7d00974"
+  },
+  "plan_sha256": "dfa361c4cceeb5bd6eced1b1dc310dcae010896204439e53e22273b662bda11f",
+  "plan_file_sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744",
+  "native_actions": 960,
+  "physics_substeps": 9600,
+  "stage_count": 39,
+  "first_probe_unchanged": {
+    "launch_result_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/launch_result.json",
+    "launch_result_sha256": "0a38dabbde49723dbfdb380498aa9cafb4bd976f3e536f552a384f2cdced5b1d",
+    "analysis_path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/joint_probe_analysis_001/analysis.json",
+    "analysis_sha256": "57d413012fab94df425397a482bfd6a5290eeaddb6c374898feb824f4e81a697",
+    "fixed_probe_plan_sha256": "06ae58d5fdc4e41be3db77234f0a3534b19b2eb3d53b333a3274d45974a2dbf8"
+  },
+  "independent_review_required_before_root_enable": true,
+  "focused_tests_passed": 30,
+  "simulator_starts": 0,
+  "full_test_authorized": false,
+  "prior007_diagnostic_actions": 845,
+  "feasibility_and_projection_basis": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/comparison.json",
+      "sha256": "233528d84382f8f4e27c13134b48458bcc63920b0093386a3ab200e6e79f8c26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/model_residuals.json",
+      "sha256": "6bf310952f2415fa8d58b3fdc89ae75df11ac485a1a94f7f2af2673b18748dde"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/archived_sources.json",
+      "sha256": "8785878f015ebe413a1c37fced770139705487f31df316ec61beaed07e900937"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_001/recommendation.json",
+      "sha256": "373f4a0a4e35cc3ce7c462f4c8054dc004c6ed4bb5558f9264eb4eb2d7d2ea98"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_feasibility_review_001/review.json",
+      "sha256": "7aebc7a60af1d6335d87f89ff087957d0aa9529613e4c7d5cb9d3dcae38d808e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/projection.json",
+      "sha256": "302acd0c6cabad7fc076ce6cd15031ee052f8b81505fe17e3df3e1a7fb8ed1da"
+    }
+  ]
+}

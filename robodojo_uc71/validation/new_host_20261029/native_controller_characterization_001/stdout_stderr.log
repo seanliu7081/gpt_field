@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py", line 563, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py", line 527, in main
+    preparation = verify_manifests(args.native_root, args.source_manifest, args.asset_manifest,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py", line 143, in verify_manifests
+    gate = require_camera_gate(Path(gate_info["result"]), Path(gate_info["visual_review"]),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/scripts/provision_native_common.py", line 98, in require_camera_gate
+    result_path, review_path = result_path.resolve(strict=True), review_path.resolve(strict=True)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 993, in resolve
+    s = os.path.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen posixpath>", line 413, in realpath
+  File "<frozen posixpath>", line 457, in _joinrealpath
+PermissionError: [Errno 13] Permission denied: '/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/camera_003/launch_result.json'

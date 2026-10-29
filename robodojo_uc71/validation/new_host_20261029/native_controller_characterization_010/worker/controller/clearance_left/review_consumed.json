@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "9acf8770863bf94f8f2e48e10245bb70f3982702d4a7374145cc047b657f03b8",
+  "plan_sha256": "5638ae4e23c51e2f1980b68a03e1e99d5d52f22082cec5b2a6e6b403d9d20528",
+  "stage_index": 27,
+  "active_arm": "left",
+  "native_action_counter": [
+    665
+  ],
+  "image_sha256": {
+    "stage_027/cam_head.png": "45088a914347fd97507807209aa579f282e4434f6c76555a9c94eab6b76a7927",
+    "stage_027/cam_left_wrist.png": "67c399a1c831073ca129b74e96723d776e0cb1e29a63c3a22dae681ce03e2b29",
+    "stage_027/cam_right_wrist.png": "5f38f7391c107c500eee917b0a6b480113b681c5816712e43827c9f28c00a52c"
+  },
+  "reviewer": "root/operator",
+  "decision": "clear_for_empty_gripper_timing",
+  "reason": "Inspected all three fresh hash-bound stage027 RGB views. The head view shows tabletop separating the active left fingertips and complete closing span from the bread rack; near left finger surfaces are unobstructed in the wrist view. This supports only the fixed-pose left empty-gripper timing sequence. The right gripper remains open; future right clearance requires its own fresh review. No object-state or contact truth was used.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

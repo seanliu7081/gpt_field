@@ -122,6 +122,7 @@ class NativeWorkerClient:
         self._ready = self._binding = None
         self._ready_hash = self._fixed_calibration = None
         self._last_ticket = self._capture_index = 0
+        self._verified_timings = {}
         self.last_worker_terminal = None
 
     def _alive(self):
@@ -324,10 +325,28 @@ class NativeWorkerClient:
                     or terminal["native_evidence"]["evidence_id"] != result.evidence_id
                     or terminal["native_evidence"]["native_reward"] != reward))):
             raise WorkerClientError("terminal_result_disagreement")
+        timing = receipt.get("timing")
+        names = ("policy_begin_monotonic_s","dispatch_started_monotonic_s",
+            "native_callback_completed_monotonic_s","dispatch_completed_monotonic_s")
+        _keys(timing,{"clock",*names},"invalid_native_wall_timing")
+        values = [timing[key] for key in names]
+        if (timing["clock"] != "time.monotonic" or any(type(v) not in (int,float) or not math.isfinite(v) or v < 0 for v in values)
+                or values != sorted(values)):
+            raise WorkerClientError("invalid_native_wall_timing")
+        if ticket in self._verified_timings:
+            if timing != self._verified_timings[ticket]: raise WorkerClientError("native_wall_timing_changed")
+        else:
+            if ticket != len(self._verified_timings)+1: raise WorkerClientError("native_wall_timing_sequence_gap")
+            previous = self._verified_timings.get(ticket-1)
+            if previous is not None and (timing[names[0]] != previous[names[0]]
+                    or timing[names[1]] < previous[names[3]]):
+                raise WorkerClientError("native_wall_timing_discontinuous")
+            self._verified_timings[ticket] = deepcopy(timing)
         return result
 
     def dispatch(self, ticket: int, joint_action: dict) -> ActionReceipt:
         verified = None
+        sent = False
         try:
             snapshot = self.lifecycle.snapshot()
             if (self.state != "RUNNING" or snapshot["state"] != "RUNNING"
@@ -336,6 +355,7 @@ class NativeWorkerClient:
             action = validate_joint_action(joint_action)
             self.check_binding()
             self._last_ticket = ticket  # No resend after an uncertain dispatch.
+            sent = True
             response = self._request("action", {"ticket": ticket, "joint_action": action})
             verified = self._native_result(response, ticket)
             write_private_record(self.output / f"action_{ticket:04d}.json", {"scope": "evaluator_only", **response["evaluator"]})
@@ -345,6 +365,29 @@ class NativeWorkerClient:
             return ActionReceipt(measurement, verified)
         except BaseException as error:
             self._poison()
+            # The worker commits its evaluator receipt before robot feedback.
+            # A lost response/measurement error cannot erase that native truth.
+            # This is evidence recovery only: never resend or query rewards.
+            if verified is None and sent:
+                try:
+                    path = self.worker_output / f"action_{ticket:04d}.json"
+                    receipt, digest = _record(path)
+                    terminal = None
+                    terminal_path = self.worker_output / "terminal.json"
+                    if terminal_path.exists():
+                        value, terminal_hash = _record(terminal_path)
+                        terminal_spec = {"path": str(terminal_path), "sha256": terminal_hash, "record": value}
+                        self._terminal(terminal_spec)
+                        if value["status"] in ("success", "native_failure", "horizon_exhausted"):
+                            terminal = terminal_spec
+                    recovered = {"native_result": receipt["native_result"],
+                        "receipt": {"path": str(path), "sha256": digest}, "terminal": terminal}
+                    verified = self._native_result({"evaluator": recovered}, ticket)
+                    if not (self.output / f"action_{ticket:04d}.json").exists():
+                        write_private_record(self.output / f"action_{ticket:04d}.json", {
+                            "scope": "evaluator_only", "recovered_after_rpc_failure": True, **recovered})
+                except Exception:
+                    pass  # Unverified/missing evidence remains an unconfirmed dispatch.
             if verified is not None:
                 raise VerifiedActionFollowupError(verified) from None
             raise

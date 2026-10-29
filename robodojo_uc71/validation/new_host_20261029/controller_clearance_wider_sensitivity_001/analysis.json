@@ -1,0 +1,1166 @@
+{
+  "actual008_response_measurements": {
+    "left": {
+      "maximum_command_to_next_state_residual_rad": 0.0034373809076754247,
+      "observed_actions": 40,
+      "projected_response_gain_min_median_max": [
+        0.8757828764642946,
+        0.8762774509577236,
+        0.8766668306284202
+      ],
+      "projected_response_samples": 24
+    },
+    "right": {
+      "maximum_command_to_next_state_residual_rad": 0.003430592254473286,
+      "observed_actions": 40,
+      "projected_response_gain_min_median_max": [
+        0.8758150176199324,
+        0.8762984580842407,
+        0.8766805038637303
+      ],
+      "projected_response_samples": 24
+    }
+  },
+  "all_gain_cases_meet_endpoint_checks": false,
+  "all_hypothetical_guard_checks_passed": true,
+  "candidate_selected_for_execution": null,
+  "cases_lift_retreat_outward_yaw": [
+    [
+      0.03,
+      0.04,
+      0.025,
+      0.08
+    ]
+  ],
+  "counterfactual_continuation_after_unsettled_endpoint": true,
+  "endpoint_rule": {
+    "extra_settling_actions": 0,
+    "last_samples": 5,
+    "open_finger_tolerance_m": 0.001,
+    "orientation_tolerance_rad": 0.02,
+    "position_tolerance_m": 0.002
+  },
+  "fixed_open_finger_proxy": {
+    "left_arm": {
+      "modeled_as_constant": true,
+      "positions_m": [
+        0.04399970546364784,
+        0.04399970546364784
+      ],
+      "within_declared_open_tolerance": true
+    },
+    "right_arm": {
+      "modeled_as_constant": true,
+      "positions_m": [
+        0.04399970546364784,
+        0.04399970546364784
+      ],
+      "within_declared_open_tolerance": true
+    }
+  },
+  "fresh_empty_sweep_clearance_passed": false,
+  "full_test_authorized": false,
+  "hypothetical_guards": {
+    "inactive_joint_distance_from_latched_hold_rad": 0.015,
+    "joint_distance_from_home_rad": 0.5,
+    "measured_joint_velocity_rad_s": 2.0,
+    "observed_finger_limit_excess_m": 0.001,
+    "tool_distance_from_home_m": 0.065,
+    "tool_orientation_from_home_rad": 0.12
+  },
+  "hypothetical_joint_home_ceiling_rad": 0.5,
+  "inactive_arm_dynamics_validated": false,
+  "initial_inventory": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/robot_inventory.json",
+    "sha256": "716612770f6e9c2eb9e337296ef47de10cbc54769dfb0fd8abb8c58c8a6e2b9d"
+  },
+  "limitations": [
+    "The fitted008 response medians and selected gain cases are not error bounds for a new pose.",
+    "The exact four-stage130-update path has no endpoint holds. Finger positions and inactive arms are held constant as numerical proxies, without dynamics validation.",
+    "Numerical joint-rate proxies do not certify native continuous-time velocities.",
+    "A real preview must stop at the first unsettled endpoint; continued numerical paths after such a failure are counterfactual only.",
+    "The0.50-rad joint bound is hypothetical. Production remains0.35; all other numerical guards are unchanged.",
+    "Fresh unambiguous three-camera clearance and actual native guard/accounting checks remain mandatory."
+  ],
+  "model_calls": 0,
+  "native_actions_executed": 0,
+  "native_dynamic_validation_passed": false,
+  "packages": {
+    "numpy": "1.26.0",
+    "scipy": "1.15.3"
+  },
+  "physical_finger_dynamics_validated": false,
+  "production_guards": {
+    "inactive_joint_distance_from_latched_hold_rad": 0.015,
+    "joint_distance_from_home_rad": 0.35,
+    "measured_joint_velocity_rad_s": 2.0,
+    "observed_finger_limit_excess_m": 0.001,
+    "tool_distance_from_home_m": 0.065,
+    "tool_orientation_from_home_rad": 0.12
+  },
+  "production_joint_home_ceiling_rad": 0.35,
+  "production_source_or_limits_changed": false,
+  "response_model": "q_next = q + gain*(unchanged joint_target command(q)-q); recompute source URDF FK/Jacobian each update",
+  "schedule": [
+    {
+      "stage": "raise",
+      "updates": 25
+    },
+    {
+      "stage": "clearance",
+      "updates": 40
+    },
+    {
+      "stage": "return",
+      "updates": 40
+    },
+    {
+      "stage": "lower",
+      "updates": 25
+    }
+  ],
+  "schema": "robodojo-hypothetical-open-preview-sensitivity-1",
+  "scope": "offline_robot_kinematics_and_scalar_response_sensitivity_only",
+  "simulator_starts": 0,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/ARX.usd",
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/X5A.urdf",
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link7.STL",
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/meshes/link8.STL",
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/runtime/native/RoboDojo/Assets/Robots/x5/robot_config.yml",
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/analyze_joint_probe.py",
+      "sha256": "3254117d0f8ed7c7fd49a332436da278a8621ebd6a55021d0a6810daa0c91ddf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_plan_004/proposal.json",
+      "sha256": "1794f9a11ae6e6a24257d36456bd47ea1dcb545a223b4a6205a6f35658993744"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_001/analysis.py",
+      "sha256": "a9cfdad2830907e9f5c6880a8d55006111568bcf86b2b94b28f7ff4099fb8ae4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_002/analysis.py",
+      "sha256": "1db7c0fd52bb02963545a69fbdda642ddb68acf0de38e12ffa8b6c0f16c47cdc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_projection_003/analysis.py",
+      "sha256": "9df2346ff7ecbf16e452ae190b82ec12e26b276f1bd7dd9b6c715705b5815006"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_feasibility_001/grid.json",
+      "sha256": "e6d3149c837bc9988a14212cd17ac4f848cd089ad314f98309cc5f785d7a1911"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/analysis.py",
+      "sha256": "e11ec87124d8ed865fb4ffdbb5ccbe76c1b9cbca653a03d96fa15220fd7205c7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/left_sweep_comparison.pdf",
+      "sha256": "0206847b5e2943452b3a207f0964ed32f525caffa5af52197d6b528ccba6a792"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/left_sweep_comparison.png",
+      "sha256": "b5de43ef1c0fab938cd9db14635fa105392b1576ddea9c021dfa03534069e821"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/projection.json",
+      "sha256": "e51e1a108d098294be42a1be58e129c2f6ac15701c11823c488f0e5d23333059"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/right_sweep_comparison.pdf",
+      "sha256": "d864e05da0fbb60e8f53321372a95f1a5ac14274493282f9fe8811f8fc98589b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/right_sweep_comparison.png",
+      "sha256": "3a215ae5bb0513b134d221d9488da5b5a3e194548d0b0ac0b05035f1f9ffee08"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/scene_context.pdf",
+      "sha256": "8cdeb1084de8eccb7249b832461dbe5b913aaee9ea53dcc6374a17a1915e2ac0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/scene_context.png",
+      "sha256": "383e745e6a3e078e1e730ba131dd970bbf7f360964d1370c3ab9a441a7117c95"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_ranking_001/result/ranking.json",
+      "sha256": "0ad8dec48501e2287769958dd01ea30cad4b03157f4bc18d057b883e8041417e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_sensitivity_001/analysis_method.py",
+      "sha256": "852bb8c7abf47a8c56162434929a6560c741e84a5b120c4b29257b37e3131a12"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_sensitivity_001/numerical_traces.json",
+      "sha256": "ad604a0cb48cf2831c2db22ac82479c4f0194d5a91819144b7b2f1410bcabbb7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/clearance_left/request.json",
+      "sha256": "96dda855d55e4551656c7aac44eb070e871909cca6cc076252a287a9d7354c98"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/clearance_right/request.json",
+      "sha256": "39df7e7d7bcb9a911768055bed6ef04e0309d761833c18e6b53eaab442075410"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0626.json",
+      "sha256": "adfb2ee706c8a35396132ef50561e18570fa45ecb86dd7de2aca3a4ff12ef3a9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0627.json",
+      "sha256": "ea5aed685e0d0b9f811631b5ae4ef66d95fa8812f66e5a5c5b1d23abac48178e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0628.json",
+      "sha256": "228d537163a03c43605d3997ce20eb083b7b608d18d1b344ed1f8974a005f790"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0629.json",
+      "sha256": "54a1c000cb39b61af9913f75fc4f5cd6feca924b276e0c06649dda2a3130ab1c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0630.json",
+      "sha256": "218847d3db5f39ee9edf98aa86bdd9b68ecc769bce718eaa428b62f8829062c6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0631.json",
+      "sha256": "0137cf9d44c8687763039ca23c90a0857365ae798aabdf843e77f315b96dd06a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0632.json",
+      "sha256": "63de322f1cea500a8a320720fd69cf039765d2805739ca1b0bdb87c4a022cd12"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0633.json",
+      "sha256": "cf718b19dc148a2d3ced01e2289b4abef9aef27e812b3cf8fc9d206de7744d51"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0634.json",
+      "sha256": "5af912229fa17e72b54669ef6e39c48a49646dabe0ae3a8ba691662e745ad081"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0635.json",
+      "sha256": "e6e5f89f89a78f7ed2dc91d8b420c9d40d2dc44c79c44b3754f04016d9b0c7e8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0636.json",
+      "sha256": "4a299201a45a49bcb3d775b38681322555ee1c60a0a7a6ab3d063ea5f1b4ed04"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0637.json",
+      "sha256": "3d9940007122513ab2d66663efdb43284daebdec7993177e4980c156a9188fb3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0638.json",
+      "sha256": "86babc11ed0ca5d9219a8bb2c1204bbba0672a5034ecf97e8ec652c3cac25b94"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0639.json",
+      "sha256": "466249f58957ade291a6a97ca75b07f9e35413114c6141484801cf5cb2b2bde8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0640.json",
+      "sha256": "8c6c94745be05b5705e514234e3aef34d0691d9b99961360d381e2ec7260674f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0641.json",
+      "sha256": "6a7278cb07b5d384ece1b5fbbe87a43d0a3071fc654c5f430bf3178522186f1c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0642.json",
+      "sha256": "65cb8cd4527b521a64db437cf4819cdf4c874743c520845be87d615f5fd968ae"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0643.json",
+      "sha256": "5619f2fafa34df4be67343997edb83fe993158e0a0848c6ddaea821715c56355"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0644.json",
+      "sha256": "1a1261891b8b35b70601a6df8ae1bc09c2dd34031f3693fc73d5ebc7aa818322"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0645.json",
+      "sha256": "d5027170174e2c96322991cda365baf74ebc381066dc2d32a8b8f559c41cf8cc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0646.json",
+      "sha256": "bedcb97dbd4d879f8787a3347654e4728dec37c0f3db5c9e71c82a85714ba452"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0647.json",
+      "sha256": "1179d3ef02fabb0a87c4b2141518ad440785f0a2c6e133368cdc04d2420b1702"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0648.json",
+      "sha256": "d47d4ed2d7e80f1b3e33f42b1c29babdf4c8d8b44f75fa26374e9db0ba0c0863"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0649.json",
+      "sha256": "06ee0819bda08c4f989416b3a3a5a9fe52c879854b50fbf7e51ae035f97b3225"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0650.json",
+      "sha256": "a27f780d16946122233a195b113346cc5bce2ebe39c5cdca7920957258a776d9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0651.json",
+      "sha256": "cc18c04084ce6fa9924693a2a18ea1dccc538c84c8014c35a188ba9609e7ff17"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0652.json",
+      "sha256": "d2e1752331e96e67178facfaa8169f1d3779e81ef5364c796f041fd0fe024dca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0653.json",
+      "sha256": "22dbb98d84108573e72e67ece9dd768de8e72d352d6b030209a01c2f145aa777"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0654.json",
+      "sha256": "35a03b0b54a7107c68647abc317eff6fa6334785abf9898660b6febb7016fe32"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0655.json",
+      "sha256": "87bba7e855e1ff7b175496104af48457ae73feb70237b498bad0164c3a63acc3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0656.json",
+      "sha256": "258b28b13580855b11526079500eac023f54997dfb45ae2305b841b2169794c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0657.json",
+      "sha256": "eda1f83482deaa81f9f4e2386bc2e7034eb73feeb762caaf62fe0e0fc23c5992"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0658.json",
+      "sha256": "df63b36b28b7b76dd43654fb58e892f11113fd44eda7f20d8fe98d896e8aeaa9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0659.json",
+      "sha256": "b21dd726fb8fedfd3881b55e512998f145b72a8593573ad0285a8e6fe9f61f39"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0660.json",
+      "sha256": "c517e587a9aa1918a2d4ee528fd265ec0cabf0e0db5cbefab368ec32f5a0f62f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0661.json",
+      "sha256": "20cfce4fd743c799424ea4e70b0f052f95208aaf41ce71154d6c26da4c63ac47"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0662.json",
+      "sha256": "5bbf7e16e03cfcf45b3acea2a559de599a68fe169af4d31f02c36af81488b870"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0663.json",
+      "sha256": "033a13da71308f8c91e25ff750e93a0a78da209f33ebbc181a335ac5c0744848"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0664.json",
+      "sha256": "3c84aa024cdc0ce962d00ee1f2dd5e192acc205d551160e892efbaaed4ea2767"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0665.json",
+      "sha256": "91b540d3bb435834b20f5ac163bd59057fbc6767e80f4606b12d2544c953bf31"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0806.json",
+      "sha256": "f4e302ad43f43940477bf92eb709f9414ce0c1bd0d4c8c355e1390fba1617a0d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0807.json",
+      "sha256": "07009ff9ae6287c9387eed7fe8f8691b1ce1c368697edfe3033e04d930c4478e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0808.json",
+      "sha256": "d61c3d40591283788fdc278905078fabb9baba49a350b4f7ba7004d54471aa7a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0809.json",
+      "sha256": "f1112a863f48e0fa2250969b19076ffbafe2db896c5d7b4742578655780b6cbb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0810.json",
+      "sha256": "bbd00f7653c6e559fad161b05b920a48f7d1933f73513b79a3dc17ce73e9ae25"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0811.json",
+      "sha256": "708d3ece8ad0b3d855c7e38e4dc22a7dd1ee9267c13be8dbe245d1903ee4baf2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0812.json",
+      "sha256": "a4ca92e868c8237aca0236f1e254b02e2af59fd19804cdb4c2ce843254520734"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0813.json",
+      "sha256": "6ca265f11c76f7fc0066d3d7eb6fec586d3148f13b6336b4f33acb40a00a01ce"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0814.json",
+      "sha256": "c72129e0ceb38cf712b2e635b30a2a344b518246f4a1215362f8d6a4a1c91927"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0815.json",
+      "sha256": "a43118da6d608f840ef1cb866a6d1ececd411ee194b6a3e3098447e4e5154e73"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0816.json",
+      "sha256": "b2f6d962df66436e0a0b3648b389f322fb194a52ea899d0081045130e822a0bc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0817.json",
+      "sha256": "3b7ad25c88c0429282b6d1f3beed18a387f2ce64ed874b5fccfdfa1a06e9d5b9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0818.json",
+      "sha256": "5da22c56572c5c104c071b28b53dc8e7bededb016f16bab8e5fbe85c59ee9a35"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0819.json",
+      "sha256": "ae12ed9a096269ed2398e4831129c480f9e770c4ebd483e84813c6910b42e61d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0820.json",
+      "sha256": "4a832490e8be1c0257caac24287400296fbc81ea2c400f0951931ce49fe83df9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0821.json",
+      "sha256": "b708319afa7d894cdf854c93ce26f2f81dfc217444acf09a8b296ecb7d52e3fa"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0822.json",
+      "sha256": "193b07ba54e9c16af8e90a8b389c197789c629b8c14caa955629d1907010d909"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0823.json",
+      "sha256": "91c3ca2ebc9b5a8d575530346628883c8fe9821a3ba9fe02651c6d4ab8bc0cb7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0824.json",
+      "sha256": "281d2040155a568c082ca0c288e8c119a3c7be85b6f5fdc3ca90ca4d33c6b9c9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0825.json",
+      "sha256": "dd0d882448d5684d2d741ad1b2b0198e36e72795407ea828429b384c531db237"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0826.json",
+      "sha256": "3de7ee517a519202f0e9aebd093ec666eda7a90d52f7e4866c05d7ce54dec7fe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0827.json",
+      "sha256": "b300d1a91294bce505d0f2af76f4b1041049e7608de265327f15d260ef87b98b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0828.json",
+      "sha256": "70b492db7cbe919f2863092f38a5bedeb223db749828240ae3dfe6bcd61e72a7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0829.json",
+      "sha256": "f919c7f4d5fb339d82dcf082299cb0cbd62492efecef85055c4e97cb9ebbabbf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0830.json",
+      "sha256": "67f0055dcd7fc11ea74c065d3746c61855844db6ca130d1ab6bea0b167c6a530"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0831.json",
+      "sha256": "5f19cffafb1a8efca606de09cee159273b52fee0754808b6e0421d2244143102"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0832.json",
+      "sha256": "6dba4e1150ad3096e4579464cd5aa01c4f8821013b3e1e281669f0d39a595d11"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0833.json",
+      "sha256": "81f652c3a2cc9e256794056d661cbd42b620a6b3f493d6f44a0eb8d61db2b60c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0834.json",
+      "sha256": "5e41606a57966ca23700ccdbd6b0979ebbffdaba91d442051265469b71948e17"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0835.json",
+      "sha256": "45aad7b8b503afcd3ba0b9f2901cdb7a02558d6cc58c950742150cdd8c631f63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0836.json",
+      "sha256": "49e8ed731ad3b4047a18cc0dbc9636de0a99388a9bca6cda54dd91623269126f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0837.json",
+      "sha256": "2bd43e48763899ab2c8ccbd89917590cd0e81f8e410f5a7309c7366219c3f6a5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0838.json",
+      "sha256": "c4064fba8b3a36d47e5acc25b7d3c8465bd6ae86b36b476a979bca81ad78d8c4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0839.json",
+      "sha256": "65ffdd70144bfb073dd1108992f261578807e256dfdb6514a0b8f62d92d8bc3e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0840.json",
+      "sha256": "758c9ad21c653f2f940ce53bdcd7512be62f500454862ac652eea814f2b78d77"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0841.json",
+      "sha256": "d22e40efd0d8765e50af1e4e19805c73977fab0f7dcac2bd150b960f68999ece"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0842.json",
+      "sha256": "18e2166749bba7ebe1676b8cb7deeab0236b37dd07c2ccc11ee1867d198de10a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0843.json",
+      "sha256": "d451bbce6bf90b4feeab26f1d3672b57047766d713e0581d9957490320e49bbe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0844.json",
+      "sha256": "c84e1e09e7bcb840dfeae0d533fd37addf18fc0e0821bbbb499caa2580343a2b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/native_action_0845.json",
+      "sha256": "03c63c4edd058532025f100b253a5f4191dfbc416a517106a38b8bd1b5535db2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_027/cam_head.png",
+      "sha256": "d6b5d0cc170ec082fb5151aefad40eaaafa87a27ba26cc75021d677f87afa9dc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_027/camera_inventory.json",
+      "sha256": "e52dc32b2245c3a5af359232882f7c6cdbeb373d5dc8e60b1b4471252a8631aa"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_027/robot_measurement.json",
+      "sha256": "ea4b43dd206f07e7f542e95b189e0b8f513656243e67602cea790d3bf3123548"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_034/cam_head.png",
+      "sha256": "6639c763a5eb59e27753188b299d69b1647ae9ef147d32d7a27d6313f033eab6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_034/camera_inventory.json",
+      "sha256": "ad0ba29fbb87c7dc8dbec0fdee45dfbb7f8a0d8020dffc98a048554d73699ee5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_008/worker/controller/stage_034/robot_measurement.json",
+      "sha256": "146d4f6c082601e134f4b1192f54ecb92ce67155ef2bfbff886e198fe78bbab3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_preview_002/preview/robot_inventory.json",
+      "sha256": "716612770f6e9c2eb9e337296ef47de10cbc54769dfb0fd8abb8c58c8a6e2b9d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/robot_characterization_plan_001/plan.json",
+      "sha256": "83a983ed13229295a141380bce1931771d89d5ed0e9b5c95b664027bc8deca03"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/tool_geometry_001/candidate.json",
+      "sha256": "b412112b863151e69db17ab6a146fe15bd0387d6858bc86646f4471cdaea39bc"
+    }
+  ],
+  "source_projection": {
+    "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_clearance_wider_projection_001/projection.json",
+    "sha256": "e51e1a108d098294be42a1be58e129c2f6ac15701c11823c488f0e5d23333059"
+  },
+  "standard_ready": false,
+  "summaries": [
+    {
+      "all_four_endpoints_settled": false,
+      "arm": "left",
+      "failure": null,
+      "first_unsettled_stage": "clearance",
+      "hypothetical_joint_margin_rad": 0.13036837297485743,
+      "kinematic_joint_rate_margin_rad_s": 1.375,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.139998767727479,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.039912970892292884,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 0.5,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 3.921403701483558e-08,
+          "final_position_error_m": 1.255991045768422e-06,
+          "first_stable_suffix_update": 15,
+          "last_five_max_orientation_error_rad": 4.307459919868572e-07,
+          "last_five_max_position_error_m": 1.920057351505649e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 8.70713067402045e-05,
+          "final_position_error_m": 0.011211191658449138,
+          "first_stable_suffix_update": null,
+          "last_five_max_orientation_error_rad": 8.70713067402045e-05,
+          "last_five_max_position_error_m": 0.014480888491061094,
+          "last_five_pose_samples_passed": false,
+          "samples_after_first_stable": null,
+          "stable_suffix_samples": null,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 2.8193938116897105e-05,
+          "final_position_error_m": 0.0005924567202472919,
+          "first_stable_suffix_update": null,
+          "last_five_max_orientation_error_rad": 3.860037001219075e-05,
+          "last_five_max_position_error_m": 0.003682674994129567,
+          "last_five_pose_samples_passed": false,
+          "samples_after_first_stable": null,
+          "stable_suffix_samples": null,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 4.127342277459327e-08,
+          "final_position_error_m": 1.5536259959170557e-06,
+          "first_stable_suffix_update": 15,
+          "last_five_max_orientation_error_rad": 4.4553269376779087e-07,
+          "last_five_max_position_error_m": 2.011663899183265e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.018000457590084035,
+      "world_yaw_sign": 1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "left",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.0522706482012113,
+      "kinematic_joint_rate_margin_rad_s": 0.9046531863028462,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.13999734139869,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.039836436551282925,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 0.8762774509577236,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 4.440107810020198e-08,
+          "final_position_error_m": 7.391812534198955e-07,
+          "first_stable_suffix_update": 9,
+          "last_five_max_orientation_error_rad": 4.440107810020198e-08,
+          "last_five_max_position_error_m": 7.391812534198955e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 16,
+          "stable_suffix_samples": 17,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 7.959583310181036e-07,
+          "final_position_error_m": 4.250018196454934e-06,
+          "first_stable_suffix_update": 31,
+          "last_five_max_orientation_error_rad": 1.0221367475646298e-05,
+          "last_five_max_position_error_m": 5.451287694850729e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 9,
+          "stable_suffix_samples": 10,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 5.6498802850590464e-08,
+          "final_position_error_m": 2.8944702669199844e-07,
+          "first_stable_suffix_update": 30,
+          "last_five_max_orientation_error_rad": 5.6498802850590464e-08,
+          "last_five_max_position_error_m": 2.8944702669199844e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 5.148931141841364e-09,
+          "final_position_error_m": 8.326838501451039e-07,
+          "first_stable_suffix_update": 9,
+          "last_five_max_orientation_error_rad": 5.148931141841364e-09,
+          "last_five_max_position_error_m": 8.326838501451039e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 16,
+          "stable_suffix_samples": 17,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.009106537165148768,
+      "world_yaw_sign": 1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "left",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.05009971234360022,
+      "kinematic_joint_rate_margin_rad_s": 0.75,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.13999739980942,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.039836979402901124,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 1.0,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 2.9520253298737092e-09,
+          "final_position_error_m": 1.1298785235133528e-07,
+          "first_stable_suffix_update": 8,
+          "last_five_max_orientation_error_rad": 2.9520253298737092e-09,
+          "last_five_max_position_error_m": 1.1298785235133528e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 17,
+          "stable_suffix_samples": 18,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 1.2734284458039348e-07,
+          "final_position_error_m": 6.800291202880832e-07,
+          "first_stable_suffix_update": 27,
+          "last_five_max_orientation_error_rad": 2.757441050470289e-07,
+          "last_five_max_position_error_m": 1.4724836404006496e-06,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 13,
+          "stable_suffix_samples": 14,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 3.4161065699131824e-08,
+          "final_position_error_m": 1.6394390345907605e-07,
+          "first_stable_suffix_update": 27,
+          "last_five_max_orientation_error_rad": 3.4161065699131824e-08,
+          "last_five_max_position_error_m": 1.6394390345907605e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 13,
+          "stable_suffix_samples": 14,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 3.0489712612295137e-09,
+          "final_position_error_m": 5.765413761770364e-07,
+          "first_stable_suffix_update": 8,
+          "last_five_max_orientation_error_rad": 3.0489712612295137e-09,
+          "last_five_max_position_error_m": 5.765413761770364e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 17,
+          "stable_suffix_samples": 18,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.00910415759810966,
+      "world_yaw_sign": 1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "left",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.049922871186609874,
+      "kinematic_joint_rate_margin_rad_s": 0.43749999999999933,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.1399972330810617,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.03717833969545464,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 1.25,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 9.103676278662952e-09,
+          "final_position_error_m": 2.41892509446686e-07,
+          "first_stable_suffix_update": 6,
+          "last_five_max_orientation_error_rad": 9.103676278662952e-09,
+          "last_five_max_position_error_m": 2.41892509446686e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 7.269010015872645e-08,
+          "final_position_error_m": 3.836397573254067e-07,
+          "first_stable_suffix_update": 22,
+          "last_five_max_orientation_error_rad": 7.269010015872645e-08,
+          "last_five_max_position_error_m": 3.836397573254067e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 18,
+          "stable_suffix_samples": 19,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 8.392466675695618e-07,
+          "final_position_error_m": 4.744454481048337e-07,
+          "first_stable_suffix_update": 21,
+          "last_five_max_orientation_error_rad": 8.392466675695618e-07,
+          "last_five_max_position_error_m": 4.744454481048337e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 1.3290735325022142e-08,
+          "final_position_error_m": 8.89285965651167e-07,
+          "first_stable_suffix_update": 6,
+          "last_five_max_orientation_error_rad": 1.3290735325022142e-08,
+          "last_five_max_position_error_m": 8.89285965651167e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.00910396059501406,
+      "world_yaw_sign": 1.0
+    },
+    {
+      "all_four_endpoints_settled": false,
+      "arm": "right",
+      "failure": null,
+      "first_unsettled_stage": "clearance",
+      "hypothetical_joint_margin_rad": 0.13135416534830918,
+      "kinematic_joint_rate_margin_rad_s": 1.3749999999999998,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.139998651993558,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.039913533520020916,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 0.5,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 3.921403702871604e-08,
+          "final_position_error_m": 1.255991045768296e-06,
+          "first_stable_suffix_update": 15,
+          "last_five_max_orientation_error_rad": 4.3074599198685546e-07,
+          "last_five_max_position_error_m": 1.920057351505649e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 8.65076552810976e-05,
+          "final_position_error_m": 0.011194161118074728,
+          "first_stable_suffix_update": null,
+          "last_five_max_orientation_error_rad": 8.65076552810976e-05,
+          "last_five_max_position_error_m": 0.014470304849301119,
+          "last_five_pose_samples_passed": false,
+          "samples_after_first_stable": null,
+          "stable_suffix_samples": null,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 2.7625181090304472e-05,
+          "final_position_error_m": 0.0005854303609608314,
+          "first_stable_suffix_update": null,
+          "last_five_max_orientation_error_rad": 3.809044516093948e-05,
+          "last_five_max_position_error_m": 0.0036670832748739632,
+          "last_five_pose_samples_passed": false,
+          "samples_after_first_stable": null,
+          "stable_suffix_samples": null,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 4.257100281690023e-08,
+          "final_position_error_m": 1.558020158093149e-06,
+          "first_stable_suffix_update": 15,
+          "last_five_max_orientation_error_rad": 4.506202016095275e-07,
+          "last_five_max_position_error_m": 2.013617981649707e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.017979694405843218,
+      "world_yaw_sign": -1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "right",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.05420515429136624,
+      "kinematic_joint_rate_margin_rad_s": 0.9046269273946996,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.1399987099112794,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.039837670101431286,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 0.8762984580842407,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 4.4366170556528906e-08,
+          "final_position_error_m": 7.385312162669619e-07,
+          "first_stable_suffix_update": 9,
+          "last_five_max_orientation_error_rad": 4.4366170556528906e-08,
+          "last_five_max_position_error_m": 7.385312162669619e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 16,
+          "stable_suffix_samples": 17,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 7.063626596408165e-07,
+          "final_position_error_m": 3.7639116226540667e-06,
+          "first_stable_suffix_update": 31,
+          "last_five_max_orientation_error_rad": 9.391576866157926e-06,
+          "last_five_max_position_error_m": 4.998915961237859e-05,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 9,
+          "stable_suffix_samples": 10,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 5.2655364894070024e-08,
+          "final_position_error_m": 2.688336910634342e-07,
+          "first_stable_suffix_update": 30,
+          "last_five_max_orientation_error_rad": 5.2655364894070024e-08,
+          "last_five_max_position_error_m": 2.688336910634342e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 10,
+          "stable_suffix_samples": 11,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 5.1494079189738305e-09,
+          "final_position_error_m": 8.322784002588356e-07,
+          "first_stable_suffix_update": 9,
+          "last_five_max_orientation_error_rad": 5.1494079189738305e-09,
+          "last_five_max_position_error_m": 8.322784002588356e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 16,
+          "stable_suffix_samples": 17,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.009095400825696848,
+      "world_yaw_sign": -1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "right",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.051712669577358816,
+      "kinematic_joint_rate_margin_rad_s": 0.7499999999999996,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.1399986452222746,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.03983819968901202,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 1.0,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 2.9520253298744727e-09,
+          "final_position_error_m": 1.1298785235133528e-07,
+          "first_stable_suffix_update": 8,
+          "last_five_max_orientation_error_rad": 2.9520253298744727e-09,
+          "last_five_max_position_error_m": 1.1298785235133528e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 17,
+          "stable_suffix_samples": 18,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 1.1008350389041159e-07,
+          "final_position_error_m": 5.866538038233073e-07,
+          "first_stable_suffix_update": 27,
+          "last_five_max_orientation_error_rad": 2.4109848353788706e-07,
+          "last_five_max_position_error_m": 1.2848318472885271e-06,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 13,
+          "stable_suffix_samples": 14,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 1.9153110959495003e-07,
+          "final_position_error_m": 9.394792960071896e-07,
+          "first_stable_suffix_update": 27,
+          "last_five_max_orientation_error_rad": 1.9153110959495003e-07,
+          "last_five_max_position_error_m": 9.394792960071896e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 13,
+          "stable_suffix_samples": 14,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 3.0577390043077952e-09,
+          "final_position_error_m": 5.764978934857256e-07,
+          "first_stable_suffix_update": 8,
+          "last_five_max_orientation_error_rad": 3.0577390043077952e-09,
+          "last_five_max_position_error_m": 5.764978934857256e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 17,
+          "stable_suffix_samples": 18,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.009093288712980187,
+      "world_yaw_sign": -1.0
+    },
+    {
+      "all_four_endpoints_settled": true,
+      "arm": "right",
+      "failure": null,
+      "first_unsettled_stage": null,
+      "hypothetical_joint_margin_rad": 0.05154627538313444,
+      "kinematic_joint_rate_margin_rad_s": 0.4374999999999998,
+      "lift_m": 0.03,
+      "native_dynamic_validation_passed": false,
+      "native_joint_limit_margin_rad": 3.139998612566491,
+      "nominal_guard_checks_passed": true,
+      "numerical_schedule_steps": 130,
+      "numerical_updates": 130,
+      "orientation_margin_rad": 0.03718014094719245,
+      "outward_m": 0.025,
+      "outward_yaw_rad": 0.08,
+      "production_joint_bound_would_pass": false,
+      "response_gain": 1.25,
+      "retreat_m": 0.04,
+      "stages": [
+        {
+          "final_orientation_error_rad": 9.103676278663377e-09,
+          "final_position_error_m": 2.41892509446686e-07,
+          "first_stable_suffix_update": 6,
+          "last_five_max_orientation_error_rad": 9.103676278663377e-09,
+          "last_five_max_position_error_m": 2.41892509446686e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "raise",
+          "updates": 25
+        },
+        {
+          "final_orientation_error_rad": 1.8196825949501933e-07,
+          "final_position_error_m": 9.751878928241456e-07,
+          "first_stable_suffix_update": 22,
+          "last_five_max_orientation_error_rad": 1.8196825949501933e-07,
+          "last_five_max_position_error_m": 9.751878928241456e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 18,
+          "stable_suffix_samples": 19,
+          "stage": "clearance",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 7.966640293651866e-07,
+          "final_position_error_m": 4.6256497377711246e-07,
+          "first_stable_suffix_update": 21,
+          "last_five_max_orientation_error_rad": 7.966640293651866e-07,
+          "last_five_max_position_error_m": 4.6256497377711246e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "return",
+          "updates": 40
+        },
+        {
+          "final_orientation_error_rad": 1.3287171603717474e-08,
+          "final_position_error_m": 8.892303872581499e-07,
+          "first_stable_suffix_update": 6,
+          "last_five_max_orientation_error_rad": 1.3287171603717474e-08,
+          "last_five_max_position_error_m": 8.892303872581499e-07,
+          "last_five_pose_samples_passed": true,
+          "samples_after_first_stable": 19,
+          "stable_suffix_samples": 20,
+          "stage": "lower",
+          "updates": 25
+        }
+      ],
+      "tool_margin_m": 0.009093543874823654,
+      "world_yaw_sign": -1.0
+    }
+  ]
+}

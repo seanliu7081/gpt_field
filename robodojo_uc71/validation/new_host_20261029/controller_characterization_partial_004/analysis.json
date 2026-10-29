@@ -1,0 +1,2309 @@
+{
+  "schema": "robodojo-controller-characterization-partial-analysis-1",
+  "attempt": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004",
+  "diagnostic_completed": false,
+  "native_actions_verified": 161,
+  "native_physics_substeps_verified": 1610,
+  "diagnostic_simulated_time_s": 6.440000305883586,
+  "complete_stages": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_000_analysis.json",
+      "sha256": "468c96ee69dfa99ee9e18da01be605ead27b4385167992de1b89d7281ce9c9b3",
+      "stage": "baseline_hold",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163703200397281e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163703200397281e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_001_analysis.json",
+      "sha256": "c7dbb91d33b31c0e6918b561e51bcf1df7c3aff78dade7b202e634d3318b2e23",
+      "stage": "left_contact_0.025_up",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.022350060673210062,
+          "sampled_translation_speed_p95_m_s": 0.022039738031961957,
+          "sampled_angular_speed_peak_rad_s": 0.0015471177345303272,
+          "maximum_joint_drift_from_stage_entry_rad": 0.03809640556573808,
+          "tail5_tool_position_range_m": [
+            2.0272111950214722e-07,
+            1.196554093030322e-07,
+            1.2324288711784703e-07
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399973899126053,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0,
+          "final_position_error_m": 8.909960148941691e-08,
+          "final_orientation_error_rad": 2.2806566636962898e-07,
+          "settling_threshold_sweep": [
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            }
+          ],
+          "stall_progress_observations": [
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.003526907856504973,
+                0.0035257398258191613,
+                0.003525516490252821,
+                0.003525346366734605,
+                0.0035247614243259723,
+                0.0035241457402293017,
+                0.003522800824182594,
+                0.0028929209412993087,
+                0.002048229813735791,
+                0.0011752628553692416,
+                0.0002964170142295339,
+                4.539804545125699e-05,
+                9.225321367479446e-06,
+                1.3819883626765648e-06,
+                3.5168300511280417e-07,
+                1.0072044084904472e-07,
+                1.148288942632004e-07,
+                1.384348517113474e-07,
+                7.712947226250288e-08,
+                0.0,
+                1.1390646373927303e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.007932479572202297,
+                0.007929785303514321,
+                0.007299664375250218,
+                0.006454440032117691,
+                0.005580834571066566,
+                0.0047004624919246936,
+                0.0038195459304486545,
+                0.002938318986750566,
+                0.0020574551351032707,
+                0.0011766684347005048,
+                0.0002968458267069092,
+                4.549876589210603e-05,
+                9.32604180832849e-06,
+                1.4827088035256096e-06,
+                4.2881247737530704e-07,
+                1.0072044084904472e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.003529733340879377,
+                0.003526116720814691,
+                0.003525622253597764,
+                0.0035253803179744877,
+                0.0035249221498777216,
+                0.0035243042262752076,
+                0.0035230649103241644,
+                0.0028950375241690355,
+                0.002050484660005743,
+                0.001178312642470047,
+                0.0002993827688667199,
+                4.654751480385348e-05,
+                1.0116451029015432e-05,
+                1.4808337008993876e-06,
+                3.974744779228871e-07,
+                1.3826875352513886e-07,
+                1.5686069715124067e-07,
+                1.5162970343526513e-07,
+                9.94802836972761e-08,
+                0.0,
+                1.422187736457638e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.00793546312562091,
+                0.00793047296838603,
+                0.00730188110399289,
+                0.0064568489059183614,
+                0.00558404242721158,
+                0.0047037390164380586,
+                0.0038228063651989793,
+                0.0029415850389728888,
+                0.0020606011110347582,
+                0.0011798322646407742,
+                0.0002998797236283401,
+                4.668578355737861e-05,
+                1.025471978254057e-05,
+                1.6191024544245264e-06,
+                4.969547616201632e-07,
+                1.3826875352513886e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            }
+          ]
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163707103525102e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_002_analysis.json",
+      "sha256": "a2e5ca3796edeed83a8e0818da9b2a793b0b472ae211cee89aff10368811174f",
+      "stage": "left_contact_0.025_return",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.02237550469767258,
+          "sampled_translation_speed_p95_m_s": 0.022057637885005744,
+          "sampled_angular_speed_peak_rad_s": 0.0015791251935312175,
+          "maximum_joint_drift_from_stage_entry_rad": 0.03809591522872324,
+          "tail5_tool_position_range_m": [
+            1.0957292456703627e-07,
+            8.943760124169309e-08,
+            2.898577090570953e-07
+          ],
+          "initial_finger_positions_m": [
+            0.04399973899126053,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399973899126053,
+            0.04399973154067993
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0,
+          "final_position_error_m": 1.146880948168346e-07,
+          "final_orientation_error_rad": 3.6481870406956424e-07,
+          "settling_threshold_sweep": [
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 11,
+              "settling_time_s": 0.4400000208988786
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 10,
+              "settling_time_s": 0.4000000189989805
+            }
+          ],
+          "stall_progress_observations": [
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.0035293039464325904,
+                0.0035272915184995333,
+                0.0035264067953090865,
+                0.003525546946870946,
+                0.0035240961294240804,
+                0.0035225236662499676,
+                0.0035184648068513295,
+                0.002886927640101767,
+                0.0020442114988538426,
+                0.0011727560167703872,
+                0.00029720954516600646,
+                4.812035570326269e-05,
+                1.0506955324299323e-05,
+                2.0799265378769317e-06,
+                4.595340138783877e-07,
+                7.728061299525163e-08,
+                8.007199424366399e-08,
+                1.4147071595437935e-07,
+                5.49882522412643e-08,
+                8.028013394222902e-08,
+                1.6080504150369617e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.007933282586726549,
+                0.007927056918477351,
+                0.007294345456037567,
+                0.006450087987351676,
+                0.0055767346570643455,
+                0.004696974945143824,
+                0.0038160590164317432,
+                0.0029350479958050292,
+                0.002054718454178142,
+                0.001174910812907735,
+                0.00029767149019340914,
+                4.8197636316257944e-05,
+                1.0636813176011578e-05,
+                2.2097843895891855e-06,
+                5.422251613448788e-07,
+                1.5756074693748066e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.003532184865107006,
+                0.0035277688573466135,
+                0.0035266195262518433,
+                0.003525739513001629,
+                0.003524330688218004,
+                0.0035228050140365605,
+                0.0035189779542870035,
+                0.0028887385200355525,
+                0.002046409631041233,
+                0.0011756740798952408,
+                0.00029989599649532983,
+                4.9523802294401494e-05,
+                1.1449970377490531e-05,
+                2.2342707864768114e-06,
+                5.372494312668655e-07,
+                8.032426377060548e-08,
+                9.593917567889791e-08,
+                1.7219561193244064e-07,
+                8.15357468941731e-08,
+                8.895905860990604e-08,
+                1.8481502131264894e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.007936466804062016,
+                0.00792811969898038,
+                0.007296436201328958,
+                0.006452551864954093,
+                0.005579956018850251,
+                0.004700246838129096,
+                0.0038193404773715165,
+                0.002938262322329954,
+                0.002057859601418724,
+                0.0011779790735238016,
+                0.0003004428473482833,
+                4.96041265581721e-05,
+                1.1602228966468706e-05,
+                2.386529375454987e-06,
+                6.358099115633747e-07,
+                1.6928332238051152e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            }
+          ]
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163709705610316e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_003_analysis.json",
+      "sha256": "a80e72b2feb0000e9ec1b345e5a5b030b06782f37a143b7b8d8bb2580f63006c",
+      "stage": "left_contact_0.05_up",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.044701566202432215,
+          "sampled_translation_speed_p95_m_s": 0.044078100541554394,
+          "sampled_angular_speed_peak_rad_s": 0.003101052117554692,
+          "maximum_joint_drift_from_stage_entry_rad": 0.038096083828634164,
+          "tail5_tool_position_range_m": [
+            1.6058234159066487e-07,
+            8.87494066015293e-08,
+            1.2197566290339523e-07
+          ],
+          "initial_finger_positions_m": [
+            0.04399973899126053,
+            0.04399973154067993
+          ],
+          "final_finger_positions_m": [
+            0.0439998023211956,
+            0.043999746441841125
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0,
+          "final_position_error_m": 7.838623966539646e-08,
+          "final_orientation_error_rad": 5.223114486938347e-07,
+          "settling_threshold_sweep": [
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            }
+          ],
+          "stall_progress_observations": [
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.007052798437594772,
+                0.006301825964059521,
+                0.0046575402846973256,
+                0.002921902751168255,
+                0.001164499539749521,
+                0.0001509694672171221,
+                3.248769021554856e-05,
+                5.782304195818231e-06,
+                1.0911892706213637e-06,
+                2.570046885836743e-07,
+                -7.063423035750538e-08,
+                1.0767186810051145e-07,
+                1.2085394185829158e-07,
+                1.2188845244455766e-07,
+                7.028384106772607e-08,
+                1.5580854526694596e-07,
+                -6.383416557756153e-08,
+                8.229238843810315e-08,
+                6.383416557756153e-08,
+                1.2671159707840314e-07,
+                8.123997599659674e-08
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.00821813216192633,
+                0.006453052435965227,
+                0.004690027974912875,
+                0.0029276850553640733,
+                0.0011655907290201422,
+                0.00015122647190570577,
+                3.248769021554856e-05,
+                5.782304195818231e-06,
+                1.0911892706213637e-06,
+                2.570046885836743e-07,
+                -3.503892897793099e-10,
+                1.779557091682375e-07,
+                1.2085394185829158e-07,
+                1.2188845244455766e-07,
+                7.028384106772607e-08,
+                1.5580854526694596e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.00705862380277187,
+                0.006308148745984746,
+                0.0046615351662439635,
+                0.002927794911105303,
+                0.0011709211685301641,
+                0.00015205131173979568,
+                3.5270945304097525e-05,
+                6.458524950715419e-06,
+                1.2153647588106767e-06,
+                3.083904146027138e-07,
+                -6.462552094302157e-08,
+                1.2838266929635455e-07,
+                1.3569588983818793e-07,
+                1.6472588154012536e-07,
+                7.646541969996206e-08,
+                2.0472781066986908e-07,
+                -8.843448461418557e-08,
+                1.1184045626328467e-07,
+                8.843448461418557e-08,
+                1.5160995091642755e-07,
+                1.1131774466065972e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.008230451945646242,
+                0.006460508448139144,
+                0.004696806111548061,
+                0.0029342534360560185,
+                0.0011721365332889747,
+                0.0001523597021543984,
+                3.5270945304097525e-05,
+                6.470364849472359e-06,
+                1.2272046575676172e-06,
+                3.202303133596543e-07,
+                1.183989875694049e-08,
+                2.048480889963166e-07,
+                1.3569588983818793e-07,
+                1.6472588154012536e-07,
+                7.646541969996206e-08,
+                2.0472781066986908e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            }
+          ]
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163709705610316e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_004_analysis.json",
+      "sha256": "1c3d692e7866346ca4e2148952636e5a100e7261e4285393e0f059c6c8dd2ebe",
+      "stage": "left_contact_0.05_return",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.04474667320411104,
+          "sampled_translation_speed_p95_m_s": 0.04410647578709583,
+          "sampled_angular_speed_peak_rad_s": 0.0031645599594222356,
+          "maximum_joint_drift_from_stage_entry_rad": 0.03809651383622281,
+          "tail5_tool_position_range_m": [
+            1.602038570691633e-07,
+            1.1441181335669626e-11,
+            7.078229002921432e-09
+          ],
+          "initial_finger_positions_m": [
+            0.0439998023211956,
+            0.043999746441841125
+          ],
+          "final_finger_positions_m": [
+            0.0439998023211956,
+            0.0439998023211956
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0,
+          "final_position_error_m": 8.004571113913296e-08,
+          "final_orientation_error_rad": 3.6037902290403673e-07,
+          "settling_threshold_sweep": [
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 6,
+              "settling_time_s": 0.2400000113993883
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 5,
+              "settling_time_s": 0.20000000949949026
+            }
+          ],
+          "stall_progress_observations": [
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.007052209555050279,
+                0.006294085294183025,
+                0.004650710441480865,
+                0.0029170319923598168,
+                0.0011628329132046355,
+                0.00015550663916412551,
+                3.5765101560852685e-05,
+                7.158047974418583e-06,
+                1.6345608494465017e-06,
+                4.7110464644769974e-07,
+                4.829806280339742e-08,
+                8.69046163736112e-08,
+                1.0783455462725014e-08,
+                -2.3809138607165706e-08,
+                1.679981790101907e-08,
+                2.383116029030876e-09,
+                5.603433977449799e-10,
+                7.603102339818056e-09,
+                5.603433977449799e-10,
+                0.0,
+                5.603433977449799e-10
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.008216216707913376,
+                0.006450014739930795,
+                0.004686475543041717,
+                0.0029242275549415764,
+                0.0011644782575095448,
+                0.0001559777438105732,
+                3.5813399623656084e-05,
+                7.20634603722198e-06,
+                1.6453443049092267e-06,
+                4.7110464644769974e-07,
+                4.829806280339742e-08,
+                8.69046163736112e-08,
+                1.0783455462725014e-08,
+                -2.3248795209420726e-08,
+                1.736016129876405e-08,
+                2.383116029030876e-09
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.007058607931970574,
+                0.006300946257947286,
+                0.004654499899704985,
+                0.0029228678759082864,
+                0.0011688738028716324,
+                0.0001562474499357478,
+                3.883071412920965e-05,
+                7.93134471863936e-06,
+                1.8106980584917412e-06,
+                5.352814808380063e-07,
+                4.3693997115656654e-08,
+                1.237431696276922e-07,
+                7.52868111960069e-09,
+                -3.1989063707101344e-08,
+                2.232887388413887e-08,
+                -9.953554342200868e-09,
+                2.5405770460871654e-09,
+                2.3457082107448673e-08,
+                2.5405770460871654e-09,
+                0.0,
+                2.5405770460871654e-09
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.00822876468010098,
+                0.006457685295366756,
+                0.004693330613834195,
+                0.002930835385942922,
+                0.0011706920296112439,
+                0.00015678273141658578,
+                3.887440812632531e-05,
+                7.975038715755015e-06,
+                1.818226739611342e-06,
+                5.352814808380063e-07,
+                4.3693997115656654e-08,
+                1.237431696276922e-07,
+                7.52868111960069e-09,
+                -3.1989063707101344e-08,
+                2.232887388413887e-08,
+                -9.953554342200868e-09
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            }
+          ]
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163688888928604e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_005_analysis.json",
+      "sha256": "1f0215da35c569da056346e4b8d38b5e37c0ce6a4d09ef3e7bffbe8913bf59f5",
+      "stage": "left_transit_0.1_up",
+      "arms": {
+        "left": {
+          "sampled_translation_speed_peak_m_s": 0.08940332907046074,
+          "sampled_translation_speed_p95_m_s": 0.08820972572512689,
+          "sampled_angular_speed_peak_rad_s": 0.006199663554936069,
+          "maximum_joint_drift_from_stage_entry_rad": 0.1152878702229998,
+          "tail5_tool_position_range_m": [
+            2.0707357872851162e-07,
+            1.4860548588901956e-07,
+            3.046950329821385e-07
+          ],
+          "initial_finger_positions_m": [
+            0.0439998023211956,
+            0.0439998023211956
+          ],
+          "final_finger_positions_m": [
+            0.04399999976158142,
+            0.043999891728162766
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0,
+          "final_position_error_m": 7.334801676349745e-08,
+          "final_orientation_error_rad": 4.0081343487233225e-07,
+          "settling_threshold_sweep": [
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.0005,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.001,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 9,
+              "settling_time_s": 0.36000001709908247
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.005,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.01,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 3,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            },
+            {
+              "position_tolerance_m": 0.002,
+              "orientation_tolerance_rad": 0.02,
+              "minimum_stable_samples": 5,
+              "first_stable_native_action": 8,
+              "settling_time_s": 0.3200000151991844
+            }
+          ],
+          "stall_progress_observations": [
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.014115737980904564,
+                0.014112176646790615,
+                0.014112638096765422,
+                0.014112849680461812,
+                0.012088060244021837,
+                0.00874425448018371,
+                0.005256259355921223,
+                0.0017348849487018717,
+                0.00023266083476648983,
+                4.846143442244722e-05,
+                8.162958099489906e-06,
+                1.342763476724496e-06,
+                2.1052753705945412e-07,
+                1.7561211518059292e-08,
+                -7.0750384171062286e-09,
+                3.3896500209252914e-08,
+                6.055768219395187e-08,
+                -6.988631456335473e-08,
+                5.672834610765007e-08,
+                1.2080236920345627e-07,
+                1.998947811517273e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.05,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.026388190591595986,
+                0.0228967471645088,
+                0.01937571764730941,
+                0.01584886686510335,
+                0.012320914045113868,
+                0.008792733475817676,
+                0.0052644223140207135,
+                0.0017362277121785962,
+                0.00023287136230354928,
+                4.847899563396528e-05,
+                8.162958099489906e-06,
+                1.342763476724496e-06,
+                2.1052753705945412e-07,
+                1.7561211518059292e-08,
+                1.7689894821351353e-08,
+                5.8661433447710495e-08
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 5,
+              "rolling_progress_m": [
+                0.014126503546079064,
+                0.014113425655828614,
+                0.014112601785060571,
+                0.014112776922528106,
+                0.012101540588119766,
+                0.008753891424711453,
+                0.005269275396569938,
+                0.0017486766764162197,
+                0.00023316954069643145,
+                5.279769246880738e-05,
+                9.147457745937286e-06,
+                1.536384414893679e-06,
+                2.2463844846489444e-07,
+                2.533623696000466e-08,
+                -1.4951422658814558e-08,
+                1.3395826297646955e-08,
+                6.949189875844518e-08,
+                -5.2027728010386226e-08,
+                4.685609971220057e-08,
+                1.2017819362797002e-07,
+                2.1962327095905468e-07
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            },
+            {
+              "orientation_weight_m_per_rad": 0.15,
+              "window_actions": 10,
+              "rolling_progress_m": [
+                0.02640861528463796,
+                0.022910992651499897,
+                0.01938948825496155,
+                0.015862765344910757,
+                0.012334909431027701,
+                0.00880671445341722,
+                0.0052784228543158755,
+                0.0017502130608311134,
+                0.00023339417914489634,
+                5.282302870576739e-05,
+                9.147457745937286e-06,
+                1.536384414893679e-06,
+                2.2463844846489444e-07,
+                2.533623696000466e-08,
+                1.01896323487817e-08,
+                3.853688130524321e-08
+              ],
+              "interpretation": "Low progress after arrival is expected; genuine-obstruction detection is untested"
+            }
+          ]
+        },
+        "right": {
+          "sampled_translation_speed_peak_m_s": 0.0,
+          "sampled_translation_speed_p95_m_s": 0.0,
+          "sampled_angular_speed_peak_rad_s": 0.0,
+          "maximum_joint_drift_from_stage_entry_rad": 1.3163692358375556e-11,
+          "tail5_tool_position_range_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "final_finger_positions_m": [
+            0.04399970546364784,
+            0.04399970546364784
+          ],
+          "tail5_finger_range_m": [
+            0.0,
+            0.0
+          ],
+          "tail5_finger_sum_proxy_range_m": 0.0
+        }
+      }
+    }
+  ],
+  "incomplete_stage": "left_transit_0.1_return",
+  "stopped_before_native_action": 162,
+  "failure": "ControllerError:no_cartesian_progress",
+  "offline_replay": {
+    "last_measured_state_receipt": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0161.json",
+    "position_error_m": 3.096960041597894e-08,
+    "orientation_error_rad": 8.946420489969285e-08,
+    "desired_dot_predicted": 8.802656864297327e-15,
+    "absolute_progress_guard": 1e-14,
+    "both_error_norms_at_target_guard": 1e-10,
+    "classification": "numerical_guard_mismatch_at_negligible_residual_not_evidence_of_obstruction"
+  },
+  "right_arm_motion_characterized": false,
+  "orientation_pulses_characterized": false,
+  "gripper_timing_characterized": false,
+  "clearance_reviews_issued": 0,
+  "selected_parameters": null,
+  "selection_supported_by_recorded_stages": false,
+  "standard_ready": false,
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "model_calls": 0,
+  "automatic_tuning": false,
+  "automatic_retry": false,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/launch_result.json",
+      "sha256": "07c072cfe2a13f1f060b352c1922c3341bb0fcc7d113923ee4244c9d2a9ce221"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/controller_failure.json",
+      "sha256": "5cd415ebed1c2b6248340255d8d08c39cdbf17f1afffecc6ad9f3bf8d8dfd678"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/controller_preclose_ready.json",
+      "sha256": "d71540725c9b7fba98cfe84c66f00275d3e974e229fa92b0a6de5e139d55be69"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/worker_isolation.json",
+      "sha256": "205cbc56125ac648e47b01841a11d4bdfb406454e7bdb28840c6c72957c6d98e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/runtime_paths.json",
+      "sha256": "a32b0868767d42029d3889f2c4136c37bd7fed5f9de2a2fb159ca189bb39433c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_logging_paths.json",
+      "sha256": "788a48e9f070387a68be4ff7ac6461fdff8b9312785283ca34e0076859da438b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0001.json",
+      "sha256": "9ccf0c431a7538be9c74a29c725339611f51ed939b1af25d22e0ba698e4180de"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0002.json",
+      "sha256": "dbb975333f62b31bffb698ebf73ac009b25bb94d6fa8efddd222370524cf5863"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0003.json",
+      "sha256": "4c47111f4ba28018824335d9aa1203a58732a2ce822ab088ce54d07acbc52220"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0004.json",
+      "sha256": "31f2da133aa186755a6152abbe11647156f848b0fa4f5ef5434608ff42df60cc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0005.json",
+      "sha256": "b0de74078cf0edc2e3f95d05d3e1e176ee2d69c06e368d63b02b0d5ebd67c38e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0006.json",
+      "sha256": "7e91c847c70c13d396f2aa8dd191d46371c0e70af4c37d1928966c8a3ef6fdba"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0007.json",
+      "sha256": "529ad2b96f4ba65795056a7a7d85a5513a666e444766f06edafc8ab43b3861d5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0008.json",
+      "sha256": "19e3489ae78ef483eb800b5658ddb263ff7e0f6c48cefde83054aaece7bbecef"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0009.json",
+      "sha256": "b15f80bf282532f2024690dd3811a79dfed10c0de4f67882fe8db2c5668c27d0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0010.json",
+      "sha256": "e4c73a662b23c26863a8d0ee45cdcebfd9f1dfb2cabf60e4638cd8ea4aed5593"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0011.json",
+      "sha256": "08ec43c322ebb8920f09703364263ee010ffddfd04ff63dd8693c57c35023208"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0012.json",
+      "sha256": "0eba85facc21a46ebf58f139a2023859174c06ff8414c751bdf2ece54106211b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0013.json",
+      "sha256": "cea21a56b268bd5c3021a75e5dba2a86157f861c3c9d876ba0f2dc19efd1d859"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0014.json",
+      "sha256": "711503d418bb04a95df6ec81b8d165e33ec1c244c024ff6bcb6f54eca93bc7f6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0015.json",
+      "sha256": "86fe2164303ec10430f4be2f067a918aca945f859b6ff8951b8742bc4c26203b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0016.json",
+      "sha256": "8171de2221b6a7abe8a576b4f44a077a7b491c782457192c81de1951ffdee8f7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0017.json",
+      "sha256": "76d1a163d937699846de4766406d58d80f3fd2a01f47c50cde4780dabab12e99"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0018.json",
+      "sha256": "1aeee6b5692ede6fcd91dbd8ea28b91491e3c1b34eae91dfec3a5ba2f2863f3a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0019.json",
+      "sha256": "f0c4f625716597c155ac9f651fe4e48fef195eeffb1e3690159ff61d6b9fd17f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0020.json",
+      "sha256": "5da05180b708d525e6c9f71d0982bd25b3e5be4028e57e897b00d48b2b6eb8d8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0021.json",
+      "sha256": "cc098a46ecb4e8eff9115f7d270a4c81e61fc4be5d065dcc8b7b4c503ed2e57e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0022.json",
+      "sha256": "61d63a403c399f09b4ed893b25151e630d8fc197925e5ca749690954de8d6e38"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0023.json",
+      "sha256": "20581b7da047cf3b44acfa00f83d0425a3229074b75434897a7b83dc236853b2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0024.json",
+      "sha256": "510ecaf69c2f95dbd29c377b825a00215caf5c07c2cee8f4a6f540a34fd46acd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0025.json",
+      "sha256": "f7eea3cd7e1ba7385493c6824cf8ec7142933685c3768929c2105c6244ffddc1"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0026.json",
+      "sha256": "d13dc3a4dd3dde96785a87f91c60e8b6898c85c49cdfbb667baa1ae9f520e175"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0027.json",
+      "sha256": "084975c36b843afecaf980ecd0b1e92b3dbe5ec6a253f7c58f64e03506da41df"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0028.json",
+      "sha256": "9230f3d000717a49cabe41ae17680aad48e5195257f22c505cc30a3bcd239726"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0029.json",
+      "sha256": "4310c9ba44e4be7bbbc3b3c0a21aaf9c94b46369fdac6d4f44a5d71306ab1327"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0030.json",
+      "sha256": "a2be6e7922abf356156ff62f1f8738159475ac63599993bbcf7d55bb2aa7c190"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0031.json",
+      "sha256": "90217945d053b14041080c95338c5d78ebb192bdba6604a747ebdb7add02c452"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0032.json",
+      "sha256": "3a9fff27367980cbc24b592c57371246f3026efe481278607c169bf7dc45829d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0033.json",
+      "sha256": "d58c5e4660a1f1f05987769add526fd5d6b30ca9b62fdf09b6bdf4c327f92b26"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0034.json",
+      "sha256": "0383b88bfddee038b79d0d6e17536aa938dff61f534d3b1032cf4c914f8e66df"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0035.json",
+      "sha256": "9c035ecdf2e10b9b2925b6266c62f58a48c192b486e6a16d81e00493c05fa9c6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0036.json",
+      "sha256": "31fc4de288e065eeea2c824021ee42e728f2f2a9e055f8949e78d0c40cf714ef"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0037.json",
+      "sha256": "ee3f5f1affa44210b35445ed0a7396f80776193859dbc25667d40ffc91400404"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0038.json",
+      "sha256": "bf5c35aa37622d0a4327fccfccaba8c1f5f195f3fd908db9a19568a456d86f63"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0039.json",
+      "sha256": "ccb3078867801d68e0a4069a20f851b5aa213721a4160135efc9ca6ce61da817"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0040.json",
+      "sha256": "5769083553a52f80b37deeac2141f2bd5bca880a297dbe4efae73afb4de96778"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0041.json",
+      "sha256": "ab56500521de39b403cfaeafa0f2ebdf20cc437ce1677eddb03d01ec19f94550"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0042.json",
+      "sha256": "53355506ec3083831bce1324a3a84079607c23ffcad9c6d9d2f96dcdd1293784"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0043.json",
+      "sha256": "f494866ab85f0d60406f63b6165f9b76a7041b2137be487282e3b2d60e1152d4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0044.json",
+      "sha256": "4a01c79682e7160c8d52fe2e68f10408c7444414296e5457c4162edaa96b55db"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0045.json",
+      "sha256": "baadadbdbc75bebb5989f8e02d9558cf45665b1589b951d31d95b7d61c6b1bf0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0046.json",
+      "sha256": "edbb8c73b6ea9adca71ccf367650e5cd3effd621aa8c600d7e3fd5537637402e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0047.json",
+      "sha256": "02b5814ceccff7fd0a851e9f7b3d451610fece2bb3fe8172febaf511f8b4ec64"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0048.json",
+      "sha256": "ddffbb07440c0d71aaf2ce277be8854f0f3b28f59afecd356282269c179ac1ef"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0049.json",
+      "sha256": "d62bf6f45a673e9d5913705945ba184cbfbe65ec78e421d84f96d0a0a13ea1fd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0050.json",
+      "sha256": "66725d1a37e49679b9d8e440f2059aaa0fa7da2184bcf05cb95a98f3be6eca8d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0051.json",
+      "sha256": "98017801bbfa58ee69148742a913ced0f8104c8cf656105822a4137b0dbef83d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0052.json",
+      "sha256": "d15625a69bfe09e9a5f735c7d8b13dd7c3c3dcc8edc75afb8ca38ef13f287232"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0053.json",
+      "sha256": "8a9b3cc47b4e1bb1ca99f967b5fd05e694799f616ce5596998ffe2274ef231b5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0054.json",
+      "sha256": "c5eafc05857080905aa84c2f379b48b45ba6dd07c4ce26178604ab74488a5487"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0055.json",
+      "sha256": "348800756cac7cbffab569a96bcb2b5e637b5ff6e66f2d02b5b2c4b26c601eab"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0056.json",
+      "sha256": "f42d878748238589d1dc7bdb318e0eb605105390192b12eaf07235da1188fa1f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0057.json",
+      "sha256": "bc4a0066d7123003f2a6493edab8dc60b913a3c24c1158ad96f740932d34c6df"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0058.json",
+      "sha256": "5295613bed7d0c29a31d45902cfceb98085cd54ba40a452a73d01d16c6c30c07"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0059.json",
+      "sha256": "85d77ed3c2829827205c5b3626623bf028a7bdbc29ef740bba6712c0867a084d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0060.json",
+      "sha256": "c23d41a6974480364bb243033607dfd39cc8bed758f42a884d685d09a9e7477c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0061.json",
+      "sha256": "7f10f793f508eddcd63a4aa0b8f985926e0bbfc57f56161d75142c0715f9ffe9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0062.json",
+      "sha256": "aac68225582b4e2a8bf4a49f33a33e620f12e13260cdd57f90e40c6e8d6e0669"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0063.json",
+      "sha256": "f938711fd01a551007a27ee2261647c8bf236be621aa9f0404d7171fb44cd72b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0064.json",
+      "sha256": "a4d597759847df13c3f2bba35399d3a3937cc24c824fd09cc41d39738ba398df"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0065.json",
+      "sha256": "64bc3fb71f22e6c9839ff1647792fc4ea578c844493f00a01cca34cbfb4a7d29"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0066.json",
+      "sha256": "4eca700cd4ff8f317ba42a8125912f79ae1be8c20d6c8fe34f590a4f82849352"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0067.json",
+      "sha256": "66e0224a6b5ffd723b60d93ff64fe466ed997206e4d5c119cb20e29a3ecd8d56"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0068.json",
+      "sha256": "538634854adde69493fd7a60d4d702d32fa7603af0e48528194fffe910184bcd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0069.json",
+      "sha256": "ff6a60a98b6e960a5c5e0620af6259520faedf69254e87a6b02bd0332a26296f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0070.json",
+      "sha256": "09e033e76a63d9ee7bcb37e6d6b05808932ce6448cd24e64ced4ac305df78e5f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0071.json",
+      "sha256": "f6a8a5dc8a75133b66a438d3fd1131fc1a69b168379d355a9cc268fd2d89a1c5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0072.json",
+      "sha256": "3a630a0b37a0c09f5f9bf45ceeacc1293d024497c803528e6858edd99d116026"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0073.json",
+      "sha256": "77cf2b9ee452d23bf5c51fb47454f6d3ec0add3fb22be44641eaf2d24821c486"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0074.json",
+      "sha256": "bd1b079df041c4b8846d43590fdcb5aa87e0f0e08af2e1047efa3d2269901563"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0075.json",
+      "sha256": "3e2b7a3cb3e34a7bcfca3af00a84a7e2f2609a4d0078b2f26d90fe3e14318d79"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0076.json",
+      "sha256": "dab6d28f9f15e673313cba3207c60fb7c1b5d23018b4f0c8145c2d895853d555"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0077.json",
+      "sha256": "bc9feee15aeed9d597c31977113dcb965510739efc08cf4be03b6c81e74a6f89"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0078.json",
+      "sha256": "35c6108802bd33a6025bc5922462d39579195353757da35ac79f1851a5fddb47"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0079.json",
+      "sha256": "a505d7b2dd67a4644eb47288d9127815afb14dff44e8de87886b9c89d566c1b0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0080.json",
+      "sha256": "d862ebf368fb85e83b3cef3ec5ff2e837ebbdd7ed6739093317288b0beb65755"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0081.json",
+      "sha256": "bd2d332f5b6381eec1d14062e5167eb66d18a28402027f9bf4d75794a50ae58f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0082.json",
+      "sha256": "19969b736e8d5db3f8657cd7ad66f95177da21645d7752accd4d80d7cc75fb3f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0083.json",
+      "sha256": "e6ca790805974a8da626a7462fd94b5a5406990ed22716c663bfdde177741654"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0084.json",
+      "sha256": "3ced1f846ddf986305bf186fd1bb667156d896be4d21035351e3bbd6e4f7bc97"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0085.json",
+      "sha256": "51963357d6f472d8558e1b72972245f5d89cbb6ec300dea4f5ae1dea99c8824c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0086.json",
+      "sha256": "6ff2079d23ca8df17f521a72ddd1638d3e7f26c60ae0b8816e7362124b54f605"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0087.json",
+      "sha256": "e363024adbda8d1b4a4ab008b93290333e69e8b912b1d9ae3558f8508d7e4cfe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0088.json",
+      "sha256": "96b3c23d52367c500c47cb3fffba7f9259fcffc0c8eca10ac4070a2f406882c8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0089.json",
+      "sha256": "fe1bc62ea3f2255bd1bc942460cc5f1d7274062a7b7941efb4cd48339f96565e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0090.json",
+      "sha256": "3094fdd67aebac68b850aa734011fd718f46c843cc7b297885c4bb359d0df14a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0091.json",
+      "sha256": "3ecc673e462b71f1b6c11b33fd3cfc237cbe04fcd24098e595f86fbc17087e75"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0092.json",
+      "sha256": "789bcc6dc4bb25c88267b2dffcee522dd2a756d1776d18fd9ba85ca9bdff5738"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0093.json",
+      "sha256": "6386a93b8641960fe48244d75fd0197c222398fd1f1ffbcc2cbfd14b91cd26c5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0094.json",
+      "sha256": "71aa058f9e1dd97bfe09fb5a5458c5646d8850c00cff54f5c1d3d748ace40e32"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0095.json",
+      "sha256": "331135444044b465c2681bd1ac623ad86d4219fc29c963996bc14701d62a09e4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0096.json",
+      "sha256": "b27b42bc8b1607daf641e5a788ef878bc5d28de40987c6c4439897e4b2f1c55f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0097.json",
+      "sha256": "00fc78a2ab0f0fc56389385e4903d9c66d40c8aafc6a2a6475e8d779939db6a5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0098.json",
+      "sha256": "2cf6a1a2e79fbf708575b4ba519b085ae6d0db5741d6d6bb67e9f57673f4288c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0099.json",
+      "sha256": "f347615473438a06e38e555123125aafc2f48a7f8d169b3be1302dd8823895c6"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0100.json",
+      "sha256": "c01f990faad02f88e047bd01d51777721f9d6ec05312c2dff1d814562141e537"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0101.json",
+      "sha256": "098733ea7709b95f117132579268ba1c4c8d479e1c767e58f599e4a322674ebd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0102.json",
+      "sha256": "8d5c833f9fdab0584430cdcc9c99ad25029b697069db2016c850d985ed4bde2e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0103.json",
+      "sha256": "ecf8d1fd51b9870f58e9331714101df74d6506e5a6ef4ca970097c56557173bd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0104.json",
+      "sha256": "ea25fee08ad7bf91aee00c841a5a4bbd694efc7d6f2d29a0339aa708552d1dad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0105.json",
+      "sha256": "1ac929fe5e1c953ad9beb9f2865a3cdeaeaed30aa15f9bdf6c600ca3857d4e17"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0106.json",
+      "sha256": "727ae8f3d1af2bc5761e03264d07298012ab1ed5fd96ef437f2ecf012fd80cf8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0107.json",
+      "sha256": "0f231ef2e6665d7dee96557fa1053fd6237ea9aadfa911362a5b31b1888e6e6c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0108.json",
+      "sha256": "4b05ea8a3db52411a717b402beb97aa76dbc933400f265caa04cf4ba8fa5088a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0109.json",
+      "sha256": "965bc72f4907cf26bd39f230cdff7ff661a76da268b6719f09112db882e26fba"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0110.json",
+      "sha256": "d432441db11eebcc632fb337751b4cf4bd0f156ea6f1851d16251f801cefe5a3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0111.json",
+      "sha256": "3252c8a08db98b5677a03d25b25e86bbf18a3ec1e8b6ff21c3bca01419a86c74"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0112.json",
+      "sha256": "16964e37b3a7d428bb2f69432a5949117dfea509dfdf8800673a51966e9b0927"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0113.json",
+      "sha256": "3dd140092c21c69d7e4d3b5662b8f3303b0d8c1c872993f1c23888706b270b6e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0114.json",
+      "sha256": "0a6fbe24c944cec75b96fc1fb67a6c7398563b07520b9022bd16b4ea78ee7723"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0115.json",
+      "sha256": "d93455297ccc90ae0c7216e8007a7805968cf66f7bf9cdd47daa7d04df6b2107"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0116.json",
+      "sha256": "1ab8b0db78f88173c9380055d82344b23f3d5c89a7c1925acbd706e8a757d378"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0117.json",
+      "sha256": "30aebd5a8e0df7dfb1e1af1f3cae62dcd855a312ebf71ae09e3b96dce975c96f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0118.json",
+      "sha256": "8e2ef424683c446d4b80bd617b7c69cdaa15808fd8a1da0d2a18a948c0d0dbcc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0119.json",
+      "sha256": "15004131ff4a7f6935feea1842b036534988397067b5a0094409cd07a1547b36"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0120.json",
+      "sha256": "4dec74656c9b4df7cf0ce8854a440fa3ba05821db09fae3621e32ec9da7b9e97"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0121.json",
+      "sha256": "0d3c49fcc4eeef3a506fb64efbf87980e61e96cd752e41ce1045053a71a0305e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0122.json",
+      "sha256": "58cdca99e5e64c3fc85a81cb7e04cdf50bd44e9bec6cba11c54321ecaf4b6afe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0123.json",
+      "sha256": "67f9bd5bc9157139ca324a3b94205b49221ddb875b0028c4b9938df8125dd7d9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0124.json",
+      "sha256": "38073fa000eceb05cb295a685fffac54a63efeded78e1c7748625020368e8bae"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0125.json",
+      "sha256": "1b9ac739356d915c62bbc2ebc8034e6207da2d1d7316d1c453f68d17c1e636bd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0126.json",
+      "sha256": "324c808999328442a6c96797968c920ba06494f54d6c6e51b8f8e52adf31f8b4"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0127.json",
+      "sha256": "975d646486cb0494dad583c8a5b9d4bea6d5326e7e47b961599ef4a6cc4e3313"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0128.json",
+      "sha256": "498fc3a861a63a6e078daca0c3263adfa5fc8e1c6fbc08f1902686298ada371e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0129.json",
+      "sha256": "5426e63aa22276b6d921509b610578e6aa93653ba10c9c1ef8238cf4826962c3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0130.json",
+      "sha256": "d6c8d95157212e1d6778a3734c1b84d58939cad261ed64a129802143772de5ca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0131.json",
+      "sha256": "956b79b8ed649d3944944b9e491e91471d428c8bcee3da317159f6b21caed90d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0132.json",
+      "sha256": "68ca9a69432301fd64b5b61325f35484264710b02c5b3658077153ca2b0798a8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0133.json",
+      "sha256": "5c1f4f82b4306edb7dbc7fefef89585d5d5b154ad6d3c80ed795ef7da01b986f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0134.json",
+      "sha256": "0719d705afd7caf9b79247116cb2117490f0984b880978d46ee366a02c996e02"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0135.json",
+      "sha256": "f57e7d2ce8ca66771ecc9048b8da0c0a3adf4de25675d95cb96c5e7ff0ca5aff"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0136.json",
+      "sha256": "2da94571546ce2f2cb7a46e77c8dd37625f266a8e5c20558ad6eedb07201a21a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0137.json",
+      "sha256": "9d6ecc282b173a2fcbf7477cd0e9bb78560bdf9938318ffc2eec674caa90c47c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0138.json",
+      "sha256": "617a167d3c091fb85a21cc0c6993b8eed6ee692dd89c9663d988e85b19c29479"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0139.json",
+      "sha256": "aeeb2ec62a2060600c4b9fb801270ce1ab9f0e757956c2ef07d4bc48d798134a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0140.json",
+      "sha256": "869f77261edb9ab1460fc91e72d6e649b0c42286f972499c937e4969f74e0259"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0141.json",
+      "sha256": "0efa872afaec5de641840d3914a54cd7cd18d821bf456fae82fd0c5c079d65f3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0142.json",
+      "sha256": "4096b201384238a7ccc969e08ff1b3ebb0d4812f43432e7304575c4d70b8c19d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0143.json",
+      "sha256": "8f616bb2aac86fc697eceb878142b720da5ac7d812c3c5f477a9e525b77fe1d8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0144.json",
+      "sha256": "ea99fbab92a381c517bb2aa0f50b0cdc2fe72532d3c154cb6f4c77694c904e23"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0145.json",
+      "sha256": "3d8015ca77d68c652118bef4377e2abf5ba0d0698dca8c24d41a7c48dd5e8b44"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0146.json",
+      "sha256": "0e967f09def38fae35f9d98aef4be96d48497c336f73b28725110c2ba82117cd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0147.json",
+      "sha256": "2e820e799a02a05a9caa59bc6e010647f90b3657fe4b7676fa30455511b2740b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0148.json",
+      "sha256": "fd895b17e7337a5edf22fe5bf71054a627ec042134684e1899f0a39ccc4d3f1b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0149.json",
+      "sha256": "d27307445256b56e717dab8c8ad8ed9c08e98bdfb84eff5761478c477de4c901"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0150.json",
+      "sha256": "eec6d413d3f950e8691662ead529c8349e4d533cdff2ad51a680a8c81730d32b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0151.json",
+      "sha256": "4b2219ba4aecbe5bdc6f464334f42dee4e5d7c11ed73ed72b5b791293fc543eb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0152.json",
+      "sha256": "451b7a0462c1e2f82d89c43c1187fe711528907314224f013e8a584970f72024"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0153.json",
+      "sha256": "b6751259bd0ee48c12bd50ac1e4e76bdb3dce09cc8aa4150a91e9fbf93f883f7"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0154.json",
+      "sha256": "3b4dfa92830764d25e35fc771c6b52bac9cc13c782b9a282dd6cfdb3f291f945"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0155.json",
+      "sha256": "a4b0cce98c0bba52ee77ed2701ea94b4c900a941d7b9bc621d93b1037194b083"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0156.json",
+      "sha256": "9fbe71620c259b48b2a067400239a5bd0833689d0c04f817fbedbcd29cf3643e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0157.json",
+      "sha256": "ef46ac1987b899a474be6be0fbc61cbb455730d97981078f64e7da8c7e672845"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0158.json",
+      "sha256": "a2e876676472870a2fe789008fd4ee0e2e6e3e24af86afa7c75d6fcc29d8c8b3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0159.json",
+      "sha256": "871cd187032994fb72c87ada124d11cde135c49413aafd6d94897cf0945811e8"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0160.json",
+      "sha256": "06bfb9dcb5d33a31920ffd9d66287621bd7ce258a5c198f9f2e6844384435544"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/native_action_0161.json",
+      "sha256": "143c8c4ff0b55b1e24d4b887225c2bb0a217c8a5cdd42be2568b3f5a9cb14191"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_000_analysis.json",
+      "sha256": "468c96ee69dfa99ee9e18da01be605ead27b4385167992de1b89d7281ce9c9b3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_001_analysis.json",
+      "sha256": "c7dbb91d33b31c0e6918b561e51bcf1df7c3aff78dade7b202e634d3318b2e23"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_002_analysis.json",
+      "sha256": "a2e5ca3796edeed83a8e0818da9b2a793b0b472ae211cee89aff10368811174f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_003_analysis.json",
+      "sha256": "a80e72b2feb0000e9ec1b345e5a5b030b06782f37a143b7b8d8bb2580f63006c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_004_analysis.json",
+      "sha256": "1c3d692e7866346ca4e2148952636e5a100e7261e4285393e0f059c6c8dd2ebe"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/worker/controller/stage_005_analysis.json",
+      "sha256": "1f0215da35c569da056346e4b8d38b5e37c0ce6a4d09ef3e7bffbe8913bf59f5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/controller.py",
+      "sha256": "70d2f765469bcfe3496ff63b7f632c119860c7eca5d432f9dfb6b38fd0e6a261"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/controller_characterization.py",
+      "sha256": "ab2a7faf391038a4e56bf742438bdd1c9a7f5d66c6241b94f9ada3d37685305a"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/native_action_observer.py",
+      "sha256": "45a229cda651af8ecd968b467201cf36417e63478f09862207f9979ae5e9baca"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/native_characterization.py",
+      "sha256": "8380338e3d13daaeb7d1f3d0a982fee257f977044d9c77bb72345e83447c4d48"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/native_config.py",
+      "sha256": "6d2787451c377ec0aa5d55549d42688e685ce238930387b452bba77a877c5ad2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/native_measurements.py",
+      "sha256": "7faab6c76a4f36bf8fcbc104a9fdafd9878074e5f7efa44937e1e6466d92e424"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/native_robot_inventory.py",
+      "sha256": "f9e8ea25aa218b1e31554bf62bde4180114d5371f7f2cbd9730e6df72452362e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/new_host_camera.py",
+      "sha256": "f36e5b097ec4553032be10db1930a586f1db13602a65869b7e63cbacae79e6d3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/prepare_controller_characterization.py",
+      "sha256": "b9b9aa8414ae8e052f83faf65c215dc8c74fccc2bec3a5834d5c73197b81b62e"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/prepare_native_characterization.py",
+      "sha256": "264cf079e2404298857e91ea39cf817db2b81c129565a96c8cf5b5b8a9dadb70"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/prepare_native_preview.py",
+      "sha256": "fe4216f5a62e60628cbed481ef29f57430fd56ea15b1a5969318e2326e0eaceb"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_controller_characterization.py",
+      "sha256": "81f8e2de848073dd5ebdde9b3ab8547630a39b4c2e96749d21e8190603e25caf"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_native_characterization.py",
+      "sha256": "5e8856dd598aa7ec18c5d7d00bb77a9c86e4f43fca2a9539cddd9d6d32a32d7b"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_native_common.py",
+      "sha256": "856a9b6556adc5bfde39e4f4ef4c68dd84c0a20c8232b6a86ebfdfb153f59325"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_native_compatibility.py",
+      "sha256": "79b9bbcd0eacc920ed509f0e45a7f3420ad3a611e9fc6aab63d0c1908e6a6f07"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_native_dependencies.py",
+      "sha256": "c04141cdf26bb30aae2ce2ce9bb24938f302d301c610f26902ab1b15ebddc5cc"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_native_preview.py",
+      "sha256": "f7538d3d5c2c590f2855ddcf0b58ecf9e4cfeaef9bf0251fed29ab4be2f217bd"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/provision_new_host_camera.py",
+      "sha256": "f1d33366b64a3ecaf71ed8659f3d8c8aae9c480097009a3f369fac327942d4ad"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_004/scripts_snapshot/worker_isolation.py",
+      "sha256": "3c46bf7226c4140cb10a8c8be57ddc1e2e2d5529e5c03ad04a537a4b1dd650c8"
+    }
+  ],
+  "limitations": [
+    "Partial left-arm free-space observations only; the right arm only held its initial joints.",
+    "No completed controller calibration, gripper clearance, loaded-contact behavior, or task-success assessment.",
+    "Successful process/GPU release does not reclassify the failed diagnostic."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "64b8c0688c5d2232276dcfc4ad4a32db6f6f349be38c8f77f913b2df4148633f",
+  "plan_sha256": "0ddc7fd440d6d39aea6f5b0f2a1b0cc4036fbad5d04fd06e68ef633aac2b79ea",
+  "stage_index": 34,
+  "active_arm": "right",
+  "native_action_counter": [
+    845
+  ],
+  "image_sha256": {
+    "stage_034/cam_head.png": "d4ecaf64ab26451638d36c41e3edd4b672141dc2d94217ec80ad0d0f4d346525",
+    "stage_034/cam_left_wrist.png": "4543007dec38ca8150408ab45c421433aced64a6d1b47d8dd0a106e0a86c05d0",
+    "stage_034/cam_right_wrist.png": "3cb1d706cdfc97ab83d49dd75cf9997e5cdbf87719f93706e8ee975b5f12d755"
+  },
+  "reviewer": "root/operator",
+  "decision": "ambiguous_or_not_clear",
+  "reason": "Inspected all three fresh hash-bound RGB views. The head view leaves the inner right fingertip projected against or over the toaster front-right edge, without visible separation sufficient to establish the entire closing sweep. The right wrist view also places the toaster across the near-left jaw projection and does not independently resolve depth. The left wrist view cannot resolve this right-hand clearance. No collision or contact is claimed; visual clearance is ambiguous, so stop before right close without an automatic return or retry. No object-state or contact truth was used.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

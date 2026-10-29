@@ -1,0 +1,5 @@
+{
+  "type": "RuntimeError",
+  "message": "Post-action measured envelope/measurement failed; native receipt preserved",
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py\", line 498, in run_controller_characterization\n    diagnostic = execute_stages(env, counters, output, plan, preparation, permitted, progress, verify_runtime)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py\", line 359, in execute_stages\n    if measurement_error: raise RuntimeError(\"Post-action measured envelope/measurement failed; native receipt preserved\")\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Post-action measured envelope/measurement failed; native receipt preserved\n"
+}

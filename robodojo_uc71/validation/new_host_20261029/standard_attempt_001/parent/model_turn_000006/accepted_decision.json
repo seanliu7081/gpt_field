@@ -1,0 +1,77 @@
+{
+  "arm_id": "left",
+  "belief": "Lateral motion completed cleanly. The closer view resolves multiple rack slices; A remains the far-left physical slice and B the far-right. A's front edge is left of the tool center, and neighboring-slice clearance will require a monitored approach.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.008,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.008,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          -0.008,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.0,
+          -0.009
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": true,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.0,
+          -0.009
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Shift another 24 mm left and lower 18 mm while still in front of the rack, then inspect before advancing toward A.",
+  "type": "execute",
+  "why": "This positions the open jaws around A's exposed front-upper region without yet entering the rack."
+}

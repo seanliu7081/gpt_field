@@ -1,0 +1,77 @@
+{
+  "arm_id": "left",
+  "belief": "The hand is now aligned near A's front edge at x=-0.381 and z=0.887. The rack and all slices remain undisturbed. There is still visible forward clearance; actual pad-to-bread spacing remains uncertain.",
+  "execution": {
+    "segments": [
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": false,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      },
+      {
+        "gripper": "keep",
+        "max_steps": 50,
+        "observation_after": true,
+        "profile": "contact",
+        "quaternion_wxyz": null,
+        "skill": "move_relative",
+        "xyz_m": [
+          0.0,
+          0.009,
+          0.0
+        ]
+      }
+    ]
+  },
+  "motion": null,
+  "plan": "Advance 45 mm toward A in slow increments, stopping before the estimated front edge to reassess jaw clearance.",
+  "type": "execute",
+  "why": "This reduces approach distance while preserving a visual checkpoint before entering the crowded slice region."
+}

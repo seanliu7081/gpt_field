@@ -1,0 +1,55 @@
+{
+  "actual_scope_metadata": {
+    "gid": 0,
+    "mode": "0o640",
+    "uid": 0
+  },
+  "app_close_claimed": false,
+  "automatic_retry": false,
+  "benchmark_attempt_started": false,
+  "child_output_created": false,
+  "cleanup": {
+    "clean_shutdown_confirmed": false,
+    "gpu_memory_released": true,
+    "gpu_memory_used_delta_mib": 0,
+    "gpu_processes_released": true,
+    "remaining_owned_pids": [],
+    "returncode": 1,
+    "termination_signals": []
+  },
+  "diagnostic_native_actions": 0,
+  "failure_location": "check_authorization before child output creation and before native imports/startup",
+  "full_test_authorized": false,
+  "model_calls": 0,
+  "resolution_for_fresh_scope": "Root creates a fresh scope owner0/group65534/mode0640 and explicitly verifies the actual file read/hash and check_authorization underUID65534 before the separate launch.",
+  "root_cause": "The actual scope was owner0/group0/mode0640; workerUID65534 with empty supplementary groups could not read it. The earlier preparation scope had an other-read bit, so it did not test the actual enabled file permissions.",
+  "schema": "robodojo-controller-startup-failure-analysis-1",
+  "simulator_start_reached": false,
+  "source_code_change_required": false,
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_009/launch_result.json",
+      "sha256": "40e40114758c4677a27a0d4040bd4d43f2f7d5db4f7915181bf49ef0511e0ff5"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_009/stdout_stderr.log",
+      "sha256": "04643d09bd497e098f3a20bedc1d16d91f9052c5177162c20380492c54040b0c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/controller_characterization_scope_009.json",
+      "sha256": "68a2f6170dd6a3d09a41c05f29a4cf51ca9e21e9264e187c64b2012e06ff0777"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_009/gpu_before.json",
+      "sha256": "c90f0fbb341d03a90aef4d171b9cacea72d796febb93ce4b1eab1e8bbec21993"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_controller_characterization_009/gpu_after.json",
+      "sha256": "c90f0fbb341d03a90aef4d171b9cacea72d796febb93ce4b1eab1e8bbec21993"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+      "sha256": "0071f05546ae0c62a75c4a03b7f9bd2d60a63679bc3ea0dd315fb3191505bec0"
+    }
+  ]
+}

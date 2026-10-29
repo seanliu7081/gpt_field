@@ -1,0 +1,21 @@
+{
+  "schema": "robodojo-controller-clearance-review-1",
+  "request_sha256": "96dda855d55e4551656c7aac44eb070e871909cca6cc076252a287a9d7354c98",
+  "plan_sha256": "dfa361c4cceeb5bd6eced1b1dc310dcae010896204439e53e22273b662bda11f",
+  "stage_index": 27,
+  "active_arm": "left",
+  "native_action_counter": [
+    665
+  ],
+  "image_sha256": {
+    "stage_027/cam_head.png": "d6b5d0cc170ec082fb5151aefad40eaaafa87a27ba26cc75021d677f87afa9dc",
+    "stage_027/cam_left_wrist.png": "8d3a9dbd5b0104a4eef8388e44d86b7240d48a3538c54126cef52e534a08ef05",
+    "stage_027/cam_right_wrist.png": "932133aecd43d4d84117eefd768e74be830a742bcd33f2089de88de41165bfbe"
+  },
+  "reviewer": "root/operator",
+  "decision": "clear_for_empty_gripper_timing",
+  "reason": "Inspected all three fresh hash-bound stage027 RGB views. The head view shows the left fingertips and inward closing span separated from the bread rack by visible tabletop space, with the outward-shifted hand further to the side. The left wrist view shows empty near finger surfaces; the rack remains farther ahead in that projection. The right hand is inactive and receives no clearance from this decision. This approves only the fixed-pose empty closing timing diagnostic, using no object state or contact truth.",
+  "full_test_authorized": false,
+  "benchmark_attempt_started": false,
+  "object_truth_used": false
+}

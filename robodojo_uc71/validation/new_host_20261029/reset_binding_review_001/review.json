@@ -1,0 +1,110 @@
+{
+  "schema": "robodojo-reset-binding-independent-review-1",
+  "created_at_utc": "2026-10-29T10:12:29.060077+00:00",
+  "scope": "offline_reset_policy_and_actual_fresh_reset_evidence_review",
+  "policy_unchanged": true,
+  "stored_fresh_check_independently_reproduced": true,
+  "exact_robot_geometry_and_state_match": true,
+  "exact_camera_geometry_match": true,
+  "raw_fresh_images_preserved": true,
+  "offline_test_cases_passed": 10,
+  "image_policy": {
+    "version": "native-rgb-reset-comparison-1",
+    "shape": [
+      480,
+      640,
+      3
+    ],
+    "mean_absolute_channel_difference_max": 1.0,
+    "percentile_99_channel_difference_max": 4.0,
+    "maximum_channel_difference_max": 32,
+    "resizing_alignment_cropping_or_color_adjustment": false
+  },
+  "image_comparisons": {
+    "head": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_head.png",
+      "sha256": "641e6c526f63944b6559eeb738a211f91c966c666ffab5ba9ca845c2df76c3a9",
+      "mean_absolute_channel_difference": 0.4043880208333333,
+      "percentile_99_channel_difference": 2.0,
+      "maximum_channel_difference": 11,
+      "passed": true
+    },
+    "left_wrist": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_left_wrist.png",
+      "sha256": "2476e66b94fe5930aea47b65826d6ce71d6d68e7701c0fbfb2e633a0a4514e37",
+      "mean_absolute_channel_difference": 0.3696115451388889,
+      "percentile_99_channel_difference": 2.0,
+      "maximum_channel_difference": 22,
+      "passed": true
+    },
+    "right_wrist": {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_right_wrist.png",
+      "sha256": "dcd8c92fd38bdd8f11639b49ef9bda1f71821bb64278eee5c54acc2a152975e3",
+      "mean_absolute_channel_difference": 0.3839420572916667,
+      "percentile_99_channel_difference": 3.0,
+      "maximum_channel_difference": 25,
+      "passed": true
+    }
+  },
+  "normalized_start_state_sha256": "f567c505b1ce7b008071bbb3bd9767bbfb595dea0bae36147ed0fef5a46c8bad",
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/src/robodojo_uc71/reset_binding.py",
+      "sha256": "5c3d34261428f2f7ed068b98549ee376a1ccd07f58918bc89a374ac9a572073f"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/tests/test_reset_binding.py",
+      "sha256": "029d890eb51483eb043dad2606153f77361fdbe8ca61f531d0df33b030512df0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_001/reference.json",
+      "sha256": "4f3d07e082f4283281b62ea1e5c02ef11669103c23eb65b19c9c45f94a8002d0"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_001/policy_review.json",
+      "sha256": "30b52156f2f787636a5a682529f6fafb200d55fef9983ef17d52f9772cfb0817"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/reset_binding_001/fresh_probe001_check.json",
+      "sha256": "50827a8b05e5f15a6f0162f485cbaa075ac638ab1431c2d5232436401c325e7d"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/robot_measurement.json",
+      "sha256": "a3ab736ba2ac0d39a1d46ea299d41167d0240299ddfb0b834ee42e2db011fca2"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/camera_inventory.json",
+      "sha256": "a692dcfee150a7be2be7ad15bf0e271c536fac918e38a090dc1e62999572bc9c"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_head.png",
+      "sha256": "641e6c526f63944b6559eeb738a211f91c966c666ffab5ba9ca845c2df76c3a9"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_left_wrist.png",
+      "sha256": "2476e66b94fe5930aea47b65826d6ce71d6d68e7701c0fbfb2e633a0a4514e37"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/native_characterization_001/characterization/before/cam_right_wrist.png",
+      "sha256": "dcd8c92fd38bdd8f11639b49ef9bda1f71821bb64278eee5c54acc2a152975e3"
+    }
+  ],
+  "findings": [
+    "Tensor dtype/device annotations and capture timestamps are excluded; recorded numerical robot values remain exact with no rounding or numerical tolerances.",
+    "Robot signatures include joint/link identities, all joint positions/velocities/limits, root and body actor poses, COM positions, and full raw Jacobians.",
+    "Camera signatures retain native name/prim/mount, resolution, K, optical axes and world optical pose; omitted inverse transform is redundant.",
+    "Images are decoded unchanged as640x480 RGB uint8 and compared using int16 channel differences; no resize, crop, alignment or color adjustment.",
+    "Reference file hashes and reference-derived signatures are rechecked; relaxed policy and changed reference/signatures fail closed.",
+    "Normalized start signature intentionally binds an equivalence class under the frozen image-noise bounds; actual fresh image hashes and per-image metrics are retained separately."
+  ],
+  "integration_requirements": [
+    "Bind this exact code, policy/reference and referenced files into the approval manifest.",
+    "Caller must capture fresh synchronized state without physics advance, persist the complete fresh comparison audit before BEGIN, and send actual fresh RGB rather than substituting reference images.",
+    "This verifies reset robot/camera state and bounded RGB difference; it is not a proof of every hidden scene state, tool calibration or controller tracking."
+  ],
+  "full_calibration_passed": false,
+  "standard_ready": false,
+  "full_test_authorized": false,
+  "simulator_starts": 0,
+  "model_calls": 0
+}

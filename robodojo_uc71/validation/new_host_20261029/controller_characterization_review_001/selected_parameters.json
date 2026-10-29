@@ -1,0 +1,45 @@
+{
+  "controller": {
+    "angular_speed_rad_s": 0.5,
+    "calibration_status": "uncalibrated_candidate",
+    "contact_translation_speed_m_s": 0.05,
+    "control_hz": 25.0,
+    "damping": 0.02,
+    "joint_target_lead_rad": 0.05,
+    "transit_translation_speed_m_s": 0.2
+  },
+  "execution_limits": {
+    "contact_rotation_rad": 0.08,
+    "contact_translation_m": 0.01,
+    "control_hz": 25,
+    "direct_max_steps": 5,
+    "direct_rotation_rad": 0.08,
+    "direct_translation_m": 0.03,
+    "max_execution_steps": 300,
+    "max_segment_steps": 150,
+    "max_segments": 6,
+    "min_close_steps": 15,
+    "min_open_steps": 20,
+    "transit_rotation_rad": 0.08,
+    "transit_translation_m": 0.03
+  },
+  "monitoring": {
+    "arrival_stable_samples": 5,
+    "gap_rise_samples": 2,
+    "gap_rise_yield_m": 0.002,
+    "gap_stable_range_m": 0.0005,
+    "gap_stable_samples": 5,
+    "orientation_error_weight_m_per_rad": 0.05,
+    "orientation_tolerance_rad": {
+      "contact": 0.01,
+      "transit": 0.02
+    },
+    "position_tolerance_m": {
+      "contact": 0.001,
+      "transit": 0.002
+    },
+    "stall_min_steps": 10,
+    "stall_progress_m": 0.0001,
+    "stall_window_steps": 10
+  }
+}

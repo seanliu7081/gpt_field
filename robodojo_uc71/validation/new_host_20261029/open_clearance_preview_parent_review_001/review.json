@@ -1,0 +1,32 @@
+{
+  "schema": "robodojo-open-preview-parent-static-review-1",
+  "reviewer": "root",
+  "static_review_passed": true,
+  "scope": "Parent supervisor diff against exact pre-change snapshot; not a native execution or clearance review",
+  "source_files": [
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+      "sha256": "07077de030657332fcc94eec64cf18753a60f41a06e1b2a01ce90bd6f5418df3"
+    },
+    {
+      "path": "/workspace/gpt_field/robodojo_uc71/validation/new_host_20261029/open_clearance_preview_implementation_001/source_before/provision_controller_characterization.py",
+      "sha256": "81f8e2de848073dd5ebdde9b3ab8547630a39b4c2e96749d21e8190603e25caf"
+    }
+  ],
+  "verified_properties": [
+    "Distinct preview schemas and completion flags; full39/960 contract retained",
+    "Exactly260 acknowledged actions,2600 substeps and27 synchronized images",
+    "Independently normalized recorded gripper commands must both be exactly open",
+    "Each stage requires its final five measured poses within2mm/.02rad and both arms physically open within1mm of.044m",
+    "No extra settling actions or operator closing-clearance records permitted",
+    "Captures match acknowledged robot state and unchanged action/physics counters and time",
+    "Existing process ownership, private paths, frozen inputs, clean stock-fast preclose and GPU release remain required"
+  ],
+  "limitations": [
+    "Static review does not prove native dynamics or visual clearance",
+    "No candidate selected or execution authorized by this review"
+  ],
+  "full_test_authorized": false,
+  "simulator_starts": 0,
+  "model_calls": 0
+}
