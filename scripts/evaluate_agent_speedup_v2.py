@@ -195,13 +195,17 @@ def _validate_collision_configuration_v2(sim_config, task_key):
         raise ValueError("v2 contacts are record-only; stop_on_collision must be False")
 
 
-def validate_configuration(config, sim_config, task_spec):
+def validate_configuration(config, sim_config, task_spec, *, allow_initial_state_override=False):
     _validate_task_configuration(config, sim_config, task_spec, speed_first_v3=True)
     _validate_collision_configuration_v2(sim_config, task_spec.key)
     if sim_config.include_arm_joints:
         raise ValueError("agent_speedup_v2 uses the state8 protocol; include_arm_joints must be False")
-    if sim_config.initial_state_override is not None or sim_config.task_bddl_override is not None:
+    if sim_config.task_bddl_override is not None or (
+            sim_config.initial_state_override is not None and not allow_initial_state_override):
         raise ValueError("agent_speedup_v2 evaluates official LIBERO scenes only; overrides are unsupported")
+    if sim_config.initial_state_override is not None:
+        from gpt_field.libero import validate_initial_state_override
+        validate_initial_state_override(sim_config.initial_state_override)
     if not sim_config.stop_on_success:
         raise ValueError("LIBERO success must stop the episode")
     if sim_config.max_steps is not None or sim_config.seed != 7 or sim_config.settle_steps != 10:
@@ -721,12 +725,14 @@ def _live_build_failure(exc):
     return f"{type(exc).__name__}: {str(exc)[:300]}"
 
 
-def preflight(config, sim_config, output=None, *, task_key=PRIMARY_TASK, episode_index=0, libero_root=None):
+def preflight(config, sim_config, output=None, *, task_key=PRIMARY_TASK, episode_index=0, libero_root=None,
+              allow_initial_state_override=False):
     """Identity, prompt check and the real v2 payloads for a synthetic 512 observation; no credentials, network,
     files or simulator."""
     episode_index = _validate_episode_index(episode_index)
     task_spec = resolve_v2_task(task_key)
-    validate_configuration(config, sim_config, task_spec)
+    validate_configuration(config, sim_config, task_spec,
+                           allow_initial_state_override=allow_initial_state_override)
     if output is not None and Path(output).exists():
         raise FileExistsError("Fresh agent_speedup_v2 experiment requires a new output directory")
     from gpt_field.agent_speedup_v2_client import AgentSpeedUpV2Client, preflight_payloads
@@ -822,7 +828,8 @@ def _console_event(row, steps):
 def execute(output, *, config, sim_config, task_key, episode_index, monitor_options=None, token_provider=None,
             client_factory=None, policy_factory=None, sim_factory=None, recorder_factory=None,
             expected_initial_observation_sha256=None, video=True, smoke=False, smoke_steps=DEFAULT_SMOKE_STEPS,
-            smoke_script="plumbing", libero_root=None, oracle_factory=None, stop_after_steps=None):
+            smoke_script="plumbing", libero_root=None, oracle_factory=None, stop_after_steps=None,
+            allow_initial_state_override=False):
     output = Path(output).absolute()
     if output.exists():
         raise FileExistsError("Fresh agent_speedup_v2 experiment requires a new output directory; no resume")
@@ -839,7 +846,17 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
     relation_smoke = smoke and smoke_script == "relation"
     if oracle_factory is not None and not relation_smoke:
         raise ValueError("the ORACLE is used only by --sim-smoke --smoke-script relation (refused in live mode)")
-    validate_configuration(config, sim_config, task_spec)
+    validate_configuration(config, sim_config, task_spec,
+                           allow_initial_state_override=allow_initial_state_override)
+    if sim_config.initial_state_override is not None and expected_initial_observation_sha256 is None:
+        raise ValueError("A custom layout requires an explicit expected_initial_observation_sha256")
+    layout_metadata, layout_bytes = None, None
+    if sim_config.initial_state_override is not None:
+        from gpt_field.libero import validate_initial_state_override
+        layout_metadata = validate_initial_state_override(sim_config.initial_state_override)
+        layout_bytes = Path(layout_metadata["path"]).read_bytes()
+        if _sha256(layout_bytes) != layout_metadata["sha256"]:
+            raise ValueError("Custom initial state changed while reading it")
     expected, expected_source = resolve_expected_sha(task_spec.key, episode_index,
                                                      expected_initial_observation_sha256,
                                                      injected_sim=sim_factory is not None)
@@ -928,7 +945,12 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
         "max_policy_steps": smoke_steps, "max_api_calls": None, "max_wall_time_s": None,
         "output_token_limit_sent": None, "api_key_fallback": False, "model_fallback": False,
         "evaluation_scored": not smoke, "prior_budgets_inherited": False, "live_gate": LIVE_GATE}
+    if layout_metadata is not None:
+        identity.update(benchmark_variant="custom_initial_layout", initial_layout=layout_metadata)
     output.mkdir(parents=True, exist_ok=False)
+    if layout_bytes is not None:
+        (output / "frozen_inputs").mkdir()
+        (output / "frozen_inputs/initial_state.npy").write_bytes(layout_bytes)
     write_json(output / "manifest.json", {"identity_hash": digest(identity), "configuration": identity,
                                           "created_utc": datetime.now(timezone.utc).isoformat(),
                                           "simulation_pauses_for_api": True})

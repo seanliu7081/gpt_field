@@ -1,0 +1,40 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /venv/fm_dno/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /workspace/heading_flow_pub/third_party/LIBERO/libero/datasets does not exist!
+Traceback (most recent call last):
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py", line 210, in <module>
+    if __name__=='__main__':raise SystemExit(cli())
+                                             ^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py", line 195, in cli
+    try:return main(argv)
+               ^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py", line 150, in main
+    store=m.prepare_review(directory/'review',config=api,sim_config=sim,task_key=data['task'],episode_index=data['episode_index'],monitor_options=monitor,token_provider=token(args),expected_initial_observation_sha256=args.expected_initial_observation_sha256,video=True,auto_approve=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_agent_speedup_v2_user_check.py", line 188, in prepare_review
+    draft = client.request_plan(
+            ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/agent_speedup_v2_user_check_client.py", line 375, in request_plan
+    raw = super().request_plan(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/agent_speedup_v2_client.py", line 1050, in request_plan
+    data = self._send(kind, request, meta)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/agent_speedup_v2_client.py", line 994, in _send
+    return self.predict(request, mode=kind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/agent_speedup_v2_client.py", line 932, in predict
+    result = super().predict(same_request, grid, mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/hybrid_subscription.py", line 424, in predict
+    token = _access_token(self.token_provider)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/src/gpt_field/chatgpt_plan.py", line 129, in _access_token
+    raise MissingCredentials("ChatGPT subscription authorization is unavailable") from None
+gpt_field.astra.MissingCredentials: ChatGPT subscription authorization is unavailable

@@ -1,0 +1,20 @@
+{
+  "recorded_before_any_policy_actions": true,
+  "created_at_utc": "2026-10-26T07:00:17.016133+00:00",
+  "mode": "pairs sequential; arms started in alternating A/B order with overlapping execution on identical dedicated GPU slots",
+  "concurrency": 2,
+  "GPU_slots": [
+    1,
+    2
+  ],
+  "first_pair": {
+    "A": 1,
+    "B": 2
+  },
+  "subsequent_pairs": "alternate which arm starts first and uses slot1; other arm uses slot2",
+  "resources": "identical NVIDIA RTX4090; OMP/BLAS1 per process; no other GPU workload at resume",
+  "reason": "count every automatic review/scheduling second; do not exclude one prepared arm waiting for the other as human review",
+  "inference": "independent fresh responses, identical model/config; no shared answers",
+  "timing_limit": "900 service seconds per arm unchanged",
+  "comparison_limitation": "paired concurrent OS/service contention is part of this fixed evaluation setting; component IO result remains separate"
+}

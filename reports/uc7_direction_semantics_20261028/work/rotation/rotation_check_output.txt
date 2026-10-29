@@ -1,0 +1,31 @@
+== original LIBERO agentview
+original                           in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none 
+== yaw: camera orbits the plate (moved to another side of the table)
+yaw 30                             in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none 
+yaw 90                             in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none 
+yaw 180                            in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none 
+yaw 250                            in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none 
+== elevation: camera above the table on the +x side, looking at the plate (no roll)
+elevation 8                        in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 20                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 35                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 49                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 65                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 80                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+elevation 88                       in_image=True  roll=   -0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+== top-down camera directly above the plate
+top-down                           in_image=True  roll=   +0.0deg  right_err=  0.0deg  behind_err=  0.0deg  words_wrong=none 
+== roll: camera turned about its own viewing axis (image appears tilted)
+roll 5                             in_image=True  roll=   +5.0deg  right_err=  3.7deg  behind_err=  0.8deg  words_wrong=none 
+roll 15                            in_image=True  roll=  +15.0deg  right_err= 10.8deg  behind_err=  3.4deg  words_wrong=none 
+roll 30                            in_image=True  roll=  +30.0deg  right_err= 19.2deg  behind_err=  7.0deg  words_wrong=none 
+roll 60                            in_image=True  roll=  +60.0deg  right_err= 22.8deg  behind_err= 11.0deg  words_wrong=none 
+roll 89                            in_image=True  roll=  +89.0deg  right_err=  0.7deg  behind_err=  0.6deg  words_wrong=none 
+roll 180                           in_image=True  roll= +180.0deg  right_err=  0.0deg  behind_err=  0.4deg  words_wrong=none away points TOWARD camera (sign check fires)
+== roll over the whole visible table (not only the plate pixel): share of anchors with >=1 word wrong
+roll  0: 0/556 visible table anchors have >=1 word wrong (0.0%)
+roll  5: 0/564 visible table anchors have >=1 word wrong (0.0%)
+roll 15: 0/574 visible table anchors have >=1 word wrong (0.0%)
+roll 30: 41/608 visible table anchors have >=1 word wrong (6.7%)
+roll 45: 133/657 visible table anchors have >=1 word wrong (20.2%)
+roll 60: 90/608 visible table anchors have >=1 word wrong (14.8%)

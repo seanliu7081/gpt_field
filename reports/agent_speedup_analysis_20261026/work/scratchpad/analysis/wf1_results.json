@@ -1,0 +1,1664 @@
+[
+ {
+  "key": "uc7_framework",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/uc7_framework.md",
+  "summary": "uc7 (agent-speedup-v2-user-check-7) is a single-threaded stop-and-think loop. Preparation resets a simulator and makes one plan-draft call (4 images, high effort). The plan is approved once, bound by hash, through a loopback selector UI or `--auto-approve`. The run then reuses the unchanged base v2 runner. In each act, gpt-6-astra gets the full text transcript, encrypted reasoning and the last 6 RGB pairs, and returns one action: `execute`, `motion`, `macro`, `observe` or `finish`. The simulator is paused during the call.\n\nIn the 13 uc7 runs, 210 of 218 decisions were `execute` and no native macro was ever used. Fragments drove 99.66% of steps. A fragment ends on arrival, a stall, a budget limit or a requested checkpoint, and every end forces a new model call.\n\nOver the 11 raw successes:\n- Model latency is 53.7% of control time. It is about 15 s per call and does not grow with prompt size (r = −0.13).\n- The harness adds about 230 ms per step against 50 ms of simulated time: simulator 105 ms (two 512² renders, PNG encode/decode, an extra geometry request), video 91 ms (two 1600x960 renders), run_state writes 25 ms.\n- Simulated robot time is only about 10% of control wall time.\n\nOnly t5_001 meets S300 (270.2 s, computed as prep + run). Stalls end 29% of fragments. The plan-draft call has no total deadline, and 3 of 16 preparations stalled for 297–634 s on payloads that succeeded in other attempts. Failure runs never end on their own: `finish` is advisory and there is no horizon.\n\nCompared with uc6, uc7 adds the fragment executor (4.8–5.5 → 56.4 steps per call), makes schema errors recoverable, and lets the review accept intents with no native macro. The current source differs from the uc7 frozen copy only by a geometry-validator import that now points to an untracked file. LIBERO behaviour should be the same, but a new run would get a new runtime hash.",
+  "details_markdown": "## uc7 framework, as it actually runs\n\nThe full report, with path:line citations throughout, is at `/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/uc7_framework.md`. `UC runner` means `scripts/evaluate_agent_speedup_v2_user_check.py`; `base runner` means `scripts/evaluate_agent_speedup_v2.py`.\n\n### Identity and outcomes\n- Version constants:\n  - `VERSION=\"agent-speedup-v2-user-check-7\"` (src/gpt_field/agent_speedup_v2_user_check.py:31)\n  - policy `agent-2` (agent.py:30)\n  - prompt/client `-2`, `HISTORY_PROTOCOL=persistent_task_executive_fragments_text_and_six_visual_pairs_v2` (agent_client.py:40-42)\n- There are two uc7 builds. t3_003 and t6_009 use one; the other 11 runs use the other. They differ **only** in the review HTML, which went from Chinese to English (`diff -rq` of frozen_source); the Python is identical.\n- 13 runs gave 11 raw successes over 9/10 tasks. t6_009 and t6_011 were operator-stopped (`user_stop`). Strict `v2_success` was 3/13. The single-build sweep `manual_batch_001` gave 9/10 raw.\n- uc7 alone is 11/13. The brief's \"13/15\" counts only if the two uc6 successes are added.\n- S300, computed as `preparation_elapsed_s + elapsed_s`: only t5_001 passes (28.4 + 241.7 = 270.2 s). The others take 327.5–962.4 s.\n\n### Component diagram\n```\nCLI (UC runner) main:578  prepare|start[--auto-approve]|run|review|preflight\n ├─PREP prepare_review:131  sim reset(0 actions) → SHA check → UserCheckV2Client.request_plan\n │      (4 PNG: ext/wrist clean+8x8 grid; high; plan+regions/placement_goals) → ReviewStore.create\n ├─REVIEW ReviewServer 127.0.0.1 (token in #fragment) /api/review|update|approve  | auto: approve(all)\n └─RUN execute_reviewed:426 → ReviewStore.claim (single use) → PlanLock → base.execute:822\n      loop :1398-1527 ─ policy.act ─► AgentFirstV2Policy (agent.py:484)\n           need_agent → AgentFirstV2Client.request_agent (agent_client.py:451) ══SSE══► gpt-6-astra\n           execute → FragmentSequencePrimitive (fragments.py:169)\n           motion/observe/finish → LocalMotionPrimitive → ShortTargetExecutor (1–5 steps)\n           macro → AgentMacroSession → base v2 hold/turn/place_on/release (never used)\n      ─► 7-D OSC action ─► UserCheckSimProcess → worker: robosuite OSC 20 Hz, 2×512² render+PNG,\n         raw check_success, record-only contacts, truth window; + agent_geometry IPC per obs\n      ─► observe_transition (fragment predicates) → trace rows, 2 video frames, 3 run_state writes\n```\n\n### Executive request and response\n- **Images:** two new 512x512 `detail:\"high\"` PNGs, agentview and eye_in_hand, both upright. The last **6 pairs** are retained; older ones become placeholder text (agent_client.py:43, :364; direct_history.py:45-57).\n- **Text fields:**\n  - `robot_pose_wxyz` (grip_site xyz, right_hand quaternion, closure) and `finger_joints_m`;\n  - `measured_state`: gap, **7 joint positions and 7 velocities** taken from the same observation as the RGB (sim.py:40-48, :84-90);\n  - `geometry`: Astranomy calibration. agentview has fovy 45 deg and f 618 px. The wrist camera pose comes from state8 plus the fixed mount (fovy 75 deg, f 334 px).\n  - gripper constants: 0.097 m hand-to-grip, pads, 0.079 m open gap;\n  - context: `capabilities`, `model_belief`, `last_feedback`, `recent_feedback[-8:]`, `macro` (incl. setup_progress), `execution`, `native_evidence`.\n  - The reviewed plan and task contract go **only in the first request** (agent_client.py:478-481).\n- **Compaction:** above 45,000 chars, per-key budgets of 7000/5000/7000/4500 apply. Above 56,000 chars a ValueError ends the run (agent_client.py:484-495).\n- **Transcript:** every call re-sends all prior text and the encrypted reasoning items (`include reasoning.encrypted_content`, `store:false`). Only accepted turns are committed (hybrid_subscription.py:465-468).\n- **Growth in t1_001:** input tokens went from 6,544 to 75,354 over 13 calls; request logs reached about 4.19 MB.\n- **Output** (agent_client.py:195-215, strict json_schema): `belief` ≤1800, `plan` ≤1800, `why` ≤600 chars, and `type` ∈ {execute, motion, macro, observe, finish} with the unused payloads null.\n- **Validation:** `validate_agent_decision` plus `validate_execution`. A `SchemaError` becomes `invalid_action_arguments` feedback, a 1-step hold and a re-ask (agent.py:264-274). Observed 0 times.\n- **Transport:** the 180 s timeout is per socket operation, not a total deadline (chatgpt_plan.py:141). Retries: overload 3 attempts with at most 60 s wait; transient at most 2.\n- **Decision mix:** 218 decisions = 210 execute, 7 motion, 1 finish, 0 macro.\n\n### Execution\n- **Fragments** (fragments.py):\n  - **Shape:** 1–6 stages: `move_to_pose`, `move_relative`, `approach` (contact only), `set_gripper`, `wait`. Each stage has max_steps ≤120, and the total is ≤240.\n  - **Targets:** resolved from the **measured** pose at each stage's entry. A target outside the envelope (transit 0.30 m/1.2 rad, contact 0.08 m/0.5 rad) gets `target_envelope_rejected` with zero actions (:233-239).\n  - **Per-step control:** the error is clamped to 0.02 m (transit) or 0.005 m (contact) and 0.1 rad.\n  - **Stage completion:**\n    - motion: arrival within 4 mm/0.06 rad (transit) or 2 mm/0.04 rad (contact) for 2 consecutive samples;\n    - set_gripper: ≥12 (close) or ≥8 (open) actions, gap stable within 0.6 mm over 5 samples, and pose held.\n  - **Interrupts:**\n    - stall: ≥16 actions and less than 0.8 mm improvement over 12 samples;\n    - gap rise: ≥6 mm for 3 samples;\n    - segment budget exhausted.\n  - **Checkpoints:** `observation_after=true` or a `wait` stage stops the sequence; pending stages are never resumed.\n- **Direct path:** `motion`, `observe` and `finish` use Astranomy `ShortTargetExecutor`. The target must be ≤0.05 m/0.35 rad away; it runs exactly 1–5 steps with no arrival check (astranomy_agentic_motion.py:103-266).\n- **Macros:** hold/turn/place_on/release run through `AgentMacroSession`. Setup is lazy: CalibratePlus (about 190 steps nominal), then a grounding model call (a semantic change triggers the `plan_conflict` stop), registration, keep-outs, then the skill. Grants are 1–60 steps, and a grant pause is \"not failure\". In uc7 there were **0 grants** across all 13 runs. 8 of 13 plans contain `place_in` or `slide`, which have no native macro.\n- **Observed** (trace feedback rows, *computed*):\n  - fragments drove 11,895 of 11,936 steps;\n  - median 56 steps per execute;\n  - of 192 terminations: 133 `fragment_complete`, **55 `segment_stall` (29%)**, 2 budget, 1 checkpoint;\n  - stalls used 17.7% of fragment steps, with a median final error of 22.4 mm.\n\n### One control cycle (base runner loop)\n1. Terminal checks: raw success, stop file, step cap (:1399-1435).\n2. run_state.json write, light (:1438).\n3. `policy.act`. If a model call is needed, it **blocks for about 15 s** while the simulator is paused. Then the primitive's next action (agent.py:484-570).\n4. Trace \"action\" row, about 35 KB.\n5. Video frame #1 (1600x960, 2× or 12× repeats).\n6. run_state.json write.\n7. `sim.step`. The worker steps physics, renders both cameras at 512², PNG-encodes them and decode-validates them, checks success twice, and updates the contact and truth monitors. The host decodes both images 4 more times and makes the extra `agent_geometry` IPC.\n8. Trace \"executed\" row, which carries both base64 PNGs (about 556 KB).\n9. `observe_transition`: fragment predicates and handoff.\n10. Trace \"feedback\" row; video frame #2.\n11. run_state.json write with full agent_stats (about 0.9 MB).\n\n### Veto / shorten / terminate / advisory\n- **VETO:**\n  - schema checks (0 seen);\n  - stage-entry envelope (6 seen);\n  - direct 5 cm/0.35 rad envelope (0 seen);\n  - macro refusals (never reached).\n- **CLAMP:** per-step translation and rotation caps; OSC clip.\n- **SHORTEN:**\n  - stall (55);\n  - gap rise (0);\n  - budget (2);\n  - checkpoint or `wait`;\n  - macro grant, preemption or failure.\n- **TERMINATE:**\n  - raw LIBERO success (11);\n  - operator stop (2);\n  - `plan_conflict`;\n  - subscription error;\n  - infrastructure error.\n- **ADVISORY:**\n  - `finish` (t6_009 declared it at step 965 and ran to step 1544);\n  - InvariantMonitor (`observers: {}`);\n  - contacts (record-only);\n  - stuck alert (needs relation outcomes, so it never fires);\n  - physical truth.\n- **Absent:** no horizon, max API calls or wall-time cap. Failure runs therefore last until an operator stops them (930 s and 711 s).\n\n### Structural time costs (11 successes, *computed* from summary.json)\n- Control time 4,579.7 s over 9,195 steps and 163 calls:\n  - **model 53.7%** (15.1 s per call, 56.4 steps per call);\n  - simulator 21.0% (104.6 ms per step);\n  - video 18.2% (90.8 ms per step);\n  - run_state 5.1% (25.3 ms per step).\n- Unaccounted time, mostly trace writes, is 1.4–2.7 ms per step. The trace still costs about 0.5 GB per run.\n- Simulated robot time is 459.8 s, about 10% of wall time.\n- Latency does not depend on prompt size: r(input tokens, latency) = −0.13 over 218 calls.\n- Images reach the model only about once every 56 steps, yet every step renders and encodes both cameras.\n- t1_001 drew 1,796 1600x960 renders, about 17.5 GB of raw RGB piped to single-thread libx264. Today's offline benchmark measured 89 ms per step for the legacy recorder and 22.7 ms for the compact one (display_io_benchmark.json).\n- Preparation takes 19–32 s, of which the draft call is 12–24 s. It starts a separate simulator; execution startup adds 4–8 s.\n\n### uc6 → uc7 (diff of t6_007 and t1_001 frozen_source)\n- **New fragments.py:** the `execute` action. uc6 runs had 82–87 `motion` calls at 4.8–5.5 steps per call, and model time was 92–93% of control.\n- **Prompt and schema v2:** an `execution` field; \"do not replay every five steps\"; per-key compaction.\n- **Policy:** a SchemaError is now recoverable. In uc6 it ended the run as `subscription_error`.\n- **Macros:** `setup_progress` reporting, including the 190-step estimate.\n- **Review:** `require_native=False`, so place_in, slide and push_to are approvable.\n- **Runner:** `--auto-approve` with provenance recorded.\n\n### Current src vs uc7 frozen\n- Only two files differ: agent_client.py:30 and sim.py:19-20. Both now import `validate_geometry_metadata` from **untracked** `robocasa_user_check_geometry.py`.\n- That validator delegates to the original one for the LIBERO schema (robocasa_user_check_geometry.py:53-54), so behaviour should be identical (inference). `HEAD` equals the frozen copy.\n- However, `runtime_inventory` hashes all of `src/gpt_field` (UC runner:113-128). A new run would carry a different runtime hash that includes 19 untracked files. Editing any of them between prepare and run voids the approval.",
+  "claims": [
+   {
+    "id": "C1",
+    "kind": "fact",
+    "claim": "uc7 has 13 runs with 11 raw LIBERO successes over 9 of 10 tasks. t6_009 (1544 steps, 930.0 s) and t6_011 (1197 steps, 711.0 s) ended user_stop by operator stop file. Strict v2_success was 3/13. The one-build manual sweep manual_batch_001 (t0-t9, episode 0) gave 9/10 raw. The brief's '13/15' matches only if the two uc6 successes are added.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_<run>/summary.json: status, libero_success, v2_success, steps, elapsed_s",
+     "runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/batch_state.json tasks[]",
+     "runs/..._t6_009/summary.json error.source=file"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C2",
+    "kind": "fact",
+    "claim": "With service time computed as user_check.preparation_elapsed_s + elapsed_s, only t5_001 meets S300 (28.4 + 241.7 = 270.2 s, raw success, auto-approved run outside the batch). All other uc7 runs took 327.5-962.4 s.",
+    "evidence": [
+     "runs/..._t5_001/summary.json user_check.preparation_elapsed_s=28.4, elapsed_s=241.7",
+     "runs/..._t5_002/summary.json 21.6+306.0=327.5",
+     "runs/..._t6_009/summary.json 32.3+930.0"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C3",
+    "kind": "fact",
+    "claim": "There are two uc7 builds with identical Python. t3_003 and t6_009 differ from the other 11 runs only in agent_speedup_v2_user_check.html (Chinese to English, 216 changed lines).",
+    "evidence": [
+     "diff -rq runs/..._t3_003/frozen_source runs/..._t1_001/frozen_source -> only the .html differs",
+     "sha256 grouping of frozen_source across the 13 runs"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C4",
+    "kind": "framework",
+    "claim": "Control is a synchronous stop-and-think loop. The executive model call runs inside policy.act with the simulator paused, and there is at most one executive call per act. Every fragment, direct-motion or macro handoff sets _need_agent, so each handoff costs a full model call while the robot is frozen.",
+    "evidence": [
+     "scripts/evaluate_agent_speedup_v2.py:1438-1444 (policy.act timed), :934 simulation_pauses_for_api True",
+     "src/gpt_field/agent_speedup_v2_user_check_agent.py:506-511 (one agent call per act), :372-401 (_complete_direct sets _need_agent)",
+     "agent_speedup_v2_user_check_agent_client.py:150-151 'Simulation pauses during inference'"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C5",
+    "kind": "fact",
+    "claim": "Across the 13 uc7 runs, 218 executive decisions = 210 execute, 7 motion, 1 finish, 0 macro, 0 observe. optional_macro_grants and native_macro_actions are 0 in every run. Fragment steps are 11,895 of 11,936 (99.66%) and direct steps 41.",
+    "evidence": [
+     "runs/..._<run>/user_check_plan_history.json model_decisions[].action.type",
+     "runs/..._<run>/agent_stats.json counts.fragment_actions/direct_actions/native_macro_actions/optional_macro_grants"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C6",
+    "kind": "bottleneck",
+    "claim": "Model latency is 53.7% of control time pooled over the 11 successful uc7 runs (2460.3 of 4579.7 s): 15.09 s per call and 56.4 steps per call. Per-call latency (mean 15.47 s, n=218) does not correlate with input tokens (Pearson r = -0.13), although input grows from about 6.5k to 153,901 tokens.",
+    "evidence": [
+     "summary.json timing_components.model_pipeline_s and control_elapsed_s (11 successes)",
+     "episode.events.jsonl skill_decision api_latency_s",
+     "requests/*.response.json usage.input_tokens (t6_009 last = 153,901)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C7",
+    "kind": "bottleneck",
+    "claim": "Non-model harness cost is about 230 ms per step pooled ((4579.7-2460.3)/9195), against 50 ms of simulated time per 20 Hz step: simulator 104.6 ms, video 90.8 ms, run_state 25.3 ms. Simulated robot time (9195/20 = 459.8 s) is about 10% of control wall time.",
+    "evidence": [
+     "summary.json timing_components simulator_step_s, video_render_s, run_state_s (11 successes, summed)",
+     "libero.py:870 control_freq=20"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C8",
+    "kind": "fact",
+    "claim": "Every simulator step renders agentview and robot0_eye_in_hand at 512x512 and PNG-encodes both. That is 2 encodes and 2 validation decodes in the worker, and 4 more decodes on the host (from_dict, then CalibratedObservation re-running __post_init__). Each step also makes an extra agent_geometry IPC request. The model sees images only at decision steps, about 1 in 56.",
+    "evidence": [
+     "src/gpt_field/libero.py:868-873 camera_heights/widths=render_size=512, :951-954",
+     "src/gpt_field/observation.py:24-45 (PNG), :114-115 (decode in __post_init__)",
+     "src/gpt_field/agent_speedup_v2_user_check_sim.py:55-57, :84-90, :117-122",
+     "agent_speedup_v2_tasks.py:146-151 image_size=render_size=512"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C9",
+    "kind": "fact",
+    "claim": "The video recorder renders two 1600x960 canvases per step (decision frame repeated 2x or 12x, executed frame 2x) and pipes raw RGB to libx264 running -threads 1. t1_001 had 1,796 renders and 3,790 frames, about 17.5 GB of raw RGB. Today's offline benchmark measured about 89 ms per step for the legacy recorder and 22.7 ms per step for a compact recorder, a 74.5% reduction.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v1_video.py:119-125, :182-213",
+     "src/gpt_field/video.py:227-233",
+     "runs/..._t1_001/episode.events.jsonl (counted)",
+     "results/speedup_evidence_20261026T055123Z/display_io_benchmark.json median_display_wall_s A=10.69, B=2.72 per 120 steps"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C10",
+    "kind": "fact",
+    "claim": "trace.jsonl writes about 0.6 MB per step because the 'executed' row embeds the full observation with two base64 PNGs (avg 556 KB per row; 535 MB for t1_001's 897 steps). Unaccounted control time (control_elapsed minus all timing components) is only 1.4-2.7 ms per step, so the trace costs storage more than time.",
+    "evidence": [
+     "scripts/evaluate_agent_speedup_v2.py:1494-1496 ('observation': obs.to_dict())",
+     "runs/..._t1_001/trace.jsonl size by event type (executed 498.7 MB / 897 rows)",
+     "summary.json control_elapsed_s minus timing components (13 runs)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C11",
+    "kind": "failure_mechanism",
+    "claim": "segment_stall ended 55 of 192 fragment executions (29%) that issued at least one action. Stalled segments consumed 2,087 of 11,798 fragment steps (17.7%) and ended with a median position error of 22.4 mm (2.3-120.1 mm). Each stall returns control and costs a model call of about 15 s. The executor records no cause.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_fragments.py:311-325 (STALL_MIN_STEPS 16, window 12, 0.8 mm)",
+     "trace.jsonl feedback rows with primitive_feedback.done across the 13 uc7 runs (computed)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "defect",
+    "claim": "The plan-draft request has no total deadline: urllib timeout=180 s applies per socket operation and max_wall_time_s is None. 3 of 16 uc7 preparations (t6_008 634 s, t3_004 298 s, t6_010 297 s) got no response until KeyboardInterrupt. Identical request_keys succeeded in other attempts (t6 key c24936d2: 2 stalled, 2 valid; t3 key 426b72b4: 1 stalled, 2 valid).",
+    "evidence": [
+     "src/gpt_field/chatgpt_plan.py:136-157 (_open_public timeout)",
+     "src/gpt_field/astra.py:476-489 (_reserve returns c.timeout_s when no wall limit)",
+     "runs/..._{t6_008,t3_004,t6_010}_review/requests/*.result.json error_type KeyboardInterrupt + file mtimes",
+     "manual_batch_001/t03_restart.json, t06_restart.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C13",
+    "kind": "failure_mechanism",
+    "claim": "A failing run has no autonomous end: there is no horizon (max_steps None), no max_api_calls and no max_wall_time_s, and `finish` is advisory (stop_on_model_complete False). t6_009 claimed completion at step 965, kept running to step 1544, and was operator-stopped at 930 s.",
+    "evidence": [
+     "agent_speedup_v2_tasks.py:146 max_steps=None",
+     "scripts/evaluate_agent_speedup_v2.py:927 stop_on_model_complete False; :1398-1435 termination checks",
+     "agent_speedup_v2_user_check_agent.py:356-362",
+     "runs/..._t6_009/user_check_framework.json state.model_completion_claims step 965"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "fact",
+    "claim": "Veto checks are: schema and validate_execution (0 rejections in the 13 runs), the fragment stage-entry envelope (6 rejections fed back; 5 at a first stage, each producing a hold step), and the direct-target 5 cm/0.35 rad envelope (0 observed). Observers are advisory: InvariantMonitor preemption is consumed only in macro mode and `observers` was {} in t1_001; contacts are record-only; the stuck alert needs relation outcomes, which uc7 never produces.",
+    "evidence": [
+     "agent_speedup_v2_user_check_agent_client.py:218-258",
+     "agent_speedup_v2_user_check_fragments.py:233-239",
+     "astranomy_agentic_motion.py:158-163",
+     "agent_speedup_v2_user_check_agent.py:440 (preemption only in _next_macro)",
+     "grep 'invalid_action_arguments' in runs/..._<run>/requests -> 0",
+     "agent_stats.json counts.hold_actions"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C15",
+    "kind": "fact",
+    "claim": "uc6 to uc7 added: the fragments module (execute action, 1-6 stages, up to 120 steps per stage and 240 per execute); prompt and schema v2; recoverable SchemaError (in uc6 it propagated to subscription_error); macro setup_progress with a 190-step calibration estimate; review accepting non-native intents (require_native False); and --auto-approve. uc6 runs t6_007 and t3_002 averaged 5.5 and 4.8 steps per call, and model time was 1229.3/1338.6 s and 1226.6/1316.3 s of control.",
+    "evidence": [
+     "diff -u runs/..._t6_007/frozen_source vs runs/..._t1_001/frozen_source (agent.py, agent_client.py, agent_macros.py, user_check.py, client.py, runner, html)",
+     "runs/..._t6_007/summary.json, runs/..._t3_002/summary.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "fact",
+    "claim": "Current src differs from the uc7 frozen copy only in agent_speedup_v2_user_check_agent_client.py:30 and agent_speedup_v2_user_check_sim.py:19-20, where validate_geometry_metadata now comes from the untracked robocasa_user_check_geometry.py. For the LIBERO schema that module delegates to the original validator, and HEAD equals the frozen copy. runtime_inventory hashes all src/gpt_field/*.py, so a new uc7 run would get a different runtime_sha256 and frozen tree (19 untracked src files).",
+    "evidence": [
+     "cmp of all 300 files in runs/..._t1_001/frozen_source vs working tree -> 2 differ",
+     "git show HEAD:<file> == frozen copy",
+     "src/gpt_field/robocasa_user_check_geometry.py:44-54",
+     "scripts/evaluate_agent_speedup_v2_user_check.py:113-128",
+     "git ls-files --others src/gpt_field (19 files)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C17",
+    "kind": "framework",
+    "claim": "Approval is a single-use binding: binding_sha256 = sha256(context_sha256, plan, revision, reviewed_steps). claim() requires an approved status and matching task, episode, initial-observation SHA and runtime hash, and it writes .review-claimed.json before marking the review consumed. Approval requires every step index to be checked.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check.py:240-246, :367-381, :383-408, :288-294"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C18",
+    "kind": "fact",
+    "claim": "Each executive request carries 2 new 512 px high-detail images plus up to 6 retained pairs, robot pose/finger joints, 7 joint positions and velocities, Astranomy camera calibration and gripper geometry, and the full prior text with encrypted reasoning. The reviewed plan is sent only in the first request. In t1_001 the fields text was about 13-20k chars and request logs reached 4.19 MB.",
+    "evidence": [
+     "agent_speedup_v2_user_check_agent_client.py:43, :355-372, :451-505",
+     "agent_speedup_v2_user_check_agent.py:205-224",
+     "runs/..._t1_001/requests/*.request.json (sizes and keys)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C19",
+    "kind": "opportunity",
+    "claim": "Inference, not validated live: on a t1_001-sized run (897 steps), a compact recorder (benchmark 22.7 vs about 89-91 ms per step) plus not writing the full agent_stats run_state every step (25.1 s) could remove roughly 60-85 s of control time without touching control logic. Avoiding the per-step 512² render, PNG encoding and geometry IPC on non-decision steps could reduce the 108 s simulator time further; the size of that saving is unknown.",
+    "evidence": [
+     "runs/..._t1_001/summary.json video_render_s 81.8, run_state_s 25.1, simulator_step_s 108.4",
+     "results/speedup_evidence_20261026T055123Z/display_io_benchmark.json"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C20",
+    "kind": "fact",
+    "claim": "Preparation takes 19.0-32.3 s, of which the plan-draft call is 11.9-24.3 s; it starts and closes its own simulator. Execution starts a second simulator (startup_to_initial_observation_s 4.0-7.9 s), and finalization adds about 2.2-2.8 s.",
+    "evidence": [
+     "summary.json user_check.preparation_elapsed_s / preparation_model_s, startup_to_initial_observation_s, elapsed_s - control_elapsed_s",
+     "scripts/evaluate_agent_speedup_v2_user_check.py:162-170, :206-209"
+    ],
+    "confidence": "high"
+   }
+  ],
+  "unknowns": [
+   "How the ~105 ms simulator step splits between MuJoCo physics, per-substep contact monitoring, the evaluator truth-window update, two 512² renders, PNG encode/decode, the ~613 KB pipe transfer and the extra agent_geometry IPC. Nothing times these separately.",
+   "What share of video_render_s is the ≤1 Hz user_check_framework.json publication done inside ReviewedRecorder.decision/executed.",
+   "What makes up the ~15 s per-call model latency (queueing, reasoning or upload of ~4 MB request bodies). Latency does not correlate with input tokens, but upload time is not logged.",
+   "What physically causes the 55 segment stalls (contact, obstruction or OSC tracking). The executor records contact_or_collision_cause as unknown by design.",
+   "Whether LIBERO behaviour is byte-identical after the robocasa validator import swap. The code says yes (delegation at robocasa_user_check_geometry.py:53-54); it was not executed.",
+   "The build of the stalled t6_008 preparation: it stopped before frozen_source was written, though its request_key equals t6_009/t6_010/t6_011.",
+   "Why the plan-draft streams stall without completing (server-side or transport). Identical payloads both stalled and succeeded."
+  ]
+ },
+ {
+  "key": "v3_framework",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/v3_framework.md",
+  "summary": "I mapped the r11 code (the current source, identical to the t1_012 frozen copy) against r6 (t1_008 frozen) and read the last two request/response pairs of all 8 failed runs.\n\nv3 is uc7 plus these layers:\n- an extended action contract: 5 new decision types and 11 required output fields;\n- persistent shared geometry (GeometryMemory through r9; the policy switched to LocalGeometryMemory in r10);\n- adaptive fragment/motion primitives that check the sweep and every emitted command;\n- semantic programs (up to 24 stages; compact pick_place operations from r8; local recovery from r7);\n- a visual watch, a two-view interaction monitor, an operation runtime (r7) and local stereo perception (r7);\n- a 180 s bounded transport, and wire-only history projection (r10).\n\nMain findings:\n- **One exit funnel.** All 8 failures ended as EvidenceAcquisitionFailed through the same path: a geometry or evidence gate paused execution, the model was called, and the view planner offered 0 candidates. The model then escalated in 6 runs. In 2 runs (r10 t1_011, r11 t1_012) it chose acquire_evidence even though the request already advertised 0 candidates, which is a terminal stop by construction (agent_speedup_v3.py:300-302).\n- **Root gates.** Strict sweep coverage appears in 6 of the 8 chains, strict overlap in 4, payload/attachment uncertainty in 2. Tracking mismatch ended t1_011. In t1_012, a neighbour (milk) went stale after a predicted contact, which broke lift-goal derivation and disabled view planning.\n- **Gates drive the model calls, even in the success.** In r6 t1_008, 36 of the 39 follow-up calls came after a gate pause; model time was 83.9% of control time at 33.4 s per call.\n- **r10 moved strictness rather than removing it.** Coverage stopped being a veto, but new hard blocking reasons appeared and program-level freshness requirements remain.\n- **Misleading blocker.** The blocker shown to the model omits tracking, so it can contradict the real pause cause (t1_011).\n- **Unused local-evidence paths.** None of the r7 local-evidence paths ever produced an accepted event in r7–r11.",
+  "details_markdown": "# agent_speedup_v3: r11 code map, gates, and what ended the failed runs (condensed)\n\nRoot: `/workspace/gpt_field`. The full report is at `/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/v3_framework.md`.\n\n**Versions verified** (`agent_stats.json` `policy_version` plus frozen copies):\n\n| Run | Revision |\n|---|---|\n| t1_008 | r6 |\n| t1_009 | r7 |\n| t1_010, t7_001, g5_001 | r8 |\n| g5_002 | r9 |\n| t1_011 | r10 |\n| t1_012 | r11 |\n| completion-baseline attempt_003 | r6 copy, t1 episode 2 |\n\nThe current source's v3 modules are identical to t1_012's `frozen_runtime`. The policy used `GeometryMemory()` through r9 and `LocalGeometryMemory()` from r10 (`src/gpt_field/agent_speedup_v3.py:90`).\n\n## 1. r11 architecture\n\nLabels: (U) inherited from uc7, (V) added by v3 up to r6, (7)–(11) added in that revision.\n\n```\nRUNNER scripts/evaluate_agent_speedup_v3.py\n  (U) uc7 runner as a private module; class swaps L181-231; manual approval\n  (V) performance.json: 300 s target, not a stop\nPOLICY AgentSpeedUpV3Policy(AgentFirstV2Policy)                agent_speedup_v3.py:68\n  (U) <=1 executive call per act; 1-step hold after a rejected answer\n      (agent_speedup_v2_user_check_agent.py:499-531); native macros\n  (V) _context adds shared_geometry + current_decision (+ view proposals)   L133-222\n  (V) router: program|execute|motion|observe|finish|macro(U)|geometry_patch|\n      continue_intent|acquire_evidence|escalate                             L573-634\n  (V) repeat guard, continuation guard, 2 view attempts -> TERMINAL stops\n  (7) local-evidence resume   (8) binding-conflict stop in act()\n |-> CLIENT AgentSpeedUpV3Client(retry mixin, (U) AgentFirstV2Client)\n |     6 image pairs (U); (V) scene_update/motion_context/continuation/program;\n |     (10) lean prompt + wire-only history projection;\n |     (r5) bounded transport, 180 s\n |-> (V) AdaptiveProgramPrimitive: <=24 stages; (8) compact operations;\n |       (7) local recovery\n |     -> (V) AdaptiveFragmentSequence / AdaptiveLocalMotion (extend the (U)\n |            primitives): tracking, watchdogs, exact-command verify,\n |            prefix/horizon pauses\n |-> SHARED GEOMETRY: (10) LocalGeometryMemory extends (V) GeometryMemory\n |       (strict sweep/inventory checks are inert in r10-r11)\n |       (V) VisualGeometryWatch  (7) LocalRGBGeometryEvidence\n |-> (7) OperationRuntime   (V) InteractionEvidence (two-view)\n |   (V) propose_evidence_views (wrist-camera lateral view moves)\n```\n\n- **Executive request.**\n  - 11 required output fields: the 7 uc7 fields plus `continuation`, `scene_update`, `motion_context`, `program` (`agent_speedup_v3_client.py:188-200`).\n  - Decision types: uc7's 5 (`agent_speedup_v2_user_check_agent_client.py:209`) plus 5 v3 types (`agent_speedup_v3_client.py:190`).\n  - `current_decision` holds `blocker`, `missing_evidence_requests`, `pending_intent`, `repeated_action_guard` and `evidence_acquisition` (`agent_speedup_v3.py:154-222`).\n- **Prompt size.** Instructions were 25,722 characters in r6, 18,572 in r8 and 10,569 in r10–r11. Wire projection cut t1_012 call 9 from 298,988 to 138,195 characters. Input tokens: r6 t1_008 call 40 = 397,117; r11 t1_012 call 9 = 43,836.\n- **The two geometry memories.**\n  - **GeometryMemory:** \"supported\" requires every swept hand/payload sample to be inside the union of model free_region boxes eroded by uncertainty (`agent_speedup_v3_geometry.py:246-286, 1298-1432`). Otherwise the motion runs a 4/6-step \"unknown\" horizon at 5 mm per command, or is blocked.\n  - **LocalGeometryMemory:** status is always \"unknown\"; motion is allowed unless `blocking_reasons` is non-empty. Free regions are advisory and obstacle cores are checked (`agent_speedup_v3_local_geometry.py:86-279`).\n- **Module size.** 16 modules, 7,850 lines (r6: 5,357). New since r6: operation (408) and perception (381) in r7, local_geometry (323) in r10. program.py grew from 478 to 1,133 lines.\n\n## 2. Gate inventory (condensed; full table with r6 lines is in the report)\n\nClasses: TERM = terminal stop; VETO = action not executed; SHORT = shortened; HAND = control returns to the model; ADV = advisory only.\n\n| Gate | path:line (r11) | Trigger → what the model sees | Class | First seen |\n|---|---|---|---|---|\n| model escalate | `agent_speedup_v3.py:576-577` | type=escalate | TERM | ≤r6 |\n| `targeted_view_unavailable` | `:300-302` | acquire_evidence with 0 candidates or ≥2 attempts | TERM | ≤r6 |\n| repeat guard | `:377-394` (terminal at 386-387) | unchanged action + blocker + evidence → `rejected_repeat` with `required_route` | VETO+HAND; 2nd = TERM | ≤r6 |\n| continuation guard | `:497-504` | wrong intent, protected context or budget → `continuation rejected`; 2nd = TERM | VETO+HAND | ≤r6 |\n| binding conflict | `:644-645`, `agent_speedup_v3_operation.py:130-133` | close/open for a different object mid-operation | TERM | r8 |\n| transport guards | `agent_speedup_v3_transport.py:17-21, 67-201` | >180 s; >131,072 chars; >2,048-char whitespace run; >64 MiB stream; >8 MiB event. Not retried (`agent_speedup_v2_client.py:149-150`) | TERM (error) | r5 (unchanged r6→r11) |\n| schema rejection | `agent_speedup_v3_client.py:203-241`; U `_ask_agent` L263-274 | `invalid_action_arguments`, then a 1-step hold | VETO+HAND | ≤r6 |\n| local blocking reasons | `agent_speedup_v3_local_geometry.py:200-233` | `obstacle_core:*`, `measured_tracking_mismatch`, `payload_shape_required`, `attachment_verification_required`, `changed_geometry:*`, `grasp_target_shape_required`, `current_public_rgb_required`, controller limits → `blocking_reasons` | VETO+HAND | r10 |\n| shell advisories | `local_geometry.py:151-157, 201, 236-237` | `unmeasured_free_space`, `estimated_obstacle_margin`; 5 mm speed cap | ADV+SHORT | r10 |\n| strict sweep / overlap / inventory / candidates (inert since r10) | `agent_speedup_v3_geometry.py:1647-1741, 1154-1203, 1487-1557` | `sweep_coverage:*`, `estimated_obstacle_overlap`, `geometry_inventory_required` | SHORT/VETO+HAND | ≤r6 |\n| event invalidation | `geometry.py:896-933, 750-801` | predicted contact (hand box overlaps a padded OBB), slip >6 mm, release, appearance change → stale entities | feeds vetoes | ≤r6 |\n| fragment pauses | `agent_speedup_v3_fragments.py:440-441, 515-516, 551-573, 478-484, 453-458` | `geometry_predicted_block`, `geometry_prefix_observed`, `geometry_observation_horizon`, `segment_stall`, `intent_watchdog_exhausted` | VETO/SHORT+HAND | ≤r6 |\n| program pauses | `agent_speedup_v3_program.py:700-704, 372-379, 695-699, 960-968, 588-598, 830-914` | MissingGeometry (incl. freshness of every inventory neighbour), visual hold/release, previous operation (r8), local recovery ≤2 per object (r7) | HAND | mostly ≤r6; r7/r8 noted |\n| view-planner zero-candidate reasons | `agent_speedup_v3.py:264-268`; `agent_speedup_v3_observation.py:49-161` | no derived goal; no witness; visibility (<8 px shift, occluded, off-image); motion not admitted; payload veto (r6–r9 only) | feeds T2 | ≤r6 (payload veto removed r10) |\n\n## 3. Terminal reasons of the failed runs (agent_stats `evidence_pause` + last two requests)\n\n| Run | End | Root chain | View planner at the final call |\n|---|---|---|---|\n| t1_009 r7 | escalate @743 | B release never accepted (14 raw release samples, 14 rejections) → payload unknown → overlap/coverage vetoed even a stationary open (0 steps, twice) | payload veto, 0 candidates |\n| t1_010 r8 | escalate @190 | 6 sweep_coverage requests on the grasp descent, unknown fraction 0.850; 2 of 2 recovery claims used | visibility rejected 8/8 |\n| t7_001 r8 | escalate @176 | overlap + 2 coverage requests, unknown 0.277 | visibility 6 + motion 2 rejected |\n| g5_001 r8 | escalate @21 | empty-hand close created a false plate payload → blocked | payload veto |\n| g5_002 r9 | escalate @71 | palm coverage unknown; repeat rejection at step 64 | visibility rejected 8/8 |\n| t1_011 r10 | acquire_evidence → TERM @194 | descent stall (translation response 1.06e-4 at 8.0 mm error) → tracking mismatch → recovery found no alternative | no_spatial_coverage_witness |\n| t1_012 r11 | acquire_evidence → TERM @431 | predicted contact staled milk at step 396 → `fresh_geometry:milk` during lift_clear → no goal | semantic_goal_requires_geometry_before_view_planning |\n| attempt_003 r6 | escalate @313 | inventory gate (stale target A) + 4 finger coverage requests | visibility rejected 8/8 |\n\nSupporting facts:\n- **Model kept choosing actions after the planner said no.** In both acquire_evidence endings, the request had already shown the 0-candidate reason.\n- **Misleading blocker in t1_011.** `blocker.execution_allowed=true` and `blocking_reasons=[]` (a preview recomputed without tracking, `agent_speedup_v3.py:137-141`), while `current_tracking` said mismatch.\n- **Milk staleness followed a real contact (t1_012).** The evaluator-only audit records a milk–palm contact at action 386.\n- **Planner visibility failure (inference).** In t1_010 and attempt_003 the focus witness lies inside a padded estimated box (15.3 mm and 31.2 mm), which `_occluded` always rejects.\n- **Unused local-evidence paths.** r7–r11 show 0 local-evidence resumes, 0 accepted displacements or anchors, and 0 accepted releases.\n- **Transport never fired.** The longest call was 119.5 s.\n- **Gates drive the calls, even in the success.** t1_008 (r6): 36 of 39 follow-up calls came after gate pauses or repeat rejections; model time was 1,336.5 s (83.9% of control time, 33.4 s per call). t1_012: 7 of 8 follow-up calls likewise.\n\n## 4. v3 = uc7 + layers\n\nv3 subclasses and reuses uc7:\n- `AgentFirstV2Policy`: act loop, macros, `_ask_agent`, `_complete_direct`.\n- `FragmentSequencePrimitive` and `LocalMotionPrimitive`, with uc7 PROFILES and stall/gap constants.\n- `AgentFirstV2Client` and `UserCheckV2Client`, with the v7 schema and validator.\n- The uc7 review store and server, loaded through importlib.\n- The uc7 runner, as a private module copy with swapped globals.\n\nv3 adds: the contract extensions, shared geometry, adaptive primitives, programs, the intent/guard/evidence-acquisition/escalate machinery, the visual watch, the interaction monitor, the operation runtime, perception, the bounded transport, history projection, and the performance and video adapters.\n\n## 5. Changes r6 → r11\n\n- **r7:** operation runtime and local perception; dual-hypothesis attachment probes; local recovery (≤2 per object) and goal updates (≤4); adaptive contact cap; local-evidence resume.\n- **r8:** compact operations; previous-operation gate; release-provenance preservation; binding-conflict stop.\n- **r9:** empty-hand posture is no longer treated as a grasp.\n- **r10:** LocalGeometryMemory (coverage advisory, obstacle cores, blocking reasons); payload view veto removed; blocking-entity view focus; grasp/support consistency checks; lean prompt and history projection.\n- **r11:** tracking mismatch passed to view planning; robot-endpoint view focus.",
+  "claims": [
+   {
+    "id": "C1",
+    "kind": "fact",
+    "claim": "Run-to-revision mapping verified from agent_stats.json policy_version and frozen copies: t1_009=v3-7, t1_010/t7_001/g5_001=v3-8, g5_002=v3-9, t1_011=v3-10, t1_012=v3-11, completion-baseline attempt_003=v3-6. The current source's v3 modules are byte-identical to t1_012's frozen_runtime.",
+    "evidence": [
+     "runs/agent_speedup_v3_*/agent_stats.json policy_version",
+     "runs/agent_speedup_v3_t1_012/v3_runtime_integrity.json changed_since_start=[]",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/execution/frozen_runtime/src/gpt_field/agent_speedup_v3.py POLICY_VERSION"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C2",
+    "kind": "framework",
+    "claim": "r6-r9 used strict GeometryMemory; r10-r11 use LocalGeometryMemory, which overrides assess_motion and verify_command and never calls _sweep_geometry, _command_candidates or _interaction_inventory, so the free-region coverage, overlap, inventory and command-candidate gates are inert in r11.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3.py:90",
+     "runs/agent_speedup_v3_g5_002/frozen_runtime/src/gpt_field/agent_speedup_v3.py (GeometryMemory())",
+     "src/gpt_field/agent_speedup_v3_local_geometry.py:174-316"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C3",
+    "kind": "framework",
+    "claim": "v3 extends uc7's 5 decision types (execute, motion, macro, observe, finish) with program, geometry_patch, continue_intent, acquire_evidence and escalate, and requires 11 output fields (uc7's 7 plus continuation, scene_update, motion_context, program). program is {stages:1..24} or a compact {operations:1..3 pick_place} that compiles to 8 stages per operation.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_agent_client.py:209",
+     "src/gpt_field/agent_speedup_v3_client.py:188-200",
+     "src/gpt_field/agent_speedup_v3_program.py:32-63,138-171"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C4",
+    "kind": "failure_mechanism",
+    "claim": "All 8 failed runs (7 r7-r11 runs plus attempt_003) ended as EvidenceAcquisitionFailed with zero view candidates at the final decision. 6 ended by model escalate (agent_speedup_v3.py:576-577) and 2 by acquire_evidence with 0 candidates (L300-302): t1_011 'no_spatial_coverage_witness' and t1_012 'semantic_goal_requires_geometry_before_view_planning'. In both acquire_evidence cases the request already showed that reason and 0 candidates.",
+    "evidence": [
+     "runs/agent_speedup_v3_*/agent_stats.json evidence_pause.reason",
+     "runs/agent_speedup_v3_t1_011/requests/000003-6bb95e7b156c460a8b6fa77dd2ab32d9.request.json current_decision.evidence_acquisition",
+     "runs/agent_speedup_v3_t1_012/requests/000009-d6cd6b9a1f784281a8193a5d5afe532a.request.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C5",
+    "kind": "bottleneck",
+    "claim": "In the last v3 success (r6 t1_008), 36 of 39 follow-up model calls followed a geometry-gate pause or a repeat-guard rejection: predicted_block 12, observation_horizon 12, prefix_observed 10, rejected_repeat 2. Only 3 followed a normal fragment_complete. Model pipeline time was 1336.5 s of 1593.6 s control (83.9%), 33.4 s per call.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/requests/*.request.json context.last_feedback",
+     "runs/agent_speedup_v3_t1_008/summary.json timing_components"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C6",
+    "kind": "failure_mechanism",
+    "claim": "Root gate families in the 8 terminal chains: strict sweep coverage 6/8 (t1_009, t1_010, t7_001, g5_001, g5_002, attempt_003); strict estimated overlap 4/8; interaction inventory 1/8 (attempt_003); payload/attachment uncertainty 2/8 (t1_009, g5_001); tracking mismatch 1/8 (t1_011); predicted-contact staleness leading to inventory-freshness MissingGeometry 1/8 (t1_012). The repeat-guard terminal (T3), continuation terminal (T4), binding-conflict stop (T5) and transport guards (T6) fired in none.",
+    "evidence": [
+     "runs/*/agent_stats.json evidence_pause.missing_evidence_requests and blocker",
+     "last two request/response pairs per run"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C7",
+    "kind": "defect",
+    "claim": "The blocker shown to the model for a pending goal is a preview recomputed with the pending motion_context and no tracking (agent_speedup_v3.py:137-141), so it can contradict the actual pause. In t1_011 request 3: blocker.execution_allowed=true and blocking_reasons=[], while current_tracking.status=mismatch (translation response 1.06e-4, 8.0 mm error) and executable_prefix_assessment was blocked by measured_tracking_mismatch. r11 added tracking only to view planning (L276-283).",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_011/requests/000003-6bb95e7b156c460a8b6fa77dd2ab32d9.request.json",
+     "runs/agent_speedup_v3_t1_011/agent_stats.json shared_geometry.last_motion"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C8",
+    "kind": "failure_mechanism",
+    "claim": "t1_012 (r11): milk went stale at step 396 from a predicted hand/padded-OBB overlap (possible_contact, invalidation_local_contact=false; geometry.py:917-933). Lift_clear goal derivation then failed with fresh_geometry:milk, because every scene_inventory neighbour must be fresh (program.py:372-379, 246-249). stage_goal became None, current_target None, and view planning was disabled (agent_speedup_v3.py:266-268). The evaluator-only audit records a real milk/palm contact at action_index 386.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_012/agent_stats.json shared_geometry.entities.milk and events",
+     "runs/agent_speedup_v3_t1_012/collision.json first_by_class.robot_object"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C9",
+    "kind": "fact",
+    "claim": "The local-evidence paths added in r7 never produced an accepted result in r7-r11 runs: 0 local_evidence_resume continuation events; 0 request-log mentions of an accepted rigid displacement or anchor; release_supported=0 in every run; hold_supported=1 only in t1_009 (where 14 raw release samples all had their confirmation rejected).",
+    "evidence": [
+     "runs/agent_speedup_v3_*/agent_stats.json continuation_events, operation_state.counts",
+     "grep of runs/agent_speedup_v3_*/requests/*.request.json for two_view_rigid_material_displacement / explicit_local_anchor_triangulated"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C10",
+    "kind": "failure_mechanism",
+    "claim": "The view planner rejected all 8 candidates (4 directions x 2 fractions) on predicted visibility in t1_010, g5_002 and attempt_003, so motion admission never ran. In t1_010 and attempt_003 the focus witness lies inside an uncertainty-padded estimated box (15.3 mm inside the table; 31.2 mm inside stale target A), which _occluded() always counts as occluded.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3_observation.py:27-44,141-153",
+     "last request evidence_acquisition.rejected in each run",
+     "box margins recomputed from agent_stats.json shared_geometry.entities"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C11",
+    "kind": "fact",
+    "claim": "Transport guards (180 s total deadline, 131,072 visible characters, 2,048-character JSON whitespace run, 64 MiB stream, 8 MiB event) are unchanged from r6 to r11. Their error codes are not in TRANSIENT_ERROR_CODES, so a trip terminates the run. None fired; the longest single call was 119.5 s (t1_008 first program).",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3_transport.py:17-21,67-201",
+     "src/gpt_field/agent_speedup_v2_client.py:149-150,903-914",
+     "responses _subscription_transport.v3_bounds.elapsed_s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "fact",
+    "claim": "v3 grew from 5,357 lines (r6) to 7,850 lines (r11), +46.5%. program.py went from 478 to 1,133 lines. New modules: operation.py (408) and perception.py (381) in r7, local_geometry.py (323) in r10. transport, performance, video and server are byte-identical to r6.",
+    "evidence": [
+     "wc -l src/gpt_field/agent_speedup_v3*.py",
+     "wc -l runs/agent_speedup_v3_t1_008/frozen_runtime/src/gpt_field/agent_speedup_v3*.py",
+     "diff of the r6 frozen copy vs current"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C13",
+    "kind": "opportunity",
+    "claim": "Instruction text fell from 25,722 characters (r6) to 10,569 (r10-r11). Wire projection reduced t1_012 call 9 from 298,988 to 138,195 prompt characters. Last-call input tokens were 397,117 in r6 t1_008 (call 40) vs 43,836 in r11 t1_012 (call 9); these are not like-for-like call positions.",
+    "evidence": [
+     "requests/*.request.json payload.instructions length",
+     "runs/agent_speedup_v3_t1_012/requests/000009-*.request.json prompt_sizes",
+     "responses usage.input_tokens"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "framework",
+    "claim": "The inherited uc7 loop allows at most one executive call per act and emits a 1-step zero-motion hold after any rejected answer. The v3 repeat guard and continuation guard turn the second unchanged or invalid attempt into a terminal stop, and acquire_evidence allows at most 2 view attempts per intent.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_agent.py:499-531",
+     "src/gpt_field/agent_speedup_v3.py:300,386-387,499-500"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C15",
+    "kind": "fact",
+    "claim": "Hard vetoes added after r6: LocalGeometryMemory blocking reasons obstacle_core, payload_shape_required, attachment_verification_required, changed_geometry, grasp_target_shape_required, current_public_rgb_required and controller limits (r10); program_previous_operation_unverified (r8); binding-conflict terminal (r8). Removed: the payload view-planning veto and free-region coverage as a veto (both r10).",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3_local_geometry.py:200-233",
+     "src/gpt_field/agent_speedup_v3_program.py:588-598",
+     "src/gpt_field/agent_speedup_v3.py:636-646",
+     "grep of frozen copies: payload_geometry_required_before_view_motion present through g5_002 (r9), absent from t1_011 (r10)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "bottleneck",
+    "claim": "Model pipeline share of control time in the failed runs: t1_009 0.802, t1_010 0.719, t7_001 0.886, g5_001 0.952, g5_002 0.814, t1_011 0.788, t1_012 0.814, attempt_003 0.861 (0.845 of result.json T_control 688.65 s). Total service times (s): 936.0, 535.9, 463.2, 201.2, 242.4, 214.8, 469.4, 1007.4.",
+    "evidence": [
+     "runs/*/summary.json timing_components.model_pipeline_s and control_elapsed_s",
+     "runs/*/performance.json completion_target.total_service_elapsed_s",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/result.json"
+    ],
+    "confidence": "high"
+   }
+  ],
+  "unknowns": [
+   "Why candidates failed predicted visibility in t7_001 and g5_002: the focus witness was not within 1 cm of any padded box, and per-candidate pixel shift and occlusion were not reconstructed.",
+   "Whether policy step indices (geometry events) and evaluator action_index (collision.json) use the same numbering; I assumed they are comparable when comparing the milk invalidation at step 396 with the contact at action 386.",
+   "Seconds of model time attributable to each gate family; only counts of the handoff reason before each call were computed.",
+   "Revision attribution before r6 (e.g. transport added in r5, visual watch in r3) comes from agent_SpeedUp_v3.md, not from diffs of r1-r5 frozen copies.",
+   "r8 to r9 was not diffed in full beyond the operation-runtime posture and release fields.",
+   "The internals of uc7 context_detail_compaction and causal_nodes (agent_speedup_v2_user_check_context.py), which shape last_feedback, were not inspected.",
+   "Counterfactuals were not tested: whether removing or softening any gate would raise raw LIBERO success. Some gates fired on real contacts (t1_012 audit).",
+   "The t1_009 release-provenance erasure mechanism was taken from the doc plus counters (14 raw release samples, 14 confirmation rejections), not traced step by step.",
+   "attempt_003 response logs lack v3_bounds elapsed_s, so its per-call transport latency is unknown (summary model total 581.8 s only)."
+  ]
+ },
+ {
+  "key": "uc7_runs",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/uc7_runs.md",
+  "summary": "The uc7 line has one run under 300 s. Of 11 raw successes, only t5_001 (task t5) qualifies, at 270.2 s reconstructed and 274.9 s process wall. The mean is 448.6 s.\n\nWhere the time goes, on average:\n- **Model:** 223.7 s (49.9%), from 14.8 calls × 15.1 s. Latency is about 10.2 s per call plus 0.037 s per reasoning token (r=0.84). First calls average 27.4 s.\n- **Per-step overhead:** 0.228 s/step × 836 steps = 190 s (42%). Simulator 0.105, video 0.091, run_state 0.025, observe 0.007 s/step.\n- **Preparation:** 23.8 s.\n\nNo single lever reaches 300 s:\n- Zero model time: mean 224.9 s, but t0 is still 318.7 s.\n- Compact I/O alone (as measured today in arm B): mean 372.6 s, 2/11 runs under 300 s.\n- Compact I/O plus motion at transit speed: mean 317.8 s, 4/11 under 300 s.\n- About 151 s of model time fits the budget, roughly 10 calls.\n\nWhy there are so many steps:\n- The arm realizes about 24% of its commanded step: 4.8 mm/step in transit (20 mm cap) and 1.17 mm/step in contact (5 mm cap).\n- Contact motion takes 48.6% of motion steps but covers 21% of the path.\n- The same path at transit speed would need 51.7% of the steps. Stalled segments hold 15% of steps.\n\nWhy there are so many calls:\n- Every fragment ends in a model call (210 of 210 executes). Fragments average 1.95 segments and use 49% of their step budget.\n- 36 of 163 calls followed stalls.\n- The 1.2 rad rotation check rejected 5 calls before any motion, wasting 133 s.\n- Native macros were never used.\n\nPreparation reliability: identical plan requests hang at random. 5 of 20 uc7-code attempts hung for 297–900 s, including today's trials 004/005.\n\nRaw-success quality: strict physical success at the final step failed in 15/15 raw successes, because the evaluator stops mid-release. After a simulated release-and-settle, t0 and t5_002 are still badly placed. t5_001 would lose raw success after release.\n\nt6 failures:\n- **Pudding:** the \"right of the plate\" region is hidden and gives no completion feedback. t6_009's plan read it as world +x; the pudding ended 20.4 mm outside, after 12 calls and 400 s spent after the model declared finish.\n- **Mug:** in t6_011 the handle grasp slipped and the mug tipped; 20 recovery calls failed.\n- **Arm:** elbow and reach limits recur on t6 and t3.\n\nToday's reruns: per-call latency was 45% higher, and 138 s of automated review was counted as service.",
+  "details_markdown": "## Scope and sources\n\nThe run set is uc7 (`agent-speedup-v2-user-check-7`, 13 runs, identical frozen control code), uc6 (t6_007, t3_002), uc1–uc5 (t6_001–t6_006), and today's `results/speedup_evidence_20261026T055123Z/evaluations/trial_001..005`.\n\n- **Per-call latency** comes from `<run>_launch/runner.log` `model_call.latency_s`. Its sum equals `model_pipeline_s` exactly. It is duplicated in `episode.events.jsonl` `skill_decision.api_latency_s`. `result.json` `budget.elapsed_s` is a cumulative clock, and `ledger.json` is empty.\n- **Service time** for historical runs is reconstructed as `user_check.preparation_elapsed_s + approval_to_claim_s + elapsed_s`. This is about 5 s below supervisor process wall time: t5_001 274.9 vs 270.2 s, t6_009 968.1 vs 962.4 s. Today's runs use `service_clock.json`.\n\n## Q1: time decomposition, 11 uc7 raw successes\n\n| component | mean (s) | share |\n|---|---:|---:|\n| model_pipeline (14.8 calls × 15.1 s) | 223.7 | 49.9% |\n| simulator_step (0.105 s/step) | 87.4 | 19.5% |\n| video_render (0.091 s/step) | 75.9 | 16.9% |\n| preparation (17.2 s of it model) | 23.8 | 5.3% |\n| run_state (0.025 s/step) | 21.1 | 4.7% |\n| start-up + finalization | 8.3 | 1.8% |\n| observe_transition | 5.8 | 1.3% |\n| **service** | **448.6** (median 438.1; range 270.2–650.3) | |\n\nOnly t5_001 is ≤300 s. t5_002 is at 327.8 s.\n\nCounterfactuals, as arithmetic on measured components:\n- **Zero model time:** mean 224.9 s, but t0_001 is still 318.7 s, and t3_003 (294.1 s) and t9_001 (298.4 s) are within 6 s of the limit.\n- **No video and no run_state:** mean 351.5 s.\n- **Compact B-arm I/O** (video 0.0252 s/step, run_state about 0): mean 372.6 s; 2/11 runs fit. The model budget left is 151.1 s, about 10 calls at 15.1 s or about 7 at today's ~22 s.\n- **Compact I/O plus steps at the realized transit-speed lower bound:** mean 317.8 s; 4/11 runs fit. The rest still need 1–2 fewer calls.\n\nt5_001 reference:\n- prep 28.4 s; model 146.8 s (7 calls, first call 38.55 s); simulator 41.1 s; video 36.5 s; run_state 6.9 s; observe 1.7 s; other 8.4 s.\n- It had the fewest steps (399) and zero stalls.\n\nLatency model (205 non-first uc7 calls):\n- Latency ≈ 10.2 s + 0.0373 × reasoning tokens. Correlation with reasoning tokens is 0.84; with input tokens it is 0.04.\n- First calls average 27.4 s with 438 reasoning tokens; later calls average 14.7 s with 120.\n- Today, non-first calls averaged 21.7 s (arm A) and 19.8 s (arm B), with 107 and 89 reasoning tokens. Arms A and B ran concurrently.\n\n## Q2: action mix\n\n- **Control steps (13 uc7 runs):** fragment 11,895, direct 41, native macro 0, optional macro grants 0. Decision types: execute 210, motion 7, finish 1, observe 0, macro 0.\n- **Execute shape:** segments per execute average 1.95 (77× one segment, 79× two, 41× three, 13× four, never more than four of six). All 210 executes set `observation_after` on the last segment, so every fragment ends in a model call (`fragments.py:335-337`).\n- **Steps per call:** 56.4 for uc7 successes, against 4.8 (t3_002) and 5.5 (t6_007) in uc6. Fragments executed a median of 58 steps, using 49% of the requested budget.\n- **What triggered the 163 calls in the 11 successes:**\n  - 104 scheduled checkpoints\n  - 36 stalls (22%)\n  - 11 fragments cut short by raw success\n  - 6 direct `motion` calls\n  - 3 zero-step first calls rejected by the 1.2 rad rotation envelope (`fragments.py:236-239`) in t4, t8 and t9; two more in t6_011, for 133.1 s of wasted model time across the five\n  - 3 other\n- uc6 t6_007 had a single macro grant, which burned 60 calibration steps with no progress.\n\n## Q3: step efficiency\n\n- **Realized versus commanded motion** (OSC kp=150, damping ratio 1, 20 Hz; `fragments.py:25-32,252-258`; `action.py:16,92`): transit 20 mm/step command gives 4.79 mm/step (n=2,740); contact 5 mm gives 1.17 mm/step (n=3,322). That is a ratio of about 0.24.\n- **Contact versus transit:** contact is 48.6% of motion steps but 21.2% of path (4.73 of 22.28 m).\n- **Wasted or slow steps:**\n\n| category | steps | share |\n|---|---:|---:|\n| proportional tail (commanded below cap) | 1,479 | 17.1% of motion steps |\n| inside 36 stalled segments | 1,411 | 15.3% |\n| no-progress runs (≥10 consecutive steps <1 mm) | 1,115 | 12.1% |\n| gripper (hard minimum 364) | 496 | 5.4% |\n\n- **Lower bound on steps:** at measured transit speed plus gripper minimums, 4,752 steps (51.7% of actual; 40–65% per run). At the nominal 20 mm cap it would be 16.1%, which current gains cannot reach.\n- **Elbow limit:** joint 4 was within 0.02 rad of its −0.0698 rad upper limit at 13 of 218 requests (t6_009 ×8, t6_011 ×3, t3_003 ×2).\n- **Table contact:** descents stalled at fingertip-to-table height z≈0.446 in t1, t6_009 and t7.\n\n## Q4: t6 failures\n\nThe goal is `On(mug, plate)`, which needs the mug within 30 mm xy of the plate centre, and `On(pudding, plate_right_region)` with x∈[0.10,0.20], y∈[0.05,0.15]. \"Right of the plate\" therefore means world +y.\n\n- **Earlier versions (uc1–uc5):** the mug never finished in any run.\n  - Grasp and precondition vetoes: `pointed_not_grasp_point`, `geometry_unmeasured`, `footprint_blocked`.\n  - Region E was never registered: `part_not_found`, `reach_limit`, `destination_not_registered` ×16 in t6_002.\n  - t6_004 placed the mug strictly well but 52.6 mm off centre, so raw success failed.\n- **t6_009 (uc7):**\n  - The mug succeeded, with strict truth passing at 19.6 mm.\n  - The auto-approved plan bound region E to \"world +x side of plate\". The first pudding placement at (0.30, 0.02) was outside the region.\n  - After the model declared finish (call 16, step 965, 530 s into execution), 12 more calls over 579 steps and 399.6 s ended with the pudding 20.36 mm outside (y=0.170).\n  - The robot's own placement error was a few mm, so this is not perception or control. It is a general missing capability: a hidden relational region with only a one-bit \"episode continued\" signal.\n  - The +x target was about 0.87 m from the shoulder against a 0.742 m stretch limit (my inference from `mount_decision`).\n- **t6_007 (uc6):** the first pudding target at y=0.20 was also outside the region. Success came at a 4.43 mm margin.\n- **t6_011 (uc7):** the handle grasp leaned and then slipped while lowering (call 8). The mug tipped to 88.85°. 20 recovery calls over 874 steps and 535 s failed:\n  - rotation-envelope rejections\n  - elbow at its straight limit\n  - body grasps slipping and rolling the mug off the plate\n  - empty closes after height misestimates\n\n  The pudding was never touched. This is a control-robustness and recovery gap: the same plan worked in t6_009.\n\n## Q5: raw success with v2_success = false\n\nStrict truth at the final step failed in 15 of 15 raw successes. Raw success fires 2–27 steps into the last fragment, because the evaluator stops at the first raw success (`libero.py:944`).\n\n- **At the final step:** not_held or robot-touching checks failed in all 15. Dropped objects were still moving at 0.62–1.07 m/s.\n- **v2 = false in 12:** container and plate support checks, and the drawer-borne bowl's `at_rest`, are not deferrable (`agent_speedup_v2_truth.py:74-75,884-923`).\n- **After release-and-settle:** strict passes in 10 of those 12.\n  - t0_001 and t5_002 remain perched on the rim.\n  - t5_001, the only sub-300 s run, fired while the book was still held, 1.16 mm below the region top. After settling its origin is 3.48 mm below the region box, so raw success would be lost.\n\n## Today's reruns\n\n| trial | arm | outcome | service (s) | detail |\n|---|---|---|---:|---|\n| 002 | A | raw success, 830 steps, 11 calls | 648.7 | prep 29.1 s; Codex review 138.1 s; raw at 645.8 s |\n| 003 | B | raw success, 1,019 steps, 13 calls | 614.0 | video+run_state 25.7 s vs A's 103.7 s |\n| 004 / 005 | B / A | prep request hung | 901 | 900 s cutoff, 0 tokens |\n| 001 | A | credentials error | 7.6 | — |\n\n## Ranked bottlenecks\n\n1. **Model calls × latency (50%).** There is a checkpoint after every fragment, a floor of about 10 s per call, and a first call of 27 s.\n2. **Per-step overhead × steps (42%).** Two 512² image data-URLs are encoded on every step (`observation.py:158-159`).\n3. **Slow realized motion.** Contact motion takes about half the motion steps; the same path at transit speed needs about 52% of the steps.\n4. **Preparation hangs.** Hangs are random on byte-identical payloads: the t6 payload sent 4 times hung twice (634 s, 297 s), the t3 payload hung once in 3 sends, and overall 5 of 20 uc7-code attempts (25%) hung. No `max_output_tokens` is sent.\n5. **Generality gaps.** Relational regions, grasp and upright recovery, and the elbow reach limit.\n6. **Mid-placement raw stop.** Physical quality cannot be read from the raw stop.\n7. **Unstable latency.** Per-call latency was 45% higher today.",
+  "claims": [
+   {
+    "id": "C1",
+    "kind": "bottleneck",
+    "claim": "Model pipeline is the largest component. Across the 11 uc7 raw successes it averages 223.7 s, 49.9% of the 448.6 s mean reconstructed service time, from 14.8 calls at 15.1 s each. Only t5_001 is at or below 300 s (270.2 s).",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_{t0_001,t1_001,t2_002,t3_003,t3_005,t4_001,t5_001,t5_002,t7_001,t8_001,t9_001}/summary.json timing_components.model_pipeline_s, elapsed_s, user_check.preparation_elapsed_s",
+     "runs/*_launch/runner.log model_call latency_s (sum == model_pipeline_s)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C2",
+    "kind": "fact",
+    "claim": "Per-call latency is approximately 10.2 s plus 0.0373 s per reasoning token. Over 205 non-first uc7 calls the correlation is 0.84 with reasoning tokens and 0.04 with input tokens. First calls average 27.4 s (438 reasoning tokens); later calls average 14.7 s (120).",
+    "evidence": [
+     "runs/*/requests/*.response.json usage.output_tokens_details.reasoning_tokens",
+     "runs/*_launch/runner.log latency_s",
+     "scratchpad/analysis/call_tokens.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C3",
+    "kind": "bottleneck",
+    "claim": "Per-step overhead costs 0.228 s/step × 836 mean steps = 190 s, 42.4% of service. The split is simulator 0.105, video 0.091, run_state 0.025 and observe 0.007 s/step. Compact I/O measured in trial_003 cut video to 0.0252 s/step and run_state to 0.1 s total.",
+    "evidence": [
+     "summary.json timing_components.simulator_step_s/video_render_s/run_state_s/observe_transition_s",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial/summary.json video_render_s=25.64 run_state_s=0.108"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C4",
+    "kind": "bottleneck",
+    "claim": "No single lever reaches 300 s. With zero model time the mean is 224.9 s, but t0_001 is still 318.7 s. Compact I/O alone gives a mean of 372.6 s (2/11 runs at or below 300). Compact I/O plus steps cut to the realized-speed lower bound gives 317.8 s (4/11). The model budget left under compact I/O averages 151.1 s, about 10 calls at 15.1 s.",
+    "evidence": [
+     "scratchpad/scripts/decomp.py output",
+     "per-run timing_components and steps2.json lb_steps"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C5",
+    "kind": "failure_mechanism",
+    "claim": "Realized motion is about 24% of the commanded step. At the 20 mm transit cap, steady-state motion is 4.79 mm/step (n=2,740). At the 5 mm contact cap it is 1.17 mm/step (n=3,322). The controller is OSC_POSE with kp=150, damping ratio 1, at 20 Hz.",
+    "evidence": [
+     "episode.events.jsonl executed.feedback.normalized_action vs measured_translation_delta_m (11 uc7 successes)",
+     "frozen_source/agent_speedup_v2_user_check_fragments.py:25-32,252-258",
+     "frozen_source/action.py:16,92",
+     "simulator.json metadata.controller"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C6",
+    "kind": "bottleneck",
+    "claim": "The contact profile takes 48.6% of motion steps (4,203 of 8,650) but covers 21.2% of the path (4.73 of 22.28 m). The same path at measured transit speed plus minimum gripper steps needs 4,752 steps, 51.7% of the actual 9,195. Stalled segments hold 1,411 steps (15.3%), runs of 10 or more steps under 1 mm/step total 1,115 (12.1%), and gripper steps are 496 against a hard minimum of 364.",
+    "evidence": [
+     "scratchpad/analysis/steps2.json",
+     "episode.events.jsonl fragment current_segment profile/skill/reason",
+     "fragments.py:35-43,294-325"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C7",
+    "kind": "failure_mechanism",
+    "claim": "Every fragment returns control to the model: all 210 uc7 executes set observation_after on the last segment. Executes average 1.95 segments (never more than 4 of 6) and use 49% of their requested step budget. The 163 calls in the 11 successes were 104 scheduled checkpoints, 36 stall handoffs, 11 fragments cut by raw success, 6 direct motions, 3 zero-step envelope rejections and 3 other.",
+    "evidence": [
+     "runs/*/requests/*.response.json execution.segments",
+     "steps_metrics.json frag_reasons",
+     "fragments.py:335-337"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C8",
+    "kind": "defect",
+    "claim": "The 1.2 rad target-rotation envelope rejected the first execute of t4_001, t8_001, t9_001 and t6_011, plus t6_011 call 9, before any motion. That is 5 calls and 133.1 s of model latency (28.7+25.8+26.2+28.0+24.4), even though the executor already caps rotation at 0.1 rad per step.",
+    "evidence": [
+     "fragments.py:236-239",
+     "next-call beliefs: 'requested rotation exceeded the per-stage envelope'",
+     "runner.log latency_s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C9",
+    "kind": "bottleneck",
+    "claim": "Preparation plan requests hang at random on byte-identical payloads. The t6 payload (sha prefix fe11f64d) was sent 4 times: 2 hung (t6_008 634 s, t6_010 297 s, 0 tokens, user-interrupted) and 2 completed (24.3 s, 21.2 s). The t3 payload 655e8267 hung once in 3 sends (t3_004, 298 s). Today trial_004 and trial_005 hung to the 900 s cutoff. In total 5 of 20 uc7-code prep attempts hung (25%). The request payload omits max_output_tokens.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_{t3_004,t6_008,t6_010}_review/requests/*.result.json (KeyboardInterrupt, elapsed 298.1/634.1/297.3)",
+     "*_launch/stop_record.json, user_stop_request.json",
+     "evaluations/trial_00{4,5}/review/requests/*.result.json elapsed 893.5/893.6",
+     "payload sha256 comparison; payload keys lack max_output_tokens; budget.output_token_limit_sent=null"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C10",
+    "kind": "failure_mechanism",
+    "claim": "t6_009 failed on the hidden 'right of plate' region (x 0.10–0.20, y 0.05–0.15), not on perception or control. The auto-approved plan bound it to world +x, and the first placement at (0.30, 0.02) was outside. After the model's finish (call 16, step 965) the run used 12 more calls, 579 steps and 399.6 s, and ended 20.36 mm outside (y=0.170), while the mug was placed strictly. In t6_007 the first target (y=0.20) also missed; success came at a 4.43 mm margin.",
+    "evidence": [
+     "LIBERO bddl libero_10/LIVING_ROOM_SCENE6_...right_of_the_plate.bddl plate_right_region",
+     "t6_009/approved_plan.json region E text",
+     "t6_009/physical_truth.json com_margin_region_mm=-20.36",
+     "t6_009 runner.log wall_s/step",
+     "t6_007/physical_truth.json com_margin_region_mm=4.43"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C11",
+    "kind": "failure_mechanism",
+    "claim": "In t6_011 the handle grasp leaned (call 5) and slipped while lowering (call 8), leaving the mug tipped at 88.85°. Twenty recovery calls over 874 steps and 535 s failed through envelope rejections, elbow-limit stalls, slipping body grasps and empty closes, and the pudding was never touched. The same handle plan succeeded in t6_009. In all 5 uc1–uc5 t6 runs the mug was never finished, under macro precondition vetoes.",
+    "evidence": [
+     "t6_011 responses 000005-000027 beliefs",
+     "t6_011/physical_truth.json tilt_deg=88.85",
+     "t6_00{1,2,4,5,6}/summary.json relation_outcome_sequence reasons"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "failure_mechanism",
+    "claim": "Elbow joint 4 was within 0.02 rad of its upper limit (−0.0698 rad) at 13 of 218 uc7 requests: t6_009 ×8, t6_011 ×3, t3_003 ×2. By my calculation from the mount data, the +x pudding target was about 0.87 m from the shoulder, against a 0.742 m frontal stretch limit.",
+    "evidence": [
+     "runs/*/requests/*.request.json measured_state.joint_position_rad",
+     "t6_009/summary.json mount_decision.shoulder_xyz, frontal_stretch_limit_m"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C13",
+    "kind": "fact",
+    "claim": "Strict physical success at the terminal step failed in all 15 user-check raw successes (11 uc7, 2 uc6, 2 today). Raw success fires 2–27 steps into the final fragment, with fingers still on the object or part. v2 is false in 12. After release-and-settle, strict passes in 10 of those 12; t0_001 and t5_002 stay perched on the rim. t5_001's raw success would be lost after release: the settled origin is 3.48 mm below the region box.",
+    "evidence": [
+     "*/physical_truth.json terminal/after_release_settle atoms, libero margins, speed_mps",
+     "libero.py:944 stop_on_success",
+     "agent_speedup_v2_truth.py:74-75,884-923"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "fact",
+    "claim": "Today's uc7 reruns did not reach 300 s. Arm A took 648.7 s (prep 29.1, Codex review 138.1, raw at 645.8) and arm B 614.0 s. Non-first per-call latency was 21.7 s (A) and 19.8 s (B), against a historical 14.7 s at similar reasoning tokens (107 and 89 vs 120). A and B ran concurrently.",
+    "evidence": [
+     "evaluations/trial_00{2,3}/service_clock.json events",
+     "launches/trial_00{2,3}/supervisord.log spawn times",
+     "run.log model_call latency_s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C15",
+    "kind": "fact",
+    "claim": "From uc6 to uc7 on t3, calls fell from 87 to 22 or 21, steps per call rose from 4.8 to 56.4 (uc7 mean), but steps rose from 419 to 1,207 or 744. Service fell from 1,351.9 s to 650.3 s or 451.6 s. Native macros were used 0 times in uc7.",
+    "evidence": [
+     "t3_002, t3_003, t3_005 summary.json",
+     "agent_stats.json counts.native_macro_actions/optional_macro_grants"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "opportunity",
+    "claim": "Each control step renders and encodes two 512² RGB data-URLs and sends them through the simulator pipe, even though fragment control between calls uses only proprioception. This is a candidate for cutting the 0.105 s/step simulator cost; how that cost splits is unknown.",
+    "evidence": [
+     "frozen_source/observation.py:158-159",
+     "frozen_source/libero.py:951-954",
+     "simulator.json image_size=512"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C17",
+    "kind": "opportunity",
+    "claim": "The transit command is capped at 0.02 m/step, but the OSC accepts up to 0.05 m per axis. If the measured 0.24 realization ratio held, transit speed could rise about 2.5×. This is untested and needs a simulator-only check for overshoot and collision.",
+    "evidence": [
+     "fragments.py:25-28",
+     "action.py:16,67-68",
+     "ratio analysis (C5)"
+    ],
+    "confidence": "low"
+   }
+  ],
+  "unknowns": [
+   "How simulator_step_s (0.085–0.124 s/step) splits between physics, two-camera rendering, PNG/data-URL encoding, pipe transfer and per-substep contact monitoring; no per-component samples exist.",
+   "Whether larger transit commands (up to 0.05 m per axis) keep the ~0.24 realization ratio without overshoot or collisions; no simulator test was run.",
+   "Root cause of the stochastic prep hangs on identical payloads (runaway output stream vs server stall); speedup_next saw output_text deltas without response.completed but the cause is unresolved.",
+   "Whether today's +45% per-call latency came from the concurrent A/B arms or from service load.",
+   "Historical service times are reconstructed (about 5 s below process wall time), not measured by a service clock.",
+   "t6_005 has no physical_truth.json, so its terminal state is unknown.",
+   "Stall causes (kinematic vs contact) are labelled from the model's own next-call beliefs by keyword, not from contact truth.",
+   "Whether the policy-side model receives reach or stretch-limit information; the 0.742 m limit comes from the evaluator-side mount_decision."
+  ]
+ },
+ {
+  "key": "v3_runs",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/v3_runs.md",
+  "summary": "I parsed 376 archived model requests across all v3 runs (r1-r11 and today's r6 copy, attempts 1-3) and uc7 t1_001, plus summary, performance, trace, agent_stats and error_traceback files.\n\nOn the identical t1 reset, the r6 success t1_008 is 3.71x slower than uc7 in prep+elapsed (1622.2 s vs 437.7 s) and 4.78x in control without video. Model time accounts for 97% of the +1186.5 s control gap (+1154.0 s). Of that, the extra calls (13 → 40) cost +640.6 s and the higher per-call latency (14.0 → 33.4 s) +513.4 s.\n- Calls: 36 of 39 non-initial calls were geometry-gate or repeat-guard handoffs (uc7: 0 of 12), and 21 decisions were pure geometry patches costing 568 s.\n- Latency: it rises mainly from bigger outputs (scene_update, program) and more reasoning tokens, not context size. The first call takes 57-137 s in r6+ (uc7: 17.8 s).\n\nAll 9 behavioural failures from r4.1 on end in a designed terminal stop. 7 are the model's own escalate decisions and 2 are runtime stops when evidence acquisition has no view to offer. Underneath:\n- The model's metric geometry is off by more than it admits: the table top was 17-42 mm too low in 9 of 9 t1 runs, with declared uncertainty of only 8-15 mm.\n- The coverage gates then ask for mm-level consistency (deficits 0.04-25 mm). In 3 of 5 cases the nominal clearance was positive; only uncertainty padding blocked motion.\n- The view proposer offered a move in only 11 of 130 requests (83% of rejections are predicted-visibility failures), and stereo pose correction was never accepted.\n\nThe t1_008 success came from the ordinary fragment executive inherited from uc7 (81.6% of actions). The new program was abandoned at step 148 after the gripper hit the real table, and the interaction monitor recorded 0 observations.",
+  "details_markdown": "## v3 runs: where time goes and why runs fail\n\nFull report: `/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/v3_runs.md`. Scripts are in the scratchpad `scripts/` folder (stdlib only, run read-only).\n\n**Method.** Per-call latency is `v3_transport_diagnostics.elapsed_s` for v3 and the budget interval for uc7. A call's trigger is `context.last_feedback.summary.reason` in its request (the reason control returned to the model).\n\n### Q1: uc7 t1_001 vs v3 t1_008 (same reset, sha e92ca405, same gpt-6-astra/high settings, 897 vs 873 steps)\n\n| control component | uc7 | t1_008 | Δ |\n|---|---:|---:|---:|\n| model_pipeline | 182.5 | 1336.5 | **+1154.0 (97.3%)** |\n| observe_transition (geometry/feedback) | 6.4 | 97.8 | +91.4 |\n| policy_compute | 0.9 | 8.8 | +7.9 |\n| simulator | 108.4 | 110.1 | +1.7 |\n| video | 81.8 | 37.5 | −44.3 |\n| run_state | 25.1 | 0.2 | −24.9 |\n\n- Ratios: prep+elapsed 437.7 → 1622.2 s (×3.71); control ×3.91; control without video ×4.78. Non-model control time is about equal (224.6 vs 257.1 s).\n- Model time: calls 13 → 40 and mean 14.04 → 33.41 s/call. Shapley split: count +640.6 s, latency +513.4 s. The first call alone is 119.5 vs 17.8 s.\n- Latency regression (374 calls, R² 0.931): latency ≈ 4.38 + 0.018/k input tokens + 0.020/visible token + 0.051/reasoning token. The 18.8 s/call gap splits into input +3.1 s, visible output +5.1 s, reasoning +5.7 s, unexplained 5.0 s.\n  - Outputs carry scene_update and motion_context: 646 + 223 of 1,778 chars per call on average. The first call is 8,480 chars (scene_update 4,372 + program 3,173).\n  - The only per-event transport log (baseline attempt 3) shows call 1 at 66.5 s before the first visible character plus 70.9 s of streaming. Later calls had a median of 20.3 s before visible output and 13.3 s of streaming at about 87-144 chars/s.\n- Trigger of the 40 calls:\n  - 1 initial\n  - 34 geometry gates: observation_horizon 12, predicted_block 11, prefix_observed 8, program_prefix 2, program_predicted_block 1 (this one replaced the program with fragments at step 149)\n  - 2 repeat guard\n  - 3 natural fragment_complete\n- So 36 of 39 non-initial calls were gate-triggered, costing 1046.5 s (80% of transport). uc7 had 12 non-initial calls: 8 fragment_complete and 4 stalls.\n- Decisions in t1_008: 21 geometry_patch (568.4 s, 43%) plus 19 progress decisions vs uc7's 13. So the +27 calls = 21 patches + 6 extra progress decisions.\n- Granularity: decisions bought a median of 4 steps each (uc7: 63). The release tail used 5 calls (169 s) for steps 867-871.\n- At the 300 s mark t1_008 was at about step 149 of 873; uc7 was at about step 494-624 of 897.\n\n### Q2: failing runs from r4.1 on\n\n9 runs ended in evidence_acquisition_failed: 7 model escalations and 2 runtime `targeted_view_unavailable` stops. Both paths are terminal by design: `agent_speedup_v3.py:300-302` and `576-577`, and the prompt tells the model to escalate when no view exists. Not every r4.1+ failure ends this way: t1_006 was a TypeError crash, and baseline attempts 1 and 2 were harness errors.\n\n| run | what fired (nominal / uncertainty / deficit) | obtainable from RGB? | recovery tried → result | progress vs geometry/evidence decisions |\n|---|---|---|---|---|\n| t1_005 r4.1 | whole lower-hand sweep coverage, occluded; 13 of 24 handoffs were 4-step horizons | no (free space can't be certified from RGB) | 7 patches; acquire_evidence not in the r4.1 schema → escalate, 0 closes | 16 vs 9 |\n| t1_009 r7 | stale B payload: −159 mm / 12 mm / 181 mm deficit | release evidence existed (14 samples) but was rejected after a provenance bug | 8 patches; 1 view move (15 steps); hold accepted at step 302, release never accepted | 15 vs 10 |\n| t1_010 r8 | fingers −5 to −10 mm / 15 mm / 20-25 mm | no: fingertips planned at z≈0.420, below the real table top (0.4368) | 2 patches; 1 view move (26 steps); 2 retreats unsupported → escalate, 0 closes | 3 vs 4 |\n| t7_001 r8 | hand +4.0 / 7 / 3.3 mm; finger pad +7.3 / 7 / **0.04 mm** | no (sub-pixel) | 2 patches; 0 of 6 proposer calls offered a view → escalate | 5 vs 3 |\n| g5_001 r8 | false plate payload (bug) | n/a | 1 patch → escalate | 3 vs 2 |\n| g5_002 r9 | hand +6.4 / 18 / 14.5 mm (union not proven) | no | patch rejected; no view → escalate | 4 vs 2 |\n| t1_011 r10 | real stall on the table (model table top 0.420 vs 0.4367) → no coverage witness for the view proposer | the stall itself was the evidence | 1 continue (stalled again) → acquire_evidence → stop | 1 vs 2 |\n| t1_012 r11 | `fresh_geometry:milk` after real palm contact; view planning blocked because the next goal could not be computed yet | plausibly yes | 4 patches, model retreat, new program, 12 closes; earlier view focus was the table center (8 of 8 candidates failed visibility) → stop | 3 vs 6 |\n| att3 (r6 copy, ep2) | fingers +0.5 to +1.6 / 4 / 2.4-3.5 mm | no | 7 patches, withdraw/re-approach, 5 partial closes; a view was offered in 1 of 11 requests → escalate | 5 vs 8 |\n\n**Totals over these 9 runs:**\n- Triggers: 72 of 92 non-initial calls (78%) were gate/guard handoffs.\n- Decisions: 55 progress (2,139 s) vs 46 geometry/evidence (1,175 s).\n\n**Cross-run facts:**\n- The view proposer offered candidates in only 11 of 130 requests. Of 567 candidate rejections, 470 were predicted-visibility failures. It only moves the wrist camera sideways in 4 directions, and treats uncertainty-inflated boxes as occluders (`observation.py:27-32, 86, 122-124, 147-160`).\n- Only 2 view moves were ever executed; neither cleared its blocker.\n- 0 accepted local pose revisions in any run checked.\n- Table-top estimates were 16.8-41.8 mm below the audited contact height in 9 of 9 t1 runs, with declared uncertainty of 8-15 mm. The model corrected the table only after physical contact.\n\n### Q3: what drove the t1_008 success\n\n- Actions: semantic program 149 (actions 0-148), ordinary fragments 712 (81.6%), local motion 12.\n- The program's grasp goal (z 0.4194 m) was 17 mm below the real table. The fingers first touched the table at action 144, and the program stopped at step 148.\n- The interaction monitor recorded 0 observations; no hold or release was accepted.\n- All four v3 successes ran ≥81.6% ordinary fragments, the uc7 mechanism.\n- One measurable gain: recorded forbidden contact points were 251 vs uc7's 5,738. That is n=1 per arm and noisy (r2 t1_002 recorded 6,808).\n- Verdict (inference): the success is not attributable to v3's new layers. Their measured effect was +27 calls and +1154 s of model time.\n\n### Q4: gate-triggered share of non-initial calls\n\nuc7 0%; r1 86%; r2 65%; r3 68%; r4.1 79%; r5 71%; r6 92% (baseline copy 92%); r7 71%; r8 71%; r9 80%; r10 100% (2 calls); r11 88%. Gate time share ranges 14-81% (r6: 80%).\n\n### Q5: analysis files vs raw data\n\nThese were reproduced from the request, trace and stats files:\n- t1_008: routes, mean latency 33.41 s, program abandonment, 0 interaction observations.\n- t1_007: 79.57% model share.\n- t1_003: ~0.5 mm per step (median 0.51 mm, 75% of steps <1 mm).\n- Staged gates: totals, gate A hold 1 / release 0 / 14 rejections, 0 pose updates, t1_010 0.546 s/action feedback.\n- t1_011 and t1_012 terminal chains.\n- Today's attempt 3: 84.49% model share and 284.8 s review.\n\nOne caveat: the r10 prompt compaction (213,934 → 91,777 chars) was measured offline. Live r10/r11 calls still averaged 39-45 s, because outputs were 1,052-1,367 tokens and the first calls took 106.7-116.2 s.\n\n### Ranked claims\n\n1. Gate handoffs, not task phases, set the call count: 92% of non-initial calls in t1_008, 78% in the failing runs, 0% in uc7.\n2. Per-call latency more than doubled, driven by output and reasoning; the r6+ first call takes 57-137 s.\n3. The model's geometry is biased by 17-42 mm, more than its declared 8-15 mm, while the gates demand mm-level consistency.\n4. Evidence acquisition can't supply that evidence, and failing to supply it is terminal.\n5. The new layers delivered no success.\n6. Bookkeeping defects (release provenance, false payload, view prerequisites) ended several runs.\n7. Geometry compute costs +91 s in t1_008 and 104 s in t1_010.\n8. Two of 14 preparations lost ~900 s to failed streams.\n9. S300 is infeasible with synchronous calls: 257 s of non-model control plus 20 s prep leaves about 23 s for all model time.",
+  "claims": [
+   {
+    "id": "C1",
+    "kind": "bottleneck",
+    "claim": "Gate/guard handoffs, not natural task-phase boundaries, set the v3 call count. In t1_008, 36 of 39 non-initial calls (92%) were triggered by geometry gates (34) or the repeat guard (2); they cost 1046.5 s of 1310.0 s model transport (80%). Across the 9 behavioural failures from r4.1 on, the figure is 72 of 92 (78%). uc7 t1_001 had 0 of 12 (8 fragment_complete, 4 segment_stall).",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/requests/*.request.json: payload.input[-1] JSON context.last_feedback.summary.reason",
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/requests/*.request.json",
+     "scratchpad/scripts/run_table.py classify(); scratchpad/analysis/run_table.json triggers/trigger_time_s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C2",
+    "kind": "framework",
+    "claim": "uc7 t1_001 → v3 t1_008 control time rises by +1186.5 s. Model pipeline accounts for +1154.0 s (97.3%), observe_transition +91.4, policy +7.9, simulator +1.7, video −44.3, run_state −24.9. Model time = 13 → 40 calls at 14.04 → 33.41 s/call; the Shapley split gives +640.6 s to the extra calls and +513.4 s to the higher latency. Prep+elapsed ratio is ×3.71 (437.7 → 1622.2 s); control without video ×4.78.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json timing_components (model 182.511, video 81.766, run_state 25.076)",
+     "runs/agent_speedup_v3_t1_008/summary.json timing_components (model 1336.477, transition 97.794, video 37.492)",
+     "review.json preparation.elapsed_s 21.406 / 20.302"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C3",
+    "kind": "bottleneck",
+    "claim": "t1_008's 40 decisions include 21 geometry_patch decisions (568.4 s, 43% of model transport), none of which exist in uc7, plus 19 progress decisions (1 program, 16 execute, 1 motion, 1 observe) against uc7's 13. So the +27 calls = 21 patches + 6 extra progress decisions, and 12 of the 16 executes were themselves gate-triggered. Decisions bought a median of 4 steps each vs 63 in uc7.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/requests/*.response.json output_text type",
+     "runs/agent_speedup_v3_t1_008/time_component_analysis.json current.model_records.routes",
+     "scratchpad step-gap computation (20 of 39 gaps <=4 steps)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C4",
+    "kind": "bottleneck",
+    "claim": "v3 per-call latency is higher mainly because of output size and reasoning, not context. Observational OLS over 374 calls (R² 0.931): latency ≈ 4.38 s + 0.0180 s per 1k input tokens + 0.0203 s per visible token + 0.0510 s per reasoning token. The uc7 → t1_008 gap of 18.8 s/call splits into input +3.1 s, visible output +5.1 s, reasoning +5.7 s, unexplained 5.0 s. The r6+ first call (full scene_update ± program) takes 56.9-137.4 s (median 96.0 s) vs 17.8 s in uc7.",
+    "evidence": [
+     "scratchpad/scripts/latency_regression.py",
+     "t1_008 first response output_text 8,480 chars (scene_update 4,372, program 3,173), 3,444 output tokens, 119.5 s",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/request_diagnostics.jsonl: call 1 66.5 s to first visible char + 70.9 s streaming"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C5",
+    "kind": "failure_mechanism",
+    "claim": "The model's metric scene estimates are biased by more than their declared uncertainty. In all 9 v3 t1 runs with a table support entity, the first table-top estimate was 16.8-41.8 mm below the audited finger/object-table contact height (0.4367-0.4368 m in every t1 run, uc7 included), while declared uncertainty was 8-15 mm. The model corrected the table only after physical contact (t1_008 0.400 → 0.432 at call 4; t1_012 0.400 → 0.435 at call 5). This bias put grasp goals below the real table (t1_008 stage goal z 0.4194; t1_010 fingertip ~0.420) and caused the stalls.",
+    "evidence": [
+     "requests/*.response.json scene_update entities role=support_surface (t1_003,005,007,008,009,010,011,012, attempt_003)",
+     "summary.json collision / collision.json contact_pos z for living_room_table_col",
+     "runs/agent_speedup_v3_local_execution_001/t1_011_analysis.json nominal_table_top_to_first_contact_z_difference_m 0.01675"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C6",
+    "kind": "failure_mechanism",
+    "claim": "Terminal coverage gates demand mm-level free-space consistency that RGB cannot provide. Terminal deficits were 0.04-25 mm. In 3 of 5 witness-based terminal blocks the nominal clearance was positive and only uncertainty padding created the deficit: t7_001 finger pad +7.3 mm nominal, 0.04 mm deficit; g5_002 +6.4 mm, 14.5 mm deficit; attempt 3 +0.5 to +1.6 mm, 2.4-3.5 mm deficits.",
+    "evidence": [
+     "runs/agent_speedup_v3_t7_001/error_traceback.txt coverage_witnesses",
+     "runs/agent_speedup_v3_g5_002/error_traceback.txt",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/execution/error_traceback.txt",
+     "runs/agent_speedup_v3_t1_010/error_traceback.txt (nominal −0.0098, uncertainty 0.015)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C7",
+    "kind": "defect",
+    "claim": "The evidence-view proposer almost never offers a move. Where it was consulted in r5+ runs (130 requests), it returned candidates in 11 (8.5%). 470 of 567 candidate rejections (82.9%) were predicted-visibility failures. It only translates the wrist camera in 4 lateral directions × 2 fractions and treats boxes inflated by uncertainty (+20 mm if stale) as occluders. Only 2 view moves were ever executed (t1_009 15 steps, t1_010 26 steps); neither cleared its blocker.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3_observation.py:27-32,86,122-124,147-160",
+     "src/gpt_field/agent_speedup_v3_geometry.py:817",
+     "scratchpad/scripts/evidence_acq.py; scratchpad/analysis/evidence_acq.txt",
+     "agent_stats.json evidence_view_attempts (non-empty only in t1_009, t1_010)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C8",
+    "kind": "failure_mechanism",
+    "claim": "Every behavioural failure from r4.1 on (9 runs) ends in a designed terminal stop: 7 model escalate decisions and 2 runtime targeted_view_unavailable stops. escalate and a candidate-less acquire_evidence both raise EvidenceAcquisitionFailed, and the prompt instructs escalation when no admissible view exists. t1_006 (TypeError) and baseline attempts 1 and 2 (harness/prepare ValueError) are exceptions to 'all r4.1+ failures end evidence_acquisition_failed'.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3.py:300-302, 369-375, 576-577",
+     "src/gpt_field/agent_speedup_v3_client.py LEAN_RECOVERY_INSTRUCTIONS ('escalate ... yields evidence_acquisition_failed')",
+     "error_traceback.txt reason fields of t1_005, t1_009, t1_010, t7_001, g5_001, g5_002, t1_011, t1_012, attempt_003"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C9",
+    "kind": "fact",
+    "claim": "The r6 t1_008 success came from ordinary fragments, not v3's new layers. Actions: semantic_program 149 (0-148), execute_fragment 712 (81.6%), local_motion 12. The program stopped on program_geometry_predicted_block at step 148, after the first finger-table contact at action 144. Visual interaction observations were 0, no hold/release was accepted, and no local pose revision was accepted. All four v3 successes ran ≥81.6% ordinary fragments (t1_001 99.5%, t1_002 99.6%, t1_007 99.3%).",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/trace.jsonl executed.primitive",
+     "runs/agent_speedup_v3_t1_008/performance.json policy_subcomponents.visual_interaction_observations=0",
+     "runs/agent_speedup_v3_t1_008/time_component_analysis.json mechanisms.program_execution",
+     "runs/agent_speedup_v3_staged_001/gate_results.json baseline.interaction"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C10",
+    "kind": "fact",
+    "claim": "The one measurable benefit coinciding with v3's geometry layers is fewer recorded forbidden contact points on the same reset: 251 in t1_008 vs 5,738 in uc7. This is n=1 per arm and noisy (v3 r2 t1_002 recorded 6,808), and contacts are not part of the raw-success criterion.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/summary.json collision.counts.forbidden_contact_points=251",
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json collision.counts.forbidden_contact_points=5738",
+     "runs/agent_speedup_v3_t1_002/summary.json forbidden=6808"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C11",
+    "kind": "defect",
+    "claim": "Lifecycle and interface defects ended runs where evidence existed or the needed evidence was the stall itself. t1_009: a model scene_update erased release provenance, so 14 raw supported release samples were rejected and the stale B payload blocked A. g5_001: an empty-hand push posture created a false plate payload. t1_011: the view proposer required a coverage witness after a real stall. t1_012: view planning was rejected because the lift_clear goal could not be derived without fresh milk geometry, and the earlier view focus was the table-volume center. t1_006: a null-uncertainty crash.",
+    "evidence": [
+     "runs/agent_speedup_v3_staged_001/gate_A_analysis.json release_provenance_failure",
+     "runs/agent_speedup_v3_t1_009/agent_stats.json counts (hold_supported 1, release_supported 0, confirmation_rejections 14)",
+     "runs/agent_speedup_v3_staged_001/gate_C2_analysis.json",
+     "runs/agent_speedup_v3_local_execution_001/t1_011_analysis.json, t1_012_analysis.json",
+     "src/gpt_field/agent_speedup_v3.py:266-268"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "fact",
+    "claim": "Local two-view metric correction never produced an accepted update. local_pose_revision is 0 for all entities in t1_008, t1_009, t1_010, t7_001, t1_012 and attempt 3, and triangulation is unavailable for 13-19 entities per run. Stage analyses attribute this to ambiguous stereo correspondence (8 of 10 entities in gate B) and insufficient texture.",
+    "evidence": [
+     "agent_stats.json shared_geometry.entities[*].local_pose_revision / triangulation.status",
+     "runs/agent_speedup_v3_staged_001/gate_B_analysis.json local_perception"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C13",
+    "kind": "fact",
+    "claim": "The r10 wire-context compaction shrank inputs but not latency. Input tokens at call 9 were 43.8k in t1_012 vs 101.4k in t1_008, yet live r10/r11 per-call latency stayed at a mean of 39-45 s, because outputs averaged 1,052-1,367 tokens with 478-520 reasoning tokens and first calls took 106.7-116.2 s. The documented 57.1% prompt-size cut is an offline payload measurement.",
+    "evidence": [
+     "runs/agent_speedup_v3_local_execution_001/prompt_size_comparison.json (213,934 → 91,777 chars)",
+     "scratchpad/analysis/calls.json t1_011/t1_012 usage tokens and transport elapsed"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "bottleneck",
+    "claim": "Geometry/feedback compute is a secondary cost. observe_transition was +91.4 s in t1_008 vs uc7 (97.8 vs 6.4 s). In t1_010 it was 103.8 s, 20.8% of control (0.546 s/action vs 0.079 in t1_009), attributed to dense coverage refinement and union checks.",
+    "evidence": [
+     "summary.json timing_components.observe_transition_s",
+     "runs/agent_speedup_v3_staged_001/gate_B_analysis.json timing.feedback_s_per_action"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C15",
+    "kind": "bottleneck",
+    "claim": "Preparation and review tails are rare but large. Two of 14 v3 preparations lost ~900 s to a failed first stream: review_001 failed at 900.8 s; review_005 failed at 900.6 s and its second request then took ~772 s with 76,222 output tokens. Today's attempt 3 charged 284.8 s of automated review, and control started at 318.7 s of service.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_review_001/requests/000001-*.result.json status error budget 900.85",
+     "runs/agent_speedup_v3_t1_review_005/review.json preparation (elapsed 1682.1)",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/service_clock.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "opportunity",
+    "claim": "Inference: S300 on t1 is infeasible for v3 r6 with synchronous model calls. Non-model control time was 257.1 s (simulator 110.1 s for 873 steps) plus 20.3 s prep, leaving ~23 s for all model time against a 57-137 s first call. uc7's non-model control was 224.6 s. Meeting S300 needs far fewer, shorter-output calls and/or model calls overlapped with execution.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_008/summary.json control_elapsed_s 1593.6 minus model 1336.5",
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json control 407.2 minus model 182.5"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C17",
+    "kind": "fact",
+    "claim": "Every gate-triggered share of non-initial calls was ≥65% for v3 revisions: r1 86%, r2 65%, r3 68%, r4.1 79%, r5 71%, r6 92%, r7 71%, r8 71%, r9 80%, r10 100% (2 calls), r11 88%, r6 copy (attempt 3) 92%. uc7 was 0%. r10's advisory coverage lengthened median inter-call gaps (97 and 39.5 steps vs 4 in t1_008), but those runs then hit physical stalls and evidence-interface stops after 3 and 9 calls.",
+    "evidence": [
+     "scratchpad/analysis/run_table.json triggers per run",
+     "scratchpad/scripts/run_table.py"
+    ],
+    "confidence": "high"
+   }
+  ],
+  "unknowns": [
+   "Every configuration was run once, so there are no variance estimates or success rates. Server load differed by day (uc7 t1_001 ran 2026-10-21, t1_008 2026-10-25), which may explain part of the 5.0 s/call gap the regression leaves unexplained.",
+   "The latency regression is observational. It does not model images (12 per request in both lines), replayed reasoning items, or schema/prompt complexity.",
+   "A per-event split of latency into time before the first visible output vs streaming exists only for baseline attempt 3. uc7's split is unknown.",
+   "Whether removing or relaxing the coverage/uncertainty gates would preserve the lower contact counts (251 vs 5,738 points) or raw success is untested.",
+   "observe_transition_s mixes geometry with other feedback work; no per-method geometry timer exists.",
+   "r1-r3 requests lack current_decision.blocker, and r1-r5 have no performance.json, so total service for them is approximated as prep + elapsed.",
+   "The audited table height (0.4368 m) is evaluator-only contact data, used here purely as a diagnostic. The model-bias measurement covers only the t1 table; t7 and g5 support estimates were not checked.",
+   "For t1_009, whether butter B physically ended up in the basket is unknown: terminal physical truth was skipped for EvidenceAcquisitionFailed runs, so no physical_truth.json exists."
+  ]
+ },
+ {
+  "key": "model_io",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/model_io.md",
+  "summary": "Model-call channel, uc7 (13 runs, 218 execution calls) and v3 r1-r11 (15 runs, 348 calls).\n\n(1) Per-call latency is recorded in trace.jsonl action rows (diagnostics.api_calls[].latency_s). It is driven by generated tokens, not input size: r(latency, reasoning) = +0.88 uc7 / +0.93 v3; r(input) = -0.13 / -0.10. Fits: uc7 L = 3.98 + 0.0274·in_k + 0.0392·reas + 0.0212·vis (R² 0.81); v3 L = 5.31 + 0.0184·in_k + 0.0522·reas + 0.0175·vis (R² 0.94). Reasoning is 35-36% of latency, visible output 29-31%, a fixed 4-5 s per call 21-26%, input 10-13%. Today's calls ran 1.35-1.51x slower than the fits predict; the excess is server-side.\n\n(2) Prep tails occur only in plan outputs and fit strict-JSON whitespace degeneration. The one completed tail (771.7 s) was 151,950 of 152,567 chars syntax whitespace. Both censored replays emitted 830/873 normal chars, then switched to uniform delta streams at about 62 deltas/s for about 100 s. Without v3's compact-serialization instruction 11/38 plan attempts tailed (297-900 s); with it 0/12 (max 26 s). The uc7 transport sends no max_output_tokens and has only a per-socket 180-s timeout, so nothing stops a degenerate stream. v3 adds a 180-s total deadline and a 2,048-char whitespace guard. Execution outputs never degenerated.\n\n(3) The full transcript is re-sent on every call, including the 6 newest image pairs. Requests grow from 0.50-0.74 MB to 3.0-4.6 MB by call 6. Tokens grow linearly per call, so per run they grow quadratically. 76-84% of input tokens are re-sent history text; images are 2-5%. Only 1-3% is cached, and cache writes are always 0.\n\n(4) The loop is strictly serial: the robot is idle during every model call.\n\n(5) Estimates (share of execution model time): halving visible output saves 14-15%; halving reasoning 18%; cutting 80% of the history text 6-9%; caching 85% of the input 9-11%; fewer image pairs under 1% by tokens (plus at most 4% from upload bytes); halving the call count 20-50%; perfect pipelining at most 35% (uc7) / 19% (v3) of control time.",
+  "details_markdown": "# Model-call channel: uc7 and v3 (condensed; full report in model_io.md)\n\n**Data.** uc7: 13 runs with `user_check.version = agent-speedup-v2-user-check-7`, 218 valid `agent` calls. v3: 15 runs r1-r11, 348 valid calls. uc6 contrast: t6_007 and t3_002, 171 calls. 52 logged prep (plan) attempts plus 4 speedup_next replays. Parsing used stdlib JSON; least squares used numpy. Scripts and derived rows are in `/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/{scripts,analysis}`.\n\n**Where latency lives.**\n- `trace.jsonl` `event==\"action\"` rows: `.diagnostics.api_calls[].latency_s`, `.diagnostics.api_latency_s` and `.diagnostics.api_request_log`. The timer is `ExecutiveCall` (`src/gpt_field/agent_speedup_v2_user_check_agent.py:258-283,551-555`). It is summed into `timing_components.model_pipeline_s` (`scripts/evaluate_agent_speedup_v2.py:1444`).\n- Request log: `request.budget_elapsed_s_before` versus `result.budget.elapsed_s`, on the same client clock (`chatgpt_plan.py:457,520`). It stays within 0.13 s (uc7) / 0.30 s (v3) of the trace latency.\n- Server: `response.created_at/completed_at`.\n- v3 only: `result.v3_transport_diagnostics.elapsed_s`.\n\n## 1. Latency drivers\n\n| | uc7 | v3 |\n|---|---|---|\n| mean / median / p90 / max | 15.47 / 13.65 / 26.0 / 39.8 s | 25.50 / 20.64 / 42.4 / 119.6 s |\n| r with input tokens / wire bytes / n images | -0.13 / -0.20 / -0.26 | -0.10 / -0.31 / -0.39 |\n| r with reasoning / output / visible tokens | +0.88 / +0.89 / +0.29 | +0.93 / +0.93 / +0.76 |\n| OLS L = a + b·in_k + c·reas + d·vis | 3.98 + 0.0274·in_k + 0.0392·reas + 0.0212·vis, R² 0.813 | 5.31 + 0.0184·in_k + 0.0522·reas + 0.0175·vis, R² 0.940 |\n| fitted share: fixed / input / reasoning / visible | 25.7 / 10.2 / 35.3 / 28.7% | 20.8 / 12.6 / 36.1 / 30.5% |\n\n- Generated tokens drive latency. The raw input correlation is negative because later, longer-context calls reason less (r(reasoning, input) = -0.31 / -0.21).\n- Input matters in long runs. In uc6 (mean 238k tokens): 0.0265 s/ktok, about 44% of its 14.4 s mean call.\n- The input term is server-side prefill. A server-time fit gives 0.0205 / 0.0177 s/ktok. The client residual (latency − server) is 1.89 / 2.39 s mean and only weakly tied to upload size (+0.23 / +0.12 s per MB, R² ≤ 0.034).\n- First calls are slowest: 27.4 s uc7 and 64.5 s v3 (676 reasoning, 1,396 visible tokens); v3 t1_008 call 1 took 119.6 s.\n- Calls with more than 300 reasoning tokens take 24.8% (uc7) and 34.6% (v3) of model time.\n- Today the service was slower. evidence trial_002/003 measured 251.0 / 277.9 s of execution-call time against 166.6 / 186.8 s predicted by the uc7 fit. The v3 baseline attempt_003 measured 575.5 s against 425.1 s. The excess is server-side; the cause is unknown.\n\n## 2. Non-completing prep streams and structured output\n\n**Request format.**\n- Strict schema: `text.format={type:json_schema, strict:true}` for execution (`agent_speedup_v2_user_check_agent_client.py:355-372`, schema `:195-215`), for plan (`agent_speedup_v2_client.py:811-819`) and for v3 (`agent_speedup_v3_client.py:746`).\n- Key order: insertion order on the wire (`ordered_transport.py:22-25`). `sort_keys` remains only in `astra._canonical` (`astra.py:117-118`), used for request-key hashing.\n- No output cap: `max_output_tokens` is in `UNSUPPORTED_FIELDS` and never sent (`chatgpt_plan.py:37-41,405-408,429-436`). Every result shows `output_token_limit_sent: null`. Temperature and top_p cannot be sent; the server uses 1.0 / 0.98.\n- No total deadline: uc7's transport uses urllib `timeout=180` (`chatgpt_plan.py:141`), which is per socket operation, not per request.\n- v3's bounded transport adds a 180-s SIGALRM total deadline, a 131,072 visible-char cap and a 2,048-char outside-string whitespace-run cap (`agent_speedup_v3_transport.py:16-19,92-124,224-271`).\n\n**Tails.**\n- uc reviews on 2026-10-21: three `KeyboardInterrupt`s after 298.1, 634.0 and 297.2 s.\n- v3 t1_review_001: `stream_missing_completion` after 900.7 s.\n- v3 t1_review_005: 900.5 s, then a completed attempt of 771.7 s.\n- v3 t1_review_006: whitespace guard tripped at 24.9 s.\n- Evidence trial_004/005: 900-s cutoff.\n- speedup_next prep_001/003: 120-s cutoff.\n\n**Stream content (`request_diagnostics.jsonl`; delta text was not retained).**\n- Completed prep_002/004: 294 / 293 deltas, 922 / 924 chars, maximum increment 12 chars.\n- Censored prep_001: normal for 830 chars (19.2 s). Then 6,230 deltas carrying 140,280 chars: 6,210 deltas of 16-37 chars (99.4% of all chars), at 62 deltas/s.\n- Censored prep_003: normal for 873 chars (10.9 s). Then 6,839 deltas of 1-4 chars (6,613 exactly 4 chars), at 63 deltas/s.\n- The switch comes at about 90% of a complete 920-947-char plan for this input.\n- The completed tail (`runs/agent_speedup_v3_t1_005_launch/transport_diagnosis.json`): 152,567 chars, of which 151,950 are syntax whitespace. One run of 151,642 chars starts at character 886 and consists of 75,818 newline+space pairs; 76,222 output tokens.\n\n**Natural experiment.**\n- Plan prompt without \"OUTPUT SERIALIZATION\" (v2-user-check-prompt-5, including the replays): 11/38 tails; mean 167.4 s (censored), median 20.7 s. 15 of 26 logged completions were pretty-printed.\n- With the v3 compact instruction: 0/12 tails, max 26.0 s, outside-string whitespace 0 in all 12.\n- One-sided Fisher p ≈ 0.032 (0.046 excluding the guard trip).\n- The same input can complete or degenerate: trial_002's input completed in 19.8 s, then failed on 2/2 replays; trial_004's input hit the 900-s cutoff, then completed on 2/2.\n- Execution outputs: 0/218 uc7 pretty-printed (maximum outside-string whitespace run 0); v3 runs ≤1 over 160 calls.\n- Today's uc7-based campaigns used the non-compact prompt.\n- Verdict: the hypothesis is strongly supported. The content of 7 tails and 2 replays is unknown.\n\n## 3. History protocol\n- Every call resends the whole transcript (`store=false`, no `previous_response_id`): every earlier observation text, assistant output and encrypted reasoning item (`chatgpt_plan.py:544`; `agent_client.py:364,442`).\n- Images: the 6 newest pairs are re-uploaded each call as 512×512 lossless PNGs at detail high, 308.5 tokens each. Older images become a 12-token placeholder (`direct_history.py:45-57`).\n- uc7 growth: wire size 0.50-0.74 MB at call 1, 3.04-4.27 MB at call 6, then flat at ≤4.57 MB. Tokens grow linearly; e.g., t1_001 6,544 → 75,354 and t6_009 6,836 → 153,901.\n- Totals per run: uc7 0.17-2.30M input tokens; uc6 t6_007 20.64M over 84 calls; v3 t1_001 20.87M over 79 calls; t1_008 8.52M over 40; r11 t1_012 0.25M over 9.\n- Composition: re-sent history text is 75.7% of uc7 input and 84.2% of v3. The latest observation is about 4.9k / 6.9k tokens per call. Images are 5.4% / 1.9% of tokens but about 78% of bytes.\n- Caching: 2.95% of uc7 input and 1.13% of v3 input was cached, typically exactly 2,304 tokens (instructions+schema). `cache_write_tokens` is 0 in 897/897 responses, and each response has a distinct server-assigned `prompt_cache_key`. All hits above 10k tokens happened at call ≤6, before image trimming starts rewriting history.\n- r11's wire projection cut input text to 38% of the unprojected size by call 9.\n\n## 4. Serial loop\n- The evaluator runs act (which contains the model call), then video, then `sim.step`, then `observe_transition`, in one thread (`scripts/evaluate_agent_speedup_v2.py:1438-1506`; `_ask_agent` `agent.py:258-283`).\n- The prompt tells the model \"Simulation pauses during inference\" (`agent_client.py:150`).\n- The v3 transport requires the main thread (`agent_speedup_v3_transport.py:55-64`).\n- Model time vs execution: uc7 model time is 54.4% of control time (3,371.6 / 6,202.3 s), against 2,829.6 s of gaps in which the robot moves. v3 model time is about 77% of control, against 2,671.7 s of gaps.\n\n## 5. Lever estimates (fit-based, % of execution model time; uc7 / v3)\n\n| Lever | uc7 | v3 |\n|---|---|---|\n| Compact output + bounded transport for prep | prep attempt mean 167.4 → 16.5 s | already in v3 |\n| −50% visible tokens | 484 s (14.4%) | 1,351 s (15.2%) |\n| −50% reasoning tokens (extra) | 595 s (17.6%) | 1,603 s (18.1%) |\n| −80% history text | 209 s (6.2%) | 752 s (8.5%) |\n| 1 image pair instead of 6 (tokens; plus upload bytes, low confidence) | 15 s (0.45%) + ≈126 s | 17 s (0.20%) + ≈150 s |\n| Lower resolution (zero image tokens) | ≤19 s | ≤21 s |\n| Halve call count | 20.6-50% | 19.9-50% |\n| Perfect pipelining, Σ min(gap, next latency) | ≤2,151 s = 34.7% of control | ≤2,233 s = 19.4% of control |\n| Caching 85% of input at zero cost | 294 s (8.7%) | 949 s (10.7%) |\n| Non-strict schema | unknown | unknown |\n\nThe levers overlap and do not add.",
+  "claims": [
+   {
+    "id": "C1",
+    "kind": "fact",
+    "claim": "Per-call execution latency is recorded in trace.jsonl rows with event=='action' as diagnostics.api_calls[].latency_s and diagnostics.api_latency_s (with diagnostics.api_request_log linking the request file). The timer is ExecutiveCall around client.request_agent, and the evaluator sums it into summary.timing_components.model_pipeline_s. Secondary fields: request.budget_elapsed_s_before vs result.budget.elapsed_s on the same client clock (mean difference from trace latency 0.129 s uc7 / 0.302 s v3); response created_at/completed_at; and in v3 result.v3_transport_diagnostics.elapsed_s.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_agent.py:258-283",
+     "src/gpt_field/agent_speedup_v2_user_check_agent.py:551-555",
+     "scripts/evaluate_agent_speedup_v2.py:1444",
+     "scripts/evaluate_agent_speedup_v2.py:1473-1475",
+     "src/gpt_field/chatgpt_plan.py:457,520",
+     "src/gpt_field/agent_speedup_v3_transport.py:259,271"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C2",
+    "kind": "bottleneck",
+    "claim": "uc7 execution-call latency (n=218; mean 15.47 s, median 13.65 s, max 39.77 s) is driven by reasoning and output tokens, not input size. r(latency, reasoning) = +0.878, r(output tokens) = +0.885, r(input tokens) = -0.132. OLS: L = 3.98 + 0.0274 s/1k input tokens + 0.0392 s/reasoning token + 0.0212 s/visible token (R² 0.813). Fitted shares: fixed 25.7%, input 10.2%, reasoning 35.3%, visible output 28.7%.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_*/requests/*.response.json usage",
+     "runs/agent_speedup_v2_user_check_libero_10_*/trace.jsonl diagnostics.api_calls",
+     "scratchpad/analysis/exec_calls.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C3",
+    "kind": "bottleneck",
+    "claim": "v3 r1-r11 execution-call latency (n=348; mean 25.50 s, median 20.64 s, max 119.56 s) follows L = 5.31 + 0.0184 s/1k input + 0.0522 s/reasoning token + 0.0175 s/visible token (R² 0.940). Fitted shares: fixed 20.8%, input 12.6%, reasoning 36.1%, visible 30.5%. v3 emits about 2.1x more visible tokens per call than uc7 (mean 443 vs 210). First v3 calls average 64.5 s (676 reasoning, 1,396 visible tokens).",
+    "evidence": [
+     "runs/agent_speedup_v3_*/requests/*.response.json usage",
+     "runs/agent_speedup_v3_*/trace.jsonl",
+     "runs/agent_speedup_v3_t1_008/trace.jsonl first call 119.56 s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C4",
+    "kind": "fact",
+    "claim": "The input-size effect is server-side prefill, not upload. A server created→completed fit gives 0.0205 (uc7) and 0.0177 (v3) s per 1k input tokens. The client residual (latency − server time) averages 1.89 s (uc7) and 2.39 s (v3), with only +0.23 / +0.12 s per uploaded MB (R² ≤ 0.034).",
+    "evidence": [
+     "response.json created_at/completed_at vs trace latency, 218 uc7 and 348 v3 calls"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C5",
+    "kind": "fact",
+    "claim": "Today's (2026-10-26) execution calls were 1.35-1.51x slower than the historical fits predict for the same token counts. evidence trial_002: 251.0 s measured vs 166.6 s predicted. trial_003: 277.9 vs 186.8 s. v3-baseline attempt_003: 575.5 vs 425.1 s. The excess is server-side (server sums 235, 259 and 545 s). The cause is unknown.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_002/trial/requests",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial/requests",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/execution/requests",
+     "trial_00{2,3}/trial/summary.json model_pipeline_s 252.3/279.5"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C6",
+    "kind": "failure_mechanism",
+    "claim": "The one completed prep tail is syntax-whitespace degeneration under strict JSON. v3 t1_review_005 attempt 2 ran 771.7 s and returned 76,222 output tokens (96 reasoning). Of its 152,567 output chars, 151,950 are whitespace outside JSON strings. One run of 151,642 chars starts at character 886 at depth 1 and consists of 75,818 newline+space pairs.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_005_launch/transport_diagnosis.json preparation.whitespace",
+     "runs/agent_speedup_v3_t1_review_005/requests/000002-*.response.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C7",
+    "kind": "failure_mechanism",
+    "claim": "Both non-completing replays (speedup_next prep_001/prep_003) first streamed normal-looking output: 830 and 873 chars with a maximum delta of 12 chars, like the completed streams. At 19.16 s and 10.88 s they switched to uniform streams for about 100 s, with no response.completed. prep_001: 6,230 deltas carrying 140,280 chars, 6,210 deltas of 16-37 chars (99.4% of its chars), 62.0 deltas/s. prep_003: 6,839 deltas of 1-4 chars (6,613 exactly 4 chars), 62.8 deltas/s. The delta text was not retained, so whitespace vs repeated-token content is unknown; whitespace is inferred from the onset position matching C6.",
+    "evidence": [
+     "runs/speedup_next_20261026T101438Z/request_diagnostics.jsonl",
+     "runs/speedup_next_20261026T101438Z/request_results.json causal_limits"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C8",
+    "kind": "opportunity",
+    "claim": "The compact-serialization instruction removes prep tails in the record. Plan requests without 'OUTPUT SERIALIZATION' (prompt agent-speedup-v2-user-check-prompt-5, 34 logged + 4 replays): 11/38 tails (10 at ≥120 s, plus a 24.9-s whitespace-guard trip); mean 167.4 s (censored), median 20.7 s. Plan requests with v3 COMPACT_OUTPUT_INSTRUCTIONS: 0/12 tails, mean 16.5 s, max 26.0 s, outside-string whitespace 0 in all 12. One-sided Fisher p ≈ 0.032 (0.046 without the guard trip). Of 26 logged non-compact completions, 15 were pretty-printed.",
+    "evidence": [
+     "runs/*_review/requests/*.request.json grep 'OUTPUT SERIALIZATION'",
+     "src/gpt_field/agent_speedup_v3_client.py:40-46,130,399-400",
+     "runs/agent_speedup_v3_t1_review_006 vs _review_006_compact instruction diff"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C9",
+    "kind": "defect",
+    "claim": "The uc7 transport cannot stop a degenerate stream. max_output_tokens is in UNSUPPORTED_FIELDS and never sent (results show output_token_limit_sent null). The 180-s timeout is a urllib per-socket timeout, and only response.completed is accepted. Observed tail durations: 297.2, 298.1 and 634.0 s (operator interrupt), 900.5 and 900.7 s (stream_missing_completion), and 891.9 and 893.4 s (900-s campaign cutoff). Today's uc7-based campaigns used this path without the compact instruction.",
+    "evidence": [
+     "src/gpt_field/chatgpt_plan.py:37-41",
+     "src/gpt_field/chatgpt_plan.py:141",
+     "src/gpt_field/chatgpt_plan.py:315-342,405-408",
+     "src/gpt_field/ordered_transport.py:28-54",
+     "results/speedup_evidence_20261026T055123Z/final_report_zh.md §4",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_004/review/requests/*.result.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C10",
+    "kind": "fact",
+    "claim": "The v3 bounded transport already contains the remedy: a 180-s total SIGALRM deadline, a 131,072 visible-char cap and a 2,048-char outside-string whitespace-run guard, with guard failures not retried. It requires the POSIX main thread.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v3_transport.py:16-19,55-64,92-124,224-271",
+     "src/gpt_field/agent_speedup_v3_client.py:79-82"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C11",
+    "kind": "fact",
+    "claim": "Execution outputs did not show whitespace degeneration. 0/218 uc7 execution outputs are pretty-printed and their maximum outside-string whitespace run is 0. v3 longest_json_whitespace_run is ≤1 in all 160 calls with bounded-transport diagnostics.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_*/requests/*.response.json",
+     "runs/agent_speedup_v3_*/requests/*.result.json v3_transport_diagnostics"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "fact",
+    "claim": "Structured output is requested through Responses text.format json_schema with strict=true (execution and plan). Keys keep insertion order on the wire via ordered_dumps; sort_keys=True remains only in astra._canonical, which hashes request keys. Temperature and top_p cannot be sent, so the server uses 1.0 and 0.98.",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_agent_client.py:355-372",
+     "src/gpt_field/agent_speedup_v2_client.py:811-819",
+     "src/gpt_field/agent_speedup_v3_client.py:746",
+     "src/gpt_field/ordered_transport.py:22-25",
+     "src/gpt_field/astra.py:117-118"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C13",
+    "kind": "fact",
+    "claim": "History protocol: every call resends the full transcript (all earlier observation texts, accepted outputs and encrypted reasoning items) plus the 6 newest image pairs. Images are re-uploaded each call as 512x512 PNGs at detail 'high', 308.5 tokens each; older images become a 12-token placeholder. uc7 request size grows from 0.50-0.74 MB at call 1 to 3.04-4.27 MB at call 6, then plateaus at ≤4.57 MB. Input tokens grow linearly (t1_001: 6,544 → 75,354; t6_009: 6,836 → 153,901).",
+    "evidence": [
+     "src/gpt_field/agent_speedup_v2_user_check_agent_client.py:42-43,364,442",
+     "src/gpt_field/direct_history.py:45-57",
+     "src/gpt_field/chatgpt_plan.py:544",
+     "src/gpt_field/agent_speedup_v2_client.py:800",
+     "src/gpt_field/mark_prompting.py:84"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "bottleneck",
+    "claim": "Input tokens are dominated by re-sent text history, not images. uc7 (12.63M tokens over 218 calls): earlier observation text 75.7%, latest observation 8.5% (about 4,923 tokens/call), images 5.4%, instructions+schema 4.2%, re-sent assistant outputs 3.2%, re-sent reasoning 2.5%. v3 (60.59M over 348 calls): history text 84.2%, images 1.9%. Total per run grows about quadratically with call count: uc7 0.17-2.30M, uc6 t6_007 20.64M over 84 calls, v3 t1_001 20.87M over 79.",
+    "evidence": [
+     "response.json usage.attribution per item",
+     "scratchpad/analysis/attrib.jsonl",
+     "runs/*/summary.json budget.input_tokens"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C15",
+    "kind": "defect",
+    "claim": "Prompt caching is effectively absent: 2.95% of uc7 input, 1.13% of v3 and 0.04% of uc6 was cached. The typical cached value is exactly 2,304 tokens (instructions+schema) in 137/218 uc7 calls. cache_write_tokens = 0 in 897/897 responses, and every response has a distinct server-assigned prompt_cache_key. All 7 hits above 10k tokens occurred at call ordinal ≤6, before image trimming begins rewriting message n−6 on every call.",
+    "evidence": [
+     "runs/*/requests/*.response.json usage.input_tokens_details, prompt_cache_key",
+     "src/gpt_field/direct_history.py:45-57",
+     "src/gpt_field/agent_speedup_v3_client.py:587-640,749"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "fact",
+    "claim": "The control loop is strictly serial, so the robot is idle during inference. The evaluator calls policy.act (which contains the model call), then sim.step, then observe_transition, in one thread. The prompt states 'Simulation pauses during inference'. The v3 transport requires the main thread. No thread or future is used for inference.",
+    "evidence": [
+     "scripts/evaluate_agent_speedup_v2.py:1438-1506",
+     "src/gpt_field/agent_speedup_v2_user_check_agent.py:484-520",
+     "src/gpt_field/agent_speedup_v2_user_check_agent_client.py:150",
+     "src/gpt_field/agent_speedup_v3_transport.py:55-64"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C17",
+    "kind": "fact",
+    "claim": "Execution model time is 54.4% of uc7 control time (3,371.6 of 6,202.3 s over 13 runs; t1_001: 182.5 of 407.2 s) and about 77% of v3 control time (≈8,858-8,887 of 11,481.9 s; t1_008: 1,336.5 of 1,593.6 s). Inter-call gaps, when the robot moves, total 2,829.6 s for uc7 and 2,671.7 s for v3.",
+    "evidence": [
+     "runs/*/summary.json timing_components, control_elapsed_s",
+     "request budget_elapsed_s_before vs previous result budget.elapsed_s"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C18",
+    "kind": "opportunity",
+    "claim": "Upper bound for pipelining (estimate): overlapping each next call with the preceding execution gap, Σ min(gap_k, L_{k+1}), saves at most 2,151 s = 34.7% of uc7 control time (t1_001: 407.2 → 257.7 s). For v3 the bound is 2,233 s = 19.4% (t1_008: 282.0 s), because v3 is model-bound. This assumes perfect speculation; the real hit rate is unknown.",
+    "evidence": [
+     "scratchpad/analysis/uc_rows.jsonl, v3_rows.jsonl gap computation"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C19",
+    "kind": "opportunity",
+    "claim": "Fit-based lever estimates, as shares of execution model time (uc7 / v3): halving visible output tokens 14.4% / 15.2%; halving reasoning tokens 17.6% / 18.1%; removing 80% of history text 6.2% / 8.5%; caching 85% of input at zero cost 8.7% / 10.7%; one image pair instead of six 0.45% / 0.20% by tokens (plus about 3.7% / 1.7% from upload bytes, low confidence); halving the call count 20-50%. The levers overlap and do not add.",
+    "evidence": [
+     "scratchpad/analysis/model_io.md §5",
+     "OLS coefficients in C2/C3"
+    ],
+    "confidence": "low"
+   },
+   {
+    "id": "C20",
+    "kind": "fact",
+    "claim": "v3 r11's wire-only history projection cut input text to 38.3% of the unprojected size by call 9 (100,009 vs 260,802 chars). Because input is only 10-13% of latency, the expected per-call latency gain is modest (estimate about 6%).",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_012/requests/*.request.json prompt_sizes",
+     "src/gpt_field/agent_speedup_v3_client.py:587-640,749"
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "unknowns": [
+   "What the two censored replay streams (prep_001/003) and the seven unsaved tails contained: syntax whitespace or a repeated non-whitespace token. Delta text was never retained.",
+   "Why streams end at about 900 s without response.completed (stream_missing_completion). A server-side stream limit is inferred, not observed.",
+   "Whether the subscription route would accept client-sent max_output_tokens, temperature/top_p or a stable prompt_cache_key; all were untested. The first three are in UNSUPPORTED_FIELDS.",
+   "Whether cached input tokens shorten latency on this route; cache_write_tokens is 0 in every response.",
+   "Whether the OLS coefficients are causal. History length, decision type and reasoning co-vary within runs, and service speed varied by 35-51% between days.",
+   "What caused today's 1.35-1.51x slowdown: service load or the overlapped A/B concurrency.",
+   "How less reasoning, shorter belief/plan/why prose, fewer or smaller images, non-strict output or bigger fragments would affect decision quality and raw LIBERO success.",
+   "How execution-call latency splits into upload, TTFB and generation; per-phase timing exists only for the 4 speedup_next prep replays.",
+   "The achievable speculation hit rate for pipelined inference, and whether strict vs non-strict schemas change latency (no non-strict calls exist)."
+  ]
+ },
+ {
+  "key": "campaigns_today",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/campaigns_today.md",
+  "summary": "Codex ran three campaigns today, using 4.01 h of wall-clock (14,451.5 s). None produced an S300 success or an autonomous strict completion.\n\n**Episodes.** 8 episode slots were used, but only 3 executed policy actions (2,162 actions in total). The other 5 died before control: missing credentials (1), two 900 s plan requests that never completed (2), a newline rejected by the request serializer (1), and a missing reset SHA (1).\n\n**Campaign 1 (results/speedup_evidence_20261026T055123Z):**\n- **Raw successes.** Two on t1 episode 1, at 648.7 s (arm A, v7) and 614.0 s (arm B, v7 + compact display I/O). Both failed strict quality because the last object was still held when the evaluator stopped at the first raw success.\n- **I/O change.** On a saved 120-step slice, display cost fell 74.55% (10.69 → 2.72 s). In the live pair the full-episode difference was only −5.35%, and the two arms took different trajectories.\n- **Stop.** On episode 2, both arms' plan requests stayed pending for about 893 s and never completed. The campaign stopped with P5 inconclusive (2 of 9 pairs) and P6 not started.\n\n**Campaign 2 (runs/speedup_next_20261026T101438Z):**\n- **Plan-request probes.** It replayed 4 saved plan requests. 2 streamed text to the 120 s cutoff without completing (141,110 and 27,853 characters); 2 completed in 17.3 s and 11.2 s (922 and 924 characters).\n- **Mechanism.** Its only local-control candidate stopped before implementation because the observability gate failed. No robot ran.\n\n**Campaign 3 (runs/v3_completion_baseline_20261026T133633Z):**\n- **Result.** Isolated v3 r6 with an autonomous finish endpoint went 0/3.\n  - Episode 0 hit the newline bug.\n  - Episode 1 lacked its reset SHA.\n  - Episode 2 escalated after 313 actions without ever touching the object.\n- **Timing (episode 2).** The model took 84.5% of control time. The 284.8 s Codex review pushed the start of control to 318.7 s.\n\n**Main bottleneck.** The plan-request transport has no bound on output length or total time: `max_output_tokens` is stripped and only the outer budget stops a stream. 2,025 s of today's 3,075 s of model-request time went to four streams that never completed.\n\n**Where the time went.** Live robot windows were 8.1% of wall-clock. Waiting for the user's review authorization was 18.8%. Protocol, implementation, tests, freezes, audits and reports were 54.9%.\n\n**Defects still open.** The evaluator labels `EvidenceAcquisitionFailed` as `infrastructure_error` and then skips terminal truth (8 of 8 historical v3 runs checked are affected). `held_objects` is a cumulative \"ever held\" list. No fix from today is in the main working tree.",
+  "details_markdown": "# Today's three Agent SpeedUp campaigns (2026-10-26), condensed\n\nFull report: `/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/campaigns_today.md`.\n\nPath roots:\n- `C1 = /workspace/gpt_field/results/speedup_evidence_20261026T055123Z`\n- `C2 = /workspace/gpt_field/runs/speedup_next_20261026T101438Z`\n- `C3 = /workspace/gpt_field/runs/v3_completion_baseline_20261026T133633Z`\n\nAll times are UTC. Campaign spans run from the first to the last file mtime. Monotonic clocks were mapped to UTC with an offset of −646548.212 s, calibrated on `trial_001` and `trial_004`.\n\n## The plan that drove them\n`/workspace/gpt_field/Agent_SpeedUp_Codex_Implementation_Plan_ZH.md` was written by Codex (mtime 05:47).\n\n- **Metric.** S300 = raw LIBERO success AND full service ≤ 300 s.\n- **Time budget.** 900 s of effective service. Human review wait is excluded; automatic review compute is included.\n- **Phases.** P0 freeze → P1 audit ∥ P2 light baseline → P3 one candidate → P4 local test → P5 paired screen → P6 held-out.\n- **Hard caps.** 60 audit windows; 40 offline model queries; 24 P4 rollouts at 180 s; 18 P5 episodes; 18 P6 episodes; 4 infrastructure retries; 2 repair rounds per defect; one online candidate. Upper bound about 11.2 h.\n- **P5 gate.** S300 gains ≥ 2 pairs, OR S300 does not drop and the median service time falls ≥ 20% over ≥ 5 common successes.\n- **Stop rule (§10).** A repeated failure with no new testable explanation means no more full episodes.\n\n## Campaign 1 — C1 (05:51:23 → 07:48:51, 7,047.1 s)\n\n**User ask.** Execute the plan; the campaign has no `user_request` file. The recorded user answer is \"授权上述具体矩阵逐份代审（推荐）\" (`delegated_review_authorization.json`, 06:57:59). It authorized Codex to review each plan individually for t1, t5 and t7, seed 7: P5 episodes 1–3 for arms A and B, and P6 episodes 4–6 only if P5 passed.\n\n**Hypothesis** (`candidate_spec.md`, `pure_io`).\n- A = v7 rebuilt from 300 frozen files and checked by hash.\n- B = A + the compact display recorder + throttled status snapshots.\n- Policy inputs and actions stay identical, while full-service time improves.\n\n**Offline evidence.**\n- Replay: 897/897 actions exact, 13/13 payloads identical (`baseline_validation.json`).\n- Display benchmark: median 10.689 → 2.721 s, −74.55% (`display_io_benchmark.json`).\n- History (`audit_summary.md`): v7 t1_001 cost model 182.511 s, sim 108.384 s, video 81.766 s, status writes 25.076 s. Removing all I/O still leaves about 321.7 s.\n\n**Live runs** (`paired_results.csv`, `live_audit.csv`):\n\n| Trial | Condition | Result | Service time | Detail |\n|---|---|---|---:|---|\n| trial_001 | A, ep1 | MissingCredentials (empty store in the isolated copy) | 7.567 s | — |\n| trial_002 | A, ep1 (retry) | raw success at 645.774 s | 648.734 s | 830 steps, 11 execution requests; model 252.344 s, sim 101.798 s, video 79.135 s, run_state 24.579 s; Codex review 138.107 s |\n| trial_003 | B, ep1 | raw success at 611.987 s | 614.011 s | 1019 steps, 13 requests; model 279.538 s, sim 121.992 s, video 25.642 s, run_state 0.108 s; review 138.456 s |\n| trial_004 | B, ep2 | single plan request pending 893.37 s, then budget exhausted | 901.033 s | 0 actions |\n| trial_005 | A, ep2 | single plan request pending 891.93 s, then budget exhausted | 900.953 s | 0 actions |\n\n- **Strict quality.** Both successes were strict-false at the raw-success instant, with the last object still held. A separate 38-action release/settle diagnostic made them strict-true; that is not autonomous completion.\n- **Pair comparison.** B − A = −34.72 s (−5.35%). Display + status: 103.714 vs 25.750 s. The trajectories differ, so the difference is not causal (`online_mechanism_attribution.json`).\n- **Request latency.** Median execution-request latency was 20.05 s (A) and 16.69 s (B), against a historical p50 of 13.825 s.\n- **Schedule.** Pair 2 ran sequentially, although `paired_schedule_protocol.json` called for overlapping arms (inference from timestamps).\n- **Gate.** `p5_gate.json`: 2 of 9 pairs complete. A raw900 0/2, B 1/2; S300 0/2 for both. Status `inconclusive`. P6 not started.\n- **Budget used.** Audit windows 46/60, offline queries 0/40, P4 0/24, P5 4/18, P6 0/18, retries 1/4. 28 model requests.\n- **Conclusion.** Keep the I/O branch with narrowed scope; freeze online expansion.\n- **Recommended next step.** Find the cause of the plan-stream completion latency, then re-plan the evaluation.\n\n## Campaign 2 — C2 (10:14:38 → 11:03:06, 2,907.4 s)\n\n**User ask** (`objective.md`). Decide whether one reliable local mechanism can replace a model handoff with a net speedup. Constraints:\n- Stage 1: ≤ 6 plan requests, 120 s each.\n- 12 historical windows.\n- ≤ 8 development short operations, each with T_control ≤ 180 s and T_service ≤ 420 s.\n- Then 6 paired formal tests.\n\nPromotion requires B ≥ 5/6 strict autonomous completions, ≥ 4 common successes, ≥ 3 trigger chains, and a median T_control ratio ≤ 0.90.\n\n**Hypothesis** (`mechanism_spec.md`): `bounded_visual_placement_continuation`. After a placement descent stalls, one bounded visual check confirms containment, and the model's pending open and retreat fragments run. That saves one handoff, about 10.149 s. Cost gate: T_control_A ≤ 101.489 − 10c.\n\n**Probes** (`request_results.json`):\n\n| Probe | Source input | Result |\n|---|---|---|\n| prep_001 | trial_002 | cut at 120 s; 141,110 characters, 6,493 deltas, no `response.completed` |\n| prep_002 | trial_004 | completed in 17.3 s; 922 characters |\n| prep_003 | trial_002 | cut at 120 s; 27,853 characters |\n| prep_004 | trial_004 | completed in 11.2 s; 924 characters |\n\nThe pattern flipped relative to C1: the input that completed in C1 stalled here, and vice versa.\n\nMy own analysis of `request_diagnostics.jsonl`: the stalled streams passed 4,000 characters at 25.3 s and 26.8 s. Completed plans averaged about 3.1 characters per delta; prep_001 averaged 21.7.\n\n**Gates.**\n- Service gate failed: success-source inputs 0/2, timeout-source inputs 2/2.\n- Observability gate failed: no validated object, container-interior or post-release feedback (`observability_review.md`).\n- No simulator started, and `paired_results.csv` contains only its header.\n\n**Conclusion.** Pause online robot work in this service configuration and stop the branch. Net gain is unknown, not zero.\n\n**Recommended next step.** Find why streams never complete; then build verifiable object and container feedback, including negative cases.\n\n## Campaign 3 — C3 (13:36:33 → 14:51:30, 4,497.0 s)\n\n**User ask** (`user_request.txt`): \"implement and test it then give me results\". The accepted proposal was an isolated v3 r6 baseline with autonomous finishing, run on the known t1 episode first and then a few more t1 episodes.\n\n**Protocol** (`protocol.json`).\n- 3 attempts (t1 episodes 0, 1 and 2), 1800 s service each, 180 s per request, ≤ 6 simulator starts.\n- Qualification: 3/3 runs that finish autonomously and are raw- and strict-successful.\n- Amended twice after failures (`repair_amendment.json`, `enrollment_amendment.json`).\n\n**Results** (`summary.json`):\n\n| Attempt | Episode | Service time | Actions | Failure |\n|---|---|---:|---:|---|\n| 1 | ep0 | 140.170 s | 0 | Newline in the completion rule rejected before the first execution request |\n| 2 | ep1 | 0.751 s | 0 | No reset SHA |\n| 3 | ep2 | 1007.386 s (control 688.653 s) | 313 | Model escalate |\n\nAttempt 3 (`evidence/execution_attribution.json`):\n- Codex review took 284.8 s, so control started at 318.7 s.\n- Model time was 581.8 s, 84.5% of control. The 13 execution requests took 578.4 s; the first took 137.5 s for 11,866 characters.\n- 188 semantic-program actions ran, completing only stage 0 of 16, followed by 125 fragment actions.\n- Decisions: 7 geometry patches, 4 executes, 1 escalate.\n- The contact audit shows finger–table contact from action 195 and 0 finger–object contact points. Terminal strict quality is unknown because the evaluator skipped truth.\n\n**Totals.** 15 HTTP requests, 5 simulator starts, 1,148.306 s of service.\n\n**Conclusion.** No baseline. Freeze the claim that r6 + autonomous finish gives a repeatable completion baseline.\n\n**Recommended next step.** Fix the terminal-truth gap first. Then narrow the work to one chain: first-grasp visual evidence → action correction → grasp confirmation.\n\n## Established vs unknown\n\n**Established:**\n- 0 S300 out of 8 slots.\n- 2 raw successes out of 3 executed episodes, both strict-false at the raw-success instant.\n- 4 of 8 v7 plan requests did not complete. All 37 execution requests and both v3 plan requests completed.\n- Model time dominates control.\n- Even without Codex review time, the best run is 475.6 s.\n- 8 of 8 historical v3 `evidence_acquisition_failed` runs have their terminal truth skipped (t1_005, 009, 010, 011, 012; g5_001, 002; t7_001).\n\n**Unknown:**\n- Why streams fail to complete. Contents were not persisted, and C1's two 893 s cases have no telemetry.\n- Whether v7 would finish strictly if not truncated.\n- Whether r6 + finish reproduces success on episode 0.\n- Strict terminal quality of the v3 failures.\n- Perception accuracy.\n- Any t5 or t7 behavior.\n\n## Defects\n\n| # | Defect | Evidence | Status |\n|---|---|---|---|\n| D1 | The subscription route strips `max_output_tokens`, the read loop has no cap, and the 180 s timeout is a socket timeout, not a total deadline | `src/gpt_field/chatgpt_plan.py:37-41, 429-434, 315-342, 136-141` | Not fixed in the main tree. The isolated copies only add absolute deadlines (120 s in C2, 180 s in C3). |\n| D2 | `EvidenceAcquisitionFailed` becomes `infrastructure_error`, and terminal truth is then skipped | `scripts/evaluate_agent_speedup_v2.py:1535-1536, 141-143, 1124-1126`; relabel at `scripts/evaluate_agent_speedup_v3.py:283-289` | Not fixed |\n| D3 | U+000A in the completion rule is rejected by `_safe_strings` | `src/gpt_field/agent_speedup_v2_client.py:518-531` | Fixed only at `C3/revisions/r2/.../v3_completion_endpoint.py:552` |\n| D4 | No frozen reset SHA for t1 episode 1; the lookup fails closed | `scripts/evaluate_agent_speedup_v2.py:411-421` | Worked around for attempt 3 by measuring the initial state in a separate enrollment step |\n| D5 | `held_objects` is the cumulative `held_ever` set, so it is not a current-hold label | `src/gpt_field/agent_speedup_v2_contacts.py:284, 347` | Not fixed; audit-side only |\n| D6 | The isolated copy used an empty credential store | — | Fixed with an explicit `--store-dir` |\n| D7 | The evaluator truncates at the first raw success | — | Fixed only in the isolated copies |\n| D8 | The pair-2 initial-state hash was never persisted | — | Not fixed |\n| D9 | Review-tool failures: system `python3` lacked numpy; review cells are immutable | — | Not fixed |\n\nNone of today's harness modules exist in `/workspace/gpt_field/src/gpt_field`. The user's tracked modifications are unchanged.\n\n## Process cost\nTotal wall-clock 14,451.5 s:\n\n| Category | Seconds | Share |\n|---|---:|---:|\n| Live robot-execution windows (the model was being waited on for 948.7 s of them) | 1,168.5 | 8.1% |\n| Model requests outside robot execution (2,025.3 s of this was in non-completing streams) | 2,125.9 | 14.7% |\n| Waiting for the user's authorization | 2,710.2 | 18.8% |\n| Codex automated review | 518.3 | 3.6% |\n| Protocol, implementation, tests, freezes, audits, reports and gaps | 7,928.5 | 54.9% |\n\nThat last category was 26.9% of C1, 90.8% of C2 and 75.5% of C3.\n\nEpisodes with actions: 3 (C1 `trial_002` and `trial_003`, both raw successes; C3 attempt 3, a failure).\n\n## Asked vs delivered\n- **C1:** the I/O branch and 2 runs; no S300 result; t5 and t7 never ran.\n- **C2:** all requested files; the core question unanswered.\n- **C3:** the implementation and an honest 0/3; episodes 0 and 1 never executed; no baseline; the larger experiment was not run.\n\n## Next-step implications (my inference)\n1. Add a client-side cap on output length for plan requests (normal plan ≈ 922 characters) plus one bounded retry. It can be tested offline against `C2/request_diagnostics.jsonl`.\n2. Fix D2 before any further v3 run.\n3. Merge today's deadline, endpoint and enrollment code into the main tree once, with tests.\n4. For S300 on v7 t1, both model time (252–280 s) and step count (830–1019 steps at about 0.12 s each) need to roughly halve.\n5. Test on t5 and t7 as well; generality has not been tested at all.",
+  "claims": [
+   {
+    "id": "today-outcome",
+    "kind": "fact",
+    "claim": "Across the three 2026-10-26 campaigns (14,451.5 s total wall-clock), 8 episode slots were consumed but only 3 executed any policy action (830+1019+313 = 2,162 actions). Result: 2 raw LIBERO successes (C1 trial_002 at 648.734 s and trial_003 at 614.011 s full service), 0 S300, 0 autonomous strict completions.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv",
+     "results/speedup_evidence_20261026T055123Z/live_audit.csv",
+     "runs/v3_completion_baseline_20261026T133633Z/summary.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-pair1-quality",
+    "kind": "fact",
+    "claim": "C1 t1 episode 1. Arm A (trial_002, infrastructure retry): 830 steps, 11 execution requests, model pipeline 252.344 s, raw success at 645.774 s. Arm B (trial_003): 1019 steps, 13 requests, model 279.538 s, raw success at 611.987 s. Both failed strict terminal quality: at truncation the last object was still held (not_held, at_rest, supported_by_container_or_contents, not_perched_on_rim all false). Only a separate 38-action release/settle diagnostic made them strict-true.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/online_mechanism_attribution.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_002/trial/summary.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial/summary.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-io-effect",
+    "kind": "fact",
+    "claim": "The compact display I/O candidate cut display wall time by 74.55% on a saved 120-step prefix (median 10.689 s to 2.721 s; 582 vs 122 frames). Online, display + status writes took 103.714 s (A) vs 25.750 s (B). The full-service difference was only -34.72 s (-5.35%), confounded by different trajectories (model +27.19 s, sim +20.19 s for B).",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/display_io_benchmark.json",
+     "results/speedup_evidence_20261026T055123Z/online_mechanism_attribution.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-replay-equivalence",
+    "kind": "fact",
+    "claim": "The rebuilt v7 baseline is behavior-equivalent on saved inputs: 897/897 actions exact, and 13/13 model payloads identical to history and across arms A/B.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/baseline_validation.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-ep2-stall-stop",
+    "kind": "fact",
+    "claim": "In C1, t1 episode 2: trial_004 (B) and trial_005 (A) each had a single plan request pending 893.37 s and 891.93 s without response.completed. Both exhausted the 900 s budget (901.033 s and 900.953 s) with 0 actions, and C1 stopped under plan §10. P5 ended inconclusive with 2/9 pairs complete (A raw900 0/2, B 1/2, S300 0/2 for both); P6 0/18 not started.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_004/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_005/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/p5_gate.json",
+     "results/speedup_evidence_20261026T055123Z/online_stop.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-budget",
+    "kind": "fact",
+    "claim": "C1 consumed: audit windows 46/60, offline perception queries 0/40, P4 rollouts 0/24, P5 originals 4/18, P6 0/18, infrastructure retries 1/4. It sent 28 model requests (4 prep + 24 execution). Effective service totalled 3,072.298 s and per-arm human wait 5,486.579 s.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/execution_manifest.json",
+     "results/speedup_evidence_20261026T055123Z/budget_ledger.jsonl"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c2-probes-flip",
+    "kind": "fact",
+    "claim": "C2 replayed the saved plan payloads 4 times, 120 s each. The trial_002 source (which completed in 19.8 s in C1) failed to complete 0/2 times: cut at 120 s with 141,110 and 27,853 public chars and no response.completed. The trial_004 source (which stalled 893 s in C1) completed 2/2, in 17.308 s and 11.215 s with 922 and 924 chars.",
+    "evidence": [
+     "runs/speedup_next_20261026T101438Z/request_results.json",
+     "runs/speedup_next_20261026T101438Z/request_diagnostics.jsonl"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c2-candidate-not-built",
+    "kind": "fact",
+    "claim": "C2's only candidate, bounded_visual_placement_continuation, was never implemented. The observability gate failed: there is no validated object/container-interior/post-release feedback. C2 started 0 simulators, and paired_results.csv has 0 data rows. The ideal saving was a single handoff of 10.148901 s, with a cost gate of T_control_A <= 101.489010 - 10c.",
+    "evidence": [
+     "runs/speedup_next_20261026T101438Z/mechanism_spec.md",
+     "runs/speedup_next_20261026T101438Z/observability_review.md",
+     "runs/speedup_next_20261026T101438Z/paired_results.csv",
+     "runs/speedup_next_20261026T101438Z/requirements_audit.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c3-zero-of-three",
+    "kind": "fact",
+    "claim": "C3, isolated v3 r6 + autonomous finish endpoint, went 0/3. Attempt 1 (ep0): 140.170 s service, 0 actions (newline). Attempt 2 (ep1): 0.751 s, 0 actions (no reset SHA). Attempt 3 (ep2): 1007.386 s service, 688.653 s control, 313 actions, ended evidence_acquisition_failed after the model's escalate. Totals: 15 HTTP requests, 5 simulator starts, 1,148.306 s service.",
+    "evidence": [
+     "runs/v3_completion_baseline_20261026T133633Z/summary.json",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/result.json",
+     "runs/v3_completion_baseline_20261026T133633Z/evidence/final_independent_audit.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c3-model-dominates",
+    "kind": "bottleneck",
+    "claim": "In C3 attempt 3 the model pipeline was 581.8 s, 84.5% of the 688.7 s control time. The 13 execution requests took 578.4 s (median 34.0 s). The first request (a 16-stage semantic program) took 137.5 s, about 66 s before any public text, and returned 11,866 public characters.",
+    "evidence": [
+     "runs/v3_completion_baseline_20261026T133633Z/evidence/execution_attribution.json",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/request_diagnostics.jsonl"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c3-never-touched-object",
+    "kind": "failure_mechanism",
+    "claim": "In C3 attempt 3 the robot never touched the target. The independent contact audit records right finger-table contact from action 195 (368 robot-scene points), 0 finger-object contact points across 8,139 checks, and empty held/manipulated lists. The semantic program completed only stage 0 (approach) of 16, and the close commands at actions 308-312 never completed.",
+    "evidence": [
+     "runs/v3_completion_baseline_20261026T133633Z/evidence/execution_attribution.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "plan-stream-noncompletion",
+    "kind": "bottleneck",
+    "claim": "4 of the 8 v7 (user-check) plan requests sent today never completed (C1 trial_004/trial_005; C2 prep_001/prep_003). They account for 2,025.3 s of the 3,074.6 s of model-request wall time today (65.9%). All 37 execution requests (24 in C1, 13 in C3) and both v3 plan requests completed.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_004/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_005/service_clock.json",
+     "runs/speedup_next_20261026T101438Z/request_results.json",
+     "runs/v3_completion_baseline_20261026T133633Z/evidence/execution_attribution.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "transport-unbounded",
+    "kind": "defect",
+    "claim": "The subscription transport has no output or total-time bound. max_output_tokens is in UNSUPPORTED_FIELDS and is popped from every payload; the stalled C1 request payload has no such key and the budget snapshot reports output_token_limit_sent=None. read_completed_response loops until response.completed with no cap, and timeout_s=180 is only a urllib socket timeout. This is not fixed in the main tree.",
+    "evidence": [
+     "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py:37-41",
+     "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py:429-434",
+     "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py:315-342",
+     "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py:136-141",
+     "/workspace/gpt_field/src/gpt_field/chatgpt_plan.py:458",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_004/review/requests/000001-5c26504d97f342529abac5c24cb7e363.request.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "output-cap-opportunity",
+    "kind": "opportunity",
+    "claim": "Inference: a client-side cap on public output length would cut stalled plan streams after about 25-27 s instead of 120 s or 893 s. Completed v7 plans end at 922-924 public chars (about 3.1 chars per delta). The two stalled C2 streams passed 4,000 chars at 25.26 s and 26.81 s, and prep_001 averaged 21.7 chars per delta. Whether C1's two 893 s stalls follow the same pattern is unknown; C1 has no telemetry.",
+    "evidence": [
+     "runs/speedup_next_20261026T101438Z/request_diagnostics.jsonl"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "truth-skip-defect",
+    "kind": "defect",
+    "claim": "The base evaluator classifies EvidenceAcquisitionFailed (a RuntimeError subclass) as infrastructure_error via a generic except clause. finalize_truth then skips terminal truth for any status outside TRUTH_STATUSES. The v3 runner relabels the status afterwards, but the truth is already lost. Every v3 evidence_acquisition_failed run checked has summary.physical_truth.skipped='status infrastructure_error (simulator state not trusted)': t1_005, t1_009, t1_010, t1_011, t1_012, g5_001, g5_002, t7_001, plus C3 attempt 3. Not fixed.",
+    "evidence": [
+     "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2.py:1535-1536",
+     "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2.py:141-143",
+     "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2.py:1124-1126",
+     "/workspace/gpt_field/scripts/evaluate_agent_speedup_v3.py:283-289",
+     "/workspace/gpt_field/src/gpt_field/agent_speedup_v3.py:26",
+     "runs/agent_speedup_v3_t1_012/summary.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "newline-defect",
+    "kind": "defect",
+    "claim": "C3 attempt 1 (t1 ep0, the episode where r6 had succeeded historically) failed before its first execution HTTP request. The multi-line NEW_FINISH completion rule contained U+000A, which _safe_strings rejects. The fix (joining lines with spaces) exists only in C3's revisions/r2 copy. The 35 offline tests run before going live missed it.",
+    "evidence": [
+     "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_client.py:518-531",
+     "runs/v3_completion_baseline_20261026T133633Z/source/src/gpt_field/v3_completion_endpoint.py:552",
+     "runs/v3_completion_baseline_20261026T133633Z/revisions/r2/source/src/gpt_field/v3_completion_endpoint.py:552",
+     "runs/v3_completion_baseline_20261026T133633Z/repair_amendment.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "reset-sha-defect",
+    "kind": "defect",
+    "claim": "C3 attempt 2 (t1 ep1) died in 0.751 s with 0 requests and 0 simulator starts. resolve_expected_sha fails closed when the registry has no frozen reset SHA and no --expected-initial-observation-sha256 is given. This was worked around for attempt 3 only, via measured enrollment (SHA a84295393320...). Episode 1 never ran.",
+    "evidence": [
+     "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2.py:411-421",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_002/result.json",
+     "runs/v3_completion_baseline_20261026T133633Z/enrollment_amendment.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "held-ever-trap",
+    "kind": "defect",
+    "claim": "The contact snapshot's held_objects field is sorted(self.held_ever): it is cumulative, so an object stays listed after release (still listed at step 353 after release in v7). It is consumed as generic_held in the replay script. It is audit-side only and not fixed.",
+    "evidence": [
+     "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_contacts.py:284",
+     "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_contacts.py:347",
+     "/workspace/gpt_field/scripts/agent_speedup_v2_replay.py:243",
+     "runs/speedup_next_20261026T101438Z/observability_review.md"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "fixes-not-in-main-tree",
+    "kind": "fact",
+    "claim": "None of today's harness pieces (request diagnostics/absolute deadline, evidence service clock, completion endpoint, reset enrollment) exist under /workspace/gpt_field/src/gpt_field. The user's tracked modifications in git status are identical to the C1 and C3 initial git status. Only C1 has campaign-local git repos (baseline/.git and tooling/.git).",
+    "evidence": [
+     "/workspace/gpt_field/src/gpt_field",
+     "results/speedup_evidence_20261026T055123Z/initial_git_status.txt",
+     "runs/v3_completion_baseline_20261026T133633Z/initial_git_status.txt"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "review-charged-to-service",
+    "kind": "bottleneck",
+    "claim": "Codex automated plan review is charged to service time: 138.107 s and 138.456 s in C1; 93.8 s and 284.8 s in C3. In C3 attempt 3, control began at service 318.7 s, so S300 was impossible before any action. Even with review removed, the best C1 run is 614.011 - 138.456 = 475.6 s, still above 300 s.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_001/service_clock.json",
+     "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/service_clock.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "wallclock-allocation",
+    "kind": "fact",
+    "claim": "Today's 14,451.5 s of wall-clock broke down as follows: live robot-execution windows 1,168.5 s (8.1%, with 948.7 s of model waiting inside them); model requests outside robot execution 2,125.9 s (14.7%); waiting for the user's review authorization 2,710.2 s (18.8%); Codex automated review 518.3 s (3.6%); protocol, implementation, tests, freezes, audits, reports and gaps 7,928.5 s (54.9%). That last bucket was 26.9% of C1, 90.8% of C2 and 75.5% of C3. Start and end are first and last file mtimes per campaign directory.",
+    "evidence": [
+     "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/budget.py",
+     "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/timecalc.py",
+     "results/speedup_evidence_20261026T055123Z/evaluations/*/service_clock.json",
+     "runs/v3_completion_baseline_20261026T133633Z/budget_ledger.jsonl",
+     "runs/speedup_next_20261026T101438Z/request_diagnostics.jsonl"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "v7-latency-higher",
+    "kind": "fact",
+    "claim": "Today's v7 execution-request latency was higher than the historical v7 t1_001 run (p50 13.825 s, p90 17.734 s): median 20.05 s (A, max 40.33 s) and 16.69 s (B, max 52.77 s). The cause is unknown; the two arms ran concurrently in pair 1.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_002/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_003/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/audit_summary.md"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "v7-s300-arithmetic",
+    "kind": "bottleneck",
+    "claim": "Inference: for v7 on t1, the execution windows were 450.3-479.8 s, with model 252-280 s and sim about 0.12 s per step over 830-1019 steps. With prep about 24-29 s and Codex review about 138 s counted, execution must fit in about 137 s; without the review, in about 276 s. Model time and step count therefore both need to roughly halve to reach S300.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial/summary.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_002/trial/summary.json",
+     "results/speedup_evidence_20261026T055123Z/online_mechanism_attribution.json"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "generality-untested",
+    "kind": "fact",
+    "claim": "Only LIBERO-10 t1 was run today. t5 and t7 were preregistered and authorized for C1 P5/P6 (18+18 units) but got 0 episodes, so cross-task generality had no test today.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/delegated_review_authorization.json",
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv",
+     "results/speedup_evidence_20261026T055123Z/heldout_results.csv"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c3-protocol-amended",
+    "kind": "fact",
+    "claim": "C3's self-imposed stop rule ('correctness defect freezes this campaign, no repair resit') was amended twice after observed failures (repair_amendment 13:58:30, enrollment_amendment 14:13:26). This made the original 3/3 same-build qualification impossible. The known t1 ep0 was never actually executed.",
+    "evidence": [
+     "runs/v3_completion_baseline_20261026T133633Z/protocol.json",
+     "runs/v3_completion_baseline_20261026T133633Z/repair_amendment.json",
+     "runs/v3_completion_baseline_20261026T133633Z/enrollment_amendment.json",
+     "runs/v3_completion_baseline_20261026T133633Z/report_zh.md"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "truncation-endpoint",
+    "kind": "defect",
+    "claim": "The standard evaluator stops at the first raw success (stop_on_success), so autonomous finishing cannot be scored; both C1 successes were strict-false at the truncation point. The no-truncation endpoint exists only in isolated copies: C2 source/src/gpt_field/speedup_next_endpoint.py (validated offline only) and C3 revisions/r2 v3_completion_endpoint.py (which patches the validation at lines 359-362).",
+    "evidence": [
+     "runs/speedup_next_20261026T101438Z/source/src/gpt_field/speedup_next_endpoint.py",
+     "runs/v3_completion_baseline_20261026T133633Z/revisions/r2/source/src/gpt_field/v3_completion_endpoint.py:359-362",
+     "runs/speedup_next_20261026T101438Z/requirements_audit.json"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "c1-schedule-deviation",
+    "kind": "fact",
+    "claim": "paired_schedule_protocol.json fixed overlapping execution of the two arms, but C1 pair 2 ran sequentially: trial_004 from 07:09:42.9 to 07:24:43.9 UTC, then trial_005 from 07:25:09.8 to 07:40:10.7 UTC. The pair's cross-arm initial-state hash was never verified.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/paired_schedule_protocol.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_004/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_005/service_clock.json",
+     "results/speedup_evidence_20261026T055123Z/launches/trial_005/pair_reset_annotation.json"
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "unknowns": [
+   "Root cause of the non-completing plan streams: server-side or client-side. Stream content was never persisted, and C1's two 893 s stalls have no SSE telemetry at all.",
+   "Whether the ChatGPT subscription endpoint would accept any output bound; max_output_tokens is deliberately stripped as unsupported.",
+   "Whether v7 would complete strictly if not truncated at the first raw success. C2's common endpoint was validated only offline with FakeSim, and no live v7 episode ran with it.",
+   "Whether v3 r6 plus the autonomous finish endpoint reproduces t1_008's episode-0 success. C3 attempt 1 failed before its first execution request.",
+   "Strict terminal quality of C3 attempt 3 and of the 8 historical v3 evidence_acquisition_failed runs; the evaluator skipped truth in all of them.",
+   "Cross-arm initial-state equality for C1 pair 2 (t1 ep2); trial_004 never persisted its SHA.",
+   "Metric localization error, feasible-grasp-region accuracy and uncertainty coverage; never measured in any campaign.",
+   "Why v7 request latency was higher today (median 16.7-20.1 s vs 13.8 s historically), e.g. whether two concurrent arms caused it.",
+   "Any behavior on t5/t7 or other LIBERO-10 tasks (0 episodes today).",
+   "Real LIBERO worker cancellation latency under C2's endpoint/deadline protocol.",
+   "Whether the 7,928.5 s 'everything else' bucket is mostly Codex compute or idle gaps between Codex turns; file mtimes cannot separate them."
+  ]
+ },
+ {
+  "key": "history_intent",
+  "report_path": "/tmp/claude-0/-workspace/02fb8e60-2ddf-4353-88bc-336305aea415/scratchpad/analysis/history_intent.md",
+  "summary": "uc7 (agent-speedup-v2-user-check-7) is the version the evidence favours. On the identical t1 episode-0 initial state (SHA e92ca405…), uc7 t1_001 succeeded with 13 calls and 416.3 s elapsed (≈437.7 s service). The best v3 success, r6 t1_008, needed 40 calls and 1,626.2 s of service. Every v3 success was 3.1–4.5× slower, and no v3 run has succeeded since r6 (0/7, plus 0/3 in today's r6 baseline).\n\nGenerality points the same way. uc7 reached raw success on 11 of 13 runs across all 10 LIBERO-10 tasks (sweep 9/10, strict 3/10). v3 succeeded only on t1 episode 0 (4 of 15 runs) and went 0/3 on t7 and g5.\n\nThe only LIBERO-10 raw success within 300 s is uc7 t5_001: 274.9 s of process wall time including preparation, auto-approved. The history doc never mentions it. Its success also depends on the runner stopping at the first raw success: LIBERO's predicate fails after a diagnostic release.\n\nv3 failure mode: 8 of the 9 failures from r4.1 on end in evidence_acquisition_failed; the ninth was a local float(None) bug. Six were model escalations over sweep or clearance evidence the runtime demanded and RGB could not supply; two were view-planner preconditions. Per-call latency tracks output tokens (r=0.97), not input tokens (r=-0.17). v3's protocol raised output per call 2–4×, and its first call takes 96–120 s against 17.9 s for uc7. In r6, 21 of 40 calls (568 s) were geometry_patch repairs.\n\nProcess drift: v3 iterated on one task and one episode (12 of 15 runs on t1 ep0), with one live run per revision, adding gates each time. That runs against the user's 2026-10-21 rules: organise work by mechanisms recurring on 2+ tasks, accept on an all-task sweep, prefer removing vetoes. Today the user also told Codex not to force triangulation, new geometry layers or more complex state machines.\n\nPlan-preparation streams that never complete recur in both lines: at least 7 occurrences, each alone over 300 s.\n\nThe general plan's decisions D1–D5 were never ruled on. D1 (agent ends the episode) was not adopted, and D4 (autonomous headline) was reversed in v3. Today's campaigns bill automated-review time to service, while v3's own reports exclude approval time.",
+  "details_markdown": "# History and user intent: condensed report (full version in history_intent.md)\n\nEvery number below comes from a cited file. **[inference]** and **[unknown]** are labelled.\n\nConventions:\n- **svc** is full service time. For v3 r6+ it is `performance.json` `total_service_elapsed_s`. Otherwise it is ≈ `preparation_elapsed_s + elapsed_s`; where supervisord logs exist, the true value is 4.7–5.9 s higher.\n- **raw** means LIBERO success; **strict** means `v2_success`.\n- Run number ≠ revision.\n\n## 1. Timeline\n\n| Version | Design change | Outcome |\n|---|---|---|\n| v1 (10-16/17) | 6 macro skills, 2 grasp families, task-specific targets | 5 runs, 2 raw successes on non-LIBERO-10 tasks: bowl_002 at 193.1 s with 11 calls; drawer_003 at 349.0 s with 21 calls, bowl perched on the rim |\n| base v2 (10-18/20) | Relation constraints, one threshold table | 0 of 7 runs. t2 lost to an O-1 5° false refusal; a fork with 20° succeeded with 3 calls |\n| uc1 | Browser review; locked semantics | t2_001 raw and strict success (6 calls, ≈497 s); t6_001 `plan_conflict` |\n| uc2 | `initial_plan_only`; lowering-stall rule relaxed | t6_002 stopped by the user (5,621 steps, 45 calls) |\n| uc3 | Four contracts, persistent IDs | t6_004 stopped by the user |\n| uc4 | `local_motion` (≤ 5 cm / 0.35 rad) | t6_005 hit `request text exceeds 60000 characters`, a client defect labelled infrastructure |\n| uc5 | Regions/goals; `verify_grasp`/`resume_macro` hand-offs | t6_006 stopped by the user |\n| uc6 | Model-continuous control; **uniform verify gate removed** | t6_007 (84 calls, ≈1,383 s) and t3_002 (87 calls) both succeeded |\n| uc7 | `execute` fragments: 5 skills, ≤ 6 segments, ≤ 240 steps, measured stops (`agent_speedup_v2_user_check_fragments.py:22-34,300-320`) | 13 runs: raw 11, strict 3, S300 1 (t5_001). Sweep raw 9/10, t6 0/2. Median raw-success ≈svc 437.7 s |\n| v3 r1 | `GeometryMemory` with sweep-prefix checks | t1_001 success with 79 calls, 1,739 s; preparation 925 s (a 900.8 s stream failure) |\n| r2 | Removed fixed 4/6/24-step handoffs | Success: 41 calls, 1,285 s |\n| r3 | Event validity, RGB watch, inventory guard | HTTP 500 |\n| r4 | Patches, continue-intent, evidence stop | HTTP 503 |\n| r4.1 | 503 retry | `evidence_acquisition_failed`; preparation 1,682 s |\n| r5 | Tracking checks, view acquisition | t1_006 `float(None)`; t1_007 success with 52 calls, 1,877 s |\n| r6 | Semantic program, I/O cuts | t1_008 success with 40 calls, svc 1,626 s. **This is the last v3 success.** |\n| r7 | `OperationRuntime`, recovery budgets | Fail, 936 s |\n| r8 | `pick_place` ×(1–3)×8 stages | t1_010, t7_001 and g5_001 all failed |\n| r9 | Empty-hand closing is not a grasp | g5_002 failed |\n| r10 | Coverage made advisory; context −57% | Failed: 3 calls, 214.8 s, gripper never closed |\n| r11 | View focus without coverage witness | Failed: 9 calls, 469.4 s, no accepted hold |\n\n**Campaigns today (10-26):**\n- **Evidence campaign** (uc7 A vs uc7 + compact I/O B), t1 ep1: raw success at 648.7 s and 614.0 s svc. Both include about 138 s of automated review. S300 false. On ep2 both preparations hit the 900 s cutoff.\n- **speedup_next:** 2 of 4 replayed preparations streamed (141,110 and 27,853 characters) to the 120 s cutoff without completing. Both were inputs that had previously *succeeded*. The local candidate was not implemented and online runs were paused.\n- **v3 r6 completion baseline:** 0 of 3. Two attempts failed on harness bugs; the third escalated for lack of evidence after 313 actions at 1,007.4 s (review 284.8 s).\n\n## 2. The user's goals, constraints and rejected directions\n\n**Goals:**\n- **2026-10-18 (verbatim):** \"Using the same robot arm and RGB image and robot-state inputs, there is no longer a need to modify control code or thresholds for each individual manipulation task…\" (`memory/agent-speedup-v2-plan.md:17`).\n- **2026-10-20/21 (verbatim):** \"we should not write skills or harness specific for a task…\" and \"we want a general framework for the agent to speed up and finish tasks.\" (`memory/v2-scope-general-framework.md:11,29`).\n- **300 s target:** appears from r6 (2026-10-25, Codex paraphrase). It covers preparation plus execution, excludes approval wait, and is not a stop condition (`runs/agent_speedup_v3_t1_review_008/review.json`).\n\n**Rules:**\n- Mechanisms that recur on two or more tasks.\n- An all-task sweep on one frozen build.\n- \"Prefer removing veto checks over adding thresholds.\" (`memory/v2-scope-general-framework.md:30-32`)\n\n**Process preferences (verbatim):**\n- \"i never ask to have zero model calls\" (`memory/v2-live-first-model-calls-ok.md:11`).\n- \"can i have a runable version? we did too much checks and evaluation\" (`memory/agent-speedup-v2-plan.md:115`).\n- \"avoid excessive checks or smoke tests\" (`runs/agent_speedup_v2_user_check_v7_t3_t6_001_launch/authorization.json`).\n\n**Inputs:** RGB, robot state and calibration only. No simulator truth. `gpt-6-astra`, high effort, subscription.\n\n**Today, to Codex** (`runs/speedup_next_20261026T101438Z/objective.md`):\n- Determine whether a reliable local mechanism can replace expensive hand-offs with net speedup.\n- \"本轮不扩展完整 v3\" (this round does not extend full v3).\n- \"不要为了完成计划强行实现三角化、新几何层或更复杂状态机\" (do not force triangulation, a new geometry layer or a more complex state machine just to finish the plan).\n- Ban on stall→close and on truth-driven triggers.\n\n**Rejected directions:**\n- The F1–F11 t2 plan, rejected as task-specific.\n- Zero-call scripted gates before live runs.\n- Per-task skills.\n- Heavy checks.\n- (Today) full v3 extension and the large P5/P6 matrix.\n\n**Tension:** the Codex plan, whose author is not recorded, allows task labels for skill selection (`Agent_SpeedUp_Codex_Implementation_Plan_ZH.md:25`) and narrows the generality claim to one operation family (`:23`). Both conflict with the user's rules.\n\n## 3. Pending decisions\n\nNo later artifact rules on D1–D5 or M0.\n\n- **D1(a), the agent ends the episode: not adopted.**\n  - The runner requires `stop_on_success` (`scripts/evaluate_agent_speedup_v2.py:205-206,1514-1515`).\n  - uc7's prompt says `finish` \"never ends the episode\" (frozen `agent_speedup_v2_user_check_agent_client.py:173-177`).\n  - All 18 raw successes end with `physical_success_at_terminal=false`.\n  - The finish endpoint exists only in today's isolated copies.\n- **D1(b), end on no progress: absent.**\n- **D2, D3: settled in practice.** World-frame targets, calibration and high effort are in use; contacts are record-only and not prevented.\n- **D4, autonomous headline: contradicted.**\n  - v3 rejects `--auto-approve` (`scripts/evaluate_agent_speedup_v3.py:234-238`).\n  - v3's `performance.json` excludes approval time, while today's campaigns bill automated review (138–285 s).\n- **D5: moot.** Fragments need no Calibrate+.\n- **M0 items:** WP1 (ledger) and WP8 (`--no-video`) were not done. WP6 (≤ 25k tokens per request) was not met in uc7 (24.7k–82.2k per call).\n\n**Other open items:**\n- Merging the I/O branch.\n- Resuming online runs while preparation streams fail to complete.\n- A narrowed v3 grasp-evidence budget.\n- Asynchronous planning, which remains deferred.\n\n## 4. Recurring patterns\n\n1. **Gates accumulate (v3).** Proxy string counts across frozen runtimes, r1 → r11: `_pause(` 5 → 22, `reject` 0 → 52, `missing_evidence` 0 → 48, `raise ValueError` 28 → 118. v3 code grew from 69 KB to 478 KB. The relaxations in r2, r3, r10 and r11 undid v3's own earlier gates. In user-check, the turning point was *removing* a gate (uc6).\n2. **One task, one episode.** All 36 uc and v3 runs used episode 0, seed 7. 12 of 15 v3 runs were on t1, the first 10 consecutively. 6 of 8 uc1–uc6 runs were on t6. The v3 t2/t3 reviews were never approved.\n3. **n = 1 per revision.** Each v3 revision had one live run (two for r5, three for r8), backed by 48–238 offline cases and no smoke runs.\n4. **Failure causes.** Of 18 execution failures: 2 remote service, 2 local defects, 1 approval boundary, 13 mechanism (5 uc user stops and 8 v3 evidence stops). Preparation stalls are separate and recur: at least 7, each over 300 s.\n5. **Speed.** t1 elapsed was uc7 416 s, then v3 1,739 → 1,285 → 1,877 → 1,602 s. Per call: 14.0 s for uc7, 33.4 s for r6, 39–51 s for r8–r11. Model time was 44.8% of ctrl in uc7 and 72–88% in v3. Even uc7's floor on t1 is 312 s (model 182.5 + sim 108.4 + preparation 21.4), before video and state files.\n6. **Generality.** uc7: 10 tasks, raw 11/13. v3: 3 tasks, raw only on t1, and 0/10 since r6 including today.\n7. **Native macros executed 0 actions in all 28 uc7 and v3 runs.**\n\n## 5. Does the evidence support the history doc's §11–13?\n\nSupported:\n- The code limits listed in §11.2.\n- Local closed loops reduce hand-offs.\n- r2 was faster than r1.\n- r6 cut I/O cost.\n- r9 fixed the false payload.\n- r11's viewing and a fully recovered object operation are both unproven.\n- v3 misses the 5-minute target.\n- Generalization is unproven.\n\nPartly supported:\n- \"Coverage no longer blocks\" (r10): t1_011 still ended on `no_spatial_coverage_witness`.\n- §10's \"the main bottleneck is model round-trips\": true for v3, but in uc7 non-model time is 36–56% of ctrl.\n\nOmissions:\n- uc7 t5_001.\n- The uc7 and v3 t1_001 preparation stalls.\n- The real cause of uc4 t6_005.\n- uc7 contact counts (t0 19,799; t1 5,738).\n\nIts closing recommendation (more observation and geometry correction) continues the direction the user restricted today.\n\n## 6. The fork: uc7 versus v3\n\n**uc7:** the model sets the poses and decides when it is done. Local fragments track measurements and stop only on measured events. Unknown is not failure.\n\n**v3:** every response must carry `scene_update` plus `motion_context` (`agent_speedup_v3_client.py:196-206`). Programs derive targets from geometry and require fresh geometry (`program.py:249`). The runtime checks hand and payload sweeps, the final-interaction inventory, the RGB watch and attachment gates, and raises `EvidenceAcquisitionFailed` (`agent_speedup_v3.py:369-375`).\n\n**The evidence favours uc7 on both speed and generality.** It was 3.1–4.5× faster on the same t1 state. Its first call took 17.9 s against v3's 96–120 s. v3 spent 21 of 40 calls (568 s) on geometry patches. Against uc7: strict success is 3/13, t6 is unsolved, raw success relies on truncation, and contact counts are high on some tasks. v3's only edge is fewer recorded contacts on t1 in r5/r6 (433 and 251, against uc7's 5,738), and that does not hold for r2 (6,808).",
+  "claims": [
+   {
+    "id": "C01",
+    "kind": "fact",
+    "claim": "On the identical LIBERO-10 t1 episode-0 initial state, uc7 t1_001 succeeded with 13 calls, 897 steps and 416.3 s elapsed (≈437.7 s service). The best v3 success, r6 t1_008, used 40 calls and 1,601.9 s elapsed (1,626.2 s service). Every v3 success (r1, r2, r5, r6) was 3.1–4.5× slower in elapsed time.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json: steps 897, model_calls.real_model_calls 13, elapsed_s 416.32, user_check.preparation_elapsed_s 21.41",
+     "runs/agent_speedup_v3_t1_008/performance.json: completion_target.total_service_elapsed_s 1626.18",
+     "runs/agent_speedup_v3_t1_00{1,2,7,8}/summary.json elapsed_s 1739.2/1285.1/1877.1/1601.9",
+     "runs/*/initial_observation_check.json sha256 e92ca405… matched in both lines"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C02",
+    "kind": "fact",
+    "claim": "The only LIBERO-10 run in the whole Agent SpeedUp line with raw success and full service ≤ 300 s is uc7 t5_001: auto-approved, 399 steps, 7 calls, supervisord process wall 274.857 s including preparation (review 0.09 s). The history doc and the evidence-campaign inventory do not report it as such.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t5_001_launch/supervisord.log: spawned 17:02:59,325, exited 17:07:34,182",
+     "runs/agent_speedup_v2_user_check_libero_10_t5_001/summary.json: elapsed_s 241.74, preparation_elapsed_s 28.41, review_phase_elapsed_s 0.088, libero_success true",
+     "grep for t5_001 in agent_SpeedUp_implementation_history.md returns nothing",
+     "results/speedup_evidence_20261026T055123Z/run_inventory.csv line 31: service_elapsed_s blank"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C03",
+    "kind": "defect",
+    "claim": "t5_001's ≤ 300 s raw success depends on the runner stopping at the first raw success while the book was held. After a diagnostic release and settle the book is physically inside (strict checks true), but LIBERO's origin-only test fails: the origin is 3.48 mm below the region box.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t5_001/summary.json physical_truth.raw_libero_success_after_settle=false",
+     "runs/agent_speedup_v2_user_check_libero_10_t5_001/physical_truth.json after_release_settle.atoms[0].libero.margin_to_lb_mm[2] = -3.48, raw=false, strict=true"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C04",
+    "kind": "failure_mechanism",
+    "claim": "From r4.1 on, 8 of the 9 v3 failures end in evidence_acquisition_failed. Six are model escalations because the runtime required hand, palm, finger or payload sweep coverage or clearance evidence the model could not establish from RGB (t1_005, t1_009, t1_010, t7_001, g5_001, g5_002). Two are view-planner preconditions: t1_011 no_spatial_coverage_witness, t1_012 semantic_goal_requires_geometry_before_view_planning. The ninth, r5 t1_006, was a local float(None) TypeError.",
+    "evidence": [
+     "runs/agent_speedup_v3_{t1_005,t1_009,t1_010,t7_001,g5_001,g5_002,t1_011,t1_012}/error_traceback.txt reason strings",
+     "runs/agent_speedup_v3_t1_006/summary.json status infrastructure_error, error.type TypeError",
+     "src/gpt_field/agent_speedup_v3.py:369-375 (_stop_for_evidence), call sites :301,:387,:500,:577,:645",
+     "src/gpt_field/agent_speedup_v3.py:264-267; src/gpt_field/agent_speedup_v3_program.py:249"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C05",
+    "kind": "bottleneck",
+    "claim": "Across 29 agent-call runs, mean model latency per call correlates with output tokens per call (r=0.97) and not with input tokens per call (r=-0.17); OLS s/call ≈ 1.70 + 0.0222·input_kTok + 0.0340·output_tok, R²=0.96. v3 r6–r11 runs averaged 721–1,367 output tokens and 27.0–51.2 s per call, against uc7 t1's 368 tokens and 14.0 s. The first v3 execution call carried 2,576–3,588 output tokens and took 96.0–119.6 s, against 17.9 s for uc7 t1.",
+    "evidence": [
+     "summary.json budget.input_tokens, output_tokens, reasoning_tokens and timing_components.model_pipeline_s for 29 runs (computed; runs_extract.json)",
+     "runs/agent_speedup_v3_t1_0{08,10,11,12}_launch/run.log model_call latency_s: first 119.56/96.05/116.27/106.82",
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001_launch/runner.log first latency 17.87",
+     "requests/*.result.json cumulative budget deltas: first-call output 3444 (t1_008), 2576 (t1_010), 3588 (t1_011), 3364 (t1_012), 558 (uc7 t1_001)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C06",
+    "kind": "bottleneck",
+    "claim": "v3 spends a large share of its model calls on geometry_patch repairs its own gates require: 21 of 52 calls (465.9 s) in r5 t1_007, 21 of 40 (568.4 s) in r6 t1_008, 8 of 25 in r7, 4 of 9 in r11, and 7 of 13 in today's r6 baseline attempt. uc7 t1_001 used 13 of 13 calls on execute.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_007/time_cost_details.json by_decision_type.geometry_patch count 21 total_s 465.89",
+     "runs/agent_speedup_v3_t1_008/time_component_analysis.json current.model_records timeline: geometry_patch 21, 568.4 s",
+     "runs/*/requests/*.response.json decision-type tally",
+     "runs/v3_completion_baseline_20261026T133633Z/report_zh.md (1 program, 7 geometry_patch, 4 execute, 1 escalate)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C07",
+    "kind": "fact",
+    "claim": "Generality: uc7 reached raw success on 11 of 13 runs over all 10 LIBERO-10 tasks (manual sweep raw 9/10, strict 3/10; t6 0/2). v3 reached raw success on 4 of 15 runs, all on t1 episode 0 and the last at r6; it went 0/3 on t7 and g5, 0/7 after r6, and 0/3 in today's r6 baseline.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t{0..9}_0??/summary.json libero_success and v2_success",
+     "runs/agent_speedup_v3_[tg]?_0??/summary.json libero_success",
+     "runs/v3_completion_baseline_20261026T133633Z/summary.json raw_successes 0"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C08",
+    "kind": "fact",
+    "claim": "Evaluation was concentrated on one task and episode. All 36 uc and v3 runs before today used episode 0, seed 7. v3 ran 12 of 15 runs on t1, the first 10 consecutively. uc1–uc6 ran 6 of 8 runs on t6. The v3 t2/t3 reviews prepared on 2026-10-23 were never approved. This contradicts the user's 2026-10-21 rule to organise by mechanisms recurring on 2+ tasks, never by one run's timeline.",
+    "evidence": [
+     "summary.json episode_index and seed for all runs",
+     "runs/agent_speedup_v3_t{2,3}_review_001/review.json approved=None",
+     "memory/v2-scope-general-framework.md:30-31",
+     "agent_SpeedUp_v3.md:103,240,68,14 (each revision is a fix for the previous run)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C09",
+    "kind": "framework",
+    "claim": "v3 revisions kept adding gating paths. In frozen v3 runtimes from r1 to r11, string counts rose: `_pause(` 5→22, `_stop_for_evidence(` 0→6, `reject` 0→52, `missing_evidence` 0→48, `raise ValueError` 28→118. v3 code grew from 69.2 KB to 478.3 KB (6→16 files). The relaxations in r2, r3, r10 and r11 undid gates that v3 itself had introduced.",
+    "evidence": [
+     "runs/agent_speedup_v3_t1_0??/frozen_runtime/**/agent_speedup_v3*.py (grep -o counts; wc -c)",
+     "agent_SpeedUp_v3.md:22,123,129,133",
+     "agent_SpeedUp_implementation_history.md:245-251,365-367"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C10",
+    "kind": "fact",
+    "claim": "In user-check, the first t6 and t3 completions came right after a gate was removed. uc6 dropped the uniform 'pass the old verification hand-off first' gate, and t6_007 (84 calls) and t3_002 (87 calls) both succeeded after 6 failed uc t6 runs. uc7 then added a capability (fragments) rather than a gate.",
+    "evidence": [
+     "agent_SpeedUp_implementation_history.md:147-148",
+     "runs/agent_speedup_v2_user_check_libero_10_t6_00{1,2,4,5,6}/summary.json statuses",
+     "runs/agent_speedup_v2_user_check_libero_10_t6_007/summary.json success, 84 calls",
+     "runs/agent_speedup_v2_user_check_libero_10_t3_002/summary.json success, 87 calls"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C11",
+    "kind": "failure_mechanism",
+    "claim": "Plan-preparation model streams that never complete recur in both lines, and each one alone exceeds the 300 s budget. Occurrences: uc7 t6_008 (634.1 s), t3_004 (298.1 s) and t6_010 (297.3 s), all interrupted by the user; v3 t1_001 (900.8 s stream_missing_completion); v3 t1_005 (~900.5 s, then 771.7 s with 151,950 whitespace characters); today's trial_004 and trial_005 (900 s). In today's replay, 2 of 4 requests streamed 141,110 and 27,853 characters to the 120 s cutoff without response.completed.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_{t6_008,t3_004,t6_010}_review/requests/*.result.json (KeyboardInterrupt, budget.elapsed_s)",
+     "runs/agent_speedup_v3_t1_review_001/requests/000001-*.result.json error_code stream_missing_completion, elapsed 900.85",
+     "agent_SpeedUp_v3.md:252",
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv trial_004/005",
+     "runs/speedup_next_20261026T101438Z/decision.md §1 table"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C12",
+    "kind": "defect",
+    "claim": "uc4 t6_005 is labelled infrastructure_error, and the history doc treats it as an infrastructure stop. The actual cause was the local client limit: ValueError 'request text exceeds 60000 characters', a context-growth protocol defect.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t6_005/error_traceback.txt last line",
+     "runs/agent_speedup_v2_user_check_libero_10_t6_005/frozen_source/agent_speedup_v2_client.py:136 (MAX_REQUEST_TEXT_CHARS = 60_000), :541",
+     "agent_SpeedUp_implementation_history.md:145"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C13",
+    "kind": "fact",
+    "claim": "The general plan's decisions D1–D5 are not ruled on in any later doc. D1 (the episode ends where the agent ends it) was not adopted in either mainline: the base runner requires stop_on_success and breaks at the first success, and uc7's prompt says finish 'never ends the episode or sets success'. All 18 historical raw successes ended with physical_success_at_terminal=false.",
+    "evidence": [
+     "agent_SpeedUp_v2_general_plan.md:296-317",
+     "grep for D1–D5/M0/WP/sweep 1 in agent_SpeedUp_v2_user_check.md, agent_SpeedUp_v3.md, agent_SpeedUp_implementation_history.md and the Codex plan: no matches",
+     "scripts/evaluate_agent_speedup_v2.py:205-206, 1514-1515",
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent_client.py:173-177",
+     "summary.json physical_truth.physical_success_at_terminal for the 18 raw successes"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C14",
+    "kind": "fact",
+    "claim": "D4 (autonomous headline via --auto-approve) was reversed. uc7 has --auto-approve, but the 10-task sweep used manual review at the user's request, and the v3 runner rejects auto-approve outright. Accounting is inconsistent: v3 performance.json excludes approval/operator wait, while today's campaigns bill automated Codex review (138.1 s, 138.5 s, 284.8 s) to service time.",
+    "evidence": [
+     "scripts/evaluate_agent_speedup_v2_user_check.py:600",
+     "runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/queue_manifest.json request 'retest this 10 tasks, we need the user approve now for the plan'",
+     "scripts/evaluate_agent_speedup_v3.py:234-238",
+     "runs/agent_speedup_v3_t1_008/performance.json completion_target.excludes",
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv automatic_review_compute_s",
+     "runs/v3_completion_baseline_20261026T133633Z/report_zh.md (284.756 s)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C15",
+    "kind": "fact",
+    "claim": "Native macros (hold/turn/place_on/release) executed 0 actions in all 13 uc7 runs and all 15 v3 runs; fragments and direct motion carried every executed step.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_*/agent_stats.json native_macro_actions=0",
+     "runs/agent_speedup_v3_*/agent_stats.json native_macro_actions=0"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C16",
+    "kind": "fact",
+    "claim": "The user's explicit rules, verbatim: a general framework with no per-task skills or harness ('we should not write skills or harness specific for a task…'); 'we want a general framework for the agent to speed up and finish tasks'; organise by mechanisms recurring on ≥2 tasks with acceptance on an all-task sweep; 'Prefer removing veto checks over adding thresholds'; live-first ('i never ask to have zero model calls'); 'avoid excessive checks or smoke tests'. Today's prompt to Codex adds: '本轮不扩展完整 v3' (do not extend full v3 this round) and '不要为了完成计划强行实现三角化、新几何层或更复杂状态机' (do not force triangulation, a new geometry layer or a more complex state machine).",
+    "evidence": [
+     "/root/.claude/projects/-workspace/memory/v2-scope-general-framework.md:11,29-32",
+     "/root/.claude/projects/-workspace/memory/v2-live-first-model-calls-ok.md:11",
+     "runs/agent_speedup_v2_user_check_v7_t3_t6_001_launch/authorization.json",
+     "runs/speedup_next_20261026T101438Z/objective.md"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C17",
+    "kind": "fact",
+    "claim": "The Codex implementation plan executed today relaxes two of the user's earlier rules. It allows task labels for semantic conditioning and skill selection, and it limits the first-round generality claim to one operation family. Its author is not recorded.",
+    "evidence": [
+     "Agent_SpeedUp_Codex_Implementation_Plan_ZH.md:23,25",
+     "memory/v2-scope-general-framework.md:13-21 ('No task key reaches the agent')"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "C18",
+    "kind": "bottleneck",
+    "claim": "Even uc7 cannot reach 300 s on two-object tasks through I/O cuts alone. For t1_001, model pipeline 182.5 s + simulator 108.4 s + preparation 21.4 s = 312.3 s, before video (81.8 s) and state files (25.1 s). Simulator stepping costs about 0.10–0.13 s per action.",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json timing_components",
+     "runs/agent_speedup_v2_user_check_libero_10_t5_001/summary.json simulator_step_s 41.1 over 399 steps",
+     "results/speedup_evidence_20261026T055123Z/final_report_zh.md §2 (321.720 s computation)"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C19",
+    "kind": "fact",
+    "claim": "Today's campaigns. uc7 A and B on t1 episode 1 reached raw success at 648.7 s and 614.0 s of service (830 steps/11 calls and 1,019 steps/13 calls; each includes about 138 s of automated review; S300 false). Both episode-2 preparations hit the 900 s cutoff. The isolated v3 r6 completion baseline went 0/3 on t1 episodes 0–2: two harness bugs, then an evidence escalation after 313 actions at 1,007.4 s.",
+    "evidence": [
+     "results/speedup_evidence_20261026T055123Z/paired_results.csv",
+     "results/speedup_evidence_20261026T055123Z/evaluations/trial_00{2,3}/trial/summary.json",
+     "runs/v3_completion_baseline_20261026T133633Z/summary.json rows"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C20",
+    "kind": "fact",
+    "claim": "The history doc's §11–13 conclusions are mostly supported. 'r10 coverage no longer generally blocks progress' is only partly supported, because t1_011 terminated on no_spatial_coverage_witness in view planning. The doc omits uc7 t5_001, the three uc7 preparation stalls, v3 t1_001's 900.8 s preparation stall, and the uc7 sweep's forbidden-contact counts (for example t0_001 19,799; t1_001 5,738).",
+    "evidence": [
+     "agent_SpeedUp_implementation_history.md:428-527",
+     "runs/agent_speedup_v3_t1_011/error_traceback.txt",
+     "summary.json collision.counts.forbidden_contact_points for uc7 runs"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "C21",
+    "kind": "framework",
+    "claim": "[inference] The fork. uc7 lets the model act on uncertain RGB estimates; local fragments stop only on measured events (arrival, stable gap, stall, budget), and unknown is not treated as failure. v3 requires model-asserted geometry (scene_update plus motion_context in every response) and gates motion, goal derivation and viewing on evidence. The evidence favours uc7 for both speed and generality. v3's only measured advantage is fewer recorded forbidden contacts on t1 in r5/r6 (433 and 251 vs uc7's 5,738), and that does not hold for r2 (6,808).",
+    "evidence": [
+     "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_fragments.py:22-34,300-320",
+     "agent_SpeedUp_v2_user_check.md:20-21",
+     "src/gpt_field/agent_speedup_v3_client.py:190,196-206",
+     "src/gpt_field/agent_speedup_v3_geometry.py:1154-1202",
+     "summary.json collision counts for v3 t1_002, t1_007, t1_008 and uc7 t1_001"
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "unknowns": [
+   "Root cause of the plan-preparation streams that never complete (runaway output vs service-side behaviour); only t1_005's stalled content was retained (151,950 whitespace characters).",
+   "Whether the user ruled on D1–D5 outside the repository, for example in chat; no artifact records a ruling.",
+   "Who wrote Agent_SpeedUp_Codex_Implementation_Plan_ZH.md, and whether the user endorses its task-label and operation-family relaxations.",
+   "uc7's success rate and S300 rate on more than one initial state per task; only t1 episode 1 has been run (2 raw successes, both over 300 s).",
+   "Whether uc7 t5_001's ≤ 300 s result repeats; its manually reviewed twin t5_002 took ≈327.5 s with 10 calls.",
+   "Exact service time for uc7 runs without supervisord logs; preparation + elapsed was used, which is 4.7–5.9 s low where it could be checked.",
+   "What the user's 2026-10-21 13:42 instruction 'implement this' referred to; inferred to be the uc7 fragment design, about an hour after the general plan.",
+   "Whether the D1 honest-end protocol would turn current uc7 raw successes into failures in general; only t5_001 is known to fail LIBERO's predicate after a diagnostic release."
+  ]
+ }
+]

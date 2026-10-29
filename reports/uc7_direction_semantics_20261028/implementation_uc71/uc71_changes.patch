@@ -1,0 +1,1860 @@
+--- a/src/gpt_field/agent_speedup_v2_user_check.html
++++ b/src/gpt_field/agent_speedup_v2_user_check.html
+@@ -23,6 +23,7 @@
+     .images{display:grid;grid-template-columns:1fr 1fr;gap:10px}.images figure{margin:0}.images img{width:100%;border-radius:7px;background:var(--soft);display:block}.images figcaption{font-size:12px;margin-top:5px;color:var(--muted)}
+     #message{border:1px solid #e7c0b9;background:#fff1ee;color:var(--error);border-radius:9px;padding:11px 14px;margin-bottom:16px;white-space:pre-wrap}#validation{color:var(--error);font-size:13px}#validation ul{padding-left:20px}
+     .success{color:var(--accent)}.footer{border-top:1px solid var(--line);margin-top:18px;padding-top:15px}details{margin-top:12px}summary{cursor:pointer;font-weight:550}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);padding:14px;border-radius:9px;font:12px/1.5 ui-monospace,monospace;max-height:460px;overflow:auto}
++    mark.axis-wording{background:#fff0b3;color:#594300;border-radius:3px;padding:0 2px}.direction-note{font:12px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}.display-note{color:#78631c;font-size:12px}
+     .binding{font:11px/1.7 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--muted)}[hidden]{display:none!important}:focus-visible{outline:3px solid #78b8ae;outline-offset:2px}
+     @media(max-width:850px){.layout{grid-template-columns:1fr}main{margin-top:18px}.card{padding:17px}}
+     @media(max-width:500px){.form{grid-template-columns:1fr}.rule,.rule.until,.rule.hold-true{grid-template-columns:minmax(0,1fr) 36px}.rule select{grid-column:1}.rule .remove{grid-column:2;grid-row:1/span 2}.rule.hold-true .remove{grid-row:1/span 3}.rule.until .phrase{grid-column:1/-1}.images{grid-template-columns:1fr}.toolbar button{font-size:13px}select{font-size:16px}.part{grid-template-columns:1fr}}
+@@ -49,6 +50,7 @@
+       <div class="card">
+         <h2>Objects and parts <small>parts</small></h2>
+         <p class="muted">Names come from the model's observations. Select the parts to include and how each can move. Their image locations are refreshed during execution.</p>
++        <p id="axis-wording-note" class="display-note" hidden>Highlighted world-axis wording is a display diagnostic. Frozen external-view directions take precedence; this highlighting does not block approval.</p>
+         <div id="parts" class="parts"></div>
+       </div>
+       <div class="card">
+@@ -60,6 +62,7 @@
+       <div class="card">
+         <h2>Initial scene</h2>
+         <p id="scene" class="muted"></p>
++        <p id="view-frame-summary" class="direction-note"></p>
+         <div id="images" class="images"></div>
+         <details><summary>Run binding details</summary><div id="bindings" class="binding"></div></details>
+       </div>
+@@ -101,8 +104,8 @@
+     quarter_turn:"Quarter turn",half_turn:"Half turn",
+     on:"On a surface",in:"Inside",closed:"Already closed",
+     supported_on:"Object supported by target surface",centered_on:"Object centered on target",inside:"Entire object inside target bounds",
+-    left_of:"Left of anchor (world −x)",right_of:"Right of anchor (world +x)",
+-    front_of:"In front of anchor (world −y)",behind:"Behind anchor (world +y)",near:"Near anchor"
++    left_of:"Left of anchor (image-left in external view)",right_of:"Right of anchor (image-right in external view)",
++    front_of:"In front of anchor (toward external camera)",behind:"Behind anchor (away along external view)",near:"Near anchor"
+   };
+   const title = value => (labels[value] ? labels[value] + " · " : "") + value;
+   const node = (tag, text, className) => {
+@@ -111,6 +114,33 @@
+     if (className) out.className = className;
+     return out;
+   };
++  // Display helpers only: they do not create plan issues or affect approval.
++  const worldAxisWording = () => /\bworld\s*[+\-−]\s*[xy]\b/gi;
++  const directionLabels = {right_of:"image-right",left_of:"image-left",front_of:"toward external camera",behind:"away along external view"};
++  function vectorText(vector) {
++    return vector.map(value => {
++      const number = Number(Number(value).toPrecision(6));
++      return number > 0 ? "+" + number : String(number);
++    }).join(",");
++  }
++  function regionDirectionLine(region, frame) {
++    if (!Object.hasOwn(directionLabels, region.relation)) return null;
++    const prefix = `${region.id}: ${region.relation} ${region.anchor}`;
++    const direction = frame?.available ? frame.relation_directions?.[region.relation] : null;
++    const mapped = direction ? `world (${vectorText(direction)})` : `unavailable (${frame?.reason || "view_frame_unavailable"})`;
++    return `${prefix} → ${mapped} [${directionLabels[region.relation]}]`;
++  }
++  function appendPartWording(parent, text) {
++    let cursor = 0;
++    for (const match of text.matchAll(worldAxisWording())) {
++      parent.append(document.createTextNode(text.slice(cursor, match.index)));
++      const mark = node("mark", match[0], "axis-wording");
++      mark.title = "Display diagnostic: use the frozen external-view direction over this wording.";
++      parent.append(mark);
++      cursor = match.index + match[0].length;
++    }
++    parent.append(document.createTextNode(text.slice(cursor)));
++  }
+   const editable = () => !busy && record && record.status === "draft";
+   const planSchema = () => schema.plan_schema.properties;
+   const stepSchema = () => planSchema().steps.items.properties;
+@@ -184,6 +214,7 @@
+   }
+   function renderParts() {
+     const target = el("parts"); target.replaceChildren();
++    el("axis-wording-note").hidden = !record.plan.parts.some(part => worldAxisWording().test(part.text));
+     record.draft_plan.parts.forEach(original => {
+       const index=record.plan.parts.findIndex(part=>part.id===original.id);
+       const part=index>=0?record.plan.parts[index]:original;
+@@ -196,7 +227,8 @@
+         if(included.checked) plan.parts.push(clone(original));
+         else plan.parts.splice(index,1);
+       }));
+-      const caption=node("span");caption.append(node("strong", part.id + " · "), document.createTextNode(part.text));
++      const caption=node("span");caption.append(node("strong", part.id + " · "));
++      appendPartWording(caption, part.text);
+       text.append(included,caption);
+       row.append(text, select(part.move, optionEnums(planSchema().parts.items.properties.move),
+         value => change(plan => { plan.parts[index].move = value; }), part.id + " movement type",index<0));
+@@ -241,7 +273,9 @@
+             }),part.id+" region boundary"));
+         }
+       }
+-      const note=node("small",region.anchor?"Bounds are relative to the anchor center. Left, right, front and behind follow world axes, not image directions.":"Bounds use world coordinates. Placement requires an observed support surface within the region.","wide");
++      const direction = regionDirectionLine(region, record.preparation?.view_frame);
++      if (direction) form.append(node("p", direction, "wide direction-note"));
++      const note=node("small",(region.anchor?"Bounds are relative to the anchor center. ":"Bounds use world coordinates. ")+"Left and right follow image 1's external view; front and behind mean nearer and farther along that view. Directions are frozen at review, never judged in the wrist image. Placement requires observed support.","wide");
+       form.append(note);
+     }
+     parent.append(form);
+@@ -409,6 +443,10 @@
+     const states={draft:busy?"Saving…":"Awaiting review",approved:"Plan approved",consumed:"Plan used for execution"};
+     el("state").textContent=states[record.status] || record.status;
+     el("scene").textContent=record.plan.scene;
++    const viewFrame = record.preparation?.view_frame;
++    el("view-frame-summary").textContent = viewFrame?.available
++      ? `Frozen external view (image 1): right → world (${vectorText(viewFrame.right_xy)}); away → world (${vectorText(viewFrame.away_xy)}).`
++      : `External-view directions: calibration unavailable (${viewFrame?.reason || "view_frame_unavailable"}). Judge direction words in the initial external image, never the wrist image.`;
+     el("bindings").replaceChildren();
+     for(const [label,key] of [["Initial observation","initial_observation_sha256"],["Runtime","runtime_sha256"]]) {
+       const value=record[key];
+--- a/src/gpt_field/agent_speedup_v2_user_check.py
++++ b/src/gpt_field/agent_speedup_v2_user_check.py
+@@ -28,7 +28,7 @@
+ from .agent_speedup_v2_types import SLICE_DO_KINDS
+ 
+ 
+-VERSION = "agent-speedup-v2-user-check-7"
++VERSION = "agent-speedup-v2-user-check-7.1"
+ DISPLAY_NAME = "speed up v2 user check"
+ SCHEMA_VERSION = 1
+ _HASH = re.compile(r"^[0-9a-f]{64}$")
+--- a/src/gpt_field/agent_speedup_v2_user_check_agent.py
++++ b/src/gpt_field/agent_speedup_v2_user_check_agent.py
+@@ -27,7 +27,7 @@
+ from .astra import SchemaError
+ 
+ 
+-POLICY_VERSION = "agent-speedup-v2-user-check-agent-2"
++POLICY_VERSION = "agent-speedup-v2-user-check-agent-3"
+ CONTROLLER = base.CONTROLLER
+ MAX_MACRO_GRANT_STEPS = 60
+ MAX_NATIVE_CALLS_PER_ACT = 2
+@@ -65,6 +65,7 @@
+ 
+     def reset(self):
+         super().reset()
++        self.ctx.user_check_view_frame = deepcopy(self.plan_lock.view_frame)
+         from .agent_speedup_v2_user_check_control import build_relation_layer, refresh_relation_layer
+         from .agent_speedup_v2_user_check_runtime import StableScene
+         from .agent_speedup_v2_user_check_spatial import WholeObjectHeldFrameEstimator, install_spatial_layer
+@@ -113,8 +114,10 @@
+         self._sync_framework()
+ 
+     def _task_contract(self):
++        from .agent_speedup_v2_user_check_spatial import region_directions
+         contract = self.plan_lock.task_contract.to_dict()
+         contract.update(
++            region_directions=region_directions(self.plan_lock.view_frame, contract.get("regions", [])),
+             goal_source="official_task_with_reviewed_goal_meanings_and_constraints",
+             execution_authority="model_owned_continuous_control",
+             method_rule=("Reviewed steps are initial methods and optional macro choices. The model may "
+@@ -203,10 +206,12 @@
+         }
+ 
+     def _context(self, view):
++        contract = self._task_contract()
+         return jsonable({
+             "step": self.step_index,
+             "approved_plan": self.plan_lock.plan(),
+-            "task_contract": self._task_contract(),
++            "task_contract": contract,
++            "region_directions": contract["region_directions"],
+             "geometry": getattr(view.observation, "geometry", None),
+             "capabilities": self._capabilities(),
+             "measured_state": {"pose_wxyz": measured_pose(view.state),
+--- a/src/gpt_field/agent_speedup_v2_user_check_agent_client.py
++++ b/src/gpt_field/agent_speedup_v2_user_check_agent_client.py
+@@ -38,14 +38,14 @@
+ 
+ 
+ CLIENT_VERSION = "user-check-agent-first-client-2"
+-PROMPT_VERSION = "user-check-agent-first-prompt-2"
++PROMPT_VERSION = "user-check-agent-first-prompt-3"
+ HISTORY_PROTOCOL = "persistent_task_executive_fragments_text_and_six_visual_pairs_v2"
+ IMAGE_HISTORY = 6
+ AGENT_KIND = "agent"
+ CONTEXT_KEYS = frozenset({
+     "step", "approved_plan", "task_contract", "geometry", "capabilities",
+     "measured_state", "model_belief", "last_feedback", "recent_feedback",
+-    "macro", "execution", "native_evidence", "task_success_source",
++    "macro", "execution", "native_evidence", "task_success_source", "region_directions",
+ })
+ 
+ AGENT_INSTRUCTIONS = """
+@@ -175,6 +175,16 @@
+ Only the independent evaluator terminates a successful task. If observation
+ continues, recheck unfinished spatial relations rather than repeatedly declaring
+ completion. There is no give_up action.
++
++Direction words in the task and in reviewed regions are as seen in the external image (image 1):
++right/left = toward its image-right/left; front/behind = nearer to/farther from the external camera
++along its viewing direction. Never judge them in the wrist image. region_directions gives each
++region's world-xy direction computed from calibration; use it over any direction wording in reviewed
++text. If region_directions is unavailable, judge the words in image 1 as defined.
++The direction frame is frozen from the external view at review; later camera motion does not change
++these reviewed meanings. The full first-request contract is reviewed_goal_contract.task_contract;
++context.region_directions repeats its compact direction information in every request, even when
++there are no directional regions. Use current camera calibration to interpret the current RGB.
+ 
+ Camera position_world_m and rotation_world_from_camera map OpenGL camera axes to
+ world: p_world=origin+R*p_camera. Camera +X is image-right, +Y image-up, -Z forward.
+@@ -471,6 +481,14 @@
+             raise ValueError("executive observation step must be a nonnegative integer")
+         reviewed_plan = current.pop("approved_plan", self.plan_lock.plan())
+         task_contract = current.pop("task_contract", None)
++        from .agent_speedup_v2_user_check_spatial import region_directions
++        # Recompute this small payload from the frozen approval on every call;
++        # it cannot disappear with image-history trimming or stale caller context.
++        directions = region_directions(self.plan_lock.view_frame, self.plan_lock.plan().get("regions", []))
++        current["region_directions"] = directions
++        if task_contract is None:
++            task_contract = self.plan_lock.task_contract.to_dict()
++        task_contract["region_directions"] = copy.deepcopy(directions)
+         fields = {"step": step, "robot_pose_wxyz": measured_pose(view.state),
+                   "finger_joints_m": [float(x) for x in view.state[6:8]],
+                   "geometry": geometry, "context": current}
+--- a/src/gpt_field/agent_speedup_v2_user_check_client.py
++++ b/src/gpt_field/agent_speedup_v2_user_check_client.py
+@@ -21,7 +21,7 @@
+ from .agent_speedup_v2_user_check_runtime import FrameworkRunnerMixin, StableScene, compact_evidence
+ 
+ 
+-PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-6"
++PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-7.1"
+ USER_CHECK_REASONING_EFFORT = "high"
+ USER_CHECK_REASONING_EFFORTS = ("high", "xhigh")
+ 
+@@ -131,11 +131,24 @@
+ METRIC_INSTRUCTIONS = """
+ METRIC REASONING IS ALLOWED. You may reason about and describe directions,
+ distances, heights, angles and coordinates when useful. State the frame and
+-units. Image pixels/cells are not world coordinates. World +z is up; do not
+-assume image left/right is world -x/+x. Distinguish a visual estimate from a
+-measurement. Keep the existing symbolic plan schema: metric prose alone does
++units. Image pixels/cells are not world coordinates. Image left/right/up/down
++are not world axes; direction words are judged as seen in the external image
++(image 1); convert to world coordinates with calibration. World +z is up.
++Distinguish a visual estimate from a measurement. Keep the existing symbolic plan schema: metric prose alone does
+ not command motion. During execution, repair/review can issue local_motion.
+ """
++
++PLAN_METRIC_INSTRUCTIONS = METRIC_INSTRUCTIONS.replace(
++    "Image left/right/up/down\nare not world axes; direction words are judged as seen in the external image\n"
++    "(image 1); convert to world coordinates with calibration. World +z is up.",
++    "Image left/right are not world axes and you have no calibration: give directions only in "
++    "image-1 viewer words; distances and heights may be given in metres. World +z is up.")
++
++# Only the user-check planner changes these words. The baseline/v3 snapshot and
++# the actual image rotations/grid transformations remain untouched by uc7.1.
++PLANNING_WRIST_INSTRUCTIONS = (
++    "Images 3/4 are the wrist camera, turned by the number of quarter turns stated in the request; "
++    "a quarter turn is coarse and never a perspective match; judge direction words only in image 1.")
+ 
+ LOCAL_CONTROL_INSTRUCTIONS = """
+ LOCAL CONTROL (in addition to the symbolic repair actions): choose local_motion
+@@ -237,6 +250,7 @@
+     conflict: dict | None = None
+     allow_auto_replan: bool = True
+     task_prompt: str = ""
++    view_frame: dict | None = None
+     _approved: dict = field(init=False, repr=False)
+     _semantic_sha256: str = field(init=False, repr=False)
+     _current_plan: dict = field(init=False, repr=False)
+@@ -257,6 +271,8 @@
+     _checkpoint: dict = field(default_factory=dict, init=False, repr=False)
+ 
+     def __post_init__(self):
++        from .agent_speedup_v2_user_check_spatial import validate_view_frame
++        self.view_frame = validate_view_frame(self.view_frame)
+         raw = copy.deepcopy(self.approved_plan)
+         if parse_plan(raw).to_json() != raw:
+             raise ValueError("Approved plan must round-trip without changes")
+@@ -351,6 +367,7 @@
+             "initial_approved_plan": self._approved,
+             "initial_approved_plan_sha256": canonical_sha256(self._approved),
+             "initial_approved_semantic_sha256": self._semantic_sha256,
++            "view_frame": self.view_frame,
+             "initial_plan_grounded": self._initial_plan_grounded,
+             "current_plan": self._current_plan,
+             "plan_revision_count": sum(not row["user_approved"] for row in self._revisions),
+@@ -377,6 +394,11 @@
+             self._instruction_text[kind] = self._instruction_text[kind].replace(
+                 ordered_dumps(WORKED_EXAMPLE), ordered_dumps(user_check_worked_example()))
+             self._instruction_text[kind] += "\n" + SPATIAL_INSTRUCTIONS
++            self._instruction_text[kind] = self._instruction_text[kind].replace(
++                "The wrist image is turned so that its left and right match the external image; "
++                "the request names the edge where the robot's own fingertips appear (they are never a part).",
++                PLANNING_WRIST_INSTRUCTIONS + " The request names the edge where the robot's own "
++                "fingertips appear (they are never a part).")
+         forbidden = "Never give directions, distances, heights, angles or coordinates."
+         for kind in ("plan", "replan", "repair", "review"):
+             self._instruction_text[kind] = self._instruction_text[kind].replace(forbidden, "")
+@@ -384,9 +406,22 @@
+                 "you name what matters and which physical relations to establish, never how to move.",
+                 "you name what matters and which physical relations to establish; "
+                 "during recovery you may also select short local motions.")
+-            self._instruction_text[kind] += METRIC_INSTRUCTIONS
++            self._instruction_text[kind] += (PLAN_METRIC_INSTRUCTIONS if kind in ("plan", "replan")
++                                             else METRIC_INSTRUCTIONS)
+         for kind in ("plan", "replan"):
+             self._instruction_text[kind] += "\n" + COMPACT_PLAN_INSTRUCTIONS
++
++    def _plan_request(self, *args, **kwargs):
++        kind, request, meta = super()._plan_request(*args, **kwargs)
++        k = meta["quarter_turns"]
++        turn_text = ("not turned; not aligned with image 1" if k == 0 else
++                     f"turned {k} quarter turns counter-clockwise; coarse rotation, not a perspective match")
++        edge = meta["fingertip_edge"]
++        request["images"][2] = (
++            f"Image 3: wrist camera, clean ({turn_text}; fingertips at the {edge} edge):",
++            request["images"][2][1])
++        request["fields"]["wrist_quarter_turns"] = k
++        return kind, request, meta
+ 
+     def validate_response(self, data, grid):
+         if self._request_kind not in ("plan", "replan"):
+@@ -801,6 +836,7 @@
+ 
+     def reset(self):
+         super().reset()
++        self.ctx.user_check_view_frame = copy.deepcopy(self.plan_lock.view_frame)
+         from .agent_speedup_v2_user_check_local import LocalRecoveryFulfiller
+         previous = self.fulfiller
+         fulfiller = LocalRecoveryFulfiller(self.client, self._events, clock=self._clock, ctx=self.ctx)
+--- a/src/gpt_field/agent_speedup_v2_user_check_direction_display.py
++++ b/src/gpt_field/agent_speedup_v2_user_check_direction_display.py
+@@ -0,0 +1,58 @@
++"""Display-only direction diagnostics for uc7.1 review and trial logs.
++
++These helpers never alter a plan, its validity, or its approval state. Direction
++vectors are supplied by the shared spatial contract, not recomputed here.
++"""
++from __future__ import annotations
++
++import re
++from typing import Mapping
++
++_WORLD_AXIS_WORDING = re.compile(r"\bworld\s*[+\-−]\s*[xy]\b", re.IGNORECASE)
++_DIRECTION_LABELS = {
++    "right_of": "image-right",
++    "left_of": "image-left",
++    "behind": "away along external view",
++    "front_of": "toward external camera",
++}
++
++
++def world_axis_wording_diagnostics(plan: Mapping) -> list[dict]:
++    """Locate horizontal world-axis wording in part text for highlighting only."""
++    diagnostics = []
++    for part in plan.get("parts", []):
++        text = part.get("text", "")
++        matches = [
++            {"text": match.group(), "start": match.start(), "end": match.end()}
++            for match in _WORLD_AXIS_WORDING.finditer(text)
++        ]
++        if matches:
++            diagnostics.append({
++                "part_id": part.get("id"), "text": text,
++                "matches": matches, "display_only": True,
++            })
++    return diagnostics
++
++
++def _component(value: float) -> str:
++    number = float(value)
++    if number == 0:
++        return "0"
++    return f"{number:+.6g}"
++
++
++def region_direction_lines(contract: Mapping) -> list[str]:
++    """Format the shared region_directions contract for human-readable logs."""
++    lines = []
++    for pid, region in contract.get("regions", {}).items():
++        relation = region["relation"]
++        prefix = f"{pid}: {relation} {region.get('anchor')}"
++        direction = region.get("direction_world_xy")
++        label = _DIRECTION_LABELS.get(relation, relation)
++        if contract.get("available") and direction is not None:
++            vector = ",".join(_component(value) for value in direction)
++            lines.append(f"{prefix} → world ({vector}) [{label}]")
++        else:
++            reason = contract.get("reason") or "view_frame_unavailable"
++            lines.append(f"{prefix} → unavailable ({reason}) [{label}]")
++    return lines
+--- a/src/gpt_field/agent_speedup_v2_user_check_spatial.py
++++ b/src/gpt_field/agent_speedup_v2_user_check_spatial.py
+@@ -7,7 +7,10 @@
+ from __future__ import annotations
+ 
+ import copy
++import hashlib
++import json
+ import math
++from collections.abc import Mapping
+ from dataclasses import replace
+ from types import SimpleNamespace
+ 
+@@ -20,7 +23,9 @@
+ from .agent_speedup_v2_scene import HeldFrameEstimator
+ from .agent_speedup_v2_types import HF_SOURCES, PIDS, HandPose, ObsReport, jsonable
+ 
+-SPATIAL_VERSION = "user-check-spatial-2"
++SPATIAL_VERSION = "user-check-spatial-3"
++DIRECTION_SEMANTICS = "external_view_v1"
++DIRECTION_RELATIONS = ("left_of", "right_of", "front_of", "behind")
+ REGION_RELATIONS = ("on", "left_of", "right_of", "front_of", "behind", "near")
+ PLACEMENT_RELATIONS = ("supported_on", "centered_on", "inside")
+ _NUM = {"type": "number"}
+@@ -56,8 +61,15 @@
+ Put a bare surface region in
+ regions as {id,support,anchor,relation,frame,bounds_xy_m}; keep its id in parts so a
+ place_on ref can reference it. support is a measured part id or observed_plane;
+-anchor is a measured part id or null. Relations use WORLD axes: right_of=+x,
+-left_of=-x, behind=+y, front_of=-y; they do not mean screen directions. Bounds are
++anchor is a measured part id or null. left_of/right_of/front_of/behind (and these
++words in the task) are as seen in image 1, the external camera: right/left = toward
++image 1's right/left; behind/front_of = farther from/nearer to that camera along
++its viewing direction (toward the top/bottom of image 1). Not the robot's own
++left/right; never judged in the wrist images. Use the same viewer words in plan
++text; never restate them as world axes. Vertical words mean world up/down. A word
++naming part of an object (back compartment, left plate) selects that part by
++pointing; it is not a region. frame "world" describes metric bounds only; keep
++bounds_xy_m null for directional relations. Bounds are
+ [[xmin,xmax],[ymin,ymax]] in metres, relative to the anchor's measured centre when
+ anchor is set, otherwise absolute world coordinates. null bounds use observed
+ support extent. near requires explicit bounds. Never manufacture safe geometry:
+@@ -136,6 +148,110 @@
+         scene.user_check_body_frames = {}
+ 
+ 
++
++def _frame_json(value):
++    """Detach finite JSON data with the same canonical form as review artifacts."""
++    return json.dumps(value, sort_keys=True, separators=(",", ":"),
++                      ensure_ascii=True, allow_nan=False)
++
++
++def build_view_frame(geometry) -> dict:
++    """Freeze horizontal viewer directions from validated external calibration.
++
++    R describes the displayed upright, uncropped, non-mirrored OpenGL image; this
++    function never flips pixels or uses the wrist camera. World +z is support up.
++    At zero roll, projected camera +x defines viewer right, and up cross right
++    defines the horizontal viewing direction (image-up for a top-down view).
++    This is a global horizontal convention, not a local perspective Jacobian.
++    Off-centre image-up can differ even at zero roll; rolled cameras can also
++    disagree with local pixel directions. Recorded LIBERO (0 degree) and RoboCasa
++    (about 0.9 degree) views are within the intended gravity-upright use. The
++    report's sampled table stayed word-consistent through 15 degrees of roll;
++    that empirical result is not a guarantee for arbitrary cameras or scenes.
++    Large-roll/local-plane semantics and inverted-view policy remain deferred:
++    inverted views retain the same formula and are diagnosed, never vetoed.
++
++    Camera numerical validity is checked by the observation geometry boundary.
++    Missing calibration is an unavailable fact, including for old/fake reviews.
++    The sole geometric availability case is a vertical camera x axis (1e-9 is
++    the fixed numerical epsilon specified for this frame, not a tuning threshold).
++    The digest includes both full external calibration and image conventions.
++    """
++    frame = {"direction_semantics": DIRECTION_SEMANTICS, "available": False,
++             "reason": "no_external_calibration", "external_camera": None,
++             "image": None, "calibration_sha256": None, "right_xy": None,
++             "away_xy": None, "roll_deg": None, "inverted": None,
++             "relation_directions": {}}
++    cameras = geometry.get("cameras") if isinstance(geometry, Mapping) else None
++    external = cameras.get("external") if isinstance(cameras, Mapping) else None
++    if not isinstance(external, Mapping) or "rotation_world_from_camera" not in external:
++        return frame
++    # No robot/task/object channels are copied into the frozen semantic frame.
++    calibration = {"external_camera": copy.deepcopy(dict(external)),
++                   "image": copy.deepcopy(geometry.get("image"))}
++    encoded = _frame_json(calibration)
++    calibration = json.loads(encoded)
++    frame.update(calibration, calibration_sha256=hashlib.sha256(encoded.encode("utf-8")).hexdigest())
++    rotation = np.asarray(calibration["external_camera"]["rotation_world_from_camera"], dtype=float)
++    if rotation.shape != (3, 3):
++        raise ValueError("External camera rotation must be a 3 by 3 matrix")
++    right = rotation[:2, 0]
++    length = float(np.linalg.norm(right))
++    up_components = rotation[2, :2]
++    frame.update(inverted=bool(rotation[2, 1] < 0),
++                 roll_deg=(None if not np.any(up_components) else
++                           math.degrees(math.atan2(float(up_components[0]), float(up_components[1])))))
++    if length < 1e-9:
++        frame["reason"] = "camera_x_vertical"
++        return frame
++    right = right / length
++    away = np.array([-right[1], right[0]])
++    frame.update(available=True, reason=None, right_xy=right.tolist(), away_xy=away.tolist(),
++                 relation_directions={"right_of": right.tolist(), "left_of": (-right).tolist(),
++                                      "behind": away.tolist(), "front_of": (-away).tolist()})
++    return frame
++
++
++def validate_view_frame(value) -> dict:
++    """Return a detached frozen frame, checking its self-contained provenance.
++
++    This checks serialized review data only; it never compares a live camera or
++    changes the review's frame. Absence remains unavailable for legacy/fake use.
++    """
++    if value is None:
++        return build_view_frame(None)
++    try:
++        clean = json.loads(_frame_json(value))
++        if not isinstance(clean, dict) or clean.get("direction_semantics") != DIRECTION_SEMANTICS:
++            raise ValueError("Unsupported view-frame semantics")
++        expected = build_view_frame({"cameras": {"external": clean.get("external_camera")},
++                                     "image": clean.get("image")})
++        if _frame_json(clean) != _frame_json(expected):
++            raise ValueError("View frame does not match its frozen calibration")
++    except (TypeError, KeyError, IndexError, OverflowError) as exc:
++        raise ValueError("Invalid frozen view frame") from exc
++    return clean
++
++
++def region_directions(view_frame, regions) -> dict:
++    """Project reviewed directional labels through the one frozen direction table.
++
++    All consumers (executive, resolver, approval display) use this pure mapping.
++    Empty region lists still carry the viewer basis for directional part names.
++    Missing frames yield null vectors, never legacy world-axis interpretations.
++    """
++    frozen = view_frame if isinstance(view_frame, Mapping) else {}
++    available = bool(frozen.get("available")) and frozen.get("direction_semantics") == DIRECTION_SEMANTICS
++    table = frozen.get("relation_directions", {}) if available else {}
++    return {"direction_semantics": DIRECTION_SEMANTICS, "available": available,
++            "reason": frozen.get("reason") if available else frozen.get("reason") or "no_external_calibration",
++            "frame": {"right_xy": copy.deepcopy(frozen.get("right_xy")) if available else None,
++                      "away_xy": copy.deepcopy(frozen.get("away_xy")) if available else None},
++            "regions": {spec["id"]: {"relation": spec["relation"], "anchor": spec.get("anchor"),
++                                      "direction_world_xy": copy.deepcopy(table.get(spec["relation"]))}
++                        for spec in regions if spec.get("relation") in DIRECTION_RELATIONS}}
++
++
+ def _polygon(record):
+     raw = getattr(record, "region_xy", None)
+     if raw is None:
+@@ -206,12 +322,16 @@
+         if poly is None:
+             return dict(result, reason="anchor_extent_unmeasured", dependency=anchor_pid)
+         origin = _centre(poly)
+-        low, high = poly.min(axis=0), poly.max(axis=0)
+         relation = spec["relation"]
+-        if relation == "right_of": mask &= xs > high[0]
+-        if relation == "left_of": mask &= xs < low[0]
+-        if relation == "behind": mask &= ys > high[1]
+-        if relation == "front_of": mask &= ys < low[1]
++        if relation in DIRECTION_RELATIONS:
++            directions = region_directions(getattr(ctx, "user_check_view_frame", None), [spec])
++            direction = directions["regions"][pid]["direction_world_xy"]
++            result.update(view_frame=directions["frame"], direction_semantics=DIRECTION_SEMANTICS,
++                          direction_world_xy=direction)
++            if not directions["available"] or direction is None:
++                return dict(result, reason="view_frame_unavailable")
++            d = np.asarray(direction, dtype=float)
++            mask &= xs * d[0] + ys * d[1] > np.max(poly @ d)
+         if relation == "on": mask &= _mask_for_poly(hf, poly)
+     bounds = spec.get("bounds_xy_m")
+     if bounds is not None:
+--- a/scripts/evaluate_agent_speedup_v2_user_check.py
++++ b/scripts/evaluate_agent_speedup_v2_user_check.py
+@@ -53,11 +53,18 @@
+ from gpt_field.agent_speedup_v2_user_check_framework import (  # noqa: E402
+     FEEDBACK_STATUSES, FRAMEWORK_VERSION,
+ )
++from gpt_field.agent_speedup_v2_user_check_spatial import (  # noqa: E402
++    DIRECTION_SEMANTICS, build_view_frame, region_directions,
++)
++from gpt_field.agent_speedup_v2_user_check_direction_display import (  # noqa: E402
++    region_direction_lines, world_axis_wording_diagnostics,
++)
+ 
+ 
+ def framework_settings(reasoning_effort=USER_CHECK_REASONING_EFFORT):
+     return {
+         "version": "user-check-agent-fragments-framework-2",
++        "direction_semantics": DIRECTION_SEMANTICS,
+         "legacy_contract_version": FRAMEWORK_VERSION,
+         "interfaces": ["task_contract", "shared_state", "skill_contracts", "execution_feedback"],
+         "feedback_statuses": list(FEEDBACK_STATUSES),
+@@ -87,6 +94,20 @@
+             "phase_checkpoints": "model_selected_short_horizon_with_fresh_feedback",
+             "controller": ShortTargetConfig().to_dict(),
+         },
++    }
++
++
++def direction_review_output(review):
++    """Display frozen meanings without changing plan validation or model inputs."""
++    preparation = review.get("preparation") or {}
++    view_frame = preparation.get("view_frame")
++    plan = review["plan"]
++    directions = region_directions(view_frame, plan.get("regions", []))
++    return {
++        "view_frame": view_frame,
++        "region_directions": directions,
++        "region_direction_lines": region_direction_lines(directions),
++        "display_diagnostics": world_axis_wording_diagnostics(plan),
+     }
+ 
+ 
+@@ -268,6 +289,7 @@
+             "approval_mode": "user_authorized_automatic" if auto_approve else "manual_browser_review",
+             "manual_review": not auto_approve,
+             "draft_model_s": model_seconds,
++            "view_frame": build_view_frame(getattr(observation, "geometry", None)),
+             "expected_reset_sha256": expected, "expected_reset_source": expected_source,
+             "quarter_turns": turns, "fingertip_edge": FINGERTIP_EDGES[turns],
+             "review_images": images,
+@@ -300,6 +322,7 @@
+             destination = frozen / name
+             destination.parent.mkdir(parents=True, exist_ok=True)
+             shutil.copyfile(ROOT / name, destination)
++    base.write_json(directory / "direction_review.json", direction_review_output(store.load()))
+     return store
+ 
+ 
+@@ -401,6 +424,8 @@
+     plan_history = lock.snapshot()
+     meta = {
+         "version": VERSION, "display_name": DISPLAY_NAME,
++        "direction_semantics": DIRECTION_SEMANTICS,
++        **direction_review_output(review),
+         "review_id": review["id"], "revision": review["revision"],
+         "approved": approval, "claim": review["claim"],
+         "approval_mode": preparation.get("approval_mode", "manual_browser_review"),
+@@ -427,6 +452,7 @@
+         "normalized_at": now, "base_records": "base_v2_artifacts",
+     }
+     summary = dict(summary, method=METHOD, mode=mode, display_name=DISPLAY_NAME,
++                   direction_semantics=DIRECTION_SEMANTICS,
+                    zero_shot=False, human_reviewed_plan=manual_review, user_check=meta,
+                    subscription_transport=subscription_transport,
+                    interpretation="One user-check episode with " +
+@@ -476,6 +502,7 @@
+     identity = manifest["configuration"]
+     identity.update(
+         method=METHOD, mode=mode, kind=METHOD + "_full_task", zero_shot=False,
++        direction_semantics=DIRECTION_SEMANTICS,
+         human_reviewed_plan=manual_review, user_check=meta,
+         subscription_transport=subscription_transport,
+         base_runner=identity["runner"],
+@@ -499,11 +526,13 @@
+     base.write_json(manifest_path, manifest)
+     base.write_json(output / "user_check_review.json", review)
+     base.write_json(output / "approved_plan.json", review["plan"])
++    base.write_json(output / "direction_review.json", direction_review_output(review))
+     base.write_json(output / "user_check_plan_history.json", plan_history)
+     base.write_json(output / "user_check_framework.json", plan_history.get("framework", {}))
+     for name, blob in variant_sources.items():
+         (output / "frozen_source" / Path(name).name).write_bytes(blob)
+     with (output / "trace.jsonl").open("a", encoding="utf-8") as stream:
++        stream.write(json.dumps({"event": "direction_review", **direction_review_output(review)}) + "\n")
+         stream.write(json.dumps({
+             "event": "user_check_terminal", "method": METHOD,
+             "status": summary["status"], "step": summary.get("steps"),
+@@ -564,7 +593,8 @@
+         output=output, task_key=task.key, episode_index=episode_index,
+         initial_observation_sha256=review["initial_observation_sha256"],
+         runtime_sha256=runtime)
+-    lock = PlanLock(review["plan"], task_prompt=task.prompt)
++    lock = PlanLock(review["plan"], task_prompt=task.prompt,
++                    view_frame=(review.get("preparation") or {}).get("view_frame"))
+     client_metadata = {}
+     policy_holder = {}
+ 
+@@ -590,6 +620,9 @@
+     def make_policy(client):
+         policy = (policy_factory or AgentFirstV2Policy)(client, lock=lock)
+         policy_holder["policy"] = policy
++        # Display-only diagnostics: retained in trial logs, never a plan issue.
++        diagnostic = direction_review_output(review)
++        print(json.dumps({"event": "direction_review", **diagnostic}), flush=True)
+         return policy
+ 
+     def planning_snapshot():
+@@ -850,9 +883,11 @@
+                 reasoning_effort=reasoning_effort,
+                 request_deadline_s=request_deadline_s, stream_progress=stream_progress)
+             if args.command == "prepare":
++                prepared = store.load()
+                 print(json.dumps({
+                     "status": "review_required", "method": METHOD,
+-                    "review_dir": str(store.path), "validation": store.load()["validation"],
++                    "review_dir": str(store.path), "validation": prepared["validation"],
++                    **direction_review_output(prepared),
+                 }), flush=True)
+                 return 0
+             if args.auto_approve:
+@@ -862,7 +897,8 @@
+                 print(json.dumps({"event": "plan_automatically_approved",
+                                   "authorization": "explicit_auto_approve_argument",
+                                   "manual_review": False, "review_id": approval["id"],
+-                                  "plan_sha256": approval["approved"]["plan_sha256"]}), flush=True)
++                                  "plan_sha256": approval["approved"]["plan_sha256"],
++                                  **direction_review_output(approval)}), flush=True)
+             else:
+                 _show_review(store, host=args.host, port=args.port, until_approved=True)
+         result = execute_reviewed(
+--- a/scripts/evaluate_robocasa_user_check.py
++++ b/scripts/evaluate_robocasa_user_check.py
+@@ -25,6 +25,7 @@
+ from gpt_field.agent_speedup_v2_user_check_agent import AgentFirstV2Policy
+ from gpt_field.agent_speedup_v2_user_check_agent_client import AgentFirstV2Client
+ from gpt_field.agent_speedup_v2_user_check_client import PlanLock, UserCheckV2Client
++from gpt_field.agent_speedup_v2_user_check_spatial import DIRECTION_SEMANTICS, build_view_frame
+ from gpt_field.agent_speedup_v2_types import jsonable
+ from gpt_field.contact_skills import StepView
+ from gpt_field.experiment import write_json
+@@ -43,12 +44,17 @@
+     "refer to gripper0_right_grip_site. Use the synchronized calibration supplied "
+     "with each image; the external view is robot0_agentview_left."
+ )
++PLAN_ROBOT_CONTEXT = ROBOT_CONTEXT.replace(
++    "Use the synchronized calibration supplied with each image; ",
++    "No camera calibration is supplied to this planning request; ",
++)
+ 
+ 
+ class RoboCasaPlanClient(UserCheckV2Client):
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+-        self._instruction_text["plan"] += "\n" + ROBOT_CONTEXT
++        for kind in ("plan", "replan"):
++            self._instruction_text[kind] += "\n" + PLAN_ROBOT_CONTEXT
+ 
+ 
+ class RoboCasaAgentClient(AgentFirstV2Client):
+@@ -112,6 +118,7 @@
+         "api": asdict(config), "simulator": asdict(sim_config),
+         "method": METHOD, "policy": "RoboCasaUserCheckPolicy",
+         "native_macros": False, "reasoning_effort": "high",
++        "direction_semantics": DIRECTION_SEMANTICS,
+         "python_executable": sys.executable,
+     })
+     return result
+@@ -199,7 +206,9 @@
+         preparation = {
+             "kind": "robocasa_model_draft_before_policy_actions", "policy_actions": 0,
+             "approval_mode": "manual_browser_or_chat_review", "manual_review": True,
+-            "execution": {"api": asdict(config), "simulator": asdict(sim_config)},
++            "execution": {"api": asdict(config), "simulator": asdict(sim_config),
++                          "direction_semantics": DIRECTION_SEMANTICS},
++            "view_frame": build_view_frame(getattr(obs, "geometry", None)),
+             "initial_sensor_sha256": canonical_sha256(sensor_record(obs)),
+             "initial_physics_sha256": reset["physical_sha256"],
+             "model_xml_sha256": reset["model_xml_sha256"],
+@@ -221,6 +230,7 @@
+             "status": "review_required", "plan": draft,
+             "validation": store.load()["validation"], "model_budget": preparation["model_budget"],
+             "policy_actions": 0,
++            **reviewed.direction_review_output(store.load()),
+         })
+         return store.load()
+     finally:
+@@ -252,8 +262,12 @@
+         "policy_inputs": "two RGB, state8, seven arm joint sensors, camera and fixed robot calibration",
+         "hidden_scene_truth_to_policy": False, "human_reviewed_plan": True,
+         "review_id": review["id"], "video": video,
++        "version": reviewed.VERSION, "direction_semantics": DIRECTION_SEMANTICS,
++        **reviewed.direction_review_output(review),
+     })
+-    lock = PlanLock(review["plan"], task_prompt=TASK_PROMPT)
++    lock = PlanLock(review["plan"], task_prompt=TASK_PROMPT,
++                    view_frame=(review.get("preparation") or {}).get("view_frame"))
++    write_json(output / "direction_review.json", reviewed.direction_review_output(review))
+     sim = client = policy = recorder = None
+     obs = None
+     steps = feedback_count = 0
+@@ -277,6 +291,7 @@
+         def append(row):
+             trace.write(json.dumps(jsonable(row), allow_nan=False) + "\n")
+             trace.flush()
++        append({"event": "direction_review", **reviewed.direction_review_output(review)})
+         try:
+             state("starting")
+             sim = new_sim(sim_config, sim_factory)
+@@ -401,6 +416,7 @@
+                          and budget is not None and "validation_error" not in budget)
+             summary = {
+                 "method": METHOD, "task": "CoffeePressButton", "status": status, "error": error,
++                "version": reviewed.VERSION, "direction_semantics": DIRECTION_SEMANTICS,
+                 "steps": steps, "feedback_count": feedback_count, "pending_action": pending_action,
+                 "robocasa_success": raw_success, "task_success": completed,
+                 "evaluation_completed": completed, "completion_time_eligible": completed,
+@@ -458,14 +474,16 @@
+             parser.error("--revision and --reviewed-steps are required for explicit plan review")
+         result = ReviewStore(args.review_dir).approve(expected_revision=args.revision,
+                                                      reviewed_steps=args.reviewed_steps)
+-        print(json.dumps({"status": result["status"], "approved": result["approved"]}))
++        print(json.dumps({"status": result["status"], "approved": result["approved"],
++                          **reviewed.direction_review_output(result)}))
+         return 0
+     from gpt_field.chatgpt_auth import SubscriptionCredentials
+     token_provider = SubscriptionCredentials(store_dir=args.store_dir, profile=args.profile).access_token
+     if args.command == "prepare":
+         result = prepare(args.review_dir, config=config, sim_config=sim_config, token_provider=token_provider)
+         print(json.dumps({"status": result["status"], "review_dir": str(args.review_dir),
+-                          "plan": result["plan"], "revision": result["revision"]}), flush=True)
++                          "plan": result["plan"], "revision": result["revision"],
++                          **reviewed.direction_review_output(result)}), flush=True)
+         return 0
+     if args.output is None:
+         parser.error("--output is required for run")
+--- a/tests/test_agent_speedup_v2_user_check_direction_contract.py
++++ b/tests/test_agent_speedup_v2_user_check_direction_contract.py
+@@ -0,0 +1,191 @@
++"""uc7.1 direction semantics across frozen locks and actual offline requests."""
++from copy import deepcopy
++import json
++import math
++
++import numpy as np
++import pytest
++
++from gpt_field.agent_speedup_v2_client import AgentSpeedUpV2Client, FINGERTIP_EDGE
++from gpt_field.agent_speedup_v2_user_check_agent import AgentFirstV2Policy
++from gpt_field.agent_speedup_v2_user_check_agent_client import AgentFirstV2Client
++from gpt_field.agent_speedup_v2_user_check_client import (
++    METRIC_INSTRUCTIONS, PLAN_METRIC_INSTRUCTIONS, PLANNING_WRIST_INSTRUCTIONS,
++    PlanLock, ReviewedV2Client, ReviewedV2Policy, UserCheckV2Client,
++)
++from gpt_field.agent_speedup_v2_user_check_sim import CalibratedObservation
++from gpt_field.agent_speedup_v2_user_check_spatial import build_view_frame
++from gpt_field.contact_skills import StepView
++from gpt_field.observation import image_to_data_url
++from test_robocasa_user_check_geometry import STATE, metadata
++
++
++TASK = "Put the package to the right of the plate."
++PLAN = {
++    "scene": "A package and a plate on a table.",
++    "parts": [
++        {"id": "A", "text": "package: body", "move": "free", "w": 35, "x": 0},
++        {"id": "C", "text": "plate: flat surface", "move": "free", "w": 53, "x": 0},
++        {"id": "E", "text": "table: surface to the right of the plate", "move": "fixed", "w": 55, "x": 0},
++    ],
++    "hold_true": [],
++    "steps": [{"do": "place_on", "obj": "A", "grip": ["A"], "ref": "E", "sense": "any", "keep": [], "until": []}],
++    "regions": [{"id": "E", "support": "observed_plane", "anchor": "C", "relation": "right_of", "frame": "world", "bounds_xy_m": None}],
++    "placement_goals": [],
++}
++
++
++def calibrated_view():
++    geometry = metadata()
++    a = math.sqrt(.5)
++    geometry["cameras"]["external"]["rotation_world_from_camera"] = [[0., -a, a], [1., 0., 0.], [0., a, a]]
++    image = np.zeros((512, 512, 3), dtype=np.uint8)
++    image[32:64, 96:128] = [255, 128, 0]
++    url = image_to_data_url(image, size=512, rotate=False)
++    return StepView(CalibratedObservation(image=url, wrist_image=url, state=tuple(STATE),
++                                          prompt=TASK, geometry=geometry))
++
++
++class ExecutiveTransport:
++    """Real client/history processing, deterministic response, no credentials/network."""
++    offline_mock = True
++
++    def __init__(self):
++        self.calls = []
++
++    def __call__(self, endpoint, payload, headers, timeout_s):
++        self.calls.append(deepcopy(payload))
++        answer = {"belief": "Placement remains unverified.", "plan": "Inspect the package.",
++                  "why": "Read current visual evidence.", "type": "observe",
++                  "motion": None, "macro": None, "execution": None}
++        number = len(self.calls)
++        return {"id": f"offline-direction-{number}", "status": "completed", "model": payload["model"],
++                "reasoning": {"effort": "high"}, "offline_mock": True, "billing": "offline_mock",
++                "output": [{"type": "message", "id": f"msg_direction_{number}", "role": "assistant",
++                            "status": "completed", "content": [{"type": "output_text", "text": json.dumps(answer)}]}],
++                "usage": {"input_tokens": 0, "output_tokens": 0,
++                          "input_tokens_details": {"cached_tokens": 0}, "output_tokens_details": {"reasoning_tokens": 0}}}
++
++
++def executive(plan=PLAN):
++    view = calibrated_view()
++    frame = build_view_frame(view.observation.geometry)
++    lock = PlanLock(deepcopy(plan), task_prompt=TASK, view_frame=frame)
++    transport = ExecutiveTransport()
++    client = AgentFirstV2Client(task_prompt=TASK, approved_plan=lock.plan(), lock=lock, transport=transport)
++    policy = AgentFirstV2Policy(client, lock=lock)
++    return view, lock, transport, client, policy
++
++
++def current_fields(payload):
++    message = next(row for row in reversed(payload["input"]) if row.get("role") == "user")
++    return json.loads(message["content"][0]["text"])
++
++
++def test_plan_lock_detaches_and_snapshots_frozen_frame_without_changing_plan_hash():
++    frame = build_view_frame(calibrated_view().observation.geometry)
++    lock = PlanLock(PLAN, view_frame=frame)
++    expected = deepcopy(frame)
++    frame["right_xy"][0] = 99
++    assert lock.view_frame == expected
++    snapshot = lock.snapshot()
++    assert snapshot["view_frame"] == expected
++    snapshot["view_frame"]["external_camera"]["position_world_m"][0] = 99
++    assert lock.view_frame == expected
++    assert lock.snapshot()["initial_approved_semantic_sha256"] == PlanLock(PLAN).snapshot()["initial_approved_semantic_sha256"]
++    assert lock.plan() == PLAN
++
++
++def test_plan_lock_validates_serialized_direction_frame_but_missing_frame_is_unavailable():
++    frame = build_view_frame(calibrated_view().observation.geometry)
++    frame["right_xy"] = [1., 0.]
++    with pytest.raises(ValueError):
++        PlanLock(PLAN, view_frame=frame)
++    lock = PlanLock(PLAN)
++    assert lock.view_frame["available"] is False
++    assert lock.view_frame["reason"] == "no_external_calibration"
++
++
++def test_frozen_frame_survives_scene_replacement_and_both_policy_reset_paths():
++    view, lock, _, client, policy = executive()
++    expected = deepcopy(lock.view_frame)
++    assert policy.ctx.user_check_view_frame == expected
++    policy.ctx.scene = object()
++    assert policy._task_contract()["region_directions"]["regions"]["E"]["direction_world_xy"] == [0., 1.]
++    policy.reset()
++    assert policy.ctx.user_check_view_frame == expected
++    policy.ctx.user_check_view_frame["right_xy"][0] = 99
++    assert lock.view_frame == expected
++    reviewed = ReviewedV2Client(task_prompt=TASK, approved_plan=PLAN, lock=lock, transport=ExecutiveTransport())
++    legacy = ReviewedV2Policy(reviewed, lock=lock)
++    assert legacy.ctx.user_check_view_frame == expected
++    legacy.reset()
++    assert legacy.ctx.user_check_view_frame == expected
++
++
++def test_empty_regions_still_publish_frame_for_direction_named_object_parts():
++    plan = {"scene": "One object.", "parts": [PLAN["parts"][0]], "hold_true": [],
++            "steps": [{"do": "hold", "obj": "A", "grip": [], "ref": None, "sense": "any", "keep": [], "until": []}]}
++    _, _, _, _, policy = executive(plan)
++    directions = policy._task_contract()["region_directions"]
++    assert directions["available"] and directions["regions"] == {}
++    assert directions["frame"] == {"right_xy": [0., 1.], "away_xy": [-1., 0.]}
++
++
++def test_actual_eleventh_request_keeps_frozen_directions_after_visual_history_trimming():
++    view, lock, transport, client, policy = executive()
++    expected = policy._task_contract()["region_directions"]
++    for step in range(11):
++        policy.step_index = step
++        context = policy._context(view)
++        # A stale caller cannot substitute a different frame; the client uses the lock.
++        context["region_directions"] = {"available": False}
++        result = client.request_agent(view, context)
++        assert result["type"] == "observe"
++        fields = current_fields(transport.calls[-1])
++        assert fields["context"]["region_directions"] == expected
++        if step == 0:
++            assert fields["reviewed_goal_contract"]["task_contract"]["region_directions"] == expected
++        else:
++            assert "reviewed_goal_contract" not in fields
++    final = transport.calls[-1]
++    assert client.history_stats()["retained_image_pairs"] == 6
++    assert "use it over any direction wording in reviewed" in final["instructions"]
++    assert "frame is frozen from the external view at review" in final["instructions"]
++    assert current_fields(final)["context"]["region_directions"]["regions"]["E"]["direction_world_xy"] == [0., 1.]
++    assert client.budget_snapshot()["api_calls"] == 11
++    assert lock.plan() == PLAN
++
++
++@pytest.mark.parametrize("kind", ["plan", "replan", "repair", "review"])
++def test_prompt_modes_use_appropriate_calibration_statement_and_no_old_axis_convention(kind):
++    client = UserCheckV2Client(task_prompt=TASK)
++    text = client.build_payload({"fields": {}, "images": []}, mode=kind)["instructions"]
++    assert "right_of=+x" not in text and "WORLD axes" not in text
++    assert (PLAN_METRIC_INSTRUCTIONS if kind in ("plan", "replan") else METRIC_INSTRUCTIONS) in text
++    if kind in ("plan", "replan"):
++        assert "you have no calibration" in text
++        assert PLANNING_WRIST_INSTRUCTIONS in text
++        assert "turned so that its left and right match" not in text
++    else:
++        assert "convert to world coordinates with calibration" in text
++
++
++@pytest.mark.parametrize("turns", range(4))
++def test_wrist_plan_label_matches_actual_turns_without_changing_pixels(turns):
++    image = calibrated_view().external_rgb_upright
++    client = UserCheckV2Client(task_prompt=TASK)
++    baseline = AgentSpeedUpV2Client(task_prompt=TASK)
++    args = dict(quarter_turns=turns, fingertip_edge=FINGERTIP_EDGE[turns])
++    _, request, meta = client._plan_request(image, image, **args)
++    _, original, _ = baseline._plan_request(image, image, **args)
++    assert request["fields"]["wrist_quarter_turns"] == turns
++    assert [url for _, url in request["images"]] == [url for _, url in original["images"]]
++    assert meta["quarter_turns"] == turns
++    label = request["images"][2][0]
++    if turns == 0:
++        assert "not turned; not aligned with image 1" in label
++    else:
++        assert f"turned {turns} quarter turns counter-clockwise" in label
++        assert "not a perspective match" in label
++    assert f"fingertips at the {FINGERTIP_EDGE[turns]} edge" in label
+--- a/tests/test_agent_speedup_v2_user_check_direction_display.py
++++ b/tests/test_agent_speedup_v2_user_check_direction_display.py
+@@ -0,0 +1,142 @@
++"""Offline display checks: frozen directions and non-blocking wording highlights."""
++from __future__ import annotations
++
++import copy
++import json
++from pathlib import Path
++import re
++import shutil
++import subprocess
++
++import pytest
++
++from gpt_field.agent_speedup_v2_user_check import ReviewStore, plan_validation
++from gpt_field.agent_speedup_v2_user_check_direction_display import (
++    region_direction_lines,
++    world_axis_wording_diagnostics,
++)
++
++HTML = Path(__file__).resolve().parents[1] / "src/gpt_field/agent_speedup_v2_user_check.html"
++
++
++def _plan():
++    return {
++        "scene": "An object and a support surface.",
++        "parts": [
++            {"id": "A", "text": "object: body on world +x side", "move": "free", "w": 1, "x": 2},
++            {"id": "B", "text": "support: upper surface", "move": "fixed", "w": 3, "x": 4},
++        ],
++        "hold_true": [],
++        "steps": [{"do": "place_on", "obj": "A", "grip": [], "ref": "B", "sense": "any",
++                   "keep": [{"c": "upright", "p": "A"}], "until": []}],
++    }
++
++
++def test_wording_diagnostics_find_horizontal_axes_without_mutating_plan():
++    plan = {"parts": [
++        {"id": "A", "text": "world +x, WORLD −y and world- x; world +z is vertical"},
++        {"id": "B", "text": "world +xyz and underworld +x are not direction tokens"},
++    ]}
++    before = copy.deepcopy(plan)
++    diagnostics = world_axis_wording_diagnostics(plan)
++    assert len(diagnostics) == 1
++    assert diagnostics[0]["part_id"] == "A"
++    assert diagnostics[0]["display_only"] is True
++    assert [match["text"] for match in diagnostics[0]["matches"]] == ["world +x", "WORLD −y", "world- x"]
++    for match in diagnostics[0]["matches"]:
++        assert diagnostics[0]["text"][match["start"]:match["end"]] == match["text"]
++    assert plan == before
++
++
++def test_diagnostic_does_not_turn_legacy_wording_into_plan_issue_or_approval_veto(tmp_path):
++    plan = _plan()
++    validation = plan_validation(plan)
++    assert validation["valid"]
++    assert world_axis_wording_diagnostics(plan)
++    assert plan_validation(plan) == validation
++    store = ReviewStore.create(
++        tmp_path / "review", task_key="fixture", episode_index=0,
++        task_prompt="Place the object on the support.", initial_observation={"offline": True},
++        plan=plan, runtime_sha256={"fixture": "0" * 64}, preparation={},
++    )
++    approved = store.approve(expected_revision=0, reviewed_steps=[0])
++    assert approved["status"] == "approved"
++    assert approved["plan"] == plan
++
++
++def test_direction_lines_use_contract_vectors_and_report_unavailable():
++    contract = {"available": True, "regions": {
++        "E": {"relation": "right_of", "anchor": "C", "direction_world_xy": [0.0, 1.0]},
++        "F": {"relation": "front_of", "anchor": "B", "direction_world_xy": [1.0, -0.0]},
++    }}
++    before = copy.deepcopy(contract)
++    assert region_direction_lines(contract) == [
++        "E: right_of C → world (0,+1) [image-right]",
++        "F: front_of B → world (+1,0) [toward external camera]",
++    ]
++    assert contract == before
++    contract.update(available=False, reason="no_external_calibration")
++    assert "unavailable (no_external_calibration)" in region_direction_lines(contract)[0]
++    assert region_direction_lines({"available": True, "regions": {}}) == []
++
++
++def _run_ui_helpers(script):
++    node_binary = shutil.which("node")
++    if node_binary is None:
++        candidates = sorted(Path("/opt/nvm/versions/node").glob("*/bin/node"))
++        node_binary = str(candidates[-1]) if candidates else None
++    if node_binary is None:
++        pytest.skip("Node is required for executing the browser's pure display helpers")
++    text = HTML.read_text()
++    # Evaluate exactly the helper functions shipped in the CSP-protected page.
++    start = text.index("  // Display helpers only:")
++    end = text.index("  const editable =", start)
++    stub = """
++const document = {createTextNode(text) {return {tag: 'text', text};}};
++const node = (tag,text,className) => ({tag,text,className});
++"""
++    result = subprocess.run([node_binary, "-e", stub + text[start:end] + script],
++                            check=True, text=True, capture_output=True)
++    return json.loads(result.stdout)
++
++
++def test_browser_display_recomputes_after_relation_and_anchor_edits():
++    result = _run_ui_helpers("""
++const frame={available:true,relation_directions:{right_of:[0,1],front_of:[1,0]}};
++const region={id:'E',relation:'right_of',anchor:'C'};
++const values=[regionDirectionLine(region,frame)];
++region.relation='front_of';region.anchor='D';
++values.push(regionDirectionLine(region,frame));
++values.push(regionDirectionLine(region,{available:false,reason:'no_external_calibration'}));
++region.relation='on';values.push(regionDirectionLine(region,frame));
++console.log(JSON.stringify(values));
++""")
++    assert result == [
++        "E: right_of C → world (0,+1) [image-right]",
++        "E: front_of D → world (+1,0) [toward external camera]",
++        "E: front_of D → unavailable (no_external_calibration) [toward external camera]",
++        None,
++    ]
++
++
++def test_browser_highlights_text_nodes_without_html_interpolation():
++    result = _run_ui_helpers("""
++const parent={children:[],append(child){this.children.push(child);}};
++appendPartWording(parent,'<img src=x> world +x and WORLD −y; world +z');
++console.log(JSON.stringify(parent.children));
++""")
++    assert "".join(item["text"] for item in result) == "<img src=x> world +x and WORLD −y; world +z"
++    assert [item["text"] for item in result if item["tag"] == "mark"] == ["world +x", "WORLD −y"]
++    assert result[0] == {"tag": "text", "text": "<img src=x> "}
++
++
++def test_ui_labels_and_notes_have_no_old_world_axis_mapping():
++    text = HTML.read_text()
++    labels = text.split("  const labels = {", 1)[1].split("  };", 1)[0]
++    assert not re.search(r"world\s*[+\-−]\s*[xy]", labels, re.IGNORECASE)
++    assert "follow world axes" not in text
++    assert "image-right in external view" in labels
++    assert "image-left in external view" in labels
++    assert "Directions are frozen at review" in text
++    assert "this highlighting does not block approval" in text
++    assert 'regionDirectionLine(region, record.preparation?.view_frame)' in text
+--- a/tests/test_agent_speedup_v2_user_check_direction_evidence.py
++++ b/tests/test_agent_speedup_v2_user_check_direction_evidence.py
+@@ -0,0 +1,272 @@
++"""Development-only uc7.1 evidence checks; no simulator or inference is started.
++
++Benchmark predicates and archived object positions below are test data only.
++Nothing from this module is imported into policy/runtime requests.
++"""
++from __future__ import annotations
++
++from collections import Counter
++import importlib.util
++import json
++from pathlib import Path
++import re
++from types import SimpleNamespace
++import xml.etree.ElementTree as ET
++
++import numpy as np
++import pytest
++
++from gpt_field.astranomy_agentic_geometry import project_world_point
++from gpt_field.contact_skills import StepView
++from gpt_field.observation import PolicyObservation, decode_image, image_to_data_url
++from gpt_field.robocasa_user_check_sim import RoboCasaConfig, RoboCasaWorker
++from gpt_field.agent_speedup_v2_user_check_spatial import build_view_frame, validate_spatial_spec
++
++ROOT = Path(__file__).resolve().parents[1]
++REPORT = ROOT / "reports/uc7_direction_semantics_20261028"
++T6 = ROOT / "runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/task_6"
++LIBERO = ROOT.parent / "heading_flow_pub/third_party/LIBERO/libero/libero"
++
++
++def _require(path):
++    if not path.exists():
++        pytest.skip(f"Recorded development evidence is not installed: {path}")
++    return path
++
++
++def _rgb():
++    y, x = np.indices((512, 512))
++    return np.stack([x % 251, y % 241, (3*x + y) % 253], axis=-1).astype(np.uint8)
++
++
++def _robot_obs():
++    return {"robot0_eef_pos": [.1, -.1, .5], "robot0_eef_quat": [0, 0, 0, 1],
++            "robot0_gripper_qpos": [.04, -.04], "robot0_joint_pos": [0.0]*7,
++            "robot0_joint_vel": [0.0]*7}
++
++
++def test_libero_actual_transport_then_stepview_is_one_vertical_flip():
++    raw = _rgb()
++    wrist = np.rot90(raw).copy()
++    obs = PolicyObservation.from_libero(
++        {**_robot_obs(), "agentview_image": raw, "robot0_eye_in_hand_image": wrist},
++        "Offline image orientation fixture", image_size=512,
++    )
++    # Exercise the real encoder separately as well as the from_libero call site.
++    assert obs.image == image_to_data_url(raw, 512)
++    view = StepView(obs)
++    np.testing.assert_array_equal(view.external_rgb_upright, raw[::-1, :])
++    np.testing.assert_array_equal(view.wrist_rgb_upright, wrist[::-1, :])
++    assert not np.array_equal(view.external_rgb_upright, raw[::-1, ::-1])
++
++
++def test_robocasa_actual_response_then_stepview_does_not_add_a_second_flip(monkeypatch):
++    from gpt_field import robocasa_user_check_geometry as geometry_module
++    raw = _rgb()
++    wrist = np.rot90(raw).copy()
++    worker = RoboCasaWorker(RoboCasaConfig())
++    # RoboSuite's opencv convention supplies A[::-1, :]. No simulator is built.
++    native_obs = {**_robot_obs(), worker.config.external_camera + "_image": raw[::-1, :],
++                  "robot0_eye_in_hand_image": wrist[::-1, :]}
++    worker._fresh_observation = lambda: native_obs
++    worker._contacts = lambda: {"count": 0, "records": []}
++    worker.prompt = "Offline image orientation fixture"
++    worker.base_controller = SimpleNamespace(qpos_index=[0, 1, 2])
++    worker.torso_controller = SimpleNamespace(qpos_index=[3])
++    worker.base_position = np.zeros(3)
++    worker.torso_position = np.zeros(1)
++    worker.env = SimpleNamespace(
++        sim=SimpleNamespace(data=SimpleNamespace(qpos=np.zeros(4))),
++        _check_success=lambda: False,
++    )
++    monkeypatch.setattr(geometry_module, "extract_robocasa_geometry", lambda *args, **kwargs: {})
++    response = worker._response()
++    obs = PolicyObservation.from_dict(response["observation"])
++    view = StepView(obs)
++    np.testing.assert_array_equal(view.external_rgb_upright, raw[::-1, :])
++    np.testing.assert_array_equal(view.wrist_rgb_upright, wrist[::-1, :])
++    assert not np.array_equal(view.external_rgb_upright, raw[::-1, ::-1])
++    assert not response["status"]["terminated"]
++
++
++def _recorded_geometry():
++    requests = _require(T6 / "trial/requests")
++    path = next(requests.glob("000001-*.request.json"))
++    request = json.loads(path.read_text())
++    return json.loads(request["payload"]["input"][0]["content"][0]["text"])["geometry"]
++
++
++def _cell(uv):
++    u, v = uv
++    assert 0 <= u < 512 and 0 <= v < 512
++    return int(v // 64) * 8 + int(u // 64) + 1
++
++
++def audit_recorded_projection():
++    camera = _recorded_geometry()["cameras"]["external"]
++    physical = json.loads(_require(T6 / "physical_validation.json").read_text())
++    positions = {row["object"]: row["settled_xyz_m"] for row in physical["objects"]}
++    projections = {}
++    for name in ("chocolate_pudding_1", "porcelain_mug_1", "plate_1"):
++        uv = project_world_point(positions[name], camera)
++        projections[name] = {"uv": uv, "cell": _cell(uv),
++                             "mirrored_cell": _cell((511-uv[0], uv[1]))}
++    row, column = divmod(61-1, 8)
++    u, v = (column+.5)*64, (row+.5)*64
++    cx, cy = camera["principal_point_px"]
++    fx, fy = camera["focal_length_px"]
++    rotation = np.asarray(camera["rotation_world_from_camera"])
++    origin = np.asarray(camera["position_world_m"])
++    ray = rotation @ np.array([(u-cx)/fx, -(v-cy)/fy, -1])
++    table_point = origin + (.44-origin[2]) / ray[2] * ray
++    distance = float(np.linalg.norm(table_point[:2] - np.asarray(positions["plate_1"])[:2]))
++    return {"objects": projections, "plate_pointed_cell": 61,
++            "plate_cell_center_xy": table_point[:2].tolist(),
++            "plate_cell_center_distance_m": distance, "plate_radius_m": .069}
++
++
++def test_recorded_projection_detects_mirror_using_settled_objects():
++    result = audit_recorded_projection()
++    pudding = result["objects"]["chocolate_pudding_1"]
++    mug = result["objects"]["porcelain_mug_1"]
++    assert (pudding["cell"], mug["cell"]) == (35, 38)
++    assert (pudding["mirrored_cell"], mug["mirrored_cell"]) == (38, 35)
++    assert result["objects"]["plate_1"]["cell"] == 53
++    assert result["plate_cell_center_distance_m"] < result["plate_radius_m"]
++    plan = json.loads((T6 / "trial/approved_plan.json").read_text())
++    plate = next(part for part in plan["parts"] if part["id"] == "C")
++    assert plate["x"] == 61
++
++
++def test_recorded_review_external_image_matches_actual_stepview():
++    initial = json.loads(_require(T6 / "review/initial_observation.json").read_text())
++    review = json.loads((T6 / "review/review.json").read_text())
++    displayed = next(image for image in review["preparation"]["review_images"]
++                     if image["label"] == "external clean")
++    view = StepView(PolicyObservation.from_dict(initial))
++    np.testing.assert_array_equal(view.external_rgb_upright, np.asarray(decode_image(displayed["data_url"])))
++
++
++def _bddl_documents():
++    # Reuse only the archived read-only parser; it has no simulator imports.
++    path = _require(REPORT / "work/semantics/bddl_parse.py")
++    spec = importlib.util.spec_from_file_location("uc71_dev_bddl_parser", path)
++    parser = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(parser)
++    parser.L = str(_require(LIBERO / "bddl_files"))
++    return parser.all_bddls()
++
++
++def _flat(value):
++    return value if isinstance(value, str) else "(" + " ".join(_flat(item) for item in value) + ")"
++
++
++def _region_center(doc, full_name):
++    for name, region in doc["regions"].items():
++        if region["target"] + "_" + name == full_name:
++            x0, y0, x1, y1 = region["ranges"][0]
++            return np.array([(x0+x1)/2, (y0+y1)/2]) + np.asarray((doc["offset"] or (0,0,0))[:2])
++    raise KeyError(full_name)
++
++
++def _init_center(doc, obj):
++    row = next(row for row in doc["init"] if row[0].lower() == "on" and row[1] == obj)
++    return _region_center(doc, row[2])
++
++
++def audit_bddl_conventions():
++    """Recompute archived 41 decidable cases and all 31 anchored region signs."""
++    docs = _bddl_documents()
++    by_file = {doc["file"]: doc for doc in docs}
++    archived = json.loads((REPORT / "work/semantics/verify_claim.json").read_text())
++    direction_docs = {doc["file"] for doc in docs
++                      if re.search(r"\b(left|right|front|back|behind|middle)\b", doc["language"].lower())}
++    assert direction_docs == {row["file"] for row in archived}
++    table = build_view_frame(_recorded_geometry())["relation_directions"]
++    directions = {word: np.asarray(table[relation]) for word, relation in {
++        "right": "right_of", "left": "left_of", "front": "front_of",
++        "back": "behind", "behind": "behind"}.items()}
++    asset = _require(LIBERO / "assets/turbosquid_objects/desk_caddy/desk_caddy.xml")
++    sites = {site.attrib["name"].removesuffix("_contain_region"):
++             np.array([float(value) for value in site.attrib["pos"].split()][:2])
++             for site in ET.parse(asset).iter("site") if site.attrib.get("name", "").endswith("_contain_region")}
++    checked = []
++    for row in archived:
++        doc = by_file[row["file"]]
++        assert row["language"] == doc["language"]
++        assert row["goal"] == _flat(doc["goal"])
++        for case in row["checks"]:
++            kind, word = case["kind"], case["word"]
++            if word == "middle":
++                ok = None
++            elif kind == "select by direction":
++                position = _init_center(doc, case["obj"])
++                siblings = [name for name in doc["objects"] if name != case["obj"]
++                            and name.rsplit("_",1)[0] == case["obj"].rsplit("_",1)[0]]
++                assert siblings
++                ok = all(float((position-_init_center(doc,name)) @ directions[word]) > 0 for name in siblings)
++            elif kind == "side-of-anchor goal region":
++                delta = _region_center(doc, case["region"]) - _region_center(doc, case["anchor_init"])
++                ok = bool(delta @ directions[word] > 0)
++            elif kind == "caddy compartment":
++                yaw = doc["regions"]["desk_caddy_init_region"]["yaw"][0][0]
++                rotation = np.array([[np.cos(yaw),-np.sin(yaw)],[np.sin(yaw),np.cos(yaw)]])
++                ok = bool((rotation @ sites[case["goal_site"]]) @ directions[word] > 0
++                          and word == case["goal_site"])
++            else:
++                raise AssertionError(kind)
++            checked.append({"file": doc["file"], "kind": kind, "word": word, "ok": ok})
++    anchored = []
++    for doc in docs:
++        regions = doc["regions"]
++        for name, region in regions.items():
++            match = re.fullmatch(r"(\w+?)_(left|right|front|back)_region", name)
++            if not match or "ranges" not in region:
++                continue
++            anchor, word = match.groups()
++            anchor_name = anchor + "_init_region"
++            if anchor_name in regions:
++                anchor_region = regions[anchor_name]
++                anchor_center = _region_center(doc, anchor_region["target"]+"_"+anchor_name)
++            else:
++                obj = next((row[1] for row in doc["init"] if row[0].lower() == "on"
++                            and row[1].startswith(anchor)), None)
++                if obj is None:
++                    continue
++                anchor_center = _init_center(doc, obj)
++            delta = _region_center(doc, region["target"]+"_"+name) - anchor_center
++            if np.linalg.norm(delta) < 1e-9:
++                continue
++            anchored.append({"file": doc["file"], "region": name, "word": word,
++                             "delta": delta.tolist(), "ok": bool(delta @ directions[word] > 0)})
++    return {"direction_bddl_files": len(direction_docs), "checks": checked,
++            "decidable_passed": sum(case["ok"] is True for case in checked),
++            "decidable_failed": sum(case["ok"] is False for case in checked),
++            "unknown_middle": sum(case["ok"] is None for case in checked),
++            "anchored_regions": anchored,
++            "coverage_note": "Archived direction conventions only, not proof every language sentence matches its goal. Known LIBERO annotation inconsistencies remain."}
++
++
++def test_bddl_conventions_from_actual_assets_agree_with_calibrated_directions():
++    result = audit_bddl_conventions()
++    assert result["direction_bddl_files"] == 42
++    assert (result["decidable_passed"], result["decidable_failed"], result["unknown_middle"]) == (41, 0, 4)
++    counts = Counter(case["kind"] for case in result["checks"] if case["ok"] is True)
++    assert counts == {"select by direction": 21, "caddy compartment": 11, "side-of-anchor goal region": 9}
++    assert len(result["anchored_regions"]) == 31
++    assert all(case["ok"] for case in result["anchored_regions"])
++    assert Counter(case["word"] for case in result["anchored_regions"]) == {"right": 23, "left": 5, "front": 3}
++
++
++def audit_recorded_plan_validation():
++    paths = sorted((ROOT / "runs").rglob("approved_plan.json"))
++    if not paths:
++        pytest.skip("No archived approved plans installed")
++    return [{"path": str(path.relative_to(ROOT)),
++             "issues": validate_spatial_spec(json.loads(path.read_text()))} for path in paths]
++
++
++def test_all_recorded_approved_plans_still_pass_spatial_schema_validation():
++    rows = audit_recorded_plan_validation()
++    failures = [row for row in rows if row["issues"]]
++    assert not failures, failures
+--- a/tests/test_agent_speedup_v2_user_check_direction_runner.py
++++ b/tests/test_agent_speedup_v2_user_check_direction_runner.py
+@@ -0,0 +1,171 @@
++"""uc7.1 approval-to-policy wiring; fake simulators and transport only."""
++import copy
++import hashlib
++import json
++from pathlib import Path
++from types import SimpleNamespace
++
++import numpy as np
++import pytest
++
++from agent_speedup_v2_fakes import FakeV2Sim
++from gpt_field.agent_speedup_v2_client import FixedAnswers, ScriptedV2Transport
++from gpt_field.agent_speedup_v2_user_check import ReviewError, VERSION
++from gpt_field.agent_speedup_v2_user_check_agent_client import AgentFirstV2Client
++from gpt_field.agent_speedup_v2_user_check_sim import CalibratedObservation
++from gpt_field.astranomy_agentic_geometry import extract_geometry_metadata
++from test_agent_speedup_v2_user_check_runner import PLAN, TASK, runner, settings
++import test_robocasa_user_check_runner as coffee
++
++
++def geometry():
++    rotation = np.array([[0., 0., 1.], [1., 0., 0.], [0., 1., 0.]])
++    model = SimpleNamespace(camera_name2id=lambda name: 0 if name == "agentview" else 1,
++                            cam_fovy=[45., 45.])
++    data = SimpleNamespace(cam_xpos=np.array([[1., 0., 2.], [.1, 0., 1.2]]),
++                           cam_xmat=np.array([rotation.ravel(), np.eye(3).ravel()]))
++    value = extract_geometry_metadata(SimpleNamespace(sim=SimpleNamespace(model=model, data=data)), 512)
++    value["cameras"]["wrist"]["pose_source"] = "observed_robot_pose_fixed_mount"
++    return value
++
++
++class CalibratedFakeSim(FakeV2Sim):
++    def calibrated(self, obs):
++        return CalibratedObservation(obs.image, obs.wrist_image, obs.state, obs.prompt,
++            joint_position=(0.,) * 7, joint_velocity=(0.,) * 7, geometry=geometry())
++
++    def reset(self, *args):
++        return self.calibrated(super().reset(*args))
++
++    def step(self, action):
++        obs, success = super().step(action)
++        return self.calibrated(obs), success
++
++
++def directional_plan():
++    plan = copy.deepcopy(PLAN)
++    plan["parts"].append({"id": "E", "text": "table: world +x side of cup",
++                          "move": "fixed", "w": 32, "x": 32})
++    plan["regions"] = [{"id": "E", "support": "observed_plane", "anchor": "A",
++                        "relation": "right_of", "frame": "world", "bounds_xy_m": None}]
++    plan["placement_goals"] = []
++    plan["steps"][0].update(do="place_on", ref="E")
++    return plan
++
++
++def prepare(tmp_path):
++    config, sim_config, monitor = settings()
++    sim = CalibratedFakeSim(prompt=TASK.prompt)
++    transport = ScriptedV2Transport(FixedAnswers(plans=[directional_plan()]), effort="high")
++    store = runner.prepare_review(
++        tmp_path / "review", config=config, sim_config=sim_config, task_key=TASK.key,
++        episode_index=0, monitor_options=monitor, sim_factory=lambda _: sim,
++        token_provider=lambda: "offline", transport=transport, video=False)
++    return store, config, sim_config, monitor
++
++
++class ExecutiveTransport:
++    offline_mock = True
++
++    def __init__(self):
++        self.calls = []
++
++    def __call__(self, endpoint, payload, headers, timeout):
++        self.calls.append(copy.deepcopy(payload))
++        decision = {"belief": "Inspect the scene.", "plan": "Observe before moving.",
++                    "why": "Offline wiring test.", "type": "observe",
++                    "motion": None, "macro": None, "execution": None}
++        return {"id": f"offline-{len(self.calls)}", "status": "completed",
++                "model": "gpt-6-astra", "reasoning": {"effort": "high"},
++                "offline_mock": True, "billing": "offline_mock",
++                "output": [{"type": "message", "role": "assistant", "status": "completed",
++                            "content": [{"type": "output_text", "text": json.dumps(decision)}]}],
++                "usage": {"input_tokens": 0, "output_tokens": 0}}
++
++
++def current_fields(payload):
++    return json.loads(next(message for message in reversed(payload["input"])
++                           if message.get("role") == "user")["content"][0]["text"])
++
++
++def test_calibrated_prepare_approval_real_executive_and_terminal_artifacts(tmp_path):
++    store, config, sim_config, monitor = prepare(tmp_path)
++    review = store.load()
++    assert review["version"] == VERSION == "agent-speedup-v2-user-check-7.1"
++    frame = review["preparation"]["view_frame"]
++    assert frame["available"] and frame["right_xy"] == [0., 1.]
++    store.approve(expected_revision=0, reviewed_steps=[0])
++    transport, locks = ExecutiveTransport(), []
++
++    def client_factory(*args, **kwargs):
++        locks.append(kwargs["lock"])
++        kwargs["transport"] = transport
++        return AgentFirstV2Client(*args, **kwargs)
++
++    sim = CalibratedFakeSim(prompt=TASK.prompt, success_at=2)
++    result = runner.execute_reviewed(
++        tmp_path / "trial", review_dir=store.path, config=config, sim_config=sim_config,
++        task_key=TASK.key, episode_index=0, monitor_options=monitor, video=False,
++        token_provider=lambda: "offline", client_factory=client_factory, sim_factory=lambda _: sim)
++    assert result["status"] == "success", result.get("error")
++    assert locks[0].view_frame == frame
++    assert len(transport.calls) == 2
++    for i, payload in enumerate(transport.calls):
++        fields = current_fields(payload)
++        compact = fields["context"]["region_directions"]
++        assert compact["regions"]["E"]["direction_world_xy"] == [0., 1.]
++        if i == 0:
++            assert fields["reviewed_goal_contract"]["task_contract"]["region_directions"] == compact
++        else:
++            assert "reviewed_goal_contract" not in fields
++    assert result["direction_semantics"] == "external_view_v1"
++    manifest = json.loads((tmp_path / "trial/manifest.json").read_text())
++    assert manifest["configuration"]["direction_semantics"] == "external_view_v1"
++    diagnostic = json.loads((tmp_path / "trial/direction_review.json").read_text())
++    assert diagnostic["display_diagnostics"][0]["part_id"] == "E"
++    events = [json.loads(line) for line in (tmp_path / "trial/trace.jsonl").read_text().splitlines()]
++    assert any(row["event"] == "direction_review" for row in events)
++
++
++def test_tampered_frozen_basis_breaks_review_integrity(tmp_path):
++    store, *_ = prepare(tmp_path)
++    store.approve(expected_revision=0, reviewed_steps=[0])
++    path = store.path / "review.json"
++    data = json.loads(path.read_text())
++    data["preparation"]["view_frame"]["right_xy"] = [1., 0.]
++    path.write_text(json.dumps(data))
++    with pytest.raises(ReviewError):
++        store.load()
++
++
++def test_old_version_cannot_load_under_uc71(tmp_path):
++    store, *_ = prepare(tmp_path)
++    path = store.path / "review.json"
++    data = json.loads(path.read_text())
++    data["version"] = "agent-speedup-v2-user-check-7"
++    path.write_text(json.dumps(data))
++    with pytest.raises(ReviewError, match="version"):
++        store.load()
++
++
++def test_robocasa_frame_survives_actual_prepare_claim_and_factory(tmp_path, monkeypatch):
++    source = Path(coffee.runner.ROOT) / coffee.runner.RUNNER
++    monkeypatch.setattr(coffee.runner, "runtime_inventory", lambda *_: {
++        str(source): hashlib.sha256(source.read_bytes()).hexdigest()})
++    config, sim_config = coffee.runner.reviewed.base.configuration(), coffee.runner.RoboCasaConfig()
++    args = dict(config=config, sim_config=sim_config, token_provider=lambda: "offline")
++    review = coffee.runner.prepare(tmp_path / "review", **args,
++        sim_factory=lambda _: coffee.FakeSim(), client_factory=coffee.FakeClient)
++    frame = review["preparation"]["view_frame"]
++    assert frame["right_xy"] == [1., 0.] and frame["away_xy"] == [0., 1.]
++    coffee.runner.ReviewStore(tmp_path / "review").approve(expected_revision=0, reviewed_steps=[0])
++    coffee.FakePolicy.instances = []
++    result = coffee.runner.execute(tmp_path / "trial", review_dir=tmp_path / "review", **args,
++        sim_factory=lambda _: coffee.FakeSim(), client_factory=coffee.FakeClient,
++        policy_factory=coffee.FakePolicy, video=False)
++    assert result["task_success"]
++    assert coffee.FakePolicy.instances[0].lock.view_frame == frame
++    assert result["direction_semantics"] == "external_view_v1"
++    plan_prompt = coffee.runner.RoboCasaPlanClient(task_prompt=coffee.runner.TASK_PROMPT)._instruction_text["plan"]
++    assert "No camera calibration is supplied" in plan_prompt
++    assert "calibration supplied with each image" not in plan_prompt
+--- a/tests/test_agent_speedup_v2_user_check_view_frame.py
++++ b/tests/test_agent_speedup_v2_user_check_view_frame.py
+@@ -0,0 +1,263 @@
++"""uc7.1 camera semantics and actual observed-region solver, no sim/model calls."""
++from copy import deepcopy
++import math
++from types import SimpleNamespace
++
++import numpy as np
++import pytest
++
++from gpt_field.agent_speedup_v2_types import HF_SOURCES, HeightField, Meas, PartRecord
++from gpt_field.agent_speedup_v2_user_check_spatial import (
++    DIRECTION_RELATIONS, DIRECTION_SEMANTICS, build_view_frame, ground_region,
++    install_spatial_spec, region_directions, validate_view_frame,
++)
++
++
++# Camera-only snapshots from recorded, already validated geometry. No task or
++# evaluator information is passed into the production helper.
++# runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/task_6/trial/requests/000001-*.request.json
++LIBERO_R = [[-1.7233905013069872e-6, -0.5287697435529835, 0.8487653140297038],
++            [0.9999999999985034, -7.823149652530503e-7, 1.5430955956352577e-6],
++            [-1.5194045527300304e-7, 0.848765314031093, 0.5287697435535403]]
++# runs/robocasa_coffee_user_check_001/trial/initial_sensors.json
++ROBOCASA_R = [[0.9792973845320813, 0.09726115808109848, -0.17752999683813428],
++              [-0.20197362855829382, 0.5281292976892554, -0.8247945794494831],
++              [0.013538316572630271, 0.8435755520704573, 0.5368398289372741]]
++
++
++def geometry(rotation=LIBERO_R, *, position=(0.6065773716836134, 0.0, 0.96), robocasa=False):
++    fovy = 60.0 if robocasa else 45.0
++    return {"image": {"width": 512, "height": 512, "pixel_axes": "u_right_v_down",
++                      "pixel_centers": "integer", "source_transform": "raw_mujoco_rgb_vertical_flip_no_crop"},
++            "cameras": {"external": {
++                "mujoco_name": "robot0_agentview_left" if robocasa else "agentview",
++                "pose_source": "synchronized_robot_mounted_camera" if robocasa else "fixed_world_camera",
++                "fovy_deg": fovy, "focal_length_px": [256 / math.tan(math.radians(fovy / 2))] * 2,
++                "principal_point_px": [255.5, 255.5], "position_world_m": list(position),
++                "rotation_world_from_camera": np.asarray(rotation).tolist()}}}
++
++
++def camera_rotation(yaw, elevation):
++    """Independent look-at basis: yaw is the horizontal camera-to-scene heading."""
++    forward = np.array([math.cos(yaw) * math.cos(elevation),
++                        math.sin(yaw) * math.cos(elevation), -math.sin(elevation)])
++    right = np.array([math.sin(yaw), -math.cos(yaw), 0.0])
++    up = np.cross(right, forward)
++    return np.column_stack([right, up, -forward])
++
++
++def test_recorded_libero_calibration_and_direction_contract():
++    original = geometry()
++    frame = build_view_frame(original)
++    assert frame["available"] and frame["direction_semantics"] == DIRECTION_SEMANTICS
++    assert frame["right_xy"] == pytest.approx([0, 1], abs=3e-6)
++    assert frame["away_xy"] == pytest.approx([-1, 0], abs=3e-6)
++    assert frame["roll_deg"] == pytest.approx(0, abs=2e-5)
++    assert frame["external_camera"] == original["cameras"]["external"]
++    assert frame["image"] == original["image"]
++    contract = region_directions(frame, [{"id": "E", "relation": "right_of", "anchor": "C"}])
++    assert contract["regions"]["E"]["direction_world_xy"] == frame["right_xy"]
++    assert contract["regions"]["E"]["anchor"] == "C"
++    # No image flip or mutable shared list can change the approved basis.
++    original["cameras"]["external"]["rotation_world_from_camera"][0][0] = 9
++    contract["frame"]["right_xy"][0] = 9
++    contract["regions"]["E"]["direction_world_xy"][1] = 9
++    assert validate_view_frame(frame) == frame
++
++
++def test_recorded_robocasa_rotation_is_not_a_libero_axis_constant():
++    frame = build_view_frame(geometry(ROBOCASA_R, position=(0.09, -1.3, 1.75), robocasa=True))
++    assert frame["right_xy"] == pytest.approx([0.979, -0.202], abs=5e-4)
++    assert frame["away_xy"] == pytest.approx([0.202, 0.979], abs=5e-4)
++    assert frame["roll_deg"] == pytest.approx(0.919, abs=0.001)
++    assert frame["external_camera"]["pose_source"] == "synchronized_robot_mounted_camera"
++    assert validate_view_frame(frame) == frame
++
++
++@pytest.mark.parametrize("yaw", [-2.1, -0.4, 0.0, 1.3, math.pi])
++@pytest.mark.parametrize("elevation", [math.radians(8), math.radians(45), math.radians(88), math.pi / 2])
++def test_viewer_basis_tracks_camera_yaw_and_elevation(yaw, elevation):
++    rotation = camera_rotation(yaw, elevation)
++    frame = build_view_frame(geometry(rotation, position=(1.7, -0.8, 1.3)))
++    expected_right = [math.sin(yaw), -math.cos(yaw)]
++    expected_away = [math.cos(yaw), math.sin(yaw)]
++    assert frame["available"]
++    assert frame["right_xy"] == pytest.approx(expected_right, abs=1e-14)
++    assert frame["away_xy"] == pytest.approx(expected_away, abs=1e-14)
++    assert frame["relation_directions"]["left_of"] == pytest.approx(-np.asarray(expected_right))
++    assert frame["relation_directions"]["front_of"] == pytest.approx(-np.asarray(expected_away))
++    # Translate the camera without turning it: one global reviewed basis remains.
++    assert build_view_frame(geometry(rotation, position=(-0.5, 2.0, 3.0)))["right_xy"] == frame["right_xy"]
++
++
++@pytest.mark.parametrize("roll", [-45, -15, 15, 45])
++def test_rolled_camera_records_roll_and_preserves_centre_word_signs(roll):
++    rad = math.radians(roll)
++    rotation = camera_rotation(math.pi, math.radians(32))
++    optical_roll = np.array([[math.cos(rad), -math.sin(rad), 0],
++                             [math.sin(rad), math.cos(rad), 0], [0, 0, 1]])
++    rotation = rotation @ optical_roll
++    frame = build_view_frame(geometry(rotation))
++    assert frame["roll_deg"] == pytest.approx(roll)
++    # Word signs are asserted only at an optical-axis intersection on support,
++    # not as an unsupported claim of global pixel alignment under roll.
++    for relation, pixel_axis, sign in (("right_of", 0, 1), ("left_of", 0, -1),
++                                       ("behind", 1, 1), ("front_of", 1, -1)):
++        world_direction = np.r_[frame["relation_directions"][relation], 0.0]
++        assert sign * float(rotation[:, pixel_axis] @ world_direction) > 0
++
++
++def test_inverted_view_is_diagnostic_only_and_top_down_has_no_roll():
++    inverted = camera_rotation(math.pi, math.radians(30)) @ np.diag([-1.0, -1.0, 1.0])
++    frame = build_view_frame(geometry(inverted))
++    assert frame["available"] and frame["inverted"]
++    assert frame["right_xy"] == pytest.approx([0, -1], abs=1e-14)
++    assert frame["away_xy"] == pytest.approx([1, 0], abs=1e-14)
++    assert abs(frame["roll_deg"]) == pytest.approx(180)
++    top_down = build_view_frame(geometry(np.diag([1.0, -1.0, -1.0])))
++    assert top_down["available"] and top_down["roll_deg"] is None
++    assert top_down["away_xy"] == [0.0, 1.0]
++
++
++def test_missing_and_degenerate_frames_do_not_fall_back_to_world_axes():
++    vertical_x = [[0, 0, -1], [0, 1, 0], [1, 0, 0]]
++    frame = build_view_frame(geometry(vertical_x))
++    assert not frame["available"] and frame["reason"] == "camera_x_vertical"
++    assert frame["calibration_sha256"] and frame["relation_directions"] == {}
++    assert validate_view_frame(frame) == frame
++    for missing in (None, {}, {"cameras": {}}, {"cameras": {"wrist": {}}}):
++        absent = build_view_frame(missing)
++        assert not absent["available"] and absent["reason"] == "no_external_calibration"
++    missing_contract = region_directions(None, [{"id": "E", "relation": "right_of", "anchor": "C"}])
++    assert not missing_contract["available"]
++    assert missing_contract["regions"]["E"]["direction_world_xy"] is None
++    assert validate_view_frame(None) == build_view_frame(None)
++
++
++def test_frame_always_sent_without_regions_and_nondirectional_relations_unchanged():
++    frame = build_view_frame(geometry())
++    for regions in ([], [{"id": "A", "relation": "on", "anchor": None}],
++                    [{"id": "A", "relation": "near", "anchor": "B"}]):
++        compact = region_directions(frame, regions)
++        assert compact["frame"]["right_xy"] == frame["right_xy"]
++        assert compact["regions"] == {} and compact["available"]
++
++
++@pytest.mark.parametrize("field,value", [("right_xy", [1, 0]), ("calibration_sha256", "0" * 64),
++                                         ("direction_semantics", "world_axes_legacy"), ("roll_deg", 999)])
++def test_serialized_frame_rejects_tampered_semantic_evidence(field, value):
++    frame = build_view_frame(geometry())
++    frame[field] = value
++    with pytest.raises(ValueError):
++        validate_view_frame(frame)
++
++
++def test_malformed_camera_is_not_sliced_before_its_shape_is_known():
++    with pytest.raises(ValueError, match="3 by 3"):
++        build_view_frame(geometry([[1, 0], [0, 1]]))
++    with pytest.raises(ValueError):
++        build_view_frame(geometry([[float("nan"), 0, 0], [0, 1, 0], [0, 0, 1]]))
++
++
++def region_context(relation="right_of", frame=True, bounds=None):
++    hf = HeightField.empty((0.1, 0.0), half_extent_m=0.32)
++    hf.z[:] = 0.44
++    hf.sigma[:] = 0.001
++    hf.known[:] = True
++    hf.source[:] = HF_SOURCES.index("plane")
++    hf.stamp[:] = 0
++    theta = np.linspace(0, 2 * np.pi, 64, endpoint=False)
++    poly = np.column_stack([0.149 + 0.0732 * np.cos(theta), 0.0057 + 0.0732 * np.sin(theta)])
++    # A flat measured anchor; its footprint still supplies directional extent.
++    anchor = PartRecord("C", "plate: body", "free", frozenset({"ref"}),
++                        xyz=np.array([0.149, 0.0057, 0.444]), sigma_h_m=0.001,
++                        top_z=Meas(0.444, 0.001, "dense"), region_xy=poly,
++                        status="registered", registration_step=0)
++    record = PartRecord("E", "table: right of plate", "fixed", frozenset({"ref"}))
++    scene = SimpleNamespace(hf=hf, parts={"C": anchor, "E": record}, planes=[{"z": Meas(0.44, 0.001, "plane")}])
++    spec = {"id": "E", "support": "observed_plane", "anchor": "C", "relation": relation,
++            "frame": "world", "bounds_xy_m": bounds}
++    install_spatial_spec(scene, {"regions": [spec]})
++    ctx = SimpleNamespace(scene=scene, step=4, holding=None)
++    if frame is True:
++        # Exact LIBERO heading: use no floating yaw trig at the boundary.
++        rotation = [[0, -0.6, 0.8], [1, 0, 0], [0, 0.8, 0.6]]
++        ctx.user_check_view_frame = build_view_frame(geometry(rotation))
++    elif isinstance(frame, dict):
++        ctx.user_check_view_frame = frame
++    return ctx, poly
++
++
++def region_mask(ctx):
++    cells = ctx.scene.parts["E"].region_cells
++    mask = np.zeros(ctx.scene.hf.shape, bool)
++    mask[cells[:, 0], cells[:, 1]] = True
++    return mask
++
++
++@pytest.mark.parametrize("relation", DIRECTION_RELATIONS)
++def test_actual_solver_changes_same_label_to_viewer_half_plane(relation):
++    ctx, poly = region_context(relation)
++    hf = ctx.scene.hf
++    gy, gx = np.indices(hf.shape)
++    x, y = hf.origin_xy[0] + gx * hf.cell_m, hf.origin_xy[1] + gy * hf.cell_m
++    # Independent old-axis masks: the permutation is the intended semantic change.
++    expected = {"right_of": y > poly[:, 1].max(), "left_of": y < poly[:, 1].min(),
++                "behind": x < poly[:, 0].min(), "front_of": x > poly[:, 0].max()}[relation]
++    result = ground_region(ctx, "E")
++    assert result["ready"], result
++    np.testing.assert_array_equal(region_mask(ctx), expected)
++    assert result["direction_world_xy"] == ctx.user_check_view_frame["relation_directions"][relation]
++    assert result["view_frame"] == region_directions(ctx.user_check_view_frame, [])["frame"]
++
++
++def test_actual_solver_uses_oblique_robocasa_direction_and_ctx_survives_scene_rebuild():
++    frame = build_view_frame(geometry(ROBOCASA_R, robocasa=True))
++    ctx, poly = region_context(frame=frame)
++    # Rebuilding scene must not replace the approved frame with camera/world axes.
++    ctx.scene = deepcopy(ctx.scene)
++    result = ground_region(ctx, "E")
++    assert result["ready"]
++    points = ctx.scene.hf.origin_xy + ctx.scene.parts["E"].region_cells[:, ::-1] * ctx.scene.hf.cell_m
++    direction = np.asarray(frame["right_xy"])
++    assert np.all(points @ direction > np.max(poly @ direction))
++    # A world +x test would include a below-oblique-boundary cell; ensure it does not.
++    point = np.array([0.24, 0.20])
++    assert point[0] > poly[:, 0].max()
++    assert not region_mask(ctx)[ctx.scene.hf.index(point)]
++
++
++def test_actual_solver_without_frame_invalidates_previous_directional_geometry():
++    ctx, _ = region_context()
++    assert ground_region(ctx, "E")["ready"]
++    del ctx.user_check_view_frame
++    result = ground_region(ctx, "E")
++    assert not result["ready"] and result["reason"] == "view_frame_unavailable"
++    assert ctx.scene.parts["E"].region_cells is None
++    assert ctx.scene.parts["E"].status == "seeded"
++
++
++def test_observed_region_keeps_bounds_unknown_cells_and_obstacles():
++    ctx, _ = region_context(bounds=[[-0.1, 0.1], [0.08, 0.2]])
++    hf = ctx.scene.hf
++    unknown = hf.index((0.1, 0.12))
++    obstacle_fill = hf.index((0.11, 0.12))
++    hf.known[unknown] = False
++    hf.source[obstacle_fill] = HF_SOURCES.index("obstacle")
++    obstacle_poly = np.array([[0.15, 0.14], [0.18, 0.14], [0.18, 0.17], [0.15, 0.17]])
++    ctx.scene.parts["B"] = PartRecord("B", "mug: body", "free", frozenset(),
++        xyz=np.array([0.16, 0.15, 0.55]), sigma_h_m=0.001, top_z=Meas(0.55, 0.001, "dense"),
++        region_xy=obstacle_poly, status="registered", registration_step=0)
++    result = ground_region(ctx, "E")
++    assert result["ready"] and result["excluded_objects"] == ["B"]
++    mask = region_mask(ctx)
++    assert not mask[unknown] and not mask[obstacle_fill]
++    assert not mask[hf.index((0.16, 0.15))]
++    points = hf.origin_xy + ctx.scene.parts["E"].region_cells[:, ::-1] * hf.cell_m
++    assert points[:, 0].min() >= 0.049 and points[:, 0].max() <= 0.249
++    assert points[:, 1].min() >= 0.0857 and points[:, 1].max() <= 0.2057
++
++
++def test_on_region_does_not_require_direction_calibration():
++    ctx, _ = region_context("on", frame=False)
++    assert ground_region(ctx, "E")["ready"]

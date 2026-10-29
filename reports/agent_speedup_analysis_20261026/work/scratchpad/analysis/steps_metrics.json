@@ -1,0 +1,5369 @@
+{
+ "t0_001": {
+  "n_steps": 1107,
+  "kinds": {
+   "framework_fragment:execute_fragment": 1107
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 383,
+   "move_to_pose|contact": 103,
+   "approach|contact": 293,
+   "set_gripper|contact": 57,
+   "move_relative|contact": 228,
+   "move_relative|transit": 43
+  },
+  "motion_steps": 1050,
+  "transit_steps": 426,
+  "contact_steps": 624,
+  "grip_steps": 57,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 119,
+  "tail_err_lt1cm": 165,
+  "transit_delta_p50": 0.005103920523602685,
+  "transit_delta_p90": 0.005257690956436412,
+  "transit_delta_max": 0.005460464225766456,
+  "contact_delta_p50": 0.0012311680575992742,
+  "contact_delta_p90": 0.0013037264902603094,
+  "path_m": 2.6047526609014455,
+  "path_motion_m": 2.599120372526659,
+  "path_transit_m": 1.8862762535988535,
+  "path_contact_m": 0.7128441189278056,
+  "frag_reasons": {
+   "fragment_complete": 9,
+   "segment_stall": 4,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 9,
+   "move_to_pose|contact|pose_arrived": 3,
+   "approach|contact|pose_arrived": 3,
+   "set_gripper|contact|gap_stable": 4,
+   "move_relative|contact|pose_arrived": 5,
+   "approach|contact|segment_stall": 3,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|transit|segment_stall": 1,
+   "move_relative|transit|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 39,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 139,
+    "budget": 235,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      38,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      51,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      38,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 127,
+    "budget": 235,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      40,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "segment_stall",
+    "executed": 85,
+    "budget": 190,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      19,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      66,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 49,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      17,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      32,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 155,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      52,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      17,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 120,
+    "budget": 215,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      25,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      50,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      33,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 87,
+    "budget": 170,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      52,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 43,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      43,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 96,
+    "budget": 145,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      65,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_relative",
+      "contact",
+      31,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "segment_stall",
+    "executed": 72,
+    "budget": 170,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      55,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      17,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "fragment_complete",
+    "executed": 101,
+    "budget": 155,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      60,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      41,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "segment_stall",
+    "executed": 53,
+    "budget": 160,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      53,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000014",
+    "reason": null,
+    "executed": 27,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      18,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      9,
+      65,
+      null
+     ]
+    ],
+    "pending": 0
+   }
+  ]
+ },
+ "t1_001": {
+  "n_steps": 897,
+  "kinds": {
+   "framework_fragment:execute_fragment": 897
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 498,
+   "move_to_pose|contact": 206,
+   "set_gripper|contact": 46,
+   "move_relative|contact": 147
+  },
+  "motion_steps": 851,
+  "transit_steps": 498,
+  "contact_steps": 353,
+  "grip_steps": 46,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 63,
+  "tail_err_lt1cm": 96,
+  "transit_delta_p50": 0.0051528380692209075,
+  "transit_delta_p90": 0.005241319517042567,
+  "transit_delta_max": 0.00546622499449651,
+  "contact_delta_p50": 0.0012930786883447697,
+  "contact_delta_p90": 0.0013180625995922327,
+  "path_m": 2.718026128203663,
+  "path_motion_m": 2.7142923196492026,
+  "path_transit_m": 2.308268935233914,
+  "path_contact_m": 0.40602338441528885,
+  "frag_reasons": {
+   "fragment_complete": 8,
+   "segment_stall": 4,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 13,
+   "move_to_pose|contact|segment_stall": 3,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|contact|pose_arrived": 3,
+   "move_to_pose|transit|segment_stall": 1,
+   "move_to_pose|contact|pose_arrived": 2,
+   "set_gripper|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 34,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "segment_stall",
+    "executed": 66,
+    "budget": 200,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      20,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      46,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 56,
+    "budget": 90,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      44,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 85,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      37,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      48,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "segment_stall",
+    "executed": 59,
+    "budget": 225,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      24,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      35,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 54,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      18,
+      25,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      36,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 102,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "segment_stall",
+    "executed": 38,
+    "budget": 210,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      38,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 3
+   },
+   {
+    "call": "000009",
+    "reason": "fragment_complete",
+    "executed": 130,
+    "budget": 185,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      59,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      13,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 73,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      18,
+      40,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      43,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 131,
+    "budget": 210,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      43,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      47,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      41,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "segment_stall",
+    "executed": 63,
+    "budget": 200,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      17,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      46,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000013",
+    "reason": null,
+    "executed": 6,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      6,
+      30,
+      null
+     ]
+    ],
+    "pending": 1
+   }
+  ]
+ },
+ "t2_002": {
+  "n_steps": 621,
+  "kinds": {
+   "framework_fragment:execute_fragment": 621
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 211,
+   "move_to_pose|contact": 229,
+   "approach|contact": 78,
+   "set_gripper|contact": 42,
+   "move_relative|transit": 30,
+   "move_relative|contact": 31
+  },
+  "motion_steps": 579,
+  "transit_steps": 241,
+  "contact_steps": 338,
+  "grip_steps": 42,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 75,
+  "tail_err_lt1cm": 140,
+  "transit_delta_p50": 0.005138236940583128,
+  "transit_delta_p90": 0.0052683294316590475,
+  "transit_delta_max": 0.005436330109007818,
+  "contact_delta_p50": 0.0012409273995044445,
+  "contact_delta_p90": 0.0013450022256502963,
+  "path_m": 1.4865386333487196,
+  "path_motion_m": 1.4837854622901943,
+  "path_transit_m": 1.1271745209951871,
+  "path_contact_m": 0.35661094129500714,
+  "frag_reasons": {
+   "fragment_complete": 12,
+   "segment_stall": 1,
+   "target_envelope_rejected": 1,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 6,
+   "move_to_pose|contact|pose_arrived": 4,
+   "approach|contact|pose_arrived": 3,
+   "set_gripper|contact|gap_stable": 3,
+   "move_to_pose|contact|segment_stall": 1,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|transit|target_envelope_rejected": 1,
+   "move_relative|contact|pose_arrived": 1,
+   "approach|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 48,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      48,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 65,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 41,
+    "budget": 75,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      29,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 20,
+    "budget": 55,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      20,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "segment_stall",
+    "executed": 32,
+    "budget": 55,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      32,
+      55,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "target_envelope_rejected",
+    "executed": 48,
+    "budget": 190,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      18,
+      25,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      30,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      0,
+      100,
+      "target_envelope_rejected"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 16,
+    "budget": 55,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      16,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "fragment_complete",
+    "executed": 63,
+    "budget": 65,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      63,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 43,
+    "budget": 75,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      30,
+      45,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 77,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      31,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      46,
+      85,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "fragment_complete",
+    "executed": 56,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      56,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 20,
+    "budget": 45,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      20,
+      45,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "fragment_complete",
+    "executed": 27,
+    "budget": 45,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      27,
+      45,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000015",
+    "reason": null,
+    "executed": 3,
+    "budget": 70,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      3,
+      30,
+      null
+     ]
+    ],
+    "pending": 2
+   }
+  ]
+ },
+ "t3_003": {
+  "n_steps": 1207,
+  "kinds": {
+   "framework_fragment:execute_fragment": 1197,
+   "agent_owned:local_motion": 10
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 605,
+   "move_to_pose|contact": 212,
+   "None|None": 10,
+   "move_relative|transit": 15,
+   "set_gripper|contact": 51,
+   "move_relative|contact": 129,
+   "approach|contact": 185
+  },
+  "motion_steps": 1146,
+  "transit_steps": 620,
+  "contact_steps": 526,
+  "grip_steps": 51,
+  "wait_steps": 0,
+  "direct_steps": 10,
+  "tiny_lt1mm": 368,
+  "tail_err_lt1cm": 286,
+  "transit_delta_p50": 0.0030240720917589373,
+  "transit_delta_p90": 0.005214416244539819,
+  "transit_delta_max": 0.006345456843695604,
+  "contact_delta_p50": 0.0011948968893672075,
+  "contact_delta_p90": 0.0013665159267713454,
+  "path_m": 2.312687025559818,
+  "path_motion_m": 2.288523209656228,
+  "path_transit_m": 1.727088415492412,
+  "path_contact_m": 0.5614347941638163,
+  "frag_reasons": {
+   "fragment_complete": 11,
+   "segment_stall": 8,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 12,
+   "move_to_pose|contact|segment_stall": 1,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|contact|pose_arrived": 3,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|contact|pose_arrived": 3,
+   "move_to_pose|transit|segment_stall": 5,
+   "approach|contact|pose_arrived": 2,
+   "approach|contact|segment_stall": 2,
+   "approach|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      58,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "segment_stall",
+    "executed": 52,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      25,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      27,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 39,
+    "budget": 110,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      16,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      23,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 126,
+    "budget": 185,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      53,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 45,
+    "budget": 85,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      15,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      30,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 68,
+    "budget": 135,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      22,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      46,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "segment_stall",
+    "executed": 71,
+    "budget": 90,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      25,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      52,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 28,
+    "budget": 165,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      28,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000010",
+    "reason": "segment_stall",
+    "executed": 53,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      100,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "segment_stall",
+    "executed": 23,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      23,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 88,
+    "budget": 185,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      20,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "fragment_complete",
+    "executed": 56,
+    "budget": 75,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      56,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000015",
+    "reason": "segment_stall",
+    "executed": 23,
+    "budget": 95,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      23,
+      95,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000016",
+    "reason": "fragment_complete",
+    "executed": 104,
+    "budget": 160,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      35,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000017",
+    "reason": "fragment_complete",
+    "executed": 72,
+    "budget": 95,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      72,
+      95,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000018",
+    "reason": "segment_stall",
+    "executed": 35,
+    "budget": 95,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      35,
+      95,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000019",
+    "reason": "segment_stall",
+    "executed": 127,
+    "budget": 200,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      65,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      32,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      30,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000020",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000021",
+    "reason": "fragment_complete",
+    "executed": 66,
+    "budget": 95,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      66,
+      95,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000022",
+    "reason": null,
+    "executed": 5,
+    "budget": 40,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      5,
+      40,
+      null
+     ]
+    ],
+    "pending": 0
+   }
+  ]
+ },
+ "t3_005": {
+  "n_steps": 744,
+  "kinds": {
+   "framework_fragment:execute_fragment": 729,
+   "agent_owned:local_motion": 15
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 571,
+   "move_to_pose|contact": 21,
+   "move_relative|transit": 70,
+   "None|None": 15,
+   "set_gripper|contact": 51,
+   "wait|contact": 16
+  },
+  "motion_steps": 662,
+  "transit_steps": 641,
+  "contact_steps": 21,
+  "grip_steps": 51,
+  "wait_steps": 16,
+  "direct_steps": 15,
+  "tiny_lt1mm": 224,
+  "tail_err_lt1cm": 156,
+  "transit_delta_p50": 0.003738282900365963,
+  "transit_delta_p90": 0.005250493711855952,
+  "transit_delta_max": 0.005599509963322117,
+  "contact_delta_p50": 0.0001406335975799136,
+  "contact_delta_p90": 0.00124415587451965,
+  "path_m": 1.9643284322496102,
+  "path_motion_m": 1.8873102844891316,
+  "path_transit_m": 1.8747465220288344,
+  "path_contact_m": 0.012563762460297232,
+  "frag_reasons": {
+   "fragment_complete": 9,
+   "segment_stall": 7,
+   "observation_required": 1,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 11,
+   "move_to_pose|contact|segment_stall": 1,
+   "move_relative|transit|pose_arrived": 4,
+   "set_gripper|contact|gap_stable": 3,
+   "move_to_pose|transit|segment_stall": 6,
+   "wait|contact|wait_elapsed": 1,
+   "move_to_pose|transit|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 55,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      55,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 28,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      28,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "segment_stall",
+    "executed": 21,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      21,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 84,
+    "budget": 200,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      15,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 10,
+    "budget": 60,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      10,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 24,
+    "budget": 85,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      15,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      9,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "segment_stall",
+    "executed": 92,
+    "budget": 165,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      24,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      68,
+      100,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 41,
+    "budget": 65,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      41,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "segment_stall",
+    "executed": 63,
+    "budget": 65,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      63,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "observation_required",
+    "executed": 34,
+    "budget": 120,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      35,
+      "gap_stable"
+     ],
+     [
+      "wait",
+      "contact",
+      15,
+      15,
+      "wait_elapsed"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 30,
+    "budget": 80,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      30,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "fragment_complete",
+    "executed": 74,
+    "budget": 170,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      24,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      31,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000016",
+    "reason": "fragment_complete",
+    "executed": 16,
+    "budget": 70,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      16,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000017",
+    "reason": "segment_stall",
+    "executed": 24,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      24,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000018",
+    "reason": "segment_stall",
+    "executed": 74,
+    "budget": 195,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      17,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      32,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      25,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000019",
+    "reason": "segment_stall",
+    "executed": 26,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      26,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000020",
+    "reason": "fragment_complete",
+    "executed": 19,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      19,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000021",
+    "reason": null,
+    "executed": 14,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      14,
+      80,
+      null
+     ]
+    ],
+    "pending": 0
+   }
+  ]
+ },
+ "t4_001": {
+  "n_steps": 770,
+  "kinds": {
+   "agent_owned:local_motion": 1,
+   "framework_fragment:execute_fragment": 769
+  },
+  "skill_profile": {
+   "None|None": 1,
+   "move_to_pose|transit": 224,
+   "move_to_pose|contact": 319,
+   "move_relative|contact": 86,
+   "set_gripper|contact": 43,
+   "move_relative|transit": 59,
+   "approach|contact": 38
+  },
+  "motion_steps": 726,
+  "transit_steps": 283,
+  "contact_steps": 443,
+  "grip_steps": 43,
+  "wait_steps": 0,
+  "direct_steps": 1,
+  "tiny_lt1mm": 83,
+  "tail_err_lt1cm": 164,
+  "transit_delta_p50": 0.005082031503252597,
+  "transit_delta_p90": 0.00523503691165743,
+  "transit_delta_max": 0.0052795685561522285,
+  "contact_delta_p50": 0.001241348983457372,
+  "contact_delta_p90": 0.0013012529841502944,
+  "path_m": 1.709946938831875,
+  "path_motion_m": 1.7071963202579448,
+  "path_transit_m": 1.188882204316956,
+  "path_contact_m": 0.5183141159409889,
+  "frag_reasons": {
+   "fragment_complete": 12,
+   "segment_stall": 2,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 6,
+   "move_to_pose|contact|segment_stall": 1,
+   "move_relative|contact|pose_arrived": 3,
+   "move_to_pose|contact|pose_arrived": 6,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|transit|pose_arrived": 3,
+   "approach|contact|segment_stall": 1,
+   "approach|contact|pose_arrived": 1,
+   "approach|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "segment_stall",
+    "executed": 28,
+    "budget": 70,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      28,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 56,
+    "budget": 100,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      27,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      29,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 54,
+    "budget": 70,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      54,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 42,
+    "budget": 90,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      40,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      29,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 50,
+    "budget": 150,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      15,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 90,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      36,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      54,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 16,
+    "budget": 135,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      16,
+      35,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 49,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      30,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 155,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      45,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      24,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "fragment_complete",
+    "executed": 55,
+    "budget": 70,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      55,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 130,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      16,
+      40,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      13,
+      40,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      29,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "fragment_complete",
+    "executed": 64,
+    "budget": 150,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      15,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000015",
+    "reason": "fragment_complete",
+    "executed": 62,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      62,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000016",
+    "reason": null,
+    "executed": 7,
+    "budget": 135,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      7,
+      35,
+      null
+     ]
+    ],
+    "pending": 2
+   }
+  ]
+ },
+ "t5_001": {
+  "n_steps": 399,
+  "kinds": {
+   "framework_fragment:execute_fragment": 399
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 206,
+   "move_to_pose|contact": 142,
+   "set_gripper|contact": 12,
+   "move_relative|contact": 39
+  },
+  "motion_steps": 387,
+  "transit_steps": 206,
+  "contact_steps": 181,
+  "grip_steps": 12,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 14,
+  "tail_err_lt1cm": 51,
+  "transit_delta_p50": 0.0050747102451959335,
+  "transit_delta_p90": 0.005258087882994847,
+  "transit_delta_max": 0.0053037784366300935,
+  "contact_delta_p50": 0.0013089921408553403,
+  "contact_delta_p90": 0.0013383698083129821,
+  "path_m": 1.2112621853481338,
+  "path_motion_m": 1.2100571575425292,
+  "path_transit_m": 0.9822273391117142,
+  "path_contact_m": 0.22782981843081496,
+  "frag_reasons": {
+   "fragment_complete": 6,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 5,
+   "move_to_pose|contact|pose_arrived": 3,
+   "set_gripper|contact|gap_stable": 1,
+   "move_relative|contact|pose_arrived": 1,
+   "move_to_pose|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 44,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      44,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 28,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      28,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 98,
+    "budget": 170,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      48,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      38,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 100,
+    "budget": 180,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      47,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 34,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 91,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      52,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      39,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": null,
+    "executed": 4,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      4,
+      85,
+      null
+     ]
+    ],
+    "pending": 0
+   }
+  ]
+ },
+ "t5_002": {
+  "n_steps": 497,
+  "kinds": {
+   "framework_fragment:execute_fragment": 497
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 254,
+   "approach|contact": 141,
+   "set_gripper|contact": 18,
+   "move_relative|contact": 72,
+   "move_to_pose|contact": 12
+  },
+  "motion_steps": 479,
+  "transit_steps": 254,
+  "contact_steps": 225,
+  "grip_steps": 18,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 109,
+  "tail_err_lt1cm": 112,
+  "transit_delta_p50": 0.005039327487698036,
+  "transit_delta_p90": 0.005245705619192436,
+  "transit_delta_max": 0.005543500967343812,
+  "contact_delta_p50": 0.001241798934074343,
+  "contact_delta_p90": 0.00131696745342246,
+  "path_m": 1.2026385157836337,
+  "path_motion_m": 1.2009021762998249,
+  "path_transit_m": 0.9498524502003811,
+  "path_contact_m": 0.2510497260994438,
+  "frag_reasons": {
+   "fragment_complete": 7,
+   "segment_stall": 2,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 7,
+   "approach|contact|pose_arrived": 1,
+   "set_gripper|contact|gap_stable": 1,
+   "move_relative|contact|pose_arrived": 2,
+   "approach|contact|segment_stall": 2,
+   "move_to_pose|contact|pose_arrived": 1,
+   "set_gripper|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 39,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 31,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      31,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 101,
+    "budget": 150,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      51,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      38,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 101,
+    "budget": 190,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      45,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      56,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 155,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 14,
+    "budget": 60,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      14,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "segment_stall",
+    "executed": 41,
+    "budget": 75,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      41,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 45,
+    "budget": 100,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      34,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      11,
+      45,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 50,
+    "budget": 80,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      50,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": null,
+    "executed": 6,
+    "budget": 120,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      6,
+      30,
+      null
+     ]
+    ],
+    "pending": 2
+   }
+  ]
+ },
+ "t6_009": {
+  "n_steps": 1544,
+  "kinds": {
+   "framework_fragment:execute_fragment": 1538,
+   "agent_owned:local_motion": 6
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 509,
+   "move_to_pose|contact": 615,
+   "set_gripper|contact": 120,
+   "move_relative|contact": 182,
+   "approach|contact": 37,
+   "move_relative|transit": 75,
+   "None|None": 6
+  },
+  "motion_steps": 1418,
+  "transit_steps": 584,
+  "contact_steps": 834,
+  "grip_steps": 120,
+  "wait_steps": 0,
+  "direct_steps": 6,
+  "tiny_lt1mm": 205,
+  "tail_err_lt1cm": 266,
+  "transit_delta_p50": 0.004949511172298289,
+  "transit_delta_p90": 0.005335106591270932,
+  "transit_delta_max": 0.0057750209436109685,
+  "contact_delta_p50": 0.001286054093958558,
+  "contact_delta_p90": 0.001473095049429163,
+  "path_m": 3.361934275643257,
+  "path_motion_m": 3.3385486639531137,
+  "path_transit_m": 2.297657041122412,
+  "path_contact_m": 1.040891622830702,
+  "frag_reasons": {
+   "fragment_complete": 15,
+   "segment_stall": 10,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 8,
+   "move_to_pose|contact|pose_arrived": 11,
+   "set_gripper|contact|gap_stable": 8,
+   "move_relative|contact|pose_arrived": 6,
+   "approach|contact|pose_arrived": 1,
+   "move_relative|transit|pose_arrived": 3,
+   "approach|contact|segment_stall": 1,
+   "move_to_pose|contact|segment_stall": 5,
+   "move_to_pose|transit|segment_stall": 4,
+   "move_to_pose|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 38,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      40,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      25,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 79,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      19,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      60,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 65,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      65,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 67,
+    "budget": 150,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      22,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      26,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 79,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      45,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 56,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      56,
+      85,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 16,
+    "budget": 130,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      16,
+      45,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000010",
+    "reason": "segment_stall",
+    "executed": 88,
+    "budget": 155,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      25,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      27,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      36,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 37,
+    "budget": 85,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      25,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "segment_stall",
+    "executed": 135,
+    "budget": 220,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      36,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      51,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      48,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 52,
+    "budget": 95,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      52,
+      95,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "fragment_complete",
+    "executed": 77,
+    "budget": 175,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      40,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      18,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      19,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000015",
+    "reason": "segment_stall",
+    "executed": 49,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000017",
+    "reason": "segment_stall",
+    "executed": 53,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      90,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000018",
+    "reason": "fragment_complete",
+    "executed": 117,
+    "budget": 225,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      56,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      26,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      23,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000019",
+    "reason": "segment_stall",
+    "executed": 45,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      45,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000020",
+    "reason": "fragment_complete",
+    "executed": 121,
+    "budget": 205,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      43,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      18,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      60,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000021",
+    "reason": "fragment_complete",
+    "executed": 89,
+    "budget": 165,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      57,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      20,
+      45,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000022",
+    "reason": "segment_stall",
+    "executed": 18,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      18,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000024",
+    "reason": "segment_stall",
+    "executed": 16,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      16,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000025",
+    "reason": "segment_stall",
+    "executed": 16,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      16,
+      90,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000026",
+    "reason": "segment_stall",
+    "executed": 26,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      26,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000027",
+    "reason": "fragment_complete",
+    "executed": 71,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      26,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      18,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      27,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000028",
+    "reason": null,
+    "executed": 1,
+    "budget": 230,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      1,
+      80,
+      null
+     ]
+    ],
+    "pending": 3
+   }
+  ]
+ },
+ "t6_011": {
+  "n_steps": 1197,
+  "kinds": {
+   "agent_owned:local_motion": 2,
+   "framework_fragment:execute_fragment": 1195
+  },
+  "skill_profile": {
+   "None|None": 2,
+   "move_to_pose|transit": 490,
+   "move_to_pose|contact": 341,
+   "set_gripper|contact": 139,
+   "move_relative|contact": 178,
+   "move_relative|transit": 47
+  },
+  "motion_steps": 1056,
+  "transit_steps": 537,
+  "contact_steps": 519,
+  "grip_steps": 139,
+  "wait_steps": 0,
+  "direct_steps": 2,
+  "tiny_lt1mm": 238,
+  "tail_err_lt1cm": 261,
+  "transit_delta_p50": 0.003318922523168433,
+  "transit_delta_p90": 0.005172995289540355,
+  "transit_delta_max": 0.006826905307112993,
+  "contact_delta_p50": 0.0012434913397569656,
+  "contact_delta_p90": 0.0014401061266715166,
+  "path_m": 2.236834590698332,
+  "path_motion_m": 2.223797711466737,
+  "path_transit_m": 1.607656154603623,
+  "path_contact_m": 0.6161415568631138,
+  "frag_reasons": {
+   "fragment_complete": 14,
+   "segment_stall": 9,
+   "segment_budget_exhausted": 1,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 7,
+   "move_to_pose|contact|pose_arrived": 3,
+   "set_gripper|contact|gap_stable": 6,
+   "move_relative|contact|pose_arrived": 7,
+   "move_relative|transit|pose_arrived": 2,
+   "move_to_pose|transit|segment_stall": 6,
+   "move_to_pose|contact|segment_stall": 3,
+   "set_gripper|contact|segment_budget_exhausted": 1,
+   "set_gripper|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 69,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 54,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      54,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 38,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      40,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      25,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 62,
+    "budget": 75,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      62,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 60,
+    "budget": 110,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      60,
+      110,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 39,
+    "budget": 65,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      39,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 46,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      27,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "segment_stall",
+    "executed": 48,
+    "budget": 210,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      48,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000011",
+    "reason": "segment_stall",
+    "executed": 37,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      37,
+      90,
+      "segment_stall"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000012",
+    "reason": "segment_stall",
+    "executed": 49,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "segment_stall",
+    "executed": 18,
+    "budget": 95,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      18,
+      95,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "segment_stall",
+    "executed": 19,
+    "budget": 85,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      19,
+      85,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000015",
+    "reason": "fragment_complete",
+    "executed": 78,
+    "budget": 180,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000016",
+    "reason": "segment_stall",
+    "executed": 60,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      60,
+      90,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000017",
+    "reason": "segment_budget_exhausted",
+    "executed": 35,
+    "budget": 90,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      35,
+      35,
+      "segment_budget_exhausted"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000018",
+    "reason": "fragment_complete",
+    "executed": 20,
+    "budget": 60,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      20,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000019",
+    "reason": "fragment_complete",
+    "executed": 37,
+    "budget": 75,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      37,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000020",
+    "reason": "segment_stall",
+    "executed": 51,
+    "budget": 105,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      32,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000021",
+    "reason": "segment_stall",
+    "executed": 55,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      55,
+      90,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000022",
+    "reason": "segment_stall",
+    "executed": 71,
+    "budget": 110,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      20,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      51,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000023",
+    "reason": "fragment_complete",
+    "executed": 35,
+    "budget": 110,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      60,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      16,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000024",
+    "reason": "fragment_complete",
+    "executed": 117,
+    "budget": 215,
+    "segs": [
+     [
+      "move_relative",
+      "transit",
+      20,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      44,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000025",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 95,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      95,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000026",
+    "reason": "fragment_complete",
+    "executed": 38,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      45,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      19,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000027",
+    "reason": null,
+    "executed": 1,
+    "budget": 175,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      1,
+      30,
+      null
+     ]
+    ],
+    "pending": 3
+   }
+  ]
+ },
+ "t7_001": {
+  "n_steps": 812,
+  "kinds": {
+   "framework_fragment:execute_fragment": 812
+  },
+  "skill_profile": {
+   "move_to_pose|transit": 427,
+   "approach|contact": 178,
+   "set_gripper|contact": 50,
+   "move_relative|contact": 78,
+   "move_relative|transit": 39,
+   "move_to_pose|contact": 40
+  },
+  "motion_steps": 762,
+  "transit_steps": 466,
+  "contact_steps": 296,
+  "grip_steps": 50,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 60,
+  "tail_err_lt1cm": 95,
+  "transit_delta_p50": 0.005130267185076841,
+  "transit_delta_p90": 0.0053071606091660865,
+  "transit_delta_max": 0.005427749514656295,
+  "contact_delta_p50": 0.0012685797235296261,
+  "contact_delta_p90": 0.0013278767446472327,
+  "path_m": 2.500256430253645,
+  "path_motion_m": 2.4960800119509874,
+  "path_transit_m": 2.1745119420066805,
+  "path_contact_m": 0.32156806994430676,
+  "frag_reasons": {
+   "fragment_complete": 8,
+   "segment_stall": 4,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 13,
+   "approach|contact|pose_arrived": 1,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|contact|pose_arrived": 2,
+   "approach|contact|segment_stall": 3,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|contact|segment_stall": 1,
+   "set_gripper|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000001",
+    "reason": "fragment_complete",
+    "executed": 36,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      36,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 110,
+    "budget": 215,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      11,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      50,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      37,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 123,
+    "budget": 220,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      48,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      36,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "segment_stall",
+    "executed": 92,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      25,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      67,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 55,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      17,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      38,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 91,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      59,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      32,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "segment_stall",
+    "executed": 48,
+    "budget": 215,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      15,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      33,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 19,
+    "budget": 80,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      19,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "segment_stall",
+    "executed": 40,
+    "budget": 180,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      40,
+      80,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 51,
+    "budget": 100,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      39,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 88,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      42,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      46,
+      85,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "segment_stall",
+    "executed": 48,
+    "budget": 130,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      23,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      25,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": null,
+    "executed": 11,
+    "budget": 110,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      11,
+      35,
+      null
+     ]
+    ],
+    "pending": 1
+   }
+  ]
+ },
+ "t8_001": {
+  "n_steps": 902,
+  "kinds": {
+   "agent_owned:local_motion": 1,
+   "framework_fragment:execute_fragment": 901
+  },
+  "skill_profile": {
+   "None|None": 1,
+   "move_to_pose|transit": 400,
+   "approach|contact": 293,
+   "set_gripper|contact": 43,
+   "move_relative|contact": 72,
+   "move_relative|transit": 28,
+   "move_to_pose|contact": 65
+  },
+  "motion_steps": 858,
+  "transit_steps": 428,
+  "contact_steps": 430,
+  "grip_steps": 43,
+  "wait_steps": 0,
+  "direct_steps": 1,
+  "tiny_lt1mm": 86,
+  "tail_err_lt1cm": 151,
+  "transit_delta_p50": 0.0050706870429866584,
+  "transit_delta_p90": 0.005245773216736115,
+  "transit_delta_max": 0.005300843286212717,
+  "contact_delta_p50": 0.0012139307397546753,
+  "contact_delta_p90": 0.00134775985523353,
+  "path_m": 2.3806998349090525,
+  "path_motion_m": 2.377369571328414,
+  "path_transit_m": 1.8634422906977668,
+  "path_contact_m": 0.5139272806306476,
+  "frag_reasons": {
+   "fragment_complete": 11,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 10,
+   "approach|contact|pose_arrived": 7,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|contact|pose_arrived": 2,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|contact|pose_arrived": 1,
+   "approach|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 77,
+    "budget": 180,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      43,
+      100,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 80,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      17,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      63,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 48,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      35,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 83,
+    "budget": 170,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      23,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      60,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 83,
+    "budget": 130,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      61,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      22,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 83,
+    "budget": 175,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      33,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      4,
+      25,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      27,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 106,
+    "budget": 180,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "fragment_complete",
+    "executed": 65,
+    "budget": 90,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      65,
+      90,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 48,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      13,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      35,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "fragment_complete",
+    "executed": 118,
+    "budget": 210,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      30,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      49,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "fragment_complete",
+    "executed": 108,
+    "budget": 160,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      55,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "approach",
+      "contact",
+      53,
+      80,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": null,
+    "executed": 2,
+    "budget": 125,
+    "segs": [
+     [
+      "approach",
+      "contact",
+      2,
+      25,
+      null
+     ]
+    ],
+    "pending": 2
+   }
+  ]
+ },
+ "t9_001": {
+  "n_steps": 1239,
+  "kinds": {
+   "agent_owned:local_motion": 6,
+   "framework_fragment:execute_fragment": 1233
+  },
+  "skill_profile": {
+   "None|None": 6,
+   "move_to_pose|transit": 334,
+   "move_to_pose|contact": 645,
+   "set_gripper|contact": 83,
+   "move_relative|contact": 121,
+   "move_relative|transit": 50
+  },
+  "motion_steps": 1150,
+  "transit_steps": 384,
+  "contact_steps": 766,
+  "grip_steps": 83,
+  "wait_steps": 0,
+  "direct_steps": 6,
+  "tiny_lt1mm": 217,
+  "tail_err_lt1cm": 217,
+  "transit_delta_p50": 0.0049772499441427635,
+  "transit_delta_p90": 0.005334617874643247,
+  "transit_delta_max": 0.0060578955983165384,
+  "contact_delta_p50": 0.0012261673523191012,
+  "contact_delta_p90": 0.001327387206995194,
+  "path_m": 2.351554682511688,
+  "path_motion_m": 2.3163387718882267,
+  "path_transit_m": 1.4694558448784802,
+  "path_contact_m": 0.8468829270097463,
+  "frag_reasons": {
+   "fragment_complete": 11,
+   "segment_stall": 4,
+   "segment_budget_exhausted": 1,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 8,
+   "move_to_pose|contact|pose_arrived": 9,
+   "set_gripper|contact|gap_stable": 5,
+   "move_relative|contact|pose_arrived": 4,
+   "move_relative|transit|pose_arrived": 2,
+   "move_to_pose|contact|segment_stall": 3,
+   "move_to_pose|contact|segment_budget_exhausted": 1,
+   "move_to_pose|transit|segment_stall": 1,
+   "move_to_pose|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 78,
+    "budget": 160,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      44,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "fragment_complete",
+    "executed": 55,
+    "budget": 70,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      55,
+      70,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 85,
+    "budget": 155,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      40,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      13,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      32,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 38,
+    "budget": 100,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      38,
+      100,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "fragment_complete",
+    "executed": 89,
+    "budget": 155,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      46,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      25,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      24,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 66,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      32,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      34,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 97,
+    "budget": 145,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      53,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      13,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      31,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "fragment_complete",
+    "executed": 48,
+    "budget": 120,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      23,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      25,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "segment_stall",
+    "executed": 68,
+    "budget": 135,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      52,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      16,
+      65,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": "segment_budget_exhausted",
+    "executed": 66,
+    "budget": 90,
+    "segs": [
+     [
+      "move_relative",
+      "contact",
+      6,
+      30,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      60,
+      60,
+      "segment_budget_exhausted"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000012",
+    "reason": "fragment_complete",
+    "executed": 94,
+    "budget": 160,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      19,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      51,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_relative",
+      "transit",
+      24,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000013",
+    "reason": "fragment_complete",
+    "executed": 111,
+    "budget": 185,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      85,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      39,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      19,
+      25,
+      "gap_stable"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000014",
+    "reason": "segment_stall",
+    "executed": 35,
+    "budget": 75,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      35,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000016",
+    "reason": "segment_stall",
+    "executed": 116,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      50,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      66,
+      75,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000017",
+    "reason": "segment_stall",
+    "executed": 119,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      56,
+      70,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      63,
+      70,
+      "segment_stall"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000018",
+    "reason": "fragment_complete",
+    "executed": 58,
+    "budget": 75,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      58,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000019",
+    "reason": null,
+    "executed": 10,
+    "budget": 55,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      10,
+      55,
+      null
+     ]
+    ],
+    "pending": 0
+   }
+  ]
+ },
+ "t6_007": {
+  "n_steps": 464,
+  "kinds": {
+   "agent_owned:calibrate_plus": 60,
+   "agent_owned:local_motion": 404
+  },
+  "skill_profile": {
+   "None|None": 464
+  },
+  "motion_steps": 0,
+  "transit_steps": 0,
+  "contact_steps": 0,
+  "grip_steps": 0,
+  "wait_steps": 0,
+  "direct_steps": 404,
+  "tiny_lt1mm": 0,
+  "tail_err_lt1cm": 0,
+  "transit_delta_p50": null,
+  "transit_delta_p90": null,
+  "transit_delta_max": null,
+  "contact_delta_p50": null,
+  "contact_delta_p90": null,
+  "path_m": 1.3650642347106372,
+  "path_motion_m": 0,
+  "path_transit_m": 0,
+  "path_contact_m": 0,
+  "frag_reasons": {},
+  "seg_reasons": {},
+  "per_call": []
+ },
+ "t3_002": {
+  "n_steps": 419,
+  "kinds": {
+   "agent_owned:local_motion": 419
+  },
+  "skill_profile": {
+   "None|None": 419
+  },
+  "motion_steps": 0,
+  "transit_steps": 0,
+  "contact_steps": 0,
+  "grip_steps": 0,
+  "wait_steps": 0,
+  "direct_steps": 419,
+  "tiny_lt1mm": 0,
+  "tail_err_lt1cm": 0,
+  "transit_delta_p50": null,
+  "transit_delta_p90": null,
+  "transit_delta_max": null,
+  "contact_delta_p50": null,
+  "contact_delta_p90": null,
+  "path_m": 1.3431230888315955,
+  "path_motion_m": 0,
+  "path_transit_m": 0,
+  "path_contact_m": 0,
+  "frag_reasons": {},
+  "seg_reasons": {},
+  "per_call": []
+ },
+ "A_trial_002": {
+  "n_steps": 830,
+  "kinds": {
+   "agent_owned:local_motion": 1,
+   "framework_fragment:execute_fragment": 829
+  },
+  "skill_profile": {
+   "None|None": 1,
+   "move_to_pose|transit": 422,
+   "move_to_pose|contact": 265,
+   "set_gripper|contact": 47,
+   "move_relative|contact": 66,
+   "move_relative|transit": 29
+  },
+  "motion_steps": 782,
+  "transit_steps": 451,
+  "contact_steps": 331,
+  "grip_steps": 47,
+  "wait_steps": 0,
+  "direct_steps": 1,
+  "tiny_lt1mm": 84,
+  "tail_err_lt1cm": 105,
+  "transit_delta_p50": 0.005142091176864468,
+  "transit_delta_p90": 0.005243632395578143,
+  "transit_delta_max": 0.005403487331085078,
+  "contact_delta_p50": 0.0012417002494627617,
+  "contact_delta_p90": 0.0013095498274133673,
+  "path_m": 2.5141319632677956,
+  "path_motion_m": 2.5107766028716756,
+  "path_transit_m": 2.155924130733852,
+  "path_contact_m": 0.3548524721378234,
+  "frag_reasons": {
+   "fragment_complete": 7,
+   "segment_stall": 1,
+   "segment_budget_exhausted": 1,
+   "null": 1
+  },
+  "seg_reasons": {
+   "move_to_pose|transit|pose_arrived": 11,
+   "move_to_pose|contact|segment_stall": 1,
+   "set_gripper|contact|gap_stable": 3,
+   "move_relative|contact|pose_arrived": 2,
+   "move_to_pose|contact|segment_budget_exhausted": 1,
+   "move_relative|transit|pose_arrived": 1,
+   "move_to_pose|contact|pose_arrived": 4,
+   "set_gripper|contact|None": 1
+  },
+  "per_call": [
+   {
+    "call": "000002",
+    "reason": "fragment_complete",
+    "executed": 78,
+    "budget": 150,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      55,
+      90,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      23,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000003",
+    "reason": "segment_stall",
+    "executed": 71,
+    "budget": 200,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      15,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      56,
+      60,
+      "segment_stall"
+     ]
+    ],
+    "pending": 2
+   },
+   {
+    "call": "000004",
+    "reason": "fragment_complete",
+    "executed": 44,
+    "budget": 90,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      12,
+      35,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      32,
+      55,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000005",
+    "reason": "fragment_complete",
+    "executed": 145,
+    "budget": 215,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      40,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      53,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      52,
+      75,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000006",
+    "reason": "segment_budget_exhausted",
+    "executed": 83,
+    "budget": 190,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      18,
+      60,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      65,
+      65,
+      "segment_budget_exhausted"
+     ]
+    ],
+    "pending": 1
+   },
+   {
+    "call": "000007",
+    "reason": "fragment_complete",
+    "executed": 46,
+    "budget": 95,
+    "segs": [
+     [
+      "set_gripper",
+      "contact",
+      18,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "transit",
+      28,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000008",
+    "reason": "fragment_complete",
+    "executed": 75,
+    "budget": 135,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      44,
+      75,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      31,
+      60,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000009",
+    "reason": "fragment_complete",
+    "executed": 111,
+    "budget": 185,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      33,
+      50,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      34,
+      55,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      12,
+      30,
+      "gap_stable"
+     ],
+     [
+      "move_relative",
+      "contact",
+      32,
+      50,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000010",
+    "reason": "fragment_complete",
+    "executed": 153,
+    "budget": 210,
+    "segs": [
+     [
+      "move_to_pose",
+      "transit",
+      40,
+      65,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "transit",
+      54,
+      80,
+      "pose_arrived"
+     ],
+     [
+      "move_to_pose",
+      "contact",
+      59,
+      65,
+      "pose_arrived"
+     ]
+    ],
+    "pending": 0
+   },
+   {
+    "call": "000011",
+    "reason": null,
+    "executed": 23,
+    "budget": 140,
+    "segs": [
+     [
+      "move_to_pose",
+      "contact",
+      17,
+      45,
+      "pose_arrived"
+     ],
+     [
+      "set_gripper",
+      "contact",
+      6,
+      30,
+      null
+     ]
+    ],
+    "pending": 1
+   }
+  ]
+ },
+ "B_trial_003": {
+  "n_steps": 1019,
+  "kinds": {
+   "null": 1019
+  },
+  "skill_profile": {
+   "None|None": 1019
+  },
+  "motion_steps": 0,
+  "transit_steps": 0,
+  "contact_steps": 0,
+  "grip_steps": 0,
+  "wait_steps": 0,
+  "direct_steps": 0,
+  "tiny_lt1mm": 0,
+  "tail_err_lt1cm": 0,
+  "transit_delta_p50": null,
+  "transit_delta_p90": null,
+  "transit_delta_max": null,
+  "contact_delta_p50": null,
+  "contact_delta_p90": null,
+  "path_m": 0,
+  "path_motion_m": 0,
+  "path_transit_m": 0,
+  "path_contact_m": 0,
+  "frag_reasons": {},
+  "seg_reasons": {},
+  "per_call": []
+ }
+}

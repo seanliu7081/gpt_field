@@ -16,7 +16,8 @@ import os
 import sys
 
 from .agent_speedup_v2_sim import V2LiberoWorker, V2SimProcess, _json_line
-from .astranomy_agentic_geometry import extract_geometry_metadata, validate_geometry_metadata
+from .astranomy_agentic_geometry import extract_geometry_metadata
+from .robocasa_user_check_geometry import validate_geometry_metadata
 from .libero import LiberoConfig
 from .observation import PolicyObservation
 

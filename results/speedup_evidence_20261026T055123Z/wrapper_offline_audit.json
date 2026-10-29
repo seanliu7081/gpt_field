@@ -1,0 +1,409 @@
+{
+  "scope": "Existing FakeV2Sim and scripted transport only; socket connect and subprocess Popen blocked.",
+  "wrapper_sha256": "57c23b0d9198c246adbf82ad2e699e8a9bb32d3226ac9d58feedcaca00b1bcb8",
+  "runner_sha256": "ed5f0b833e1a57944b7b425822e2c01bec29dc8053bce9a3950c3a4c2bba7219",
+  "checks": [
+    {
+      "arm": "A",
+      "failure_injected": false,
+      "request_equal": true,
+      "same_request_count_one": true,
+      "same_outcome": true,
+      "wrapper_expected_command_order": true,
+      "zero_actions": true,
+      "never_approved": true
+    },
+    {
+      "arm": "A",
+      "failure_injected": true,
+      "request_equal": true,
+      "same_request_count_one": true,
+      "same_outcome": true,
+      "wrapper_expected_command_order": true,
+      "zero_actions": true,
+      "never_approved": true
+    },
+    {
+      "arm": "B",
+      "failure_injected": false,
+      "request_equal": true,
+      "same_request_count_one": true,
+      "same_outcome": true,
+      "wrapper_expected_command_order": true,
+      "zero_actions": true,
+      "never_approved": true
+    },
+    {
+      "arm": "B",
+      "failure_injected": true,
+      "request_equal": true,
+      "same_request_count_one": true,
+      "same_outcome": true,
+      "wrapper_expected_command_order": true,
+      "zero_actions": true,
+      "never_approved": true
+    }
+  ],
+  "results": [
+    {
+      "mode": "direct",
+      "arm": "A",
+      "failure_injected": false,
+      "exit_code": 0,
+      "loader_context": [
+        {
+          "module_name": "__main__",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cup: body",
+            "w": 20,
+            "x": 30
+          }
+        ],
+        "scene": "Offline cup fixture.",
+        "steps": [
+          {
+            "do": "hold",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "review_status": "draft",
+      "review_approved": null,
+      "clock_paused_after_exit": true,
+      "automatic_review_started": false,
+      "error_status": null
+    },
+    {
+      "mode": "wrapper",
+      "arm": "A",
+      "failure_injected": false,
+      "exit_code": 0,
+      "loader_context": [
+        {
+          "module_name": "<run_path>",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/launches/prepare_then_begin_review.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare",
+        "review-begin"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cup: body",
+            "w": 20,
+            "x": 30
+          }
+        ],
+        "scene": "Offline cup fixture.",
+        "steps": [
+          {
+            "do": "hold",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "review_status": "draft",
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": true,
+      "error_status": null
+    },
+    {
+      "mode": "direct",
+      "arm": "A",
+      "failure_injected": true,
+      "exit_code": 3,
+      "loader_context": [
+        {
+          "module_name": "__main__",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": null,
+      "review_status": null,
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": false,
+      "error_status": "evaluation_budget_exhausted"
+    },
+    {
+      "mode": "wrapper",
+      "arm": "A",
+      "failure_injected": true,
+      "exit_code": 3,
+      "loader_context": [
+        {
+          "module_name": "<run_path>",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/launches/prepare_then_begin_review.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": null,
+      "review_status": null,
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": false,
+      "error_status": "evaluation_budget_exhausted"
+    },
+    {
+      "mode": "direct",
+      "arm": "B",
+      "failure_injected": false,
+      "exit_code": 0,
+      "loader_context": [
+        {
+          "module_name": "__main__",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cup: body",
+            "w": 20,
+            "x": 30
+          }
+        ],
+        "scene": "Offline cup fixture.",
+        "steps": [
+          {
+            "do": "hold",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "review_status": "draft",
+      "review_approved": null,
+      "clock_paused_after_exit": true,
+      "automatic_review_started": false,
+      "error_status": null
+    },
+    {
+      "mode": "wrapper",
+      "arm": "B",
+      "failure_injected": false,
+      "exit_code": 0,
+      "loader_context": [
+        {
+          "module_name": "<run_path>",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/launches/prepare_then_begin_review.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare",
+        "review-begin"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cup: body",
+            "w": 20,
+            "x": 30
+          }
+        ],
+        "scene": "Offline cup fixture.",
+        "steps": [
+          {
+            "do": "hold",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "review_status": "draft",
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": true,
+      "error_status": null
+    },
+    {
+      "mode": "direct",
+      "arm": "B",
+      "failure_injected": true,
+      "exit_code": 3,
+      "loader_context": [
+        {
+          "module_name": "__main__",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": null,
+      "review_status": null,
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": false,
+      "error_status": "evaluation_budget_exhausted"
+    },
+    {
+      "mode": "wrapper",
+      "arm": "B",
+      "failure_injected": true,
+      "exit_code": 3,
+      "loader_context": [
+        {
+          "module_name": "<run_path>",
+          "file": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline/scripts/evaluate_speedup_evidence.py",
+          "sys_argv0": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/launches/prepare_then_begin_review.py",
+          "root": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/baseline"
+        }
+      ],
+      "command_sequence": [
+        "prepare"
+      ],
+      "requests_captured": 1,
+      "captured_request_sha256": "b2b2f54c2f7f1b0809c1ae819d08cd9ecec750d231bb8ae8dc58cdfa166ce9a4",
+      "fake_actions": 0,
+      "fake_operations": [
+        [
+          "start",
+          "reset",
+          "close"
+        ]
+      ],
+      "plan": null,
+      "review_status": null,
+      "review_approved": null,
+      "clock_paused_after_exit": false,
+      "automatic_review_started": false,
+      "error_status": "evaluation_budget_exhausted"
+    }
+  ],
+  "passed": true,
+  "limits": "Offline fake request equivalence does not prove identical network/service timing or rule out every runpy/environment interaction. No real simulator/model call or budget reservation."
+}

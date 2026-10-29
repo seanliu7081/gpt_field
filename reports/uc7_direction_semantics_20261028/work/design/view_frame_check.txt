@@ -1,0 +1,21 @@
+external right_xy=[-0.  1.] away_xy=[-1. -0.] |horiz(R[:,0])|=1.0000 away.forward=+1.000
+wrist    right_xy=[-0.0015 -1.    ] away_xy=[ 1.     -0.0015] |horiz(R[:,0])|=1.0000 away.forward=-1.000
+cell 55 (416,416) -> world (+0.110,+0.181) at z=0.437  [region E (relayout plan)]
+cell 61 (288,480) -> world (+0.196,+0.033) at z=0.437  [plate C (relayout plan)]
+cell 35 (160,288) -> world (-0.142,-0.141) at z=0.437  [pudding D]
+cell 38 (352,288) -> world (-0.142,+0.142) at z=0.437  [mug A]
+cell 54 (352,416) -> world (+0.110,+0.109) at z=0.437  [t6_007 E]
+cell 43 (160,352) -> world (+0.001,-0.122) at z=0.437  [t6_006 E]
+cell 53 (288,416) -> world (+0.110,+0.037) at z=0.437  [t6_007 plate C]
+cell 60 (224,480) -> world (+0.196,-0.032) at z=0.437  [t6_006 plate C]
+pointing check region cell 55 vs anchor cell 61 for right_of (external_view): du=+128 dv=-64 projection=+128 -> agrees
+pointing check region cell 54 vs anchor cell 53 for right_of (external_view): du=+64 dv=+0 projection=+64 -> agrees
+pointing check region cell 43 vs anchor cell 60 for right_of (external_view): du=-64 dv=-128 projection=-64 -> disagrees
+legacy right_of=+x at plate: image displacement for +5 cm x = (+2.4,+44.4) px (down = toward camera)
+external_view right_of=+y at plate: image displacement for +5 cm y = (+49.5,+0.0) px
+relayout E vs C  new right_of=external-view right (0,1)   score= +128.0 -> agrees
+relayout E vs C  old right_of=world +x                    score=  -33.8 -> disagrees
+t6_007 E vs C    new right_of=external-view right (0,1)   score=  +64.0 -> agrees
+t6_007 E vs C    old right_of=world +x                    score=   -0.0 -> disagrees
+t6_006 E vs C    new right_of=external-view right (0,1)   score=  -64.0 -> disagrees
+t6_006 E vs C    old right_of=world +x                    score=  -67.7 -> disagrees

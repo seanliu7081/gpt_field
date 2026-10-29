@@ -1,0 +1,1257 @@
+{
+  "stage": "P2",
+  "decision": "continue",
+  "historical_v7_files_restored": 300,
+  "historical_v7_control_sources_unchanged": true,
+  "original_hardlinks_edited": false,
+  "arm_A": "frozen user-check v7 policy/client/prompt + common effective-service clock and explicit single-use review provenance; original display IO",
+  "arm_B": "A + existing v3 compact video recorder + existing private evaluator live snapshot gate",
+  "additional_algorithm_changes": [],
+  "already_satisfied_not_rebuilt": [
+    "reviewed framework snapshot write already throttled to one second in frozen v7",
+    "all v7 control/feedback/online RGB cadence",
+    "existing compact video no-additional-simulator-render path"
+  ],
+  "common_protocol_changes": [
+    "monotonic prepare + active delegated review + execution + necessary synchronous finalization",
+    "explicit human wait only paused",
+    "900 s effective deadline interrupts model request chain; simulator/required finalization drained and any overshoot reported",
+    "first raw event retained separately from terminal and S300",
+    "single-use canonical ledger reservation and explicit plan approval",
+    "unknown official reset enrollment only in prepare; strict initial SHA matching for paired B and all executions"
+  ],
+  "validation": {
+    "real_policy_client_saved_replay": "baseline_replay_attempt1.json",
+    "actions_exact_to_history": 897,
+    "AB_actions_exact": 897,
+    "AB_feedback_and_diagnostics_exact": 897,
+    "model_payloads_exact_to_history_and_AB": 13,
+    "offline_protocol_tests": {
+      "passed": 11,
+      "log": "baseline_protocol_tests_final.txt",
+      "fake_evaluator_rollouts": "synthetic offline only, no simulator or model"
+    },
+    "display_IO_component_benchmark": "display_io_benchmark.json (separate P1 investigator)",
+    "source_restoration_checks": [
+      {
+        "path": "scripts/evaluate_agent_speedup_v1.py",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/evaluate_agent_speedup_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/evaluate_agent_speedup_v2_user_check.py",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/evaluate_bowl_field_history.py",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/evaluate_bowl_hybrid_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/evaluate_bowl_subscription_close.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/__init__.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/__main__.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/action.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v1.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v1_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v1_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_contacts.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_geometry.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_observers.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_plan.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_planner.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_primitives.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_relations.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_robot.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_scene.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_sim.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_tasks.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_thresholds.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_truth.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_types.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check.html",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_agent.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_agent_macros.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_constraints.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_context.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_control.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_fragments.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_framework.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_local.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_motion.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_plan.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_runtime.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_server.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_sim.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_skills.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v2_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astra.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astranomy_agentic_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astranomy_agentic_geometry.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astranomy_agentic_motion.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astranomy_agentic_prompt.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/astranomy_agentic_sim.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/attempt_memory.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/baselines.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/block_feedback_history.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/chatgpt_auth.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/chatgpt_direct.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/chatgpt_plan.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/cli.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/compact_field.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/compact_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_diagnostic_policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_diagnostic_sim.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_geometry_v13.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_region_feedback.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_region_policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/contact_skills.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/demo_direct_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/demo_direct_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/demonstration.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/diagnostics.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/direct_history.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/direct_history_resume.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/direct_history_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/distance_planner.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/distance_policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/distance_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/distance_tasks.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/distance_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/experiment.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/external_axes.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/field.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/field_grounding.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/field_history.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/field_history_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/fine_distance_planner.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/historical_zero_shot_direct.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/hybrid_policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/hybrid_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/hybrid_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/libero.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/local_visual_feedback.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/mark_prompting.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/observation.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/operation_contract.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/operation_visual.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/ordered_transport.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/planner.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/report.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robodojo_direct_client.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robodojo_direct_motion.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robodojo_direct_sim.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robot_facts_v2.json",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robot_geometry_guidance.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robot_tool_geometry.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robot_translation_response.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/robot_translation_response_v25.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/schema.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_gripper.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_history.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_hybrid.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_pregrasp.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_v3.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_v3_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_v4.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/speed_first_visual.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/target_identity_guidance.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/tracking.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/uncertainty_egress_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_boundary_evidence_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_contact_alignment_v13.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_egress_evidence_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v11.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v14.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_compact_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_feedback_transaction_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v10.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v11.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v13.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v14.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v15.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v18.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v19.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v20.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v22.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v25.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v26.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v29.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v3.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v30.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v33.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v36.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v4.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v5.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v6.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v7.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v8.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_policy_v9.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_proposals_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_proposals_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_proposals_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v10.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v11.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v13.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v14.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v15.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v18.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v19.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v20.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v22.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v25.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v26.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v29.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v3.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v30.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v33.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v36.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v4.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v5.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v6.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v7.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v8.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_subscription_v9.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v10.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v11.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v13.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v19.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v2.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v20.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v22.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v25.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v29.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v3.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v33.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v4.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v5.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v6.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v8.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_field_v9.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_goal_field_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_goal_replay_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_hand_outline_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_heading_evidence_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_intent_replan_v36.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_intent_watch_v36.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v10.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v4.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v5.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v6.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v7.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_monitor_v8.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_motion_diagnostic_v15.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_navigation_fields_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_neighbor_track_v26.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_objective_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_candidates_v18.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_candidates_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_candidates_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_candidates_v30.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_candidates_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_diagnostic_v14.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_overlay.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_replay_v18.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_review_v30.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_review_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_track_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reference_track_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_reverse_evidence_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_rotation_guard_v8.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_route_exposure_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_route_exposure_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_guard_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_guard_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_guard_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_inventory_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_inventory_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_scene_inventory_v31.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_task_progress_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v11.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v12.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v14.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v15.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v16.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v17.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v19.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v21.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v23.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v24.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v25.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v26.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v27.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v28.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v29.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v30.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v32.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v33.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v34.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_translation_guard_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/visual_wrist_goal_v35.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/wrist_servo.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/zero_shot_direct_subscription.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v3_video.py",
+        "unchanged": true
+      },
+      {
+        "path": "src/gpt_field/agent_speedup_v3_performance.py",
+        "unchanged": true
+      }
+    ]
+  },
+  "limitations": [
+    "Saved responses are not independent model decisions or task-success trials.",
+    "No new simulator state or physical outcomes are generated.",
+    "Per-step camera/joint serialization missing outside model boundaries; no claim to recover those missing channels.",
+    "No fresh full-task S300 or success claim from these tests.",
+    "Deadline may be crossed during an already-issued simulator step or required finalization; exact overshoot recorded, raw event retained, no additional action starts after boundary check.",
+    "No performance inference from saved-response replay or fake evaluator timings."
+  ],
+  "new_model_requests": 0,
+  "new_real_simulator_rollouts": 0,
+  "ready_for_frozen_P5_prepare": true
+}

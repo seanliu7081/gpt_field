@@ -1,0 +1,917 @@
+warning: Error disabling address space randomization: Operation not permitted
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+{"phase": "before_vendor_import", "monotonic_s": 924386.780622677}
+[Warning] PYTHONPATH: path doesn't exist (/workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app)
+[Warning] PYTHONPATH: path doesn't exist (/workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extsDeprecated/omni.isaac.kit)
+[Warning] Unable to expose 'isaacsim.simulation_app' API: Extension not found
+[Info] [carb] Logging to file: /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/logs/Kit/uc71-stage-a0-camera/0.1/kit_20261029_051039.log
+2026-10-29T05:10:39Z [0ms] [Warning] [omni.kit.app.plugin] No crash reporter present, dumps uploading isn't available.
+[0.837s] [ext: omni.kit.async_engine-0.0.3] startup
+[0.935s] [ext: omni.metrics.core-0.0.3] startup
+[0.940s] [ext: omni.client.lib-1.1.0] startup
+[0.999s] [ext: omni.blobkey-1.1.2] startup
+[1.001s] [ext: omni.stats-1.0.1] startup
+[1.009s] [ext: omni.datastore-0.0.0] startup
+[1.107s] [ext: omni.client-1.3.0] startup
+[Detaching after vfork from child process 3123551]
+[1.143s] [ext: omni.ujitso.default-1.0.0] startup
+[1.162s] [ext: omni.hsscclient-1.1.2] startup
+[1.181s] [ext: omni.gpu_foundation.shadercache.vulkan-1.0.0] startup
+[1.188s] [ext: omni.assets.plugins-0.0.0] startup
+[1.209s] [ext: omni.gpu_foundation-0.0.0] startup
+[1.322s] [ext: carb.windowing.plugins-1.0.0] startup
+2026-10-29T05:10:40Z [545ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:40Z [545ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[1.338s] [ext: omni.kit.renderer.init-0.0.0] startup
+[Detaching after fork from child process 3123556]
+2026-10-29T05:10:40Z [720ms] [Warning] [omni.platforminfo.plugin] failed to open the default display.  Can't verify X Server version.
+[Detaching after fork from child process 3123557]
+2026-10-29T05:10:41Z [1,703ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:41Z [1,703ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 610.43.02     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 077fe526.. |
+|     |                                  |        |     |            | 1         |            |
+|---------------------------------------------------------------------------------------------|
+| 1   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | a6fca0de.. |
+|     |                                  |        |     |            | 25        |            |
+|---------------------------------------------------------------------------------------------|
+| 2   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 432492db.. |
+|     |                                  |        |     |            | 41        |            |
+|---------------------------------------------------------------------------------------------|
+| 3   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 6cfc23e5.. |
+|     |                                  |        |     |            | 61        |            |
+|---------------------------------------------------------------------------------------------|
+| 4   | NVIDIA GeForce RTX 4090          | Yes: 0 |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | e1a460e9.. |
+|     |                                  |        |     |            | 81        |            |
+|---------------------------------------------------------------------------------------------|
+| 5   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 93ff6a97.. |
+|     |                                  |        |     |            | a1        |            |
+|---------------------------------------------------------------------------------------------|
+| 6   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 8de4fcf0.. |
+|     |                                  |        |     |            | c1        |            |
+|---------------------------------------------------------------------------------------------|
+| 7   | NVIDIA GeForce RTX 4090          |        |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2684      | 0ebc8f88.. |
+|     |                                  |        |     |            | e1        |            |
+|=============================================================================================|
+| OS: 24.04.4 LTS (Noble Numbat) ubuntu, Version: 24.04.4, Kernel: 6.8.0-138-generic
+| Processor: AMD EPYC 7713 64-Core Processor
+| Bare Metal Cores: 128 | Bare Metal Logical Cores: 256
+| Core Usage Quota: 245.76
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 495096 | Free Memory: 270785
+| Total Page/Swap (MB): 0 | Free Page/Swap: 0
+|---------------------------------------------------------------------------------------------|
+[Detaching after vfork from child process 3123594]
+2026-10-29T05:10:43Z [4,057ms] [Warning] [gpu.foundation.plugin] IOMMU is enabled.
+2026-10-29T05:10:43Z [4,057ms] [Warning] [gpu.foundation.plugin] Detected IOMMU is enabled. Running CUDA peer-to-peer bandwidth and latency validation.
+Unidirectional P2P=Enabled Bandwidth (P2P Writes) Matrix (GB/s)
+   D\D     0      1      2      3      4      5      6      7 
+     0 916.42  17.15  16.79  17.55  15.73  17.37  17.17  17.56 
+     1  17.61 927.30  17.72  17.64  14.96  16.86  17.08  17.13 
+     2  17.46  17.76 926.78  17.68  16.10  17.50  17.18  17.56 
+     3  17.61  17.74  17.70 927.30  15.37  17.02  17.03  17.12 
+     4  17.64  17.81  17.77  16.53 927.85  17.44  17.14  16.58 
+     5  17.67  17.64  17.73  16.91  17.25 928.40  17.39  17.25 
+     6  17.67  16.82  17.40  17.48  16.82  16.81 928.37  16.61 
+     7  17.53  16.78  17.74  16.91  16.66  17.11  16.67 926.75 
+P2P=Enabled Latency (P2P Writes) Matrix (us)
+   GPU     0      1      2      3      4      5      6      7 
+     0   1.43  15.78  13.87  13.54  15.23  13.81  14.60  15.15 
+     1  12.56   1.44  13.25  11.84  15.91  15.14  14.91  14.58 
+     2  14.09  12.60   1.31  13.57  14.35  14.94  14.25  14.35 
+     3  12.03  14.10  11.75   1.40  14.23  15.01  14.63  14.84 
+     4  11.37  11.38  12.60  11.35   1.29  14.83  13.60  15.23 
+     5  11.33  11.39  11.44  11.35  13.12   1.35  15.80  15.07 
+     6  11.38  11.35  11.35  11.44  14.64  16.90   1.32  13.24 
+     7  11.44  11.34  11.44  11.34  13.56  15.87  15.72   1.31 
+
+   CPU     0      1      2      3      4      5      6      7 
+     0   2.86   8.48   8.31   8.21   9.18   9.04   8.18   8.14 
+     1   7.55   2.32   7.45   7.33   8.23   9.26  12.67   9.01 
+     2   7.39   7.36   2.35   7.58   9.36   9.17   9.27   9.09 
+     3   7.44   7.41   7.46   2.37   9.35   9.25   9.48   9.12 
+     4   8.67   8.58   8.64   8.67   2.97  10.53  10.46  10.31 
+     5   8.48   8.45   8.51   8.51  10.40   3.05  10.68  10.45 
+     6   8.60   8.56   8.63   8.64  10.51  10.36   3.01  10.40 
+     7   8.50   8.48   8.52   8.50  10.41  10.26  10.39   2.96 
+2026-10-29T05:10:46Z [7,073ms] [Warning] [gpu.foundation.plugin] CUDA peer-to-peer observed bandwidth: 15.0 GB/s.
+2026-10-29T05:10:46Z [7,073ms] [Warning] [gpu.foundation.plugin] CUDA peer-to-peer observed latency: 16.9 us.
+2026-10-29T05:10:46Z [7,073ms] [Warning] [gpu.foundation.plugin] Please verify if observed bandwidth and latency are expected.
+[Detaching after vfork from child process 3123874]
+sh: 1: zenity: not found
+[8.221s] [ext: omni.materialx.libs-1.0.7] startup
+[8.247s] [ext: omni.usd.config-1.0.6] startup
+[8.254s] [ext: omni.gpucompute.plugins-0.0.0] startup
+[8.259s] [ext: omni.usd.libs-1.0.1] startup
+[9.053s] [ext: omni.mdl-56.0.3] startup
+[9.315s] [ext: omni.iray.libs-0.0.0] startup
+[9.354s] [ext: omni.mdl.neuraylib-0.2.12] startup
+[9.362s] [ext: omni.kit.usd.mdl-1.1.5] startup
+[9.694s] [ext: omni.kit.loop-default-0.2.2] startup
+[9.697s] [ext: omni.kit.test-2.0.1] startup
+[9.786s] [ext: omni.usd.schema.anim-0.0.0] startup
+[9.854s] [ext: omni.usd.schema.semantics-0.0.0] startup
+[9.862s] [ext: omni.usd.schema.audio-0.0.0] startup
+[9.875s] [ext: omni.usd.schema.physx-107.3.26] startup
+[9.963s] [ext: omni.usd.schema.geospatial-0.0.0] startup
+[9.974s] [ext: omni.usd.schema.omnigraph-1.0.0] startup
+[9.987s] [ext: omni.usd_resolver-1.0.0] startup
+[10.002s] [ext: omni.usd.core-1.5.3] startup
+[10.014s] [ext: omni.usd.schema.omni_sensors-0.0.0] startup
+[10.052s] [ext: omni.appwindow-1.1.10] startup
+2026-10-29T05:10:48Z [9,272ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:48Z [9,272ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[10.083s] [ext: omni.index.libs-380600.8087.0] startup
+[10.083s] [ext: omni.kit.actions.core-1.0.0] startup
+[10.093s] [ext: omni.hydra.scene_delegate-0.3.4] startup
+[10.105s] [ext: omni.index-1.0.1] startup
+[10.108s] [ext: omni.kit.renderer.core-1.1.0] startup
+2026-10-29T05:10:48Z [9,376ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:48Z [9,376ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T05:10:48Z [9,405ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:48Z [9,405ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[10.212s] [ext: omni.kit.commands-1.4.10] startup
+[10.223s] [ext: omni.hydra.rtx.shadercache.vulkan-1.0.0] startup
+[10.224s] [ext: omni.kit.renderer.capture-0.0.0] startup
+[10.236s] [ext: omni.convexdecomposition-107.3.26] startup
+[10.244s] [ext: omni.physics-107.3.26] startup
+[10.251s] [ext: omni.kit.renderer.imgui-2.0.5] startup
+2026-10-29T05:10:49Z [9,497ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:49Z [9,497ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T05:10:49Z [9,518ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:49Z [9,518ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-29T05:10:49Z [9,536ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-29T05:10:49Z [9,536ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+[10.426s] [ext: omni.physx.foundation-107.3.26] startup
+[10.436s] [ext: omni.kvdb-107.3.26] startup
+[10.442s] [ext: carb.audio-0.1.0] startup
+[10.464s] [ext: omni.usdphysics-107.3.26] startup
+[10.469s] [ext: omni.localcache-107.3.26] startup
+[10.475s] [ext: omni.kit.audiodeviceenum-1.0.2] startup
+[10.481s] [ext: omni.physx.cooking-107.3.26] startup
+[10.490s] [ext: usdrt.scenegraph-7.6.1] startup
+[10.581s] [ext: omni.resourcemonitor-107.0.1] startup
+[10.590s] [ext: omni.activity.core-1.0.3] startup
+[10.597s] [ext: omni.physx-107.3.26] startup
+[10.617s] [ext: omni.hydra.usdrt_delegate-7.5.1] startup
+[10.641s] [ext: omni.physics.physx-107.3.26] startup
+2026-10-29T05:10:49Z [9,857ms] [Warning] [carb] Acquiring non optional plugin interface which is not listed as dependency: [omni::physx::IPhysxBenchmarks v1.0] (plugin: <default plugin>), by client: omni.physics.physx.plugin. Add it to CARB_PLUGIN_IMPL_DEPS() macro of a client.
+[10.645s] [ext: omni.ui-2.27.1] startup
+[10.670s] [ext: omni.kit.usd_undo-0.1.8] startup
+[10.671s] [ext: omni.kit.window.popup_dialog-2.0.24] startup
+[10.678s] [ext: omni.graph.exec-0.9.6] startup
+[10.680s] [ext: omni.timeline-1.0.14] startup
+[10.688s] [ext: omni.kit.widget.nucleus_connector-2.0.1] startup
+[10.691s] [ext: omni.kit.exec.core-0.13.4] startup
+[10.697s] [ext: omni.ujitso.client-0.0.0] startup
+[10.700s] [ext: omni.usd-1.13.10] startup
+[10.760s] [ext: omni.kit.widget.graph-2.0.0] startup
+[10.767s] [ext: omni.volume-0.5.2] startup
+[10.785s] [ext: omni.kit.widget.searchfield-1.1.8] startup
+[10.787s] [ext: omni.kit.graph.delegate.default-1.2.3] startup
+[10.788s] [ext: omni.hydra.rtx-1.0.0] startup
+2026-10-29T05:10:49Z [10,182ms] [Warning] [omni.log] Source: omni.hydra was already registered.
+[11.066s] [ext: omni.kit.graph.editor.core-1.5.3] startup
+[11.070s] [ext: omni.kit.menu.core-1.1.2] startup
+[11.071s] [ext: omni.kit.graph.usd.commands-1.3.1] startup
+[11.077s] [ext: omni.kit.hydra_texture-1.4.6] startup
+[11.087s] [ext: omni.kit.usd.layers-2.2.11] startup
+[11.103s] [ext: omni.kit.menu.utils-2.0.5] startup
+[11.111s] [ext: omni.inspect-1.0.2] startup
+[11.116s] [ext: omni.kit.widget.material_preview-1.0.16] startup
+[11.118s] [ext: omni.physics.stageupdate-107.3.26] startup
+[11.124s] [ext: omni.kit.primitive.mesh-1.0.17] startup
+[11.128s] [ext: omni.warp.core-1.8.2] startup
+[11.334s] [ext: omni.kit.widget.context_menu-1.2.5] startup
+[11.336s] [ext: omni.graph.tools-1.79.2] startup
+[11.361s] [ext: omni.graph.core-2.184.5] startup
+[11.371s] [ext: omni.kit.notification_manager-1.0.10] startup
+[11.373s] [ext: omni.kit.context_menu-1.8.6] startup
+[11.375s] [ext: omni.kit.clipboard-1.0.5] startup
+[11.378s] [ext: omni.graph-1.141.2] startup
+[11.426s] [ext: omni.kit.hotkeys.core-1.3.10] startup
+[11.428s] [ext: omni.kit.material.library-2.0.7] startup
+[11.433s] [ext: omni.kit.viewport.registry-104.0.6] startup
+[11.435s] [ext: omni.kit.widget.viewport-107.1.3] startup
+[11.443s] [ext: omni.ui.scene-1.11.5] startup
+[11.456s] [ext: omni.hydra.engine.stats-1.0.3] startup
+[11.462s] [ext: omni.kit.widget.options_menu-1.1.6] startup
+[11.466s] [ext: omni.kit.helper.file_utils-0.1.9] startup
+[11.468s] [ext: omni.kit.widget.path_field-2.0.11] startup
+[11.469s] [ext: omni.kit.viewport.window-107.2.0] startup
+[11.490s] [ext: omni.kit.widget.options_button-1.0.3] startup
+[11.492s] [ext: omni.kit.widget.filebrowser-2.12.3] startup
+[11.497s] [ext: omni.kit.widget.browser_bar-2.0.10] startup
+[11.499s] [ext: omni.kit.viewport.utility-1.1.2] startup
+[11.501s] [ext: omni.graph.image.core-0.6.1] startup
+[11.505s] [ext: omni.kit.window.filepicker-2.13.4] startup
+[11.520s] [ext: omni.graph.action_core-1.1.7] startup
+[11.527s] [ext: omni.kit.widget.settings-1.2.6] startup
+[11.531s] [ext: omni.graph.image.nodes-1.3.1] startup
+[11.576s] [ext: omni.graph.action_nodes-1.50.4] startup
+[11.583s] [ext: omni.kit.window.file_exporter-1.0.33] startup
+[11.599s] [ext: omni.kit.widget.filter-1.1.4] startup
+[11.603s] [ext: omni.graph.nodes-1.170.10] startup
+[11.628s] [ext: omni.graph.action-1.130.0] startup
+[11.630s] [ext: omni.kit.widget.stage-3.1.4] startup
+[11.649s] [ext: omni.graph.ui_nodes-1.50.5] startup
+[11.661s] [ext: omni.kit.window.preferences-1.8.0] startup
+[11.689s] [ext: omni.videoencoding-0.1.2] startup
+[11.698s] [ext: omni.warp-1.8.2] startup
+[11.764s] [ext: omni.syntheticdata-0.6.13] startup
+[11.832s] [ext: omni.kit.window.material_graph-1.9.1] startup
+[11.865s] [ext: omni.graph.scriptnode-1.50.0] startup
+[11.873s] [ext: omni.replicator.core-1.12.27] startup
+2026-10-29T05:10:50Z [11,172ms] [Warning] [pxr.Semantics] pxr.Semantics is deprecated - please use Semantics instead
+[Detaching after vfork from child process 3124536]
+Warp 1.8.2 initialized:
+   CUDA Toolkit 12.8, Driver 13.3
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:1"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:2"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:3"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:4"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:5"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:6"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+     "cuda:7"   : "NVIDIA GeForce RTX 4090" (24 GiB, sm_89, mempool enabled)
+   CUDA peer access:
+     Not supported
+   Kernel cache:
+     /workspace/gpt_field/robodojo_uc71/runtime/cache/warp
+2026-10-29T05:10:51Z [11,804ms] [Warning] [omni.graph.core.plugin] Found duplicate of category 'Replicator' - was 'Annotators', adding 'Fabric Reader'
+2026-10-29T05:10:51Z [11,804ms] [Warning] [omni.graph.core.plugin] Category 'Replicator' not accepted on node type 'omni.replicator.core.FabricReader' in extension 'omni.replicator.core'
+2026-10-29T05:10:51Z [11,805ms] [Warning] [omni.replicator.core.scripts.extension] No material configuration file, adding configuration to material settings directly.
+[12.598s] [ext: a0_camera-0.1.0] startup
+{"phase": "kit_startup_returned", "monotonic_s": 924399.589104831}
+2026-10-29T05:10:51Z [12,069ms] [Warning] [carb.audio.device] audio device is misconfigured or broken {deviceIndex = 0, name = 'default'} (The device is likely misconfigured, check your $HOME/.asoundrc)
+2026-10-29T05:10:51Z [12,069ms] [Warning] [carb.audio.output] failed to retrieve the capabilities for device 0 {result = eDeviceLost (2)}
+2026-10-29T05:10:51Z [12,069ms] [Warning] [carb.audio.context] failed to set the requested output during context creation.  Using a null streamer instead {result = eDeviceLost (2)}
+
+Thread 1 "python" received signal SIGSEGV, Segmentation fault.
+0x00007c710c297c0f in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#0  0x00007c710c297c0f in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#1  0x00007c710c297f86 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#2  0x00007c710c29a234 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#3  0x00007c710c2645fe in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#4  0x00007c710c2259d1 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+#5  0x00007c73be13b20f in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.scenerenderer-rtx.plugin.so
+#6  0x00007c73be159136 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.scenerenderer-rtx.plugin.so
+#7  0x00007c73be18634b in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.scenerenderer-rtx.plugin.so
+#8  0x00007c73ab54d459 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/libomni.hydra.rtx.plugin.so
+#9  0x00007c7368362bba in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#10 0x00007c73683673ae in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#11 0x00007c736835cf67 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#12 0x00007c736836a2e7 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#13 0x00007c736835dc35 in omni::usd::UsdManager::createHydraEngine(char const*, omni::usd::UsdContext*) () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#14 0x00007c741bebe6d4 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/_usd.cpython-311-x86_64-linux-gnu.so
+#15 0x00007c741beb23d2 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/_usd.cpython-311-x86_64-linux-gnu.so
+#16 0x000057794d31db55 in cfunction_call ()
+#17 0x000057794d2efc3c in PyObject_Vectorcall ()
+#18 0x000057794d38fe50 in _PyEval_EvalFrameDefault ()
+#19 0x000057794d2f0219 in _PyFunction_Vectorcall ()
+#20 0x00007c7ce2af233a in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#21 0x00007c7ce2ad4a27 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#22 0x00007c7ce2ad4c86 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#23 0x00007c7ce2339201 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.eventdispatcher.plugin.so
+#24 0x00007c736831c3fd in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#25 0x00007c73682bc42c in omni::usd::UsdContext::newStage() () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+#26 0x00007c741be89c48 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/_usd.cpython-311-x86_64-linux-gnu.so
+#27 0x00007c741beb23d2 in ?? () from /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/_usd.cpython-311-x86_64-linux-gnu.so
+#28 0x000057794d31db55 in cfunction_call ()
+#29 0x000057794d1cbec6 in PyObject_Call ()
+From                To                  Syms Read   Shared Object Library
+0x00007c7ce5443000  0x00007c7ce546d195  Yes (*)     /lib64/ld-linux-x86-64.so.2
+0x00007c7ce543c040  0x00007c7ce543c105  Yes (*)     /usr/lib/x86_64-linux-gnu/libpthread.so.0
+0x00007c7ce5437040  0x00007c7ce5437105  Yes (*)     /usr/lib/x86_64-linux-gnu/libdl.so.2
+0x00007c7ce5432040  0x00007c7ce5432105  Yes (*)     /usr/lib/x86_64-linux-gnu/libutil.so.1
+0x00007c7ce542d080  0x00007c7ce542d2b1  Yes (*)     /usr/lib/x86_64-linux-gnu/librt.so.1
+0x00007c7ce5353420  0x00007c7ce53d13a6  Yes (*)     /usr/lib/x86_64-linux-gnu/libm.so.6
+0x00007c7ce5157800  0x00007c7ce52deeb9  Yes (*)     /usr/lib/x86_64-linux-gnu/libc.so.6
+0x00007c7ce4b080d0  0x00007c7ce4bbea02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/libcarb.so
+0x00007c7ce49235c0  0x00007c7ce4a62ce2  Yes (*)     /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+0x00007c7ce4854780  0x00007c7ce4877745  Yes (*)     /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+0x00007c7ce47f9b50  0x00007c7ce4831eb5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/libre2.so
+0x00007c7ce47b6820  0x00007c7ce47d48ac  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/libcares.so
+0x00007c7ce366b000  0x00007c7ce40b9bd0  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/bin/../lib/libpython3.11.so
+0x00007c7ce33aa540  0x00007c7ce3445dc2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/_carb.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce32f8a10  0x00007c7ce3346ed2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/libomni.structuredlog.plugin.so
+0x00007c7ce2b23d50  0x00007c7ce2b48c52  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/variant/_variant.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2ab2f50  0x00007c7ce2af2452  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2a53c80  0x00007c7ce2a87042  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/profiler/_profiler.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce29e8c20  0x00007c7ce2a25f62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/dictionary/_dictionary.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2981c20  0x00007c7ce29b9672  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce293d880  0x00007c7ce295a6b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/tokens/_tokens.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce28c7f00  0x00007c7ce290c462  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/ext/_extensions.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2565e50  0x00007c7ce2599af2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/kit/app/_app.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce24f5f70  0x00007c7ce25351e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/events/_events.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce241b910  0x00007c7ce24b6232  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libomni.kit.app.plugin.so
+0x00007c7ce23bff70  0x00007c7ce23e22f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.dictionary.plugin.so
+0x00007c7ce2394550  0x00007c7ce23a21d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.settings.plugin.so
+0x00007c7ce23726d0  0x00007c7ce237cf12  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.tokens.plugin.so
+0x00007c7ce2333b50  0x00007c7ce2352f62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.eventdispatcher.plugin.so
+0x00007c7ce22d20c0  0x00007c7ce230cd32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.events.plugin.so
+0x00007c7ce2293c50  0x00007c7ce22afed2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.variant.plugin.so
+0x00007c7ce2257980  0x00007c7ce22755a2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.dictionary.serializer-json.plugin.so
+0x00007c7ce2210830  0x00007c7ce22351a2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.dictionary.serializer-toml.plugin.so
+0x00007c7ce21ed440  0x00007c7ce21f5802  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.profiler-mux.plugin.so
+0x00007c7ce2186960  0x00007c7ce21bfc72  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.profiler-cpu.plugin.so
+0x00007c7ce194cbe0  0x00007c7ce1963322  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libomni.platforminfo.plugin.so
+0x00007c7ce1919920  0x00007c7ce19304b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.profiler-gpu.plugin.so
+0x00007c7ce188c7a0  0x00007c7ce18b8612  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.tasking.plugin.so
+0x00007c7ce17d4630  0x00007c7ce18578e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libomni.ext.plugin.so
+0x00007c7ce1790bc0  0x00007c7ce17b0df2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.scripting-python.plugin.so
+0x00007c7ce1762be0  0x00007c7ce176f002  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.launcher.plugin.so
+0x00007c77595d7660  0x00007c77595e6972  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.metrics.core-0.0.3+69cbf6ad.lx64.r/bin/deps/libcarb.metrics.plugin.so
+0x00007c77462f5980  0x00007c774748f295  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.client.lib/bin/libomniclient.so
+0x00007c7758d66480  0x00007c775934d725  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.client.lib/bin/libomniverse_connection.so
+0x00007c7758819ae0  0x00007c77588b1caa  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.client.lib/omni/client/impl/_omniclient.cpython-311-x86_64-linux-gnu.so
+0x00007c7758b3c1d0  0x00007c7758b7fdd2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.blobkey-1.1.2+69cbf6ad.lx64.r/bin/deps/libomni.blobkey.plugin.so
+0x00007c77587aa540  0x00007c77587e1652  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.stats-1.0.1+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.stats.plugin.so
+0x00007c7758764760  0x00007c7758783592  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.stats-1.0.1+69cbf6ad.lx64.r.cp311/omni/stats/_stats.cpython-311-x86_64-linux-gnu.so
+0x00007c7745202400  0x00007c7745b9fc92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.datastore-0.0.0+69cbf6ad.lx64.r/bin/libomni.datastore.ext.plugin.so
+0x00007c7758b286e0  0x00007c7758b30f19  Yes (*)     /usr/lib/x86_64-linux-gnu/libresolv.so.2
+0x00007c7758691a80  0x00007c7758729b02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.datastore-0.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.datastore.plugin.so
+0x00007c775864e800  0x00007c775865b6e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.client-1.3.0+69cbf6ad.lx64.r/bin/libomni.client.liveprocess.plugin.so
+0x00007c7758625820  0x00007c7758634452  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.client-1.3.0+69cbf6ad.lx64.r/bin/deps/libcarb.datasource-omniclient.plugin.so
+0x00007c77586064a0  0x00007c775860b102  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.client-1.3.0+69cbf6ad.lx64.r/bin/deps/libcarb.omniclient.plugin.so
+0x00007c77441e4540  0x00007c77443453b0  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ujitso.default-1.0.0+69cbf6ad.lx64.r.cp311/bin/carb.ujitsoagent/libcarb.ujitsoagent.plugin.so
+0x00007c7747fd49e0  0x00007c7747fe6ee2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ujitso.default-1.0.0+69cbf6ad.lx64.r.cp311/bin/carb.ujitso.default/libcarb.ujitso.default.plugin.so
+0x00007c7747faf7c0  0x00007c7747fbaf02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ujitso.default-1.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.ujitso.default.ext.plugin.so
+0x00007c77440cb980  0x00007c7744162f80  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hsscclient-1.1.2+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.hsscclient.plugin.so
+0x00007c7747f5eb60  0x00007c7747f8d212  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ujitso.default-1.0.0+69cbf6ad.lx64.r.cp311/omni/ujitso/default/_ujitsodefault.cpython-311-x86_64-linux-gnu.so
+0x00007c7747f05960  0x00007c7747f35412  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/omni/gpu_foundation_factory/_gpu_foundation_factory.cpython-311-x86_64-linux-gnu.so
+0x00007c774407ec40  0x00007c774409ece2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.assets.plugins-0.0.0+69cbf6ad.lx64.r/bin/libcarb.assets.plugin.so
+0x00007c774405a590  0x00007c77440639f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.assets.plugins-0.0.0+69cbf6ad.lx64.r/bin/libcarb.datasource-file.plugin.so
+0x00007c773d3ce500  0x00007c773d533592  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.assets.plugins-0.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.imaging.plugin.so
+0x00007c774402b930  0x00007c77440402b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.assets.plugins-0.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.progress.plugin.so
+0x00007c773d096040  0x00007c773d126f22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.graphics-vulkan.plugin.so
+0x00007c773cb28c40  0x00007c773cee455c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libGFSDK_Aftermath_Lib.x64.so
+0x00007c774400d3a0  0x00007c7744012142  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.graphics_optional.plugin.so
+0x00007c773caaeda0  0x00007c773cac6a22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.shadercompiler-slang.plugin.so
+0x00007c7726d8e190  0x00007c77275ac7c5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libslang.so
+0x00007c773c316720  0x00007c773c932cc2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libgpu.foundation.plugin.so
+0x00007c773c24e980  0x00007c773c256472  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.blockcompression.plugin.so
+0x00007c7724654bb0  0x00007c77248303fa  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libnvtt.so.30205
+0x00007c7723abd040  0x00007c772406c3e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.cudainterop.plugin.so
+0x00007c773c22a5c0  0x00007c773c232b82  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.glinterop.plugin.so
+0x00007c773c1e31e0  0x00007c773c1e6081  Yes (*)     /usr/lib/x86_64-linux-gnu/libGL.so.1
+0x00007c7723654170  0x00007c77236802f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libGLEW.so.2.1
+0x00007c773c1292c0  0x00007c773c12b42f  Yes (*)     /usr/lib/x86_64-linux-gnu/libGLdispatch.so.0
+0x00007c773c0b8700  0x00007c773c0d2371  Yes (*)     /usr/lib/x86_64-linux-gnu/libGLX.so.0
+0x00007c77238d5100  0x00007c7723963fde  Yes (*)     /usr/lib/x86_64-linux-gnu/libX11.so.6
+0x00007c773c097660  0x00007c773c0a9ebe  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb.so.1
+0x00007c7758014360  0x00007c7758015042  Yes (*)     /usr/lib/x86_64-linux-gnu/libXau.so.6
+0x00007c775800d1a0  0x00007c775800ea89  Yes (*)     /usr/lib/x86_64-linux-gnu/libXdmcp.so.6
+0x00007c773c07ade0  0x00007c773c0854f6  Yes (*)     /usr/lib/x86_64-linux-gnu/libbsd.so.0
+0x00007c7747eef160  0x00007c7747ef7a7a  Yes (*)     /usr/lib/x86_64-linux-gnu/libmd.so.0
+0x00007c773c051980  0x00007c773c05f412  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.failureinjector.plugin.so
+0x00007c773c01eba0  0x00007c773c034272  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.memorytracking.plugin.so
+0x00007c7726cd3380  0x00007c7726cd8fe2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.gpu_foundation.ext.plugin.so
+0x00007c7726caa840  0x00007c7726cb9e82  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.gpu_foundation_factory.plugin.so
+0x00007c77235df540  0x00007c77235ea212  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.imguiregistry.plugin.so
+0x00007c77235b65a0  0x00007c77235c6de2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libomni.streamingstatus.plugin.so
+0x00007c7723598420  0x00007c772359e5f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/carb.ujitso.processors.texture/libcarb.ujitso.processor.texture.plugin.so
+0x00007c7723552cd0  0x00007c7723578ee2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/carb.windowing.plugins-1.0.0+69cbf6ad.lx64.r/bin/libcarb.input.plugin.so
+0x00007c7723492380  0x00007c77234976b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/carb.windowing.plugins-1.0.0+69cbf6ad.lx64.r/bin/libcarb.windowing.ext.plugin.so
+0x00007c7723526990  0x00007c7723536c72  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.init-0.0.0+69cbf6ad.lx64.r/bin/libomni.kit.renderer.init.plugin.so
+0x00007c7721e1fc80  0x00007c7721f9d261  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1
+0x00007c771b3a8dc0  0x00007c771c621ee1  Yes (*)     /usr/lib/x86_64-linux-gnu/libcuda.so.1
+0x00007c771a607150  0x00007c771a64be0b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libvulkan.so.1
+0x00007c77233b6660  0x00007c77234126d1  Yes (*)     /usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.0
+0x00007c771a973790  0x00007c771a9d2541  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-glsi.so.610.43.02
+0x00007c7758006050  0x00007c7758007bd1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-tls.so.610.43.02
+0x00007c7711a71000  0x00007c77128ae9a1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-glcore.so.610.43.02
+0x00007c773c00a600  0x00007c773c014bce  Yes (*)     /usr/lib/x86_64-linux-gnu/libXext.so.6
+0x00007c770af5bfe0  0x00007c770f4f76b1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-gpucomp.so.610.43.02
+0x00007c77238ac7c0  0x00007c77238b56fc  Yes (*)     /usr/lib/x86_64-linux-gnu/libEGL.so.1
+0x00007c771a506660  0x00007c771a58daf1  Yes (*)     /usr/lib/x86_64-linux-gnu/libEGL_nvidia.so.0
+0x00007c7744004250  0x00007c77440061b4  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-egl-gbm.so.1
+0x00007c7723511760  0x00007c772351c7c1  Yes (*)     /usr/lib/x86_64-linux-gnu/libdrm.so.2
+0x00007c7726ca22e0  0x00007c7726ca30c9  Yes (*)     /usr/lib/x86_64-linux-gnu/libgbm.so.1
+0x00007c77234e4210  0x00007c7723500473  Yes (*)     /usr/lib/x86_64-linux-gnu/libexpat.so.1
+0x00007c7708819d80  0x00007c770945e4e1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-eglcore.so.610.43.02
+0x00007c7723321220  0x00007c7723346102  Yes (*)     /usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0
+0x00007c7705ba2880  0x00007c77073ae9e2  Yes (*)     /usr/lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.2.so
+0x00007c7758001040  0x00007c775800111f  Yes (*)     /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1
+0x00007c77234d60c0  0x00007c77234dac57  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-randr.so.0
+0x00007c77234c80a0  0x00007c77234ca789  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-xfixes.so.0
+0x00007c773c0020e0  0x00007c773c002b07  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-shm.so.0
+0x00007c77234ba580  0x00007c77234bfb84  Yes (*)     /usr/lib/x86_64-linux-gnu/libwayland-client.so.0
+0x00007c7726c9b0e0  0x00007c7726c9c14c  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0
+0x00007c77234b10a0  0x00007c77234b18ba  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-present.so.0
+0x00007c76fdfa0cc0  0x00007c7701bc18d2  Yes (*)     /usr/lib/x86_64-linux-gnu/libLLVM.so.20.1
+0x00007c77232f6260  0x00007c7723307c40  Yes (*)     /usr/lib/x86_64-linux-gnu/libz.so.1
+0x00007c771a8ad400  0x00007c771a9537b2  Yes (*)     /usr/lib/x86_64-linux-gnu/libzstd.so.1
+0x00007c7721df35a0  0x00007c7721df9f38  Yes (*)     /usr/lib/x86_64-linux-gnu/libsensors.so.5
+0x00007c7721deb100  0x00007c7721ded2c6  Yes (*)     /usr/lib/x86_64-linux-gnu/libxcb-sync.so.1
+0x00007c7721de4180  0x00007c7721de4450  Yes (*)     /usr/lib/x86_64-linux-gnu/libxshmfence.so.1
+0x00007c7721dd9840  0x00007c7721dde909  Yes (*)     /usr/lib/x86_64-linux-gnu/libdrm_amdgpu.so.1
+0x00007c771a88d700  0x00007c771a8a202f  Yes (*)     /usr/lib/x86_64-linux-gnu/libelf.so.1
+0x00007c771a4b4660  0x00007c771a4c9a38  Yes (*)     /usr/lib/x86_64-linux-gnu/libdrm_intel.so.1
+0x00007c771a880460  0x00007c771a88607a  Yes (*)     /usr/lib/x86_64-linux-gnu/libffi.so.8
+0x00007c771a480050  0x00007c771a49dcd0  Yes (*)     /usr/lib/x86_64-linux-gnu/libedit.so.2
+0x00007c771a2c4e70  0x00007c771a429d0e  Yes (*)     /usr/lib/x86_64-linux-gnu/libxml2.so.2
+0x00007c771a28c5c0  0x00007c771a290980  Yes (*)     /usr/lib/x86_64-linux-gnu/libpciaccess.so.0
+0x00007c771a264840  0x00007c771a276b68  Yes (*)     /usr/lib/x86_64-linux-gnu/libtinfo.so.6
+0x00007c771a0b1940  0x00007c771a1b5bea  Yes (*)     /usr/lib/x86_64-linux-gnu/libicuuc.so.74
+0x00007c771a01a400  0x00007c771a03b5ef  Yes (*)     /usr/lib/x86_64-linux-gnu/liblzma.so.5
+0x00007c77182b8040  0x00007c77182b80f9  Yes (*)     /usr/lib/x86_64-linux-gnu/libicudata.so.74
+0x00007c7718264f10  0x00007c77182937bb  Yes (*)     /usr/lib/x86_64-linux-gnu/libdbus-1.so.3
+0x00007c771818fe20  0x00007c771821c770  Yes (*)     /usr/lib/x86_64-linux-gnu/libsystemd.so.0
+0x00007c771816e9c0  0x00007c7718173607  Yes (*)     /usr/lib/x86_64-linux-gnu/libcap.so.2
+0x00007c7718032ac0  0x00007c77181250de  Yes (*)     /usr/lib/x86_64-linux-gnu/libgcrypt.so.20
+0x00007c7718004180  0x00007c771801ee8c  Yes (*)     /usr/lib/x86_64-linux-gnu/liblz4.so.1
+0x00007c77117dfa20  0x00007c77117f4d72  Yes (*)     /usr/lib/x86_64-linux-gnu/libgpg-error.so.0
+0x00007c77117b94d0  0x00007c77117ccad1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-allocator.so.1
+0x00007c76f7433c30  0x00007c76f7bfafe1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-glvkspirv.so.610.43.02
+0x00007c76f144fe80  0x00007c76f21b9471  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvidia-rtcore.so.610.43.02
+0x00007c75d3378a50  0x00007c75d37ff7bc  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpu_foundation-0.0.0+69cbf6ad.lx64.r.cp311/bin/deps/libnvperf_grfx_host.so
+0x00007c761c059390  0x00007c761c0d45b8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.materialx.libs-1.0.7+69cbf6ad.lx64.r.cp311/bin/libMaterialXCore.so
+0x00007c767c0178e0  0x00007c767c04d831  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.materialx.libs-1.0.7+69cbf6ad.lx64.r.cp311/bin/libMaterialXFormat.so
+0x00007c75b0417350  0x00007c75b05645b3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.materialx.libs-1.0.7+69cbf6ad.lx64.r.cp311/MaterialX/PyMaterialXCore.cpython-311-x86_64-linux-gnu.so
+0x00007c765c082940  0x00007c765c0c3508  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.materialx.libs-1.0.7+69cbf6ad.lx64.r.cp311/MaterialX/PyMaterialXFormat.cpython-311-x86_64-linux-gnu.so
+0x00007c763c019c10  0x00007c763c097082  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpucompute.plugins-0.0.0+69cbf6ad.lx64.r/bin/deps/libomni.gpucompute-cuda.plugin.so
+0x00007c76f480f520  0x00007c76f4816452  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.gpucompute.plugins-0.0.0+69cbf6ad.lx64.r/bin/deps/libomni.gpucompute-d3dvk.plugin.so
+0x00007c75b01b7aa0  0x00007c75b01f8936  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXRCore.so
+0x00007c75f813a390  0x00007c75f81b55b8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXCore.so
+0x00007c765c0348e0  0x00007c765c06a831  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXFormat.so
+0x00007c75d012b2b0  0x00007c75d01b0b7b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXGenShader.so
+0x00007c7616065e40  0x00007c76160c98db  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXRender.so
+0x00007c76f00bbce0  0x00007c76f00c6e77  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXRenderOsl.so
+0x00007c76160158d0  0x00007c761603a692  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_arch.so
+0x00007c75f80b0290  0x00007c75f80d0bfc  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtbb.so
+0x00007c769c013df0  0x00007c769c034578  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_python311.so
+0x00007c75a851bc50  0x00007c75a85c06c3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_tf.so
+0x00007c75f80625f0  0x00007c75f8073021  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtbbmalloc.so.2
+0x00007c75d009da40  0x00007c75d00b932f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_garch.so
+0x00007c769c3d07a0  0x00007c769c3d20bd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_work.so
+0x00007c75d0016e20  0x00007c75d0028326  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_js.so
+0x00007c75b8193220  0x00007c75b81c9cd2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_trace.so
+0x00007c75b8133d40  0x00007c75b815f4c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_plug.so
+0x00007c75b8086120  0x00007c75b80c3f89  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_gf.so
+0x00007c75243f1e70  0x00007c752451afbf  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_vt.so
+0x00007c75b803c260  0x00007c75b805b1f8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_ar.so
+0x00007c7524075fa0  0x00007c75240fcbec  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hio.so
+0x00007c746fbc46e0  0x00007c746fee4b83  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_sdf.so
+0x00007c75b0181dc0  0x00007c75b01a1694  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_glf.so
+0x00007c75b00c0920  0x00007c75b0147350  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libosdCPU.so
+0x00007c75b0047f00  0x00007c75b0082ce2  Yes (*)     /usr/lib/x86_64-linux-gnu/libgomp.so.1
+0x00007c769c203a80  0x00007c769c210d3f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_pxOsd.so
+0x00007c769c3c24e0  0x00007c769c3c72ef  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_geomUtil.so
+0x00007c76f00af540  0x00007c76f00b1277  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_cameraUtil.so
+0x00007c765c017900  0x00007c765c01b140  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hf.so
+0x00007c75b0019950  0x00007c75b002fc2a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_ndr.so
+0x00007c75a84a6940  0x00007c75a84bdc9c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_sdr.so
+0x00007c746f6472f0  0x00007c746f92a9d5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hd.so
+0x00007c765c00a900  0x00007c765c00e1ee  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_kind.so
+0x00007c75a80c7c60  0x00007c75a81b6944  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_pcp.so
+0x00007c746eeb1940  0x00007c746f2f1142  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usd.so
+0x00007c746eb1f2b0  0x00007c746ec2700c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdGeom.so
+0x00007c746e98bed0  0x00007c746ea4ec66  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdsi.so
+0x00007c75a84747a0  0x00007c75a8485c9c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hgi.so
+0x00007c75a8422f60  0x00007c75a844bd5f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hgiGL.so
+0x00007c769c3ba220  0x00007c769c3bb2ec  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hgiInterop.so
+0x00007c75b80139b0  0x00007c75b801ad2c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdUI.so
+0x00007c746e85cfa0  0x00007c746e8cb6f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdShade.so
+0x00007c746e7701f0  0x00007c746e7f681f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdUtils.so
+0x00007c746e6a58c0  0x00007c746e6f92e5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdMtlx.so
+0x00007c75a80411d0  0x00007c75a804f1dd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdMtlx.so
+0x00007c746e5f2a80  0x00007c746e6163fe  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libosdGPU.so
+0x00007c746e552490  0x00007c746e585a69  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXGenGlsl.so
+0x00007c746e4f3670  0x00007c746e51f8be  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXGenMsl.so
+0x00007c746e1f0be0  0x00007c746e423a5a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdSt.so
+0x00007c746dfa6400  0x00007c746e064578  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdx.so
+0x00007c763c0094c0  0x00007c763c00adbc  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdar.so
+0x00007c746dea17d0  0x00007c746dee87c5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdLux.so
+0x00007c75a8012530  0x00007c75a8028e25  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdRender.so
+0x00007c752402ed90  0x00007c752403b116  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdVol.so
+0x00007c746da62ba0  0x00007c746dd650ff  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdImaging.so
+0x00007c746d7d1ab0  0x00007c746d7e7292  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdImagingGL.so
+0x00007c746d7602a0  0x00007c746d76b82b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libImath-3_1.so
+0x00007c746d5beda0  0x00007c746d70dc5a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libAlembic.so
+0x00007c746d563f40  0x00007c746d57e2b5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_hdGp.so
+0x00007c746d523470  0x00007c746d5351be  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libIex.so
+0x00007c746d4a2470  0x00007c746d4b41be  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libIex-3_3.so
+0x00007c75f80047b0  0x00007c75f80071be  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libIlmThread-3_3.so
+0x00007c746d216aa0  0x00007c746d257936  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXRCore-3_3.so
+0x00007c746d1312e0  0x00007c746d1d45fd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXR-3_3.so
+0x00007c746d0b5660  0x00007c746d0d1a13  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXRUtil.so
+0x00007c746cfeb7e0  0x00007c746d078237  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libjpeg.so
+0x00007c746cf9dcb0  0x00007c746cfd229e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXGenMdl.so
+0x00007c76f7f632c0  0x00007c76f7f6399b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXRenderHw.so
+0x00007c746cf23570  0x00007c746cf62569  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/sysroot/usr/lib/x86_64-linux-gnu/libXt.so.6
+0x00007c75d00054c0  0x00007c75d0009809  Yes (*)     /usr/lib/x86_64-linux-gnu/libSM.so.6
+0x00007c752400eac0  0x00007c752401c9d8  Yes (*)     /usr/lib/x86_64-linux-gnu/libICE.so.6
+0x00007c75b8004500  0x00007c75b80082fb  Yes (*)     /usr/lib/x86_64-linux-gnu/libuuid.so.1
+0x00007c746cef0410  0x00007c746cf05a79  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_filesystem.so
+0x00007c746ce41fd0  0x00007c746cebbdf4  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdPhysics.so
+0x00007c769c1fa040  0x00007c769c1fa105  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_system.so
+0x00007c746cddc7f0  0x00007c746cdded6d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdProc.so
+0x00007c746cdc0640  0x00007c746cdcdb0c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libz.so
+0x00007c746cd8c1f0  0x00007c746cdafe0d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libpng.so
+0x00007c746cd73110  0x00007c746cd7f7c3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdSemantics.so
+0x00007c746cd470f0  0x00007c746cd5f301  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXGenOsl.so
+0x00007c746cd24f10  0x00007c746cd2d28f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdMedia.so
+0x00007c746ccca2a0  0x00007c746ccd582b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libImath.so
+0x00007c746cc4c5f0  0x00007c746cc920c9  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtiff.so
+0x00007c765c002280  0x00007c765c002963  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtiffxx.so
+0x00007c746cc29d60  0x00007c746cc3a1ec  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_thread.so
+0x00007c746caf4220  0x00007c746cbcea32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdSkel.so
+0x00007c746ca70d10  0x00007c746ca77bcf  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdVolImaging.so
+0x00007c746ca225f0  0x00007c746ca33021  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtbbmalloc.so
+0x00007c746ca14420  0x00007c746ca17427  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_chrono.so
+0x00007c763c002040  0x00007c763c002105  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_date_time.so
+0x00007c746c9cf490  0x00007c746c9fb93e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdSkelImaging.so
+0x00007c746c98a280  0x00007c746c99392b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdProcImaging.so
+0x00007c761c0011c0  0x00007c761c001bca  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libtbbmalloc_proxy.so
+0x00007c746c93ffc0  0x00007c746c9662fd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libMaterialXRenderGlsl.so
+0x00007c746c8b75f0  0x00007c746c8fed05  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_program_options.so
+0x00007c746c87d660  0x00007c746c899a13  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXRUtil-3_3.so
+0x00007c746c84f280  0x00007c746c861f4e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdRiPxrImaging.so
+0x00007c746c8254a0  0x00007c746c830d7d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_container.so
+0x00007c746c73e4e0  0x00007c746c7ee737  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libturbojpeg.so
+0x00007c746c716690  0x00007c746c73013f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdRi.so
+0x00007c746c6fced0  0x00007c746c704b67  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdHydra.so
+0x00007c75240011a0  0x00007c7524002182  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_atomic.so
+0x00007c746c6e63a0  0x00007c746c6ee9e3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdAppUtils.so
+0x00007c746c5fc2e0  0x00007c746c69f5fd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libOpenEXR.so
+0x00007c746c560ae0  0x00007c746c5995ab  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libboost_regex.so
+0x00007c746c5291f0  0x00007c746c54ce0d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libpng16.so
+0x00007c746c471dd0  0x00007c746c4e9aa1  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_ts.so
+0x00007c746c4067b0  0x00007c746c4091be  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libIlmThread.so
+0x00007c746c3e4dd0  0x00007c746c3f997c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libusd_usdBakeMtlx.so
+0x00007c746c2d0890  0x00007c746c39bfa2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/libdraco.so
+0x00007c746c124ed0  0x00007c746c2053d8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/usd/usdAbc.so
+0x00007c744ffad240  0x00007c744ffe7a1f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/usd/usdDraco.so
+0x00007c744fef1990  0x00007c744ff4f282  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/deps/libomni.usd-abi.plugin.so
+0x00007c746c0335b0  0x00007c746c03b0c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/deps/libomni.usd.hydra.renderproduct.plugin.so
+0x00007c746c015620  0x00007c746c01baf2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/deps/libomni.tbb.globalcontrol.plugin.so
+0x00007c744fc04aa0  0x00007c744fdfdde2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/bin/fabric/libomni.fabric.plugin.so
+0x00007c744f2f8ec0  0x00007c744f629993  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.mdl-56.0.3+69cbf6ad.lx64.r.cp311/omni/mdl/pymdlsdk/_pymdlsdk.cpython-311-x86_64-linux-gnu.so
+0x00007c744eac1af0  0x00007c744ef97713  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so
+0x00007c744cb2d000  0x00007c744e7adc5c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/core/../../numpy.libs/libopenblas64_p-r0-0cf96a72.3.23.dev.so
+0x00007c744c41b870  0x00007c744c646837  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/core/../../numpy.libs/libgfortran-040039e1.so.5.0.0
+0x00007c744c0023e0  0x00007c744c025d2b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/core/../../numpy.libs/libquadmath-96973f99.so.0.0.0
+0x00007c7ce2cb2d80  0x00007c7ce2cc2819  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/core/_multiarray_tests.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2c86b50  0x00007c7ce2ca0372  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so
+0x00007c7ce2c69170  0x00007c7ce2c7bafa  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/fft/_pocketfft_internal.cpython-311-x86_64-linux-gnu.so
+0x00007c744c252900  0x00007c744c2aabf4  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so
+0x00007c744c8e4900  0x00007c744c906070  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so
+0x00007c744c8a5860  0x00007c744c8d6ecd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_common.cpython-311-x86_64-linux-gnu.so
+0x00007c744aeac850  0x00007c744aef10ef  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so
+0x00007c744ae90610  0x00007c744aea05e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so
+0x00007c744ae78620  0x00007c744ae8621c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so
+0x00007c744ae5c600  0x00007c744ae6d56b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so
+0x00007c746c005590  0x00007c746c00d28a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so
+0x00007c7448423ca0  0x00007c74484a5427  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so
+0x00007c73a641da70  0x00007c73a66774e8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/liboptix_prime.so.1
+0x00007c739d4d91a0  0x00007c739f58264a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/libiray.so
+0x00007c7396105000  0x00007c73994872af  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/libneuray.so
+0x00007c744ae047c0  0x00007c744ae4a31d  Yes (*)     /usr/lib/x86_64-linux-gnu/libGLU.so.1
+0x00007c7445ae91c0  0x00007c7445ae9638  Yes (*)     /usr/lib/x86_64-linux-gnu/libOpenGL.so.0
+0x00007c74406521f0  0x00007c74407aaff8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/mdl-distiller/mdl_distiller.so
+0x00007c743dcb2e90  0x00007c743ddb3548  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/mdl-distiller/mdl_lod_distiller.so
+0x00007c7445a37e80  0x00007c7445aaae52  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.mdl.neuraylib-0.2.12+69cbf6ad.lx64.r.cp311/bin/deps/librtx.neuraylib.plugin.so
+0x00007c74430b57a0  0x00007c74430df4b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.mdl.neuraylib-0.2.12+69cbf6ad.lx64.r.cp311/omni/mdl/neuraylib/_neuraylib.cpython-311-x86_64-linux-gnu.so
+0x00007c7759f31540  0x00007c7759f36b12  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.usd.mdl-1.1.5+69cbf6ad.lx64.r.cp311/bin/librtx.usdmdl.plugin.so
+0x00007c743b347760  0x00007c743b3c3932  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.usd.mdl-1.1.5+69cbf6ad.lx64.r.cp311/bin/libomni.usdMdl.so
+0x00007c7395c3a920  0x00007c7395cf6f26  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Tf/_tf.so
+0x00007c744307e220  0x00007c744309c82b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.usd.mdl-1.1.5+69cbf6ad.lx64.r.cp311/omni/UsdMdl/_usdMdl.so
+0x00007c7443049970  0x00007c7443062e46  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Trace/_trace.so
+0x00007c7759f292e0  0x00007c7759f2a520  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Work/_work.so
+0x00007c743dc50f10  0x00007c743dc7fb0c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Plug/_plug.so
+0x00007c73957c4cf0  0x00007c7395a0023b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Gf/_gf.so
+0x00007c7394c99a00  0x00007c739519267d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Vt/_vt.so
+0x00007c74389bd740  0x00007c74389e6c16  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Ar/_ar.so
+0x00007c7394207a80  0x00007c7394504a32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Sdf/_sdf.so
+0x00007c74388fd580  0x00007c7438947c6a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Ndr/_ndr.so
+0x00007c743884f590  0x00007c743886cf01  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Sdr/_sdr.so
+0x00007c7759f15c70  0x00007c7759f1cdb6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Kind/_kind.so
+0x00007c743373fae0  0x00007c74337bbf26  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Pcp/_pcp.so
+0x00007c73939daf80  0x00007c7393b6c9b5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Usd/_usd.so
+0x00007c73935828d0  0x00007c73936a797e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdGeom/_usdGeom.so
+0x00007c742bb29970  0x00007c742bbb37d7  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdShade/_usdShade.so
+0x00007c7433621b80  0x00007c7433649732  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/data/ov/data/exts/v2/omni.kit.loop-default-8527d65f8e6ff569/bin/libomni.kit.loop-default.plugin.so
+0x00007c742ec81dc0  0x00007c742ecd6872  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.test-2.0.1+69cbf6ad.lx64.r.cp311/bin/libomni.kit.test.plugin.so
+0x00007c75b0002430  0x00007c75b0004504  Yes         /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/psutil/_psutil_linux.abi3.so
+0x00007c744c89c280  0x00007c744c89d751  Yes         /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/psutil/_psutil_posix.abi3.so
+0x00007c744c895300  0x00007c744c896a57  Yes         /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/coverage/tracer.cpython-311-x86_64-linux-gnu.so
+0x00007c744060e8b0  0x00007c744062bdbd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/lib/libanimationSchema.so
+0x00007c742ec47ce0  0x00007c742ec5fa9c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/lib/libanimationSchemaTools.so
+0x00007c742ec0e210  0x00007c742ec261cf  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/lib/libomniSkelSchema.so
+0x00007c74290b8420  0x00007c74290ee1e1  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/lib/libretargetingSchema.so
+0x00007c744c2456a0  0x00007c744c2482ef  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/lib/libretargetingSchemaTools.so
+0x00007c742906d760  0x00007c742908ecdd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/AnimationSchema/_animationSchema.so
+0x00007c7411749200  0x00007c74117c3750  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdSkel/_usdSkel.so
+0x00007c74266de3a0  0x00007c74266ef5fc  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/AnimationSchemaTools/_animationSchemaTools.so
+0x00007c7423c90900  0x00007c7423cd50f7  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/OmniSkelSchema/_omniSkelSchema.so
+0x00007c7426684260  0x00007c742669cff7  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/RetargetingSchema/_retargetingSchema.so
+0x00007c7448417540  0x00007c7448418835  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.anim-0.0.0+69cbf6ad.lx64.r.cp311/RetargetingSchemaTools/_retargetingSchemaTools.so
+0x00007c7448408bb0  0x00007c744840d31f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.semantics-0.0.0+69cbf6ad.lx64.r.cp311/lib/libsemantics.so
+0x00007c7445a11d40  0x00007c7445a1d717  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.semantics-0.0.0+69cbf6ad.lx64.r.cp311/Semantics/_semantics.so
+0x00007c743b21d9d0  0x00007c743b22884f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.audio-0.0.0+69cbf6ad.lx64.r.cp311/lib/libomniAudioSchema.so
+0x00007c742ba0ef40  0x00007c742ba24e07  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.audio-0.0.0+69cbf6ad.lx64.r.cp311/OmniAudioSchema/_omniAudioSchema.so
+0x00007c739023e700  0x00007c739038549d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libphysxSchema.so
+0x00007c742663c140  0x00007c74266507ee  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libphysicsSchemaTools.so
+0x00007c7116bcb1e0  0x00007c7116eab342  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353/pxr/PhysxSchema/_physxSchema.so
+0x00007c7115e70ee0  0x00007c71160261b1  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdPhysics/_usdPhysics.so
+0x00007c74212ddb20  0x00007c74212f33cd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353/pxr/PhysicsSchemaTools/_physicsSchemaTools.so
+0x00007c744300c890  0x00007c744301122f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.geospatial-0.0.0+69cbf6ad.lx64.r.cp311/lib/libomniGeospatial.so
+0x00007c742129cfe0  0x00007c74212ade77  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.geospatial-0.0.0+69cbf6ad.lx64.r.cp311/OmniGeospatial/_omniGeospatial.so
+0x00007c7421256fb0  0x00007c742127164f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.omnigraph-1.0.0+69cbf6ad.lx64.r.cp311/lib/libomniGraphSchema.so
+0x00007c7445a04640  0x00007c7445a05c69  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.omnigraph-1.0.0+69cbf6ad.lx64.r.cp311/lib/libomniGraphSchemaTools.so
+0x00007c741e8a51c0  0x00007c741e8dfb47  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.omnigraph-1.0.0+69cbf6ad.lx64.r.cp311/OmniGraphSchema/_omniGraphSchema.so
+0x00007c7443002400  0x00007c7443003629  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.schema.omnigraph-1.0.0+69cbf6ad.lx64.r.cp311/OmniGraphSchemaTools/_omniGraphSchemaTools.so
+0x00007c7433605380  0x00007c7433609ec2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd_resolver-1.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.ext-usd_resolver.plugin.so
+0x00007c74266127f0  0x00007c742661d1b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd_resolver-1.0.0+69cbf6ad.lx64.r.cp311/lib/libcarb.usdresolver.plugin.so
+0x00007c7421224a00  0x00007c742123dbac  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd_resolver-1.0.0+69cbf6ad.lx64.r.cp311/lib/libomni_usd_resolver.so
+0x00007c7423c11960  0x00007c7423c1ba02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd_resolver-1.0.0+69cbf6ad.lx64.r.cp311/lib/libomni.spectree.delegate.plugin.so
+0x00007c741e84bcf0  0x00007c741e874062  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd_resolver-1.0.0+69cbf6ad.lx64.r.cp311/omni/usd_resolver/_omni_usd_resolver.cpython-311-x86_64-linux-gnu.so
+0x00007c736820d800  0x00007c7368372962  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.core-1.5.3+69cbf6ad.lx64.r/bin/libomni.usd.so
+0x00007c741be74290  0x00007c741bece712  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/_usd.cpython-311-x86_64-linux-gnu.so
+0x00007c74194a1300  0x00007c74194df8c1  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdUtils/_usdUtils.so
+0x00007c73f492f080  0x00007c73f49bd9e3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdLux/_usdLux.so
+0x00007c741be1c920  0x00007c741be47ba2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.appwindow-1.1.10+69cbf6ad.lx64.r.cp311/bin/libomni.appwindow.plugin.so
+0x00007c7416aa5920  0x00007c7416adbfe2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.appwindow-1.1.10+69cbf6ad.lx64.r.cp311/omni/appwindow/_appwindow.cpython-311-x86_64-linux-gnu.so
+0x00007c741e8168d0  0x00007c741e827612  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.actions.core-1.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.actions.core.plugin.so
+0x00007c7429003380  0x00007c7429007de2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.actions.core-1.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.actions.core_tests.plugin.so
+0x00007c7416a3fef0  0x00007c7416a79972  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.actions.core-1.0.0+69cbf6ad.lx64.r.cp311/omni/kit/actions/core/_kit_actions_core.cpython-311-x86_64-linux-gnu.so
+0x00007c7419418980  0x00007c74194286c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.scene_delegate-0.3.4+69cbf6ad.lx64.r/bin/libomni.fabric.endframe.plugin.so
+0x00007c733c2148d0  0x00007c733c34d282  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.scene_delegate-0.3.4+69cbf6ad.lx64.r/bin/libomni.hydra.scene_delegate.plugin.so
+0x00007c7414018fe0  0x00007c74140b0a62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.index-1.0.1+69cbf6ad.lx64.r/bin/deps/librtx.indexlib.plugin.so
+0x00007c7416a1c380  0x00007c7416a217e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.core-1.1.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.renderer.ext.plugin.so
+0x00007c73f1f04e50  0x00007c73f1faf802  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.core-1.1.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.renderer.plugin.so
+0x00007c741165c8e0  0x00007c741166c5a2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.core-1.1.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.renderer_test.plugin.so
+0x00007c740ecacd40  0x00007c740ecdeb92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.core-1.1.0+69cbf6ad.lx64.r.cp311/omni/kit/renderer/bind/_renderer.cpython-311-x86_64-linux-gnu.so
+0x00007c7411640380  0x00007c7411644db2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.commands-1.4.10+69cbf6ad.lx64.r.cp311/bin/libomni.kit.command_tests.plugin.so
+0x00007c7411622480  0x00007c7411629802  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.commands-1.4.10+69cbf6ad.lx64.r.cp311/bin/libomni.kit.commands.plugin.so
+0x00007c740ec628e0  0x00007c740ec86ab2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.commands-1.4.10+69cbf6ad.lx64.r.cp311/omni/kit/commands/_kit_commands.cpython-311-x86_64-linux-gnu.so
+0x00007c740ec1aff0  0x00007c740ec3dd42  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.capture-0.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.renderer_capture.plugin.so
+0x00007c740c2dc800  0x00007c740c2e8312  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.capture-0.0.0+69cbf6ad.lx64.r.cp311/bin/libomni.kit.renderer_capture_test.plugin.so
+0x00007c740c28e8a0  0x00007c740c2b9932  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.capture-0.0.0+69cbf6ad.lx64.r.cp311/omni/kit/renderer_capture/_renderer_capture.cpython-311-x86_64-linux-gnu.so
+0x00007c740986f660  0x00007c74098d9c62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.convexdecomposition-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.convexdecomposition.plugin.so
+0x00007c740c232a60  0x00007c740c2645a2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.convexdecomposition-107.3.26+107.3.3.lx64.r.cp311.u353/omni/convexdecomposition/bindings/_convexdecomposition.cpython-311-x86_64-linux-gnu.so
+0x00007c740c2034e0  0x00007c740c212062  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physics-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physics.plugin.so
+0x00007c73ecae5b00  0x00007c73ecbaf922  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physics-107.3.26+107.3.3.lx64.r.cp311.u353/omni/physics/core/bindings/_physics.cpython-311-x86_64-linux-gnu.so
+0x00007c73ea0953c0  0x00007c73ea1a36d1  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/deps/libimgui.so
+0x00007c74098315c0  0x00007c7409840f32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.imgui.plugin.so
+0x00007c7406ed47c0  0x00007c7406ee9992  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.imguizmo.plugin.so
+0x00007c7411603420  0x00007c741160aa02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.ui.windowmanager.plugin.so
+0x00007c7406ea2c00  0x00007c7406eb8e92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.ui.glyphmanager.plugin.so
+0x00007c7406e6e880  0x00007c7406e88f42  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.svg-nanosvg.plugin.so
+0x00007c7409808380  0x00007c740980d7e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.kit.imgui_renderer.ext.plugin.so
+0x00007c7406e19bb0  0x00007c7406e46332  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.kit.imgui_renderer.plugin.so
+0x00007c7404447920  0x00007c74044cce62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.kit.ui.so
+0x00007c7401adb900  0x00007c7401ae84e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.kit.imgui_renderer_test.plugin.so
+0x00007c7401a9b750  0x00007c7401abc862  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/omni/kit/imgui_renderer/_imgui_renderer.cpython-311-x86_64-linux-gnu.so
+0x00007c7401a2ea20  0x00007c7401a6f172  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.renderer.imgui-2.0.5+69cbf6ad.lx64.r.cp311/omni/kit/imgui.cpython-311-x86_64-linux-gnu.so
+0x00007c73ff0dd700  0x00007c73ff0e83f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx.foundation-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physx.foundation.plugin.so
+0x00007c73ff0a26e0  0x00007c73ff0bf062  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx.foundation-107.3.26+107.3.3.lx64.r.cp311.u353/omni/physxfoundation/bindings/_physxFoundation.cpython-311-x86_64-linux-gnu.so
+0x00007c6f3a756cd0  0x00007c6f3a874b62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx.foundation-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libPhysXGpu_64.so
+0x00007c73ff02df80  0x00007c73ff076fc2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kvdb-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.kvdb.plugin.so
+0x00007c73fc6c86a0  0x00007c73fc6e4942  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kvdb-107.3.26+107.3.3.lx64.r.cp311.u353/omni/kvdb/bindings/_kvdb.cpython-311-x86_64-linux-gnu.so
+0x00007c72d404ad80  0x00007c72d4231342  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/carb.audio-0.1.0+69cbf6ad.lx64.r.cp311/bin/libcarb.audio-forge.plugin.so
+0x00007c73fc64c1a0  0x00007c73fc69e002  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usdphysics-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.usdphysics.plugin.so
+0x00007c73ff003500  0x00007c73ff010e12  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.localcache-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.localcache.plugin.so
+0x00007c73fc6076a0  0x00007c73fc623932  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.localcache-107.3.26+107.3.3.lx64.r.cp311.u353/omni/localcache/bindings/_localcache.cpython-311-x86_64-linux-gnu.so
+0x00007c7401a09480  0x00007c7401a0f562  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.audiodeviceenum-1.0.2+69cbf6ad.lx64.r.cp311/bin/libomni.kit.audiodeviceenum.plugin.so
+0x00007c73f9cb38e0  0x00007c73f9cde2d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.audiodeviceenum-1.0.2+69cbf6ad.lx64.r.cp311/omni/kit/audiodeviceenum/_audiodeviceenum.cpython-311-x86_64-linux-gnu.so
+0x00007c73e766f320  0x00007c73e77aacb2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx.cooking-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physx.cooking.plugin.so
+0x00007c73f9c74700  0x00007c73f9c90eb2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx.cooking-107.3.26+107.3.3.lx64.r.cp311.u353/omni/physxcooking/bindings/_physxCooking.cpython-311-x86_64-linux-gnu.so
+0x00007c73f72699f0  0x00007c73f72d4382  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/bin/libusdrt.scenegraph.plugin.so
+0x00007c73f9c3aea0  0x00007c73f9c53b22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/bin/libusdrt.xformcache.plugin.so
+0x00007c73f481fac0  0x00007c73f4855f22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/core/_core.cpython-311-x86_64-linux-gnu.so
+0x00007c73f72235e0  0x00007c73f7240d82  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/helpers/_helpers.cpython-311-x86_64-linux-gnu.so
+0x00007c72b415d960  0x00007c72b4377867  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/Gf/_Gf.cpython-311-x86_64-linux-gnu.so
+0x00007c72681b1de0  0x00007c726837ed82  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/Vt/_Vt.cpython-311-x86_64-linux-gnu.so
+0x00007c73f1e84860  0x00007c73f1ecdb02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/Sdf/_Sdf.cpython-311-x86_64-linux-gnu.so
+0x00007c73e2260720  0x00007c73e238e472  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/Usd/_Usd.cpython-311-x86_64-linux-gnu.so
+0x00007c73df8335c0  0x00007c73df97fe92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdGeom/_UsdGeom.cpython-311-x86_64-linux-gnu.so
+0x00007c73f1e1f640  0x00007c73f1e58872  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/Rt/_Rt.cpython-311-x86_64-linux-gnu.so
+0x00007c73ef46a5c0  0x00007c73ef4cea72  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdPhysics/_UsdPhysics.cpython-311-x86_64-linux-gnu.so
+0x00007c71e01825c0  0x00007c71e03411b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/PhysxSchema/_PhysxSchema.cpython-311-x86_64-linux-gnu.so
+0x00007c73eca565c0  0x00007c73ecaa85e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/ForceFieldSchema/_ForceFieldSchema.cpython-311-x86_64-linux-gnu.so
+0x00007c73e4c64580  0x00007c73e4ccc482  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdLux/_UsdLux.cpython-311-x86_64-linux-gnu.so
+0x00007c73ef41c5a0  0x00007c73ef442172  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdMedia/_UsdMedia.cpython-311-x86_64-linux-gnu.so
+0x00007c73ea0155a0  0x00007c73ea04f372  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdRender/_UsdRender.cpython-311-x86_64-linux-gnu.so
+0x00007c73da47c640  0x00007c73da5941c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdShade/_UsdShade.cpython-311-x86_64-linux-gnu.so
+0x00007c73dcea55a0  0x00007c73dcedcf92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdSkel/_UsdSkel.cpython-311-x86_64-linux-gnu.so
+0x00007c73e76115c0  0x00007c73e763dbe2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdUI/_UsdUI.cpython-311-x86_64-linux-gnu.so
+0x00007c73dce4a5c0  0x00007c73dce7c9c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/UsdVol/_UsdVol.cpython-311-x86_64-linux-gnu.so
+0x00007c73eca10580  0x00007c73eca314b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/usdrt.scenegraph-7.6.1+69cbf6ad.lx64.r.cp311/usdrt/xformcache/_xformcache.cpython-311-x86_64-linux-gnu.so
+0x00007c73f9c0a880  0x00007c73f9c1c772  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.resourcemonitor-107.0.1+69cbf6ad.lx64.r.cp311/bin/libomni.resourcemonitor.plugin.so
+0x00007c73e4c138a0  0x00007c73e4c3b6e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.resourcemonitor-107.0.1+69cbf6ad.lx64.r.cp311/omni/resourcemonitor/_resourceMonitor.cpython-311-x86_64-linux-gnu.so
+0x00007c73e22295e0  0x00007c73e2231e62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.activity.core-1.0.3+69cbf6ad.lx64.r.cp311/bin/libomni.activity.core.plugin.so
+0x00007c73da411a60  0x00007c73da443a62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.activity.core-1.0.3+69cbf6ad.lx64.r.cp311/omni/activity/core/_activity.cpython-311-x86_64-linux-gnu.so
+0x00007c6f39d02500  0x00007c6f3a58c0c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physx.plugin.so
+0x00007c73d7a76250  0x00007c73d7b8dac2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physx-107.3.26+107.3.3.lx64.r.cp311.u353/omni/physx/bindings/_physx.cpython-311-x86_64-linux-gnu.so
+0x00007c71d41773a0  0x00007c71d4366182  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/plugins/libusdrt.population.plugin.so
+0x00007c73dce1a7e0  0x00007c73dce2a442  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/plugins/libusdrt.geopriority.plugin.so
+0x00007c73d5086250  0x00007c73d513f592  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/plugins/libusdrt.hierarchy.plugin.so
+0x00007c73d7a3ea00  0x00007c73d7a4b542  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/bin/libomni.hydra.usdrt_delegate.plugin.so
+0x00007c73d5028720  0x00007c73d5057c52  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/usdrt/population/_population.cpython-311-x86_64-linux-gnu.so
+0x00007c73d27c25e0  0x00007c73d27e3902  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.usdrt_delegate-7.5.1+69cbf6ad.lx64.r.cp311/usdrt/hierarchy/_hierarchy.cpython-311-x86_64-linux-gnu.so
+0x00007c73d7a0d970  0x00007c73d7a21db2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physics.physx-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physics.physx.plugin.so
+0x00007c7194266850  0x00007c719437e552  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ui-2.27.1+69cbf6ad.lx64.r.cp311/bin/libomni.ui.so
+0x00007c718c0ef780  0x00007c718c3008d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ui-2.27.1+69cbf6ad.lx64.r.cp311/omni/ui/_ui.cpython-311-x86_64-linux-gnu.so
+0x00007c73d262dbe0  0x00007c73d268c402  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/input.cpython-311-x86_64-linux-gnu.so
+0x00007c73cfdda5f0  0x00007c73cfde8a62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.exec-0.9.6+69cbf6ad.lx64.r/bin/libomni.graph.exec.plugin.so
+0x00007c73cfda2ae0  0x00007c73cfdbd5d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.timeline-1.0.14+69cbf6ad.lx64.r.cp311/bin/libomni.timeline.plugin.so
+0x00007c73cfd3c940  0x00007c73cfd780f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.timeline-1.0.14+69cbf6ad.lx64.r.cp311/omni/timeline/_timeline.cpython-311-x86_64-linux-gnu.so
+0x00007c73cfce3d70  0x00007c73cfd0e922  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.exec.core-0.13.4+69cbf6ad.lx64.r.cp311/bin/libomni.kit.exec.core.plugin.so
+0x00007c73cfca2820  0x00007c73cfcbf782  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.exec.core-0.13.4+69cbf6ad.lx64.r.cp311/omni/kit/exec/core/unstable/_omni_kit_exec_core_unstable.cpython-311-x86_64-linux-gnu.so
+0x00007c7404403380  0x00007c7404407dd2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ujitso.client-0.0.0+69cbf6ad.lx64.r/bin/libomni.ujitso.client.ext.plugin.so
+0x00007c73cfc56eb0  0x00007c73cfc79952  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/bin/libomni.stageupdate.plugin.so
+0x00007c73cfc1b890  0x00007c73cfc34982  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/bin/libomni.usd.cppcommands.plugin.so
+0x00007c73cd3bc000  0x00007c73cd3ea5aa  Yes (*)     /usr/lib/x86_64-linux-gnu/libpulse.so.0
+0x00007c73cd344320  0x00007c73cd38ba32  Yes (*)     /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-16.1.so
+0x00007c73cd2b19e0  0x00007c73cd310d5a  Yes (*)     /usr/lib/x86_64-linux-gnu/libsndfile.so.1
+0x00007c743b210400  0x00007c743b212b29  Yes (*)     /usr/lib/x86_64-linux-gnu/libasyncns.so.0
+0x00007c7438804920  0x00007c743880d0b8  Yes (*)     /usr/lib/x86_64-linux-gnu/libapparmor.so.1
+0x00007c73cd24c7e0  0x00007c73cd29d0af  Yes (*)     /usr/lib/x86_64-linux-gnu/libFLAC.so.12
+0x00007c73cd2194a0  0x00007c73cd23005f  Yes (*)     /usr/lib/x86_64-linux-gnu/libvorbis.so.0
+0x00007c73ca9680c0  0x00007c73ca96a61d  Yes (*)     /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2
+0x00007c73ca8f82a0  0x00007c73ca941a15  Yes (*)     /usr/lib/x86_64-linux-gnu/libopus.so.0
+0x00007c743b206120  0x00007c743b208619  Yes (*)     /usr/lib/x86_64-linux-gnu/libogg.so.0
+0x00007c73ca89e1f0  0x00007c73ca8d8b5c  Yes (*)     /usr/lib/x86_64-linux-gnu/libmpg123.so.0
+0x00007c73ca8294c0  0x00007c73ca859782  Yes (*)     /usr/lib/x86_64-linux-gnu/libmp3lame.so.0
+0x00007c73c7f21500  0x00007c73c7fbed68  Yes (*)     /usr/lib/x86_64-linux-gnu/libasound.so.2.0.0
+0x00007c73c7e39c40  0x00007c73c7ea5a22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/audio/audio.cpython-311-x86_64-linux-gnu.so
+0x00007c73c549a980  0x00007c73c54d3312  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/usd/audio/_audio.cpython-311-x86_64-linux-gnu.so
+0x00007c73c544b880  0x00007c73c5471d62  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd-1.13.10+69cbf6ad.lx64.r.cp311/omni/stageupdate/_stageupdate.cpython-311-x86_64-linux-gnu.so
+0x00007c73c2ac9290  0x00007c73c2ae9bfc  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.volume-0.5.2+69cbf6ad.lx64.r.cp311/bin/libtbb.so
+0x00007c6fb8111a40  0x00007c6fb8500040  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.volume-0.5.2+69cbf6ad.lx64.r.cp311/bin/libopenvdb.so
+0x00007c6f39728200  0x00007c6f39b49db0  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.volume-0.5.2+69cbf6ad.lx64.r.cp311/bin/deps/libcarb.volume.plugin.so
+0x00007c73f7202380  0x00007c73f72077f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.volume-0.5.2+69cbf6ad.lx64.r.cp311/bin/libomni.volume.plugin.so
+0x00007c73c2a75880  0x00007c73c2a9ba92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.volume-0.5.2+69cbf6ad.lx64.r.cp311/omni/volume/_volume.cpython-311-x86_64-linux-gnu.so
+0x00007c6f392305e0  0x00007c6f395e1b92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.hydra.so
+0x00007c73c2a227d0  0x00007c73c2a4e892  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libomni.materialx.so
+0x00007c6f2943ecf0  0x00007c6f2c57d454  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnrend.so
+0x00007c71140f6fb0  0x00007c7114340b32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/liblegacy.hydra.so
+0x00007c6f28200a60  0x00007c6f28200ebd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvrtc-builtins.so
+0x00007c6f27e09110  0x00007c6f27e3e453  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvflow_rtx.so
+0x00007c6f2722ee10  0x00007c6f27304f33  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvflowext_rtx.so
+0x00007c73be0813c0  0x00007c73be19d6f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.scenerenderer-rtx.plugin.so
+0x00007c73baedf2f0  0x00007c73bafb8ce2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.reshade.plugin.so
+0x00007c73bae13b70  0x00007c73bae8afc2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rtxsensor.memutil.plugin.so
+0x00007c73b8514d10  0x00007c73b85b4862  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rtxsensor.plugin.so
+0x00007c73b5af2c60  0x00007c73b5b6a862  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rtxsensormodel_20.example.plugin.so
+0x00007c73b30f4c60  0x00007c73b316bc42  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rtxsensormodel.example.plugin.so
+0x00007c73b8412c40  0x00007c73b8489a32  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rtxsensormodel.example_legacy.plugin.so
+0x00007c73c7e068a0  0x00007c73c7e16bb2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.cameraisp.plugin.so
+0x00007c73c540d8c0  0x00007c73c542a6d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.multigpumanager.plugin.so
+0x00007c710c0c8a60  0x00007c710c35bb92  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.scenedb.plugin.so
+0x00007c73b0722890  0x00007c73b0794202  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.mdltranslator.plugin.so
+0x00007c73b5a29c70  0x00007c73b5ab8aa2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.materialdb.plugin.so
+0x00007c7034137fc0  0x00007c7034357702  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.raytracing.plugin.so
+0x00007c73be01d840  0x00007c73be05b4d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.denoising.plugin.so
+0x00007c70101d89a0  0x00007c701020d8de  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libnvrtd.so
+0x00007c6f26c01f40  0x00007c6f26c259e8  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libNRD.so.3.2.3
+0x00007c73b3025b30  0x00007c73b30a51f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.optixdenoising.plugin.so
+0x00007c73b0651b30  0x00007c73b06d0072  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.optixdenoising73.plugin.so
+0x00007c6f2664ef90  0x00007c6f267be5c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.postprocessing.plugin.so
+0x00007c6f263a37d0  0x00007c6f26462ee2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.syntheticdata.plugin.so
+0x00007c73b06149e0  0x00007c73b062f472  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.rasterizing.plugin.so
+0x00007c73ab5d4160  0x00007c73ab5e6222  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libcarb.ocio.plugin.so
+0x00007c6f256f1000  0x00007c6f25de52ca  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/libOpenColorIO.so.2.3
+0x00007c73ab57b5a0  0x00007c73ab5a9962  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/deps/librtx.flow.plugin.so
+0x00007c73ab54c8e0  0x00007c73ab55b0d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/libomni.hydra.rtx.plugin.so
+0x00007c73ab4d18e0  0x00007c73ab51c152  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/carb.omnimesh/libcarb.omnimesh.plugin.so
+0x00007c73e220c460  0x00007c73e2212282  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.rtx-1.0.0+69cbf6ad.lx64.r/bin/carb.ujitso.processors.geometry/libcarb.ujitso.processor.geometry.plugin.so
+0x00007c73ab4a4000  0x00007c73ab4baf36  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdUI/_usdUI.so
+0x00007c73ab434590  0x00007c73ab462162  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.hydra_texture-1.4.6+69cbf6ad.lx64.r.cp311/bin/linux-x86_64/release/libomni.hydratexture.plugin.so
+0x00007c73a73aa9c0  0x00007c73a73dd1d2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.hydra_texture-1.4.6+69cbf6ad.lx64.r.cp311/omni/hydratexture/_hydra_texture.cpython-311-x86_64-linux-gnu.so
+0x00007c73a728efe0  0x00007c73a7354e12  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.usd.layers-2.2.11+69cbf6ad.lx64.r.cp311/bin/libomni.kit.usd.layers.plugin.so
+0x00007c7390175940  0x00007c73901bcf52  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.usd.layers-2.2.11+69cbf6ad.lx64.r.cp311/omni/kit/usd/layers/_omni_kit_usd_layers.cpython-311-x86_64-linux-gnu.so
+0x00007c73ab407840  0x00007c73ab414db2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.inspect-1.0.2+69cbf6ad.lx64.r.cp311/bin/libomni.inspect.plugin.so
+0x00007c73900236c0  0x00007c739004c2c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.inspect-1.0.2+69cbf6ad.lx64.r.cp311/omni/inspect/_omni_inspect.cpython-311-x86_64-linux-gnu.so
+0x00007c73d5005380  0x00007c73d500b4b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physics.stageupdate-107.3.26+107.3.3.lx64.r.cp311.u353/bin/libomni.physics.stageupdate.plugin.so
+0x00007c736807b6e0  0x00007c73680994c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.physics.stageupdate-107.3.26+107.3.3.lx64.r.cp311.u353/omni/physics/stageupdate/bindings/_physicsStageUpdateNode.cpython-311-x86_64-linux-gnu.so
+0x00007c6f24dc00e0  0x00007c6f25004042  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.core-2.184.5+69cbf6ad.lx64.r/bin/libomni.graph.core.plugin.so
+0x00007c73d26053a0  0x00007c73d260c462  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.kit.clipboard-1.0.5+69cbf6ad.lx64.r.cp311/bin/libomni.kit.clipboard.plugin.so
+0x00007c6f24b075a0  0x00007c6f24cc77f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph-1.141.2+69cbf6ad.lx64.r.cp311/omni/graph/core/_omni_graph_core.cpython-311-x86_64-linux-gnu.so
+0x00007c736805bea0  0x00007c7368069456  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/CameraUtil/_cameraUtil.so
+0x00007c733c0413b0  0x00007c733c0b42b2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ui.scene-1.11.5+69cbf6ad.lx64.r.cp311/bin/libomni.ui.scene.so
+0x00007c6f23d2d590  0x00007c6f23e5fc72  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.ui.scene-1.11.5+69cbf6ad.lx64.r.cp311/omni/ui_scene/_scene.cpython-311-x86_64-linux-gnu.so
+0x00007c730c0af7c0  0x00007c730c0d4602  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.hydra.engine.stats-1.0.3+69cbf6ad.lx64.r.cp311/omni/hydra/engine/stats/_stats.cpython-311-x86_64-linux-gnu.so
+0x00007c730c033d70  0x00007c730c079a42  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.image.core-0.6.1+69cbf6ad.lx64.r/bin/libomni.graph.image.core.plugin.so
+0x00007c7268028d10  0x00007c726806f472  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.action_core-1.1.7+69cbf6ad.lx64.r.cp311/bin/libomni.graph.action_core.plugin.so
+0x00007c72636c35a0  0x00007c72636e2842  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.action_core-1.1.7+69cbf6ad.lx64.r.cp311/omni/graph/action_core/_omni_graph_action_core.cpython-311-x86_64-linux-gnu.so
+0x00007c6f237e0ce0  0x00007c6f238a1492  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.image.nodes-1.3.1+69cbf6ad.lx64.r/bin/libomni.graph.image.nodes.plugin.so
+0x00007c6f236926a0  0x00007c6f2378d3c2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.action_nodes-1.50.4+107.3.0.lx64.r.cp311.u353/bin/libomni.graph.action_nodes.plugin.so
+0x00007c72636619e0  0x00007c7263698a22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/windowing.cpython-311-x86_64-linux-gnu.so
+0x00007c6f0a1b1910  0x00007c6f0bb5ab12  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.nodes-1.170.10+107.3.0.lx64.r.cp311.u353/bin/libomni.graph.nodes.plugin.so
+0x00007c72636226a0  0x00007c726363e782  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.nodes-1.170.10+107.3.0.lx64.r.cp311.u353/omni/graph/nodes/bindings/_omni_graph_nodes.cpython-311-x86_64-linux-gnu.so
+0x00007c6f20079da0  0x00007c6f201400a2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.ui_nodes-1.50.5+107.3.0.lx64.r.cp311.u353/bin/libomni.graph.ui_nodes.plugin.so
+0x00007c72600bd6a0  0x00007c72600d9782  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.graph.ui_nodes-1.50.5+107.3.0.lx64.r.cp311.u353/omni/graph/ui_nodes/bindings/_omni_graph_ui_nodes.cpython-311-x86_64-linux-gnu.so
+0x00007c6f27d2ae30  0x00007c6f27db9d02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.videoencoding-0.1.2+69cbf6ad.lx64.r.cp311/bin/deps/libomni.videoencoding.plugin.so
+0x00007c726007a840  0x00007c726009a4e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.videoencoding-0.1.2+69cbf6ad.lx64.r.cp311/video_encoding/_video_encoding.cpython-311-x86_64-linux-gnu.so
+0x00007c6f0908fa80  0x00007c6f092e8d22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.syntheticdata-0.6.13+69cbf6ad.lx64.r.cp311/bin/libomni.syntheticdata.plugin.so
+0x00007c774442ba60  0x00007c7744469602  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.syntheticdata-0.6.13+69cbf6ad.lx64.r.cp311/omni/syntheticdata/_syntheticdata.cpython-311-x86_64-linux-gnu.so
+0x00007c7194029ac0  0x00007c71940ade30  Yes         /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/_imaging.cpython-311-x86_64-linux-gnu.so
+0x00007c7114017bd0  0x00007c7114089593  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/libtiff-13a02c81.so.6.1.0
+0x00007c70100097c0  0x00007c701009fea7  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/libjpeg-8a13c6e0.so.62.4.0
+0x00007c774439be90  0x00007c774440963e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/libopenjp2-56811f71.so.2.5.3
+0x00007c7260040740  0x00007c726005a8f4  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/libxcb-64009ff3.so.1.1.0
+0x00007c71e002b590  0x00007c71e0057c48  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/liblzma-64b7ab39.so.5.8.1
+0x00007c6f22400ff0  0x00007c6f22401cd2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/PIL/../pillow.libs/libXau-154567c4.so.6.0.0
+0x00007c6f0879e190  0x00007c6f08d97fd2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/bin/libomni.replicator.core.plugin.so
+0x00007c6f08173db0  0x00007c6f0862a972  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/bindings/_omni_replicator_core.cpython-311-x86_64-linux-gnu.so
+0x00007c73680075e0  0x00007c7368021c82  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/str/_str.cpython-311-x86_64-linux-gnu.so
+0x00007c718c0398e0  0x00007c718c070712  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/log/_log.cpython-311-x86_64-linux-gnu.so
+0x00007c72b4020020  0x00007c72b402fe16  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdSemantics/_usdSemantics.so
+0x00007c6eef521cc0  0x00007c6eef5d5347  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/bindings/_omni_replicator_exrwriter.so
+0x00007c6e1558ff40  0x00007c6e1de4f144  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.warp.core-1.8.2+lx64/warp/bin/warp.so
+0x00007c6e114997c0  0x00007c6e13b596f3  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.warp.core-1.8.2+lx64/warp/bin/warp-clang.so
+0x00007c710c080420  0x00007c710c09dc66  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/PxOsd/_pxOsd.so
+0x00007c73ca814db0  0x00007c73ca81b5b0  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Garch/_garch.so
+0x00007c6fb807d290  0x00007c6fb80910d6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Glf/_glf.so
+0x00007c726001ee60  0x00007c726002a227  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdHydra/_usdHydra.so
+0x00007c6eee863300  0x00007c6eee880342  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdImagingGL/_usdImagingGL.so
+0x00007c7416a0e820  0x00007c7416a11276  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdMtlx/_usdMtlx.so
+0x00007c730c0127d0  0x00007c730c01c746  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/GeomUtil/_geomUtil.so
+0x00007c6eac15bd60  0x00007c6eac1c1162  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/Ts/_ts.so
+0x00007c740ec10300  0x00007c740ec11149  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdAbc/_usdAbc.so
+0x00007c72d4017900  0x00007c72d401d731  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdAppUtils/_usdAppUtils.so
+0x00007c7406e0b900  0x00007c7406e0f376  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdBakeMtlx/_usdBakeMtlx.so
+0x00007c73f480f600  0x00007c73f48118cd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdDraco/_usdDraco.so
+0x00007c710c02b140  0x00007c710c03f9b6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdMedia/_usdMedia.so
+0x00007c71e0019d20  0x00007c71e00204d7  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdProc/_usdProc.so
+0x00007c6f22651140  0x00007c6f22672ab6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdRender/_usdRender.so
+0x00007c6f21ebe480  0x00007c6f21ee73b6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdRi/_usdRi.so
+0x00007c6fb8029020  0x00007c6fb8041cd6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+69cbf6ad.lx64.r.cp311/pxr/UsdVol/_usdVol.so
+0x00007c73df8057e0  0x00007c73df812d75  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/_lib/_ccallback_c.cpython-311-x86_64-linux-gnu.so
+0x00007c6eec029d90  0x00007c6eec0d22ca  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_ckdtree.cpython-311-x86_64-linux-gnu.so
+0x00007c6e0f2f8450  0x00007c6e0f6ae0ca  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so
+0x00007c6ecc042a30  0x00007c6ecc0e3b44  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/_csparsetools.cpython-311-x86_64-linux-gnu.so
+0x00007c6e9c147b10  0x00007c6e9c188a72  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_fblas.cpython-311-x86_64-linux-gnu.so
+0x00007c6adec34c00  0x00007c6adfd3d80d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/../../scipy.libs/libscipy_openblas-68440149.so
+0x00007c6e0ee1b870  0x00007c6e0f046837  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/../../scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0
+0x00007c6e0ea023e0  0x00007c6e0ea25d2b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/../../scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0
+0x00007c6a3ffd4b60  0x00007c6a4009af02  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_flapack.cpython-311-x86_64-linux-gnu.so
+0x00007c6eac0219e0  0x00007c6eac09451f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_cythonized_array_utils.cpython-311-x86_64-linux-gnu.so
+0x00007c6e9c08d300  0x00007c6e9c0a584a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/cython_lapack.cpython-311-x86_64-linux-gnu.so
+0x00007c6f28b819a0  0x00007c6f28bb1b06  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_solve_toeplitz.cpython-311-x86_64-linux-gnu.so
+0x00007c71d400a910  0x00007c71d4034c9d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_decomp_lu_cython.cpython-311-x86_64-linux-gnu.so
+0x00007c6f20034960  0x00007c6f200609cb  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_matfuncs_sqrtm_triu.cpython-311-x86_64-linux-gnu.so
+0x00007c6e9c02a860  0x00007c6e9c0438c5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_matfuncs_expm.cpython-311-x86_64-linux-gnu.so
+0x00007c718c016510  0x00007c718c029329  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_linalg_pythran.cpython-311-x86_64-linux-gnu.so
+0x00007c6e0ecaf780  0x00007c6e0ececb0b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/_decomp_update.cpython-311-x86_64-linux-gnu.so
+0x00007c6e0ec67290  0x00007c6e0ec91efa  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/linalg/cython_blas.cpython-311-x86_64-linux-gnu.so
+0x00007c6e0e178ad0  0x00007c6e0e1ca975  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_dsolve/_superlu.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3d312980  0x00007c6a3de9e8da  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/iray_openimageio.so
+0x00007c6e0e0c1b60  0x00007c6e0e111c22  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3cec7850  0x00007c6a3d05b218  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/iray_dds.so
+0x00007c6e0e057ba0  0x00007c6e0e06b9e2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_propack/_spropack.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3cd32f40  0x00007c6a3ce56238  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/mi_exporter.so
+0x00007c6adeb3cba0  0x00007c6adeb50492  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_propack/_dpropack.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3cb5ddd0  0x00007c6a3cca98da  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/iray_bridge_client.so
+0x00007c6adeab1c00  0x00007c6adeacbed2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_propack/_cpropack.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3c9971a0  0x00007c6a3cab8b5a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/nvcuvid_video_decoder.so
+0x00007c6a3ae17680  0x00007c6a3af910e1  Yes (*)     /usr/lib/x86_64-linux-gnu/libnvcuvid.so.1
+0x00007c6a3c8fcc00  0x00007c6a3c914802  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/linalg/_propack/_zpropack.cpython-311-x86_64-linux-gnu.so
+0x00007c6adea10990  0x00007c6adea7247c  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_shortest_path.cpython-311-x86_64-linux-gnu.so
+0x00007c6f281d36b0  0x00007c6f281f2b4b  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_tools.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3a470990  0x00007c6a3a4e9cdd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_traversal.cpython-311-x86_64-linux-gnu.so
+0x00007c6ecc0058f0  0x00007c6ecc02ea0d  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_min_spanning_tree.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3c88f920  0x00007c6a3c8c77a6  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_flow.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3a4208f0  0x00007c6a3a4581dd  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_matching.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3a3d7960  0x00007c6a3a40c936  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/sparse/csgraph/_reordering.cpython-311-x86_64-linux-gnu.so
+0x00007c6a330bdac0  0x00007c6a34da6c6a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray/libnvindex.so
+0x00007c6a32d7fcb0  0x00007c6a32e471ad  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_qhull.cpython-311-x86_64-linux-gnu.so
+0x00007c6a32c2f8d0  0x00007c6a32d1f918  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray//libnvindex_application_layer_application_layer.so
+0x00007c73dce08710  0x00007c73dce11bc5  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/_lib/messagestream.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3206ff40  0x00007c6a3295dcda  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray//libnvindex_plugin_openvdb_integration.so
+0x00007c6f080098f0  0x00007c6f0802daec  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_voronoi.cpython-311-x86_64-linux-gnu.so
+0x00007c6a31ee8db0  0x00007c6a31fa8658  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/isaacsim/extscache/omni.iray.libs-0.0.0+69cbf6ad.lx64.r/bin/iray//libnvindex_application_layer_io.so
+0x00007c73b5a021c0  0x00007c73b5a15632  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_distance_wrap.cpython-311-x86_64-linux-gnu.so
+0x00007c6e0f2c2910  0x00007c6e0f2e86a9  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_hausdorff.cpython-311-x86_64-linux-gnu.so
+0x00007c6a31569ed0  0x00007c6a3166d202  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_ufuncs.cpython-311-x86_64-linux-gnu.so
+0x00007c73f1e05050  0x00007c73f1e0512e  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/libsf_error_state.so
+0x00007c6a30bddb00  0x00007c6a30d2ba52  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_ufuncs_cxx.cpython-311-x86_64-linux-gnu.so
+0x00007c6a2fa8e640  0x00007c6a2fb90452  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_special_ufuncs.cpython-311-x86_64-linux-gnu.so
+0x00007c6a2d8f2440  0x00007c6a2d977172  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_gufuncs.cpython-311-x86_64-linux-gnu.so
+0x00007c6a3c84e940  0x00007c6a3c87f7f2  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_specfun.cpython-311-x86_64-linux-gnu.so
+0x00007c73cfc075a0  0x00007c73cfc0d741  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_comb.cpython-311-x86_64-linux-gnu.so
+0x00007c703400b6c0  0x00007c703401f2aa  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/special/_ellip_harm_2.cpython-311-x86_64-linux-gnu.so
+0x00007c6a2706ac40  0x00007c6a270cfb8a  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/_distance_pybind.cpython-311-x86_64-linux-gnu.so
+0x00007c6a22776b80  0x00007c6a2282052f  Yes (*)     /workspace/gpt_field/robodojo_uc71/runtime/a0_env/lib/python3.11/site-packages/scipy/spatial/transform/_rotation.cpython-311-x86_64-linux-gnu.so
+(*): Shared library is missing debugging information.

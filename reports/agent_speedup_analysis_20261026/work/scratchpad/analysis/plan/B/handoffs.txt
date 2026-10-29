@@ -1,0 +1,51 @@
+per-run handoff classes
+run direct gripper_final other:observation_required other:segment_budget_exhausted post_gripper pre_contact stall veto
+t0_001 0 0 0 0 3 6 4 0
+t1_001 0 0 0 0 3 5 4 0
+t2_002 0 1 0 0 1 10 1 1
+t3_003 2 0 0 0 2 9 8 0
+t3_005 3 0 1 0 2 7 7 0
+t4_001 0 0 0 0 3 9 2 1
+t5_001 0 0 0 0 1 5 0 0
+t5_002 0 0 0 0 1 6 2 0
+t6_009 2 0 0 0 8 7 10 0
+t6_011 0 0 0 1 5 9 9 2
+t7_001 0 0 0 0 3 5 4 0
+t8_001 0 0 0 0 3 8 0 1
+t9_001 1 1 0 1 4 6 4 1
+TOTAL 8 2 1 2 39 92 55 6 sum 205
+
+next-call latency by class: n mean median
+direct 8 13.2 12.1
+gripper_final 2 10.7 10.7
+other:observation_required 1 9.1 9.1
+other:segment_budget_exhausted 2 10.3 10.3
+post_gripper 39 17.4 15.6
+pre_contact 92 13.9 12.3
+stall 55 15.4 14.2
+veto 6 8.4 7.5
+
+raw11 post_gripper handoffs 26 with transit-prefix next (hit) 23 by grip Counter({('close', True): 16, ('open', True): 7, ('close', False): 3})
+   P actions median 87 E_P compact median 13.1 E_P legacy median 21.1 L_next median 15.9
+   saving compact sum 253.3 legacy sum 328.0
+   misses next_first: Counter({'approach/contact': 1, 'motion': 1, 'move_to_pose/contact': 1})
+all13 post_gripper handoffs 39 with transit-prefix next (hit) 27 by grip Counter({('close', True): 19, ('open', True): 8, ('close', False): 7, ('open', False): 5})
+   P actions median 85 E_P compact median 12.6 E_P legacy median 21.4 L_next median 16.8
+   saving compact sum 295.4 legacy sum 386.9
+   misses next_first: Counter({'move_to_pose/contact': 6, 'move_to_pose/transit': 3, 'approach/contact': 1, 'motion': 1, 'set_gripper/contact': 1})
+
+per-run (raw successes): calls, first, post_gripper hits, saving_compact, saving_legacy
+t0_001 14 31.5 3 36.9 38.8
+t1_001 13 17.9 3 39.9 40.1
+t2_002 15 23.0 1 9.9 16.3
+t3_003 22 33.3 1 8.6 14.5
+t3_005 21 18.4 1 3.0 5.2
+t4_001 16 28.7 3 27.7 38.9
+t5_001 7 38.6 1 13.3 21.7
+t5_002 10 26.7 1 13.4 21.9
+t7_001 13 18.0 3 39.5 48.3
+t8_001 13 25.8 3 37.6 42.5
+t9_001 19 26.2 3 23.5 39.8
+
+raw11 ORACLE any-class transit-prefix overlap: n 55 saving compact 392.3 legacy 540.9
+raw11 UPPER BOUND sum min(L_k+1, E_k): compact 1154.6 legacy 1577.8

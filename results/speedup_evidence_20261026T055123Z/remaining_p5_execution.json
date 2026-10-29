@@ -1,0 +1,110 @@
+{
+  "recorded_at_utc": "2026-10-26T07:41:37.131695+00:00",
+  "decision": "stop_new_online_runs",
+  "reason": "Two consecutive arms of t1 episode2 did not receive a completed initial-plan response within unchanged 900 service seconds. No new causal explanation supports repeating further episodes. This is not a proven infrastructure outage and not a two-repair failure claim.",
+  "all_existing_trial_evidence": [
+    {
+      "reservation_id": "trial_001",
+      "arm": "A",
+      "retry_of": null,
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "evidence_path": "evaluations/trial_001/evidence_result.json",
+      "status": "preparation_error",
+      "raw_libero_success": false,
+      "service_elapsed_s": 7.567007966921665,
+      "approved_by": null,
+      "review_modified": null
+    },
+    {
+      "reservation_id": "trial_002",
+      "arm": "A",
+      "retry_of": "trial_001",
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "evidence_path": "evaluations/trial_002/evidence_result.json",
+      "status": "success",
+      "raw_libero_success": true,
+      "service_elapsed_s": 648.73408882902,
+      "approved_by": "codex",
+      "review_modified": false
+    },
+    {
+      "reservation_id": "trial_003",
+      "arm": "B",
+      "retry_of": null,
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "evidence_path": "evaluations/trial_003/evidence_result.json",
+      "status": "success",
+      "raw_libero_success": true,
+      "service_elapsed_s": 614.0114279978443,
+      "approved_by": "codex",
+      "review_modified": false
+    },
+    {
+      "reservation_id": "trial_004",
+      "arm": "B",
+      "retry_of": null,
+      "task": "libero_10_t1",
+      "episode_index": 2,
+      "evidence_path": "evaluations/trial_004/evidence_result.json",
+      "status": "evaluation_budget_exhausted",
+      "raw_libero_success": false,
+      "service_elapsed_s": 901.0327912470093,
+      "approved_by": null,
+      "review_modified": null
+    },
+    {
+      "reservation_id": "trial_005",
+      "arm": "A",
+      "retry_of": null,
+      "task": "libero_10_t1",
+      "episode_index": 2,
+      "evidence_path": "evaluations/trial_005/evidence_result.json",
+      "status": "evaluation_budget_exhausted",
+      "raw_libero_success": false,
+      "service_elapsed_s": 900.9528483679751,
+      "approved_by": null,
+      "review_modified": null
+    }
+  ],
+  "private_supervisor_shutdown_checks": [
+    {
+      "trial": "trial_001",
+      "supervisor_pid_file_present": false,
+      "socket_present": false,
+      "recorded_pid_alive": false
+    },
+    {
+      "trial": "trial_002",
+      "supervisor_pid_file_present": false,
+      "socket_present": false,
+      "recorded_pid_alive": false
+    },
+    {
+      "trial": "trial_003",
+      "supervisor_pid_file_present": false,
+      "socket_present": false,
+      "recorded_pid_alive": false
+    },
+    {
+      "trial": "trial_004",
+      "supervisor_pid_file_present": false,
+      "socket_present": false,
+      "recorded_pid_alive": false
+    },
+    {
+      "trial": "trial_005",
+      "supervisor_pid_file_present": false,
+      "socket_present": false,
+      "recorded_pid_alive": false
+    }
+  ],
+  "remaining_experiment_runner_or_supervisor_processes": [],
+  "historical_t2_t3_services_touched": false,
+  "orchestration_detail": "remaining_p5_orchestration.json",
+  "root_stop_record": "online_stop.json",
+  "remaining_P5_conditions_unstarted": 7,
+  "P6_started": false
+}

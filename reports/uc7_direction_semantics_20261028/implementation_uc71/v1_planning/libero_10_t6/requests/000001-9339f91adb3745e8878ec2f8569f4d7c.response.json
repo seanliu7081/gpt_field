@@ -1,0 +1,688 @@
+{
+  "id": "resp_09cb3868a21f855c016ae1c15995e0819390621806e85c4741",
+  "object": "response",
+  "created_at": 1793179993,
+  "completed_at": 1793180027,
+  "status": "completed",
+  "background": false,
+  "frequency_penalty": 0.0,
+  "presence_penalty": 0.0,
+  "moderation": null,
+  "model": "gpt-6-astra",
+  "access_programs": {
+    "cyber": "standard"
+  },
+  "previous_response_id": null,
+  "instructions": "agent-speedup-v2-prompt-4, plan request. You plan for a robot arm with one parallel-jaw gripper (about 79 mm maximum opening) that starts with the hand pointing straight down. The robot measures every distance, height, direction and angle itself by moving, touching and looking; you name what matters and which physical relations to establish; during recovery you may also select short local motions.\nIMAGES. Four images, all upright (not mirrored): 1 the external camera, clean; 2 the same with an 8x8 grid of numbered cells; 3 the wrist camera, clean; 4 the same with the grid. Images 3/4 are the wrist camera, turned by the number of quarter turns stated in the request; a quarter turn is coarse and never a perspective match; judge direction words only in image 1. The request names the edge where the robot's own fingertips appear (they are never a part). Cells are numbered 1-64 row-major from the top left.\nWRITE ONE JSON PLAN. Write every text in plain ASCII English and keep it within its limit; a longer text is cut off.\n- scene: one short line on what you see, at most 80 characters.\n- parts: exactly the parts the steps, keeps, criteria and hold_true use, with ids A-H; every object you list is used by a step as obj, grip, ref, keep or criterion part, or by hold_true. text is \"<object>: <visible part>\", 3 to 60 characters, with the same <object> words for every part of one object and distinguishing appearance or position when similar objects exist. move is your prior for how the part moves: free (a loose object, and every part of one, since it moves with the object), fixed, hinged (rotates about its mount), sliding (moves along a track) or unknown; the robot verifies it by probing. w is the part's cell in image 4 and x its cell in image 2, 0 when it is not visible in that image.\n- steps, in order, numbered from 0; each establishes one physical relation: hold (obj is lifted and moves with the hand; use it only when holding obj is itself wanted); turn (a rotary part obj, held at grip, is rotated about its own axis); slide (a sliding part obj, held at grip, moves along its own track; sense open = away from the body it slides in, close = into it); place_on (obj rests on the top surface of ref, released and at rest); place_in (obj rests inside the cavity of ref, below its rim); push_to (obj slides on its support to the spot ref without lifting); release (the hand opens and leaves obj). grip lists up to two parts of obj for the fingers, in preference order (an empty list means obj itself); ref is the reference part or null; sense is any, open or close. The robot adds the grasps, carries and releases a step needs: place_on, place_in and push_to take obj themselves, so a hold step before them is unnecessary.\n- keep: constraints held during a step: upright (part p keeps its in-hand pose) and clear_of (the hand and the held object stay clear of part p).\n- until: completion criteria, the first one met ends the step: effect (part p visibly changes as txt says, txt at most 40 characters; p is the part whose look changes, never the step's obj or a grip part), stop (the mechanism reaches its end stop), fits (the opening is long enough for the free part p), quarter_turn and half_turn (of the turned part). turn takes effect, stop, quarter_turn or half_turn and needs one; slide takes stop, fits or effect; place_on and place_in take only effect and usually need none, since the robot checks the placement itself; hold, push_to and release take none. List each criterion once. Unused p and txt are null.\n- hold_true: relations the images clearly show as already true and that must stay true (on, in, open, closed, effect; a is the part, b the other part or null).\nNAMING. In a part text, name the visible part by its shape and by its position relative to its own object or a neighbouring object, for example \"<object>: <shape> on its side toward <neighbour object>\"; use colour only as a secondary cue, since the wrist and external views can show a part in different colours.\nRULES. Name only things visible in at least one image. GRIP: leave grip empty when obj fits between the fingers, so obj itself is gripped. Name a sub-part only when it is the feature made to be held or turned (a protruding bar or loop, a small control) or the rim of an open container too wide for the fingers; never invent a thin edge, rim or face of an object that fits whole. Give a second grip only when a second such feature exists. Include enabling steps (make an opening before placing into it). Describe completion only with the criteria above. List a relation as already true only when the images clearly show it.  Write scene first.\nEXAMPLE (other objects; cells illustrative): {\"scene\":\"toy car by an open shoe box; music box with a side crank; glass vase\",\"parts\":[{\"id\":\"A\",\"text\":\"toy car: whole car\",\"move\":\"free\",\"w\":36,\"x\":28},{\"id\":\"B\",\"text\":\"shoe box: open cavity\",\"move\":\"free\",\"w\":44,\"x\":37},{\"id\":\"C\",\"text\":\"music box: small crank on the side\",\"move\":\"hinged\",\"w\":52,\"x\":45},{\"id\":\"D\",\"text\":\"music box: dancer figure on top\",\"move\":\"hinged\",\"w\":51,\"x\":44},{\"id\":\"E\",\"text\":\"glass vase: whole vase\",\"move\":\"free\",\"w\":21,\"x\":19}],\"hold_true\":[],\"steps\":[{\"do\":\"place_in\",\"obj\":\"A\",\"grip\":[],\"ref\":\"B\",\"sense\":\"any\",\"keep\":[{\"c\":\"clear_of\",\"p\":\"E\"}],\"until\":[]},{\"do\":\"turn\",\"obj\":\"C\",\"grip\":[],\"ref\":null,\"sense\":\"any\",\"keep\":[{\"c\":\"clear_of\",\"p\":\"E\"}],\"until\":[{\"o\":\"effect\",\"p\":\"D\",\"txt\":\"the dancer spins\"}]}],\"regions\":[],\"placement_goals\":[]}\nCORRECTION. previous_answer_rejected, when not null, says why the robot rejected your last answer. When previous_plan is not null, it is that rejected plan and previous_answer_rejected lists its issues as \"code: text\" (steps by index from 0, parts by id): change only what those issues name, copy every other part and step unchanged with the same ids, add a part or step only when an issue asks for one, and return the whole plan. When previous_plan is null, your last answer could not be read: write the plan anew.\nA physical object and a surface region are distinct. Both regions and\nplacement_goals are required arrays; use [] when an extension is unnecessary.\nDo not invent or repeat entries to fill an array. Every region id is a distinct\nexisting part id A-H; each placement (obj,ref) pair appears at most once.\nPut a bare surface region in\nregions as {id,support,anchor,relation,frame,bounds_xy_m}; keep its id in parts so a\nplace_on ref can reference it. support is a measured part id or observed_plane;\nanchor is a measured part id or null. left_of/right_of/front_of/behind (and these\nwords in the task) are as seen in image 1, the external camera: right/left = toward\nimage 1's right/left; behind/front_of = farther from/nearer to that camera along\nits viewing direction (toward the top/bottom of image 1). Not the robot's own\nleft/right; never judged in the wrist images. Use the same viewer words in plan\ntext; never restate them as world axes. Vertical words mean world up/down. A word\nnaming part of an object (back compartment, left plate) selects that part by\npointing; it is not a region. frame \"world\" describes metric bounds only; keep\nbounds_xy_m null for directional relations. Bounds are\n[[xmin,xmax],[ymin,ymax]] in metres, relative to the anchor's measured centre when\nanchor is set, otherwise absolute world coordinates. null bounds use observed\nsupport extent. near requires explicit bounds. Never manufacture safe geometry:\nunobserved region cells require observation, while a region already grounded in\nobserved support may be refreshed with an occupied hand. Entries in placement_goals\nspecify supported_on, centered_on or inside for an existing place_on (obj,ref).\ncentered_on asks for the WHOLE OBJECT's centre, not a handle or gripper point;\ntolerance_m=null derives tolerance from measured uncertainty and available space.\nOnly request centered_on/inside when intended by the task. Missing explicit goals\nuse supported_on. Post-release placement remains unverified until fresh geometry\nconfirms the whole-object relation. Repoint an incomplete body region or use local\nmotion to reveal it; a model assertion alone never verifies the goal.\nParts used only as a region support or anchor are legitimate plan dependencies;\ndo not invent manipulation steps solely to make those parts appear used.\nMETRIC REASONING IS ALLOWED. You may reason about and describe directions,\ndistances, heights, angles and coordinates when useful. State the frame and\nunits. Image pixels/cells are not world coordinates. Image left/right are not world axes and you have no calibration: give directions only in image-1 viewer words; distances and heights may be given in metres. World +z is up.\nDistinguish a visual estimate from a measurement. Keep the existing symbolic plan schema: metric prose alone does\nnot command motion. During execution, repair/review can issue local_motion.\n\nOUTPUT SERIALIZATION. Emit exactly one compact JSON object conforming to the\nschema. Do not indent or align fields, insert blank lines, or pad between tokens.\nUse ordinary spaces inside text values where needed. Finish immediately after\nthe closing brace; do not append whitespace. Keep every required field and the\ncomplete requested plan, including every task object and unfinished goal.\nThis changes formatting, not task content. regions and placement_goals must\nalways be present; use [] when no extension is needed.",
+  "output": [
+    {
+      "type": "reasoning",
+      "id": "rs_09cb3868a21f855c016ae1c1742a6481939f485262246e0651",
+      "summary": [],
+      "content": [],
+      "encrypted_content": "gAAAAABq4cF0QKLrMPDAH2gXbCYe5R5rsDsnlo8g1PDSW_01wK4jxMV_vXlWvi1B8KATGjScsrDQoX0l7EPu2hqGPGJY-1oBHTqLpmT3L0xGn_AiDtiDNr24X30GDGVOnf7wivLxwHoMx3JC0T6JyKFxT9nTnD6jb_piSM7XMTxD51XEwcHOlCVLjviYUDOHXEncPwvqZDtAHZxZZim21QU_XLrZpOKNbxo3XU0HlcsvJnBv6um-YgUspm2tiZ2eTgyPQYotZRwggGzEmE6sMZCKQGEzSiVcCGtjryhJa5MKyU_jagcGS6Vh0lJ6B1k6Rd4XxJA2ApMdyyHUDfeA48J97cEoq_vWb3iDyRSQlgvJzOCAmmYc27ldf-VZZm6UldWk-K6LBVon7ITlgKALqM30zXelO_mThLv0OhVUFvcpSSLX8eQ5yLdfwZBZEk2uGA3n2F1b8N3dh_voMvJpx0BBmJ3p0Q6hGdTescqhXS5785ZmvV7YWtMnIHwY2vCtlkr-dFcA9YQr_3Pn9MjmdX_uaJEn-7B4aGnMAwpXLaWPfxv0PE6OI0ILKSeCFTAoZzCqIqQmoo4WTcZQ1wni9cSDS8ZgfHNBXiEIVGoi6bLbTCfJPEBVvlG9PJbcsWaOtLSpim62Pz41Wuve8T2n-etVoDgf8nfEQOtm_ShHGDDWGch1xXaxIYDhGN9EB_1BnIoZ1fB2X3NYw95M-f-hJPwBFPDvsoNy7udhyWvKy_EvAdz2yjNyMvZoOqzKu1dn9Ird3kFkn8h0kbsaFInb9lJINDlCDVU55X7Ayt3EVgfLPyOsvHSSp1PfPTdf-IcQk2ZFWIgnr6dLkTNNpMlyXMw0sLN2N02qmO_ZgCtkvITRnndzfiLOlEIr9d3Mt6j9LW7bHg3rJKNuuUE0NqjJ0rNHQZLN4J1O81bza7Ysvwq2R8sV3m8CbVJRtwqEP9A07JPw_JCrc3IwI5tpNsf4qirkeEi1GvcWv9lKsQxb9aFg124WhyLVXbK-wo5C6hWiMhQJdY3Kad9dmfST-VfSq4bBxk97XMHyHQM6Iy8cwLIwjUyqQJSq4BacoQSe4vUj6UZ3bxXxKuphhtSsnsjsNDxN6LiYf3DUyd83fSQcyRKDtC0HlF184NRtcMhTb_upO2ge1nhgeMhte2i3jU4b0Igc0bjo6hHzrTNsFR-xrk7LGPJRQSPrES_RKBZqQw4Q-mktc8a5HYZgPnpVijNnauK0o7RSGNpy9EN4QbcgjP4XZ5uxkaLAbQO9zfMvkdiOl0irxgSidyMqysWUO2FJgNVYx8Pehy8LmRi-r-d5bZeeBc09aSqtq6jxok2WY_-bMcct9gqFrGqsgJBsMOM5WssXtoCgM_K4bS2ACY-G6HjA5jY34pfqc7mAisGsbzMJGv3FNHl9nKp88VmjyzVZF1Zt84MrEr-nuC5Gp5HqTyxrAJLx6OmZLTzSRSY4ZiNlvFKkYiSG2fIWl1Z_qvXK4N6QspVn1bbEx7fNv_ZI8zbiMav7bX9RDbXXN2CAjujNfErprDLfvdhlvq353KeX9xyeupSjGrPsDgN9rpXKdn4WhtkyB5LqBed2_LrR1fGngdJB0d-FZij1g3xKobQFNtHIZ1hQKKNT0wjOj80As7gWQPauMcDh-ja7m2mMJ77roj3n0M7f385LxRD2LOuufMtaV6_8oO1BYLpw2XR2TZfFO1bjOErsR94IV7FHlFdopXUUdJwwoyln_ySo-S9PkOc9i30X96dbVP5Sc1WPIHlo-mNpbkoW9c9S8Gy_7tVL06AB1DW_Gg7iNM9wJ41_BLFtW3OeHIo1yv0Yp8Bs7HcTmD1K_OBTASaZa2D6s-jHtsiIzAMly--rirjJO86lgxxp_ieD25Alhbj_Ic_4HfixoXidaTdF-jDDgUvj2ig4WBXcpM96StaAuEIJUGtj0DLQ5A48jDh6pufe4pt0VX-Thw1alNypumb3xJgh4qdID_968ZKt9wQcjBd3aSXLeeG4yhMVaIr0FbiTQtbwvd6mHrccVzE3hmStWUA4mEkpSAp3ZvHbKpvlxu2BUw6WU1kUALIuSNnIEd8-yFDpTtqHbHFSnwzXy-h7UQpJhKTXeMMKmYkuR_FTAqnlNPuAx-nPGG80-ec-id3ZtDuuGlttdEVsC5Tx_hVCNBY6Hpq5SNdUkqBF_G2_0SHO_Nv4-zSSaHNyTnWkXHoFWTJusdZcBd548ncpNqPPtT5BN4SoW8fJyohjCf2rbTRef0YPOngxlPGkZ9xPEOfeHGbZf8wD68KaIjg25qVhE2zicCOHTFsSUsA5AHikxmlagHvcEU80gKBTV0EyZ0UuKcFvZRPuLCJ7HCRCXbWUKqTAdf85fJYq8K81TAkb39nyQEt1WrAfSXRefL6U_4Hpv9o77rcizpWCiHQl7kk5otohoZtcZKTRWI7GhI3obLq3MyA616xejbkaYXfnBBtNyAhF4AiWG46ltNScRMIYL1dvAy9J4KFTPvjt_wNd82FlHhRtUIThoe6I-9cnOJs265vbSx2X6IZ83yy_txxm_UZmV6znka97_aGNi0XWDyilOS7lzf-3JNYzzN2R8GrUHhmsHzIonr_d95Eum5ery1emsQO7iMbJBSfsiBSaKLl7_QDy81q4y1dwsHKozArjRCVCNbpT1fo8qisu-GXA5rcw-MS_yfI5fXLDt-7ap3EWO0T99UEeCKq8GTPPlGd9dpfodIKY2HRfre_Z0TJayHExTBs2Lk3Y9S9cTCMDp3xoU6hmkW_J_XSSzjuGdvrFNCggNsQh1qWtFb3u8nLfblPlkFh9LHWheuiWFjlk_St9TcGDHFB1AlYPD03O5lJjlMzWTOFSqHMTv2vY3bRi2MHoxyfQvYQayHO_SwF7o-Dp7U6GksarNbm7JKdaBM4MZ06y5yMq9JrHrrK25r5OZ4kkRgrqsjrtBu5r2XdJ7cPEO2nlhymXXtA2wHcNMnj6dy506i6bhXkaTxt2NIPi3HvD3nBvGj-24Uvad3HD9Lrr6DA79BKEoSz3IczIIo-FVtLRlldYL8kuXcbSDiIynJ9b98PYQqfojRwTWymJPtNCJdvcU6SQTp73tDCla42w1vtgzVepgdInTotZwfrxTM-_qsXhTQxC1hRTguLmpnYmpaWtKtcGuSpty6OBQjo1pRn-4htwXe1V3ndYD9tFIblIhCzMsQV2uOX5xEA7ONXdg9Fmt7xQbAyQ3XJ8eD9-55mqbuFfUIHqpnhjWw5fdp5dob9gHxKbJISewxpVAgL1oe3kEdTRD3rQknbII0wtaTRct4qyEo7ZTuV4GAeT4Ccgi7hwGIU4BBXmT2GardCWMtbC8JRGuSD-97lXzokfxbMiLj6mZeSRsG7pvezhcIx9HwHg71R_5_bf8BFZT4GQSDcnTQkaUazLXgmbMnVUbIbq7UAsus0UulyzCq8rrw_DR-yJ2E-1iaXYDDl9qk_8-VuJWkg376cPxiijvnWqGq_d6kyZJ5Oa6oZ7Qx3JmgC1ajiFQAjHYPMpRBJG9wPhRsoL2Uk0wylPvLbQgFcv2UBisXPZpMF0CUoclF2RLwAyJRgEwZaOsEa5RlmY_EXl1HYzCxz4AtuqS6XwztcmJqMZIbD5p95eUZ8pFgwlhIQUmZLBwtdUqe5OSEZc-njYhfM2WLMxSQ7C6aGrORsOzNJSqw4RIKctuevF0N09PqPXblzI_6bnzSlbb25XfAizdkfqAai1KFMgjVwG2ovFKYJPuzS1QNORBr4GeLXzR5ZDN1fF4ULeoQ513POKWmGZPliwO6bZMTMthuOuh_27_M_Kwh9ogNpl0v_Ay3gyVDsOkvkvLY4N-jvP67hA4On1buIDKRM20fL2hOe-e8PFnv90jdGXqRqPXHOO0kCtIePfki6lmqkq14DQV2F9qtb5S-DJWg5WMHBKS09ONGMsE9M8MfikNgjjTkroXEPqMJbeZBpuGGGV_Onaj_rvd_536NdtfPYxub1E1xFu3RGC5sKGV-PBVHaBkXNj5jyekMit1qeu3QG379wpyJEt7yoNp4SVWHOIhcVIED6F6K-7AMK5g_rQspUNVkFCFjklQT1uV-IhHCL7uEuyPjOP8Ni0mAc91j9HANR10ZoY0ILJD48v1RjNXdNHUh7DBrup0fRXSiE9RDz-308WM2NH9OC5YhnOJsKkH8RGsye9d3QZPOdpQO8HHv50Eh8w3kL5IN1AFgjB2pWJJS00e2jiBv7eg2xBZzFPVmPZGty_jhtkMY6CNV0Ub3PhlDJe5Nb6mt78A_iC1XcuaLo5GuIjOw2mZR-PGYA929NL32u852Tv5BbAlvHPcz-tRgJ8EIiVTiDfO4bFOaTiH14iRCTTVjNNom6OEW4LS5GdNJR1ZoxBmWP13UbfgpcxjXeQQBtubHpkPfps9LJ5xO_-339GgkGrP7ARjuGMNNEkNm276yiUVcj1aYAaeEeRqs7-0uPZjSlNcnDxO697bMl4l9MSdIcu3nBsHgkpKKHxJ9HYkA2_zn-T2UJdevgX71gmHkk2tYxTRrlpWSvCowUCaipiQSg-5xlVQJTp7YsyHifvz13ebyAYma3-HGCcOyeKRV6Zwaps86tPo14yRu9_9tRBbzC5y-DQvvtolTNxG7Iwjx8BAjYaTuzJ86cv5Nm-EiDCGb2AQVchkFah0xphHKwsov9aXW5f53O0Rr4AhG8yf20tA_xXx5IdnhuHo9T6EzXwdZdltlJbat7jLc3hPvRPWmNVDxRqaQYwmSXKJVTGp2U7UVm1BdFyQif0kUuSO-Hg-t-qdDyjh0CcovGTCRWXj6EbhdTWv621MWAMw59HzSsraM2xFX7mr8xeVgiC7E5bSsk9qsVHlzmGUzjSPfH7MfocWQy9XheXGEoiztTY_xdclcEleBdCls7DJOG___2MzoLlMJS_heaLLLz41DMNanaOmEsArDcFf8AEHaPUsJeCz5P378uMrrKZVWmvXBmuGBWnalE-RNlTwdvzO-dOV2BVn9hn9EF00V4HprkL4o5szJNjnBo7jYyFKd7Z8Fwf0N1idI7AiSetHYS3TUlma0IcEeejxc-kQZbLYJSzoA=="
+    },
+    {
+      "type": "message",
+      "id": "msg_09cb3868a21f855c016ae1c1753b1c8193a5019cf5f3918bdd",
+      "role": "assistant",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "{\"scene\":\"White mug, tall red mug, chocolate pudding and striped plate on a table.\",\"parts\":[{\"id\":\"A\",\"text\":\"white mug: whole cup with textured sides\",\"move\":\"free\",\"w\":48,\"x\":35},{\"id\":\"B\",\"text\":\"white mug: loop handle on its side\",\"move\":\"free\",\"w\":46,\"x\":36},{\"id\":\"C\",\"text\":\"plate: round top surface with striped border\",\"move\":\"free\",\"w\":12,\"x\":53},{\"id\":\"D\",\"text\":\"chocolate pudding: rectangular package\",\"move\":\"free\",\"w\":35,\"x\":46},{\"id\":\"E\",\"text\":\"table: surface to the right of the plate\",\"move\":\"fixed\",\"w\":10,\"x\":55}],\"hold_true\":[],\"steps\":[{\"do\":\"place_on\",\"obj\":\"A\",\"grip\":[\"B\"],\"ref\":\"C\",\"sense\":\"any\",\"keep\":[{\"c\":\"upright\",\"p\":\"A\"}],\"until\":[]},{\"do\":\"place_on\",\"obj\":\"D\",\"grip\":[],\"ref\":\"E\",\"sense\":\"any\",\"keep\":[],\"until\":[]}],\"regions\":[{\"id\":\"E\",\"support\":\"observed_plane\",\"anchor\":\"C\",\"relation\":\"right_of\",\"frame\":\"world\",\"bounds_xy_m\":null}],\"placement_goals\":[]}",
+          "annotations": [],
+          "logprobs": []
+        }
+      ],
+      "phase": "final_answer"
+    }
+  ],
+  "error": null,
+  "incomplete_details": null,
+  "tools": [],
+  "tool_choice": "auto",
+  "parallel_tool_calls": true,
+  "prompt_cache_key": "4cbb0f7f-d317-414d-bfd6-96ab86535d9a",
+  "prompt_cache_retention": "24h",
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "name": "agent_speedup_v2_plan",
+      "description": null,
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scene",
+          "parts",
+          "hold_true",
+          "steps",
+          "regions",
+          "placement_goals"
+        ],
+        "properties": {
+          "scene": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "parts": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "text",
+                "move",
+                "w",
+                "x"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 60
+                },
+                "move": {
+                  "type": "string",
+                  "enum": [
+                    "free",
+                    "fixed",
+                    "hinged",
+                    "sliding",
+                    "unknown"
+                  ]
+                },
+                "w": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 64
+                },
+                "x": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 64
+                }
+              }
+            }
+          },
+          "hold_true": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "rel",
+                "a",
+                "b"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "enum": [
+                    "on",
+                    "in",
+                    "open",
+                    "closed",
+                    "effect"
+                  ]
+                },
+                "a": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "b": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F",
+                        "G",
+                        "H"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "do",
+                "obj",
+                "grip",
+                "ref",
+                "sense",
+                "keep",
+                "until"
+              ],
+              "properties": {
+                "do": {
+                  "type": "string",
+                  "enum": [
+                    "hold",
+                    "turn",
+                    "slide",
+                    "place_on",
+                    "place_in",
+                    "push_to",
+                    "release"
+                  ]
+                },
+                "obj": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "grip": {
+                  "type": "array",
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "E",
+                      "F",
+                      "G",
+                      "H"
+                    ]
+                  }
+                },
+                "ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F",
+                        "G",
+                        "H"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "sense": {
+                  "type": "string",
+                  "enum": [
+                    "any",
+                    "open",
+                    "close"
+                  ]
+                },
+                "keep": {
+                  "type": "array",
+                  "maxItems": 3,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "c",
+                      "p"
+                    ],
+                    "properties": {
+                      "c": {
+                        "type": "string",
+                        "enum": [
+                          "upright",
+                          "clear_of"
+                        ]
+                      },
+                      "p": {
+                        "type": "string",
+                        "enum": [
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G",
+                          "H"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "until": {
+                  "type": "array",
+                  "maxItems": 3,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "o",
+                      "p",
+                      "txt"
+                    ],
+                    "properties": {
+                      "o": {
+                        "type": "string",
+                        "enum": [
+                          "effect",
+                          "stop",
+                          "fits",
+                          "quarter_turn",
+                          "half_turn"
+                        ]
+                      },
+                      "p": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "A",
+                              "B",
+                              "C",
+                              "D",
+                              "E",
+                              "F",
+                              "G",
+                              "H"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "txt": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 40
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "regions": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "support": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H",
+                    "observed_plane"
+                  ]
+                },
+                "anchor": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F",
+                        "G",
+                        "H"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "relation": {
+                  "type": "string",
+                  "enum": [
+                    "on",
+                    "left_of",
+                    "right_of",
+                    "front_of",
+                    "behind",
+                    "near"
+                  ]
+                },
+                "frame": {
+                  "type": "string",
+                  "enum": [
+                    "world"
+                  ]
+                },
+                "bounds_xy_m": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 2,
+                        "maxItems": 2
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "support",
+                "anchor",
+                "relation",
+                "frame",
+                "bounds_xy_m"
+              ]
+            }
+          },
+          "placement_goals": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "obj": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "ref": {
+                  "type": "string",
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H"
+                  ]
+                },
+                "relation": {
+                  "type": "string",
+                  "enum": [
+                    "supported_on",
+                    "centered_on",
+                    "inside"
+                  ]
+                },
+                "tolerance_m": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "obj",
+                "ref",
+                "relation",
+                "tolerance_m"
+              ]
+            }
+          }
+        }
+      },
+      "strict": true
+    },
+    "verbosity": "medium"
+  },
+  "top_p": 0.98,
+  "top_logprobs": 0,
+  "temperature": 1.0,
+  "reasoning": {
+    "effort": "high",
+    "context": "all_turns",
+    "summary": null,
+    "mode": "standard"
+  },
+  "user": null,
+  "usage": {
+    "input_tokens": 4367,
+    "input_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0
+    },
+    "output_tokens": 566,
+    "output_tokens_details": {
+      "reasoning_tokens": 283
+    },
+    "total_tokens": 4933,
+    "attribution": {
+      "items": {
+        "msg_09cb3868a21f855c016ae1c15997048193afe468660a3adf49": {
+          "input_tokens": 1401,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 100,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 9,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 308,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 17,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 308,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 308,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 17,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            },
+            {
+              "input_tokens": 309,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_09cb3868a21f855c016ae1c1753b1c8193a5019cf5f3918bdd": {
+          "input_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 283,
+          "content": [
+            {
+              "input_tokens": 0,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 283
+            }
+          ]
+        },
+        "rs_09cb3868a21f855c016ae1c1742a6481939f485262246e0651": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 283
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 2192,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        },
+        "text.format": {
+          "input_tokens": 772,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    }
+  },
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "input_tokens_details": {
+        "text_tokens": 0,
+        "image_tokens": 0
+      },
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      }
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "safety_identifier": "user-FxTtKqreaJ4ASj35duPnV9Nz",
+  "store": false,
+  "metadata": {},
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "service_tier": "default",
+  "truncation": "disabled",
+  "_subscription_transport": {
+    "response_media_type": "text/plain",
+    "sse_completion_verified": true
+  },
+  "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1",
+  "agent_speedup_v2_client_version": "agent-speedup-v2-client-4",
+  "billing": "chatgpt_subscription",
+  "transport_version": "chatgpt-subscription-http-sse-v1"
+}

@@ -1,0 +1,126 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/evaluate_agent_speedup_v2_user_check.py	2026-10-21 11:10:08.780173390 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_agent_speedup_v2_user_check.py	2026-10-21 17:50:16.523816476 +0000
+@@ -44,6 +44,7 @@
+ from gpt_field.agent_speedup_v2_user_check_agent_client import AgentFirstV2Client  # noqa: E402
+ from gpt_field.agent_speedup_v2_user_check_agent import AgentFirstV2Policy  # noqa: E402
+ from gpt_field.agent_speedup_v2_user_check_sim import UserCheckSimProcess  # noqa: E402
++from gpt_field.agent_speedup_v2_user_check_fragments import fragment_capabilities  # noqa: E402
+ from gpt_field.astranomy_agentic_motion import ShortTargetConfig  # noqa: E402
+ from gpt_field.agent_speedup_v2_user_check_control import control_settings  # noqa: E402
+ from gpt_field.agent_speedup_v2_user_check_framework import (  # noqa: E402
+@@ -53,7 +54,7 @@
+ 
+ def framework_settings():
+     return {
+-        "version": "user-check-agent-first-framework-1",
++        "version": "user-check-agent-fragments-framework-2",
+         "legacy_contract_version": FRAMEWORK_VERSION,
+         "interfaces": ["task_contract", "shared_state", "skill_contracts", "execution_feedback"],
+         "feedback_statuses": list(FEEDBACK_STATUSES),
+@@ -62,7 +63,8 @@
+         "task_specific_branches": False,
+         "model_reasoning_effort": USER_CHECK_REASONING_EFFORT,
+         "control_owner": "continuous_model_agent",
+-        "macro_role": "optional_bounded_acceleration; yields_back_to_model",
++        "macro_role": "independent_monitored_fragments_and_optional_native_macros; yields_back_to_model",
++        "execution_fragments": fragment_capabilities(),
+         "constraint_scope": "reviewed_task_constraints; model_selects_execution_method",
+         "contact_semantics": "task_manipulation_constraints; evaluator_records_contacts_independently",
+         "feedback": "persistent_visual_action_history_and_measured_motion; full_audit_on_disk",
+@@ -129,7 +131,8 @@
+ def prepare_review(review_dir, *, config, sim_config, task_key, episode_index,
+                    monitor_options=None, token_provider=None, client_factory=None,
+                    sim_factory=None, transport=None, expected_initial_observation_sha256=None,
+-                   video=True, stop_after_steps=None, smoke=False, smoke_steps=None):
++                   video=True, stop_after_steps=None, smoke=False, smoke_steps=None,
++                   auto_approve=False):
+     """Make one model draft before any policy action. Injected factories are test seams."""
+     from gpt_field.agent_speedup_v2_client import plan_images
+     from gpt_field.agent_speedup_v2_geometry import frame_alignment_turns
+@@ -188,6 +191,8 @@
+         model_seconds = time.monotonic() - model_started
+         preparation = {
+             "kind": "model_draft_before_policy_actions", "policy_actions": 0,
++            "approval_mode": "user_authorized_automatic" if auto_approve else "manual_browser_review",
++            "manual_review": not auto_approve,
+             "draft_model_s": model_seconds,
+             "expected_reset_sha256": expected, "expected_reset_source": expected_source,
+             "quarter_turns": turns, "fingertip_edge": FINGERTIP_EDGES[turns],
+@@ -308,6 +313,7 @@
+     now = datetime.now(timezone.utc).isoformat()
+     approval = review["approved"]
+     preparation = review.get("preparation") or {}
++    manual_review = preparation.get("approval_mode", "manual_browser_review") != "user_authorized_automatic"
+     mode = ("offline_scripted_" if summary.get("mode", "").startswith("offline") else
+             "live_chatgpt_subscription_") + METHOD
+     plan_history = lock.snapshot()
+@@ -315,6 +321,8 @@
+         "version": VERSION, "display_name": DISPLAY_NAME,
+         "review_id": review["id"], "revision": review["revision"],
+         "approved": approval, "claim": review["claim"],
++        "approval_mode": preparation.get("approval_mode", "manual_browser_review"),
++        "manual_review": manual_review,
+         "plan_sha256": canonical_sha256(review["plan"]),
+         "context_sha256": review["context_sha256"], "runtime_sha256": runtime,
+         "fixed_semantics": not lock.allow_auto_replan, "user_changes_during_test": False,
+@@ -336,10 +344,11 @@
+         "normalized_at": now, "base_records": "base_v2_artifacts",
+     }
+     summary = dict(summary, method=METHOD, mode=mode, display_name=DISPLAY_NAME,
+-                   zero_shot=False, human_reviewed_plan=True, user_check=meta,
+-                   interpretation="One v2 episode with a human-reviewed initial plan and "
+-                                  "continuous model control and optional macro acceleration; "
+-                                  "not an autonomous zero-shot baseline.")
++                   zero_shot=False, human_reviewed_plan=manual_review, user_check=meta,
++                   interpretation="One user-check episode with " +
++                                  ("a manually reviewed" if manual_review else "a user-authorized automatically approved") +
++                                  " initial plan, continuous model decisions and monitored execution fragments. "
++                                  "Approval provenance and native/fragment/direct control counts are separate.")
+     if lock.conflict is not None:
+         summary.update(
+             status="plan_conflict", failure_reason="plan_conflict",
+@@ -375,7 +384,7 @@
+     identity = manifest["configuration"]
+     identity.update(
+         method=METHOD, mode=mode, kind=METHOD + "_full_task", zero_shot=False,
+-        human_reviewed_plan=True, user_check=meta,
++        human_reviewed_plan=manual_review, user_check=meta,
+         base_runner=identity["runner"],
+         runner={"path": RUNNER_PATH, "sha256": runtime[RUNNER_PATH]},
+     )
+@@ -588,6 +597,8 @@
+         if name == "start":
+             command.add_argument("--host", default="127.0.0.1")
+             command.add_argument("--port", type=int, default=8765)
++            command.add_argument("--auto-approve", action="store_true",
++                                 help="Explicitly delegate approval of this task's validated model plan; recorded separately from manual review")
+     review_parser = sub.add_parser("review")
+     review_parser.add_argument("--review-dir", type=Path, required=True)
+     review_parser.add_argument("--host", default="127.0.0.1")
+@@ -634,14 +645,24 @@
+             store = prepare_review(
+                 args.review_dir, config=config, sim_config=sim_config, task_key=task_key,
+                 episode_index=episode_index, monitor_options=monitor, token_provider=token_provider,
+-                expected_initial_observation_sha256=expected, video=video, stop_after_steps=cap)
++                expected_initial_observation_sha256=expected, video=video, stop_after_steps=cap,
++                auto_approve=getattr(args, "auto_approve", False))
+             if args.command == "prepare":
+                 print(json.dumps({
+                     "status": "review_required", "method": METHOD,
+                     "review_dir": str(store.path), "validation": store.load()["validation"],
+                 }), flush=True)
+                 return 0
+-            _show_review(store, host=args.host, port=args.port, until_approved=True)
++            if args.auto_approve:
++                draft = store.load()
++                approval = store.approve(expected_revision=draft["revision"],
++                                         reviewed_steps=list(range(len(draft["plan"]["steps"]))))
++                print(json.dumps({"event": "plan_automatically_approved",
++                                  "authorization": "explicit_auto_approve_argument",
++                                  "manual_review": False, "review_id": approval["id"],
++                                  "plan_sha256": approval["approved"]["plan_sha256"]}), flush=True)
++            else:
++                _show_review(store, host=args.host, port=args.port, until_approved=True)
+         result = execute_reviewed(
+             args.output, review_dir=args.review_dir, config=config, sim_config=sim_config,
+             task_key=task_key, episode_index=episode_index, monitor_options=monitor,

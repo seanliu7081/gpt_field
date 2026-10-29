@@ -1,0 +1,74 @@
+FROZEN BASELINE METADATA {
+  "overlay": "/tmp/uc7_pre_fix_two_tests_1_0v143b",
+  "archive": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/frozen_runtime_high.tar.gz",
+  "archive_sha256": "12a5e029a4174fe7f8bad6ce2a123ae38a5e54683080a3288429aef4de92e0be",
+  "inventory_verified_files": 328,
+  "selected_tests": [
+    "tests/test_agent_speedup_v2_user_check_local_client.py::test_all_variant_modes_use_high_and_keep_baseline_unchanged",
+    "tests/test_agent_speedup_v2_user_check_local_client.py::test_actual_repair_request_carries_measurements_and_parses_numeric_target"
+  ]
+}
+FROZEN MODULE gpt_field.agent_speedup_v2_user_check_client /tmp/uc7_pre_fix_two_tests_1_0v143b/src/gpt_field/agent_speedup_v2_user_check_client.py ac1799ec990982d32a0e79526a2969179007d427f4a7cc6119df8606fe5e2ed7
+FROZEN MODULE gpt_field.agent_speedup_v2_user_check_spatial /tmp/uc7_pre_fix_two_tests_1_0v143b/src/gpt_field/agent_speedup_v2_user_check_spatial.py f773f3650f9a2306b1b4276b9f893dbe962309abc4a6d83bfcfc99798188603a
+FROZEN VERSIONS agent-speedup-v2-user-check-prompt-5 user-check-spatial-1
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_all_variant_modes_use_high_and_keep_baseline_unchanged __________
+
+    def test_all_variant_modes_use_high_and_keep_baseline_unchanged():
+        transport = ScriptedV2Transport(FixedAnswers())
+        baseline = AgentSpeedUpV2Client(task_prompt=TASK2, transport=transport)
+        draft = UserCheckV2Client(task_prompt=TASK2, transport=transport)
+        lock = PlanLock(TASK2_PLAN, task_prompt=TASK2)
+        reviewed = ReviewedV2Client(task_prompt=TASK2, transport=transport,
+                                    approved_plan=lock.plan(), lock=lock)
+        request = {"fields": {}, "images": []}
+        for mode in baseline._instruction_text:
+            assert baseline.build_payload(request, mode=mode)["reasoning"]["effort"] == "medium"
+            for client in (draft, reviewed):
+                payload = client.build_payload(request, mode=mode)
+                assert payload["reasoning"]["effort"] == "high"
+                assert "Never give directions" not in payload["instructions"]
+                assert "never how to move" not in payload["instructions"]
+        assert UserCheckV2Client.reasoning_effort == "high"
+        assert "local_motion" not in json.dumps(baseline._schemas["repair"])
+>       assert reviewed._schemas["plan"] == baseline._schemas["plan"]
+E       AssertionError: assert {'type': 'obj... ...}}}, ...}} == {'type': 'obj.....]}, ...}}}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'required': ['scene', 'parts', 'hold_true', 'steps', 'regions', 'placement_goals']} != {'required': ['scene', 'parts', 'hold_true', 'steps']}
+E         {'properties': {'scene': {'type': 'string', 'minLength': 1, 'maxLength': 80}, 'parts': {'type': 'array', 'minItems': 1...[...]}, 'grip': {'type': 'array', 'minItems': 0, 'maxItems': 2, 'items': {...}}, 'ref': {'anyOf': [...]}, ...}}}, ...}} != {'properties': {'scene': {'type': 'string', 'minLength': 1, 'maxLength': 80}, 'parts': {'type': 'array', 'minItems': 1...um': [...]...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_agent_speedup_v2_user_check_local_client.py:34: AssertionError
+__ test_actual_repair_request_carries_measurements_and_parses_numeric_target ___
+
+    def test_actual_repair_request_carries_measurements_and_parses_numeric_target():
+        proposed = _answer()
+        transport = ScriptedV2Transport(FixedAnswers(repairs=[proposed]), effort="high")
+        lock = PlanLock(TASK2_PLAN, task_prompt=TASK2)
+        lock._local_motion_context = motion_context(_view())
+        lock._local_motion_feedback = {"status": "segment_complete", "executed_steps": 2}
+        client = ReviewedV2Client(task_prompt=TASK2, transport=transport,
+                                  approved_plan=lock.plan(), lock=lock)
+        plan = parse_plan(lock.plan())
+        states = [StepState.pending(i, step) for i, step in enumerate(plan.steps)]
+        raw = client.request_repair(image(1), image(2), quarter_turns=0,
+                                   status_block=plan_status_block(plan, states, holding=None),
+                                   last_outcome=None, holding=None)
+        assert parse_reviewed_repair(raw).to_json() == proposed
+        payload = transport.calls[-1]
+        fields = json.loads(payload["input"][0]["content"][0]["text"])
+>       assert fields["local_control"]["context"]["xyz_m"] == [.1, -.1, .9]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'local_control'
+
+tests/test_agent_speedup_v2_user_check_local_client.py:53: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_agent_speedup_v2_user_check_local_client.py::test_all_variant_modes_use_high_and_keep_baseline_unchanged
+FAILED tests/test_agent_speedup_v2_user_check_local_client.py::test_actual_repair_request_carries_measurements_and_parses_numeric_target
+2 failed in 0.42s
+NONFROZEN_GPT_FIELD_MODULES []
+PYTEST_EXIT_CODE 1

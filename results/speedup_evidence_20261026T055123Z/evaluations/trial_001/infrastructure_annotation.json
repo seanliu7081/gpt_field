@@ -1,0 +1,12 @@
+{
+  "reservation_id": "trial_001",
+  "classification": "infrastructure_configuration",
+  "infrastructure_failure": true,
+  "reason": "isolated copy used its own empty relative credential store; no model transport called; existing original store connected",
+  "infrastructure_evidence": "launches/trial_001/prepare.log",
+  "policy_actions": 0,
+  "model_transport_calls": 0,
+  "service_elapsed_s": 7.567007966921665,
+  "fix": "explicit existing --store-dir in private supervisor commands; runtime/policy unchanged",
+  "retry_requested_once": true
+}

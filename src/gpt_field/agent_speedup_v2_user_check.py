@@ -28,7 +28,7 @@ from .agent_speedup_v2_user_check_plan import parse_plan, validate_plan
 from .agent_speedup_v2_types import SLICE_DO_KINDS
 
 
-VERSION = "agent-speedup-v2-user-check-7"
+VERSION = "agent-speedup-v2-user-check-7.1"
 DISPLAY_NAME = "speed up v2 user check"
 SCHEMA_VERSION = 1
 _HASH = re.compile(r"^[0-9a-f]{64}$")

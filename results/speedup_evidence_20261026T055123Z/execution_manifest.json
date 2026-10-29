@@ -1,0 +1,262 @@
+{
+  "experiment_id": "speedup_evidence_20261026T055123Z",
+  "created_at_utc": "20261026T055123Z",
+  "repository": "/workspace/gpt_field",
+  "git_head": "59f4b0f61b0011f94d459263c086d1378402d7a1",
+  "dirty_tree_preserved": true,
+  "source_inventory": "initial_source_inventory.json",
+  "plan_sha256": "ffec5ca6c799f395acc810434c3beafcee2f80f360699ba2e126443761a1e179",
+  "status": "completed_execution_stopped_P5_inconclusive_P6_not_started",
+  "source_identity": {
+    "policy": "agent-speedup-v3-11",
+    "client": "agent-speedup-v3-client-11",
+    "prompt": "agent-speedup-v3-prompt-10",
+    "verified_from_source": true
+  },
+  "arms": {
+    "A": "300-file frozen user-check v7 restored by original relative path + common service clock/budget instrument",
+    "B": "same A, compact public-RGB display recorder and throttled external status snapshots only"
+  },
+  "primary_change": {
+    "id": "v7_compact_display_io",
+    "type": "pure_io",
+    "description": "Reuse verified compact video and throttled external status snapshots; no policy/client/input/action changes",
+    "source": "existing v3 revision6 I/O modules; no v3 policy imported"
+  },
+  "model": {
+    "name": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "billing": "chatgpt_subscription",
+    "api_key_fallback": false,
+    "resolution": [
+      512,
+      512
+    ],
+    "history": "frozen v7 unchanged unless context selected"
+  },
+  "allowed_inputs": [
+    "two RGB views",
+    "synchronized measured EEF/arm joint/gripper states",
+    "camera calibration",
+    "fixed robot specifications",
+    "task language and reviewed initial plan"
+  ],
+  "forbidden_policy_inputs": [
+    "simulator object/depth/contact truth",
+    "reward or task predicate",
+    "answer_key",
+    "test-specific coordinate constants"
+  ],
+  "review": {
+    "scope": "initial plan, single-use source/config/reset binding",
+    "evidence": "old t1/t7/g5 notes authorize consumed concrete runs; not new resets",
+    "new_evaluations": "explicit user authorization received for declared matrix; every plan individually inspected",
+    "auto_review_compute_counts_in_service": true,
+    "authorization_evidence": "delegated_review_authorization.json"
+  },
+  "clock": {
+    "source": "time.monotonic",
+    "service": "preparation + automatic review compute + reviewed execution + required synchronous finalization",
+    "excluded": "human approval wait only; optional display video only if consistently async in both arms",
+    "score_threshold_s": 300,
+    "evaluation_budget_s": 900,
+    "on_exhaustion": "evaluation_budget_exhausted; preserve first raw success",
+    "raw_success": "first evaluator event",
+    "watchdog": "infrastructure only, separate from service budget"
+  },
+  "video": "synchronous display recorder for both arms, costs including close/drain counted; A legacy B compact; online512 RGB unchanged",
+  "budget_caps": {
+    "detailed_audit_windows": 60,
+    "new_offline_model_requests": 40,
+    "P4_rollouts": 24,
+    "P4_seconds_per_rollout": 180,
+    "P5_episodes": 18,
+    "P6_episodes": 18,
+    "infrastructure_retries_total": 4,
+    "retries_per_original": 1,
+    "repairs_per_causal_defect": 2,
+    "online_candidates": 1
+  },
+  "budget_consumed": {
+    "detailed_audit_windows": 46,
+    "new_offline_model_requests": 0,
+    "P4_rollouts": 0,
+    "P5_episodes": 4,
+    "P6_episodes": 0,
+    "infrastructure_retries_total": 1
+  },
+  "splits": {
+    "development": [
+      "all inspected historical records, including t1 episode0 seed7"
+    ],
+    "P5": [
+      {
+        "task": "libero_10_t1",
+        "episode_index": 1,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t1",
+        "episode_index": 2,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t1",
+        "episode_index": 3,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 1,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 2,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 3,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 1,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 2,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 3,
+        "seed": 7
+      }
+    ],
+    "P6": [
+      {
+        "task": "libero_10_t1",
+        "episode_index": 4,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t1",
+        "episode_index": 5,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t1",
+        "episode_index": 6,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 4,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 5,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t5",
+        "episode_index": 6,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 4,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 5,
+        "seed": 7
+      },
+      {
+        "task": "libero_10_t7",
+        "episode_index": 6,
+        "seed": 7
+      }
+    ],
+    "eligibility": "preselected now; verify no prior tuning on these resets before execution; holdout truth not read"
+  },
+  "randomness": [
+    "model sampling/service variability",
+    "fixed simulator seed and official reset index",
+    "OS/GPU timing"
+  ],
+  "P5_gate": {
+    "raw_success_900_noninferior": true,
+    "no_new_reproducible_severe_quality_defect": true,
+    "either": "S300 +2 pairs OR S300 nondecrease and common-success service median reduction >=20% with >=5 common successes",
+    "mechanism": "candidate-specific attribution; pure IO equivalence exempt from recovery P4"
+  },
+  "publication": "local only; no push/merge",
+  "P4": "not_applicable for pure IO under plan section7; requires exact saved-observation/action/request equivalence before P5",
+  "split_verification": {
+    "source": "p0_verification.json",
+    "historical_records_checked": 184,
+    "predeclared_new_resets_seen_in_history": false,
+    "heldout_truth_read": false
+  },
+  "stage_gates": {
+    "P0": "passed",
+    "P1": "passed",
+    "P2": "passed",
+    "P3": "passed_pure_IO_existing_modules_reused",
+    "P4": "not_applicable_pure_IO",
+    "P5": "inconclusive_stopped_repeated_preparation_budget_exhaustion",
+    "P6": "not_started_P5_gate_unmet"
+  },
+  "equivalence_evidence": "baseline_replay_attempt1.json",
+  "code_review_evidence": "independent_review.json",
+  "execution_activity": {
+    "terminal_receipts": 5,
+    "preparation_attempts": 5,
+    "successful_drafts": 2,
+    "requests_by_trial": {
+      "trial_001": {
+        "preparation": 0,
+        "execution": 0
+      },
+      "trial_002": {
+        "preparation": 1,
+        "execution": 11
+      },
+      "trial_003": {
+        "preparation": 1,
+        "execution": 13
+      },
+      "trial_004": {
+        "preparation": 1,
+        "execution": 0
+      },
+      "trial_005": {
+        "preparation": 1,
+        "execution": 0
+      }
+    },
+    "persisted_model_request_count": 28,
+    "complete_policy_episodes": 2,
+    "policy_actions_completed": 1849,
+    "separate_post_success_diagnostic_actions": 76,
+    "P5_terminal_original_pairs": 2,
+    "P5_active_pairs": 0,
+    "heldout_started": false,
+    "service_s_sum_all_attempts": 3072.2981644087704,
+    "human_review_wait_s_sum_all_attempts": 5486.578600335051,
+    "automatic_review_compute_s_sum_all_attempts": 276.5633395499317,
+    "note": "All original failures retained; retry is separate. Sum is per-run cost, not wall-clock duration because arms overlapped. No model calls are new offline perception queries. The verified executed pair uses A retry, not the original failed A receipt.",
+    "P5_executed_policy_pair_initial_hash_verified": 1,
+    "P5_primary_pairs_with_both_initial_hashes_verified": 0
+  },
+  "active_freeze_manifest": "freeze_manifest_delivery.json",
+  "paired_schedule": "paired_schedule_protocol.json",
+  "review_authorization_evidence": "delegated_review_authorization.json",
+  "online_stop_evidence": "online_stop.json"
+}

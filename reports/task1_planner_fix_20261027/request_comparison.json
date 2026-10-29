@@ -1,0 +1,434 @@
+{
+  "cases": [
+    {
+      "billing": "chatgpt_subscription",
+      "canonical_payload_sha256": "1ce0c496cfe6137e80b320260eb74933752e747bc281b566db192b1d84cdca06",
+      "case": "task0_high",
+      "completed_response_files": 1,
+      "configured_max_output_tokens": 8192,
+      "first_request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t0_t4_20261027_001/task_0/review/requests/000001-b8aab95b51bf44f8a67537902ae3c313.request.json",
+      "first_request_sha256": "84cde7225df88480dcc1ade4df50177f093edb0a91ba9cf35a46de707d3260e8",
+      "format_name": "agent_speedup_v2_plan",
+      "input_image_count": 4,
+      "input_text_chars": 537,
+      "instructions_chars": 7832,
+      "instructions_sha256": "4d1c70f677f436551fd54a421c5100c46b8b27d9dc6dfe258d5398008cfa8f92",
+      "max_input_tokens": 1050000,
+      "max_output_tokens_sent": null,
+      "measured_timing": {
+        "budget_elapsed_s": 9.203254165011458,
+        "draft_model_s": 9.190991865005344,
+        "preparation_elapsed_s": 17.7232131579658
+      },
+      "model": "gpt-6-astra",
+      "payload_bytes_compact": 1469668,
+      "prompt_version": "agent-speedup-v2-user-check-prompt-5",
+      "reasoning_effort": "high",
+      "request_count": 1,
+      "request_timeout_s": 180,
+      "requests": [
+        {
+          "budget_elapsed_s": 9.202095333021134,
+          "error_code": null,
+          "error_type": null,
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t0_t4_20261027_001/task_0/review/requests/000001-b8aab95b51bf44f8a67537902ae3c313.request.json",
+          "request_file_mtime_utc": "2026-10-27T13:24:05.958550+00:00",
+          "request_ordinal": 1,
+          "request_to_result_file_mtime_s": 7.292014837265015,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t0_t4_20261027_001/task_0/review/requests/000001-b8aab95b51bf44f8a67537902ae3c313.result.json",
+          "result_status": "valid",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 0
+        }
+      ],
+      "responses": [
+        {
+          "input_tokens": 3911,
+          "model": "gpt-6-astra",
+          "nonreasoning_output_tokens": 203,
+          "output_tokens": 203,
+          "plans": [
+            {
+              "compact_chars": 626,
+              "duplicate_steps": 0,
+              "grip_lengths": [
+                0,
+                0
+              ],
+              "hold_true_count": 0,
+              "leading_whitespace": 0,
+              "maximum_whitespace_run": 1,
+              "parts_count": 3,
+              "placement_goals_count": 0,
+              "regions_count": 0,
+              "step_kinds": [
+                "place_in",
+                "place_in"
+              ],
+              "step_null_fields": [],
+              "step_refs": [
+                "C",
+                "C"
+              ],
+              "step_required_fields_present": true,
+              "steps_count": 2,
+              "text_chars": 626,
+              "trailing_whitespace": 0,
+              "until_lengths": [
+                0,
+                0
+              ]
+            }
+          ],
+          "reasoning_effort": "high",
+          "reasoning_tokens": 0,
+          "response_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t0_t4_20261027_001/task_0/review/requests/000001-b8aab95b51bf44f8a67537902ae3c313.response.json",
+          "response_sha256": "f918b7a854440a5d48bfa6f75a85c691ea6f69bf12ab4a197c30c71655caa872",
+          "status": "completed"
+        }
+      ],
+      "review_dir": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t0_t4_20261027_001/task_0/review",
+      "schema_sha256": "103163a473054f70c8ca0986bdca12c9c2fa3b7d842dad7fa2b6bc2722840b71",
+      "service_tier": "default",
+      "store": false,
+      "stream": true,
+      "strict_schema": true,
+      "task_text": "put both the alphabet soup and the tomato sauce in the basket",
+      "transport_version": "chatgpt-subscription-http-sse-v1",
+      "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1"
+    },
+    {
+      "billing": "chatgpt_subscription",
+      "canonical_payload_sha256": "56b7ff1094efb8614f9923d2e4370b039a68454227a2ad205ee09aac81a9ac69",
+      "case": "task0_xhigh",
+      "completed_response_files": 1,
+      "configured_max_output_tokens": 8192,
+      "first_request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_xhigh_relayout_t0_20261027_001/task_0/review/requests/000001-7903182467da436288ec72c4eb306309.request.json",
+      "first_request_sha256": "4b9133e3f1d572ce689c64381bb81f243506437aa143c36803ec90ec096608df",
+      "format_name": "agent_speedup_v2_plan",
+      "input_image_count": 4,
+      "input_text_chars": 537,
+      "instructions_chars": 7832,
+      "instructions_sha256": "4d1c70f677f436551fd54a421c5100c46b8b27d9dc6dfe258d5398008cfa8f92",
+      "max_input_tokens": 1050000,
+      "max_output_tokens_sent": null,
+      "measured_timing": {
+        "budget_elapsed_s": 51.95383639901411,
+        "draft_model_s": 51.94161330698989,
+        "preparation_elapsed_s": 60.193658011965454
+      },
+      "model": "gpt-6-astra",
+      "payload_bytes_compact": 1476949,
+      "prompt_version": "agent-speedup-v2-user-check-prompt-5",
+      "reasoning_effort": "xhigh",
+      "request_count": 1,
+      "request_timeout_s": 180,
+      "requests": [
+        {
+          "budget_elapsed_s": 51.95274098403752,
+          "error_code": null,
+          "error_type": null,
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_xhigh_relayout_t0_20261027_001/task_0/review/requests/000001-7903182467da436288ec72c4eb306309.request.json",
+          "request_file_mtime_utc": "2026-10-27T14:08:17.719083+00:00",
+          "request_ordinal": 1,
+          "request_to_result_file_mtime_s": 51.849200963974,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_xhigh_relayout_t0_20261027_001/task_0/review/requests/000001-7903182467da436288ec72c4eb306309.result.json",
+          "result_status": "valid",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 0
+        }
+      ],
+      "responses": [
+        {
+          "input_tokens": 3911,
+          "model": "gpt-6-astra",
+          "nonreasoning_output_tokens": 350,
+          "output_tokens": 1070,
+          "plans": [
+            {
+              "compact_chars": 664,
+              "duplicate_steps": 0,
+              "grip_lengths": [
+                0,
+                0
+              ],
+              "hold_true_count": 0,
+              "leading_whitespace": 0,
+              "maximum_whitespace_run": 11,
+              "parts_count": 3,
+              "placement_goals_count": 0,
+              "regions_count": 0,
+              "step_kinds": [
+                "place_in",
+                "place_in"
+              ],
+              "step_null_fields": [],
+              "step_refs": [
+                "C",
+                "C"
+              ],
+              "step_required_fields_present": true,
+              "steps_count": 2,
+              "text_chars": 1078,
+              "trailing_whitespace": 0,
+              "until_lengths": [
+                0,
+                0
+              ]
+            }
+          ],
+          "reasoning_effort": "xhigh",
+          "reasoning_tokens": 720,
+          "response_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_xhigh_relayout_t0_20261027_001/task_0/review/requests/000001-7903182467da436288ec72c4eb306309.response.json",
+          "response_sha256": "effd0fe1681b06ec6d5dc31da2698509da9e9dd3cda5fe3d5b9ab543ec9695f9",
+          "status": "completed"
+        }
+      ],
+      "review_dir": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_xhigh_relayout_t0_20261027_001/task_0/review",
+      "schema_sha256": "103163a473054f70c8ca0986bdca12c9c2fa3b7d842dad7fa2b6bc2722840b71",
+      "service_tier": "default",
+      "store": false,
+      "stream": true,
+      "strict_schema": true,
+      "task_text": "put both the alphabet soup and the tomato sauce in the basket",
+      "transport_version": "chatgpt-subscription-http-sse-v1",
+      "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1"
+    },
+    {
+      "billing": "chatgpt_subscription",
+      "canonical_payload_sha256": "d2cb6d20c6699214dd0b64071e046789ff76e82f62f5bb43d53f5b49bee293df",
+      "case": "task1_001",
+      "completed_response_files": 0,
+      "configured_max_output_tokens": 8192,
+      "first_request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001/task_1/review/requests/000001-54edd7d03ce54fb5a58101306e2df8b2.request.json",
+      "first_request_sha256": "7ca2189efbfda7b5d095cf3e477f5fb34bbf78972922eeb7bd023e3297972868",
+      "format_name": "agent_speedup_v2_plan",
+      "input_image_count": 4,
+      "input_text_chars": 534,
+      "instructions_chars": 7832,
+      "instructions_sha256": "4d1c70f677f436551fd54a421c5100c46b8b27d9dc6dfe258d5398008cfa8f92",
+      "max_input_tokens": 1050000,
+      "max_output_tokens_sent": null,
+      "model": "gpt-6-astra",
+      "payload_bytes_compact": 1456737,
+      "prompt_version": "agent-speedup-v2-user-check-prompt-5",
+      "reasoning_effort": "high",
+      "request_count": 1,
+      "request_timeout_s": 180,
+      "requests": [
+        {
+          "budget_elapsed_s": 632.7317085070536,
+          "error_code": null,
+          "error_type": "KeyboardInterrupt",
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001/task_1/review/requests/000001-54edd7d03ce54fb5a58101306e2df8b2.request.json",
+          "request_file_mtime_utc": "2026-10-27T14:56:41.714507+00:00",
+          "request_ordinal": 1,
+          "request_to_result_file_mtime_s": 631.0160908699036,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001/task_1/review/requests/000001-54edd7d03ce54fb5a58101306e2df8b2.result.json",
+          "result_status": "error",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 1
+        }
+      ],
+      "responses": [],
+      "review_dir": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001/task_1/review",
+      "schema_sha256": "103163a473054f70c8ca0986bdca12c9c2fa3b7d842dad7fa2b6bc2722840b71",
+      "service_tier": "default",
+      "store": false,
+      "stream": true,
+      "strict_schema": true,
+      "task_text": "put both the cream cheese box and the butter in the basket",
+      "transport_version": "chatgpt-subscription-http-sse-v1",
+      "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1"
+    },
+    {
+      "billing": "chatgpt_subscription",
+      "canonical_payload_sha256": "d2cb6d20c6699214dd0b64071e046789ff76e82f62f5bb43d53f5b49bee293df",
+      "case": "task1_002",
+      "completed_response_files": 0,
+      "configured_max_output_tokens": 8192,
+      "first_request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000001-faeac77614a34006ad69ac46598b64e2.request.json",
+      "first_request_sha256": "79fc89160e947ec0f1706beba4f0cf56bafb9cd705bc4d2ef8f2e2f1b15bd15b",
+      "format_name": "agent_speedup_v2_plan",
+      "input_image_count": 4,
+      "input_text_chars": 534,
+      "instructions_chars": 7832,
+      "instructions_sha256": "4d1c70f677f436551fd54a421c5100c46b8b27d9dc6dfe258d5398008cfa8f92",
+      "max_input_tokens": 1050000,
+      "max_output_tokens_sent": null,
+      "model": "gpt-6-astra",
+      "payload_bytes_compact": 1456737,
+      "prompt_version": "agent-speedup-v2-user-check-prompt-5",
+      "reasoning_effort": "high",
+      "request_count": 2,
+      "request_timeout_s": 180,
+      "requests": [
+        {
+          "budget_elapsed_s": 900.5611571850022,
+          "error_code": "stream_missing_completion",
+          "error_type": "APIError",
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000001-faeac77614a34006ad69ac46598b64e2.request.json",
+          "request_file_mtime_utc": "2026-10-27T15:13:21.215309+00:00",
+          "request_ordinal": 1,
+          "request_to_result_file_mtime_s": 900.455806016922,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000001-faeac77614a34006ad69ac46598b64e2.result.json",
+          "result_status": "error",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 1
+        },
+        {
+          "budget_elapsed_s": 914.4842242950108,
+          "error_code": null,
+          "error_type": "KeyboardInterrupt",
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000002-f841879619e84bed871e017f5236e0af.request.json",
+          "request_file_mtime_utc": "2026-10-27T15:28:24.274120+00:00",
+          "request_ordinal": 2,
+          "request_to_result_file_mtime_s": 11.320022821426392,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000002-f841879619e84bed871e017f5236e0af.result.json",
+          "result_status": "error",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 2
+        }
+      ],
+      "responses": [],
+      "review_dir": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review",
+      "schema_sha256": "103163a473054f70c8ca0986bdca12c9c2fa3b7d842dad7fa2b6bc2722840b71",
+      "service_tier": "default",
+      "store": false,
+      "stream": true,
+      "strict_schema": true,
+      "task_text": "put both the cream cheese box and the butter in the basket",
+      "transport_version": "chatgpt-subscription-http-sse-v1",
+      "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1"
+    },
+    {
+      "billing": "chatgpt_subscription",
+      "canonical_payload_sha256": "95f3afd8e0b23387301e6fc8e0d77782159dbc0be29dd6ee1724500c4e705ca1",
+      "case": "task1_003",
+      "completed_response_files": 0,
+      "configured_max_output_tokens": 8192,
+      "first_request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/task_1/review/requests/000001-f54438d490c0427a90c8778284e0a577.request.json",
+      "first_request_sha256": "6dea43c05f0d9147473c47b5bacbface35c1a9ae85829cb0c20060b5bac76436",
+      "format_name": "agent_speedup_v2_plan",
+      "input_image_count": 4,
+      "input_text_chars": 534,
+      "instructions_chars": 7832,
+      "instructions_sha256": "4d1c70f677f436551fd54a421c5100c46b8b27d9dc6dfe258d5398008cfa8f92",
+      "max_input_tokens": 1050000,
+      "max_output_tokens_sent": null,
+      "model": "gpt-6-astra",
+      "payload_bytes_compact": 1460913,
+      "prompt_version": "agent-speedup-v2-user-check-prompt-5",
+      "reasoning_effort": "high",
+      "request_count": 1,
+      "request_timeout_s": 180,
+      "requests": [
+        {
+          "budget_elapsed_s": 181.88784986303654,
+          "error_code": "request_deadline_exceeded",
+          "error_type": "APIError",
+          "request_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/task_1/review/requests/000001-f54438d490c0427a90c8778284e0a577.request.json",
+          "request_file_mtime_utc": "2026-10-27T16:06:58.845615+00:00",
+          "request_ordinal": 1,
+          "request_to_result_file_mtime_s": 180.00369572639465,
+          "result_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/task_1/review/requests/000001-f54438d490c0427a90c8778284e0a577.result.json",
+          "result_status": "error",
+          "same_payload_as_first": true,
+          "unknown_usage_calls": 1
+        }
+      ],
+      "responses": [],
+      "review_dir": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/task_1/review",
+      "schema_sha256": "103163a473054f70c8ca0986bdca12c9c2fa3b7d842dad7fa2b6bc2722840b71",
+      "service_tier": "default",
+      "store": false,
+      "stream": true,
+      "stream_evidence": {
+        "bytes_read": 3067320,
+        "elapsed_s": 180.002943,
+        "error_code": "request_deadline_exceeded",
+        "event_types": {
+          "response.content_part.added": 1,
+          "response.created": 1,
+          "response.in_progress": 1,
+          "response.output_item.added": 2,
+          "response.output_item.done": 1,
+          "response.output_text.delta": 11484
+        },
+        "events_seen": 11490,
+        "http_status": 200,
+        "lines_read": 34470,
+        "parser_verified_completion": false,
+        "partial_output_accepted": false,
+        "phase": "failed",
+        "response_media_type": "text/plain",
+        "response_status": "in_progress",
+        "source_file": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_003/task_1/review/requests/000001-f54438d490c0427a90c8778284e0a577.stream.json"
+      },
+      "strict_schema": true,
+      "task_text": "put both the cream cheese box and the butter in the basket",
+      "transport_version": "chatgpt-subscription-http-sse-v1",
+      "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1"
+    }
+  ],
+  "comparisons": {
+    "all_instruction_hashes_equal": true,
+    "all_schema_hashes_equal": true,
+    "task0_high_vs_task1_003_different_top_level_keys": [
+      "input"
+    ],
+    "task1_001_002_payloads_identical": true
+  },
+  "conclusions": [
+    "Task0 high/xhigh produced complete short plans: three parts and two place_in steps, with empty regions and placement_goals. No duplicate step or excessive whitespace pattern appears in those completed outputs.",
+    "Successful task0 plans did not exercise nullable ref or criteria branches. The prompt example uses a null ref, so nullable fields are represented in guidance but their involvement in task1 failure is unproven.",
+    "Every task1 request used the same schema and instructions as successful task0. Fresh-layout task1_003 still stalled, so merely changing layout did not resolve the completion problem.",
+    "Task1_003 received 11484 output_text.delta events without response.completed by the 180-second deadline. Existing diagnostics did not retain text, output character counts, or repetition fingerprints; the actual repetition pattern and model-internal cause are unknown.",
+    "The shared schema has unbounded extension arrays/identifier strings, and the worked example omits two schema-required fields. These are demonstrated robustness gaps, not a proven cause of task1 streaming non-completion."
+  ],
+  "created_utc": "2026-10-27T16:19:18.936529+00:00",
+  "schema": "task1-planner-request-comparison-v1",
+  "scope": "Offline artifact inspection only; no network, simulator, model calls, or source modifications. Report contains metadata and aggregate output structure; no image data, credentials, raw prompts, raw partial output or reasoning content.",
+  "shared_schema_evidence": {
+    "parts_max": 8,
+    "placement_goals_max_items": null,
+    "regions_max_items": null,
+    "required_step_fields": [
+      "do",
+      "obj",
+      "grip",
+      "ref",
+      "sense",
+      "keep",
+      "until"
+    ],
+    "required_top_level": [
+      "scene",
+      "parts",
+      "hold_true",
+      "steps",
+      "regions",
+      "placement_goals"
+    ],
+    "steps_max": 6,
+    "unbounded_pid_string_fields": [
+      "regions[].id",
+      "regions[].support",
+      "regions[].anchor (string branch)",
+      "placement_goals[].obj",
+      "placement_goals[].ref"
+    ],
+    "worked_example_missing_required_fields": [
+      "regions",
+      "placement_goals"
+    ],
+    "worked_example_null_ref_present": true,
+    "worked_example_top_level_keys": [
+      "scene",
+      "parts",
+      "hold_true",
+      "steps"
+    ]
+  },
+  "timing_note": "draft_model_s and preparation_elapsed_s are recorded measured timings. File-mtime differences are secondary artifact timing estimates, not authoritative API latency. Task1 unknown usage is not evidence of zero tokens. Delta event counts are not token counts."
+}

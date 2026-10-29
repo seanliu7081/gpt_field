@@ -1,0 +1,168 @@
+=== decision 0 step 0 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The white mug is left of the patterned mug, with its handle projecting toward the plate-side open space. The plate is near world [0.15,0.01,0.45]; the white handle is approximately [-0.10,-0.09,0.51]. These are visual estimates.
+  plan: Grasp the white mug by its handle while keeping it upright, place it on the plate, then move the pudding onto the table on the plate's world +x side. First approach above the handle and inspect alignment.
+  why: A raised approach gives a closer wrist view without contacting the mug; rotating the jaws prepares a handle pinch.
+   seg {'gripper': 'keep', 'max_steps': 70, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': [0, -0.92388, -0.38268, 0], 'skill': 'move_to_pose', 'xyz_m': [-0.1, -0.09, 0.63]}
+   seg {'gripper': 'keep', 'max_steps': 60, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': [0, -0.707107, -0.707107, 0], 'skill': 'move_to_pose', 'xyz_m': [-0.1, -0.09, 0.59]}
+=== decision 1 step 69 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The close wrist view shows the handle centered between the intended jaw paths, with the mug body farther along negative y. The handle appears reachable from above without touching the patterned mug.
+  plan: Lower slowly to the handle's upper arc, then inspect before closing.
+  why: The approximately 7 cm descent brings the pads to handle height while preserving an upright grasp orientation.
+   seg {'gripper': 'keep', 'max_steps': 90, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.098, -0.091, 0.517]}
+=== decision 2 step 127 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The fingers now straddle the upper handle region, and the mug remains upright on the table. Attachment is not yet established.
+  plan: Close on the handle and make a 3 cm vertical test lift, then inspect mug motion before carrying.
+  why: The test distinguishes an actual handle grasp from empty closure or incidental contact.
+   seg {'gripper': 'close', 'max_steps': 40, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 55, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.03]}
+=== decision 3 step 165 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The white mug rose with the gripper by roughly the test-lift distance and remains upright; the 16.8 mm gap is consistent with gripping its handle. The plate remains unobstructed.
+  plan: Raise for clearance, carry the mug over the plate with its body centered rather than its handle, and inspect before lowering.
+  why: The handle-to-body offset requires a positive-y grip target relative to the plate center. The elevated route avoids dragging the mug across the table or plate rim.
+   seg {'gripper': 'keep', 'max_steps': 60, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.098, -0.091, 0.63]}
+   seg {'gripper': 'keep', 'max_steps': 100, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.145, 0.065, 0.63]}
+=== decision 4 step 244 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The mug stayed attached and upright during transport. Its body is visually aligned over the plate, with a visible vertical gap remaining.
+  plan: Lower most of the remaining gap slowly, then inspect the base-to-plate spacing before release.
+  why: A checkpoint near support reduces the risk of pressing the mug into the plate or releasing too high.
+   seg {'gripper': 'keep', 'max_steps': 90, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.145, 0.065, 0.556]}
+=== decision 5 step 309 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The mug is upright and centered over the plate. Its base appears only a few centimetres above the inner surface, with no visible rim interference.
+  plan: Lower another 2.8 cm, open the handle grasp at the plate, and withdraw vertically to inspect stable support.
+  why: This completes the mug placement while leaving the plate and mug clear for the pudding transfer.
+   seg {'gripper': 'keep', 'max_steps': 50, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'approach', 'xyz_m': [0, 0, -0.028]}
+   seg {'gripper': 'open', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.12]}
+=== decision 6 step 376 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The released white mug remains upright with its base supported inside the plate. The pudding is still on the table near [-0.055,0.12], clear of the mug.
+  plan: Approach the pudding from above, turn the jaws across its narrower dimension, grasp and transfer it to the plate's world +x side.
+  why: The elevated approach and orientation change avoid the placed mug and prepare a centered pinch of the packet.
+   seg {'gripper': 'keep', 'max_steps': 75, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': [0, -0.92388, -0.38268, 0], 'skill': 'move_to_pose', 'xyz_m': [-0.055, 0.12, 0.6]}
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': [0, -1, 0, 0], 'skill': 'move_to_pose', 'xyz_m': [-0.055, 0.12, 0.52]}
+=== decision 7 step 455 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding's narrow sides are aligned with the jaws. The wrist view refines its center to approximately [-0.046,0.116]; its top is near z=0.44. The mug remains undisturbed on the plate.
+  plan: Center over the packet and descend to just above its top, then inspect before the final grasp descent.
+  why: This corrects the small visual offset and keeps the low approach clear of the packet edges.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.046, 0.116, 0.45]}
+=== decision 8 step 511 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The packet is centered between the open fingers, which remain slightly above the usable side faces. The table and mug show no disturbance.
+  plan: Lower 2.2 cm, close across the packet's sides, and test-lift it 3 cm before transfer.
+  why: The lower pad position should grip the packet rather than its top edge; the lift provides direct visual attachment evidence.
+   seg {'gripper': 'keep', 'max_steps': 45, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'approach', 'xyz_m': [0, 0, -0.022]}
+   seg {'gripper': 'close', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 50, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.03]}
+=== decision 9 step 527 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The descent stalled at z=0.446 before closing; the packet has not moved. The wrist joint is near its upper range, so a kinematic limit is plausible, though contact cannot be ruled out. I will not push farther at this pose.
+  plan: Back off upward and shift the grasp 3 cm toward the packet's positive-x end, remaining within its long side faces, then retry a monitored approach.
+  why: The revised grasp changes arm geometry and avoids repeating the stalled downward target.
+   seg {'gripper': 'keep', 'max_steps': 45, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.03]}
+   seg {'gripper': 'keep', 'max_steps': 45, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.016, 0.116, 0.476]}
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.016, 0.116, 0.43]}
+=== decision 10 step 615 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The revised approach again stopped at z≈0.446 despite a different wrist configuration, so the earlier joint-limit explanation is weakened. The open pads appear adjacent to the packet's upper side edges; no packet displacement is visible.
+  plan: Avoid further downward pressure. Attempt a pinch at the current height and a small test lift; inspect whether the packet follows.
+  why: This tests the available edge grasp without repeating the blocked descent.
+   seg {'gripper': 'close', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 50, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.03]}
+=== decision 11 step 652 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The packet rose with the gripper and is visibly suspended; the gap settled at about 45.9 mm, consistent with its width. The white mug remains upright on the plate.
+  plan: Carry the pudding around the positive-y side of the mug, then position its center near [0.29,0.02], on the table beyond the plate in world +x.
+  why: The raised, offset route keeps the carried packet and hand clear of the mug. The grip target includes the off-center grasp offset.
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [-0.015, 0.16, 0.64]}
+   seg {'gripper': 'keep', 'max_steps': 80, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.22, 0.16, 0.64]}
+   seg {'gripper': 'keep', 'max_steps': 75, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.32, 0.02, 0.59]}
+=== decision 12 step 787 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding remains held and has reached the plate's positive-x side. The last transit stalled about 2 cm short near an extended arm configuration; the packet appears above table surface, not beyond its edge.
+  plan: Use the reached lateral position rather than forcing the farther target. Lower vertically in monitored stages, then release near the original grasp-support height.
+  why: Lowering at x≈0.306 reduces the reach demand while retaining enough positive-x separation from the plate and mug.
+   seg {'gripper': 'keep', 'max_steps': 95, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.302, 0.02, 0.502]}
+=== decision 13 step 839 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The downward move reached its target and the pudding remains between the fingers. Its footprint is over the tabletop on the positive-x side of the plate; the final support height remains an estimate from the pickup.
+  plan: Lower to z=0.451, slightly above the pickup grip height, release, and withdraw upward for a support check.
+  why: This places the packet close to the table without commanding below the previously observed descent limit.
+   seg {'gripper': 'keep', 'max_steps': 75, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.3, 0.02, 0.451]}
+   seg {'gripper': 'open', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.09]}
+=== decision 14 step 916 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding is no longer between the fingers and appears flat on the tabletop after release. The hand currently obscures much of the external view, so final separation and support should be checked from a clearer angle.
+  plan: Withdraw diagonally upward on the positive-y side, staying away from the mug, to inspect both placed objects.
+  why: This exposes the plate and packet without disturbing either placement.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': False, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.22, 0.16, 0.64]}
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.08, 0.16, 0.67]}
+=== decision 15 step 965 type finish src agent_executive user_approved False scope initial_plan_only
+  belief: The clearer views show the white mug upright and supported within the plate, and the pudding lying flat on the tabletop beyond the plate in world +x, with a visible gap between them. The gripper is open and clear of both objects. The retreat stopped short, but this does not appear to have disturbed either placement.
+  plan: Both requested spatial goals appear satisfied; request a final observation to confirm the settled arrangement.
+  why: The final check verifies the observed placements rather than relying on gripper commands or motion completion.
+=== decision 16 step 966 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The mug placement is stable, but the episode continued after the final check. The pudding is on the positive-x side of the plate yet nearly aligned with its center in y; a more clearly separated diagonal placement can strengthen the right-of relation while preserving the reviewed positive-x requirement.
+  plan: Leave the mug untouched. Regrasp the pudding and move it farther toward positive y while keeping it beyond the plate in positive x. First approach above the packet.
+  why: This revisits the remaining spatial relation rather than repeating a completion claim, and keeps the packet on the required side of the plate.
+   seg {'gripper': 'keep', 'max_steps': 90, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': [0, 1, 0, 0], 'skill': 'move_to_pose', 'xyz_m': [0.275, 0.016, 0.55]}
+=== decision 17 step 1019 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The hand reached within 5 mm of the raised packet approach before stalling; the wrist view shows good lateral alignment and clear space beneath the open fingers. The pudding remains flat on the table.
+  plan: Proceed with a vertical approach at the reached x position, grasp at the previously successful height, and perform a short test lift.
+  why: This uses the observed alignment rather than retrying the slightly unreachable raised pose.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.278, 0.018, 0.482]}
+   seg {'gripper': 'keep', 'max_steps': 55, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.278, 0.018, 0.448]}
+   seg {'gripper': 'close', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 50, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.03]}
+=== decision 18 step 1136 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The packet again followed the test lift and is held across its sides. The mug remains on the plate, behind the packet's planned path.
+  plan: Move the pudding to approximately [0.24,0.17], retaining positive-x separation while adding clear positive-y separation, then inspect before lowering.
+  why: This short carry stays outside the mug's footprint and makes the right-side placement less ambiguous.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.24, 0.17, 0.5]}
+=== decision 19 step 1181 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding remains held over clear tabletop at approximately [0.25,0.17], separated from the mug and plate. The carry stopped about 1 cm short, but the reached location preserves both positive-x and positive-y separation.
+  plan: Use this reached location, lower to the known near-support height, release the pudding, and withdraw vertically for inspection.
+  why: The reached destination is suitable; there is no need to force the stalled horizontal target.
+   seg {'gripper': 'keep', 'max_steps': 80, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.249, 0.172, 0.45]}
+   seg {'gripper': 'open', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 90, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.08]}
+=== decision 20 step 1302 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding is flat and released, but it sits noticeably forward of the plate as well as to its right. The mug remains securely on the plate. A smaller positive-x offset would make the packet more directly alongside the plate while still preserving the reviewed positive-x relation.
+  plan: Regrasp the pudding, shift it about 5 cm toward negative x without changing its right-side y offset, and replace it. Begin with a monitored grasp and test lift.
+  why: This refines the remaining placement relation without touching the mug or crossing its footprint.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.249, 0.172, 0.456]}
+   seg {'gripper': 'close', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 45, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.025]}
+=== decision 21 step 1391 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding followed the short lift and remains held. Its path toward a smaller x offset is clear of the mug because the packet stays at y≈0.17.
+  plan: Translate the held packet to x=0.19 at the current height and inspect before replacing it.
+  why: This brings the pudding more directly alongside the plate while keeping its center on the plate's positive-x side.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.19, 0.172, 0.481]}
+=== decision 22 step 1409 type motion src agent_executive user_approved False scope initial_plan_only
+  belief: The inward translation stalled with the elbow at its upper joint boundary; the packet remains held and clear of the table. Repeating the same Cartesian target is unlikely to help.
+  plan: Make a small upward move with a modest wrist pitch change to alter the arm configuration, then reconsider the inward carry.
+  why: This changes the kinematic geometry while maintaining clearance, rather than pushing against the same stalled direction.
+   motion {'frame': 'world', 'gripper': 'keep', 'position_mode': 'relative', 'quaternion_wxyz': [0, 0.984808, 0, -0.173648], 'steps': 5, 'xyz_m': [0, 0, 0.025]}
+=== decision 23 step 1414 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pitch adjustment moved the elbow away from its boundary and the packet remains held, with clearance beneath it. The selected pitch target has not yet been reached.
+  plan: Complete the selected raised pitch adjustment, then carry inward to x=0.19 while maintaining the new orientation.
+  why: The observed elbow response supports using the changed configuration to complete the previously stalled inward move.
+   seg {'gripper': 'keep', 'max_steps': 65, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': [0, 0.984808, 0, -0.173648], 'skill': 'move_to_pose', 'xyz_m': [0.24279, 0.17469, 0.515956]}
+   seg {'gripper': 'keep', 'max_steps': 75, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.19, 0.172, 0.515956]}
+=== decision 24 step 1430 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pitch maneuver produced substantial elbow bending and an inward displacement, although the original raised waypoint was not reached. The packet remains held and clear of the mug.
+  plan: Use the new bent-arm configuration to reach [0.19,0.172,0.49] and return the packet close to level before lowering.
+  why: The configuration has materially changed; this new placement-alignment target avoids replaying the failed outward waypoint.
+   seg {'gripper': 'keep', 'max_steps': 90, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': [0, 0.999422, 0, -0.034], 'skill': 'move_to_pose', 'xyz_m': [0.19, 0.172, 0.49]}
+=== decision 25 step 1446 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The packet is still secure and nearly level. Although the local stall detector returned control, the elbow has continued bending substantially, from about -0.48 to -0.98 rad, with no visible obstacle contact. The arm is no longer at the previous joint boundary.
+  plan: Complete the selected placement-alignment target with orientation held steady, then inspect before the final descent.
+  why: The substantially changed joint configuration and completed pitch correction provide new grounds for this short inward alignment move.
+   seg {'gripper': 'keep', 'max_steps': 85, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.19, 0.172, 0.49]}
+=== decision 26 step 1472 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: The pudding is now at the intended alongside location, within about 2.5 mm of the alignment target. It remains held, and the mug is unchanged on the plate. The packet center is still positive-x of the plate and clearly positive-y.
+  plan: Lower about 3.3 cm to near table support, release, and withdraw upward to inspect the refined placement.
+  why: The reached alignment is sufficient; the remaining operation is controlled placement rather than further horizontal correction.
+   seg {'gripper': 'keep', 'max_steps': 55, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.188, 0.171, 0.456]}
+   seg {'gripper': 'open', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 70, 'observation_after': True, 'profile': 'transit', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.13]}
+=== decision 27 step 1543 type execute src agent_executive user_approved False scope initial_plan_only
+  belief: Both objects are released and visibly supported: the mug is upright inside the plate, and the pudding is flat on the table to its right. The packet is still slightly forward of the plate's center; the plate center is now estimated closer to x=0.12 from the unobstructed view.
+  plan: Make one small final alignment correction of the pudding toward x=0.155, retaining positive-x offset and right-side separation. Regrasp and test-lift before shifting.
+  why: The clearer support view permits a more precise alongside placement while preserving the mug and the reviewed region meaning.
+   seg {'gripper': 'keep', 'max_steps': 80, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.188, 0.171, 0.51]}
+   seg {'gripper': 'keep', 'max_steps': 70, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_to_pose', 'xyz_m': [0.188, 0.171, 0.451]}
+   seg {'gripper': 'close', 'max_steps': 35, 'observation_after': False, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'set_gripper', 'xyz_m': None}
+   seg {'gripper': 'keep', 'max_steps': 45, 'observation_after': True, 'profile': 'contact', 'quaternion_wxyz': None, 'skill': 'move_relative', 'xyz_m': [0, 0, 0.025]}

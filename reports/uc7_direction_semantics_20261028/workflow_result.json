@@ -1,0 +1,981 @@
+{
+ "judged": {
+  "root_cause_verdict": "Confirmed. The framework has a direction-convention error; the model did not cause it. LIBERO writes left/right/front/behind from the external agentview camera's point of view. In all 6 problem classes that camera sits at +x, y=0, looking toward -x, so image-right is world +y. Every directional BDDL region and direction word fits right=+y, left=-y, front=+x (toward the camera), behind=-x, with 0 counterexamples (41/41 decidable checks, 31 anchored side regions).\n\nuc7 hard-codes right_of=+x, left_of=-x, behind=+y, front_of=-y. That is LIBERO's frame rotated -90 deg, so all four words are wrong in LIBERO, not only right_of. The constant is written in three places:\n- the planner prompt, /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py:59-60\n- the region resolver, same file :211-214\n- the review UI, /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html:104-105 and :244\n\nOn top of that, METRIC_INSTRUCTIONS (\"State the frame ... do not assume image left/right is world -x/+x\", /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py:133-135) pushes the planner to write world axes. The executive gets no definition at all.\n\nThe planner's own pointing was on the correct side: cell 55 ray-casts to about (0.11, 0.18), which is +y. It still wrote right_of with the part text \"table: surface to the plate's world +x side\". The executive followed that text and released the pudding at (0.29, -0.02).\n\nSwapping the constant would not fix it. RoboCasa's world axes rotate with the layout (robot yaw = fixture.rot + pi/2), and the current table fits RoboCasa layout 0 only by coincidence. The general fix is one direction definition based on the external camera, computed from calibration by code and used by the planner text, the executive data, the resolver and the UI.\n\nTwo related gaps:\n- The plan-time wrist image is not rotated (k=0), although the prompt says it matches image 1. In LIBERO it is 180 deg off.\n- A region with null bounds means the whole far half-plane, not LIBERO's adjacent 10x10 cm box (this is the D9 decision).\n\nThe same constant also drove the v3 LIBERO-goal g5 plans (front_of the stove).",
+  "suggestions": [
+   {
+    "id": "S1",
+    "priority": "must",
+    "title": "Add one helper that derives the external-camera direction frame from calibration (single source of truth)",
+    "change": "Add pure helpers to the uc spatial module (outside the base-v2 lint):\n- external_view_axes(geometry) returns {right_xy, away_xy, camera, pose_source} or None.\n  - right_xy = unit(R_ext[:2,0]): the external image-right direction on the support plane.\n  - away_xy = (-right_y, right_x) = world-up x right: the horizontal direction farther from the external camera.\n  - Return None only when R is missing or non-finite, or R[:2,0] has zero horizontal length. This is a degeneracy guard, not a tuned threshold.\n- relation_direction(relation, axes): right_of = +right, left_of = -right, behind = +away, front_of = -away; on/near give None.\n\nEvery consumer (planner text S2, executive data S3, resolver S4, UI S5/S6) uses this one helper.\n\nUse up x right rather than P0.1's normalize(-R[:2,2]):\n- On the recorded cameras the two are identical (0.0 deg apart for LIBERO, 0.49 deg for RoboCasa).\n- up x right stays defined for a top-down camera, where it equals image-up.\n\nNever derive the frame from the wrist camera.",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py (new helpers beside _polygon/_centre at :139-153; SPATIAL_VERSION :23 -> user-check-spatial-3)",
+    "evidence": "Recorded calibrations, checked read-only with /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/judge/axes_check.py:\n- relayout t6 and t4_001: external R[:,0] = (0,1,0), giving right (0,1) and away (-1,0).\n- RoboCasa coffee, robot0_agentview_left (pose_source synchronized_robot_mounted_camera): right (0.979,-0.202), away (0.202,0.979).\n\nLIBERO convention, 0 counterexamples:\n- 41/41 decidable checks over 42 BDDLs: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/semantics/verify_claim.json\n- 31 anchored side regions (right +y 23, left -y 5, front +x 3): /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/dir_signs.txt\n\nRoboCasa sets robot yaw = fixture.rot + pi/2 (robocasa kitchen.py:680), so no constant world-axis table can be right there.\n\nThe same constant governed v3 LIBERO-goal g5_001/002: regions [{relation: front_of, anchor: stove}] in /workspace/gpt_field/runs/agent_speedup_v3_g5_001/approved_plan.json and /workspace/gpt_field/runs/agent_speedup_v3_g5_002/approved_plan.json. The constant maps that to -y, but the BDDL stove front region is +x of the stove. So the mechanism recurs on 2 tasks in 2 suites.",
+    "effort": "~0.5 h plus unit test",
+    "risks": "- Assumes direction words are written from the external camera's viewpoint. This is verified for LIBERO; RoboCasa's agentview looks along the robot heading, so the viewer frame equals the robot frame there.\n- A future suite with robot-centric wording and a camera facing the robot would invert left/right. The offline convention test would catch this when the suite is added.\n- A camera whose image-right is vertical gives no frame, so its directional regions stay unready."
+   },
+   {
+    "id": "S2",
+    "priority": "must",
+    "title": "Planner text: replace the world-axis rule with the external-view definition and stop world-axis wording",
+    "change": "(a) spatial.py:59-60. Replace 'Relations use WORLD axes: right_of=+x, left_of=-x, behind=+y, front_of=-y; they do not mean screen directions.' with:\n\n'left_of/right_of/front_of/behind, and left/right/front/back/behind in the task sentence, are as seen in image 1 (the external camera): right_of/left_of = toward image 1's right/left; behind/front_of = farther from/nearer to that camera along the support. They are not the robot's own left/right and are never judged in the wrist images. Write them in plan text with the same viewer words (e.g. \"table: bare area right of the plate\"); never restate them as world axes or coordinates; the robot converts them with calibration. Vertical words (top, bottom, above, under) mean world up/down. A word naming part of an object (back compartment, bottom drawer, left plate) selects that part by pointing; it is not a region.'\n\n(b) spatial.py:60-63. Say that frame 'world' only means the bounds are world metres relative to the anchor centre. Keep bounds null for the four directional relations, because this request carries no calibration. near still requires bounds.\n\n(c) client.py:131-138. Give plan and replan their own METRIC variant:\n- remove 'State the frame' for directions;\n- remove 'do not assume image left/right is world -x/+x' (134-135) and point to the definition instead;\n- keep 'World +z is up'.\nRepair and review keep the current text, since local_motion is world-frame.\n\n(d) Remove 'Use the synchronized calibration supplied with each image' from the RoboCasa plan-mode context (evaluate_robocasa_user_check.py:43-44, appended to plan at :51). The plan request carries no calibration.\n\n(e) Bump PROMPT_VERSION at client.py:24 to prompt-7.\n\nNo change to the schema, the enum or the plan request fields.",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py:51-75 (59-63); /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py:24, 131-138, 374-389; /workspace/gpt_field/scripts/evaluate_robocasa_user_check.py:38-51",
+    "evidence": "The planner obeyed the rule against its own pointing. Part E is 'table: surface to the plate's world +x side' (/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/task_6/trial/approved_plan.json), yet E x=55 ray-casts to about (0.11,0.18), which is +y (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/view_frame_check.txt).\n\nPart text is what reaches the executive:\n- relayout and t6_009 ('world +x side') both released first on +x;\n- t6_011 ('world right of striped plate') never moved the pudding;\n- t6_007 ('table: bare top surface') went to +y.\n\nMETRIC is appended to plan, replan, repair and review (client.py:381-387).\n\nUnder the old rule the destination was outside image 1: the table meets the image bottom at x ~0.223, and the release point (0.29,-0.02) projects to v ~577. That is why t6_009 and t6_011 left E unpointed (x=0).\n\nThe recorded successes t4_001, t5_001/002 and relayout t7 have regions [] and already use viewer words ('left plate', 'rear middle cavity behind the small front cavity').",
+    "effort": "~1 h including text-snapshot tests",
+    "risks": "- The text is appended to every plan and replan, so any task's plan may change. Only the all-task sweep can accept it.\n- The planner may over-apply region semantics to part words. The exemption sentence guards against this; check with plan-only calls on t3/t4/t5/t9.\n- The model may still write world-axis prose. S3's code-computed direction overrides it.\n- The frozen v3 plan client inherits this text (see rejected/deferred)."
+   },
+   {
+    "id": "S3",
+    "priority": "must",
+    "title": "Executive: same definition plus a code-computed world direction for each region",
+    "change": "(a) AGENT_INSTRUCTIONS in agent_client.py: add one sentence after :64-69, or in the camera paragraph at :179-191:\n\n'Direction words in the task sentence and in reviewed regions are as seen in the EXTERNAL image: right/left = toward its image-right/left; front/behind = nearer to/farther from the external camera along the support. They are not the robot's own left/right and are never read from the wrist image, whose orientation changes with the hand. task_contract.region_directions gives each region's world-xy direction computed from calibration; it overrides any direction wording in reviewed text.'\n\n(b) In AgentFirstV2Policy._context (agent.py:205-209), set contract['region_directions'] = {convention: 'external_view', right_xy, away_xy, regions: {id: {relation, anchor, direction_world_xy}}} using the S1 helper.\n- Use the frame frozen at the reviewed reset (S6). Until S6 lands, use the current observation's geometry.\n- It travels in the first request's reviewed_goal_contract (agent_client.py:477-480), which stays in the history.\n- Put it beside regions, not inside them, so PlanLock's semantic hash (client.py:319-322) and the verbatim-region replan rule (framework.py:157-161) are untouched.\n\n(c) Bump the agent PROMPT_VERSION at agent_client.py:41 to prompt-3.\n\nThe RoboCasa policy and client inherit (a) and (b).",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py:41, 51-192, 477-480; /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent.py:115-126, 205-224",
+    "evidence": "The executive saw regions raw ({relation: right_of, frame: world}, framework.py:110) with no definition. AGENT_INSTRUCTIONS defines no direction words: the camera paragraph at :179-185 only says not to use image axes as world axes.\n\nWhat the executive did:\n- First plan: 'move the pudding onto clear table space on the plate's world +x side'.\n- Decision 11: 'places the package in the reviewed right-of region rather than relying on image-right'.\n- Released at (0.29,-0.02), declared finish, then spent ~10 calls centring the mug.\n\nIts wrist image is never rotated (agent_client.py:497-501). Image-right was world -y during the pudding carry and release (steps 521-1066) and +x at other times (audit).",
+    "effort": "~1-1.5 h including an offline payload test",
+    "risks": "- Model compliance is not guaranteed.\n- Adds about 0.5 kB to the first request, which must stay under the 45000/56000-char bounds (agent_client.py:483-494).\n- The frozen v3 executive does not get this change."
+   },
+   {
+    "id": "S4",
+    "priority": "must",
+    "title": "Resolver: test against the relation direction instead of fixed world axes",
+    "change": "Replace spatial.py:211-214 with one test. With d = relation_direction(relation, frame), keep observed-support cells p where p\u00b7d > max over the anchor polygon's vertices v of v\u00b7d.\n\nLeave unchanged:\n- 'on' (:215);\n- bounds (:216-220);\n- object exclusion;\n- the centroid (:247);\n- aim_target and _measure_goal.\n\nIf no frame is available, return the not-ready reason 'view_frame_unavailable', in the same style as the other unmeasured dependencies.\n\nRecord frame and direction_world_xy in the evidence (result.update at :235).\n\nTake the frame frozen at review (S6) through install_spatial_spec (:129-136) and StableScene.merge_plan (runtime.py:46-55); otherwise use ctx.view.observation.geometry.",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py:129-136, 208-215, 235; /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_runtime.py:46-55",
+    "evidence": "For LIBERO the new masks equal the old ones relabelled, with 0 differing cells (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/viewer_axes_check.py, re-run by the judge):\n- right_of = old behind\n- left_of = old front_of\n- front_of = old right_of\n- behind = old left_of\n\nIn t6_006 the constant actually grounded the wrong side: E centre (0.234,-0.009), 586 cells (t6_006 episode.events.jsonl:412). Left as is, a macro would ground the opposite side, and _measure_goal (spatial.py:433-496) would report placement_relation_not_met for a placement that is correct in LIBERO terms.\n\nThis path is dormant in uc7 (0 macro grants in every uc7 agent-2 run, including this t6/t7). It is a consistency fix, not the t6 fix.",
+    "effort": "~1 h plus a synthetic-heightfield test",
+    "risks": "- With null bounds, a native place_on still aims at the half-plane centroid, about 0.24-0.29 m from the plate along +y (estimates differ and are unverified), outside the LIBERO box. That is S8 (D9).\n- The official pudding start position (-0.040,0.117) already lies inside the new right_of half-plane."
+   },
+   {
+    "id": "S5",
+    "priority": "must",
+    "title": "Review UI: same definition in the labels and the note",
+    "change": "Change the labels at html:104-105 to:\n- 'Left of anchor (image-left in the external view)'\n- 'Right of anchor (image-right in the external view)'\n- 'In front of anchor (nearer the external camera)'\n- 'Behind anchor (farther from the external camera)'\n\nChange the note at html:244 to 'Left/right/front/behind are as seen from the external camera; bounds are world-axis metres relative to the anchor centre.'\n\nLeave agent_speedup_v3.html alone (v3 is frozen).",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html:104-105, 244",
+    "evidence": "The current labels 'Right of anchor (world +x)' and 'Behind anchor (world +y)', and the note 'follow world axes, not image directions', tell a reviewer the wrong rule. This run was auto-approved (approval.json human_reviewed_generated_plan=false), but a manual review would be misled the same way.",
+    "effort": "~15 min plus a headless render check",
+    "risks": "None functional."
+   },
+   {
+    "id": "S6",
+    "priority": "should",
+    "title": "Freeze the frame at the reviewed reset and show the computed direction in the review",
+    "change": "In prepare_review:\n- Compute the S1 frame from observation.geometry. It is available in memory at evaluate_agent_speedup_v2_user_check.py:238-264 (and in RoboCasa prepare at :180-196) but is never persisted.\n- Store it as preparation.view_frame, covered by the approval hash.\n- Pass it through PlanLock to S3 and S4.\n- In the review UI, show for each region the computed world direction (e.g. 'right_of C -> world +y') and an arrow from the anchor's cell on image 1.\n\nFor old preparations without view_frame, recompute it from the first trial observation.",
+    "files": "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2_user_check.py:238-275 (and PlanLock construction ~567); /workspace/gpt_field/scripts/evaluate_robocasa_user_check.py:180-212 (and ~256); /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py:234-301; /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html:227-244, 393-403",
+    "evidence": "Calibration exists at plan time: CalibratedObservation.geometry comes from the sim 'agent_geometry' op (agent_speedup_v2_user_check_sim.py:84-90, 117-122). But to_dict() drops it (:59-64), so review.json and initial_observation.json hold none.\n\nRoboCasa's external camera is robot-mounted. The adapter holds the base still, so recomputing per step gives the same value today. Freezing ties the meaning to what was reviewed and lets the reviewer see 'world +y' before approval.",
+    "effort": "~1.5-2 h",
+    "risks": "Changes the preparation and approval schema, so old reviews must be regenerated. They must be regenerated anyway, because the runtime hashes change."
+   },
+   {
+    "id": "S7",
+    "priority": "should",
+    "title": "Make the plan-time wrist image actually match the external image, or state the truth",
+    "change": "Preferred: in both prepare paths, pass frame_alignment_turns a small uc-side adapter instead of None. The adapter exposes image_right_world_xy() = the S1 right vector (evaluate_agent_speedup_v2_user_check.py:246; evaluate_robocasa_user_check.py:190).\n- LIBERO start poses then get k=2; RoboCasa stays at k=0.\n- The base prompt's claim 'turned so that its left and right match the external image' (agent_speedup_v2_client.py:199; label :505) becomes true.\n- The base function itself is unchanged.\n\nFallback if you defer this: override that sentence and the 'turned' label in the uc client, using the existing string-replace mechanism (client.py:380-387), to say the wrist image is not aligned with image 1.",
+    "files": "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2_user_check.py:246-273; /workspace/gpt_field/scripts/evaluate_robocasa_user_check.py:190-210; fallback: /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py:380-387",
+    "evidence": "Every recorded review has quarter_turns 0: this run's review/review.json, and 40/40 review plan requests per the critique. The reason: frame_alignment_turns returns 0 without an external model (agent_speedup_v2_geometry.py:1533-1534).\n\nAt LIBERO start poses, wrist image-right \u00b7 external image-right = -1.0 (relayout t6 and t4_001, judge/axes_check.py). So images 3/4 are image 1 rotated 180 deg; E's wrist cell w=29 ray-casts to (0.015,-0.041).\n\nWith calibration, k=2 on relayout t6, t4_001, t5_001 and t6_007 (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/turns_check.txt). For RoboCasa the dot product is +0.963, so k stays 0.\n\nThe native macro path already rotates by the J-model k (=2).",
+    "effort": "~1 h plus an audit of the consumers of w cells",
+    "risks": "- Changes images 3-4 and the w cells of every LIBERO plan, so t4/t5 plans may change.\n- Check every consumer of preparation.quarter_turns and of the initial w cells; the macro path computes its own k.\n- Ship it in the same frozen build as S1-S5 so that one sweep covers both."
+   },
+   {
+    "id": "S8",
+    "priority": "should",
+    "title": "D9: read a directional relation without bounds as 'beside the anchor'",
+    "change": "Only if you accept D9:\n(a) Add to the S2 and S3 definitions: 'beside the anchor: overlapping it across that direction and just past its edge'.\n(b) In S4's resolver, add a lateral band: |(p-o)\u00b7d_perp| <= max over v of |(v-o)\u00b7d_perp|. This is the anchor's measured half-extent, so there is no new constant.\n(c) In aim_target (spatial.py:299-351, selection ~332-337), for directional regions pick the fitting free cell nearest the anchor's edge instead of the one nearest the region centroid. Use the existing need = r_obj + max(M16_FLOOR_M, sigma).\n\nExplicit bounds override all of this. _measure_goal is unchanged.",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py:51-75, 208-220, 299-351; /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py:51-192",
+    "evidence": "All 7 LIBERO side-goal boxes are 10x10 cm (the stove's is 8x8) at lateral offset 0, centred 3-12 cm past the anchor's edge; none is a half-plane. They are: t6 plate right/left, K7 bowl right, K6 mug front, STUDY1/3 caddy right, goal stove front (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/semantics/side_geometry.json).\n\nThe official t6 pudding starts at (-0.040,0.117) (layout_changes.json original_xyz_m). That is already inside the +y half-plane beyond the plate edge (~0.075) but outside the box (x<0.10).\n\nEven when it read the side correctly, the executive overshot:\n- t6_007 first released at y ~0.198, and t6_009 ended at y=0.170 (y_max is 0.15);\n- t6_007 ended only 4.6 mm inside y_max, with the pudding still gripped.\n\nThe band where the pudding clears the plate is y in [0.099, 0.150) at yaw 180 for episode 0 (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/semantics/t6_band.json).",
+    "effort": "~2-3 h including tests",
+    "risks": "- Within LIBERO-10 only t6 uses this. The justification is box geometry across the whole benchmark, not one task; flagged under rule 2.\n- 'Just past the edge' can fall short of a box set farther out. For the goal stove-front box the inner edge is 7.5 cm beyond the burner edge, so an adjacent plate sits right at the boundary.\n- The band can be empty near table edges or clutter. The region is then unready, but the executive can still act.\n- It is wrong if a sentence means 'anywhere on that side'.\n- It adds no veto and no new threshold."
+   },
+   {
+    "id": "S9",
+    "priority": "optional",
+    "title": "Zero-call direction diagnostics in the review; never a plan issue",
+    "change": "For each directional region, store and display (review UI and trial log):\n(a) A sign-only cue on image 1 comparing the region part's external cell with the anchor's cell: column for left/right, row for front/behind. Results: agrees, disagrees, or inconclusive (when x=0 or the cells share a row/column).\n(b) A highlight of world-axis wording such as 'world +x' or '+y side' in part texts.\n\nNever add either one to plan_validation issues. If you keep this, add to S2 that a region part's x marks its intended landing area.",
+    "files": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py (new pure function); /workspace/gpt_field/scripts/evaluate_agent_speedup_v2_user_check.py:266-275; /workspace/gpt_field/scripts/evaluate_robocasa_user_check.py:199-212; /workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html:227-244",
+    "evidence": "It would have exposed this run's contradiction before approval: E55 vs C61 scores -33.8 (disagrees) under the old +x rule and +128 (agrees) under the viewer rule (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/view_frame_check.txt).\n\nOn the other recorded plans:\n- t6_007 (E54 vs C53) agrees;\n- g5_001/002 agree;\n- t6_006 (E43 vs C60, 'bare top surface') disagrees;\n- t6_009/011 (x=0) are inconclusive.",
+    "effort": "~1 h",
+    "risks": "- Coarse: a 64-px cell covers roughly 8x7 cm to 17x12 cm of table.\n- Under viewer semantics it largely reduces to image ordering, a near-tautology.\n- Gives false 'disagrees' for generic region pointing (t6_006).\n- As a plan issue it would be a veto: with PLAN_REASKS=1 it can end in invalid_plan. Keep it diagnostic only."
+   }
+  ],
+  "rejected_or_deferred": [
+   {
+    "idea": "Hard-code a swapped table (right_of=+y, left_of=-y, front_of=+x, behind=-x)",
+    "reason": "It would be correct for LIBERO only. RoboCasa sets robot yaw = fixture.rot + pi/2 per layout, so any constant table is wrong in some kitchens. It also violates rules 1 and 3 (no general capability)."
+   },
+   {
+    "idea": "Robot-centred definition of left/right/front/behind",
+    "reason": "It is mirrored in LIBERO. The agentview faces the robot, so viewer-right (+y) is the robot's left, and the caddy's 'back' compartment is the one nearest the robot."
+   },
+   {
+    "idea": "P0.1 away = normalize(-R[:2,2])",
+    "reason": "It becomes ill-conditioned as the camera approaches top-down. up x right gives the same result on every recorded camera (within 0.5 deg) and is always defined; adopted in S1."
+   },
+   {
+    "idea": "P0.2: per-scene numeric mapping in the static planning instructions, and asking the model to write both viewer and world-axis text",
+    "reason": "Instructions are built once in __init__ (client.py:370-389), so per-scene numbers would break prompt comparability. Model-written world axes are the prose channel that failed here (relayout, t6_009). Code now renders the axis instead (S3, S6)."
+   },
+   {
+    "idea": "Numeric axes as a planner request field (view_axes_world)",
+    "reason": "Deferred. The planner does not need world directions while directional bounds stay null. Revisit only if explicit directional bounds are wanted."
+   },
+   {
+    "idea": "P0.5 ray-cast sign test as a plan-validation issue or gate",
+    "reason": "It would be a veto with demonstrated false positives (t6_006 generic pointing), and it is inconclusive whenever x=0 (2 of the 5 recorded region plans). With PLAN_REASKS=1 (agent_speedup_v2.py:135) it can end in invalid_plan. Kept only as the S9 diagnostic."
+   },
+   {
+    "idea": "Rename the frame enum to external_view and bounds_xy_m to bounds_view_m (general design)",
+    "reason": "Deferred. It breaks validate_spatial_spec (spatial.py:95) for every recorded region plan (t6_006/007/009/011, relayout, g5) and the fixture at tests/test_agent_speedup_v2_user_check_plan_output.py:84-89. With S2's text and S3's code-computed direction it changes no behaviour now. Revisit if a sweep shows 'frame: world' still pulling the model toward world-axis wording."
+   },
+   {
+    "idea": "Ground regions from the model's pointed cells",
+    "reason": "Too coarse: cell 55's centre lies outside plate_right_region (y ~0.18 > 0.15). Often missing: x=0 in t6_009/011. Sometimes arbitrary: t6_006. It also cannot re-ground if the anchor moves."
+   },
+   {
+    "idea": "A new executive rule to re-check spatial goals after an unconfirmed finish",
+    "reason": "Deferred. AGENT_INSTRUCTIONS:175-177 already says to recheck unfinished spatial relations. The premature finish in the relayout came from the +x contract, which S2/S3 remove. Revisit only if the sweep shows it again."
+   },
+   {
+    "idea": "Editing frozen v3 (agent_speedup_v3.html:104-105/244, the v3 executive)",
+    "reason": "Leave it frozen. But AgentSpeedUpV3PlanClient inherits UserCheckV2Client (agent_speedup_v3_client.py:121; evaluate_agent_speedup_v3.py:195), so a v3 rerun on the new source would be a mixed build: new plan text, old executive and UI. Do not rerun v3 against this build without snapshotting it."
+   },
+   {
+    "idea": "Deriving constants (gap, band width) from LIBERO goal boxes",
+    "reason": "Use evaluator ground truth only for offline verification (rule 1). D9 must use measured anchor extent and the existing M16 clearance, never tuned numbers."
+   }
+  ],
+  "open_questions_for_user": [
+   "D9 (S8): should a directional relation with null bounds mean 'beside the anchor'? That is: overlapping the anchor across the direction, at the nearest free spot just past its edge, using only the measured extent and the existing M16 clearance. The alternative is 'anywhere on that side'. For: all 7 LIBERO side-goal boxes are anchor-aligned and 3-12 cm past the edge; the official t6 pudding already starts inside the +y half-plane but outside the goal box; t6_007 and t6_009 overshot y_max. Against: in LIBERO-10 only t6 uses it, and it can fall just short of a box set farther out (goal stove-front). S1-S5 do not depend on this answer.",
+   "S7 timing: ship the calibration-derived wrist rotation (k=2 for LIBERO, k=0 for RoboCasa) in the same frozen build as the direction fix, so one all-task sweep covers both? Or defer it and only correct the false 'turned to match' text now? It changes images 3-4 of every LIBERO plan."
+  ],
+  "verification_plan": [
+   "Offline 1, S1 unit test: on the recorded calibrations, relayout t6, t4_001 and t5_001 give right (0,1) and away (-1,0); RoboCasa coffee gives right (0.979,-0.202) and away (0.202,0.979). A synthetic top-down camera gives away = image-up; a camera rolled 90 deg gives None. Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/judge/axes_check.py",
+   "Offline 2, convention harness (developer test only; never feeds the agent or any constant): every anchored directional BDDL region and every direction-selected object agrees with its problem class's agentview frame. Expect 41/41 decidable checks, 31 anchored regions, 0 disagreements. List KITCHEN_SCENE2 'front' bowl and STUDY_SCENE3 'right compartment' as known LIBERO labelling errors. Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/bddl_convention.py",
+   "Offline 3, resolver on a synthetic heightfield with the t6 plate polygon: the new masks equal the old masks relabelled (0 differing cells); a RoboCasa-rotated d gives positive projections; a missing frame gives 'view_frame_unavailable'; the evidence carries direction_world_xy. If S8 is adopted, the aim with the pudding's r_obj lands in y in [0.099, 0.150). Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/viewer_axes_check.py",
+   "Offline 4, text snapshots: the built plan/replan instructions of UserCheckV2Client and RoboCasaPlanClient contain the definition exactly once and no 'right_of=+x', 'WORLD axes' or 'world -x/+x'. AGENT_INSTRUCTIONS contains the definition. The uc HTML has no '(world +/-x/y)' labels and no 'follow world axes'. SPATIAL_VERSION and both PROMPT_VERSIONs are bumped and request keys differ.",
+   "Offline 5, executive payload with a stub transport (no network): the relayout approved_plan plus its step-0 geometry gives task_contract.region_directions.regions.E.direction_world_xy == [0,1] in the first request. The field is absent from request 2's fields but still in the history, and size(fields) < 45000.",
+   "Offline 6, regression parse and tests: validate_spatial_spec and plan_validation still accept every recorded approved plan (t4_001, t5_001/002, t6_006/007/009/011, relayout t6/t7, v3 g5_001/002, robocasa_coffee_user_check_001). Run tests/test_agent_speedup_v2_user_check_*.py and tests/test_robocasa_user_check_*.py, skipping any that start a simulator or use a GPU.",
+   "Offline 7, only if S7 is adopted: the calibration adapter gives k=2 at the recorded LIBERO start poses and k=0 for RoboCasa; the review images are rotated. Grep every consumer of preparation.quarter_turns and of the initial w cells.",
+   "Offline 8, only if S9 is adopted: on recorded plans, relayout agrees (and disagrees under the old rule), t6_007 agrees, g5 agree, t6_006 disagrees, t6_009/011 are inconclusive. Assert the cue never appears in plan_validation issues.",
+   "Live 1, plan-only (~10 plan calls, 0 executive calls) on all LIBERO-10 tasks with the frozen build: t6 region E = right_of with viewer text and no world-axis wording; no new regions on t3/t4/t5/t9; t4 'left/right plate' pointing unchanged.",
+   "Live 2, t6 official layout and relayout: the first pudding release is on the plate's +y side. Post-hoc check against physical_truth: the pudding origin at rest is inside x in [0.10,0.20], y in [0.05,0.15]. Record any overshoot as input to D9.",
+   "Live acceptance (rule 5): a full LIBERO-10 sweep (t0-t9, including t6 official and relayout and relayout t7) plus a RoboCasa coffee smoke run, all on one frozen build. No regression against t4_001, t5_001/002 or relayout t7. The coffee run cannot tell the old rule from the new one (image-right is about +x there); it only checks that nothing breaks."
+  ],
+  "corrections_to_facts": [
+   "The brief says the plan's wrist image 'is turned so its left/right match the external image'. Only the prompt says so (agent_speedup_v2_client.py:199; label :505). prepare_review passes external=None (scripts/evaluate_agent_speedup_v2_user_check.py:246), so k=0 (review/review.json quarter_turns 0, in all recorded reviews). At LIBERO start poses the wrist image is image 1 rotated 180 deg: wrist image-right is world -y, external is +y.",
+   "t6_007 'succeeded' only leniently. physical_truth.json gives summary.verdict = lenient_success. At the terminal step the pudding was still gripped (failing checks not_held and at_rest) and 4.6 mm inside y_max. LIBERO counted it because On(obj, table zone) tests the body origin, not the centre of mass, at every step, with no contact or rest check. Its first release was at y ~0.198, outside the box; it succeeded only after a correction that followed an unconfirmed finish.",
+   "The planner's pointing: cell 55 is on the correct (+y) side, but its centre ray-casts to about (0.11,0.18) at table height, or (0.124,0.176) at pudding height. That is 2.6-3 cm beyond plate_right_region's y_max of 0.15; cell 54 matches the region.",
+   "The constant is not t6-only. The approved plans of v3 LIBERO-goal g5_001/002 use front_of the stove: the constant maps it to -y, while the BDDL stove_front_region is +x of the stove. Both runs failed earlier (evidence_acquisition_failed) and never grounded the region, so the outcome impact is unverified.",
+   "The provided parser /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/bddl_regions.py prints table-frame centres without the study workspace x offset (-0.2), ignores yaw and misses 'middle'. Relative directions are unaffected. LIBERO also has two language/goal labelling errors: libero_90 KITCHEN_SCENE2 'stack ... on the bowl at the front' targets the back bowl, and STUDY_SCENE3's 'right compartment' goal is a table region beside the caddy. Neither contradicts the frame.",
+   "Minor line and scope fixes. The METRIC_INSTRUCTIONS block is client.py:131-138, with the image left/right sentence at 134-135. It is appended to plan, replan, repair and review (client.py:381-387), not only to planning. The side tests are spatial.py:211-214; line 210 is the relation assignment.",
+   "The 2026-10-26 report the brief cites has stale line references: final_plan.md:28 and verification.md:25 cite spatial.py:47-49, resolver :200-203 and client.py:348-351. The current lines are :59-60, :211-214 and :374-379."
+  ]
+ },
+ "audit": {
+  "sites": [
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "59-60",
+    "kind": "plan_prompt",
+    "encodes": "SPATIAL_INSTRUCTIONS: 'Relations use WORLD axes: right_of=+x, left_of=-x, behind=+y, front_of=-y; they do not mean screen directions.'",
+    "must_change_for_fix": true,
+    "note": "Root cause. client.py:374-379 appends it to the plan and replan prompts. In this scene the agentview axes are image-right = world +y (R[:,0]=(0,1,0)) and forward = (-0.849,0,-0.529), so the viewer meaning is right=+y, left=-y, front=+x, behind=-x. That matches the BDDL plate_right_region at y in [0.05,0.15] and plate_left_region at y in [-0.15,-0.05]. In RoboCasa (robot0_agentview_left) image-right is about (0.98,-0.20,0) and forward about (0.18,0.83,-0.54), so the current constant is only accidentally right there. A hard-coded LIBERO swap would break RoboCasa, so the fix must derive the axes from calibration. The prior report cites stale lines 47-49."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "60-63",
+    "kind": "plan_prompt",
+    "encodes": "Bounds are [[xmin,xmax],[ymin,ymax]] world metres relative to the anchor's measured centre; 'null bounds use observed support extent'; near needs bounds",
+    "must_change_for_fix": true,
+    "note": "The text must say whether bounds stay world-aligned while relation words become viewer-relative. It must also say that null bounds mean the whole observed half-plane beyond the anchor, not 'next to' it. The adjacency default is pending decision D9."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "24, 39-40",
+    "kind": "plan_prompt",
+    "encodes": "REGION_RELATIONS enum (on,left_of,right_of,front_of,behind,near); the plan JSON schema allows only frame enum ['world']",
+    "must_change_for_fix": true,
+    "note": "Every region the model writes carries frame:'world', and the executive sees this too. That reinforces the reading 'relation along world axes'. Either add a viewer/external_camera frame value or rename the field to mean the bounds frame only. The validator, the HTML and TaskContract must change with it."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "95-98",
+    "kind": "validation",
+    "encodes": "validate_spatial_spec: frame must be 'world'; relation must be in the enum; a non-'on' relation requires an anchor",
+    "must_change_for_fix": true,
+    "note": "Change together with the schema at lines 39-40 if a frame value is added or renamed. It runs both in review validation (agent_speedup_v2_user_check.py:102-106) and in execution capability checks."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "208-215",
+    "kind": "grounding",
+    "encodes": "Side tests against the anchor polygon's axis-aligned extents: right_of xs>max x; left_of xs<min x; behind ys>max y; front_of ys<min y",
+    "must_change_for_fix": true,
+    "note": "Dormant in uc7, but it is the only code that turns the word into geometry (macro place_on, observe_region). If it is left as is after a prompt fix, macro grounding grounds the opposite half-plane and _measure_goal rejects LIBERO-correct placements. For general cameras, project (xy - anchor centre) onto the calibration-derived horizontal right/forward unit vectors and compare with the anchor polygon's max/min projection. Axis-aligned min/max works only when the camera is axis-aligned (LIBERO, not RoboCasa)."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "216-220",
+    "kind": "grounding",
+    "encodes": "bounds_xy_m applied as world-axis box offsets from the anchor polygon centroid (origin=_centre(poly))",
+    "must_change_for_fix": false,
+    "note": "No word semantics here. It stays valid if bounds remain world-aligned; the prompt and UI must say so."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "221-256",
+    "kind": "grounding",
+    "encodes": "Excludes other raised objects (dilated by max(cell, sigma_h)). Region cells = all remaining observed half-plane cells. centre = mean of cells (247). record xyz = centre, region_cells = cells",
+    "must_change_for_fix": false,
+    "note": "Not part of the direction bug, but it decides where a null-bounds macro aims (D9). Real evidence from t6_006 (legacy policy-2, +x rule): 586 cells, centre (0.234,-0.009) (runs/..._t6_006/episode.events.jsonl:412)."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "299-351",
+    "kind": "aiming",
+    "encodes": "aim_target override: keeps the native target when it is a region cell, else picks the observed free cell nearest the region centroid with clearance >= r_obj+max(M16 floor, sigma)",
+    "must_change_for_fix": false,
+    "note": "No side semantics and no preference for cells near the anchor. Never called in uc7 (0 macro grants)."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_planner.py",
+    "line": "548-565, 3163-3169",
+    "kind": "aiming",
+    "encodes": "_region_cells / _centre_xy = mean of region cells; native aim_target 'centre' rule targets that centroid when no cell is occupied",
+    "must_change_for_fix": false,
+    "note": "Base module. With null bounds the target is the half-plane centroid, far from the anchor."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "line": "433-496",
+    "kind": "validation",
+    "encodes": "_measure_goal: supported_on passes when the fresh body centre cell is in the destination region cells, share>0 and height is OK. centered_on also needs offset to the region centroid <= 3*sigma (>=1.5 cm). inside needs about the full footprint",
+    "must_change_for_fix": false,
+    "note": "It consumes region cells, so it inherits whichever side the grounding chose. There is no distance-to-anchor check, so any placement on the right side is 'verified' no matter how far away. Under the current +x side, a LIBERO-correct (+y) placement returns placement_relation_not_met. Dormant in uc7."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "line": "131-138",
+    "kind": "plan_prompt",
+    "encodes": "METRIC_INSTRUCTIONS: 'State the frame and units... World +z is up; do not assume image left/right is world -x/+x.' Appended to plan, replan, repair and review",
+    "must_change_for_fix": true,
+    "note": "The statement is literally true in LIBERO, where image-right is +y, but it reads as a companion to the +x rule. Together with 'State the frame' it led the planner to write part E 'table: surface to the plate's world +x side'. Replace it with the calibration-derived mapping, or drop it in favour of the new definition."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "line": "374-387",
+    "kind": "plan_prompt",
+    "encodes": "At client __init__ (before any observation): appends SPATIAL_INSTRUCTIONS to plan/replan, deletes 'Never give directions, distances, heights, angles or coordinates.', and appends METRIC_INSTRUCTIONS",
+    "must_change_for_fix": false,
+    "note": "Static text. Per-scene axes cannot be placed here; they must go in request fields. The removal of 'Never give directions' is what lets world-axis words reach the locked part texts."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_client.py",
+    "line": "996-1026 (uc override only at agent_speedup_v2_user_check_client.py:469-486)",
+    "kind": "plan_prompt",
+    "encodes": "Plan request fields are holding, images, status, previous_plan, previous_answer_rejected (plus user_approved_plan, approval_scope, execution_framework in ReviewedV2Client). No camera calibration",
+    "must_change_for_fix": true,
+    "note": "This is where 'external_camera_axes_world' would be injected. UserCheckV2Client (used by prepare_review) has no _plan_request override, so add one there and have both prepare and trial inherit it. request_plan takes only images, so the geometry needs a new kwarg or a client attribute."
+   },
+   {
+    "file": "/workspace/gpt_field/scripts/evaluate_agent_speedup_v2_user_check.py",
+    "line": "238-275 (246, 262-264)",
+    "kind": "calibration",
+    "encodes": "prepare_review: observation=sim.reset() is a CalibratedObservation with .geometry, but the plan call passes only images, and turns=frame_alignment_turns(view.R, None) is always 0 for a top-down hand",
+    "must_change_for_fix": true,
+    "note": "This is the only place where the plan-time calibration exists (in memory). Derive the axes from observation.geometry['cameras']['external']['rotation_world_from_camera'] and pass them to the client. Either compute k from calibration (k=2 here) or fix the 'turned' claim. Store the axes in preparation so the review UI and approval hash bind them."
+   },
+   {
+    "file": "/workspace/gpt_field/scripts/evaluate_robocasa_user_check.py",
+    "line": "38-51, 183, 190-196",
+    "kind": "calibration",
+    "encodes": "Same prepare pattern (k=0, images only). ROBOT_CONTEXT is appended to the plan instructions and says 'Use the synchronized calibration supplied with each image' although the plan request carries none",
+    "must_change_for_fix": true,
+    "note": "It shares UserCheckV2Client and SPATIAL_INSTRUCTIONS, so any change to the client contract must also be applied here. obs.geometry is available (written to initial_sensors.json)."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_client.py",
+    "line": "197-201, 503-508",
+    "kind": "image_pipeline",
+    "encodes": "_IMAGES: 'all upright (not mirrored)... The wrist image is turned so that its left and right match the external image'; label 'Image 3: wrist camera, clean (turned; fingertips at the {edge} edge)'",
+    "must_change_for_fix": false,
+    "note": "Base module (linted). The text is true only if the caller passes the right k. In every checked LIBERO prepare (t0, t4, t5, t6, t9) k=0 while wrist image-right is world -y and external image-right is +y, so the left/right claim is false. Fix the caller, or override the text in the uc client."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_geometry.py",
+    "line": "1525-1540, 1771-1776",
+    "kind": "image_pipeline",
+    "encodes": "frame_alignment_turns: for a top-down hand it picks the k whose turned wrist image-right best matches external.image_right_world_xy (J-based); returns 0 when external is None",
+    "must_change_for_fix": false,
+    "note": "With the calibrated external image-right (0,1) and the start hand R it returns k=2 (scratch audit/turns.py). Base module: fix the callers, not this function."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2.py",
+    "line": "591-596, 393-401",
+    "kind": "image_pipeline",
+    "encodes": "runner.turns uses ctx.cal.external (J model from calibrate_plus). The fulfiller _plan passes only view.*_rgb_upright to request_plan",
+    "must_change_for_fix": false,
+    "note": "Macro grounding plan requests (agent_macros.py:118-119) get a correctly turned wrist after calibration, but no geometry. Plumbing is needed (LocalRecoveryFulfiller._plan, local.py:37-45) if every plan request must carry the axes."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_client.py",
+    "line": "1096-1100, 290-291, 1158-1160",
+    "kind": "image_pipeline",
+    "encodes": "Pointing and repair prompts: 'wrist camera, turned so that its left and right match the external camera'; 'turned as named'",
+    "must_change_for_fix": false,
+    "note": "Correct when k comes from the J model. Dormant in uc7, which makes no pointing or repair calls."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/contact_skills.py",
+    "line": "281-292 (with observation.py:24-31,158-159)",
+    "kind": "image_pipeline",
+    "encodes": "The policy PNG is raw[::-1,::-1] (an upright image mirrored left-right). StepView applies [:, ::-1] so that external_rgb_upright and wrist_rgb_upright are true upright, unmirrored views",
+    "must_change_for_fix": false,
+    "note": "Verified: plan cells ray-cast with the saved calibration land on the true objects (ext 61 -> (0.198,0.032) vs plate (0.149,0.006); 38 -> (-0.139,0.141) vs mug (-0.12,0.18); 35 -> (-0.139,-0.141) vs pudding). Video agent_speedup_v2_video.py:8-10,199 un-mirrors in the same way."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/astranomy_agentic_geometry.py",
+    "line": "5-6, 24-32, 130-178",
+    "kind": "calibration",
+    "encodes": "The calibration describes the 'raw_mujoco_rgb_vertical_flip_no_crop' image with OpenGL axes. External R comes from cam_xmat. Wrist R = hand R @ [[0,1,0],[1,0,0],[0,0,-1]], so wrist image-right = hand +y (jaw) and image-up = hand +x",
+    "must_change_for_fix": false,
+    "note": "This is the source of truth for any derived axes. agent_speedup_v2_types.py:10-11 states the same (R0 = wrist image up, R1 = jaw = wrist image right)."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_sim.py",
+    "line": "84-90, 117-122, 59-64",
+    "kind": "calibration",
+    "encodes": "UserCheckSimProcess._observation calls the 'agent_geometry' op after every reset/step and attaches CalibratedObservation.geometry. to_dict() does not include it",
+    "must_change_for_fix": false,
+    "note": "So the calibration exists at prepare-time reset but is not persisted in initial_observation.json or review.json."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "line": "51-192 (64, 176, 179-185)",
+    "kind": "executive_prompt",
+    "encodes": "AGENT_INSTRUCTIONS gives no meaning for left/right/front/behind or region relations. It says only 'reviewed final spatial goals' (64) and 'recheck unfinished spatial relations' (176), plus camera conventions: '+X is image-right, +Y image-up, -Z forward... Do not use image axes as world axes' (179-185)",
+    "must_change_for_fix": true,
+    "note": "The executive took the meaning from the plan's '+x' text. Decision 11 'why': 'places the package in the reviewed right-of region rather than relying on image-right'. It needs the same definition as the planner, and ideally the derived axes."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "line": "474-480",
+    "kind": "executive_prompt",
+    "encodes": "Executive fields: robot_pose_wxyz, finger_joints_m, geometry (raw calibration every step), context. reviewed_goal_contract {initial_plan incl. regions and part texts, task_contract} is sent only when the history is empty",
+    "must_change_for_fix": true,
+    "note": "This is where a derived 'external_camera_axes_world' or a resolved region meaning could be added. The contract stays in the transcript: request 24 has 69 messages and its first message still contains it."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "line": "497-501",
+    "kind": "image_pipeline",
+    "encodes": "Executive images are view.external_rgb_upright and view.wrist_rgb_upright, never turned, labelled 'External/Wrist upright RGB, observation step N'",
+    "must_change_for_fix": false,
+    "note": "Consistent with the calibration. Wrist image-right changes with hand yaw: -y at steps 0-1 and 521-1066 (the pudding carry and release), +x at 83-437 and 1174-1372, and about (0.69,-0.71) at 1128-1133."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent.py",
+    "line": "115-126, 152-167, 205-224",
+    "kind": "executive_prompt",
+    "encodes": "_task_contract method_rule: '...preserving task goals, entity identity, region meanings...'. native_evidence.parts = scene.summary().parts (xyz, top_z; no relation or cells)",
+    "must_change_for_fix": false,
+    "note": "'region meanings' are never defined. native_evidence.parts was {} in all 24 executive requests because no macro ran."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_framework.py",
+    "line": "101-112, 155-161",
+    "kind": "other",
+    "encodes": "TaskContract.to_dict carries the raw regions and placement_goals. validate_replan requires each reviewed region to be preserved byte-for-byte ('Preserve the reviewed spatial region binding')",
+    "must_change_for_fix": false,
+    "note": "After approval a wrong relation is locked in for the episode. The same holds for part texts through the PlanLock semantic hash (client.py:319-322; semantic_plan drops only w/x) and FRAMEWORK_INSTRUCTIONS (client.py:127). So the fix must act at plan or review time."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html",
+    "line": "104-105",
+    "kind": "review_ui",
+    "encodes": "Option labels: 'Left of anchor (world \u2212x)', 'Right of anchor (world +x)', 'In front of anchor (world \u2212y)', 'Behind anchor (world +y)'",
+    "must_change_for_fix": true,
+    "note": "These show the reviewer the wrong mapping."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html",
+    "line": "244",
+    "kind": "review_ui",
+    "encodes": "Note: 'Bounds are relative to the anchor center. Left, right, front and behind follow world axes, not image directions.'",
+    "must_change_for_fix": true,
+    "note": "It contradicts the task language. It must change with the new definition."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html",
+    "line": "227-243",
+    "kind": "review_ui",
+    "encodes": "Relative-position select; 'Select world-coordinate bounds (metres)'; X/Y min/max pickers relative to the anchor; default [[-.15,.15],[-.15,.15]]",
+    "must_change_for_fix": false,
+    "note": "Only needs to change if the bounds semantics change. A t6-correct box relative to the plate is roughly x[-0.05,0.05], y[0.05,0.15], which the pickers can express."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html",
+    "line": "393-403, 418-419",
+    "kind": "review_ui",
+    "encodes": "renderImages shows preparation.review_images, the same 4 plan images with the k=0 wrist, captioned 'external clean' etc. There are no axis arrows and no region overlay. A read-only JSON preview is shown",
+    "must_change_for_fix": false,
+    "note": "Recommended: draw camera-derived world axes or the relation arrow on image 1. Region geometry is never computed before execution."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_client.py",
+    "line": "233-236",
+    "kind": "plan_prompt",
+    "encodes": "_NAMING: name the part by its position relative to its own object or a neighbour",
+    "must_change_for_fix": false,
+    "note": "In practice part texts are viewer-centric and worked: t4_001 'left plate' and 'right plate'; t5 'rear middle cavity behind the small front cavity'. Pointing models see images with no calibration, so a world-axis rule must not leak into part texts."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "line": "39-41",
+    "kind": "plan_prompt",
+    "encodes": "The worked example has regions [] and placement_goals []",
+    "must_change_for_fix": false,
+    "note": "No example of a relation region. Optionally add one that states the derived direction."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "line": "24 (and spatial.py:23, agent_client.py:40-41)",
+    "kind": "other",
+    "encodes": "PROMPT_VERSION agent-speedup-v2-user-check-prompt-6; SPATIAL_VERSION user-check-spatial-2; agent CLIENT/PROMPT_VERSION",
+    "must_change_for_fix": true,
+    "note": "Bump these so audits and approval bindings distinguish the new semantics."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_macros.py",
+    "line": "107-147",
+    "kind": "grounding",
+    "encodes": "Macro path: calibrate_plus, then PlanNeed with k=runner.turns, then merge_plan -> install_spatial_spec (runtime.py:47-49), then register_regions -> ground_region, then run_step (place_on -> aim_target -> _measure_goal)",
+    "must_change_for_fix": false,
+    "note": "The only path that installs and grounds regions. There were 0 optional_macro_grants in every uc7 agent-2 run, including task_6 and task_7 of this run; t6_007 (agent-1) used 1 grant, for step 0 only."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_skills.py",
+    "line": "218-257",
+    "kind": "grounding",
+    "encodes": "observe_spatial_region: surveys the support/anchor, fills the plane, then calls ground_region",
+    "must_change_for_fix": false,
+    "note": "Delegates entirely to spatial.py:166-263 and has no direction words."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_runtime.py",
+    "line": "101-106 (context.py:177-178)",
+    "kind": "other",
+    "encodes": "The legacy LockedStepRunner publishes region_spec plus region_evidence (centre_xy_m, cells) into execution_framework.state.entities; bounded_fields drops region_evidence under budget",
+    "must_change_for_fix": false,
+    "note": "Used only on the legacy ReviewedV2Policy path. The agent-first policy overwrites _world_state without it."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_video.py",
+    "line": "23-27, 166-226",
+    "kind": "other",
+    "encodes": "Operator planning panels XY/XZ/ZY: world X drawn to the right, Y upward",
+    "must_change_for_fix": false,
+    "note": "Display only (affects_policy False). Camera-right (+y) appears as 'up', which can mislead a human reading the video."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_relations.py",
+    "line": "4236-4290",
+    "kind": "aiming",
+    "encodes": "Native AimCheck uses external.n_hat (an image-right normal derived from J) to map image error to a world correction",
+    "must_change_for_fix": false,
+    "note": "An image-world mapping with no relation-word semantics."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_thresholds.py",
+    "line": "84-93, 106-111",
+    "kind": "other",
+    "encodes": "The vocabulary lint allowlist includes left, right, front, behind, back, side; the lint scope is the base v2 modules plus the base client only",
+    "must_change_for_fix": false,
+    "note": "uc modules are not linted. Edits to agent_speedup_v2_client.py text would be."
+   }
+  ],
+  "image_orientation": "External image (planner images 1/2 and the executive's 'External upright RGB'): upright, not mirrored, not turned. StepView un-mirrors the policy PNG (contact_skills.py:283 [:, ::-1] undoes observation.py:31 [::-1,::-1]), and this matches the calibration's 'raw_mujoco_rgb_vertical_flip_no_crop'. Image-right = world +y (agentview R[:,0]=(-1.7e-6, 1.0, -1.5e-7)). Image-up = (-0.529, 0, 0.849), so lower in the image means world +x, toward the camera ('front' in LIBERO). Checks: ray-cast cells (plane z 0.42-0.44) land on the true objects. Visually, the white mug (y=+0.18) is on the image right and the pudding (y=-0.14) on the left (scratch audit/plan_ext_grid.png).\n\nPlanner wrist (images 3/4): NOT turned. prepare_review calls frame_alignment_turns(view.R, None), which returns k=0 (scripts/evaluate_agent_speedup_v2_user_check.py:246; request_meta.quarter_turns=0, fingertip_edge 'bottom'). The instructions nevertheless say 'The wrist image is turned so that its left and right match the external image' and label it 'turned'. Actual wrist image-right = world -y and image-up = world +x (R_wrist[:,0]=(-0.0015,-1.0,-0.0005)). The wrist view is therefore rotated 180\u00b0 from the external view: mug on the left, pudding on the right, plate at the top. The same holds for t0, t4, t5 and t9 (all prepare k=0, wrist -y vs external +y). With the calibrated external image-right, frame_alignment_turns would return k=2. The planner's object cells in this unturned image are still correct (w12 -> (0.15,0.03) plate; w49 -> (-0.19,0.23) mug; w55 -> (-0.19,-0.18) pudding).\n\nExecutive wrist: never turned; labelled 'Wrist upright RGB' with synchronized calibration each step. Image-right follows hand yaw: -y at steps 0-1 and 521-1066 (covering the pudding carry and release, so the plate's LIBERO-right appeared at wrist image-left), +x at 83-437 and 1174-1372, about (0.69,-0.71) at 1128-1133.\n\nNative macro pointing/grounding (dormant): the wrist is turned by k from the J-based ExternalModel (k=2 at the start pose), and it is then truly left/right-matched.",
+  "executive_region_inputs": "No grounded region geometry. No centre, cells, hull or side mask ever reaches the executive in uc7. native_evidence.parts = scene.summary().parts was {} in all 24 executive requests (R/trial/requests/*), and macro.active was false throughout (0 macro grants), so scene.user_check_regions was never installed (installed only by StableScene.merge_plan in macro grounding, runtime.py:47-49). Even if a macro ran, summary() would expose only the region record's xyz (the cell centroid) and top_z, not the relation or the cells.\n\nThe relation reaches the executive only as raw reviewed JSON, in the first request: fields.reviewed_goal_contract.initial_plan.regions = [{anchor:C, bounds_xy_m:null, frame:'world', id:E, relation:'right_of', support:'observed_plane'}], part E text 'table: surface to the plate's world +x side', and reviewed_goal_contract.task_contract.regions (same) with method_rule '...preserving ... region meanings'. This stays in the transcript: request 24's first message still contains it.\n\nAGENT_INSTRUCTIONS gives no meaning for right_of or left/right/front/behind. It provides camera conventions plus raw geometry (external and wrist rotation_world_from_camera every step), from which image-right = +y could be derived. The executive instead followed the plan text. Request 1 plan: 'move the pudding onto clear table space on the plate's world +x side'. Request 11 why: 'places the package in the reviewed right-of region rather than relying on image-right'. Release at (0.29,-0.02).",
+  "null_bounds_behaviour": "Code (spatial.py:166-263). Cells = hf.known & (measured | plane fill) & |z-surface| <= tol & side test vs the anchor polygon's axis-aligned extent (right_of: x > plate max x), minus other raised objects dilated by max(cell, sigma_h). The anchor itself is excluded unless the relation is 'on'. The result is the WHOLE observed half-plane beyond the anchor, inside the 1 m HeightField window centred on the hand at scene.start (scene.py:1003, types.py:128). centre = arithmetic mean of the cells (247). It depends on observation coverage, not on adjacency.\n\nReal case: t6_006 (+x rule, legacy native path) gave 586 cells, centre (0.234,-0.009) (runs/..._t6_006/episode.events.jsonl:412).\n\nIdealized full-coverage estimate (scratch audit/nullbounds_estimate.py; table 0.70x1.6 at (0,0,0.41), plate radius ~0.075 assumed, unverified):\n- current +x side: 5025 cells, centre (0.286,-0.008). This is essentially where the executive released (0.29,-0.02).\n- corrected +y side: 11089 cells, centre (0.004,0.292). That is outside plate_right_region (x 0.10-0.20, y 0.05-0.15); only 280 region cells overlap the LIBERO box.\n\naim_target (spatial.py:299-351 over planner.aim_target 3106-3191) aims at that centroid, or at the free cell nearest it with enough clearance. It has no preference for cells near the anchor, so a null-bounds macro would put the pudding about 0.29 m from the plate under either convention. Fixing the side alone does not make macro placements land in LIBERO's box; that needs explicit bounds or the D9 adjacency default.\n\n_measure_goal (433-496): supported_on is verified for any placement whose fresh body-centre cell is in the region cells, with share>0 and consistent height. A far placement on the correct side is therefore accepted (too permissive), with no distance-to-anchor check. centered_on compares to the region centroid within 3 sigma (>=1.5 cm). Under the current +x side test, a LIBERO-correct +y placement is reported 'placement_relation_not_met' and would be fed back as native evidence.\n\nUsage: all three (ground, aim, measure) run only inside a native macro (agent_macros.py:107-147). Every uc7 agent-2 run, including this task_6 and task_7, had optional_macro_grants=0. The resolver evidence strings appear in no uc7 events file; only t6_006 (policy-2) has them. The uc7 executive moves the arm directly to world targets it chooses itself.",
+  "calibration_available_at_plan_time": "Yes, in memory, unused. Path:\n1. prepare_review calls sim.reset(...) (scripts/evaluate_agent_speedup_v2_user_check.py:238).\n2. That goes through SimProcess.reset (libero.py:643-652) to UserCheckSimProcess._observation (agent_speedup_v2_user_check_sim.py:84-90).\n3. That sends the worker op 'agent_geometry' (sim.py:117-122), which runs extract_geometry_metadata(worker.env, image_size, observation_state) (astranomy_agentic_geometry.py:143-178).\n4. The result is CalibratedObservation.geometry, with cameras.external {position_world_m (0.6066,0,0.96), rotation_world_from_camera, fovy 45, f 618.04 px} and the wrist pose from state8.\n\nThis object is in hand when view=StepView(observation) is built (245) and when client.request_plan is called (262-264). Only images and quarter_turns are passed, and k is computed with external=None (246). The calibration is not persisted: initial = observation.to_dict() excludes geometry (sim.py:59-64), and preparation stores only quarter_turns and review_images (272-273).\n\nThe external camera is a 'fixed_world_camera' (validated): its R was identical in all 24 executive requests, so axes computed at prepare (image_right_h = R[:,0] -> (0,1); forward_h = -R[:,2] horizontal -> (-1,0)) are valid for the episode. They can be bound into preparation, the approval hash and the review UI.\n\nRoboCasa prepare (scripts/evaluate_robocasa_user_check.py:180-196) has obs.geometry too and already writes it to initial_sensors.json.\n\nIn the trial, the executive already receives geometry every step (agent_client.py:463-476). Macro-path plan requests (agent_speedup_v2.py:393-401 via LocalRecoveryFulfiller._plan, local.py:37-45) pass only images; view.observation.geometry is available there but needs plumbing. The J-based ctx.cal.external (image_right_world_xy, geometry.py:1771-1776) exists only after a macro's calibrate_plus.",
+  "review_ui_regions": "The reviewer sees a world-axis meaning but no spatial overlay. Each region part gets these selects:\n- Target type 'Spatial region on a surface'\n- Support 'Currently observed support plane'\n- Anchor\n- Relative position, with labels 'Right of anchor (world +x)', 'Left of anchor (world \u2212x)', 'In front of anchor (world \u2212y)', 'Behind anchor (world +y)' (html:104-105, 227-229)\n- Bounds 'Use visible surface and relative position' or 'Select world-coordinate bounds (metres)' with X/Y min/max pickers (230-243)\n\nThe note reads 'Left, right, front and behind follow world axes, not image directions.' (244). The images are the 4 plan images (k=0 wrist, 180\u00b0 from the external view) captioned 'external clean/grid', 'wrist clean/grid' (393-403). No world-axis arrows, no camera-axis hint and no region overlay are drawn; region cells are never computed before execution. A reviewer would need to know independently that world +x points toward the external camera (bottom of image 1) to spot the error.\n\nThis run was auto-approved, so no human looked: approval.json has human_reviewed_generated_plan=false, and review.json preparation has approval_mode=user_authorized_automatic, manual_review=false.",
+  "other_findings": [
+   "The planner's own external pointing for E (x=55) ray-casts to (0.11,0.18), the +y side and correct in LIBERO terms. Its wrist cell w=29 ray-casts to (0.015,-0.041), on neither side. Region parts' w/x cells are not read by _ground_observed_region, so this visual evidence is discarded. A plan-time consistency check (ray-cast the region's external cell with calibration and compare it with the relation's side) could catch the contradiction before approval.",
+   "A second left/right inconsistency affects every checked LIBERO plan request (t0, t4, t5, t6, t9). The prompt says the wrist image is turned to match the external left/right, but k=0 leaves it 180\u00b0 off (wrist image-right = -y, external = +y). Any left/right reasoning from images 3/4 is reversed. The fix: compute k from calibration in prepare_review, or correct the text in the uc layer. The base client text is linted.",
+   "This mapping is LIBERO-wide, not task-specific: every LIBERO problem's agentview sits at +x, y=0, looking toward -x. RoboCasa's robot0_agentview_left has image-right about (0.98,-0.20,0) and forward about (0.18,0.83,-0.54), where the current constant happens to fit. Only a calibration-derived (viewer-centric) mapping is right in both; a hard-coded swap is not.",
+   "For non-axis-aligned cameras, the side test should project onto the horizontal image-right and forward unit vectors rather than compare world x/y extents. 'front_of/behind' should mean nearer to or farther from the external camera along the support (in LIBERO, front = +x and behind = -x, which matches BDDL usage).",
+   "Once approved, the relation and the part text ('...world +x side') are frozen by the PlanLock semantic hash (client.py:319-322) and by TaskContract.validate_replan (framework.py:155-161). A correction has to happen at plan or review time; it cannot be made mid-episode.",
+   "The executive's release point (0.29,-0.02) almost equals the idealized centroid of the +x null-bounds half-plane (0.286,-0.008). The 'far half-plane' reading is consistent whether or not the resolver runs. With the side fixed, null bounds still aim about 0.29 m from the plate (D9 is still needed for macro placements).",
+   "Line references in reports/agent_speedup_analysis_20261026/plan/final_plan.md:28 and the same report's verification.md:25 are stale: spatial.py:47-49 should be :59-60, the resolver :200-203 should be :210-214, and client.py:348-351 should be :374-379. Frozen sources in this run (review/frozen_source) are byte-identical to the current src and runner for every relevant file.",
+   "The uc modules are outside the vocabulary lint. Changing the base agent_speedup_v2_client.py text (_IMAGES, _NAMING) would hit the base-v2 'unchanged' policy and the lint, so override via the uc client's string-replace mechanism, as client.py:380-387 already does.",
+   "Scratch evidence (read-only analysis), all under /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/audit/: raycast.py (cell ray-casts, k=0 vs k=2), turns.py (frame_alignment_turns with calibrated external right gives k=2), exec_reqs.py and exec_decisions.py (executive context and decision scan), nullbounds_estimate.py (idealized centroids), plan_ext_grid.png and plan_wrist_grid.png (exact images the planner saw)."
+  ]
+ },
+ "semantics": {
+  "camera_frames": [
+   {
+    "problem_class": "Libero_Living_Room_Tabletop_Manipulation (libero_living_room_tabletop_manipulation.py:189-198; LIBERO-10 t4,t6,t7): agentview pos (0.607,0,0.960), quat wxyz (0.6182,0.3432,0.3432,0.6182); robot base (-0.51,0,0.42) facing +x (on_the_ground_panda.py:47-51). Same as the gpt_field t6 calibration: rotation_world_from_camera R[:,0]=(-1.7e-6,1.0,-1.5e-7), image transform raw_mujoco_rgb_vertical_flip_no_crop.",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.849,0,-0.529): toward -x, 31.9 deg down"
+   },
+   {
+    "problem_class": "Libero_Kitchen_Tabletop_Manipulation (libero_kitchen_tabletop_manipulation.py:189-198): pos (0.659,0,1.610), quat (0.6380,0.3048,0.3048,0.6380); robot base (-0.66,0,0)",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.778,0,-0.628): toward -x, 38.9 deg down"
+   },
+   {
+    "problem_class": "Libero_Tabletop_Manipulation (libero_tabletop_manipulation.py:188-197; libero_goal, libero_spatial): same pose and quat as kitchen; robot base (-0.66,0,0)",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.778,0,-0.628): toward -x, 38.9 deg down"
+   },
+   {
+    "problem_class": "Libero_Study_Tabletop_Manipulation (libero_study_tabletop_manipulation.py:192-201; LIBERO-10 t5): pos (0.459,0,1.610), quat (0.6380,0.3048,0.3048,0.6380); robot base (-0.75,0,0) (mounted_panda.py:46); workspace offset (-0.2,0,0.867)",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.778,0,-0.628): toward -x, 38.9 deg down"
+   },
+   {
+    "problem_class": "Libero_Floor_Manipulation (libero_floor_manipulation.py:185-194; libero_object): pos (0.897,0,0.65), quat (0.6182,0.3432,0.3432,0.6182); robot base (-0.6,0,0)",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.849,0,-0.529): toward -x, 31.9 deg down"
+   },
+   {
+    "problem_class": "Libero_Coffee_Table_Manipulation (libero_coffee_table_manipulation.py:186-188): pos (1.5,0,0.9), quat (0.56,0.43,0.43,0.56). No shipped BDDL uses this class (130 BDDLs: Kitchen 50, Living 32, Tabletop 20, Study 18, Floor 10).",
+    "image_right_world": "(0,+1,0) = world +y",
+    "view_dir_world": "(-0.966,0,-0.258): toward -x, 15 deg down"
+   },
+   {
+    "problem_class": "Not agentview: gpt_field wrist camera robot0_eye_in_hand at the t6 start pose (R/trial/requests/000001-*.request.json, geometry.cameras.wrist)",
+    "image_right_world": "(-0.0015,-1.0,-0.0005) = world -y in the raw wrist image (opposite to the external view)",
+    "view_dir_world": "(-0.055,0.001,-0.998): straight down"
+   },
+   {
+    "problem_class": "Not LIBERO: RoboCasa robot0_agentview_left, robot-mounted (runs/robocasa_coffee_user_check_001/trial/requests/000001-*.request.json, geometry.cameras.external; pos (0.090,-1.300,1.750))",
+    "image_right_world": "(0.979,-0.202,0.014): about world +x, rotated 11.7 deg toward -y",
+    "view_dir_world": "(0.178,0.825,-0.537): about world +y, 32.5 deg down; implied base yaw +90 deg"
+   }
+  ],
+  "tasks_checked": 42,
+  "counterexamples": [
+   {
+    "task": "libero_90/KITCHEN_SCENE2_stack_the_middle_black_bowl_on_the_back_black_bowl.bddl",
+    "word": "front",
+    "finding": "The language says 'stack the black bowl in the middle on the black bowl at the front', but the goal is (On akita_black_bowl_2 akita_black_bowl_3). bowl_3 starts in akita_black_bowl_back_init_region at (-0.15,0.05). The file name says 'back', and two sibling tasks use 'at the front' for bowl_1 in front_init_region at (0.10,0.15). This is a LIBERO language/goal labelling error. It contradicts the goal under any single convention, so it is not a counterexample to the frame. A planner that follows the language stacks onto the wrong bowl."
+   },
+   {
+    "task": "libero_90/STUDY_SCENE3_pick_up_the_red_mug_and_place_it_to_the_right_of_the_caddy.bddl and ..._white_mug_..._right_of_the_caddy.bddl",
+    "word": "right",
+    "finding": "The language says 'to the right compartment of the caddy', but the goal is On(mug, study_table_desk_caddy_right_region). That is a table box at x[-0.45,-0.35], y[0.10,0.20], starting 2.0 cm beyond the caddy's +y end. The caddy's right_contain_region is centred at world (-0.406,+0.003) with In-box y[-0.059,0.065], so the two do not overlap. A mug placed in the compartment fails. The direction (+y) is consistent with the claim; the kind of referent (compartment vs. table beside the caddy) is wrong."
+   },
+   {
+    "task": "all LIBERO tasks (qualifier on the 'image-right' part of the claim)",
+    "word": "right/left",
+    "finding": "'right = image-right' holds only for the upright agentview frame. In uc7 that is the external view, source_transform raw_mujoco_rgb_vertical_flip_no_crop, R[:,0]=(0,1,0). In the raw wrist image at the start pose, image-right = world -y (R[:,0]=(-0.0015,-1,-0.0005)). Any 180-degree-rotated LIBERO frame (img[::-1,::-1], as in common VLA pipelines and the gpt_field policy-image note in memory) also gives image-right = -y. Only the world statement (+y) is invariant. 'Right' must be tied to the calibrated external view, not to 'an image'."
+   },
+   {
+    "task": "all LIBERO tasks (robot-egocentric reading)",
+    "word": "right/left/front/back",
+    "finding": "In every class the robot base sits at x = -0.51 to -0.75, y = 0, facing +x, while agentview is at +x looking at -x. The camera therefore faces the robot: LIBERO right (+y) is the robot's left, and LIBERO front (+x) is the side away from the robot. Example: the caddy 'back' compartment (x=-0.434) is the one nearest the robot. A robot-centric convention inverts all four words. The uc7 table (right=+x, left=-x, behind=+y, front=-y) is LIBERO's convention rotated by -90 degrees, so all four words are wrong in LIBERO (uc7 right = LIBERO front; uc7 behind = LIBERO right)."
+   }
+  ],
+  "object_intrinsic_cases": [
+   {
+    "task": "libero_10 STUDY_SCENE1 (t5) 'back compartment of the caddy'; also libero_90 STUDY_SCENE1/2/3 front/left/right/back compartments (9 BDDLs)",
+    "word": "back/front/left/right compartment",
+    "finding": "desk_caddy_1 is a fixture with yaw pi in every BDDL (desk_caddy_init_region :yaw_rotation (pi pi)). The fixture sampler writes a correct wxyz quat (base_region_sampler.py:96-118; bddl_base_domain.py:775-777). Sites in desk_caddy.xml (local frame): back (0.0336,-0.0006,0.0856), front (-0.0310,-0.0006,0.0405), right (0.0063,-0.1434,0.0656), left (0.0063,0.1455,0.0656). In world, with the caddy at (-0.40,-0.14): back (-0.434,-0.139), 3.4 cm toward -x and 4.5 cm higher than front; front (-0.369,-0.139); right (-0.406,+0.003); left (-0.406,-0.286). All match the viewer frame. Because of the pi yaw the caddy's own front (the low, local -x side) faces the camera, so the intrinsic and viewer readings agree here and these tasks cannot tell them apart. The goal site is attached to the caddy, so rotating the caddy (e.g. in a relayout) would make 'back' follow the caddy, not the viewer. Recorded t5 successes (t5_001/002) grounded the compartment visually ('rear middle cavity'); their approved plans use no world-axis relation."
+   },
+   {
+    "task": "libero_goal/push_the_plate_to_the_front_of_the_stove.bddl",
+    "word": "front",
+    "finding": "flat_stove_1 is at (-0.41,0.21) with yaw 0 (the default [0,0], bddl_utils.py:19). In flat_stove.xml the knob ('button' body) is at the local origin and the burner box at local +0.15 x (half-size 0.095). The burner therefore spans world x[-0.355,-0.165] and the knob sits on the -x (robot) side. main_table_stove_front_region is x[-0.09,-0.01], y[0.17,0.25]: on the camera side, 36 cm from the knob and 7.5 cm beyond the burner edge. This is consistent with the viewer frame. If the knob side is taken as the stove's front, an intrinsic reading would point the other way (-x)."
+   },
+   {
+    "task": "libero_90 KITCHEN_SCENE2 / KITCHEN_SCENE10 / KITCHEN_SCENE8 / LIVING_ROOM_SCENE4 / STUDY_SCENE4 (selecting an object by a direction word)",
+    "word": "front/back/middle/left/right",
+    "finding": "Not intrinsic; init-region positions only. All match the claim: bowls front (0.10,0.15), middle (-0.05,0.20), back (-0.15,0.05); butter front x=0.0 vs back x=-0.10; moka pot right y=0.25 vs left y=0.05; bowls right y=0.05 vs left y=-0.15; books right y=0.0, middle y=-0.15, left y=-0.25. 'middle' means between the other two along whichever axis they are spread (x in K2, y in S4)."
+   }
+  ],
+  "side_of_anchor_regions": [
+   {
+    "task": "libero_10 LIVING_ROOM_SCENE6 (t6) and libero_90 LIVING_ROOM_SCENE6 'pudding to the right of the plate'",
+    "region": "living_room_table_plate_right_region (x[0.10,0.20], y[0.05,0.15])",
+    "anchor": "plate_1, init region centre (0.150,0.000) +/-0.025",
+    "along_offset_m": 0.1,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "0.0688 (visual max radius; AABB half 0.0685/0.0686, height 0.0166); 0.0732 at the collision-box corners",
+    "note": "Direction +y. The inner edge is 5 cm from the plate centre, i.e. 1.9 cm inside the rim; the outer edge is 8.1 cm beyond the rim. The region's x-span lies entirely within the plate's x-extent, so lateral alignment within about 5 cm is required. The box is fixed in the table frame and does not follow the plate."
+   },
+   {
+    "task": "libero_90 LIVING_ROOM_SCENE6 'pudding to the left of the plate'",
+    "region": "living_room_table_plate_left_region (x[0.10,0.20], y[-0.15,-0.05])",
+    "anchor": "plate_1 (0.150,0.000) +/-0.025",
+    "along_offset_m": 0.1,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "0.0688 visual / 0.0732 collision corners",
+    "note": "Direction -y; mirror image of the right region."
+   },
+   {
+    "task": "libero_90 KITCHEN_SCENE7 'white bowl to the right of the plate'",
+    "region": "kitchen_table_plate_right_region (x[-0.05,0.05], y[0.05,0.15])",
+    "anchor": "plate_1 (0.000,0.000) +/-0.025",
+    "along_offset_m": 0.1,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "0.0688 visual / 0.0732 collision corners",
+    "note": "Direction +y. The same 1.9 cm overlap with the plate. White bowl radius 0.0425, so its centre clears the plate only at 0.111-0.150 m from the plate centre (a 3.9 cm band)."
+   },
+   {
+    "task": "libero_90 KITCHEN_SCENE6 'yellow-white mug to the front of the white mug'",
+    "region": "kitchen_table_porcelain_mug_front_region (x[-0.05,0.05], y[-0.30,-0.20])",
+    "anchor": "porcelain_mug_1 (-0.100,-0.250) +/-0.025",
+    "along_offset_m": 0.1,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "cup rim about 0.048 (AABB half x 0.0483, y 0.0654 including the handle, which points +y at init yaw -90); max radius 0.0657",
+    "note": "Direction +x (toward the camera). The inner edge is 3.5 mm beyond the mug's +x extent of 0.0465."
+   },
+   {
+    "task": "libero_90 STUDY_SCENE1 / STUDY_SCENE3 'mug to the right of the caddy' (two of the three say 'right compartment')",
+    "region": "study_table_desk_caddy_right_region (world x[-0.45,-0.35], y[0.10,0.20])",
+    "anchor": "desk_caddy_1 fixture (-0.400,-0.140) +/-0.01, yaw pi",
+    "along_offset_m": 0.29,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "half-extents 0.079 (x) x 0.220 (y); max radius 0.2335",
+    "note": "Direction +y. The inner edge is 2.0 cm beyond the caddy's +y end and the outer edge 12 cm beyond. World x includes the study workspace offset of -0.2."
+   },
+   {
+    "task": "libero_90 STUDY_SCENE3 (5 BDDLs, not used in any goal)",
+    "region": "study_table_red_coffee_mug_behind_region (world x[-0.15,-0.05], y[0.10,0.20])",
+    "anchor": "red_coffee_mug_1 (0.000,0.150) +/-0.025",
+    "along_offset_m": 0.1,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.05 x 0.05",
+    "anchor_footprint_radius_m": "AABB half 0.0453 x 0.0632; max radius 0.0633",
+    "note": "Direction -x (away from the camera) = 'behind'. This is the only 'behind' region; it confirms back/behind = -x."
+   },
+   {
+    "task": "libero_goal 'push the plate to the front of the stove'",
+    "region": "main_table_stove_front_region (x[-0.09,-0.01], y[0.17,0.25])",
+    "anchor": "flat_stove_1 origin (knob) (-0.410,0.210) +/-0.01, yaw 0",
+    "along_offset_m": 0.36,
+    "lateral_offset_m": 0,
+    "region_half_extent_m": "0.04 x 0.04",
+    "anchor_footprint_radius_m": "collision footprint x[-0.052,+0.245] relative to the origin (burner centre +0.15), y +/-0.095; max radius 0.263",
+    "note": "Direction +x. The region is 0.2635 m from the footprint centre and its inner edge is 7.5 cm beyond the burner edge. Across all seven regions: lateral offset 0, a 10x10 cm (stove 8x8 cm) box centred 3.1 cm (plate), 5.4 cm (mugs), 7.0 cm (caddy) or 11.5 cm (stove) beyond the anchor's edge. None is a half-plane."
+   }
+  ],
+  "libero_on_region_test": "On(obj, R) calls R.check_ontop(obj) (predicates/base_predicates.py:62-64). For a region, R is a SiteObjectState (object_states/base_object_states.py:137-200). Its check_ontop (178-200) reads the site's world position and rotation (sim.data.get_site_xpos / get_site_xmat) and the object's root-body origin (sim.data.body_xpos of obj_body_id, set at bddl_base_domain.py:414-419); this is the frame origin, not the COM or the mesh. TargetZone inherits under() from SiteObject (objects/target_zones.py:29; objects/site_object.py:63-80). under() computes d = xmat @ (p_obj - p_site), which is the identity for table zones because quat = (1,0,0,0) (target_zones.py:48). It returns 0.007-0.005 < d_z < 0.007+0.10 AND |d_x| < half_x AND |d_y| < half_y, all strict. zone_height 0.007 comes from target_zones.py:33,46; the half-sizes are the BDDL range half-widths (libero_living_room_tabletop_manipulation.py:72-91). A parent-contact check is added only when get_object(parent_name) is not None (base_object_states.py:190-198). Table TargetZones have parent_name None (site_object.py:16; built at bddl_base_domain.py:245-249), and get_object(None) falls through to None (bddl_base_domain.py:844-851). So table zones have no contact, at-rest, not-held, orientation or overlap test. Site heights: living room site z = workspace_offset z 0.41 (libero_living_room_tabletop_manipulation.py:81,85) against a table top at 0.4368, so the object origin must have z in (0.412, 0.517). Kitchen site z is 0.875, table top 0.90 (libero_kitchen_tabletop_manipulation.py:81,88). Tabletop / libero_goal site z is 0.895 (default z_offset 0.02 on the table body at 0.875). Object-attached sites (caddy compartments, cook_region) additionally require env.check_contact(parent, obj). On(obj, object) is ObjectState.check_ontop (base_object_states.py:78-94): anchor_z <= obj_z, any contact, and |difference of origin xy| < 0.03. In(obj, site) (base_predicates.py:57-59) combines site check_contact, which is always True (base_object_states.py:172-176), with SiteObject.in_box (site_object.py:35-56): the origin must lie inside the AABB |xmat@size| around the site, with the lower z bound lowered by 0.01. Success is evaluated after every control step (done = _check_success(), bddl_base_domain.py:807; conjunction at libero_living_room_tabletop_manipulation.py:136-144). A gripped object passing through the box therefore counts: this happened in t6_007.",
+  "t6_band": "Geometry. Plate radius is 0.0688 (visual; 0.0732 at the collision corners) and its height 0.0166. Pudding footprint is a box with half-extents 0.0417 x 0.0247 x 0.015 (visual; collision 0.0401 x 0.0232 x 0.0137). Its effective init yaw is 180 deg (the HOPE (0,0)-about-x xyzw quat is read as wxyz), so the long axis runs along world x. The saved states confirm this: pudding quat (0,0,0,1), plate (0.707,0,0,0.707), mugs (-0.707,0,0,0.707) in R/original_initial_state.npy. Episode 0, used by the relayout run, t6_007 and t6_009, has the plate at (0.149,0.0057) (settled 0.14903, 0.00570, 0.4393), so the rim is at y=0.0745. Usable band. For pudding centres inside plate_right_region with no xy overlap with the plate: at yaw 180, y in [0.099,0.150), a 5.1 cm band, while 49% of the region's area overlaps the plate. At yaw 90, y in [0.116,0.150), 3.4 cm, with 65% overlap. Using the collision radius gives 4.6 cm and 2.9 cm. Over all 50 official inits (plate x 0.126-0.175, y -0.023 to +0.024) the band width is 3.3-8.0 cm, median 6.0 (yaw 180), or 1.6-6.3 cm, median 4.3 (yaw 90); the overlapping share of the region is 20-67%. A pudding does not have to overlap the rim, but the inner part of the region does overlap it. LIBERO still counts such positions, because a pudding lying on the 1.7 cm rim keeps its origin z around 0.47, below 0.517. Adjacent placement with a 0-2 cm gap puts the centre at y = 0.099-0.119 (yaw 180), 3.1-5.1 cm inside y_max. Run comparison. t6_007 (physical_truth.json terminal): origin (0.1446,0.1454,0.4668), only 4.6 mm inside y_max (x margin 44.6 mm). The pudding was still held: finger-pad contacts, 0.10 m/s, origin 13.6 mm above rest. The verdict was lenient_success, and the pudding stayed in the region after a simulated release. t6_009: at rest at (0.1869,0.1704,0.4498), 20.4 mm beyond y_max (x margin 13.1 mm), so raw_failure. Both overshot the natural adjacent band (y about 0.10-0.12). The uc7 relayout run ended at (0.276,-0.020), 76 mm past x_max and 70 mm below y_min. Pointing. The planner's cell 55, projected at pudding-centre height (z 0.452), covers x[0.074,0.168], y[0.133,0.224] with centre (0.124,0.176). It is on the correct side, but its centre is 2.6 cm outside the box; cell 54 (y[0.067,0.150]) matches the region. Half-plane estimate (assumes every visible table cell is observed; not checked against the run's heightfield). The null-bounds rule 'all support beyond the anchor, take the mean' with the corrected +y axis would give a centroid of about (-0.37,0.27), far outside LIBERO's box. Fixing the axis alone is not enough; the region also needs an adjacency band (offset about anchor radius + gap + half-size, lateral within about 5 cm).",
+  "robocasa": "Camera. The external camera is robot0_agentview_left (trial/simulator.json metadata.external_camera; robosuite 1.5.2, robocasa 0.2.0, PandaOmron, layout 0, style 0). It is robot-mounted on mobilebase0_support at local pos (-0.5,0.35,1.05), quat (0.556,0.299,-0.377,-0.678), fovy 60 (trial/initial_physics.json episode_metadata.cam_configs). The saved calibration is in trial/requests/000001-*.request.json under geometry.cameras.external, in the same MuJoCo convention and upright transform as LIBERO. It gives position (0.090,-1.300,1.750) and rotation_world_from_camera columns R[:,0]=(0.979,-0.202,0.014), meaning image-right is about world +x, skewed 11.7 deg toward -y. The view direction -R[:,2]=(0.178,0.825,-0.537) looks toward +y, 32.5 deg down. Composing R with the mount gives base yaw exactly +90 deg (robot forward = +y, support origin (0.440,-0.800,0.700)). Hard-coded rule. In this episode the uc7 table (right=+x, behind=+y, front=-y) matches the camera/robot viewer frame to within 12 deg; LIBERO's +y-right rule would be wrong here. The uc7 table is wrong in LIBERO for all four words. RoboCasa sets base yaw = ref_fixture.rot + pi/2 (environments/kitchen/kitchen.py:680), with CoffeePressButton using init_robot_base_pos = coffee_machine (kitchen_coffee.py:142). The world axes of 'right' therefore change with layout and fixture, and no constant world-axis table can be right across RoboCasa either. Calibration-derived frame. It is meaningful in both benchmarks: project R[:,0] and -R[:,2] of the external camera onto the support plane. RoboCasa's camera is robot-mounted and looks along the robot's heading, so there viewer frame = robot frame. LIBERO's agentview faces the robot, so there viewer frame = robot frame mirrored. RoboCasa direction words are fixture-intrinsic: TurnSinkSpout 'turn the sink spout to the left/right' is classified from the spout joint angle (models/fixtures/sink.py:100-104), and stove knobs have ids. Since the robot is placed facing the fixture, these should coincide with the robot-mounted viewer frame; this agreement is unverified because no simulation was run. The coffee task language, 'press the button on the coffee machine to serve coffee' (kitchen_coffee.py:153), has no direction words, so this run neither tests nor would be affected by direction semantics.",
+  "summary": "The claim holds for the frame, with no counterexample. All six LIBERO problem classes place agentview on +x at y=0 looking at -x, pitched 15-38.9 deg down, with R[:,0] = world +y. Robot bases sit at x = -0.51 to -0.75 facing +x, so the camera faces the robot: viewer-right (+y) is the robot's left. I checked all 42 BDDLs whose language contains left/right/front/back/behind/middle, plus 5 more using center/between/next to, against the geometry. Every word matches right=+y, left=-y, front=+x (toward the camera), back/behind=-x; 'middle' means between the other two along whichever axis they are spread. This covers 12 direction selections, 8 side-of-anchor goal regions and 10 caddy compartments under yaw pi. The only anomalies are LIBERO annotation errors: KITCHEN_SCENE2 'stack ... on the bowl at the front' targets the back bowl, and STUDY_SCENE3 says 'right compartment' while the goal is a table region beside the caddy. The image-right equivalence is valid only for the upright external agentview frame; the raw wrist image and 180-degree-rotated frames have image-right = -y. Object-intrinsic words (caddy compartments) agree with the viewer frame only because the caddy is always placed with yaw pi. In libero_goal, 'front of the stove' lies on the camera side even though the knob is on the robot side. LIBERO's On(obj, table zone) is a strict box test on the object's body origin (half-sizes of the BDDL ranges) with a z band 2-107 mm above the site. It has no contact, rest or hold check and is evaluated every step: t6_007 passed with the pudding still gripped, 4.6 mm inside y_max. Side regions are fixed 10x10 cm table boxes at lateral 0, centred 0.10 m (plate, mugs), 0.29 m (caddy) or 0.36 m (stove) from the anchor's nominal centre, i.e. 3-12 cm beyond its edge. For t6 the band where the pudding clears the plate is y in [0.099,0.150) (5.1 cm) for episode 0, and 3.3-8.0 cm across the 50 official inits. The uc7 rule is LIBERO's frame rotated by -90 deg, so all four words are wrong; it equals the RoboCasa layout-0 robot-mounted camera frame, where base yaw is +90 deg and is set per layout. Implications for the fix: derive right/left/behind/front from the external camera calibration (ground projections of R[:,0] and -R[:,2]) instead of constants, and drop or reword 'do not assume image left/right'. The resolver also needs a bounded adjacency band rather than a half-plane, because even with +y the half-plane centroid would be about (-0.37,0.27). Keep compartment and part words on the visual part-grounding path, which is how t4 and t5 succeeded. Scratch outputs, read-only on /workspace, are in /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/semantics/: cams.py, bddl_parse.py, verify_claim.py + verify_claim.json, meshes.py + footprints.json, side_geometry.py + side_geometry.json, t6_band.py + t6_band.json, dump_dir.txt. Caveat on the given parser dirsem/bddl_regions.py: it prints table-frame centres, without the study x offset of -0.2 (relative directions are unaffected), ignores yaw, and misses 'middle'."
+ },
+ "designGeneral": {
+  "design_name": "External-view reference frame for spatial relations: the code converts the words using camera calibration, and the model does no frame conversion",
+  "summary": "ROOT CAUSE\n- The wrong meaning of the direction words is hard-coded in three places:\n  - the planner prompt, spatial.py:59-60 (right_of=+x, behind=+y);\n  - the resolver, spatial.py:211-214;\n  - the review UI, agent_speedup_v2_user_check.html:104-105 and :244 ('Right of anchor (world +x)').\n- The plan request carries no calibration: its fields are request/task/holding/images/status in review/requests/000001. The planner can only obey the rule.\n- The planner copied the rule into its part text: 'table: surface to the plate's world +x side'.\n- The executive receives that plan verbatim as the reviewed goal (agent_client.py:477-480; region frame 'world'). It released the pudding at (0.29,-0.02).\n- Why the rule is wrong for LIBERO:\n  - The external camera sits at +x and faces the robot (libero_living_room_tabletop_manipulation.py:188-191). The robot base is at x=-0.51 (on_the_ground_panda.py:47-50).\n  - Image-right is world +y: calibration R[:,0]=(0,1,0) in the t4, t5 and t6 requests.\n  - Every LIBERO directional task definition follows that camera, with 0 counterexamples:\n    - right=+y in 23 region instances, left=-y in 5, front=+x in 3;\n    - every left/right/front/back object adjective;\n    - the libero_goal 'front of the stove' region.\n- Why it is wrong for RoboCasa: the robot's yaw is fixture.rot+pi/2 (kitchen.py:680). So no fixed world-axis table can be right there.\n\nDESIGN\n- Every directional relation carries an explicit reference frame, frame='external_view'. It means 'as seen in the external camera image':\n  - right_of / left_of: toward image-right / image-left of that camera;\n  - behind / front_of: farther from / nearer to that camera, along the support surface.\n- The planner only copies the words from the task sentence. It does no conversion and writes no world axes or coordinates.\n- Code builds the frame from the external calibration:\n  - right_xy = unit(horizontal part of R[:,0]);\n  - away_xy = up x right = (-r_y, r_x);\n  - for LIBERO this gives (0,1) and (-1,0).\n- The frame is frozen at the reviewed reset and used in three places:\n  1. The resolver. The half-plane test (p-o).d > max over the anchor of (v-o).d replaces the axis tests; it is identical to them when d is a world axis. Bounds are given in view axes.\n  2. The executive. The first request gains view_frame and region_frames, which carry world unit vectors. The executive never converts words itself and never reads task directions from the wrist image.\n  3. Plan-time wrist turning. prepare_review passes external=None, so every review checked used k=0. That contradicts the prompt's 'turned so that its left and right match'. The exact calibration gives k=2.\n\nALTERNATIVES REJECTED\n- Swap the axis table to right=+y: correct for LIBERO only.\n- Give the planner calibration and ask for world-direction text (the prior S4(a) proposal): keeps a model-side conversion and a second, prose contract. That prose channel is exactly what failed here.\n- Let the model write direction vectors: same problems.\n- Ground regions from the model's pointing:\n  - too coarse: cell 55 ray-casts to y=0.181, beyond the y<=0.15 limit;\n  - often missing: E has x=0 in t6_009 and t6_011;\n  - sometimes arbitrary: t6_006 pointed at bare table on the -y side;\n  - it cannot re-ground when the anchor moves.\n- Screen-space regions: distorted by perspective and cannot express metric adjacency.\n- Pointing is kept only as advisory evidence.\n\nNOTICING A FRAME MISMATCH WITHOUT VETOES\n- (a) Pointing evidence. Take the image-1 displacement from the anchor's cell to the region's cell and map it onto the support plane through the camera's horizontal axes. Project it on the relation direction and classify at grid resolution: agrees / disagrees / indeterminate / unpointed. Under the old rule this run would have shown 'disagrees' (score -33.8). Under the new rule it shows 'agrees' (+128).\n- (b) The review UI prints the code-computed world direction next to each relation.\n- (c) A convention test over each benchmark's task definitions, run when a suite is onboarded.\n- (d) An executive guideline: after a finish request that does not end the episode, re-check what each spatial goal means.\n- None of these re-asks the model or blocks anything.\n\nOPTIONAL D9 (adjacency; your decision)\n- Rule: a side relation with no bounds means 'beside the anchor'. The region is limited to a lateral band equal to the anchor's measured extent, and the aim is the nearest fitting free cell next to the anchor's edge. No new constants.\n- Evidence it recurs beyond one run:\n  - 8 LIBERO goal regions are 0.1 m squares centred on the anchor;\n  - t6_007 first released at y=0.198 and t6_009 ended at y=0.170, both past the y<=0.15 limit;\n  - in the official layout the pudding starts at (-0.040,0.117). That is already inside the plain half-plane, but LIBERO does not count it as right of the plate.\n\nEVIDENCE FILES\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/dir_signs.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/adj_signs.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/adjacent_regions.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/view_frame_check.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/turns_check.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/wrist_cells.txt\n- /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/t6_007_targets.txt\n\nNo code was edited. No model, simulator or GPU was used.",
+  "changes": [
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "SPATIAL_PLAN_PROPERTIES :33-50 (frame enum :40, bounds :41-43)",
+    "what": "Change the frame enum from ['world'] to ['external_view']. Rename bounds_xy_m to bounds_view_m = [[right_min,right_max],[away_min,away_max]] in metres, measured from the anchor's centre, or from the support part's centre when anchor is null. Drop absolute world bounds, which a planner without calibration cannot ground. Relation names are unchanged."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "SPATIAL_INSTRUCTIONS :51-75 (replace :56-63)",
+    "what": "Replace the WORLD-axis rule. New text: directional relations are read in image 1 (external camera); right_of/left_of = toward image-right/left; behind/front_of = farther from/nearer to that camera, along the support; task-sentence words are read the same way. frame=external_view. This request has no calibration: never write world axes or coordinates in plan text, because the robot converts directions itself. Named sides of an object (back compartment, front door) are parts to point at, not regions. A region part's x and w mark the intended destination area. bounds_view_m semantics as above. [D9] Null bounds mean beside the anchor."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "new pure helpers next to _polygon/_centre (:139-153)",
+    "what": "external_view_frame(geometry): right_xy = unit(R_ext[:2,0]), away_xy = (-right_y, right_x), plus camera name, pose_source and source step. Fallback when exact calibration is missing: native ExternalModel.image_right_world_xy() (agent_speedup_v2_geometry.py:1771-1776). If the horizontal norm is exactly 0, the frame is undefined. relation_direction(frame, relation): right_of=+right, left_of=-right, behind=+away, front_of=-away. CalibratedExternalView adapter exposing image_right_world_xy() for frame_alignment_turns. pointing_evidence(plan, geometry): image-1 displacement from the anchor's cell to the region's cell, mapped to the plane by du*R[:2,0] - dv*R[:2,1] and projected on d. Classify at one-cell resolution: agrees, disagrees, indeterminate or unpointed."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "validate_spatial_spec :78-126 (frame check :95-96, bounds :99-109)",
+    "what": "Accept only frame external_view. Bounds need an origin: an anchor or a non-plane support part. This replaces the old absolute-world reading and folds into invalid_region_bounds. Keep near_requires_metric_bounds and the other existing checks. Add no new runtime gate."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "install_spatial_spec :129-136",
+    "what": "Take the frozen view_frame and store it as scene.user_check_view_frame, so every regrounding uses the frame of the reviewed reset."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "_ground_observed_region :209-220, :235, :247, :260",
+    "what": "Replace the four axis tests. With d = relation_direction(...), keep cells where (p-o).d > max over anchor-polygon vertices of (v-o).d. Apply bounds in view coordinates r=(p-o).right and a=(p-o).away. If there is no frame, return reason view_frame_unavailable (an unready region, like other unmeasured dependencies). Record frame and direction_world_xy in the evidence. [D9] Add the lateral band abs((p-o).d_perp) <= max abs((v-o).d_perp), and record adjacency_seed_xy = o + d * extent."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "aim_target :332-337",
+    "what": "[D9 only] For directional regions, pick the fitting free cell nearest adjacency_seed_xy instead of nearest the region centroid. Uses the existing need = r_obj + max(M16_FLOOR_M, sigma_offset); no new constant."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "where": "METRIC_INSTRUCTIONS :131-138 and the appending loop :380-389",
+    "what": "Add a plan/replan variant that replaces 'World +z is up; do not assume image left/right is world -x/+x' with: this request has no camera calibration; state directions as seen in image 1; never write world-axis directions or coordinates in plan text. Keep the existing world-frame text for repair/review (local_motion)."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "where": "PlanLock dataclass :234-268, framework_snapshot :269-301",
+    "what": "Add view_frame and plan_quarter_turns fields, filled from the review preparation. Expose region_frames, computed from approved regions plus view_frame, in the task contract and snapshots. Plan hashes and the semantic sha are unchanged because the frame is not part of the model-written plan."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_framework.py",
+    "where": "TaskContract.to_dict :101-112",
+    "what": "Next to regions and placement_goals, add region_frames: {id: relation, anchor, frame, direction_world_xy, meaning, source, pointing_evidence, [D9] extent rule} and view_frame. validate_replan (:157-161) stays verbatim."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "where": "AGENT_INSTRUCTIONS calibration paragraph :179-191 and finish text :173-177",
+    "what": "Add: task and reviewed-plan directions (frame external_view) are as seen in the EXTERNAL image (right = image-right; behind = farther from that camera, along the support). reviewed_goal_contract.region_frames and view_frame give their world unit vectors; use those and do not convert yourself. Where plan prose disagrees, region_frames wins. Wrist-image left/right/up change with hand pose, so never take task directions from the wrist image. [D9] Side relations without bounds mean beside the anchor. Optional: after an unconfirmed finish, re-check each spatial goal's meaning (side, distance), not only its precision."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "where": "request_agent :477-480 (first-call reviewed_goal_contract)",
+    "what": "Include view_frame and region_frames from plan_lock in reviewed_goal_contract. This is first call only and is kept in history (about 0.4-0.8 kB, estimate). It must stay under the 56000-char bound at :493."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_agent.py",
+    "where": "_task_contract :112-124; reset :64-76",
+    "what": "Pass region_frames and view_frame through the executive's contract. Install the frozen frame into ctx.scene so the native resolver used by macros agrees with the executive."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check_runtime.py",
+    "where": "StableScene.merge_plan :46-55; entity view :101-105",
+    "what": "Pass the frozen frame to install_spatial_spec. region_evidence now carries direction_world_xy for audits."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check.py",
+    "where": "plan_validation :98-106",
+    "what": "Keep spatial_spec issues as they are. Add a separate, non-blocking spatial_evidence block (pointing agreement per directional region) to the validation result for the review UI and artifacts. It is never an issue code, so it never causes a re-ask."
+   },
+   {
+    "file": "src/gpt_field/agent_speedup_v2_user_check.html",
+    "where": "relation labels :104-105; new-region default :214; relation select :227-229; bounds/note :230-244",
+    "what": "Default frame external_view. Labels: 'Right of anchor (image-right in the external view)' and 'Behind anchor (farther from the external camera)'. Bounds labelled rightward/away metres from the anchor. Show the computed world direction (e.g. world +y) and the pointing-agreement badge. Delete the 'follow world axes, not image directions' note."
+   },
+   {
+    "file": "scripts/evaluate_agent_speedup_v2_user_check.py",
+    "where": "prepare_review :238-265 (turns at :246); PlanLock :567",
+    "what": "Compute view_frame = external_view_frame(observation.geometry) and store it in preparation.view_frame. [W] Compute turns = frame_alignment_turns(view.R, CalibratedExternalView(geometry)) instead of passing None, so images 3-4 really are turned to match image 1 (k=2 at LIBERO start poses). Construct PlanLock(..., view_frame=..., plan_quarter_turns=...); if an old review lacks the frame, recompute it from the first observation."
+   },
+   {
+    "file": "scripts/evaluate_robocasa_user_check.py",
+    "where": "prepare :164-200 (plan request :195); PlanLock :256",
+    "what": "Same frame and turn changes, fed from the RoboCasa geometry, which already shares the rotation_world_from_camera key through validate_geometry_metadata."
+   },
+   {
+    "file": "tests/test_agent_speedup_v2_user_check_plan_output.py (+ new tests)",
+    "where": ":46-53 spatial_plan fixture; :84-89 observed-plane bounds test",
+    "what": "Update the fixtures to frame external_view and bounds_view_m. The absolute-world-bounds test becomes a support-relative-bounds test. Add the new frame, resolver, evidence and turn tests listed under tests_before_live."
+   }
+  ],
+  "new_model_inputs": [
+   "Executive first request, reviewed_goal_contract.view_frame: {frame: external_view, camera: agentview, right_world_xy: [0,1], away_world_xy: [-1,0], source: 'external calibration at the reviewed reset'}. Derived only from calibration the executive already receives.",
+   "Executive first request, reviewed_goal_contract.region_frames.E: {relation: right_of, anchor: C, frame: external_view, direction_world_xy: [0,1], meaning: 'toward image-right of the external camera along the support', pointing_evidence: agrees (marked weak, 8x8-cell evidence), [D9] extent: beside the anchor}.",
+   "Plan and replan requests get no new data fields, only rewritten instruction text (external-view definition; no world-axis prose). With change W, images 3-4 are actually turned by the calibration-derived k (k=2 at the LIBERO start pose), so the existing prompt claim holds.",
+   "Review UI (human-facing, not model input): the computed world direction per relation and the pointing-agreement badge."
+  ],
+  "extra_model_calls": "None. The frame, region directions, wrist turns and pointing evidence are all computed by code from existing calibration and the plan's own cells. The only cost is the first executive request growing by roughly 0.4-0.8 kB of text (estimate, unmeasured).",
+  "handles": {
+   "official_t6": "Setup: plate centre about (0.149,0.006), radius about 0.07 m (plate mesh at scale 0.5 spans about \u00b10.069 m). View frame: right=(0,1), away=(-1,0).\n\nThe expected plan is {anchor C, relation right_of, frame external_view, bounds null}, with E text containing no axis words. The executive gets direction_world_xy [0,1]. The resolver keeps cells with y > plate max-y (about 0.075).\n\nWithout D9:\n- The pudding's start position (-0.040,0.117) already lies in that half-plane, yet LIBERO's region is x in [0.10,0.20].\n- The executive's own judgement decides the placement. t6_007 (neutral E text) first released at (0.145,0.198) and only after an unconfirmed finish moved it to y about 0.13-0.145, which succeeded (requests 69-84, t6_007_targets.txt).\n\nWith D9:\n- The band is x within the plate's measured extent (about 0.08-0.22), so the start pose correctly counts as not yet right of the plate.\n- The aim is about y = 0.075 + pudding r_obj (about 0.046 m; collision box 0.080 x 0.046 m) + 0.005 + exclusion margin, roughly 0.13-0.14, inside y<=0.15. These numbers are estimates, unverified without the heightfield.\n\nThe mug-grasp and fallen-object gaps (t6_006, t6_011) are separate and not addressed here.",
+   "relayout_t6": "Setup: plate unchanged; pudding at (-0.16,-0.14), white mug at (-0.12,0.18), red mug at (0.06,-0.20).\n\nPointing evidence: the planner's external pointing (E at cell 55, C at cell 61) agrees with right_of in external_view, plane score +128. Under the old +x rule the same check gives -33.8, 'disagrees', so the mismatch would have been visible at review.\n\nWith the frame fixed, the executive's target becomes about (0.15, 0.12-0.14) instead of (0.29,-0.02). That is about 0.14 m closer to the base at x=-0.51 (+x targets also produced elbow stalls in t6_009, per final_plan.md). The white mug at x=-0.12 lies outside the plate's D9 band and is excluded as an obstacle in the plain half-plane.\n\nFinish behaviour: the post-finish reconsideration is no longer locked by a contract that says '+x'. Audit ordinals 14-15 show the executive treated the pudding as settled on the 'reviewed world +x side'.",
+   "t4_left_right_plates": "The plan has no regions (approved_plan regions []), so the resolver change is not exercised. 'Left plate' and 'right plate' are parts selected by pointing in image 1: C at x=41 (image-left) and F at x=48 (image-right). This matches BDDL: plate_1 (left) at y=-0.30 and plate_2 (right) at y=+0.30. The new definition states exactly the convention the planner already used, and the executive additionally gets view_frame right=(0,1). Remaining risk comes only from changed prompt text and from W changing the wrist images and w cells (left plate w=32 in the k=0 image).",
+   "t5_back_compartment": "The plan has no regions. 'Back compartment' is a part pointed at in image 1: 'rear middle cavity', x=28 in t5_001 and t5_002. The new definition, behind = farther from the external camera = away (-1,0) = world -x, matches. The caddy's own back_contain_region is at local +x (desk_caddy.xml:11) and the caddy is rotated by pi in STUDY_SCENE1, which places it at world -x, so the caddy's own frame and the viewer frame agree. The instruction 'named sides of an object are parts' keeps the recorded plan form. A region version (support=caddy, relation=on, bounds_view_m on the away half) is also expressible now.",
+   "robocasa": "The external camera is robot-mounted: default robot0_agentview_left (robocasa_user_check_geometry.py:28), with a synchronized pose. The frame is computed from that pose and frozen at the reviewed reset; the same function reads the RoboCasa geometry schema.\n\nThe world axes rotate with the layout: robot yaw = fixture.rot + pi/2 (kitchen.py:680). Any fixed world-axis table is therefore wrong for some kitchens; the calibration-based frame is correct for all of them.\n\nRoboCasa language is robot-relative: 'turn the sink spout to the left' (kitchen_sink.py:152); drawer side relative to the robot (kitchen_drawer.py:49-50). Its agentview cameras look forward with image-right close to the robot's right: computed right axes (0.033,-0.999), (-0.202,-0.979) and (0.202,-0.979) in the base frame (camera_utils.py:48-72). The external-view convention matches within about 12 degrees.\n\nThe coffee run (CoffeePressButton) has regions [], so it is affected only by the prompt text and W.",
+   "wrist_view": "Executive:\n- Wrist images stay unturned and keep their own calibration.\n- At the t6 start, wrist image-right = world -y and image-up = +x, a 180-degree rotation from the external view (trial request 000001; the same holds in t4_001 and t5_001).\n- Task directions are defined by the external camera only and arrive as region_frames vectors; the instructions forbid reading them from the wrist image.\n- The frame is never derived from the wrist camera, because it moves with the hand.\n\nPlan time:\n- prepare_review calls frame_alignment_turns(view.R, None) (scripts/evaluate_agent_speedup_v2_user_check.py:246), which returns 0 for a top-down hand (geometry.py:1533-1534).\n- Every review checked recorded quarter_turns 0 (relayout t6, t4_001, t5_001, t6_007), although the prompt says 'turned so that its left and right match the external image' (agent_speedup_v2_client.py:197-201).\n- In the relayout plan, the two pointings of E fall on opposite sides: external cell 55 maps to (0.110,0.181); wrist cell 29 maps to (0.015,-0.042) (wrist_cells.txt).\n- With the calibration-backed adapter, k=2 in all four runs (turns_check.txt), so images 3-4 then agree with image 1 on both axes."
+  },
+  "rule_compliance": "Rule 1 (one frozen build):\n- One frozen code version and one global convention for every task.\n- The frame is a deterministic function of the external-camera calibration, an allowed input.\n- No task key, simulator object or goal region reaches the agent. region_frames is derived only from calibration plus the model's own plan.\n\nRule 2 (general capability, no breakage):\n- This is a general capability: relations tagged with their reference frame. It is justified by every LIBERO direction task (0 counterexamples across all BDDL files) and by RoboCasa's layout-dependent yaw, not by t6 alone.\n- Recorded successes are not touched structurally: t4_001, t5_001, t5_002 and the relayout t7 have regions [], so the resolver change does not apply to them.\n\nRule 3 (fix the gap, not the task): the failure is treated as a framework gap with a general fix. The gap is a hard-coded convention, no frame representation, and an uncalibrated wrist turn.\n\nRule 4 (remove vetoes, avoid thresholds):\n- Removes a hard-coded axis table and the world-axis prose channel.\n- Adds no veto: pointing evidence is advisory and never an issue or re-ask.\n- Adds no tuned threshold: D9 uses the anchor's measured extent and the existing M16 floor; pointing evidence is classified at the pointing grid's own resolution.\n- The only validation change replaces the frame enum value and the absolute-bounds reading.\n\nRule 5 (organised by recurring mechanisms):\n- M1, frame convention: t4, t5, t6, LIBERO-90 and RoboCasa.\n- M2, world-axis prose inside the reviewed contract: t6_009 and relayout t6 failed with it; t6_007 succeeded with neutral text.\n- M3, plan-time wrist turn: all 4 reviews checked.\n- M4, adjacency (D9, optional): t6_007 and t6_009 overshoots plus 8 LIBERO goal regions.\n- Acceptance is the all-task sweep on one frozen build.",
+  "risks": [
+   "Convention risk: language phrased in the robot's frame or an object's own frame, combined with a camera that faces the robot, would be misread. In LIBERO the camera does face the robot, but its language follows the camera (verified). At runtime this shows up only as pointing evidence; otherwise it is caught by the convention test when a suite is onboarded. A future 'robot_base' frame would need the base pose as a calibration input.",
+   "Changing the prompt text perturbs every plan, because planning is stochastic. Regressions on t0-t9 (especially t4 and t5) are possible, and only the full sweep can accept the change.",
+   "W changes images 3-4 and the meaning of w cells for every task. Any consumer that assumes k=0 for initial w cells would map them wrongly (review UI, StableScene.merge_plan quarter_turns, the executive's copy of the plan). Either give the executive the k with the plan, or strip its stale w cells.",
+   "Model compliance is not guaranteed. The executive may still reason from wrist-image left/right or from leftover prose. region_frames and the instruction to prefer them reduce this but cannot rule it out.",
+   "Pointing evidence is coarse (64-px cells), and region parts are often unpointed or point at arbitrary bare table (t6_006 cell 43 on the -y side). A 'disagrees' result can be noise, so it must be labelled weak and never used as a gate.",
+   "The D9 band encodes 'beside the anchor'. It can be empty next to table edges or clutter, which leaves the region unready (the executive can still act directly). It would also be wrong for language meaning 'anywhere on that side'. This is your decision (D9).",
+   "A degenerate camera whose image-right axis is vertical gives no frame, so directional regions stay unready.",
+   "Renaming bounds and dropping absolute bounds invalidates old review records and one existing test (tests/test_agent_speedup_v2_user_check_plan_output.py:84-89). A new preparation is needed anyway, because the runtime hash changes.",
+   "t6 success still depends on separate gaps that this does not fix: the mug-handle grasp and fallen-object recovery (t6_006 and t6_011 never moved the pudding).",
+   "In RoboCasa the frame depends on which external camera is configured (left, center or right), shifting it by about 12 degrees."
+  ],
+  "tests_before_live": [
+   "Unit test, frame: external_view_frame on the recorded calibrations (relayout t6, t4_001, t5_001 first requests) returns right=(0,1) and away=(-1,0). The three RoboCasa agentview quaternions composed with base yaws 0, pi/2, pi and -pi/2 give right equal to the robot's right rotated with the base. Also test synthetic top-down, rolled and degenerate cameras.",
+   "Unit test, resolver, on a synthetic heightfield (no simulator): an identity basis reproduces the old axis masks bit-for-bit. With the LIBERO frame, check right_of, left_of, behind and front_of, bounds in view axes, the view_frame_unavailable reason, and the D9 band and seed when enabled.",
+   "Convention test, offline: the LIBERO BDDL parse (dir_signs.py, adj_signs.py, adjacent_regions.py in the design scratch folder) asserts that every directional region and adjective agrees with the agentview frame. Keep it as a developer test to run when a new suite is onboarded.",
+   "Offline request build (nothing sent): build the plan instructions from recorded inputs and check that 'right_of=+x' and 'WORLD axes' are gone and the external-view text is present. Build the first executive request from the relayout t6 initial observation plus its plan (frame rewritten) and check that region_frames.E is [0,1], view_frame is present, the text is under 56000 chars, and the effective_instructions_sha256 changes are recorded.",
+   "Pointing evidence on recorded plans: relayout E55 vs C61 gives agrees (the old rule gives disagrees, -33.8); t6_007 E54 vs C53 gives agrees; t6_006 E43 vs C60 gives disagrees. Confirm that validation never re-asks because of it.",
+   "W: prepare_review with the calibration adapter gives k=2 at the t4, t5 and t6 start poses (turns_check.txt). Audit every consumer of initial w cells for use of preparation.quarter_turns; check that the review UI shows the turned image; check the RoboCasa prepare path.",
+   "Schema and contract tests: parse and round-trip of the new region fields, validate_spatial_spec, TaskContract.validate_replan region preservation, a headless render of the review HTML (labels and defaults), and the RoboCasa runner prepare test.",
+   "Run the existing tests/test_agent_speedup_v2_user_check_*.py and tests/test_robocasa_user_check_*.py; all must pass.",
+   "Live (your decision; uses model calls), on one frozen build: first a t6 smoke run in the official layout and the relayout, then the all-task LIBERO-10 sweep, plus a RoboCasa coffee smoke run. Acceptance: the t6 plan uses frame external_view with right_of; the first pudding release lands on the +y side (checked afterwards against simulator truth); no regression against t4_001, t5_001/002, relayout t7 and the other tasks."
+  ]
+ },
+ "designMinimal": {
+  "design_name": "Viewer words from external-camera calibration (smallest uc7 fix: one definition and one helper, shared by prompt, executive, resolver and UI)",
+  "summary": "ROOT CAUSE. Three places use one hard-coded world-axis constant (right_of=+x, left_of=-x, behind=+y, front_of=-y): the planner prompt (spatial.py:59-60), the review UI labels and note (html:104-105, 244) and the region resolver (spatial.py:210-214). The executive gets no definition of these words. It copies the planner's \"world +x\" text (direction_semantics_audit.json, accepted_decisions ordinals 1, 8, 11, 12 and 14).\n\nThe constant is wrong for LIBERO wherever it was used:\n- Relayout t6 released the pudding at (0.29, -0.02).\n- In t6_006, the native resolver itself placed region E at (0.234, -0.009), on the +x side (user_check_framework.json /state/entities/E/region_evidence).\n- t6_009 wrote \"world +x side\" and released at (0.30, 0.02).\n- LIBERO-goal g5 (\"push the plate to the front of the stove\", v3 g5_001/002) used front_of, which the constant maps to -y. The BDDL stove_front_region is +x of the stove: (-0.05, 0.21) against the stove region at (-0.41, 0.21).\n\nLIBERO's own convention:\n- Every problem class puts agentview at +x, y=0, looking toward -x. So image-right is +y and \"toward the camera\" is +x.\n- My offline scan found 31 anchored left/right/front/back regions in 26 BDDL files (libero_10 and libero_90). All of them, plus g5, follow this: right = +y, left = -y, front = +x. There are 0 exceptions.\n- The caddy's back compartment is at world -x (local +x, caddy yaw pi).\n\nThe planner's own pointing already follows the viewer reading. Of the 5 recorded regions whose pointing can be judged, 4 agree with the viewer reading and none with the constant (pointing_agreement.py).\n\nDEFINITION GIVEN TO THE MODEL. left_of, right_of, front_of and behind are viewer words, as the task sentence uses them, and are judged in image 1 (the external camera):\n- right_of / left_of: next to the anchor, toward image 1's right or left edge.\n- front_of / behind: next to the anchor, nearer to or farther from that camera, along the support surface.\n\nWhy this definition:\n- It is the convention the task sentences are written in.\n- It is what the model already sees.\n- It can be computed from the camera calibration the rules already allow.\n- A robot-centric definition would be mirrored in LIBERO, because the robot faces +x and its right is -y.\n- The old constant matches RoboCasa layout 0 only by coincidence (within 12 degrees).\n\nMECHANISM. Add one pure helper, viewer_axes(geometry):\n- right = normalize(R_ext[:2, 0]), the image-right column of rotation_world_from_camera projected onto the floor plane.\n- front = (right_y, -right_x) = right x up, which points toward the camera.\n- LIBERO gives (0, 1) and (1, 0). RoboCasa agentview_left gives (0.979, -0.202) and (-0.202, -0.979).\n\nBoth the resolver and the executive context use this helper. The prompt, the executive instructions and the UI labels state the same rule. The plan request gets no new input and the schema does not change. There are no extra model calls and no new thresholds or vetoes.\n\nHOW A FUTURE MISMATCH WOULD SHOW, WITHOUT GATES:\n- Offline tests pin the convention to the LIBERO BDDL files and to saved calibrations.\n- The region evidence records direction_world_xy and the viewer axes.\n- The executive's first request carries the computed direction.\n- Optionally, a sign-only pointing cue (region cell vs. anchor cell) is stored in the review record and shown in the UI.\n- An offline post-run audit can compare the final pose with the direction.\n- None of these block a run or trigger a re-ask.\n\nEffort: about 1.5-2 h including offline tests.\n\nDELIBERATELY LEFT OUT:\n- An adjacency or extent default for regions with null bounds (decision D9). The half-plane stays, so a native place_on to E could still land beyond LIBERO's 10 cm box.\n- Bounds in viewer axes. Bounds stay world metres, and the prompt asks for null bounds with the four direction words.\n- Calibration in the plan request, and any conversion of words to axes by the planner.\n- Schema or enum changes (\"frame\" stays \"world\"; no new words such as beside or between).\n- The wrist-turn defect. At plan time the wrist image is shown with k=0, which in LIBERO is turned 180 degrees from the external view, while the base prompt says it is turned to match. Making k come from calibration would change every LIBERO plan image, so it is deferred.\n- Freezing the axes at plan time. Both adapters have a static external camera.\n- The repair and review prompts of the older ReviewedV2Policy, and the frozen v3 executive.\n- Any runtime check, re-ask or automatic correction.",
+  "changes": [
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "SPATIAL_INSTRUCTIONS lines 59-63 (block 51-75); SPATIAL_VERSION line 23",
+    "what": "Replace the sentence 'Relations use WORLD axes: right_of=+x, left_of=-x, behind=+y, front_of=-y; they do not mean screen directions.' and the bounds sentence with: 'left_of, right_of, front_of and behind are VIEWER words, as in the task sentence, judged in image 1 (the external camera): right_of/left_of = next to the anchor toward image 1's right/left edge; front_of/behind = next to the anchor nearer to/farther from that camera (front is usually lower in image 1), along the support surface. Never judge them in a wrist image (its orientation can differ) and never rename them as world axes; the robot converts them with the external camera calibration. Word the region text the same way, e.g. \"table: bare area right of the plate\". frame \"world\" only means the region is measured in world metres. Bounds are world-axis [[xmin,xmax],[ymin,ymax]] metres, relative to the anchor's measured centre when anchor is set, otherwise absolute; this request carries no calibration, so keep bounds null for these four words. null bounds use observed support extent. near requires explicit bounds.' Do not change the schema (SPATIAL_PLAN_PROPERTIES), REGION_RELATIONS or validate_spatial_spec. Bump SPATIAL_VERSION to user-check-spatial-3."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "new pure helpers after _centre (line 152)",
+    "what": "viewer_axes(geometry) -> (right_xy, front_xy) or None. R = geometry['cameras']['external']['rotation_world_from_camera']. Camera +X is image-right (agent_client.py:179-180). right = R[:2,0]/|R[:2,0]|; front = (right_y, -right_x), which is right x world-up and points toward the camera. Return None when the matrix is missing, non-finite or has no horizontal image-right component (a degeneracy guard, not a tunable threshold). relation_direction(word, axes): right_of=right, left_of=-right, front_of=front, behind=-front, on/near=None. region_directions(regions, geometry) -> {convention:'external_camera_viewer', viewer_axes_world_xy:{right,front}, regions:{id:{anchor, relation, direction_world_xy}}}."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+    "where": "_ground_observed_region lines 209-214 (anchor block 200-215); evidence result.update at line 235",
+    "what": "Replace the four axis-aligned tests (xs>high[0], xs<low[0], ys>high[1], ys<low[1]) with one projection test. Take d = relation_direction(word, viewer_axes(ctx.view.observation.geometry)); ctx.view is set every step at agent_speedup_v2.py:1855. Keep observed-support cells p with d.p > max over the anchor polygon q of d.q. This is the existing 'strictly beyond the anchor's measured extent' rule, rotated. If the axes are missing, return the not-ready reason 'viewer_axes_unavailable', in the existing missing-measurement style; CalibratedObservation already validates geometry, so this should not happen. Add direction_world_xy and viewer_axes to the evidence. Leave 'on' (215), bounds (216-220), object exclusion, centre (247), hull, region_cells and aim_target unchanged. For LIBERO this is exactly the old tests relabelled: right_of is old behind (y>max_y), left_of is old front_of, front_of is old right_of (x>max_x), behind is old left_of. viewer_axes_check.py found 0 differing cells."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+    "where": "AGENT_INSTRUCTIONS, insert after line 69 ('...distinct from unintended collisions.'); PROMPT_VERSION line 41",
+    "what": "Add: 'Spatial words in the task and in reviewed regions (left_of/right_of/front_of/behind; left, right, front, back) are viewer words of the EXTERNAL camera: right/left = toward that image's right/left edge, front/back = nearer to/farther from that camera; for a relation, next to its anchor along the support. reviewed_goal_contract.task_contract.region_directions gives each region's world-xy direction computed from calibration; it overrides any world-axis wording in reviewed text. Never judge these words from the wrist image.' Bump PROMPT_VERSION to user-check-agent-first-prompt-3, which changes request_key."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent.py",
+    "where": "AgentFirstV2Policy._context(view), line 209 ('task_contract': self._task_contract())",
+    "what": "Build contract = self._task_contract() and set contract['region_directions'] = spatial.region_directions(contract['regions'], getattr(view.observation, 'geometry', None)). request_agent pops task_contract and sends it only in the first request, as reviewed_goal_contract (agent_client.py:477-480). The executive's text history is kept, so the field stays in context. CONTEXT_KEYS needs no change. RoboCasaUserCheckPolicy inherits this."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+    "where": "PROMPT_VERSION line 24",
+    "what": "Bump to agent-speedup-v2-user-check-prompt-7 so request keys and caches separate. Nothing else: SPATIAL_INSTRUCTIONS is already appended to plan and replan at 374-379. Keep METRIC_INSTRUCTIONS (131-138), which already says image left/right is not world -x/+x. RoboCasaPlanClient and ReviewedV2Client inherit the change."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check.html",
+    "where": "relation labels lines 104-105; region note line 244",
+    "what": "Change the labels to: left_of 'Left of anchor (as seen in the external image)', right_of 'Right of anchor (as seen in the external image)', front_of 'In front of anchor (nearer the external camera)', behind 'Behind anchor (farther from the external camera)'. Change the note to: 'Left/right/front/behind are as seen from the external camera; bounds are world-axis metres relative to the anchor center.' A manual reviewer then sees the same rule as the model."
+   },
+   {
+    "file": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py + /workspace/gpt_field/scripts/evaluate_agent_speedup_v2_user_check.py (preparation dict, ~line 265) + /workspace/gpt_field/scripts/evaluate_robocasa_user_check.py (~line 199) [OPTIONAL, passive]",
+    "where": "new pure function pointing_agreement(plan); stored as preparation['spatial_pointing']",
+    "what": "Sign-only image-space cue for each directional region, comparing the region's external cell with the anchor's cell. right/left use the column sign. front/behind use the row sign (front = lower rows for a camera looking down at the support). Result is agrees, disagrees or undetermined (cell 0 or same row/column). No numeric threshold. It is shown read-only in the UI next to the region. It is never added to plan_validation issues and never causes a re-ask."
+   },
+   {
+    "file": "/workspace/gpt_field/tests/test_agent_speedup_v2_user_check_spatial_direction.py (new)",
+    "where": "offline unit tests",
+    "what": "T1-T5 and T8 from tests_before_live. No simulator, GPU or model."
+   }
+  ],
+  "new_model_inputs": [
+   "Plan, replan and grounding requests get no new fields. Only the instruction text changes. There is no calibration, and the images and quarter_turns are unchanged.",
+   "First executive request: reviewed_goal_contract.task_contract.region_directions = {convention: 'external_camera_viewer', viewer_axes_world_xy: {right, front}, regions: {id: {anchor, relation, direction_world_xy}}}. It is computed only from geometry.cameras.external.rotation_world_from_camera, which the executive already receives. For relayout and official t6: right (0,1), front (1,0), E right_of -> (0,1). It uses no scene truth and no task key.",
+   "Executive instructions: one sentence defining the four words as external-camera viewer words. region_directions overrides world-axis wording in reviewed text, and the words are never judged from the wrist image."
+  ],
+  "extra_model_calls": "None. The fix changes instruction text and adds one deterministic field to the first executive request. There are no new request kinds, re-asks or verification calls, and the pointing cue and audits are offline or passive. Optional, the user's choice: a plan-only smoke on official t6 before the sweep would cost 1 plan call and 0 executive calls.",
+  "handles": {
+   "official_t6": "The planner writes E = {observed_plane, anchor C, right_of, null bounds} with text like 'table: bare area right of the plate'. In t6_007 it already pointed E at cell 54, to the right of C at cell 53. The executive receives E -> (0,1), so the target side is the plate's +y side. That matches plate_right_region x in [0.10,0.20], y in [0.05,0.15]. t6_007 shows the executive can finish once it is not misled: it ended at (0.145, 0.146). Caveat: the official pudding start (-0.040, 0.117) is already inside the +y half-plane but outside the box (x < 0.10). The plate's max y is about 0.075 (radius about 0.069, from plate_col.obj x 0.5). Only the 'next to the anchor' wording, not a threshold, pushes the executive to move it beside the plate. A native place_on to E would aim near the half-plane centre (y about 0.24 on a synthetic +/-0.4 m table) and could overshoot y_max. D9 is left out on purpose. The 7 checked uc7-era runs (relayout t6/t7, t4_001, t5_001/002, t6_007, t6_009) grounded no region; region grounding was seen only in the older macro-driven t6_006.",
+   "relayout_t6": "Same plan shape. The planner's own external pointing (C at 61, E at 55, ray-cast to (0.11, 0.18)) now agrees with the word instead of being overridden. The text no longer says 'world +x'. The executive gets E -> (0,1) and is told that this overrides world-axis wording. So the semantics can no longer produce the (0.29, -0.02) release or the finish claim at ordinal 14. If a macro is chosen, the resolver grounds E at y > the plate's max y instead of x > max x. Unchanged: the mug regrasp, centering and arm-posture stalls (ordinals 15-22) are separate gaps.",
+   "t4_left_right_plates": "t4_001 has regions=[]. 'left plate' and 'right plate' are object identities chosen by pointing (C x=32, F x=0), so neither the resolver nor the region path changes. The new executive sentence says left = external image-left = world -y. That matches LIBERO (plate_left_region y=-0.30, plate_right_region y=+0.30) and t4_001's successful choice. The only remaining exposure is that the prompt text changed, so the sweep must confirm t4.",
+   "t5_back_compartment": "t5_001 and t5_002 use place_in to caddy part B ('rear middle/central cavity'), with regions=[], so their code path is unaffected. Viewer 'back/behind' means farther from the camera, which is world -x. That matches desk_caddy back_contain_region (local +x, caddy yaw pi, so world -x) and the successful choice. The t5 agentview has R[:,0] about (0,1,0) (final_plan.md:28), giving the same axes. Only the prompt text changed, so the sweep must confirm t5.",
+   "robocasa": "Macros are disabled (RoboCasaUserCheckPolicy, MACRO_REASON), so the resolver never runs. CoffeePressButton has no direction words and regions=[]. The external camera robot0_agentview_left gives right (0.979,-0.202) and front (-0.202,-0.979), from initial_sensors.json. The old constant matched this layout within 12 degrees by coincidence, because the camera looks along +y. The helper follows any layout or robot yaw. RoboCasaPlanClient and RoboCasaAgentClient inherit the prompt and executive text. RoboCasaUserCheckPolicy inherits _context, so region_directions appears whenever a region exists. The base is held still (arm-only; deviations are infrastructure errors), so the axes are static.",
+   "wrist_view": "The wrist view is never a reference for direction words; both prompts say so. At plan time the wrist image is shown with quarter_turns=0, because evaluate_agent_speedup_v2_user_check.py:246 and evaluate_robocasa_user_check.py:190 call frame_alignment_turns(view.R, None). In LIBERO this image's right is world -y, 180 degrees from the external view. The base prompt (agent_speedup_v2_client.py:199, label :505) says it is turned to match. All recorded reviews have quarter_turns=0. In the relayout, region E's wrist cell w=29 ray-casts to (0.015, -0.041), not to the +y side. Neither the resolver nor the executive uses region wrist cells, so after the fix this cannot flip the side. Making k come from calibration (LIBERO k=2, RoboCasa stays 0) is deferred because it changes every LIBERO plan image. The executive's per-step wrist calibration is unchanged."
+  },
+  "rule_compliance": "R1: One build and one definition, computed only from the external-camera calibration that is already supplied. There is no task key and no benchmark constant, and the threshold table is unchanged; the helper's only numeric guard is that image-right has a horizontal component. R2: This is a general relation-semantics capability, not a t6 patch. The mechanism recurs on 2 tasks in 2 suites: LIBERO-10 t6 (prompt in t6_009/011/relayout, native resolver in t6_006) and LIBERO-goal g5 (front_of). RoboCasa adds a structural reason, since its world axes vary by layout. The recorded successes t4_001, t5_001/002, relayout t7 and RoboCasa coffee all have regions=[], so only their prompt text changes. t6_007 succeeded because the executive read the task the viewer way, which the fix makes explicit. For LIBERO the resolver change is a relabelling of its four existing tests. R3: It fixes the class: prompt, executive, resolver and UI share one helper and one wording; no t6 coordinates are involved. R4: It removes a wrong constant and adds no veto, re-ask or threshold. The pointing cue and audits are passive evidence only. R5: It is organised by mechanism (direction semantics end to end) and accepted by the all-task sweep on one frozen build. Old approvals are invalidated automatically, because claim compares runtime hashes (agent_speedup_v2_user_check.py:396-397).",
+  "risks": [
+   "The half-plane is not LIBERO's adjacent box. The official pudding start (-0.040, 0.117) already lies in the new right_of half-plane but outside plate_right_region (x < 0.10). Only the executive's reading of 'next to' moves it beside the plate. A native place_on to E aims near the half-plane centre and can overshoot y_max = 0.15, because D9 (adjacency default) is excluded.",
+   "Prompt changes affect every task. SPATIAL_INSTRUCTIONS is appended to every plan and replan (client.py:374-379), and AGENT_INSTRUCTIONS goes into every executive call. So t4, t5, t7 and RoboCasa plans could change for unrelated reasons; only the sweep can show there is no regression.",
+   "The planner may still write a world-axis phrase, since METRIC_INSTRUCTIONS asks it to 'State the frame'. The explicit ban and the authority of region_directions mitigate this, but a gap remains if the executive trusts the text over the field.",
+   "The design assumes task language is written from the external camera's viewpoint. This holds for all 31 anchored LIBERO direction regions and g5, and RoboCasa's camera looks along the robot's heading. A future benchmark with robot-centric wording and a camera facing the robot would invert left and right.",
+   "Axes are read from the current observation. That is only correct while the external camera is static (LIBERO's fixed agentview; RoboCasa with the base held). A moving camera would rotate the region's meaning during an episode.",
+   "The wrist 'turned to match' claim stays false in LIBERO at plan time (k=0). Region wrist cells may be pointed wrongly, as in the relayout (w=29). That is harmless for grounding and the executive today, but misleading for any future user of those cells.",
+   "Every existing approval becomes unusable because the runtime hash is bound at claim. Each sweep task needs a fresh plan call, which the sweep does anyway.",
+   "v3 inherits the plan-prompt change (AgentSpeedUpV3PlanClient is a UserCheckV2Client) but not the executive change: it has its own AGENT_INSTRUCTIONS and _context. Any rerun of the frozen v3 would be a mixed build.",
+   "The field 'frame': 'world' remains in the schema and could still suggest that relation words are world axes. The prompt text addresses this; the schema is left alone so recorded plans still parse."
+  ],
+  "tests_before_live": [
+   "T1 viewer_axes fixtures. LIBERO geometry from R/trial/requests/000001-8f98...request.json must give right (0,1) and front (1,0). RoboCasa runs/robocasa_coffee_user_check_001/trial/initial_sensors.json must give right (0.979,-0.202) and front (-0.202,-0.979). A missing or non-finite matrix, or a vertical image-right, must return None. Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/viewer_axes_check.py",
+   "T2 convention test against the LIBERO BDDL files, with no simulator. Every anchored <anchor>_{left,right,front,back}_region (31 regions in 26 libero_10/libero_90 files) plus libero_goal stove_front_region must agree with the viewer axes of the agentview pose in problems/*.py (+x, y=0); expect 0 disagreements. Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/bddl_convention.py",
+   "T3 resolver unit test with a fake ctx: a numpy height field, the plate polygon (r=0.069 at (0.149, 0.006)) and a view whose observation carries the saved geometry. Check that the LIBERO masks equal the old masks relabelled (0 differing cells on a 5 mm grid offset by half a cell). Check that RoboCasa axes give region centres with positive projection on the relation direction. Missing geometry must give the reason viewer_axes_unavailable. The evidence must contain direction_world_xy, and 'on', 'near', bounds and exclusions must be unchanged.",
+   "T4 text snapshots. SPATIAL_INSTRUCTIONS must no longer contain 'right_of=+x' or 'behind=+y'. The built plan and replan instructions of UserCheckV2Client, ReviewedV2Client and RoboCasaPlanClient must contain the viewer definition exactly once. AGENT_INSTRUCTIONS must contain the region_directions sentence. The HTML must have no 'world -x/+x/-y/+y' labels. The three version strings must be bumped and request_key must differ.",
+   "T5 executive payload preview, offline: build_payload needs no auth or network. Use the relayout approved_plan.json and its first-request geometry through AgentFirstV2Policy._context and request_agent with a stub transport. Assert reviewed_goal_contract.task_contract.region_directions.regions.E.direction_world_xy == [0,1], that the field is absent from the second request, and that size(fields) < 45000.",
+   "T6 regression parse. plan_validation and validate_spatial_spec must be unchanged and valid for every recorded approved plan: t4_001, t5_001/002, t6_006/007/009/011, relayout t6/t7 and robocasa_coffee_user_check_001.",
+   "T7 run the existing CPU test files tests/test_agent_speedup_v2_user_check_*.py and tests/test_robocasa_user_check_*.py, skipping any that start a simulator or need a GPU.",
+   "T8 (optional) passive cue test on recorded plans. Expected: relayout t6 agrees, t6_007 agrees, g5_001/002 agree, t6_006 disagrees, t6_009/011 undetermined. Assert it never produces a plan issue. Prototype: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/design/minfix/pointing_agreement.py",
+   "Live acceptance, run by the user: the all-task sweep on one frozen build, covering LIBERO-10 t0-t9 including official t6, relayout t6/t7 and RoboCasa coffee. Check that region text uses viewer words, that the executive's belief and targets put the pudding on the plate's +y side, and that t4, t5 and t7 outcomes do not regress. An optional 1-call plan-only smoke on official t6 can come first."
+  ]
+ },
+ "critique": {
+  "items": [
+   {
+    "item": "P0.1 Calibration-derived support-plane vectors (right = normalize(R[:2,0]), away = normalize(-R[:2,2])) as the single source of truth",
+    "verdict": "modify",
+    "reason": "Using the external camera is correct. LIBERO language follows the external viewer, and the viewer faces the robot, so viewer-right is the robot's left. A robot-base frame would also be wrong. Three parts of the formula and its use need changing. (1) away = -R[:2,2] becomes ill-conditioned as the camera approaches top-down; image-up projected (R[:2,1]) or the support-plane Jacobian at the anchor pixel is equal when roll is 0 and stays well-conditioned. (2) The vector must be frozen at plan approval. RoboCasa's external camera is robot-mounted, and a replan must keep reviewed regions verbatim. (3) It must be code-owned data shown everywhere, never model-written prose.",
+    "evidence": "All 7 LIBERO agentview set_camera definitions (envs/problems/*.py) give right=(0,1), away=(-1,0), |-R[:2,2]|=0.78-0.97 (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/libero_cams.py). In the step-0 geometry of all 24 LIBERO executive runs with geometry, external R[:,0]=(0,1,0). The wrist camera at step 0 has -R[:2,2]\u2248(-0.055,0), which is degenerate. RoboCasa coffee robot0_agentview_left (pose_source synchronized_robot_mounted_camera): right\u2248(0.98,-0.20), away\u2248(0.21,0.98) (runs/robocasa_coffee_user_check_001/trial/requests/000001 geometry.cameras.external). All 38 BDDL files with directional language were checked: every anchor-relative box and position word fits right=+y, left=-y, front=+x, behind=-x (L6 left/right of plate \u00b1y; K7 bowl right of plate +y; K6 mug front +x; STUDY1 right of caddy +y; goal stove front +x; STUDY3 mug_behind -x; K2/K10 front/back; K8/L4/L5 left/right) (/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/bddl_dir_tasks.txt).",
+    "modification": "Write helper(view_axes) to return {right_xy, away_xy, camera, step, degenerate}. Take away from the R[:2,1] projection (or the plane homography) and flag degenerate cases. Compute it once at plan approval and store it beside the approved plan, keyed by region id, outside the model-echoed region JSON. This keeps the PlanLock semantic hash and the framework.py:156-161 verbatim-region rule intact. Recompute only the wrist mapping per executive request, for display."
+   },
+   {
+    "item": "P0.2 Planning prompt: viewer-frame definition plus per-scene numeric mapping, with region text stating both",
+    "verdict": "modify",
+    "reason": "This is the change that fixes the observed failure. Part text is what carries the semantics to the executive. Two runs had part text naming world +x (relayout, t6_009), and both made the first pudding release on +x. t6_011's text was 'world right of striped plate' and it never moved the pudding. t6_007's axis-free text ('table: bare top surface') went to +y and succeeded. Six problems remain. (a) The planner has no calibration today: the review initial_observation.json holds only images, state and prompt, so plumbing is needed. (b) The numbers belong in request fields, not in static instructions, which are built once in __init__. (c) Asking the model to write world axes makes the executive depend on model frame arithmetic, the same channel that failed. Have code render the axis. (d) Vertical words and object-intrinsic part words must be exempted. (e) The same prompt falsely says the wrist image is turned to match the external image. (f) A 'frame':'world' value next to a viewer relation invites a 'world right = +x' reading.",
+    "evidence": "spatial.py:59-60. client.py:132-138; :370-389 (instructions assembled once in __init__). agent_speedup_v2_client.py:197-201 and :505 ('turned') against request_meta.quarter_turns=0 in all 40 review plan requests across 39 review dirs. turns() returns 0 without ctx.cal (agent_speedup_v2.py:591-596). In every LIBERO-10 run, wrist image-right at step 0 is world -y, the opposite of external +y. The relayout plan's own pointings confirm the 180\u00b0 turn: pudding x35 (left) / w55 (right); mug x38 (right) / w49 (left). R/initial_observation.json keys: observation/image, observation/state, observation/wrist_image, prompt. Part E texts are in /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/plans_summary.txt.",
+    "modification": "Static text: \"left_of/right_of/front_of/behind are as seen in image 1, the external camera. right_of/left_of = image-right/left. front_of = nearer to that camera along its horizontal viewing direction; behind = farther. They are not the robot's own left/right. up/down/top/bottom/above/under/on top always mean world \u00b1z. Words naming a part of an object (back compartment, top drawer, left burner) select that part, not a region.\" Request field: view_axes_world {right_xy, away_xy}. Region part text uses viewer words; code adds the world axis to the contract and the UI. Fix the review wrist turn from calibration, or state the truth. Replace client.py:135 with a pointer to view_axes_world. Bump PROMPT_VERSION and SPATIAL_VERSION."
+   },
+   {
+    "item": "P0.3 Grounding by projection onto the relation vector d",
+    "verdict": "modify",
+    "reason": "The math is right and general: xy\u00b7d > max(poly\u00b7d) is equivalent to the current axis tests. It is not a fix for uc7, though, because the resolver is dormant there. It also does not make the native path hit LIBERO's box. With null bounds the region is a half-plane over a \u00b10.5 m heightfield, and the native aim targets the region centroid when that spot is unoccupied. Treat P0.3 as a consistency change, and use the frozen P0.1 vector rather than live calibration.",
+    "evidence": "25 executive runs had 1 macro decision in total (t6_007 req 000001, step_index 0 = mug). Region-grounding evidence ('observed_support_geometry') appears only in native-path t6_006: 586 cells, centre (0.234,-0.009), which lies outside the external view (projects to v\u2248521). Sources: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/exec_types.py; t6_006 episode.events.jsonl. Code: spatial.py:209-214, :216-220, :247; planner.py:3109-3112 (unoccupied \u2192 region centre); types.py:128 HF_HALF_EXTENT_M=0.5. My estimate that a +y half-plane centroid would fall far from the (0.15,0.10) box is unverified, because I did not run the heightfield.",
+    "modification": "Implement it with the stored vector, and leave bounds semantics unchanged (world axes, anchor centroid). Either pair it with 'target nearest the anchor' in aim_target (see P0.6) or document that a null-bounds directional region is only a side constraint. Add a synthetic-heightfield unit test for d=(0,1), (-1,0) and a RoboCasa-like (0.98,-0.20)."
+   },
+   {
+    "item": "P0.4 Executive prompt sentence with definition, numbers, and 'external not wrist'",
+    "verdict": "modify",
+    "reason": "Keep the core. Today the executive never receives SPATIAL_INSTRUCTIONS, and it sees regions raw as {relation: right_of, frame: world} with no definition, so its reading comes from part text plus its own prior. Its wrist image is not turned: image-right is world -y at start and rotates with hand yaw. The numbers must be per-request fields covering both cameras. The prompt should also say that the task sentence's words use the same definition and are not robot-egocentric. When the reviewed text conflicted with the model's natural reading, the model compromised and failed.",
+    "evidence": "agent_client.py:302 and :366 (instructions = AGENT_INSTRUCTIONS only); :179-191 (calibration paragraph, no direction definition); :497-501 (wrist image sent unturned). framework.py:110 exposes regions raw. Step-0 wrist R[:,0]\u2248(0,-1,0) in all LIBERO-10 runs. In t6_009, decision 17 reads 'strengthen the right-of relation while preserving the reviewed positive-x requirement'; the diagonal placement ended at COM (0.187,0.170), past y_max 0.15 (verification.md:306).",
+    "modification": "Add a context field view_axes = {external: {right_xy, away_xy}, wrist: {right_xy, up_xy}} from the synchronized geometry on each request. In task_contract.regions, add code-owned direction_world_xy and relation_frame='external_view_at_plan_time'. Add one prompt sentence that references these fields and states: not the robot's own left/right, and not wrist-image left/right."
+   },
+   {
+    "item": "P0.5 Zero-call ray-cast sign test of the region part's pointed cell against the anchor",
+    "verdict": "modify",
+    "reason": "Unsound as a gate; acceptable only as a diagnostic. (1) The prompt defines x as 'the part's cell'. For a generic 'table: bare top surface' any table cell qualifies: t6_006 pointed at cell 43 \u2192 (-0.013,-0.125), which fails a +y test even though right_of is correct under P0. (2) x=0 in 2 of 5 recorded region plans (t6_009, t6_011), so the check cannot run. That 0 was honest: under the old rule the +x side was outside the external view. (3) At plan time the anchor reference is its own coarse cell. C61's centre is 4.7 cm from the true plate centre and C53's is 5.9 cm, against a plate radius of 6.9 cm. A cell covers about 8\u00d77 cm of table in the bottom row and 17\u00d712 cm in row 5. Shared rows or columns give exact ties: t6_007 under the old rule had (E-C).x = 0.000. (4) Plane-height error does not matter between two pointed cells, because positions on any horizontal plane scale about the camera nadir. It matters only against measured geometry. (5) Under viewer semantics the test reduces to image-space ordering of two cells the model picked from the same image, so it is mostly tautological. (6) With PLAN_REASKS=1, a false positive raised as a plan issue can end in invalid_plan, which makes it a veto.",
+    "evidence": "/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/raycast.py and raycast.txt. Relayout: E55\u2192(0.099,0.185), C61\u2192(0.187,0.034); under +y, (E-C)=+0.152 (pass); under the old +x rule, -0.088 (would flag). The image bottom edge meets the table at x\u22480.223; the plate +x edge is 0.218; the release point (0.29,-0.02) projects to v\u2248577, below the image. agent_speedup_v2.py:135 PLAN_REASKS=1.",
+    "modification": "Log it and draw it in the review UI only, with outcomes consistent / inconsistent / inconclusive (x=0; same cell, row or column; generic part text). Never raise it as a plan issue. If it is kept, the prompt must define a region part's x/w as its intended landing cell. Alternatively, drop it and draw the code-resolved direction arrow from the anchor cell in the review UI."
+   },
+   {
+    "item": "P0.6 Optional adjacency default for null-bounds '<side>_of' regions (user decision D9)",
+    "verdict": "modify",
+    "reason": "The evidence is wider than one task but mixed. Across the 5 anchor-relative LIBERO goal boxes, all suites: lateral alignment with the anchor centre holds 5/5. Placing the centre of mass just past the anchor edge lands inside 4/5 (t6 plate-right, K7 bowl-right, K6 mug-front, STUDY1 caddy-right). It fails for the libero_goal stove-front box, x\u2208[-0.09,-0.01], about 0.2 m past a stove at x=-0.41 with half-size \u22480.095. Some boxes overlap the anchor footprint (t6: y from 0.05 against plate edge 0.075; K7: 0.05 against 0.069), so the t6 pudding (half-extents 0.040\u00d70.023) must stay within about 3-5 cm of the plate edge. The executive's natural placement overshot twice (t6_007 first target y=0.20; t6_009 final 0.170). As written, P0.6 sits in the dormant resolver and has zero effect on uc7. In the native path it needs the held r_obj, so it belongs in aim_target, not region grounding, and _measure_goal still accepts any half-plane cell. Occupied neighbourhoods or a larger object push the spot outward.",
+    "evidence": "Region ranges in bddl_dir_tasks.txt, libero_goal/push_the_plate_to_the_front_of_the_stove.bddl:33-55, STUDY_SCENE1..._right_of_the_caddy.bddl:5-14,38-41 (caddy yaw \u03c0), and the KITCHEN_SCENE6/7 BDDL files. Object extents from /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/critique/asset_extent.py: plate r 0.069; pudding 0.081\u00d70.046; bowl r 0.041; caddy 0.15\u00d70.43; stove \u00b10.095 (collision geoms only, unverified against the visual mesh). Overshoot values from C_generality_reliability.md S4 Risk and verification.md:306. Code: spatial.py:299-351, planner.py:3127-3128.",
+    "modification": "If D9 is accepted, define 'beside' with no new constant: aligned with the anchor centre along the other axis, at the nearest free spot past the anchor edge whose clearance meets the existing M16 need (r_obj + max(M16_FLOOR_M, sigma)). Implement it in aim_target (choose the cell nearest the anchor, not nearest the region centroid) and as one executive sentence. Explicit bounds override it. If D9 is rejected, drop it; the uc7 fix does not depend on it."
+   },
+   {
+    "item": "P0.7 Verification: unit test, BDDL alignment harness, plan-only t4/t5/t6, live t6 then t4/t5",
+    "verdict": "modify",
+    "reason": "The ordering is right, but it misses the review wrist-image turn, the all-task effect of the prompt text (the spatial text is appended to every plan request), legacy 'frame':'world' plans, and freezing. Rule 5 accepts only an all-task sweep on one frozen build, so t4/t5 regression alone is not enough. RoboCasa coffee cannot tell the old and new rules apart: there image-right \u2248 +x and away \u2248 +y, so they nearly coincide. Part of the offline harness is already done: all 7 agentview definitions give right=(0,1), away=(-1,0), and every directional BDDL region and position word aligns.",
+    "evidence": "libero_cams.py output; bddl_dir_tasks.txt (38 files); 40/40 review requests with quarter_turns 0; RoboCasa coffee geometry; plans_summary.txt (regions occur only in t6 plans).",
+    "modification": "Add: (a) unit tests for P0.1 on the LIBERO definitions and the RoboCasa sample, including a degenerate top-down case. (b) A review-image test: the wrist turn k must make wrist image-right \u2248 external image-right (k=2 at the LIBERO start pose). (c) Plan-only runs on all 10 LIBERO-10 tasks, asserting no new regions for t3 'bottom drawer', t5 'back compartment', t4 left/right plates and t9 'behind open door', and that the t6 region resolves to +y. (d) Post-hoc truth: the first pudding release is inside x\u2208[0.10,0.20], y\u2208[0.05,0.15]. (e) A full 10-task live sweep on one frozen build, including t6 with both the official layout and the relayout. Use the BDDL harness offline only, never to tune constants."
+   }
+  ],
+  "missing_from_p0": [
+   "False wrist-image claim at review. The plan prompt says 'The wrist image is turned so that its left and right match the external image' (agent_speedup_v2_client.py:197-201), and the image label says 'turned' (:505). Yet request_meta.quarter_turns=0 in all 40 review plan requests across 39 review dirs, because turns() returns 0 when ctx.cal is None (agent_speedup_v2.py:591-596). At every LIBERO-10 start pose, wrist image-right = world -y and external = +y, so images 3/4 are the external view rotated 180\u00b0. Left/right words read from the wrist image come out reversed. Fix it with the same calibration plumbing as P0.2.",
+   "Plan-time calibration plumbing: R/initial_observation.json has only observation/image, observation/state, observation/wrist_image and prompt, and the plan request fields carry no geometry. The review needs the sim 'agent_geometry' op, and the result should be frozen into review artifacts for reproducibility.",
+   "Freezing and storage: the resolved direction should be stored at approval as code-owned data outside the model-echoed region JSON. framework.py:156-161 requires reviewed regions to be preserved verbatim, and PlanLock hashes the plan semantics. RoboCasa's external camera is robot-mounted, so a per-request recompute would rotate the meaning.",
+   "Executive contract: framework.py:110 passes regions raw with 'frame':'world' and no definition. Add the resolved vector and the relation frame there. The 'frame' enum (spatial.py:40, :95) is misleading next to viewer relations. Either rename it, which breaks validation of every recorded region plan, or redefine it as the bounds frame and document that.",
+   "Review UI: agent_speedup_v2_user_check.html:104-105 labels relations 'Right of anchor (world +x)', 'Behind anchor (world +y)' and so on, and :244 says the words 'follow world axes, not image directions'. A human reviewer would be told the opposite of P0. The default bounds are at :232. agent_speedup_v3.html:104-105 has the same labels.",
+   "Part text is the actual carrier of meaning, so do not rely on model-written world axes. Two runs whose text named +x (relayout, t6_009) made their first release on +x. t6_011 ('world right of striped plate') never moved the pudding. t6_007 ('table: bare top surface') went to +y and succeeded.",
+   "Exemptions belong in the prompt: vertical words (t3 'bottom drawer', 'top of the shelf', 'under the cabinet shelf') mean world z; object-intrinsic parts (t5 back compartment, t9 'interior cavity behind open door', caddy compartments) are not regions; t4 'left/right plate' is object selection, not a region.",
+   "Observability: under the old rule the destination was outside the external camera's view. On the table the image bottom edge is at x\u22480.223 and the plate +x edge at 0.218; the release (0.29,-0.02) projects to v\u2248577 and the t6_006 region centre to v\u2248521. The planner honestly set x=0 for E in t6_009 and t6_011. A viewer-defined relation keeps the destination in view, which is a general argument for P0. 'Pointed destination not visible' could also be logged as a diagnostic.",
+   "bounds_xy_m stays in world axes, relative to the anchor centroid. It must be explained through view_axes_world and shown in the UI in viewer terms; recorded region plans all used null bounds.",
+   "Post-finish behaviour: after finish (relayout request 14, step 1065) the executive took the reviewed +x relation as satisfied and switched to centring the mug. AGENT_INSTRUCTIONS:175-177 says to recheck unfinished spatial relations but not against the task sentence. Same root cause: the reviewed text overrode the sentence.",
+   "Egocentric trap: the LIBERO agentview sits at x\u2248+0.61 looking toward the robot, so viewer-right = robot-left. The P0.2 and P0.4 text must exclude the robot's own left/right."
+  ],
+  "regression_risks": [
+   "The planner may over-apply the new region definitions to object-intrinsic or selection words: t5 'back compartment', t3 'bottom drawer', t4 'left/right plate', t9 'behind open door'. Today only t6 plans contain regions (plans_summary.txt). Run plan-only checks on all 10 tasks.",
+   "P0.5 promoted to a plan issue would produce false positives: generic region pointing (t6_006 cell 43 fails +y) and exact row/column ties. With PLAN_REASKS=1 that can end in invalid_plan, so no episode runs.",
+   "P0.6 changes native targeting for every anchored null-bounds relation. Layouts like the libero_goal stove-front box (\u22480.2 m past the anchor) would fail, occupied neighbourhoods push the target outward, and _measure_goal still accepts any half-plane cell.",
+   "Renaming the 'frame' enum makes every recorded region plan fail validate_spatial_spec (spatial.py:95): t6_006/007/009/011 and the relayout. That affects replays and loading old plans into the review UI.",
+   "Putting per-scene numbers into static instructions would make the instructions differ per scene and break PROMPT_VERSION comparability and caching. Use request fields.",
+   "Dropping the negative METRIC sentence without a wrist caveat could lead the model to equate wrist-image axes with world axes: wrist image-right = world -y at start and rotates with hand yaw.",
+   "RoboCasa: recomputing the mapping per request from the robot-mounted camera would rotate relation meaning if the base moved. In the recorded coffee layout the old and new rules nearly coincide (right\u2248+x, away\u2248+y), so that run cannot detect a regression.",
+   "P0.3 without P0.6 or bounds would aim the native resolver at a far +y half-plane centroid (estimate, unverified). No recorded success uses the native region path, so nothing recorded regresses, but this must not be counted as a t6 fix.",
+   "Recorded successes look safe. t4_001, t5_001, t5_002, relayout task_7 and uc7 relayout t4/t5 have regions [] and viewer-consistent text ('left/right plate', 'rear middle cavity behind low front compartment', 'tall body in front of the other mugs'). t6_007 succeeded with axis-free text and the natural +y reading. No success depended on the +x rule."
+  ],
+  "rule_conflicts": [
+   "Rule 4: P0.5 as a plan issue is a new veto with demonstrated false positives (t6_006) and an inconclusive class (x=0 in 2 of 5 region plans; ties). Keep it diagnostic-only.",
+   "Rule 2: within LIBERO-10 only t6 needs P0.6. Cross-suite BDDL supports lateral alignment 5/5 and adjacency 4/5, but setting a gap constant from those boxes would be benchmark tuning. It is acceptable only if expressed through the existing measured-clearance rule (M16: r_obj + max(floor, sigma)) with no new threshold.",
+   "Rule 1: the BDDL alignment harness in P0.7 uses evaluator ground truth. That is fine as offline verification, but it must never reach the agent or set constants.",
+   "Rules 2 and 3: P0.2's request that the model write world axes in part text puts a measurement-rule result into model prose. The general capability is a code-computed axis from calibration shown to the model and the reviewer.",
+   "No conflict for P0.1, P0.2 (definition) and P0.4: they use only camera calibration (an allowed input under rule 1). They are a general mechanism recurring across t4 (left/right plates), t5 (back compartment) and t6 (right of plate), plus libero_90/goal wording, which satisfies rule 5."
+  ]
+ }
+}

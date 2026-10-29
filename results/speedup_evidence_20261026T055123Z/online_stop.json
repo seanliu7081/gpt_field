@@ -1,0 +1,22 @@
+{
+  "decision": "freeze_online_expansion",
+  "P5_status": "inconclusive",
+  "recorded_at_utc": "2026-10-26T07:41:16.267516+00:00",
+  "reason": "计划第十节：配对 trial_004/005 在同一初始计划请求阶段均达到900秒有效服务截止，未得到完成响应或有效计划；无新可检验原因证据，停止重复完整episode。保留 I/O 组件收益，未证伪控制机制。",
+  "evidence": [
+    "evaluations/trial_004/evidence_result.json",
+    "evaluations/trial_005/evidence_result.json",
+    "stop_rule_review.json",
+    "wrapper_offline_audit.json"
+  ],
+  "classification": "preparation_request_completion_latency_censored_cause_unresolved",
+  "infrastructure_retry_authorized_by_evidence": false,
+  "same_causal_defect_repairs": 0,
+  "reason_not_two_failed_control_repairs": "No controller fix attempted; stopping under repeated failures without new evidence, not claiming two repairs failed.",
+  "remaining_P5_originals_not_started": 14,
+  "P6_originals_not_started": 18,
+  "additional_online_runs_permitted_in_this_execution": false,
+  "remaining_analysis_allowed": true,
+  "policy_runtime_frozen": true,
+  "second_pair_initial_hash_matching": "unverified: B preparation did not persist complete initial observation hash; both used official t1 episode2 seed7"
+}

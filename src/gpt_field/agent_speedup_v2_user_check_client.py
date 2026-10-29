@@ -12,7 +12,8 @@ from dataclasses import dataclass, field
 
 from . import agent_speedup_v2 as base
 from .agent_speedup_v2 import AgentSpeedUpV2Policy, StepRunner
-from .agent_speedup_v2_client import AgentSpeedUpV2Client
+from .agent_speedup_v2_client import AgentSpeedUpV2Client, WORKED_EXAMPLE
+from .ordered_transport import ordered_dumps
 from .agent_speedup_v2_plan import PlanIssue
 from .agent_speedup_v2_user_check_plan import parse_plan, native_plan, variant_plan_schema, with_extensions, validate_plan
 from .agent_speedup_v2_user_check import canonical_sha256, plan_validation, semantic_plan
@@ -20,8 +21,32 @@ from .agent_speedup_v2_user_check_framework import FRAMEWORK_VERSION, SKILL_CONT
 from .agent_speedup_v2_user_check_runtime import FrameworkRunnerMixin, StableScene, compact_evidence
 
 
-PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-5"
+PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-7.1"
 USER_CHECK_REASONING_EFFORT = "high"
+USER_CHECK_REASONING_EFFORTS = ("high", "xhigh")
+
+COMPACT_PLAN_INSTRUCTIONS = """
+OUTPUT SERIALIZATION. Emit exactly one compact JSON object conforming to the
+schema. Do not indent or align fields, insert blank lines, or pad between tokens.
+Use ordinary spaces inside text values where needed. Finish immediately after
+the closing brace; do not append whitespace. Keep every required field and the
+complete requested plan, including every task object and unfinished goal.
+This changes formatting, not task content. regions and placement_goals must
+always be present; use [] when no extension is needed.
+""".strip()
+
+
+def user_check_worked_example():
+    """Complete variant example without changing the baseline client's example."""
+    return {**copy.deepcopy(WORKED_EXAMPLE), "regions": [], "placement_goals": []}
+
+
+def validate_reasoning_effort(value):
+    if value not in USER_CHECK_REASONING_EFFORTS:
+        raise ValueError("User-check reasoning effort must be high or xhigh")
+    return value
+
+
 FORBIDDEN_REPAIRS = frozenset(("insert_step", "skip_step", "swap_next", "replan"))
 GROUNDING_INSTRUCTIONS = """
 USER CHECK EXECUTION. The user has approved the exact user_approved_plan.
@@ -106,11 +131,24 @@ verify capabilities do not add new macro do values to the plan schema.
 METRIC_INSTRUCTIONS = """
 METRIC REASONING IS ALLOWED. You may reason about and describe directions,
 distances, heights, angles and coordinates when useful. State the frame and
-units. Image pixels/cells are not world coordinates. World +z is up; do not
-assume image left/right is world -x/+x. Distinguish a visual estimate from a
-measurement. Keep the existing symbolic plan schema: metric prose alone does
+units. Image pixels/cells are not world coordinates. Image left/right/up/down
+are not world axes; direction words are judged as seen in the external image
+(image 1); convert to world coordinates with calibration. World +z is up.
+Distinguish a visual estimate from a measurement. Keep the existing symbolic plan schema: metric prose alone does
 not command motion. During execution, repair/review can issue local_motion.
 """
+
+PLAN_METRIC_INSTRUCTIONS = METRIC_INSTRUCTIONS.replace(
+    "Image left/right/up/down\nare not world axes; direction words are judged as seen in the external image\n"
+    "(image 1); convert to world coordinates with calibration. World +z is up.",
+    "Image left/right are not world axes and you have no calibration: give directions only in "
+    "image-1 viewer words; distances and heights may be given in metres. World +z is up.")
+
+# Only the user-check planner changes these words. The baseline/v3 snapshot and
+# the actual image rotations/grid transformations remain untouched by uc7.1.
+PLANNING_WRIST_INSTRUCTIONS = (
+    "Images 3/4 are the wrist camera, turned by the number of quarter turns stated in the request; "
+    "a quarter turn is coarse and never a perspective match; judge direction words only in image 1.")
 
 LOCAL_CONTROL_INSTRUCTIONS = """
 LOCAL CONTROL (in addition to the symbolic repair actions): choose local_motion
@@ -212,6 +250,7 @@ class PlanLock:
     conflict: dict | None = None
     allow_auto_replan: bool = True
     task_prompt: str = ""
+    view_frame: dict | None = None
     _approved: dict = field(init=False, repr=False)
     _semantic_sha256: str = field(init=False, repr=False)
     _current_plan: dict = field(init=False, repr=False)
@@ -232,6 +271,8 @@ class PlanLock:
     _checkpoint: dict = field(default_factory=dict, init=False, repr=False)
 
     def __post_init__(self):
+        from .agent_speedup_v2_user_check_spatial import validate_view_frame
+        self.view_frame = validate_view_frame(self.view_frame)
         raw = copy.deepcopy(self.approved_plan)
         if parse_plan(raw).to_json() != raw:
             raise ValueError("Approved plan must round-trip without changes")
@@ -326,6 +367,7 @@ class PlanLock:
             "initial_approved_plan": self._approved,
             "initial_approved_plan_sha256": canonical_sha256(self._approved),
             "initial_approved_semantic_sha256": self._semantic_sha256,
+            "view_frame": self.view_frame,
             "initial_plan_grounded": self._initial_plan_grounded,
             "current_plan": self._current_plan,
             "plan_revision_count": sum(not row["user_approved"] for row in self._revisions),
@@ -337,18 +379,26 @@ class PlanLock:
 
 
 class UserCheckV2Client(AgentSpeedUpV2Client):
-    """Variant-only high effort and metric language; the native plan stays intact."""
+    """Variant effort and metric language; the native plan stays intact."""
 
     prompt_version = PROMPT_VERSION
     reasoning_effort = USER_CHECK_REASONING_EFFORT
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, reasoning_effort=USER_CHECK_REASONING_EFFORT, **kwargs):
+        reasoning_effort = validate_reasoning_effort(reasoning_effort)
         super().__init__(*args, **kwargs)
-        self.reasoning_effort = USER_CHECK_REASONING_EFFORT
+        self.reasoning_effort = reasoning_effort
         from .agent_speedup_v2_user_check_spatial import SPATIAL_INSTRUCTIONS
         for kind in ("plan", "replan"):
             self._schemas[kind] = variant_plan_schema()
-            self._instruction_text[kind] += SPATIAL_INSTRUCTIONS
+            self._instruction_text[kind] = self._instruction_text[kind].replace(
+                ordered_dumps(WORKED_EXAMPLE), ordered_dumps(user_check_worked_example()))
+            self._instruction_text[kind] += "\n" + SPATIAL_INSTRUCTIONS
+            self._instruction_text[kind] = self._instruction_text[kind].replace(
+                "The wrist image is turned so that its left and right match the external image; "
+                "the request names the edge where the robot's own fingertips appear (they are never a part).",
+                PLANNING_WRIST_INSTRUCTIONS + " The request names the edge where the robot's own "
+                "fingertips appear (they are never a part).")
         forbidden = "Never give directions, distances, heights, angles or coordinates."
         for kind in ("plan", "replan", "repair", "review"):
             self._instruction_text[kind] = self._instruction_text[kind].replace(forbidden, "")
@@ -356,7 +406,22 @@ class UserCheckV2Client(AgentSpeedUpV2Client):
                 "you name what matters and which physical relations to establish, never how to move.",
                 "you name what matters and which physical relations to establish; "
                 "during recovery you may also select short local motions.")
-            self._instruction_text[kind] += METRIC_INSTRUCTIONS
+            self._instruction_text[kind] += (PLAN_METRIC_INSTRUCTIONS if kind in ("plan", "replan")
+                                             else METRIC_INSTRUCTIONS)
+        for kind in ("plan", "replan"):
+            self._instruction_text[kind] += "\n" + COMPACT_PLAN_INSTRUCTIONS
+
+    def _plan_request(self, *args, **kwargs):
+        kind, request, meta = super()._plan_request(*args, **kwargs)
+        k = meta["quarter_turns"]
+        turn_text = ("not turned; not aligned with image 1" if k == 0 else
+                     f"turned {k} quarter turns counter-clockwise; coarse rotation, not a perspective match")
+        edge = meta["fingertip_edge"]
+        request["images"][2] = (
+            f"Image 3: wrist camera, clean ({turn_text}; fingertips at the {edge} edge):",
+            request["images"][2][1])
+        request["fields"]["wrist_quarter_turns"] = k
+        return kind, request, meta
 
     def validate_response(self, data, grid):
         if self._request_kind not in ("plan", "replan"):
@@ -771,6 +836,7 @@ class ReviewedV2Policy(AgentSpeedUpV2Policy):
 
     def reset(self):
         super().reset()
+        self.ctx.user_check_view_frame = copy.deepcopy(self.plan_lock.view_frame)
         from .agent_speedup_v2_user_check_local import LocalRecoveryFulfiller
         previous = self.fulfiller
         fulfiller = LocalRecoveryFulfiller(self.client, self._events, clock=self._clock, ctx=self.ctx)

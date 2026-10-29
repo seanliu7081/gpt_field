@@ -1,0 +1,11824 @@
+[
+{
+"run": "t0_001",
+"k": 1,
+"step": 0,
+"latency_s": 31.46,
+"server_s": 30,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6606,
+"cached_tokens": 2304,
+"output_tokens": 662,
+"reasoning_tokens": 451,
+"visible_tokens": 211,
+"out_chars": 799,
+"prose_chars": 536,
+"exec_chars": 174,
+"obs_text_chars": 13298,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 1,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1895,
+"reviewed_goal_contract": 2713
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1095,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t0_001",
+"k": 2,
+"step": 39,
+"latency_s": 12.06,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+false
+],
+[
+"approach",
+"contact",
+80,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 12509,
+"cached_tokens": 2304,
+"output_tokens": 333,
+"reasoning_tokens": 42,
+"visible_tokens": 291,
+"out_chars": 1073,
+"prose_chars": 388,
+"exec_chars": 596,
+"obs_text_chars": 17783,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 2,
+"robot_pose_wxyz": 171,
+"finger_joints_m": 42,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 484,
+"last_feedback": 3024,
+"recent_feedback": 2125,
+"macro": 2269,
+"execution": 2613,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t0_001",
+"k": 3,
+"step": 178,
+"latency_s": 13.09,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+85,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 18646,
+"cached_tokens": 2304,
+"output_tokens": 404,
+"reasoning_tokens": 122,
+"visible_tokens": 282,
+"out_chars": 1065,
+"prose_chars": 507,
+"exec_chars": 469,
+"obs_text_chars": 19742,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 43,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 344,
+"last_feedback": 3599,
+"recent_feedback": 2985,
+"macro": 2270,
+"execution": 3275,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t0_001",
+"k": 4,
+"step": 305,
+"latency_s": 14.78,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"approach",
+"contact",
+75,
+false
+],
+[
+"approach",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 24973,
+"cached_tokens": 2304,
+"output_tokens": 394,
+"reasoning_tokens": 132,
+"visible_tokens": 262,
+"out_chars": 998,
+"prose_chars": 457,
+"exec_chars": 452,
+"obs_text_chars": 20255,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 43,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 571,
+"model_belief": 438,
+"last_feedback": 3482,
+"recent_feedback": 3535,
+"macro": 2270,
+"execution": 3288,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t0_001",
+"k": 5,
+"step": 390,
+"latency_s": 11.17,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 31173,
+"cached_tokens": 2304,
+"output_tokens": 233,
+"reasoning_tokens": 24,
+"visible_tokens": 209,
+"out_chars": 856,
+"prose_chars": 470,
+"exec_chars": 297,
+"obs_text_chars": 19491,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 424,
+"last_feedback": 3305,
+"recent_feedback": 3277,
+"macro": 2270,
+"execution": 2957,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t0_001",
+"k": 6,
+"step": 439,
+"latency_s": 12.82,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 37193,
+"cached_tokens": 2304,
+"output_tokens": 290,
+"reasoning_tokens": 57,
+"visible_tokens": 233,
+"out_chars": 856,
+"prose_chars": 441,
+"exec_chars": 326,
+"obs_text_chars": 19442,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 425,
+"last_feedback": 3340,
+"recent_feedback": 3112,
+"macro": 2270,
+"execution": 3030,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t0_001",
+"k": 7,
+"step": 508,
+"latency_s": 11.44,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+50,
+false
+],
+[
+"approach",
+"contact",
+75,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 42705,
+"cached_tokens": 0,
+"output_tokens": 350,
+"reasoning_tokens": 47,
+"visible_tokens": 303,
+"out_chars": 1090,
+"prose_chars": 401,
+"exec_chars": 600,
+"obs_text_chars": 19595,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 42,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 410,
+"last_feedback": 3385,
+"recent_feedback": 3258,
+"macro": 2270,
+"execution": 3006,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 19
+},
+{
+"run": "t0_001",
+"k": 8,
+"step": 628,
+"latency_s": 12.87,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 48253,
+"cached_tokens": 2304,
+"output_tokens": 353,
+"reasoning_tokens": 123,
+"visible_tokens": 230,
+"out_chars": 835,
+"prose_chars": 427,
+"exec_chars": 319,
+"obs_text_chars": 19581,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 357,
+"last_feedback": 3595,
+"recent_feedback": 2820,
+"macro": 2270,
+"execution": 3275,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 22
+},
+{
+"run": "t0_001",
+"k": 9,
+"step": 715,
+"latency_s": 9.39,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"approach",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 53732,
+"cached_tokens": 0,
+"output_tokens": 240,
+"reasoning_tokens": 31,
+"visible_tokens": 209,
+"out_chars": 813,
+"prose_chars": 418,
+"exec_chars": 306,
+"obs_text_chars": 19178,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 573,
+"model_belief": 380,
+"last_feedback": 3407,
+"recent_feedback": 2860,
+"macro": 2270,
+"execution": 3017,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 25
+},
+{
+"run": "t0_001",
+"k": 10,
+"step": 758,
+"latency_s": 30.17,
+"server_s": 22,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+85,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 58837,
+"cached_tokens": 2304,
+"output_tokens": 470,
+"reasoning_tokens": 239,
+"visible_tokens": 231,
+"out_chars": 905,
+"prose_chars": 504,
+"exec_chars": 312,
+"obs_text_chars": 18451,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1881,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 358,
+"last_feedback": 2911,
+"recent_feedback": 2863,
+"macro": 2270,
+"execution": 2791,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 28
+},
+{
+"run": "t0_001",
+"k": 11,
+"step": 854,
+"latency_s": 22.67,
+"server_s": 21,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"approach",
+"contact",
+85,
+false
+],
+[
+"approach",
+"contact",
+85,
+true
+]
+],
+"input_tokens": 64436,
+"cached_tokens": 2304,
+"output_tokens": 587,
+"reasoning_tokens": 388,
+"visible_tokens": 199,
+"out_chars": 810,
+"prose_chars": 423,
+"exec_chars": 298,
+"obs_text_chars": 19266,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1886,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 434,
+"last_feedback": 3416,
+"recent_feedback": 2867,
+"macro": 2270,
+"execution": 3026,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 31
+},
+{
+"run": "t0_001",
+"k": 12,
+"step": 926,
+"latency_s": 17.09,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+85,
+false
+],
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 70118,
+"cached_tokens": 2304,
+"output_tokens": 447,
+"reasoning_tokens": 210,
+"visible_tokens": 237,
+"out_chars": 937,
+"prose_chars": 534,
+"exec_chars": 314,
+"obs_text_chars": 19074,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 359,
+"last_feedback": 3290,
+"recent_feedback": 2856,
+"macro": 2270,
+"execution": 3047,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 34
+},
+{
+"run": "t0_001",
+"k": 13,
+"step": 1027,
+"latency_s": 14.75,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"approach",
+"contact",
+80,
+false
+],
+[
+"approach",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 75736,
+"cached_tokens": 0,
+"output_tokens": 297,
+"reasoning_tokens": 90,
+"visible_tokens": 207,
+"out_chars": 825,
+"prose_chars": 437,
+"exec_chars": 299,
+"obs_text_chars": 19367,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 4,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 477,
+"last_feedback": 3391,
+"recent_feedback": 2943,
+"macro": 2271,
+"execution": 3030,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 37
+},
+{
+"run": "t0_001",
+"k": 14,
+"step": 1080,
+"latency_s": 12.27,
+"server_s": 11,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 80900,
+"cached_tokens": 2304,
+"output_tokens": 309,
+"reasoning_tokens": 88,
+"visible_tokens": 221,
+"out_chars": 954,
+"prose_chars": 568,
+"exec_chars": 297,
+"obs_text_chars": 18459,
+"obs_top": {
+"request": 7,
+"task": 63,
+"step": 4,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 44,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 399,
+"last_feedback": 2897,
+"recent_feedback": 2849,
+"macro": 2271,
+"execution": 2780,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 40
+},
+{
+"run": "t1_001",
+"k": 1,
+"step": 0,
+"latency_s": 17.87,
+"server_s": 17,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 6544,
+"cached_tokens": 0,
+"output_tokens": 558,
+"reasoning_tokens": 340,
+"visible_tokens": 218,
+"out_chars": 853,
+"prose_chars": 595,
+"exec_chars": 169,
+"obs_text_chars": 13134,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 1,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 41,
+"geometry": 1894,
+"reviewed_goal_contract": 2536
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 592,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1103,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t1_001",
+"k": 2,
+"step": 34,
+"latency_s": 13.76,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 12334,
+"cached_tokens": 0,
+"output_tokens": 397,
+"reasoning_tokens": 86,
+"visible_tokens": 311,
+"out_chars": 1115,
+"prose_chars": 420,
+"exec_chars": 606,
+"obs_text_chars": 17799,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 2,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 518,
+"last_feedback": 3034,
+"recent_feedback": 2124,
+"macro": 2269,
+"execution": 2608,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t1_001",
+"k": 3,
+"step": 100,
+"latency_s": 14.79,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 18290,
+"cached_tokens": 2304,
+"output_tokens": 323,
+"reasoning_tokens": 121,
+"visible_tokens": 202,
+"out_chars": 827,
+"prose_chars": 439,
+"exec_chars": 299,
+"obs_text_chars": 18639,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 42,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 371,
+"last_feedback": 3288,
+"recent_feedback": 2481,
+"macro": 2270,
+"execution": 2964,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t1_001",
+"k": 4,
+"step": 156,
+"latency_s": 13.34,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 24491,
+"cached_tokens": 0,
+"output_tokens": 359,
+"reasoning_tokens": 135,
+"visible_tokens": 224,
+"out_chars": 871,
+"prose_chars": 464,
+"exec_chars": 318,
+"obs_text_chars": 19894,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 397,
+"last_feedback": 3354,
+"recent_feedback": 3585,
+"macro": 2270,
+"execution": 3029,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t1_001",
+"k": 5,
+"step": 241,
+"latency_s": 17.57,
+"server_s": 16,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"contact",
+70,
+false
+],
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 30700,
+"cached_tokens": 2304,
+"output_tokens": 449,
+"reasoning_tokens": 132,
+"visible_tokens": 317,
+"out_chars": 1167,
+"prose_chars": 471,
+"exec_chars": 605,
+"obs_text_chars": 19703,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 569,
+"model_belief": 408,
+"last_feedback": 3406,
+"recent_feedback": 3363,
+"macro": 2270,
+"execution": 3015,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t1_001",
+"k": 6,
+"step": 300,
+"latency_s": 10.27,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 36937,
+"cached_tokens": 0,
+"output_tokens": 231,
+"reasoning_tokens": 19,
+"visible_tokens": 212,
+"out_chars": 872,
+"prose_chars": 480,
+"exec_chars": 303,
+"obs_text_chars": 19389,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 415,
+"last_feedback": 3287,
+"recent_feedback": 3190,
+"macro": 2270,
+"execution": 2964,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t1_001",
+"k": 7,
+"step": 354,
+"latency_s": 10.88,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 42395,
+"cached_tokens": 0,
+"output_tokens": 306,
+"reasoning_tokens": 75,
+"visible_tokens": 231,
+"out_chars": 847,
+"prose_chars": 442,
+"exec_chars": 314,
+"obs_text_chars": 19548,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 422,
+"last_feedback": 3347,
+"recent_feedback": 3238,
+"macro": 2270,
+"execution": 3025,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 19
+},
+{
+"run": "t1_001",
+"k": 8,
+"step": 456,
+"latency_s": 15.48,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 47843,
+"cached_tokens": 2304,
+"output_tokens": 446,
+"reasoning_tokens": 123,
+"visible_tokens": 323,
+"out_chars": 1214,
+"prose_chars": 518,
+"exec_chars": 607,
+"obs_text_chars": 19246,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 172,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 385,
+"last_feedback": 3397,
+"recent_feedback": 2915,
+"macro": 2270,
+"execution": 3019,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 22
+},
+{
+"run": "t1_001",
+"k": 9,
+"step": 494,
+"latency_s": 18.86,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+55,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 53165,
+"cached_tokens": 2304,
+"output_tokens": 406,
+"reasoning_tokens": 129,
+"visible_tokens": 277,
+"out_chars": 1073,
+"prose_chars": 518,
+"exec_chars": 466,
+"obs_text_chars": 18518,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 431,
+"last_feedback": 2912,
+"recent_feedback": 2854,
+"macro": 2270,
+"execution": 2785,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 25
+},
+{
+"run": "t1_001",
+"k": 10,
+"step": 624,
+"latency_s": 10.37,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+40,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 58782,
+"cached_tokens": 2304,
+"output_tokens": 286,
+"reasoning_tokens": 37,
+"visible_tokens": 249,
+"out_chars": 922,
+"prose_chars": 380,
+"exec_chars": 453,
+"obs_text_chars": 19586,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 443,
+"last_feedback": 3477,
+"recent_feedback": 2846,
+"macro": 2270,
+"execution": 3292,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 28
+},
+{
+"run": "t1_001",
+"k": 11,
+"step": 697,
+"latency_s": 15.92,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 64281,
+"cached_tokens": 2304,
+"output_tokens": 414,
+"reasoning_tokens": 135,
+"visible_tokens": 279,
+"out_chars": 1049,
+"prose_chars": 490,
+"exec_chars": 469,
+"obs_text_chars": 19536,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 346,
+"last_feedback": 3520,
+"recent_feedback": 2858,
+"macro": 2270,
+"execution": 3282,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 31
+},
+{
+"run": "t1_001",
+"k": 12,
+"step": 828,
+"latency_s": 13.98,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+50,
+false
+],
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 69889,
+"cached_tokens": 0,
+"output_tokens": 383,
+"reasoning_tokens": 77,
+"visible_tokens": 306,
+"out_chars": 1140,
+"prose_chars": 439,
+"exec_chars": 612,
+"obs_text_chars": 19557,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1885,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 573,
+"model_belief": 440,
+"last_feedback": 3465,
+"recent_feedback": 2856,
+"macro": 2270,
+"execution": 3285,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 34
+},
+{
+"run": "t1_001",
+"k": 13,
+"step": 891,
+"latency_s": 9.41,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 75354,
+"cached_tokens": 2304,
+"output_tokens": 223,
+"reasoning_tokens": 9,
+"visible_tokens": 214,
+"out_chars": 863,
+"prose_chars": 470,
+"exec_chars": 304,
+"obs_text_chars": 19025,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 379,
+"last_feedback": 3293,
+"recent_feedback": 2856,
+"macro": 2270,
+"execution": 2971,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 37
+},
+{
+"run": "t2_002",
+"k": 1,
+"step": 0,
+"latency_s": 22.98,
+"server_s": 19,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6713,
+"cached_tokens": 2304,
+"output_tokens": 474,
+"reasoning_tokens": 282,
+"visible_tokens": 192,
+"out_chars": 698,
+"prose_chars": 436,
+"exec_chars": 172,
+"obs_text_chars": 13598,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 1,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1893,
+"reviewed_goal_contract": 3049
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1087,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t2_002",
+"k": 2,
+"step": 48,
+"latency_s": 11.86,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 12426,
+"cached_tokens": 2304,
+"output_tokens": 279,
+"reasoning_tokens": 126,
+"visible_tokens": 153,
+"out_chars": 595,
+"prose_chars": 338,
+"exec_chars": 168,
+"obs_text_chars": 17707,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 2,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 573,
+"model_belief": 413,
+"last_feedback": 3038,
+"recent_feedback": 2125,
+"macro": 2269,
+"execution": 2617,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t2_002",
+"k": 3,
+"step": 106,
+"latency_s": 9.4,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"approach",
+"contact",
+45,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+true
+]
+],
+"input_tokens": 18030,
+"cached_tokens": 0,
+"output_tokens": 211,
+"reasoning_tokens": 27,
+"visible_tokens": 184,
+"out_chars": 721,
+"prose_chars": 337,
+"exec_chars": 295,
+"obs_text_chars": 18122,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 326,
+"last_feedback": 3032,
+"recent_feedback": 2634,
+"macro": 2270,
+"execution": 2611,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t2_002",
+"k": 4,
+"step": 147,
+"latency_s": 8.82,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 24090,
+"cached_tokens": 2304,
+"output_tokens": 159,
+"reasoning_tokens": 0,
+"visible_tokens": 159,
+"out_chars": 605,
+"prose_chars": 328,
+"exec_chars": 188,
+"obs_text_chars": 19758,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 44,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 320,
+"last_feedback": 3336,
+"recent_feedback": 3475,
+"macro": 2270,
+"execution": 3093,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t2_002",
+"k": 5,
+"step": 167,
+"latency_s": 6.58,
+"server_s": 5,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 29807,
+"cached_tokens": 17792,
+"output_tokens": 155,
+"reasoning_tokens": 0,
+"visible_tokens": 155,
+"out_chars": 584,
+"prose_chars": 307,
+"exec_chars": 188,
+"obs_text_chars": 18758,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 302,
+"last_feedback": 3046,
+"recent_feedback": 3266,
+"macro": 2270,
+"execution": 2623,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 12
+},
+{
+"run": "t2_002",
+"k": 6,
+"step": 199,
+"latency_s": 18.89,
+"server_s": 18,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 35483,
+"cached_tokens": 0,
+"output_tokens": 520,
+"reasoning_tokens": 252,
+"visible_tokens": 268,
+"out_chars": 1009,
+"prose_chars": 448,
+"exec_chars": 472,
+"obs_text_chars": 18686,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 44,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 270,
+"last_feedback": 2910,
+"recent_feedback": 3193,
+"macro": 2270,
+"execution": 2788,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 14
+},
+{
+"run": "t2_002",
+"k": 7,
+"step": 247,
+"latency_s": 7.71,
+"server_s": 6,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 41355,
+"cached_tokens": 2304,
+"output_tokens": 211,
+"reasoning_tokens": 0,
+"visible_tokens": 211,
+"out_chars": 781,
+"prose_chars": 353,
+"exec_chars": 339,
+"obs_text_chars": 20072,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 415,
+"last_feedback": 3571,
+"recent_feedback": 3244,
+"macro": 2270,
+"execution": 3328,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 17
+},
+{
+"run": "t2_002",
+"k": 8,
+"step": 316,
+"latency_s": 29.57,
+"server_s": 25,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+55,
+true
+]
+],
+"input_tokens": 46662,
+"cached_tokens": 2304,
+"output_tokens": 677,
+"reasoning_tokens": 484,
+"visible_tokens": 193,
+"out_chars": 727,
+"prose_chars": 451,
+"exec_chars": 187,
+"obs_text_chars": 19082,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 42,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 339,
+"last_feedback": 3385,
+"recent_feedback": 2828,
+"macro": 2270,
+"execution": 3010,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 19
+},
+{
+"run": "t2_002",
+"k": 9,
+"step": 332,
+"latency_s": 10.98,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 52215,
+"cached_tokens": 2304,
+"output_tokens": 214,
+"reasoning_tokens": 62,
+"visible_tokens": 152,
+"out_chars": 568,
+"prose_chars": 311,
+"exec_chars": 168,
+"obs_text_chars": 18474,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1901,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 427,
+"last_feedback": 3033,
+"recent_feedback": 2867,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 22
+},
+{
+"run": "t2_002",
+"k": 10,
+"step": 395,
+"latency_s": 9.5,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 57283,
+"cached_tokens": 2304,
+"output_tokens": 201,
+"reasoning_tokens": 22,
+"visible_tokens": 179,
+"out_chars": 693,
+"prose_chars": 305,
+"exec_chars": 299,
+"obs_text_chars": 18359,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 299,
+"last_feedback": 3045,
+"recent_feedback": 2870,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 25
+},
+{
+"run": "t2_002",
+"k": 11,
+"step": 438,
+"latency_s": 20.86,
+"server_s": 20,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 62572,
+"cached_tokens": 2304,
+"output_tokens": 585,
+"reasoning_tokens": 341,
+"visible_tokens": 244,
+"out_chars": 926,
+"prose_chars": 515,
+"exec_chars": 322,
+"obs_text_chars": 19051,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 278,
+"last_feedback": 3357,
+"recent_feedback": 2864,
+"macro": 2270,
+"execution": 3032,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 28
+},
+{
+"run": "t2_002",
+"k": 12,
+"step": 515,
+"latency_s": 12.86,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 68301,
+"cached_tokens": 0,
+"output_tokens": 187,
+"reasoning_tokens": 28,
+"visible_tokens": 159,
+"out_chars": 649,
+"prose_chars": 392,
+"exec_chars": 168,
+"obs_text_chars": 19268,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 470,
+"last_feedback": 3395,
+"recent_feedback": 2866,
+"macro": 2270,
+"execution": 3021,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 31
+},
+{
+"run": "t2_002",
+"k": 13,
+"step": 571,
+"latency_s": 11.54,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 73337,
+"cached_tokens": 0,
+"output_tokens": 222,
+"reasoning_tokens": 79,
+"visible_tokens": 143,
+"out_chars": 576,
+"prose_chars": 331,
+"exec_chars": 156,
+"obs_text_chars": 18402,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 44,
+"geometry": 1897,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 359,
+"last_feedback": 3039,
+"recent_feedback": 2866,
+"macro": 2270,
+"execution": 2623,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 34
+},
+{
+"run": "t2_002",
+"k": 14,
+"step": 591,
+"latency_s": 21.41,
+"server_s": 19,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 78398,
+"cached_tokens": 2304,
+"output_tokens": 497,
+"reasoning_tokens": 332,
+"visible_tokens": 165,
+"out_chars": 695,
+"prose_chars": 450,
+"exec_chars": 156,
+"obs_text_chars": 18333,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 45,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 295,
+"last_feedback": 3027,
+"recent_feedback": 2877,
+"macro": 2270,
+"execution": 2611,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 37
+},
+{
+"run": "t2_002",
+"k": 15,
+"step": 618,
+"latency_s": 16.46,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+30,
+false
+],
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"wait",
+"contact",
+15,
+true
+]
+],
+"input_tokens": 83753,
+"cached_tokens": 0,
+"output_tokens": 272,
+"reasoning_tokens": 38,
+"visible_tokens": 234,
+"out_chars": 927,
+"prose_chars": 414,
+"exec_chars": 424,
+"obs_text_chars": 18438,
+"obs_top": {
+"request": 7,
+"task": 46,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 407,
+"last_feedback": 3028,
+"recent_feedback": 2876,
+"macro": 2270,
+"execution": 2611,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 41
+},
+{
+"run": "t3_003",
+"k": 1,
+"step": 0,
+"latency_s": 33.34,
+"server_s": 30,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6971,
+"cached_tokens": 0,
+"output_tokens": 611,
+"reasoning_tokens": 410,
+"visible_tokens": 201,
+"out_chars": 770,
+"prose_chars": 510,
+"exec_chars": 171,
+"obs_text_chars": 14471,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1900,
+"reviewed_goal_contract": 3871
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1097,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t3_003",
+"k": 2,
+"step": 58,
+"latency_s": 18.52,
+"server_s": 18,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 12817,
+"cached_tokens": 0,
+"output_tokens": 332,
+"reasoning_tokens": 115,
+"visible_tokens": 217,
+"out_chars": 773,
+"prose_chars": 356,
+"exec_chars": 328,
+"obs_text_chars": 17780,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 2,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 573,
+"model_belief": 467,
+"last_feedback": 3037,
+"recent_feedback": 2126,
+"macro": 2269,
+"execution": 2613,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t3_003",
+"k": 3,
+"step": 110,
+"latency_s": 17.1,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 18695,
+"cached_tokens": 0,
+"output_tokens": 281,
+"reasoning_tokens": 134,
+"visible_tokens": 147,
+"out_chars": 629,
+"prose_chars": 427,
+"exec_chars": 0,
+"obs_text_chars": 18620,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 43,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 590,
+"model_belief": 327,
+"last_feedback": 3290,
+"recent_feedback": 2481,
+"macro": 2270,
+"execution": 2964,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t3_003",
+"k": 4,
+"step": 115,
+"latency_s": 13.61,
+"server_s": 12,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+50,
+false
+],
+[
+"move_to_pose",
+"transit",
+60,
+true
+]
+],
+"input_tokens": 24143,
+"cached_tokens": 0,
+"output_tokens": 310,
+"reasoning_tokens": 98,
+"visible_tokens": 212,
+"out_chars": 791,
+"prose_chars": 379,
+"exec_chars": 323,
+"obs_text_chars": 17291,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 390,
+"last_feedback": 1291,
+"recent_feedback": 3110,
+"macro": 2270,
+"execution": 2965,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t3_003",
+"k": 5,
+"step": 154,
+"latency_s": 17.66,
+"server_s": 16,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 30280,
+"cached_tokens": 0,
+"output_tokens": 468,
+"reasoning_tokens": 186,
+"visible_tokens": 282,
+"out_chars": 980,
+"prose_chars": 377,
+"exec_chars": 514,
+"obs_text_chars": 19667,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 43,
+"geometry": 1904,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 357,
+"last_feedback": 3387,
+"recent_feedback": 3360,
+"macro": 2270,
+"execution": 3010,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t3_003",
+"k": 6,
+"step": 280,
+"latency_s": 8.66,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 36605,
+"cached_tokens": 0,
+"output_tokens": 176,
+"reasoning_tokens": 0,
+"visible_tokens": 176,
+"out_chars": 697,
+"prose_chars": 310,
+"exec_chars": 298,
+"obs_text_chars": 19835,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 42,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 355,
+"last_feedback": 3465,
+"recent_feedback": 3200,
+"macro": 2270,
+"execution": 3281,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t3_003",
+"k": 7,
+"step": 325,
+"latency_s": 17.76,
+"server_s": 16,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+55,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 41994,
+"cached_tokens": 0,
+"output_tokens": 401,
+"reasoning_tokens": 184,
+"visible_tokens": 217,
+"out_chars": 842,
+"prose_chars": 433,
+"exec_chars": 320,
+"obs_text_chars": 19509,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 45,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 296,
+"last_feedback": 3353,
+"recent_feedback": 3278,
+"macro": 2270,
+"execution": 3032,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t3_003",
+"k": 8,
+"step": 393,
+"latency_s": 13.2,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 47492,
+"cached_tokens": 0,
+"output_tokens": 265,
+"reasoning_tokens": 39,
+"visible_tokens": 226,
+"out_chars": 951,
+"prose_chars": 560,
+"exec_chars": 302,
+"obs_text_chars": 19208,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 46,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 410,
+"last_feedback": 3399,
+"recent_feedback": 2854,
+"macro": 2270,
+"execution": 3015,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 21
+},
+{
+"run": "t3_003",
+"k": 9,
+"step": 464,
+"latency_s": 22.97,
+"server_s": 21,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 52836,
+"cached_tokens": 0,
+"output_tokens": 507,
+"reasoning_tokens": 219,
+"visible_tokens": 288,
+"out_chars": 1062,
+"prose_chars": 496,
+"exec_chars": 477,
+"obs_text_chars": 19132,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 43,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 509,
+"last_feedback": 3243,
+"recent_feedback": 2880,
+"macro": 2270,
+"execution": 2977,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 24
+},
+{
+"run": "t3_003",
+"k": 10,
+"step": 492,
+"latency_s": 21.71,
+"server_s": 20,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 58234,
+"cached_tokens": 0,
+"output_tokens": 466,
+"reasoning_tokens": 280,
+"visible_tokens": 186,
+"out_chars": 734,
+"prose_chars": 462,
+"exec_chars": 183,
+"obs_text_chars": 18582,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 42,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 479,
+"last_feedback": 2911,
+"recent_feedback": 2879,
+"macro": 2270,
+"execution": 2777,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t3_003",
+"k": 11,
+"step": 545,
+"latency_s": 25.97,
+"server_s": 24,
+"trigger": "execute/failed/segment_stall",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 63553,
+"cached_tokens": 0,
+"output_tokens": 568,
+"reasoning_tokens": 412,
+"visible_tokens": 156,
+"out_chars": 676,
+"prose_chars": 475,
+"exec_chars": 0,
+"obs_text_chars": 18479,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 402,
+"last_feedback": 2893,
+"recent_feedback": 2877,
+"macro": 2270,
+"execution": 2772,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t3_003",
+"k": 12,
+"step": 550,
+"latency_s": 10.54,
+"server_s": 9,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 68625,
+"cached_tokens": 0,
+"output_tokens": 210,
+"reasoning_tokens": 37,
+"visible_tokens": 173,
+"out_chars": 655,
+"prose_chars": 353,
+"exec_chars": 213,
+"obs_text_chars": 16892,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 427,
+"last_feedback": 1281,
+"recent_feedback": 2877,
+"macro": 2270,
+"execution": 2773,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 33
+},
+{
+"run": "t3_003",
+"k": 13,
+"step": 573,
+"latency_s": 14.0,
+"server_s": 11,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 73685,
+"cached_tokens": 0,
+"output_tokens": 299,
+"reasoning_tokens": 37,
+"visible_tokens": 262,
+"out_chars": 998,
+"prose_chars": 448,
+"exec_chars": 461,
+"obs_text_chars": 18390,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 313,
+"last_feedback": 2897,
+"recent_feedback": 2876,
+"macro": 2270,
+"execution": 2776,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 36
+},
+{
+"run": "t3_003",
+"k": 14,
+"step": 661,
+"latency_s": 11.65,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 79254,
+"cached_tokens": 2304,
+"output_tokens": 201,
+"reasoning_tokens": 55,
+"visible_tokens": 146,
+"out_chars": 584,
+"prose_chars": 341,
+"exec_chars": 154,
+"obs_text_chars": 19697,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 46,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 388,
+"last_feedback": 3512,
+"recent_feedback": 2957,
+"macro": 2270,
+"execution": 3279,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 39
+},
+{
+"run": "t3_003",
+"k": 15,
+"step": 717,
+"latency_s": 9.77,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 84341,
+"cached_tokens": 0,
+"output_tokens": 165,
+"reasoning_tokens": 21,
+"visible_tokens": 144,
+"out_chars": 562,
+"prose_chars": 318,
+"exec_chars": 155,
+"obs_text_chars": 18469,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 46,
+"geometry": 1901,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 314,
+"last_feedback": 3031,
+"recent_feedback": 2961,
+"macro": 2270,
+"execution": 2611,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 42
+},
+{
+"run": "t3_003",
+"k": 16,
+"step": 740,
+"latency_s": 19.87,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+50,
+false
+],
+[
+"move_to_pose",
+"transit",
+55,
+false
+],
+[
+"move_to_pose",
+"transit",
+55,
+true
+]
+],
+"input_tokens": 89395,
+"cached_tokens": 2304,
+"output_tokens": 408,
+"reasoning_tokens": 132,
+"visible_tokens": 276,
+"out_chars": 1027,
+"prose_chars": 435,
+"exec_chars": 503,
+"obs_text_chars": 18452,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 47,
+"geometry": 1901,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 590,
+"model_belief": 286,
+"last_feedback": 2890,
+"recent_feedback": 2948,
+"macro": 2270,
+"execution": 2769,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 45
+},
+{
+"run": "t3_003",
+"k": 17,
+"step": 844,
+"latency_s": 8.63,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 95028,
+"cached_tokens": 2304,
+"output_tokens": 147,
+"reasoning_tokens": 0,
+"visible_tokens": 147,
+"out_chars": 583,
+"prose_chars": 327,
+"exec_chars": 167,
+"obs_text_chars": 19652,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 46,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 395,
+"last_feedback": 3475,
+"recent_feedback": 2946,
+"macro": 2270,
+"execution": 3294,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 48
+},
+{
+"run": "t3_003",
+"k": 18,
+"step": 916,
+"latency_s": 11.11,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 100034,
+"cached_tokens": 0,
+"output_tokens": 183,
+"reasoning_tokens": 32,
+"visible_tokens": 151,
+"out_chars": 644,
+"prose_chars": 400,
+"exec_chars": 155,
+"obs_text_chars": 18466,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 159,
+"finger_joints_m": 47,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 572,
+"model_belief": 317,
+"last_feedback": 3039,
+"recent_feedback": 2958,
+"macro": 2270,
+"execution": 2624,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 50
+},
+{
+"run": "t3_003",
+"k": 19,
+"step": 951,
+"latency_s": 21.71,
+"server_s": 20,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+60,
+true
+]
+],
+"input_tokens": 105046,
+"cached_tokens": 0,
+"output_tokens": 482,
+"reasoning_tokens": 187,
+"visible_tokens": 295,
+"out_chars": 1057,
+"prose_chars": 451,
+"exec_chars": 517,
+"obs_text_chars": 18398,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 159,
+"finger_joints_m": 46,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 334,
+"last_feedback": 2896,
+"recent_feedback": 2866,
+"macro": 2270,
+"execution": 2769,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 53
+},
+{
+"run": "t3_003",
+"k": 20,
+"step": 1078,
+"latency_s": 17.07,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 110716,
+"cached_tokens": 0,
+"output_tokens": 349,
+"reasoning_tokens": 165,
+"visible_tokens": 184,
+"out_chars": 786,
+"prose_chars": 531,
+"exec_chars": 166,
+"obs_text_chars": 19505,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 4,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 46,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 571,
+"model_belief": 418,
+"last_feedback": 3473,
+"recent_feedback": 2836,
+"macro": 2271,
+"execution": 3250,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 56
+},
+{
+"run": "t3_003",
+"k": 21,
+"step": 1136,
+"latency_s": 9.29,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 115931,
+"cached_tokens": 0,
+"output_tokens": 144,
+"reasoning_tokens": 0,
+"visible_tokens": 144,
+"out_chars": 614,
+"prose_chars": 371,
+"exec_chars": 154,
+"obs_text_chars": 18513,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 4,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 47,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 568,
+"model_belief": 479,
+"last_feedback": 3035,
+"recent_feedback": 2848,
+"macro": 2271,
+"execution": 2629,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 59
+},
+{
+"run": "t3_003",
+"k": 22,
+"step": 1202,
+"latency_s": 12.08,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+40,
+true
+]
+],
+"input_tokens": 120934,
+"cached_tokens": 2304,
+"output_tokens": 173,
+"reasoning_tokens": 23,
+"visible_tokens": 150,
+"out_chars": 600,
+"prose_chars": 356,
+"exec_chars": 155,
+"obs_text_chars": 18366,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 4,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 47,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 340,
+"last_feedback": 3026,
+"recent_feedback": 2846,
+"macro": 2271,
+"execution": 2617,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 61
+},
+{
+"run": "t3_005",
+"k": 1,
+"step": 0,
+"latency_s": 18.4,
+"server_s": 17,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6756,
+"cached_tokens": 0,
+"output_tokens": 463,
+"reasoning_tokens": 281,
+"visible_tokens": 182,
+"out_chars": 683,
+"prose_chars": 426,
+"exec_chars": 168,
+"obs_text_chars": 13793,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1900,
+"reviewed_goal_contract": 3193
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1097,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t3_005",
+"k": 2,
+"step": 55,
+"latency_s": 11.9,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 12436,
+"cached_tokens": 2304,
+"output_tokens": 299,
+"reasoning_tokens": 122,
+"visible_tokens": 177,
+"out_chars": 626,
+"prose_chars": 363,
+"exec_chars": 174,
+"obs_text_chars": 17675,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 2,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 43,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 379,
+"last_feedback": 3025,
+"recent_feedback": 2126,
+"macro": 2269,
+"execution": 2613,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t3_005",
+"k": 3,
+"step": 83,
+"latency_s": 9.0,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 18106,
+"cached_tokens": 2304,
+"output_tokens": 276,
+"reasoning_tokens": 38,
+"visible_tokens": 238,
+"out_chars": 879,
+"prose_chars": 336,
+"exec_chars": 454,
+"obs_text_chars": 18163,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 2,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 336,
+"last_feedback": 3036,
+"recent_feedback": 2633,
+"macro": 2269,
+"execution": 2615,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t3_005",
+"k": 4,
+"step": 104,
+"latency_s": 23.01,
+"server_s": 21,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 23882,
+"cached_tokens": 2304,
+"output_tokens": 634,
+"reasoning_tokens": 347,
+"visible_tokens": 287,
+"out_chars": 998,
+"prose_chars": 406,
+"exec_chars": 503,
+"obs_text_chars": 18780,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 300,
+"last_feedback": 2900,
+"recent_feedback": 3252,
+"macro": 2270,
+"execution": 2779,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t3_005",
+"k": 5,
+"step": 188,
+"latency_s": 9.64,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 30438,
+"cached_tokens": 2304,
+"output_tokens": 139,
+"reasoning_tokens": 15,
+"visible_tokens": 124,
+"out_chars": 497,
+"prose_chars": 295,
+"exec_chars": 0,
+"obs_text_chars": 20005,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 357,
+"last_feedback": 3476,
+"recent_feedback": 3352,
+"macro": 2270,
+"execution": 3283,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t3_005",
+"k": 6,
+"step": 193,
+"latency_s": 7.47,
+"server_s": 7,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+true
+]
+],
+"input_tokens": 35910,
+"cached_tokens": 17920,
+"output_tokens": 146,
+"reasoning_tokens": 0,
+"visible_tokens": 146,
+"out_chars": 595,
+"prose_chars": 339,
+"exec_chars": 167,
+"obs_text_chars": 17655,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 267,
+"last_feedback": 1282,
+"recent_feedback": 3281,
+"macro": 2270,
+"execution": 3283,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t3_005",
+"k": 7,
+"step": 203,
+"latency_s": 7.79,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"transit",
+50,
+true
+]
+],
+"input_tokens": 41029,
+"cached_tokens": 0,
+"output_tokens": 177,
+"reasoning_tokens": 0,
+"visible_tokens": 177,
+"out_chars": 685,
+"prose_chars": 297,
+"exec_chars": 299,
+"obs_text_chars": 18874,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 43,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 303,
+"last_feedback": 3037,
+"recent_feedback": 3367,
+"macro": 2270,
+"execution": 2618,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t3_005",
+"k": 8,
+"step": 227,
+"latency_s": 14.39,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 46299,
+"cached_tokens": 2304,
+"output_tokens": 374,
+"reasoning_tokens": 151,
+"visible_tokens": 223,
+"out_chars": 826,
+"prose_chars": 417,
+"exec_chars": 320,
+"obs_text_chars": 19043,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 279,
+"last_feedback": 3348,
+"recent_feedback": 2849,
+"macro": 2270,
+"execution": 3027,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 20
+},
+{
+"run": "t3_005",
+"k": 9,
+"step": 319,
+"latency_s": 14.08,
+"server_s": 13,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 51801,
+"cached_tokens": 2304,
+"output_tokens": 284,
+"reasoning_tokens": 106,
+"visible_tokens": 178,
+"out_chars": 744,
+"prose_chars": 489,
+"exec_chars": 166,
+"obs_text_chars": 19155,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 45,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 387,
+"last_feedback": 3297,
+"recent_feedback": 2885,
+"macro": 2270,
+"execution": 3038,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 23
+},
+{
+"run": "t3_005",
+"k": 10,
+"step": 360,
+"latency_s": 10.83,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 56959,
+"cached_tokens": 2304,
+"output_tokens": 231,
+"reasoning_tokens": 83,
+"visible_tokens": 148,
+"out_chars": 574,
+"prose_chars": 367,
+"exec_chars": 0,
+"obs_text_chars": 18541,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 434,
+"last_feedback": 2917,
+"recent_feedback": 2874,
+"macro": 2270,
+"execution": 2781,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 26
+},
+{
+"run": "t3_005",
+"k": 11,
+"step": 365,
+"latency_s": 14.39,
+"server_s": 13,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 61674,
+"cached_tokens": 0,
+"output_tokens": 164,
+"reasoning_tokens": 10,
+"visible_tokens": 154,
+"out_chars": 621,
+"prose_chars": 366,
+"exec_chars": 166,
+"obs_text_chars": 16818,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 45,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 335,
+"last_feedback": 1272,
+"recent_feedback": 2899,
+"macro": 2270,
+"execution": 2782,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 29
+},
+{
+"run": "t3_005",
+"k": 12,
+"step": 428,
+"latency_s": 9.86,
+"server_s": 9,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"wait",
+"contact",
+15,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 66685,
+"cached_tokens": 2304,
+"output_tokens": 257,
+"reasoning_tokens": 18,
+"visible_tokens": 239,
+"out_chars": 966,
+"prose_chars": 445,
+"exec_chars": 432,
+"obs_text_chars": 18452,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 322,
+"last_feedback": 2917,
+"recent_feedback": 2899,
+"macro": 2270,
+"execution": 2780,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 32
+},
+{
+"run": "t3_005",
+"k": 13,
+"step": 462,
+"latency_s": 9.06,
+"server_s": 7,
+"trigger": "execute/succeeded/observation_required",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 72082,
+"cached_tokens": 0,
+"output_tokens": 153,
+"reasoning_tokens": 0,
+"visible_tokens": 153,
+"out_chars": 637,
+"prose_chars": 385,
+"exec_chars": 163,
+"obs_text_chars": 19183,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 382,
+"last_feedback": 3251,
+"recent_feedback": 2993,
+"macro": 2270,
+"execution": 3019,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 35
+},
+{
+"run": "t3_005",
+"k": 14,
+"step": 492,
+"latency_s": 19.9,
+"server_s": 19,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 77087,
+"cached_tokens": 0,
+"output_tokens": 452,
+"reasoning_tokens": 180,
+"visible_tokens": 272,
+"out_chars": 1004,
+"prose_chars": 457,
+"exec_chars": 458,
+"obs_text_chars": 18530,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 43,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 353,
+"last_feedback": 3038,
+"recent_feedback": 2986,
+"macro": 2270,
+"execution": 2623,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 37
+},
+{
+"run": "t3_005",
+"k": 15,
+"step": 566,
+"latency_s": 8.62,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 82795,
+"cached_tokens": 2304,
+"output_tokens": 173,
+"reasoning_tokens": 36,
+"visible_tokens": 137,
+"out_chars": 549,
+"prose_chars": 347,
+"exec_chars": 0,
+"obs_text_chars": 19679,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 46,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 418,
+"last_feedback": 3473,
+"recent_feedback": 2969,
+"macro": 2270,
+"execution": 3281,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 40
+},
+{
+"run": "t3_005",
+"k": 16,
+"step": 571,
+"latency_s": 10.26,
+"server_s": 8,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 87643,
+"cached_tokens": 2304,
+"output_tokens": 187,
+"reasoning_tokens": 23,
+"visible_tokens": 164,
+"out_chars": 665,
+"prose_chars": 409,
+"exec_chars": 167,
+"obs_text_chars": 17409,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 47,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 319,
+"last_feedback": 1281,
+"recent_feedback": 2993,
+"macro": 2270,
+"execution": 3281,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 43
+},
+{
+"run": "t3_005",
+"k": 17,
+"step": 587,
+"latency_s": 8.64,
+"server_s": 6,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 92710,
+"cached_tokens": 0,
+"output_tokens": 171,
+"reasoning_tokens": 12,
+"visible_tokens": 159,
+"out_chars": 614,
+"prose_chars": 358,
+"exec_chars": 167,
+"obs_text_chars": 18550,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 46,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 356,
+"last_feedback": 3040,
+"recent_feedback": 3000,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 46
+},
+{
+"run": "t3_005",
+"k": 18,
+"step": 611,
+"latency_s": 18.04,
+"server_s": 17,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 97761,
+"cached_tokens": 2304,
+"output_tokens": 517,
+"reasoning_tokens": 226,
+"visible_tokens": 291,
+"out_chars": 1043,
+"prose_chars": 433,
+"exec_chars": 521,
+"obs_text_chars": 18521,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 47,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 299,
+"last_feedback": 2895,
+"recent_feedback": 3004,
+"macro": 2270,
+"execution": 2780,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 49
+},
+{
+"run": "t3_005",
+"k": 19,
+"step": 685,
+"latency_s": 11.11,
+"server_s": 9,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 103486,
+"cached_tokens": 2304,
+"output_tokens": 247,
+"reasoning_tokens": 28,
+"visible_tokens": 219,
+"out_chars": 894,
+"prose_chars": 489,
+"exec_chars": 316,
+"obs_text_chars": 19607,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 159,
+"finger_joints_m": 47,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 398,
+"last_feedback": 3469,
+"recent_feedback": 2973,
+"macro": 2270,
+"execution": 3241,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 52
+},
+{
+"run": "t3_005",
+"k": 20,
+"step": 711,
+"latency_s": 11.69,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 108575,
+"cached_tokens": 0,
+"output_tokens": 241,
+"reasoning_tokens": 73,
+"visible_tokens": 168,
+"out_chars": 676,
+"prose_chars": 421,
+"exec_chars": 166,
+"obs_text_chars": 18502,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 157,
+"finger_joints_m": 47,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 415,
+"last_feedback": 2906,
+"recent_feedback": 2875,
+"macro": 2270,
+"execution": 2775,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 55
+},
+{
+"run": "t3_005",
+"k": 21,
+"step": 730,
+"latency_s": 10.13,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 113665,
+"cached_tokens": 2304,
+"output_tokens": 171,
+"reasoning_tokens": 17,
+"visible_tokens": 154,
+"out_chars": 597,
+"prose_chars": 341,
+"exec_chars": 167,
+"obs_text_chars": 18447,
+"obs_top": {
+"request": 7,
+"task": 69,
+"step": 3,
+"robot_pose_wxyz": 159,
+"finger_joints_m": 46,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 572,
+"model_belief": 383,
+"last_feedback": 3035,
+"recent_feedback": 2877,
+"macro": 2270,
+"execution": 2628,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 58
+},
+{
+"run": "t4_001",
+"k": 1,
+"step": 0,
+"latency_s": 28.7,
+"server_s": 27,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6864,
+"cached_tokens": 2304,
+"output_tokens": 623,
+"reasoning_tokens": 420,
+"visible_tokens": 203,
+"out_chars": 798,
+"prose_chars": 520,
+"exec_chars": 189,
+"obs_text_chars": 14123,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 43,
+"geometry": 1891,
+"reviewed_goal_contract": 3495
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 594,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1105,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t4_001",
+"k": 2,
+"step": 1,
+"latency_s": 8.09,
+"server_s": 7,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 14406,
+"cached_tokens": 2304,
+"output_tokens": 212,
+"reasoning_tokens": 0,
+"visible_tokens": 212,
+"out_chars": 760,
+"prose_chars": 309,
+"exec_chars": 362,
+"obs_text_chars": 22044,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1890
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 595,
+"model_belief": 480,
+"last_feedback": 3729,
+"recent_feedback": 3731,
+"macro": 2268,
+"execution": 4676,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t4_001",
+"k": 3,
+"step": 70,
+"latency_s": 28.56,
+"server_s": 27,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 20180,
+"cached_tokens": 2304,
+"output_tokens": 737,
+"reasoning_tokens": 582,
+"visible_tokens": 155,
+"out_chars": 584,
+"prose_chars": 307,
+"exec_chars": 188,
+"obs_text_chars": 18734,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 2,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 40,
+"geometry": 1886,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 295,
+"last_feedback": 3382,
+"recent_feedback": 2504,
+"macro": 2269,
+"execution": 3004,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 6
+},
+{
+"run": "t4_001",
+"k": 4,
+"step": 98,
+"latency_s": 13.4,
+"server_s": 12,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+50,
+false
+],
+[
+"move_to_pose",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 26440,
+"cached_tokens": 0,
+"output_tokens": 366,
+"reasoning_tokens": 156,
+"visible_tokens": 210,
+"out_chars": 817,
+"prose_chars": 393,
+"exec_chars": 335,
+"obs_text_chars": 18918,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 2,
+"robot_pose_wxyz": 146,
+"finger_joints_m": 41,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 560,
+"model_belief": 288,
+"last_feedback": 2903,
+"recent_feedback": 3453,
+"macro": 2269,
+"execution": 2767,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t4_001",
+"k": 5,
+"step": 154,
+"latency_s": 9.9,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 32653,
+"cached_tokens": 2304,
+"output_tokens": 192,
+"reasoning_tokens": 46,
+"visible_tokens": 146,
+"out_chars": 578,
+"prose_chars": 320,
+"exec_chars": 169,
+"obs_text_chars": 19734,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 349,
+"last_feedback": 3370,
+"recent_feedback": 3440,
+"macro": 2270,
+"execution": 3013,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t4_001",
+"k": 6,
+"step": 208,
+"latency_s": 10.07,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+40,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 38421,
+"cached_tokens": 2304,
+"output_tokens": 186,
+"reasoning_tokens": 7,
+"visible_tokens": 179,
+"out_chars": 719,
+"prose_chars": 331,
+"exec_chars": 299,
+"obs_text_chars": 18796,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 300,
+"last_feedback": 3031,
+"recent_feedback": 3287,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t4_001",
+"k": 7,
+"step": 250,
+"latency_s": 17.34,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 43804,
+"cached_tokens": 2304,
+"output_tokens": 379,
+"reasoning_tokens": 175,
+"visible_tokens": 204,
+"out_chars": 776,
+"prose_chars": 372,
+"exec_chars": 315,
+"obs_text_chars": 19462,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 294,
+"last_feedback": 3343,
+"recent_feedback": 3244,
+"macro": 2270,
+"execution": 3031,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 19
+},
+{
+"run": "t4_001",
+"k": 8,
+"step": 300,
+"latency_s": 19.98,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 49282,
+"cached_tokens": 2304,
+"output_tokens": 292,
+"reasoning_tokens": 95,
+"visible_tokens": 197,
+"out_chars": 737,
+"prose_chars": 335,
+"exec_chars": 313,
+"obs_text_chars": 19098,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 311,
+"last_feedback": 3391,
+"recent_feedback": 2829,
+"macro": 2270,
+"execution": 3018,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 22
+},
+{
+"run": "t4_001",
+"k": 9,
+"step": 390,
+"latency_s": 8.89,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+35,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 54695,
+"cached_tokens": 2304,
+"output_tokens": 255,
+"reasoning_tokens": 32,
+"visible_tokens": 223,
+"out_chars": 849,
+"prose_chars": 320,
+"exec_chars": 440,
+"obs_text_chars": 19164,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 328,
+"last_feedback": 3398,
+"recent_feedback": 2863,
+"macro": 2270,
+"execution": 3019,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 25
+},
+{
+"run": "t4_001",
+"k": 10,
+"step": 406,
+"latency_s": 7.89,
+"server_s": 7,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 59784,
+"cached_tokens": 2304,
+"output_tokens": 195,
+"reasoning_tokens": 0,
+"visible_tokens": 195,
+"out_chars": 794,
+"prose_chars": 408,
+"exec_chars": 297,
+"obs_text_chars": 18378,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 288,
+"last_feedback": 2897,
+"recent_feedback": 2863,
+"macro": 2270,
+"execution": 2777,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 28
+},
+{
+"run": "t4_001",
+"k": 11,
+"step": 455,
+"latency_s": 11.44,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 65081,
+"cached_tokens": 2304,
+"output_tokens": 332,
+"reasoning_tokens": 119,
+"visible_tokens": 213,
+"out_chars": 803,
+"prose_chars": 400,
+"exec_chars": 314,
+"obs_text_chars": 19155,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 376,
+"last_feedback": 3338,
+"recent_feedback": 2854,
+"macro": 2270,
+"execution": 3029,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t4_001",
+"k": 12,
+"step": 524,
+"latency_s": 10.17,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 70535,
+"cached_tokens": 2304,
+"output_tokens": 232,
+"reasoning_tokens": 69,
+"visible_tokens": 163,
+"out_chars": 606,
+"prose_chars": 331,
+"exec_chars": 186,
+"obs_text_chars": 19185,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 362,
+"last_feedback": 3392,
+"recent_feedback": 2865,
+"macro": 2270,
+"execution": 3013,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 33
+},
+{
+"run": "t4_001",
+"k": 13,
+"step": 579,
+"latency_s": 12.26,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+40,
+false
+],
+[
+"set_gripper",
+"contact",
+40,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 75623,
+"cached_tokens": 2304,
+"output_tokens": 311,
+"reasoning_tokens": 82,
+"visible_tokens": 229,
+"out_chars": 900,
+"prose_chars": 370,
+"exec_chars": 441,
+"obs_text_chars": 18397,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 43,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 322,
+"last_feedback": 3028,
+"recent_feedback": 2858,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 36
+},
+{
+"run": "t4_001",
+"k": 14,
+"step": 637,
+"latency_s": 15.65,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 81158,
+"cached_tokens": 0,
+"output_tokens": 234,
+"reasoning_tokens": 31,
+"visible_tokens": 203,
+"out_chars": 799,
+"prose_chars": 401,
+"exec_chars": 309,
+"obs_text_chars": 19599,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 44,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 342,
+"last_feedback": 3571,
+"recent_feedback": 2858,
+"macro": 2270,
+"execution": 3267,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 39
+},
+{
+"run": "t4_001",
+"k": 15,
+"step": 701,
+"latency_s": 12.38,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 86508,
+"cached_tokens": 2304,
+"output_tokens": 201,
+"reasoning_tokens": 51,
+"visible_tokens": 150,
+"out_chars": 640,
+"prose_chars": 390,
+"exec_chars": 161,
+"obs_text_chars": 19183,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 351,
+"last_feedback": 3401,
+"recent_feedback": 2859,
+"macro": 2270,
+"execution": 3021,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 42
+},
+{
+"run": "t4_001",
+"k": 16,
+"step": 763,
+"latency_s": 10.85,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+35,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 91547,
+"cached_tokens": 2304,
+"output_tokens": 241,
+"reasoning_tokens": 13,
+"visible_tokens": 228,
+"out_chars": 857,
+"prose_chars": 329,
+"exec_chars": 439,
+"obs_text_chars": 18379,
+"obs_top": {
+"request": 7,
+"task": 89,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 326,
+"last_feedback": 3026,
+"recent_feedback": 2860,
+"macro": 2270,
+"execution": 2620,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 45
+},
+{
+"run": "t5_001",
+"k": 1,
+"step": 0,
+"latency_s": 38.55,
+"server_s": 38,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6477,
+"cached_tokens": 2304,
+"output_tokens": 791,
+"reasoning_tokens": 607,
+"visible_tokens": 184,
+"out_chars": 684,
+"prose_chars": 424,
+"exec_chars": 171,
+"obs_text_chars": 12838,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 44,
+"geometry": 1900,
+"reviewed_goal_contract": 2237
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1097,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t5_001",
+"k": 2,
+"step": 44,
+"latency_s": 16.43,
+"server_s": 16,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 12490,
+"cached_tokens": 2304,
+"output_tokens": 451,
+"reasoning_tokens": 265,
+"visible_tokens": 186,
+"out_chars": 670,
+"prose_chars": 398,
+"exec_chars": 183,
+"obs_text_chars": 17689,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 2,
+"robot_pose_wxyz": 171,
+"finger_joints_m": 42,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 387,
+"last_feedback": 3024,
+"recent_feedback": 2123,
+"macro": 2269,
+"execution": 2613,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 5
+},
+{
+"run": "t5_001",
+"k": 3,
+"step": 72,
+"latency_s": 11.78,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 18299,
+"cached_tokens": 0,
+"output_tokens": 298,
+"reasoning_tokens": 57,
+"visible_tokens": 241,
+"out_chars": 901,
+"prose_chars": 358,
+"exec_chars": 454,
+"obs_text_chars": 18162,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 2,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 44,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 360,
+"last_feedback": 3024,
+"recent_feedback": 2631,
+"macro": 2269,
+"execution": 2610,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 8
+},
+{
+"run": "t5_001",
+"k": 4,
+"step": 170,
+"latency_s": 24.31,
+"server_s": 23,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 24564,
+"cached_tokens": 0,
+"output_tokens": 698,
+"reasoning_tokens": 460,
+"visible_tokens": 238,
+"out_chars": 895,
+"prose_chars": 466,
+"exec_chars": 340,
+"obs_text_chars": 20274,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 314,
+"last_feedback": 3531,
+"recent_feedback": 3611,
+"macro": 2270,
+"execution": 3282,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 11
+},
+{
+"run": "t5_001",
+"k": 5,
+"step": 270,
+"latency_s": 27.54,
+"server_s": 26,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 31080,
+"cached_tokens": 2304,
+"output_tokens": 708,
+"reasoning_tokens": 516,
+"visible_tokens": 192,
+"out_chars": 734,
+"prose_chars": 457,
+"exec_chars": 188,
+"obs_text_chars": 19566,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1904,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 429,
+"last_feedback": 3388,
+"recent_feedback": 3187,
+"macro": 2270,
+"execution": 3024,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 14
+},
+{
+"run": "t5_001",
+"k": 6,
+"step": 304,
+"latency_s": 13.74,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 37301,
+"cached_tokens": 0,
+"output_tokens": 322,
+"reasoning_tokens": 127,
+"visible_tokens": 195,
+"out_chars": 765,
+"prose_chars": 351,
+"exec_chars": 325,
+"obs_text_chars": 18636,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 390,
+"last_feedback": 3042,
+"recent_feedback": 3038,
+"macro": 2270,
+"execution": 2627,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 17
+},
+{
+"run": "t5_001",
+"k": 7,
+"step": 395,
+"latency_s": 14.46,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+true
+]
+],
+"input_tokens": 42853,
+"cached_tokens": 0,
+"output_tokens": 358,
+"reasoning_tokens": 195,
+"visible_tokens": 163,
+"out_chars": 672,
+"prose_chars": 414,
+"exec_chars": 169,
+"obs_text_chars": 19594,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 342,
+"last_feedback": 3395,
+"recent_feedback": 3295,
+"macro": 2270,
+"execution": 3020,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 20
+},
+{
+"run": "t5_002",
+"k": 1,
+"step": 0,
+"latency_s": 26.67,
+"server_s": 25,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 6404,
+"cached_tokens": 2304,
+"output_tokens": 731,
+"reasoning_tokens": 559,
+"visible_tokens": 172,
+"out_chars": 647,
+"prose_chars": 388,
+"exec_chars": 170,
+"obs_text_chars": 12616,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 44,
+"geometry": 1900,
+"reviewed_goal_contract": 2015
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1097,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t5_002",
+"k": 2,
+"step": 39,
+"latency_s": 14.0,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 12346,
+"cached_tokens": 0,
+"output_tokens": 393,
+"reasoning_tokens": 208,
+"visible_tokens": 185,
+"out_chars": 637,
+"prose_chars": 366,
+"exec_chars": 182,
+"obs_text_chars": 17663,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 2,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 571,
+"model_belief": 364,
+"last_feedback": 3035,
+"recent_feedback": 2122,
+"macro": 2269,
+"execution": 2612,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 5
+},
+{
+"run": "t5_002",
+"k": 3,
+"step": 70,
+"latency_s": 11.79,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+65,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 18081,
+"cached_tokens": 2304,
+"output_tokens": 276,
+"reasoning_tokens": 51,
+"visible_tokens": 225,
+"out_chars": 879,
+"prose_chars": 348,
+"exec_chars": 442,
+"obs_text_chars": 18127,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 2,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 326,
+"last_feedback": 3031,
+"recent_feedback": 2631,
+"macro": 2269,
+"execution": 2609,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 8
+},
+{
+"run": "t5_002",
+"k": 4,
+"step": 171,
+"latency_s": 26.54,
+"server_s": 26,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 24324,
+"cached_tokens": 2304,
+"output_tokens": 497,
+"reasoning_tokens": 280,
+"visible_tokens": 217,
+"out_chars": 802,
+"prose_chars": 387,
+"exec_chars": 326,
+"obs_text_chars": 20305,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 324,
+"last_feedback": 3570,
+"recent_feedback": 3602,
+"macro": 2270,
+"execution": 3272,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 11
+},
+{
+"run": "t5_002",
+"k": 5,
+"step": 272,
+"latency_s": 32.32,
+"server_s": 31,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 30650,
+"cached_tokens": 0,
+"output_tokens": 1002,
+"reasoning_tokens": 766,
+"visible_tokens": 236,
+"out_chars": 874,
+"prose_chars": 432,
+"exec_chars": 353,
+"obs_text_chars": 19577,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 41,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 338,
+"last_feedback": 3391,
+"recent_feedback": 3277,
+"macro": 2270,
+"execution": 3024,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 14
+},
+{
+"run": "t5_002",
+"k": 6,
+"step": 341,
+"latency_s": 21.24,
+"server_s": 20,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+true
+]
+],
+"input_tokens": 37406,
+"cached_tokens": 2304,
+"output_tokens": 571,
+"reasoning_tokens": 405,
+"visible_tokens": 166,
+"out_chars": 633,
+"prose_chars": 356,
+"exec_chars": 188,
+"obs_text_chars": 19377,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 44,
+"geometry": 1897,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 385,
+"last_feedback": 3392,
+"recent_feedback": 3039,
+"macro": 2270,
+"execution": 3015,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t5_002",
+"k": 7,
+"step": 355,
+"latency_s": 8.58,
+"server_s": 6,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 42937,
+"cached_tokens": 2304,
+"output_tokens": 165,
+"reasoning_tokens": 18,
+"visible_tokens": 147,
+"out_chars": 616,
+"prose_chars": 372,
+"exec_chars": 155,
+"obs_text_chars": 18803,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 308,
+"last_feedback": 3030,
+"recent_feedback": 3294,
+"macro": 2270,
+"execution": 2626,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 21
+},
+{
+"run": "t5_002",
+"k": 8,
+"step": 396,
+"latency_s": 19.42,
+"server_s": 17,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+55,
+false
+],
+[
+"move_to_pose",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 47930,
+"cached_tokens": 2304,
+"output_tokens": 481,
+"reasoning_tokens": 270,
+"visible_tokens": 211,
+"out_chars": 835,
+"prose_chars": 431,
+"exec_chars": 315,
+"obs_text_chars": 18357,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 324,
+"last_feedback": 2890,
+"recent_feedback": 2827,
+"macro": 2270,
+"execution": 2770,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 24
+},
+{
+"run": "t5_002",
+"k": 9,
+"step": 441,
+"latency_s": 11.06,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"approach",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 53535,
+"cached_tokens": 2304,
+"output_tokens": 178,
+"reasoning_tokens": 27,
+"visible_tokens": 151,
+"out_chars": 653,
+"prose_chars": 408,
+"exec_chars": 156,
+"obs_text_chars": 19217,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 388,
+"last_feedback": 3401,
+"recent_feedback": 2859,
+"macro": 2270,
+"execution": 3023,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t5_002",
+"k": 10,
+"step": 491,
+"latency_s": 18.04,
+"server_s": 17,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+false
+],
+[
+"wait",
+"contact",
+25,
+true
+]
+],
+"input_tokens": 58545,
+"cached_tokens": 2304,
+"output_tokens": 477,
+"reasoning_tokens": 229,
+"visible_tokens": 248,
+"out_chars": 1021,
+"prose_chars": 504,
+"exec_chars": 428,
+"obs_text_chars": 18386,
+"obs_top": {
+"request": 7,
+"task": 68,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 330,
+"last_feedback": 2889,
+"recent_feedback": 2859,
+"macro": 2270,
+"execution": 2768,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t6_009",
+"k": 1,
+"step": 0,
+"latency_s": 39.77,
+"server_s": 39,
+"trigger": null,
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+60,
+true
+]
+],
+"input_tokens": 6836,
+"cached_tokens": 0,
+"output_tokens": 951,
+"reasoning_tokens": 663,
+"visible_tokens": 288,
+"out_chars": 994,
+"prose_chars": 546,
+"exec_chars": 357,
+"obs_text_chars": 14146,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 1,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 44,
+"geometry": 1893,
+"reviewed_goal_contract": 3524
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1100,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t6_009",
+"k": 2,
+"step": 69,
+"latency_s": 12.71,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 13386,
+"cached_tokens": 0,
+"output_tokens": 245,
+"reasoning_tokens": 91,
+"visible_tokens": 154,
+"out_chars": 634,
+"prose_chars": 376,
+"exec_chars": 169,
+"obs_text_chars": 18799,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 2,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 40,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 591,
+"model_belief": 490,
+"last_feedback": 3390,
+"recent_feedback": 2350,
+"macro": 2269,
+"execution": 3007,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 5
+},
+{
+"run": "t6_009",
+"k": 3,
+"step": 127,
+"latency_s": 11.12,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+40,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 18932,
+"cached_tokens": 0,
+"output_tokens": 198,
+"reasoning_tokens": 20,
+"visible_tokens": 178,
+"out_chars": 696,
+"prose_chars": 309,
+"exec_chars": 298,
+"obs_text_chars": 18010,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 325,
+"last_feedback": 3023,
+"recent_feedback": 2490,
+"macro": 2270,
+"execution": 2613,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 8
+},
+{
+"run": "t6_009",
+"k": 4,
+"step": 165,
+"latency_s": 33.53,
+"server_s": 32,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 24973,
+"cached_tokens": 0,
+"output_tokens": 747,
+"reasoning_tokens": 516,
+"visible_tokens": 231,
+"out_chars": 877,
+"prose_chars": 466,
+"exec_chars": 322,
+"obs_text_chars": 19829,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 44,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 282,
+"last_feedback": 3349,
+"recent_feedback": 3613,
+"macro": 2270,
+"execution": 3034,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 11
+},
+{
+"run": "t6_009",
+"k": 5,
+"step": 244,
+"latency_s": 19.84,
+"server_s": 18,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 31531,
+"cached_tokens": 2304,
+"output_tokens": 319,
+"reasoning_tokens": 171,
+"visible_tokens": 148,
+"out_chars": 587,
+"prose_chars": 331,
+"exec_chars": 167,
+"obs_text_chars": 19518,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1883,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 573,
+"model_belief": 363,
+"last_feedback": 3408,
+"recent_feedback": 3193,
+"macro": 2270,
+"execution": 3019,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 14
+},
+{
+"run": "t6_009",
+"k": 6,
+"step": 309,
+"latency_s": 13.52,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+50,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 37311,
+"cached_tokens": 0,
+"output_tokens": 294,
+"reasoning_tokens": 62,
+"visible_tokens": 232,
+"out_chars": 879,
+"prose_chars": 350,
+"exec_chars": 440,
+"obs_text_chars": 18530,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 157,
+"finger_joints_m": 44,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 291,
+"last_feedback": 3039,
+"recent_feedback": 3038,
+"macro": 2270,
+"execution": 2627,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 17
+},
+{
+"run": "t6_009",
+"k": 7,
+"step": 376,
+"latency_s": 17.5,
+"server_s": 15,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 42916,
+"cached_tokens": 2304,
+"output_tokens": 382,
+"reasoning_tokens": 144,
+"visible_tokens": 238,
+"out_chars": 823,
+"prose_chars": 390,
+"exec_chars": 343,
+"obs_text_chars": 19943,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 42,
+"geometry": 1883,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 314,
+"last_feedback": 3542,
+"recent_feedback": 3281,
+"macro": 2270,
+"execution": 3264,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 20
+},
+{
+"run": "t6_009",
+"k": 8,
+"step": 455,
+"latency_s": 16.45,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+true
+]
+],
+"input_tokens": 48381,
+"cached_tokens": 2304,
+"output_tokens": 249,
+"reasoning_tokens": 76,
+"visible_tokens": 173,
+"out_chars": 635,
+"prose_chars": 379,
+"exec_chars": 167,
+"obs_text_chars": 19016,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 341,
+"last_feedback": 3394,
+"recent_feedback": 2729,
+"macro": 2270,
+"execution": 3008,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 23
+},
+{
+"run": "t6_009",
+"k": 9,
+"step": 511,
+"latency_s": 13.31,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+45,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 53493,
+"cached_tokens": 0,
+"output_tokens": 261,
+"reasoning_tokens": 27,
+"visible_tokens": 234,
+"out_chars": 877,
+"prose_chars": 347,
+"exec_chars": 441,
+"obs_text_chars": 18412,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 348,
+"last_feedback": 3036,
+"recent_feedback": 2866,
+"macro": 2270,
+"execution": 2618,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 26
+},
+{
+"run": "t6_009",
+"k": 10,
+"step": 527,
+"latency_s": 15.3,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+45,
+false
+],
+[
+"move_to_pose",
+"contact",
+45,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 58602,
+"cached_tokens": 2304,
+"output_tokens": 368,
+"reasoning_tokens": 94,
+"visible_tokens": 274,
+"out_chars": 1014,
+"prose_chars": 457,
+"exec_chars": 468,
+"obs_text_chars": 18363,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 283,
+"last_feedback": 2891,
+"recent_feedback": 2869,
+"macro": 2270,
+"execution": 2769,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 29
+},
+{
+"run": "t6_009",
+"k": 11,
+"step": 615,
+"latency_s": 12.02,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 64196,
+"cached_tokens": 0,
+"output_tokens": 249,
+"reasoning_tokens": 50,
+"visible_tokens": 199,
+"out_chars": 827,
+"prose_chars": 440,
+"exec_chars": 298,
+"obs_text_chars": 19549,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 429,
+"last_feedback": 3478,
+"recent_feedback": 2853,
+"macro": 2270,
+"execution": 3239,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 32
+},
+{
+"run": "t6_009",
+"k": 12,
+"step": 652,
+"latency_s": 15.11,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 69558,
+"cached_tokens": 0,
+"output_tokens": 394,
+"reasoning_tokens": 109,
+"visible_tokens": 285,
+"out_chars": 992,
+"prose_chars": 435,
+"exec_chars": 468,
+"obs_text_chars": 19192,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 42,
+"geometry": 1885,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 426,
+"last_feedback": 3338,
+"recent_feedback": 2852,
+"macro": 2270,
+"execution": 3029,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 35
+},
+{
+"run": "t6_009",
+"k": 13,
+"step": 787,
+"latency_s": 14.19,
+"server_s": 13,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 75146,
+"cached_tokens": 2304,
+"output_tokens": 250,
+"reasoning_tokens": 73,
+"visible_tokens": 177,
+"out_chars": 739,
+"prose_chars": 484,
+"exec_chars": 166,
+"obs_text_chars": 19443,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 43,
+"geometry": 1881,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 365,
+"last_feedback": 3452,
+"recent_feedback": 2851,
+"macro": 2270,
+"execution": 3239,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 38
+},
+{
+"run": "t6_009",
+"k": 14,
+"step": 839,
+"latency_s": 16.11,
+"server_s": 15,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+75,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 80238,
+"cached_tokens": 2304,
+"output_tokens": 338,
+"reasoning_tokens": 89,
+"visible_tokens": 249,
+"out_chars": 965,
+"prose_chars": 426,
+"exec_chars": 448,
+"obs_text_chars": 18472,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 43,
+"geometry": 1878,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 431,
+"last_feedback": 3033,
+"recent_feedback": 2851,
+"macro": 2270,
+"execution": 2622,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 41
+},
+{
+"run": "t6_009",
+"k": 15,
+"step": 916,
+"latency_s": 14.0,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 85782,
+"cached_tokens": 0,
+"output_tokens": 242,
+"reasoning_tokens": 33,
+"visible_tokens": 209,
+"out_chars": 802,
+"prose_chars": 398,
+"exec_chars": 315,
+"obs_text_chars": 19538,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 42,
+"geometry": 1879,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 381,
+"last_feedback": 3488,
+"recent_feedback": 2850,
+"macro": 2270,
+"execution": 3282,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 44
+},
+{
+"run": "t6_009",
+"k": 16,
+"step": 965,
+"latency_s": 9.61,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "finish",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 90875,
+"cached_tokens": 2304,
+"output_tokens": 146,
+"reasoning_tokens": 12,
+"visible_tokens": 134,
+"out_chars": 629,
+"prose_chars": 537,
+"exec_chars": 0,
+"obs_text_chars": 18456,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1881,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 388,
+"last_feedback": 2898,
+"recent_feedback": 2847,
+"macro": 2270,
+"execution": 2781,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 47
+},
+{
+"run": "t6_009",
+"k": 17,
+"step": 966,
+"latency_s": 26.08,
+"server_s": 25,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 95527,
+"cached_tokens": 2304,
+"output_tokens": 551,
+"reasoning_tokens": 345,
+"visible_tokens": 206,
+"out_chars": 870,
+"prose_chars": 610,
+"exec_chars": 171,
+"obs_text_chars": 16964,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1878,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 487,
+"last_feedback": 1278,
+"recent_feedback": 2871,
+"macro": 2270,
+"execution": 2781,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 50
+},
+{
+"run": "t6_009",
+"k": 18,
+"step": 1019,
+"latency_s": 13.95,
+"server_s": 12,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+false
+],
+[
+"move_to_pose",
+"contact",
+55,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 100980,
+"cached_tokens": 2304,
+"output_tokens": 342,
+"reasoning_tokens": 49,
+"visible_tokens": 293,
+"out_chars": 1119,
+"prose_chars": 424,
+"exec_chars": 606,
+"obs_text_chars": 18639,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 171,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 594,
+"model_belief": 528,
+"last_feedback": 2894,
+"recent_feedback": 2867,
+"macro": 2271,
+"execution": 2777,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 53
+},
+{
+"run": "t6_009",
+"k": 19,
+"step": 1136,
+"latency_s": 18.71,
+"server_s": 17,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 106531,
+"cached_tokens": 0,
+"output_tokens": 272,
+"reasoning_tokens": 110,
+"visible_tokens": 162,
+"out_chars": 637,
+"prose_chars": 384,
+"exec_chars": 163,
+"obs_text_chars": 19658,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 590,
+"model_belief": 394,
+"last_feedback": 3621,
+"recent_feedback": 2875,
+"macro": 2271,
+"execution": 3205,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 56
+},
+{
+"run": "t6_009",
+"k": 20,
+"step": 1181,
+"latency_s": 12.64,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 111695,
+"cached_tokens": 0,
+"output_tokens": 251,
+"reasoning_tokens": 0,
+"visible_tokens": 251,
+"out_chars": 981,
+"prose_chars": 442,
+"exec_chars": 450,
+"obs_text_chars": 18576,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 44,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 344,
+"last_feedback": 2925,
+"recent_feedback": 2969,
+"macro": 2271,
+"execution": 2789,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 59
+},
+{
+"run": "t6_009",
+"k": 21,
+"step": 1302,
+"latency_s": 27.23,
+"server_s": 25,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 117173,
+"cached_tokens": 2304,
+"output_tokens": 650,
+"reasoning_tokens": 379,
+"visible_tokens": 271,
+"out_chars": 1081,
+"prose_chars": 539,
+"exec_chars": 453,
+"obs_text_chars": 19653,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 43,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 410,
+"last_feedback": 3529,
+"recent_feedback": 2883,
+"macro": 2271,
+"execution": 3289,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 61
+},
+{
+"run": "t6_009",
+"k": 22,
+"step": 1391,
+"latency_s": 11.42,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+true
+]
+],
+"input_tokens": 123070,
+"cached_tokens": 2304,
+"output_tokens": 157,
+"reasoning_tokens": 0,
+"visible_tokens": 157,
+"out_chars": 603,
+"prose_chars": 348,
+"exec_chars": 166,
+"obs_text_chars": 19701,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 41,
+"geometry": 1881,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 503,
+"last_feedback": 3490,
+"recent_feedback": 2875,
+"macro": 2271,
+"execution": 3288,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 64
+},
+{
+"run": "t6_009",
+"k": 23,
+"step": 1409,
+"latency_s": 21.17,
+"server_s": 20,
+"trigger": "execute/failed/segment_stall",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 128089,
+"cached_tokens": 0,
+"output_tokens": 486,
+"reasoning_tokens": 329,
+"visible_tokens": 157,
+"out_chars": 644,
+"prose_chars": 422,
+"exec_chars": 0,
+"obs_text_chars": 18400,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1880,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 295,
+"last_feedback": 2899,
+"recent_feedback": 2875,
+"macro": 2271,
+"execution": 2784,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 66
+},
+{
+"run": "t6_009",
+"k": 24,
+"step": 1414,
+"latency_s": 13.68,
+"server_s": 12,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+false
+],
+[
+"move_to_pose",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 133066,
+"cached_tokens": 0,
+"output_tokens": 254,
+"reasoning_tokens": 35,
+"visible_tokens": 219,
+"out_chars": 835,
+"prose_chars": 396,
+"exec_chars": 350,
+"obs_text_chars": 16840,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1883,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 363,
+"last_feedback": 1240,
+"recent_feedback": 2911,
+"macro": 2271,
+"execution": 2784,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 69
+},
+{
+"run": "t6_009",
+"k": 25,
+"step": 1430,
+"latency_s": 15.29,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 138181,
+"cached_tokens": 0,
+"output_tokens": 219,
+"reasoning_tokens": 41,
+"visible_tokens": 178,
+"out_chars": 691,
+"prose_chars": 420,
+"exec_chars": 182,
+"obs_text_chars": 18449,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 44,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 341,
+"last_feedback": 2901,
+"recent_feedback": 2881,
+"macro": 2271,
+"execution": 2785,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 72
+},
+{
+"run": "t6_009",
+"k": 26,
+"step": 1446,
+"latency_s": 13.5,
+"server_s": 11,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+85,
+true
+]
+],
+"input_tokens": 143277,
+"cached_tokens": 0,
+"output_tokens": 214,
+"reasoning_tokens": 37,
+"visible_tokens": 177,
+"out_chars": 766,
+"prose_chars": 512,
+"exec_chars": 165,
+"obs_text_chars": 18481,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 42,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 571,
+"model_belief": 358,
+"last_feedback": 2924,
+"recent_feedback": 2879,
+"macro": 2271,
+"execution": 2786,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 75
+},
+{
+"run": "t6_009",
+"k": 27,
+"step": 1472,
+"latency_s": 11.45,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+55,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 148393,
+"cached_tokens": 2304,
+"output_tokens": 256,
+"reasoning_tokens": 0,
+"visible_tokens": 256,
+"out_chars": 1001,
+"prose_chars": 461,
+"exec_chars": 451,
+"obs_text_chars": 18581,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 44,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 439,
+"last_feedback": 2929,
+"recent_feedback": 2874,
+"macro": 2271,
+"execution": 2794,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 78
+},
+{
+"run": "t6_009",
+"k": 28,
+"step": 1543,
+"latency_s": 36.67,
+"server_s": 32,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+false
+],
+[
+"move_to_pose",
+"contact",
+70,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 153901,
+"cached_tokens": 0,
+"output_tokens": 634,
+"reasoning_tokens": 305,
+"visible_tokens": 329,
+"out_chars": 1261,
+"prose_chars": 566,
+"exec_chars": 606,
+"obs_text_chars": 19614,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 43,
+"geometry": 1882,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 395,
+"last_feedback": 3523,
+"recent_feedback": 2870,
+"macro": 2271,
+"execution": 3278,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 80
+},
+{
+"run": "t6_011",
+"k": 1,
+"step": 0,
+"latency_s": 28.02,
+"server_s": 27,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6811,
+"cached_tokens": 0,
+"output_tokens": 752,
+"reasoning_tokens": 516,
+"visible_tokens": 236,
+"out_chars": 921,
+"prose_chars": 642,
+"exec_chars": 190,
+"obs_text_chars": 14063,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 1,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 44,
+"geometry": 1893,
+"reviewed_goal_contract": 3441
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1100,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t6_011",
+"k": 2,
+"step": 1,
+"latency_s": 7.35,
+"server_s": 6,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 14529,
+"cached_tokens": 2304,
+"output_tokens": 216,
+"reasoning_tokens": 0,
+"visible_tokens": 216,
+"out_chars": 772,
+"prose_chars": 320,
+"exec_chars": 363,
+"obs_text_chars": 22270,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 1,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 42,
+"geometry": 1890
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 595,
+"last_feedback": 3732,
+"recent_feedback": 3734,
+"macro": 2268,
+"execution": 4786,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t6_011",
+"k": 3,
+"step": 70,
+"latency_s": 10.67,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 20305,
+"cached_tokens": 2304,
+"output_tokens": 212,
+"reasoning_tokens": 36,
+"visible_tokens": 176,
+"out_chars": 667,
+"prose_chars": 388,
+"exec_chars": 190,
+"obs_text_chars": 18746,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 2,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 591,
+"model_belief": 284,
+"last_feedback": 3390,
+"recent_feedback": 2504,
+"macro": 2269,
+"execution": 3008,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 6
+},
+{
+"run": "t6_011",
+"k": 4,
+"step": 124,
+"latency_s": 11.46,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+40,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 26093,
+"cached_tokens": 2304,
+"output_tokens": 245,
+"reasoning_tokens": 58,
+"visible_tokens": 187,
+"out_chars": 750,
+"prose_chars": 363,
+"exec_chars": 298,
+"obs_text_chars": 19037,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 43,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 344,
+"last_feedback": 3031,
+"recent_feedback": 3482,
+"macro": 2270,
+"execution": 2621,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 9
+},
+{
+"run": "t6_011",
+"k": 5,
+"step": 162,
+"latency_s": 11.96,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 32175,
+"cached_tokens": 14464,
+"output_tokens": 313,
+"reasoning_tokens": 126,
+"visible_tokens": 187,
+"out_chars": 713,
+"prose_chars": 426,
+"exec_chars": 198,
+"obs_text_chars": 19635,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1894,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 331,
+"last_feedback": 3350,
+"recent_feedback": 3365,
+"macro": 2270,
+"execution": 3036,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 12
+},
+{
+"run": "t6_011",
+"k": 6,
+"step": 224,
+"latency_s": 14.63,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+110,
+true
+]
+],
+"input_tokens": 38026,
+"cached_tokens": 2304,
+"output_tokens": 271,
+"reasoning_tokens": 109,
+"visible_tokens": 162,
+"out_chars": 685,
+"prose_chars": 430,
+"exec_chars": 166,
+"obs_text_chars": 18811,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 44,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 390,
+"last_feedback": 3040,
+"recent_feedback": 3213,
+"macro": 2270,
+"execution": 2624,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 15
+},
+{
+"run": "t6_011",
+"k": 7,
+"step": 284,
+"latency_s": 9.95,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 43236,
+"cached_tokens": 2304,
+"output_tokens": 240,
+"reasoning_tokens": 85,
+"visible_tokens": 155,
+"out_chars": 632,
+"prose_chars": 383,
+"exec_chars": 160,
+"obs_text_chars": 18832,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 157,
+"finger_joints_m": 46,
+"geometry": 1880,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 564,
+"model_belief": 394,
+"last_feedback": 3026,
+"recent_feedback": 3276,
+"macro": 2270,
+"execution": 2615,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t6_011",
+"k": 8,
+"step": 323,
+"latency_s": 16.22,
+"server_s": 15,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 48279,
+"cached_tokens": 2304,
+"output_tokens": 451,
+"reasoning_tokens": 234,
+"visible_tokens": 217,
+"out_chars": 825,
+"prose_chars": 418,
+"exec_chars": 318,
+"obs_text_chars": 18285,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 156,
+"finger_joints_m": 47,
+"geometry": 1880,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 347,
+"last_feedback": 3039,
+"recent_feedback": 2735,
+"macro": 2270,
+"execution": 2631,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 21
+},
+{
+"run": "t6_011",
+"k": 9,
+"step": 369,
+"latency_s": 24.4,
+"server_s": 23,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+false
+],
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 53842,
+"cached_tokens": 2304,
+"output_tokens": 778,
+"reasoning_tokens": 516,
+"visible_tokens": 262,
+"out_chars": 940,
+"prose_chars": 494,
+"exec_chars": 357,
+"obs_text_chars": 19160,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 360,
+"last_feedback": 3344,
+"recent_feedback": 2878,
+"macro": 2270,
+"execution": 3031,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 24
+},
+{
+"run": "t6_011",
+"k": 10,
+"step": 370,
+"latency_s": 13.63,
+"server_s": 12,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 60811,
+"cached_tokens": 2304,
+"output_tokens": 378,
+"reasoning_tokens": 76,
+"visible_tokens": 302,
+"out_chars": 1009,
+"prose_chars": 371,
+"exec_chars": 549,
+"obs_text_chars": 21810,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1892,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 449,
+"last_feedback": 4010,
+"recent_feedback": 2878,
+"macro": 2270,
+"execution": 4920,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t6_011",
+"k": 11,
+"step": 418,
+"latency_s": 29.43,
+"server_s": 24,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 66005,
+"cached_tokens": 2304,
+"output_tokens": 576,
+"reasoning_tokens": 340,
+"visible_tokens": 236,
+"out_chars": 863,
+"prose_chars": 429,
+"exec_chars": 345,
+"obs_text_chars": 18393,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 41,
+"geometry": 1872,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 569,
+"model_belief": 310,
+"last_feedback": 2913,
+"recent_feedback": 2874,
+"macro": 2270,
+"execution": 2780,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t6_011",
+"k": 12,
+"step": 455,
+"latency_s": 12.64,
+"server_s": 10,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 71419,
+"cached_tokens": 2304,
+"output_tokens": 228,
+"reasoning_tokens": 56,
+"visible_tokens": 172,
+"out_chars": 748,
+"prose_chars": 493,
+"exec_chars": 166,
+"obs_text_chars": 18425,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1873,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 372,
+"last_feedback": 2885,
+"recent_feedback": 2864,
+"macro": 2270,
+"execution": 2769,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 33
+},
+{
+"run": "t6_011",
+"k": 13,
+"step": 504,
+"latency_s": 15.31,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+95,
+true
+]
+],
+"input_tokens": 76542,
+"cached_tokens": 2304,
+"output_tokens": 366,
+"reasoning_tokens": 171,
+"visible_tokens": 195,
+"out_chars": 773,
+"prose_chars": 482,
+"exec_chars": 202,
+"obs_text_chars": 18583,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 43,
+"geometry": 1873,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 423,
+"last_feedback": 2908,
+"recent_feedback": 2948,
+"macro": 2270,
+"execution": 2771,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 36
+},
+{
+"run": "t6_011",
+"k": 14,
+"step": 522,
+"latency_s": 17.51,
+"server_s": 16,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 81806,
+"cached_tokens": 2304,
+"output_tokens": 466,
+"reasoning_tokens": 281,
+"visible_tokens": 185,
+"out_chars": 741,
+"prose_chars": 448,
+"exec_chars": 204,
+"obs_text_chars": 18575,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 43,
+"geometry": 1875,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 415,
+"last_feedback": 2905,
+"recent_feedback": 2943,
+"macro": 2270,
+"execution": 2771,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 39
+},
+{
+"run": "t6_011",
+"k": 15,
+"step": 541,
+"latency_s": 15.85,
+"server_s": 14,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 87142,
+"cached_tokens": 0,
+"output_tokens": 239,
+"reasoning_tokens": 16,
+"visible_tokens": 223,
+"out_chars": 833,
+"prose_chars": 421,
+"exec_chars": 323,
+"obs_text_chars": 18526,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1874,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 402,
+"last_feedback": 2891,
+"recent_feedback": 2928,
+"macro": 2270,
+"execution": 2774,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 42
+},
+{
+"run": "t6_011",
+"k": 16,
+"step": 619,
+"latency_s": 14.03,
+"server_s": 13,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 92531,
+"cached_tokens": 2304,
+"output_tokens": 327,
+"reasoning_tokens": 158,
+"visible_tokens": 169,
+"out_chars": 662,
+"prose_chars": 402,
+"exec_chars": 171,
+"obs_text_chars": 19272,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 395,
+"last_feedback": 3396,
+"recent_feedback": 2928,
+"macro": 2270,
+"execution": 3011,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 45
+},
+{
+"run": "t6_011",
+"k": 17,
+"step": 679,
+"latency_s": 9.27,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 97727,
+"cached_tokens": 0,
+"output_tokens": 244,
+"reasoning_tokens": 40,
+"visible_tokens": 204,
+"out_chars": 812,
+"prose_chars": 424,
+"exec_chars": 299,
+"obs_text_chars": 18501,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 153,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 346,
+"last_feedback": 2921,
+"recent_feedback": 2917,
+"macro": 2270,
+"execution": 2783,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 48
+},
+{
+"run": "t6_011",
+"k": 18,
+"step": 714,
+"latency_s": 8.26,
+"server_s": 7,
+"trigger": "execute/failed/segment_budget_exhausted",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 102877,
+"cached_tokens": 2304,
+"output_tokens": 156,
+"reasoning_tokens": 0,
+"visible_tokens": 156,
+"out_chars": 672,
+"prose_chars": 423,
+"exec_chars": 160,
+"obs_text_chars": 18619,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 171,
+"finger_joints_m": 42,
+"geometry": 1893,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 599,
+"model_belief": 356,
+"last_feedback": 2950,
+"recent_feedback": 2922,
+"macro": 2270,
+"execution": 2812,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 51
+},
+{
+"run": "t6_011",
+"k": 19,
+"step": 734,
+"latency_s": 12.29,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 107907,
+"cached_tokens": 2304,
+"output_tokens": 245,
+"reasoning_tokens": 50,
+"visible_tokens": 195,
+"out_chars": 767,
+"prose_chars": 497,
+"exec_chars": 181,
+"obs_text_chars": 18541,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 367,
+"last_feedback": 3054,
+"recent_feedback": 2931,
+"macro": 2270,
+"execution": 2629,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 53
+},
+{
+"run": "t6_011",
+"k": 20,
+"step": 771,
+"latency_s": 29.12,
+"server_s": 28,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 113055,
+"cached_tokens": 2304,
+"output_tokens": 443,
+"reasoning_tokens": 216,
+"visible_tokens": 227,
+"out_chars": 900,
+"prose_chars": 503,
+"exec_chars": 308,
+"obs_text_chars": 18562,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 46,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 392,
+"last_feedback": 3045,
+"recent_feedback": 2941,
+"macro": 2270,
+"execution": 2630,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 56
+},
+{
+"run": "t6_011",
+"k": 21,
+"step": 822,
+"latency_s": 9.85,
+"server_s": 9,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 118594,
+"cached_tokens": 2304,
+"output_tokens": 211,
+"reasoning_tokens": 42,
+"visible_tokens": 169,
+"out_chars": 642,
+"prose_chars": 382,
+"exec_chars": 171,
+"obs_text_chars": 19041,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 41,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 446,
+"last_feedback": 3230,
+"recent_feedback": 2843,
+"macro": 2270,
+"execution": 2975,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 59
+},
+{
+"run": "t6_011",
+"k": 22,
+"step": 877,
+"latency_s": 13.8,
+"server_s": 12,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+45,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 123652,
+"cached_tokens": 0,
+"output_tokens": 269,
+"reasoning_tokens": 57,
+"visible_tokens": 212,
+"out_chars": 832,
+"prose_chars": 429,
+"exec_chars": 314,
+"obs_text_chars": 18419,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 151,
+"finger_joints_m": 43,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 571,
+"model_belief": 333,
+"last_feedback": 2925,
+"recent_feedback": 2846,
+"macro": 2270,
+"execution": 2787,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 62
+},
+{
+"run": "t6_011",
+"k": 23,
+"step": 948,
+"latency_s": 10.12,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+60,
+false
+],
+[
+"move_relative",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 129027,
+"cached_tokens": 2304,
+"output_tokens": 208,
+"reasoning_tokens": 11,
+"visible_tokens": 197,
+"out_chars": 775,
+"prose_chars": 388,
+"exec_chars": 298,
+"obs_text_chars": 19075,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 43,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 386,
+"last_feedback": 3306,
+"recent_feedback": 2847,
+"macro": 2270,
+"execution": 2976,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 65
+},
+{
+"run": "t6_011",
+"k": 24,
+"step": 983,
+"latency_s": 30.12,
+"server_s": 18,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_relative",
+"transit",
+55,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 134390,
+"cached_tokens": 2304,
+"output_tokens": 539,
+"reasoning_tokens": 197,
+"visible_tokens": 342,
+"out_chars": 1206,
+"prose_chars": 472,
+"exec_chars": 645,
+"obs_text_chars": 19258,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 46,
+"geometry": 1885,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 368,
+"last_feedback": 3347,
+"recent_feedback": 2948,
+"macro": 2270,
+"execution": 3038,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 68
+},
+{
+"run": "t6_011",
+"k": 25,
+"step": 1100,
+"latency_s": 13.04,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+95,
+true
+]
+],
+"input_tokens": 140136,
+"cached_tokens": 2304,
+"output_tokens": 252,
+"reasoning_tokens": 71,
+"visible_tokens": 181,
+"out_chars": 659,
+"prose_chars": 382,
+"exec_chars": 188,
+"obs_text_chars": 19644,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1885,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 430,
+"last_feedback": 3602,
+"recent_feedback": 2848,
+"macro": 2271,
+"execution": 3216,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 71
+},
+{
+"run": "t6_011",
+"k": 26,
+"step": 1158,
+"latency_s": 11.02,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+45,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 145267,
+"cached_tokens": 2304,
+"output_tokens": 233,
+"reasoning_tokens": 51,
+"visible_tokens": 182,
+"out_chars": 706,
+"prose_chars": 318,
+"exec_chars": 299,
+"obs_text_chars": 18404,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 330,
+"last_feedback": 3041,
+"recent_feedback": 2854,
+"macro": 2271,
+"execution": 2627,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 74
+},
+{
+"run": "t6_011",
+"k": 27,
+"step": 1196,
+"latency_s": 15.4,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"set_gripper",
+"contact",
+40,
+false
+],
+[
+"move_relative",
+"contact",
+45,
+true
+]
+],
+"input_tokens": 150618,
+"cached_tokens": 2304,
+"output_tokens": 351,
+"reasoning_tokens": 64,
+"visible_tokens": 287,
+"out_chars": 1071,
+"prose_chars": 392,
+"exec_chars": 590,
+"obs_text_chars": 19070,
+"obs_top": {
+"request": 7,
+"task": 88,
+"step": 4,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 46,
+"geometry": 1891,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 289,
+"last_feedback": 3333,
+"recent_feedback": 2854,
+"macro": 2271,
+"execution": 3037,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 77
+},
+{
+"run": "t7_001",
+"k": 1,
+"step": 0,
+"latency_s": 18.04,
+"server_s": 17,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6548,
+"cached_tokens": 2304,
+"output_tokens": 451,
+"reasoning_tokens": 248,
+"visible_tokens": 203,
+"out_chars": 735,
+"prose_chars": 475,
+"exec_chars": 170,
+"obs_text_chars": 13166,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 1,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 42,
+"geometry": 1888,
+"reviewed_goal_contract": 2588
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1093,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t7_001",
+"k": 2,
+"step": 36,
+"latency_s": 11.15,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+50,
+false
+],
+[
+"approach",
+"contact",
+70,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 12236,
+"cached_tokens": 2304,
+"output_tokens": 329,
+"reasoning_tokens": 45,
+"visible_tokens": 284,
+"out_chars": 1057,
+"prose_chars": 373,
+"exec_chars": 595,
+"obs_text_chars": 17740,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 2,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 442,
+"last_feedback": 3029,
+"recent_feedback": 2127,
+"macro": 2269,
+"execution": 2617,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t7_001",
+"k": 3,
+"step": 146,
+"latency_s": 12.71,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 18351,
+"cached_tokens": 0,
+"output_tokens": 368,
+"reasoning_tokens": 96,
+"visible_tokens": 272,
+"out_chars": 986,
+"prose_chars": 427,
+"exec_chars": 470,
+"obs_text_chars": 19714,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 168,
+"finger_joints_m": 44,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 328,
+"last_feedback": 3590,
+"recent_feedback": 2985,
+"macro": 2270,
+"execution": 3274,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 7
+},
+{
+"run": "t7_001",
+"k": 4,
+"step": 269,
+"latency_s": 13.01,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"approach",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 24650,
+"cached_tokens": 2304,
+"output_tokens": 338,
+"reasoning_tokens": 138,
+"visible_tokens": 200,
+"out_chars": 797,
+"prose_chars": 404,
+"exec_chars": 304,
+"obs_text_chars": 20212,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 572,
+"model_belief": 394,
+"last_feedback": 3472,
+"recent_feedback": 3535,
+"macro": 2270,
+"execution": 3289,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 10
+},
+{
+"run": "t7_001",
+"k": 5,
+"step": 361,
+"latency_s": 9.57,
+"server_s": 7,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 30781,
+"cached_tokens": 2304,
+"output_tokens": 209,
+"reasoning_tokens": 13,
+"visible_tokens": 196,
+"out_chars": 779,
+"prose_chars": 393,
+"exec_chars": 297,
+"obs_text_chars": 19426,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1881,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 583,
+"model_belief": 342,
+"last_feedback": 3302,
+"recent_feedback": 3277,
+"macro": 2270,
+"execution": 2978,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 13
+},
+{
+"run": "t7_001",
+"k": 6,
+"step": 416,
+"latency_s": 18.85,
+"server_s": 17,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 36758,
+"cached_tokens": 2304,
+"output_tokens": 467,
+"reasoning_tokens": 240,
+"visible_tokens": 227,
+"out_chars": 807,
+"prose_chars": 396,
+"exec_chars": 321,
+"obs_text_chars": 19375,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 582,
+"model_belief": 359,
+"last_feedback": 3342,
+"recent_feedback": 3112,
+"macro": 2270,
+"execution": 3029,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 16
+},
+{
+"run": "t7_001",
+"k": 7,
+"step": 507,
+"latency_s": 12.95,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+50,
+false
+],
+[
+"approach",
+"contact",
+70,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 42457,
+"cached_tokens": 2304,
+"output_tokens": 391,
+"reasoning_tokens": 91,
+"visible_tokens": 300,
+"out_chars": 1087,
+"prose_chars": 401,
+"exec_chars": 597,
+"obs_text_chars": 19568,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 44,
+"geometry": 1890,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 358,
+"last_feedback": 3402,
+"recent_feedback": 3258,
+"macro": 2270,
+"execution": 3012,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 19
+},
+{
+"run": "t7_001",
+"k": 8,
+"step": 555,
+"latency_s": 16.86,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 47935,
+"cached_tokens": 0,
+"output_tokens": 359,
+"reasoning_tokens": 165,
+"visible_tokens": 194,
+"out_chars": 771,
+"prose_chars": 495,
+"exec_chars": 187,
+"obs_text_chars": 19075,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 153,
+"finger_joints_m": 44,
+"geometry": 1888,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 569,
+"model_belief": 365,
+"last_feedback": 3311,
+"recent_feedback": 2919,
+"macro": 2270,
+"execution": 2973,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 22
+},
+{
+"run": "t7_001",
+"k": 9,
+"step": 574,
+"latency_s": 12.89,
+"server_s": 8,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+80,
+false
+],
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 53161,
+"cached_tokens": 2304,
+"output_tokens": 246,
+"reasoning_tokens": 0,
+"visible_tokens": 246,
+"out_chars": 909,
+"prose_chars": 347,
+"exec_chars": 473,
+"obs_text_chars": 18467,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 41,
+"geometry": 1887,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 454,
+"last_feedback": 3008,
+"recent_feedback": 2861,
+"macro": 2270,
+"execution": 2614,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 25
+},
+{
+"run": "t7_001",
+"k": 10,
+"step": 614,
+"latency_s": 20.43,
+"server_s": 19,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 58256,
+"cached_tokens": 2304,
+"output_tokens": 596,
+"reasoning_tokens": 385,
+"visible_tokens": 211,
+"out_chars": 837,
+"prose_chars": 450,
+"exec_chars": 298,
+"obs_text_chars": 18381,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 147,
+"finger_joints_m": 43,
+"geometry": 1889,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 572,
+"model_belief": 313,
+"last_feedback": 2929,
+"recent_feedback": 2846,
+"macro": 2270,
+"execution": 2789,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t7_001",
+"k": 11,
+"step": 665,
+"latency_s": 16.78,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"move_to_pose",
+"transit",
+85,
+true
+]
+],
+"input_tokens": 63971,
+"cached_tokens": 2304,
+"output_tokens": 305,
+"reasoning_tokens": 86,
+"visible_tokens": 219,
+"out_chars": 827,
+"prose_chars": 419,
+"exec_chars": 317,
+"obs_text_chars": 19154,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 42,
+"geometry": 1886,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 413,
+"last_feedback": 3328,
+"recent_feedback": 2844,
+"macro": 2270,
+"execution": 3037,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t7_001",
+"k": 12,
+"step": 753,
+"latency_s": 20.39,
+"server_s": 19,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+60,
+false
+],
+[
+"approach",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 69373,
+"cached_tokens": 2304,
+"output_tokens": 315,
+"reasoning_tokens": 117,
+"visible_tokens": 198,
+"out_chars": 762,
+"prose_chars": 364,
+"exec_chars": 308,
+"obs_text_chars": 19151,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 44,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 569,
+"model_belief": 369,
+"last_feedback": 3403,
+"recent_feedback": 2850,
+"macro": 2270,
+"execution": 3017,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 33
+},
+{
+"run": "t7_001",
+"k": 13,
+"step": 801,
+"latency_s": 15.89,
+"server_s": 15,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 74764,
+"cached_tokens": 2304,
+"output_tokens": 275,
+"reasoning_tokens": 64,
+"visible_tokens": 211,
+"out_chars": 856,
+"prose_chars": 470,
+"exec_chars": 297,
+"obs_text_chars": 19010,
+"obs_top": {
+"request": 7,
+"task": 67,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 44,
+"geometry": 1884,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 354,
+"last_feedback": 3296,
+"recent_feedback": 2849,
+"macro": 2270,
+"execution": 2976,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 36
+},
+{
+"run": "t8_001",
+"k": 1,
+"step": 0,
+"latency_s": 25.77,
+"server_s": 24,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6816,
+"cached_tokens": 2304,
+"output_tokens": 615,
+"reasoning_tokens": 406,
+"visible_tokens": 209,
+"out_chars": 799,
+"prose_chars": 521,
+"exec_chars": 189,
+"obs_text_chars": 13955,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 1,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1899,
+"reviewed_goal_contract": 3409
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1091,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t8_001",
+"k": 2,
+"step": 1,
+"latency_s": 6.36,
+"server_s": 5,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+false
+],
+[
+"move_to_pose",
+"transit",
+80,
+true
+]
+],
+"input_tokens": 14296,
+"cached_tokens": 0,
+"output_tokens": 209,
+"reasoning_tokens": 0,
+"visible_tokens": 209,
+"out_chars": 748,
+"prose_chars": 298,
+"exec_chars": 361,
+"obs_text_chars": 21798,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 1,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1897
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 443,
+"last_feedback": 3696,
+"recent_feedback": 3698,
+"macro": 2268,
+"execution": 4597,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t8_001",
+"k": 3,
+"step": 78,
+"latency_s": 28.78,
+"server_s": 28,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"approach",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 20044,
+"cached_tokens": 0,
+"output_tokens": 466,
+"reasoning_tokens": 231,
+"visible_tokens": 235,
+"out_chars": 834,
+"prose_chars": 413,
+"exec_chars": 332,
+"obs_text_chars": 18671,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 2,
+"robot_pose_wxyz": 169,
+"finger_joints_m": 42,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 274,
+"last_feedback": 3380,
+"recent_feedback": 2504,
+"macro": 2269,
+"execution": 3001,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 6
+},
+{
+"run": "t8_001",
+"k": 4,
+"step": 158,
+"latency_s": 9.94,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 26511,
+"cached_tokens": 6656,
+"output_tokens": 221,
+"reasoning_tokens": 33,
+"visible_tokens": 188,
+"out_chars": 731,
+"prose_chars": 344,
+"exec_chars": 298,
+"obs_text_chars": 20334,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 43,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 346,
+"last_feedback": 3377,
+"recent_feedback": 3602,
+"macro": 2270,
+"execution": 3498,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 9
+},
+{
+"run": "t8_001",
+"k": 5,
+"step": 206,
+"latency_s": 15.22,
+"server_s": 14,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+70,
+false
+],
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 32551,
+"cached_tokens": 2304,
+"output_tokens": 429,
+"reasoning_tokens": 198,
+"visible_tokens": 231,
+"out_chars": 869,
+"prose_chars": 456,
+"exec_chars": 324,
+"obs_text_chars": 19568,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 306,
+"last_feedback": 3362,
+"recent_feedback": 3358,
+"macro": 2270,
+"execution": 3038,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 12
+},
+{
+"run": "t8_001",
+"k": 6,
+"step": 289,
+"latency_s": 17.32,
+"server_s": 16,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"approach",
+"contact",
+80,
+false
+],
+[
+"approach",
+"contact",
+50,
+true
+]
+],
+"input_tokens": 38749,
+"cached_tokens": 0,
+"output_tokens": 480,
+"reasoning_tokens": 292,
+"visible_tokens": 188,
+"out_chars": 737,
+"prose_chars": 351,
+"exec_chars": 297,
+"obs_text_chars": 19396,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 44,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 393,
+"last_feedback": 3381,
+"recent_feedback": 3109,
+"macro": 2270,
+"execution": 3009,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 15
+},
+{
+"run": "t8_001",
+"k": 7,
+"step": 372,
+"latency_s": 18.03,
+"server_s": 17,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 4,
+"seg_skills": [
+[
+"approach",
+"contact",
+55,
+false
+],
+[
+"approach",
+"contact",
+25,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 44557,
+"cached_tokens": 0,
+"output_tokens": 509,
+"reasoning_tokens": 225,
+"visible_tokens": 284,
+"out_chars": 1042,
+"prose_chars": 370,
+"exec_chars": 583,
+"obs_text_chars": 19946,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 45,
+"geometry": 1901,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 579,
+"model_belief": 324,
+"last_feedback": 3361,
+"recent_feedback": 3265,
+"macro": 2270,
+"execution": 3488,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t8_001",
+"k": 8,
+"step": 455,
+"latency_s": 10.48,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+90,
+true
+]
+],
+"input_tokens": 50237,
+"cached_tokens": 2304,
+"output_tokens": 307,
+"reasoning_tokens": 70,
+"visible_tokens": 237,
+"out_chars": 811,
+"prose_chars": 384,
+"exec_chars": 338,
+"obs_text_chars": 19470,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1901,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 315,
+"last_feedback": 3576,
+"recent_feedback": 2792,
+"macro": 2270,
+"execution": 3281,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 21
+},
+{
+"run": "t8_001",
+"k": 9,
+"step": 561,
+"latency_s": 10.11,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+90,
+true
+]
+],
+"input_tokens": 55677,
+"cached_tokens": 2304,
+"output_tokens": 206,
+"reasoning_tokens": 49,
+"visible_tokens": 157,
+"out_chars": 569,
+"prose_chars": 292,
+"exec_chars": 188,
+"obs_text_chars": 19221,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 42,
+"geometry": 1895,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 349,
+"last_feedback": 3412,
+"recent_feedback": 2946,
+"macro": 2270,
+"execution": 3021,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 24
+},
+{
+"run": "t8_001",
+"k": 10,
+"step": 626,
+"latency_s": 8.54,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+35,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 60720,
+"cached_tokens": 2304,
+"output_tokens": 175,
+"reasoning_tokens": 0,
+"visible_tokens": 175,
+"out_chars": 685,
+"prose_chars": 298,
+"exec_chars": 298,
+"obs_text_chars": 18313,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 581,
+"model_belief": 277,
+"last_feedback": 3035,
+"recent_feedback": 2870,
+"macro": 2270,
+"execution": 2618,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t8_001",
+"k": 11,
+"step": 674,
+"latency_s": 16.75,
+"server_s": 15,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+65,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 65996,
+"cached_tokens": 2304,
+"output_tokens": 456,
+"reasoning_tokens": 186,
+"visible_tokens": 270,
+"out_chars": 977,
+"prose_chars": 416,
+"exec_chars": 472,
+"obs_text_chars": 19034,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 45,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 258,
+"last_feedback": 3356,
+"recent_feedback": 2874,
+"macro": 2270,
+"execution": 3033,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 29
+},
+{
+"run": "t8_001",
+"k": 12,
+"step": 792,
+"latency_s": 11.29,
+"server_s": 10,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"approach",
+"contact",
+80,
+false
+],
+[
+"approach",
+"contact",
+80,
+true
+]
+],
+"input_tokens": 71645,
+"cached_tokens": 2304,
+"output_tokens": 240,
+"reasoning_tokens": 34,
+"visible_tokens": 206,
+"out_chars": 817,
+"prose_chars": 431,
+"exec_chars": 297,
+"obs_text_chars": 19497,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 46,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 369,
+"last_feedback": 3469,
+"recent_feedback": 2864,
+"macro": 2270,
+"execution": 3291,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 32
+},
+{
+"run": "t8_001",
+"k": 13,
+"step": 900,
+"latency_s": 8.97,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"approach",
+"contact",
+25,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 76988,
+"cached_tokens": 2304,
+"output_tokens": 275,
+"reasoning_tokens": 42,
+"visible_tokens": 233,
+"out_chars": 904,
+"prose_chars": 375,
+"exec_chars": 440,
+"obs_text_chars": 19121,
+"obs_top": {
+"request": 7,
+"task": 33,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 368,
+"last_feedback": 3381,
+"recent_feedback": 2871,
+"macro": 2270,
+"execution": 2998,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 35
+},
+{
+"run": "t9_001",
+"k": 1,
+"step": 0,
+"latency_s": 26.22,
+"server_s": 25,
+"trigger": null,
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 6752,
+"cached_tokens": 2304,
+"output_tokens": 729,
+"reasoning_tokens": 516,
+"visible_tokens": 213,
+"out_chars": 807,
+"prose_chars": 535,
+"exec_chars": 183,
+"obs_text_chars": 13748,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 1,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 43,
+"geometry": 1901,
+"reviewed_goal_contract": 3154
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 61,
+"last_feedback": 4,
+"recent_feedback": 2,
+"macro": 2269,
+"execution": 1098,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 1
+},
+{
+"run": "t9_001",
+"k": 2,
+"step": 1,
+"latency_s": 6.97,
+"server_s": 6,
+"trigger": "execute/failed/target_envelope_rejected",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+90,
+false
+],
+[
+"move_to_pose",
+"transit",
+70,
+true
+]
+],
+"input_tokens": 14413,
+"cached_tokens": 2304,
+"output_tokens": 216,
+"reasoning_tokens": 0,
+"visible_tokens": 216,
+"out_chars": 781,
+"prose_chars": 339,
+"exec_chars": 353,
+"obs_text_chars": 21965,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 1,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 42,
+"geometry": 1907
+},
+"obs_ctx": {
+"step": 1,
+"capabilities": 3847,
+"measured_state": 587,
+"model_belief": 480,
+"last_feedback": 3712,
+"recent_feedback": 3714,
+"macro": 2268,
+"execution": 4652,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 4
+},
+{
+"run": "t9_001",
+"k": 3,
+"step": 79,
+"latency_s": 12.51,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 20313,
+"cached_tokens": 2304,
+"output_tokens": 325,
+"reasoning_tokens": 149,
+"visible_tokens": 176,
+"out_chars": 634,
+"prose_chars": 361,
+"exec_chars": 184,
+"obs_text_chars": 19204,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 2,
+"robot_pose_wxyz": 167,
+"finger_joints_m": 44,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 2,
+"capabilities": 3847,
+"measured_state": 585,
+"model_belief": 287,
+"last_feedback": 3380,
+"recent_feedback": 2504,
+"macro": 2269,
+"execution": 3498,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 6
+},
+{
+"run": "t9_001",
+"k": 4,
+"step": 134,
+"latency_s": 8.71,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 26215,
+"cached_tokens": 0,
+"output_tokens": 282,
+"reasoning_tokens": 41,
+"visible_tokens": 241,
+"out_chars": 904,
+"prose_chars": 361,
+"exec_chars": 454,
+"obs_text_chars": 18993,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 170,
+"finger_joints_m": 42,
+"geometry": 1905,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 321,
+"last_feedback": 3026,
+"recent_feedback": 3481,
+"macro": 2270,
+"execution": 2618,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 9
+},
+{
+"run": "t9_001",
+"k": 5,
+"step": 219,
+"latency_s": 22.15,
+"server_s": 21,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+100,
+true
+]
+],
+"input_tokens": 32434,
+"cached_tokens": 2304,
+"output_tokens": 550,
+"reasoning_tokens": 378,
+"visible_tokens": 172,
+"out_chars": 742,
+"prose_chars": 484,
+"exec_chars": 169,
+"obs_text_chars": 19989,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 165,
+"finger_joints_m": 44,
+"geometry": 1903,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 588,
+"model_belief": 314,
+"last_feedback": 3483,
+"recent_feedback": 3363,
+"macro": 2270,
+"execution": 3283,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 12
+},
+{
+"run": "t9_001",
+"k": 6,
+"step": 257,
+"latency_s": 20.59,
+"server_s": 19,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+65,
+false
+],
+[
+"set_gripper",
+"contact",
+25,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 38505,
+"cached_tokens": 2304,
+"output_tokens": 583,
+"reasoning_tokens": 325,
+"visible_tokens": 258,
+"out_chars": 1027,
+"prose_chars": 481,
+"exec_chars": 457,
+"obs_text_chars": 18715,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 163,
+"finger_joints_m": 43,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 408,
+"last_feedback": 3031,
+"recent_feedback": 3123,
+"macro": 2270,
+"execution": 2624,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 15
+},
+{
+"run": "t9_001",
+"k": 7,
+"step": 346,
+"latency_s": 16.95,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 44398,
+"cached_tokens": 0,
+"output_tokens": 357,
+"reasoning_tokens": 113,
+"visible_tokens": 244,
+"out_chars": 847,
+"prose_chars": 397,
+"exec_chars": 361,
+"obs_text_chars": 19992,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 166,
+"finger_joints_m": 44,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 580,
+"model_belief": 424,
+"last_feedback": 3481,
+"recent_feedback": 3272,
+"macro": 2270,
+"execution": 3283,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 18
+},
+{
+"run": "t9_001",
+"k": 8,
+"step": 412,
+"latency_s": 12.39,
+"server_s": 9,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+60,
+false
+],
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 49808,
+"cached_tokens": 2304,
+"output_tokens": 273,
+"reasoning_tokens": 22,
+"visible_tokens": 251,
+"out_chars": 906,
+"prose_chars": 347,
+"exec_chars": 470,
+"obs_text_chars": 18991,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 162,
+"finger_joints_m": 42,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 570,
+"model_belief": 344,
+"last_feedback": 3390,
+"recent_feedback": 2735,
+"macro": 2270,
+"execution": 3004,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 21
+},
+{
+"run": "t9_001",
+"k": 9,
+"step": 509,
+"latency_s": 14.57,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+45,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 55264,
+"cached_tokens": 2304,
+"output_tokens": 302,
+"reasoning_tokens": 92,
+"visible_tokens": 210,
+"out_chars": 774,
+"prose_chars": 362,
+"exec_chars": 323,
+"obs_text_chars": 19481,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 44,
+"geometry": 1905,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 574,
+"model_belief": 308,
+"last_feedback": 3488,
+"recent_feedback": 2872,
+"macro": 2270,
+"execution": 3284,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 24
+},
+{
+"run": "t9_001",
+"k": 10,
+"step": 557,
+"latency_s": 13.93,
+"server_s": 12,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+false
+],
+[
+"move_to_pose",
+"contact",
+65,
+true
+]
+],
+"input_tokens": 60650,
+"cached_tokens": 2304,
+"output_tokens": 345,
+"reasoning_tokens": 139,
+"visible_tokens": 206,
+"out_chars": 800,
+"prose_chars": 389,
+"exec_chars": 322,
+"obs_text_chars": 19128,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 44,
+"geometry": 1902,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 567,
+"model_belief": 330,
+"last_feedback": 3392,
+"recent_feedback": 2879,
+"macro": 2270,
+"execution": 3010,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 27
+},
+{
+"run": "t9_001",
+"k": 11,
+"step": 625,
+"latency_s": 12.23,
+"server_s": 11,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_relative",
+"contact",
+30,
+false
+],
+[
+"move_to_pose",
+"contact",
+60,
+true
+]
+],
+"input_tokens": 66067,
+"cached_tokens": 2304,
+"output_tokens": 320,
+"reasoning_tokens": 103,
+"visible_tokens": 217,
+"out_chars": 880,
+"prose_chars": 475,
+"exec_chars": 316,
+"obs_text_chars": 18998,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 161,
+"finger_joints_m": 44,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 584,
+"model_belief": 332,
+"last_feedback": 3288,
+"recent_feedback": 2875,
+"macro": 2270,
+"execution": 2969,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 30
+},
+{
+"run": "t9_001",
+"k": 12,
+"step": 691,
+"latency_s": 12.35,
+"server_s": 11,
+"trigger": "execute/failed/segment_budget_exhausted",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"set_gripper",
+"contact",
+30,
+false
+],
+[
+"move_relative",
+"contact",
+65,
+false
+],
+[
+"move_relative",
+"transit",
+65,
+true
+]
+],
+"input_tokens": 71486,
+"cached_tokens": 2304,
+"output_tokens": 286,
+"reasoning_tokens": 35,
+"visible_tokens": 251,
+"out_chars": 986,
+"prose_chars": 447,
+"exec_chars": 450,
+"obs_text_chars": 19219,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 43,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 437,
+"last_feedback": 3348,
+"recent_feedback": 2874,
+"macro": 2270,
+"execution": 3038,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 33
+},
+{
+"run": "t9_001",
+"k": 13,
+"step": 785,
+"latency_s": 17.82,
+"server_s": 17,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 3,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+85,
+false
+],
+[
+"move_to_pose",
+"transit",
+75,
+false
+],
+[
+"set_gripper",
+"contact",
+25,
+true
+]
+],
+"input_tokens": 76970,
+"cached_tokens": 2304,
+"output_tokens": 522,
+"reasoning_tokens": 235,
+"visible_tokens": 287,
+"out_chars": 998,
+"prose_chars": 407,
+"exec_chars": 502,
+"obs_text_chars": 19577,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 164,
+"finger_joints_m": 42,
+"geometry": 1900,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 576,
+"model_belief": 411,
+"last_feedback": 3477,
+"recent_feedback": 2876,
+"macro": 2270,
+"execution": 3285,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 36
+},
+{
+"run": "t9_001",
+"k": 14,
+"step": 896,
+"latency_s": 12.58,
+"server_s": 11,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"transit",
+75,
+true
+]
+],
+"input_tokens": 82692,
+"cached_tokens": 2304,
+"output_tokens": 290,
+"reasoning_tokens": 136,
+"visible_tokens": 154,
+"out_chars": 609,
+"prose_chars": 352,
+"exec_chars": 168,
+"obs_text_chars": 19539,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 45,
+"geometry": 1898,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 589,
+"model_belief": 363,
+"last_feedback": 3488,
+"recent_feedback": 2870,
+"macro": 2270,
+"execution": 3280,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 39
+},
+{
+"run": "t9_001",
+"k": 15,
+"step": 931,
+"latency_s": 11.32,
+"server_s": 9,
+"trigger": "execute/failed/segment_stall",
+"type": "motion",
+"n_segments": 0,
+"seg_skills": [],
+"input_tokens": 87817,
+"cached_tokens": 2304,
+"output_tokens": 176,
+"reasoning_tokens": 33,
+"visible_tokens": 143,
+"out_chars": 625,
+"prose_chars": 423,
+"exec_chars": 0,
+"obs_text_chars": 18421,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 47,
+"geometry": 1897,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 578,
+"model_belief": 314,
+"last_feedback": 2921,
+"recent_feedback": 2872,
+"macro": 2270,
+"execution": 2788,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 42
+},
+{
+"run": "t9_001",
+"k": 16,
+"step": 936,
+"latency_s": 9.34,
+"server_s": 8,
+"trigger": "direct_motion/segment_complete/local_motion_segment_complete",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+75,
+false
+],
+[
+"move_to_pose",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 92473,
+"cached_tokens": 2304,
+"output_tokens": 220,
+"reasoning_tokens": 26,
+"visible_tokens": 194,
+"out_chars": 738,
+"prose_chars": 328,
+"exec_chars": 321,
+"obs_text_chars": 16849,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 3,
+"robot_pose_wxyz": 160,
+"finger_joints_m": 46,
+"geometry": 1897,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 3,
+"capabilities": 3847,
+"measured_state": 577,
+"model_belief": 378,
+"last_feedback": 1264,
+"recent_feedback": 2893,
+"macro": 2270,
+"execution": 2788,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 45
+},
+{
+"run": "t9_001",
+"k": 17,
+"step": 1052,
+"latency_s": 10.18,
+"server_s": 8,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 2,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+70,
+false
+],
+[
+"move_to_pose",
+"contact",
+70,
+true
+]
+],
+"input_tokens": 97782,
+"cached_tokens": 0,
+"output_tokens": 270,
+"reasoning_tokens": 61,
+"visible_tokens": 209,
+"out_chars": 818,
+"prose_chars": 409,
+"exec_chars": 320,
+"obs_text_chars": 19014,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 4,
+"robot_pose_wxyz": 159,
+"finger_joints_m": 47,
+"geometry": 1899,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 586,
+"model_belief": 302,
+"last_feedback": 3313,
+"recent_feedback": 2877,
+"macro": 2271,
+"execution": 2982,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 48
+},
+{
+"run": "t9_001",
+"k": 18,
+"step": 1171,
+"latency_s": 19.5,
+"server_s": 16,
+"trigger": "execute/failed/segment_stall",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+75,
+true
+]
+],
+"input_tokens": 103151,
+"cached_tokens": 2304,
+"output_tokens": 195,
+"reasoning_tokens": 29,
+"visible_tokens": 166,
+"out_chars": 700,
+"prose_chars": 446,
+"exec_chars": 165,
+"obs_text_chars": 19081,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 4,
+"robot_pose_wxyz": 158,
+"finger_joints_m": 47,
+"geometry": 1896,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 575,
+"model_belief": 378,
+"last_feedback": 3318,
+"recent_feedback": 2878,
+"macro": 2271,
+"execution": 2982,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 51
+},
+{
+"run": "t9_001",
+"k": 19,
+"step": 1229,
+"latency_s": 8.48,
+"server_s": 7,
+"trigger": "execute/succeeded/fragment_complete",
+"type": "execute",
+"n_segments": 1,
+"seg_skills": [
+[
+"move_to_pose",
+"contact",
+55,
+true
+]
+],
+"input_tokens": 108210,
+"cached_tokens": 0,
+"output_tokens": 165,
+"reasoning_tokens": 14,
+"visible_tokens": 151,
+"out_chars": 608,
+"prose_chars": 352,
+"exec_chars": 167,
+"obs_text_chars": 18461,
+"obs_top": {
+"request": 7,
+"task": 60,
+"step": 4,
+"robot_pose_wxyz": 153,
+"finger_joints_m": 45,
+"geometry": 1897,
+"context_detail_compaction": 107
+},
+"obs_ctx": {
+"step": 4,
+"capabilities": 3847,
+"measured_state": 567,
+"model_belief": 393,
+"last_feedback": 3039,
+"recent_feedback": 2886,
+"macro": 2271,
+"execution": 2632,
+"native_evidence": 220,
+"task_success_source": 52
+},
+"n_input_items": 54
+}
+]

@@ -1,0 +1,37 @@
+{
+  "reservation_id": "trial_001",
+  "status": "preparation_error",
+  "raw_libero_success": false,
+  "time_to_raw_success_s": null,
+  "service_elapsed_s": 7.567007966921665,
+  "human_review_wait_s": 0.0,
+  "automatic_review_compute_s": 0.0,
+  "approved_by": null,
+  "review_modified": null,
+  "autonomous_quality": {
+    "terminal_physical_diagnostics": null,
+    "post_success_release_or_settle_is_separate_diagnostic": true,
+    "operator_action_interventions": 0,
+    "policy_fallback_counts": "see agent_stats.json"
+  },
+  "clock": {
+    "version": "speedup-service-clock-1",
+    "service_elapsed_s": 7.567007966921665,
+    "human_review_wait_s": 0.0,
+    "first_raw_success_service_s": null,
+    "raw_success_observed": false,
+    "raw_success_within_900": false,
+    "S300": false,
+    "evaluation_budget_s": 900.0,
+    "evaluation_budget_exhausted": false,
+    "deadline_overshoot_s": 0.0,
+    "boundary": "preparation + automatic review compute + execution + required finalization including synchronous video",
+    "excluded": "explicit human review wait only; final accounting receipt serialization follows measured persistence"
+  },
+  "arm": "A",
+  "task": "libero_10_t1",
+  "episode_index": 1,
+  "raw_evaluator_summary_status": "preparation_error",
+  "full_summary": "trial/summary.json",
+  "historical_v7_approval_reused": false
+}

@@ -1,0 +1,465 @@
+{
+  "collision": {
+    "allowed_classes": [
+      "finger_object",
+      "finger_articulated_part",
+      "manipulated_object_support"
+    ],
+    "collision_policy": "record_only",
+    "counts": {
+      "active_positive_distance_contacts": 0,
+      "checks": 26495,
+      "forbidden_contact_points": 3508,
+      "physics_substeps": 25475,
+      "points_finger_articulated_part": 0,
+      "points_finger_object": 138566,
+      "points_manipulated_object_scene": 1448,
+      "points_manipulated_object_support": 495,
+      "points_passive_scene": 729192,
+      "points_robot_internal": 0,
+      "points_robot_nonfinger_manipulated_object": 1019,
+      "points_robot_object": 468,
+      "points_robot_scene": 573,
+      "positive_distance_contacts_ignored": 0,
+      "unmapped_contact_points": 0
+    },
+    "detected": true,
+    "enabled": true,
+    "first_by_class": {
+      "finger_object": {
+        "action_index": 108,
+        "class": "finger_object",
+        "contact_distance_m": -2.4164088094877002e-05,
+        "contact_pos": [
+          0.027103068801643843,
+          0.08273618884815537,
+          0.45417992152000003
+        ],
+        "geom1": {
+          "body": "gripper0_finger_joint2_tip",
+          "finger_side": "right",
+          "id": 81,
+          "name": "gripper0_finger2_pad_collision",
+          "owner": "robot0_gripper",
+          "role": "robot_finger"
+        },
+        "geom2": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 21
+      },
+      "manipulated_object_scene": {
+        "action_index": 984,
+        "class": "manipulated_object_scene",
+        "contact_distance_m": -8.150555266212357e-08,
+        "contact_pos": [
+          0.044763458969135285,
+          0.24554534581462975,
+          0.4537597546894805
+        ],
+        "geom1": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "basket_1_main",
+          "finger_side": null,
+          "id": 157,
+          "name": "basket_1_g1",
+          "owner": "basket_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 6
+      },
+      "manipulated_object_support": {
+        "action_index": 108,
+        "class": "manipulated_object_support",
+        "contact_distance_m": -7.848000009233469e-08,
+        "contact_pos": [
+          -0.0030418337459142686,
+          0.08276035293625028,
+          0.43675996076000007
+        ],
+        "geom1": {
+          "body": "living_room_table_col",
+          "finger_side": null,
+          "id": 10,
+          "name": "geom_10",
+          "owner": "arena",
+          "role": "arena"
+        },
+        "geom2": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 21
+      },
+      "robot_nonfinger_manipulated_object": {
+        "action_index": 353,
+        "class": "robot_nonfinger_manipulated_object",
+        "contact_distance_m": -2.288871980718608e-05,
+        "contact_pos": [
+          0.005467394521552678,
+          0.1961705316755072,
+          0.5730879308030573
+        ],
+        "geom1": {
+          "body": "basket_1_main",
+          "finger_side": null,
+          "id": 158,
+          "name": "basket_1_g2",
+          "owner": "basket_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "gripper0_right_gripper",
+          "finger_side": null,
+          "id": 75,
+          "name": "gripper0_hand_collision",
+          "owner": "robot0_gripper",
+          "role": "robot"
+        },
+        "phase": "action",
+        "physics_substep": 4
+      },
+      "robot_object": {
+        "action_index": 551,
+        "class": "robot_object",
+        "contact_distance_m": -4.135814969485804e-05,
+        "contact_pos": [
+          0.06514320415413904,
+          -0.12657743313019704,
+          0.5563380796701806
+        ],
+        "geom1": {
+          "body": "milk_1_main",
+          "finger_side": null,
+          "id": 151,
+          "name": "milk_1_g2",
+          "owner": "milk_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "gripper0_right_gripper",
+          "finger_side": null,
+          "id": 75,
+          "name": "gripper0_hand_collision",
+          "owner": "robot0_gripper",
+          "role": "robot"
+        },
+        "phase": "action",
+        "physics_substep": 2
+      },
+      "robot_scene": {
+        "action_index": 92,
+        "class": "robot_scene",
+        "contact_distance_m": -2.1674250291203734e-06,
+        "contact_pos": [
+          0.04030219724055757,
+          0.11604856404162965,
+          0.4367593878167508
+        ],
+        "geom1": {
+          "body": "living_room_table_col",
+          "finger_side": null,
+          "id": 10,
+          "name": "geom_10",
+          "owner": "arena",
+          "role": "arena"
+        },
+        "geom2": {
+          "body": "gripper0_rightfinger",
+          "finger_side": "right",
+          "id": 80,
+          "name": "gripper0_finger2_collision",
+          "owner": "robot0_gripper",
+          "role": "robot_finger"
+        },
+        "phase": "action",
+        "physics_substep": 10
+      }
+    },
+    "first_event": {
+      "action_index": 92,
+      "class": "robot_scene",
+      "contact_distance_m": -2.1674250291203734e-06,
+      "contact_pos": [
+        0.04030219724055757,
+        0.11604856404162965,
+        0.4367593878167508
+      ],
+      "geom1": {
+        "body": "living_room_table_col",
+        "finger_side": null,
+        "id": 10,
+        "name": "geom_10",
+        "owner": "arena",
+        "role": "arena"
+      },
+      "geom2": {
+        "body": "gripper0_rightfinger",
+        "finger_side": "right",
+        "id": 80,
+        "name": "gripper0_finger2_collision",
+        "owner": "robot0_gripper",
+        "role": "robot_finger"
+      },
+      "phase": "action",
+      "physics_substep": 10
+    },
+    "forbidden_classes": [
+      "robot_scene",
+      "robot_nonfinger_manipulated_object",
+      "robot_object",
+      "manipulated_object_scene"
+    ],
+    "goal_aware": true,
+    "goal_objects": [
+      "basket_1",
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "goal_region_predicates": {
+      "basket_1_contain_region": "in"
+    },
+    "goal_regions": {
+      "basket_1_contain_region": "basket_1"
+    },
+    "held_objects": [
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "ignored_classes": [
+      "robot_internal",
+      "passive_scene"
+    ],
+    "manipulated_objects": [
+      "basket_1",
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "mode": "generic_contact_v2",
+    "pairs_by_class": {
+      "finger_object": [
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger1_pad_collision"
+          ],
+          "points": 30407
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger2_pad_collision"
+          ],
+          "points": 29845
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger1_pad_collision"
+          ],
+          "points": 23936
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 108,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger2_pad_collision"
+          ],
+          "points": 23480
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 8560
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 8556
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 6733
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 6726
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g5",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 323
+        }
+      ],
+      "manipulated_object_scene": [
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g1",
+            "butter_1:butter_1_g1"
+          ],
+          "points": 1448
+        }
+      ],
+      "manipulated_object_support": [
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "basket_1:basket_1_g1"
+          ],
+          "points": 479
+        },
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 108,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "butter_1:butter_1_g1"
+          ],
+          "points": 12
+        },
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "cream_cheese_1:cream_cheese_1_g1"
+          ],
+          "points": 4
+        }
+      ],
+      "robot_nonfinger_manipulated_object": [
+        {
+          "class": "robot_nonfinger_manipulated_object",
+          "first_action_index": 353,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g2",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 779
+        },
+        {
+          "class": "robot_nonfinger_manipulated_object",
+          "first_action_index": 356,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g5",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 240
+        }
+      ],
+      "robot_object": [
+        {
+          "class": "robot_object",
+          "first_action_index": 551,
+          "first_phase": "action",
+          "pair": [
+            "milk_1:milk_1_g2",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 468
+        }
+      ],
+      "robot_scene": [
+        {
+          "class": "robot_scene",
+          "first_action_index": 92,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 293
+        },
+        {
+          "class": "robot_scene",
+          "first_action_index": 92,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 280
+        }
+      ]
+    },
+    "stop_on_collision": false,
+    "success_qualification": "raw_libero_goal",
+    "version": "agent-speedup-v2-generic-contact-v2"
+  },
+  "completion_time_eligible": true,
+  "evaluation_completed": true,
+  "failure_reason": null,
+  "incomplete_episodes": 0,
+  "libero_success": true,
+  "scored_episodes": 1,
+  "status": "success",
+  "success_rate": 1.0,
+  "task_success": true
+}

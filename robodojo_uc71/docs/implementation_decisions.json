@@ -1,0 +1,119 @@
+{
+  "schema_version": "robodojo-uc71-implementation-decisions-1",
+  "recorded_at_utc": "2026-10-29T04:35:29.489365+00:00",
+  "status": "implementation_authorized_test_start_not_authorized",
+  "scope": {
+    "task_key": "make_toast",
+    "variant": "standard",
+    "env_config": "arx_x5",
+    "seed_directory": 0,
+    "layout_id": 0,
+    "environments": 1,
+    "proposed_full_attempts": 1,
+    "full_test_start_approved": false,
+    "new_model_requests_in_this_record": 0
+  },
+  "review_basis": {
+    "archive": "planning_archive_20261029",
+    "archive_manifest_sha256": "ee100d8eb4322efc51d786c44d7385d73a78cea4104a5291c98fc993192a0a62",
+    "review_sha256": "a7e337ef43b973dd832e4076afa3ecfa02e4dd77079b7081ae20e2320726bd1d",
+    "workflow_sha256": "e80b8894d85a0231d4f8c307fd565d234a47e5d7937c759e3b53370bac02c1f0",
+    "agent_guide_sha256": "17ab56d83fb9897aa058a3d538524e0a5faed2d28183c3da1758cf9bf41207fd"
+  },
+  "D1": {
+    "decision": "disclosed_generic_public_homing_rule",
+    "model_visible_rule": "A task counts as complete only when both arms are back at the pose they started the episode in.",
+    "placement": "A separately labeled benchmark-wide rule in planning and execution; retain exact native task instruction.",
+    "numeric_success_thresholds_in_prompt": false,
+    "task_recipe_in_prompt": false,
+    "automatic_home_or_hidden_retreat": false,
+    "requires_versioned_prompt_diff": true,
+    "evaluation": "Native full success and separate evaluator-only instructed-goal progress; neither creates policy hints."
+  },
+  "D2": {
+    "decision": "native_1400_action_hard_stop",
+    "native_action_limit": 1400,
+    "action_unit": "One per-environment action dictionary; 10 physics substeps per action at frozen 25 Hz collection / 0.004 s physics dt.",
+    "physics_substeps_per_action": 10,
+    "physics_dt_s": 0.004,
+    "control_hz": 25,
+    "simulation_horizon_s": 56.0,
+    "remaining_action_budget_model_visible": false,
+    "uncapped_continuation_enabled": false,
+    "continuation_requires_separate_explicit_approval": true,
+    "additional_wall_time_or_model_call_episode_cap": null,
+    "controller_mapping": "Measure and preregister robot-only tracking, tolerances and timing before a model attempt; do not tune against its task outcome.",
+    "termination": "Native success at the boundary takes precedence; otherwise horizon_exhausted is a task failure with completion time null. No extra policy action after the boundary."
+  },
+  "D3": {
+    "decision": "native_640x480_rgb",
+    "views": [
+      "head",
+      "left_wrist",
+      "right_wrist"
+    ],
+    "width": 640,
+    "height": 480,
+    "crop": false,
+    "resample": false,
+    "square_letterbox": false,
+    "requires": "Versioned rectangular planning grids, grounding schema, geometry validation and video layout; verify actual decoded dimensions and robot-only camera projection before approval.",
+    "image_transform": "Isaac camera orientation verified directly; no inherited MuJoCo vertical flip."
+  },
+  "D4": {
+    "decision": "live_execution_smoke_disabled_until_separately_approved",
+    "live_execution_smoke_approved": false,
+    "run_now": false,
+    "approval_requirements": "Concrete diagnostic layout, capped execution-request/action scope and plumbing-only purpose; approval separate from implementation and from the full pilot.",
+    "model_free_checks": "Allowed implementation validation after runtime prerequisites; never called an Astra execution test.",
+    "whole_attempt_retry": "No automatic retry or layout substitution, including zero-action infrastructure failures; a new full attempt needs new review/output and approval."
+  },
+  "D5": {
+    "decision": "gpu4_candidate_runtime_identity_and_license_pending",
+    "candidate_nvidia_smi_index": 4,
+    "candidate_gpu_uuid": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+    "candidate_pci_bus_id": "00000000:81:00.0",
+    "candidate_inventory_only": true,
+    "cuda_runtime_verified": false,
+    "kit_renderer_verified": false,
+    "eula_status": "pending_explicit_user_acceptance",
+    "eula_accepted_by_this_record": false,
+    "device_contract": {
+      "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+      "CUDA_VISIBLE_DEVICES": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+      "device": "cuda:0",
+      "renderer_active_gpu_candidate": 4,
+      "multi_gpu_rendering": false,
+      "renderer_max_gpu_count": 1
+    },
+    "requires": "Recheck availability, bind UUID, verify Kit GPU table and physical CUDA/render device use; do not assume CUDA mask controls Vulkan. Preserve other workloads and host driver.",
+    "first_runtime_gate": "After license acceptance, isolated model-free RTX camera smoke; preserve a scenedb crash or first-frame hang as a provisioning failure, with no automatic process restart."
+  },
+  "E1_correction": {
+    "review_claim_corrected": "The review incorrectly says native arm joint state is overwritten by prev_control. Only keys ending ee_joint_state enter that overwrite.",
+    "native_arm_joint_state": "measured via robot_manager.get_joint",
+    "native_gripper_state": "command-derived from prev_control, normalized by gripper scale; not a measured contact or opening certificate",
+    "measured_channels": "Read both finger joint positions and six arm joint positions/velocities from articulation data, plus measured link6 pose; label raw measurements and any conversions.",
+    "command_channels": "Keep the requested/latched gripper command separately from measured fingers.",
+    "source": "env/observation_manager/obs_manager.py:169-211"
+  },
+  "inactive_arm_hold": {
+    "pose_reference": "Freeze the inactive arm measured pose at handoff and maintain that reference on each native action.",
+    "gripper_reference": "Retain the last requested gripper command; never replace it with observed opening.",
+    "both_arms_in_every_native_action": true,
+    "why": "A stale motion target can keep pushing after a stall; echoing observed opening can release a held object."
+  },
+  "authorization_note": "Implementation authorization does not approve EULA acceptance, a live execution smoke, an uncapped continuation, or the full test start. Later approvals are recorded separately; this file is not a launch approval.",
+  "later_updates": [
+    {
+      "event": "explicit_nvidia_licence_acceptance",
+      "record": "../validation/provisioning/vendor_authorization.json",
+      "full_task_start_approved": false
+    },
+    {
+      "event": "A0_renderer_gate_failed",
+      "record": "../validation/provisioning/stage_status.json",
+      "native_preview_available": false
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "version": "speedup-service-clock-1",
+  "boot_id": "899d7468-6f1a-42ca-81db-39b0b84fb52d",
+  "started_monotonic": 673257.995650629,
+  "budget_s": 900.0,
+  "human_wait_s": 0.0,
+  "pause_start": null,
+  "finished_monotonic": 674158.948498997,
+  "first_raw_success_service_s": null,
+  "events": [
+    {
+      "event": "service_started",
+      "monotonic_s": 673257.995653459,
+      "service_elapsed_s": 3.6499695852398872e-06
+    },
+    {
+      "event": "preparation_start",
+      "monotonic_s": 673258.098433083,
+      "service_elapsed_s": 0.10278337390627712
+    },
+    {
+      "event": "model_request_start",
+      "monotonic_s": 673266.063052394,
+      "service_elapsed_s": 8.067404244909994
+    },
+    {
+      "event": "transport_start",
+      "monotonic_s": 673266.063062444,
+      "service_elapsed_s": 8.067411964992061
+    },
+    {
+      "event": "evaluation_budget_exhausted",
+      "monotonic_s": 674157.995758793,
+      "service_elapsed_s": 900.000110053923,
+      "source": "in_flight_model_deadline"
+    },
+    {
+      "event": "transport_end",
+      "monotonic_s": 674157.996456734,
+      "service_elapsed_s": 900.0008066949667
+    },
+    {
+      "event": "model_request_end",
+      "monotonic_s": 674157.996464574,
+      "service_elapsed_s": 900.0008143049199
+    },
+    {
+      "event": "preparation_failed",
+      "monotonic_s": 674158.948487387,
+      "service_elapsed_s": 900.9528381678974,
+      "exception_type": "EvaluationBudgetExceeded"
+    },
+    {
+      "event": "required_artifacts_persisted",
+      "monotonic_s": 674158.948495707,
+      "service_elapsed_s": 900.952845557942
+    }
+  ],
+  "budget_exhausted": true,
+  "service_elapsed_s": 900.9528483679751
+}

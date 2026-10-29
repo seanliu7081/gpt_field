@@ -7,7 +7,10 @@ by the scene's observed plane. Unknown and obstacle-fill cells stay excluded.
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 import math
+from collections.abc import Mapping
 from dataclasses import replace
 from types import SimpleNamespace
 
@@ -18,40 +21,60 @@ from . import agent_speedup_v2_observers as observers
 from . import agent_speedup_v2_planner as planner
 from . import agent_speedup_v2_relations as relations
 from .agent_speedup_v2_scene import HeldFrameEstimator
-from .agent_speedup_v2_types import HF_SOURCES, HandPose, ObsReport, jsonable
+from .agent_speedup_v2_types import HF_SOURCES, PIDS, HandPose, ObsReport, jsonable
 
-SPATIAL_VERSION = "user-check-spatial-1"
+SPATIAL_VERSION = "user-check-spatial-3"
+DIRECTION_SEMANTICS = "external_view_v1"
+DIRECTION_RELATIONS = ("left_of", "right_of", "front_of", "behind")
 REGION_RELATIONS = ("on", "left_of", "right_of", "front_of", "behind", "near")
 PLACEMENT_RELATIONS = ("supported_on", "centered_on", "inside")
 _NUM = {"type": "number"}
 _NULL = {"type": "null"}
 _PAIR = {"type": "array", "items": _NUM, "minItems": 2, "maxItems": 2}
+# Match the extension parser's existing 32-item limit on the wire, too.
+# These are plan representation limits, not episode/action/time budgets.
+SPATIAL_MAX_ITEMS = 32
+_PART_ID = {"type": "string", "enum": list(PIDS)}
 SPATIAL_PLAN_PROPERTIES = {
-    "regions": {"type": "array", "items": {"type": "object", "additionalProperties": False,
-        "properties": {"id": {"type": "string"}, "support": {"type": "string"},
-            "anchor": {"anyOf": [{"type": "string"}, _NULL]},
+    "regions": {"type": "array", "maxItems": SPATIAL_MAX_ITEMS,
+        "items": {"type": "object", "additionalProperties": False,
+        "properties": {"id": _PART_ID,
+            "support": {"type": "string", "enum": [*PIDS, "observed_plane"]},
+            "anchor": {"anyOf": [_PART_ID, _NULL]},
             "relation": {"type": "string", "enum": list(REGION_RELATIONS)},
             "frame": {"type": "string", "enum": ["world"]},
             "bounds_xy_m": {"anyOf": [{"type": "array", "items": _PAIR, "minItems": 2,
                                           "maxItems": 2}, _NULL]}},
         "required": ["id", "support", "anchor", "relation", "frame", "bounds_xy_m"]}},
-    "placement_goals": {"type": "array", "items": {"type": "object", "additionalProperties": False,
-        "properties": {"obj": {"type": "string"}, "ref": {"type": "string"},
+    "placement_goals": {"type": "array", "maxItems": SPATIAL_MAX_ITEMS,
+        "items": {"type": "object", "additionalProperties": False,
+        "properties": {"obj": _PART_ID, "ref": _PART_ID,
             "relation": {"type": "string", "enum": list(PLACEMENT_RELATIONS)},
             "tolerance_m": {"anyOf": [_NUM, _NULL]}},
         "required": ["obj", "ref", "relation", "tolerance_m"]}},
 }
 SPATIAL_INSTRUCTIONS = """
-A physical object and a surface region are distinct. Put a bare surface region in
+A physical object and a surface region are distinct. Both regions and
+placement_goals are required arrays; use [] when an extension is unnecessary.
+Do not invent or repeat entries to fill an array. Every region id is a distinct
+existing part id A-H; each placement (obj,ref) pair appears at most once.
+Put a bare surface region in
 regions as {id,support,anchor,relation,frame,bounds_xy_m}; keep its id in parts so a
 place_on ref can reference it. support is a measured part id or observed_plane;
-anchor is a measured part id or null. Relations use WORLD axes: right_of=+x,
-left_of=-x, behind=+y, front_of=-y; they do not mean screen directions. Bounds are
+anchor is a measured part id or null. left_of/right_of/front_of/behind (and these
+words in the task) are as seen in image 1, the external camera: right/left = toward
+image 1's right/left; behind/front_of = farther from/nearer to that camera along
+its viewing direction (toward the top/bottom of image 1). Not the robot's own
+left/right; never judged in the wrist images. Use the same viewer words in plan
+text; never restate them as world axes. Vertical words mean world up/down. A word
+naming part of an object (back compartment, left plate) selects that part by
+pointing; it is not a region. frame "world" describes metric bounds only; keep
+bounds_xy_m null for directional relations. Bounds are
 [[xmin,xmax],[ymin,ymax]] in metres, relative to the anchor's measured centre when
 anchor is set, otherwise absolute world coordinates. null bounds use observed
 support extent. near requires explicit bounds. Never manufacture safe geometry:
 unobserved region cells require observation, while a region already grounded in
-observed support may be refreshed with an occupied hand. placement_goals optionally
+observed support may be refreshed with an occupied hand. Entries in placement_goals
 specify supported_on, centered_on or inside for an existing place_on (obj,ref).
 centered_on asks for the WHOLE OBJECT's centre, not a handle or gripper point;
 tolerance_m=null derives tolerance from measured uncertainty and available space.
@@ -125,6 +148,110 @@ def install_spatial_spec(scene, plan: dict) -> None:
         scene.user_check_body_frames = {}
 
 
+
+def _frame_json(value):
+    """Detach finite JSON data with the same canonical form as review artifacts."""
+    return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                      ensure_ascii=True, allow_nan=False)
+
+
+def build_view_frame(geometry) -> dict:
+    """Freeze horizontal viewer directions from validated external calibration.
+
+    R describes the displayed upright, uncropped, non-mirrored OpenGL image; this
+    function never flips pixels or uses the wrist camera. World +z is support up.
+    At zero roll, projected camera +x defines viewer right, and up cross right
+    defines the horizontal viewing direction (image-up for a top-down view).
+    This is a global horizontal convention, not a local perspective Jacobian.
+    Off-centre image-up can differ even at zero roll; rolled cameras can also
+    disagree with local pixel directions. Recorded LIBERO (0 degree) and RoboCasa
+    (about 0.9 degree) views are within the intended gravity-upright use. The
+    report's sampled table stayed word-consistent through 15 degrees of roll;
+    that empirical result is not a guarantee for arbitrary cameras or scenes.
+    Large-roll/local-plane semantics and inverted-view policy remain deferred:
+    inverted views retain the same formula and are diagnosed, never vetoed.
+
+    Camera numerical validity is checked by the observation geometry boundary.
+    Missing calibration is an unavailable fact, including for old/fake reviews.
+    The sole geometric availability case is a vertical camera x axis (1e-9 is
+    the fixed numerical epsilon specified for this frame, not a tuning threshold).
+    The digest includes both full external calibration and image conventions.
+    """
+    frame = {"direction_semantics": DIRECTION_SEMANTICS, "available": False,
+             "reason": "no_external_calibration", "external_camera": None,
+             "image": None, "calibration_sha256": None, "right_xy": None,
+             "away_xy": None, "roll_deg": None, "inverted": None,
+             "relation_directions": {}}
+    cameras = geometry.get("cameras") if isinstance(geometry, Mapping) else None
+    external = cameras.get("external") if isinstance(cameras, Mapping) else None
+    if not isinstance(external, Mapping) or "rotation_world_from_camera" not in external:
+        return frame
+    # No robot/task/object channels are copied into the frozen semantic frame.
+    calibration = {"external_camera": copy.deepcopy(dict(external)),
+                   "image": copy.deepcopy(geometry.get("image"))}
+    encoded = _frame_json(calibration)
+    calibration = json.loads(encoded)
+    frame.update(calibration, calibration_sha256=hashlib.sha256(encoded.encode("utf-8")).hexdigest())
+    rotation = np.asarray(calibration["external_camera"]["rotation_world_from_camera"], dtype=float)
+    if rotation.shape != (3, 3):
+        raise ValueError("External camera rotation must be a 3 by 3 matrix")
+    right = rotation[:2, 0]
+    length = float(np.linalg.norm(right))
+    up_components = rotation[2, :2]
+    frame.update(inverted=bool(rotation[2, 1] < 0),
+                 roll_deg=(None if not np.any(up_components) else
+                           math.degrees(math.atan2(float(up_components[0]), float(up_components[1])))))
+    if length < 1e-9:
+        frame["reason"] = "camera_x_vertical"
+        return frame
+    right = right / length
+    away = np.array([-right[1], right[0]])
+    frame.update(available=True, reason=None, right_xy=right.tolist(), away_xy=away.tolist(),
+                 relation_directions={"right_of": right.tolist(), "left_of": (-right).tolist(),
+                                      "behind": away.tolist(), "front_of": (-away).tolist()})
+    return frame
+
+
+def validate_view_frame(value) -> dict:
+    """Return a detached frozen frame, checking its self-contained provenance.
+
+    This checks serialized review data only; it never compares a live camera or
+    changes the review's frame. Absence remains unavailable for legacy/fake use.
+    """
+    if value is None:
+        return build_view_frame(None)
+    try:
+        clean = json.loads(_frame_json(value))
+        if not isinstance(clean, dict) or clean.get("direction_semantics") != DIRECTION_SEMANTICS:
+            raise ValueError("Unsupported view-frame semantics")
+        expected = build_view_frame({"cameras": {"external": clean.get("external_camera")},
+                                     "image": clean.get("image")})
+        if _frame_json(clean) != _frame_json(expected):
+            raise ValueError("View frame does not match its frozen calibration")
+    except (TypeError, KeyError, IndexError, OverflowError) as exc:
+        raise ValueError("Invalid frozen view frame") from exc
+    return clean
+
+
+def region_directions(view_frame, regions) -> dict:
+    """Project reviewed directional labels through the one frozen direction table.
+
+    All consumers (executive, resolver, approval display) use this pure mapping.
+    Empty region lists still carry the viewer basis for directional part names.
+    Missing frames yield null vectors, never legacy world-axis interpretations.
+    """
+    frozen = view_frame if isinstance(view_frame, Mapping) else {}
+    available = bool(frozen.get("available")) and frozen.get("direction_semantics") == DIRECTION_SEMANTICS
+    table = frozen.get("relation_directions", {}) if available else {}
+    return {"direction_semantics": DIRECTION_SEMANTICS, "available": available,
+            "reason": frozen.get("reason") if available else frozen.get("reason") or "no_external_calibration",
+            "frame": {"right_xy": copy.deepcopy(frozen.get("right_xy")) if available else None,
+                      "away_xy": copy.deepcopy(frozen.get("away_xy")) if available else None},
+            "regions": {spec["id"]: {"relation": spec["relation"], "anchor": spec.get("anchor"),
+                                      "direction_world_xy": copy.deepcopy(table.get(spec["relation"]))}
+                        for spec in regions if spec.get("relation") in DIRECTION_RELATIONS}}
+
+
 def _polygon(record):
     raw = getattr(record, "region_xy", None)
     if raw is None:
@@ -195,12 +322,16 @@ def _ground_observed_region(ctx, pid: str) -> dict:
         if poly is None:
             return dict(result, reason="anchor_extent_unmeasured", dependency=anchor_pid)
         origin = _centre(poly)
-        low, high = poly.min(axis=0), poly.max(axis=0)
         relation = spec["relation"]
-        if relation == "right_of": mask &= xs > high[0]
-        if relation == "left_of": mask &= xs < low[0]
-        if relation == "behind": mask &= ys > high[1]
-        if relation == "front_of": mask &= ys < low[1]
+        if relation in DIRECTION_RELATIONS:
+            directions = region_directions(getattr(ctx, "user_check_view_frame", None), [spec])
+            direction = directions["regions"][pid]["direction_world_xy"]
+            result.update(view_frame=directions["frame"], direction_semantics=DIRECTION_SEMANTICS,
+                          direction_world_xy=direction)
+            if not directions["available"] or direction is None:
+                return dict(result, reason="view_frame_unavailable")
+            d = np.asarray(direction, dtype=float)
+            mask &= xs * d[0] + ys * d[1] > np.max(poly @ d)
         if relation == "on": mask &= _mask_for_poly(hf, poly)
     bounds = spec.get("bounds_xy_m")
     if bounds is not None:

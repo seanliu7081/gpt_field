@@ -1,0 +1,23 @@
+[package]
+title = "uc7.1 isolated Stage A0 RTX camera diagnostic"
+version = "0.1.0"
+
+[dependencies]
+"omni.kit.renderer.core" = {}
+"omni.usd" = {}
+"omni.hydra.rtx" = {}
+"omni.replicator.core" = {}
+
+[settings]
+app.name = "uc71-stage-a0-camera"
+app.window.enabled = false
+app.settings.persistent = false
+app.settings.fabricDefaultStageFrameHistoryCount = 3
+app.vulkan = true
+app.fastShutdown = false
+app.telemetry.enable = false
+renderer.activeGpu = 4
+renderer.multiGpu.enabled = false
+rtx.multiGpu.enabled = false
+rtx.multiGpu.maxGpuCount = 1
+rtx-transient.resourcemanager.enableTextureStreaming = false

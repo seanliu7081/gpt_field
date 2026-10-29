@@ -1,0 +1,101 @@
+{
+  "scope": "Unapplied review proposal; original V1 draft retained and remains invalid. No model call, approval or execution.",
+  "source_draft_sha256": "579dafffb25b2eebc1a906ec86127ff1de39648c96f26402cf958fc1ca5370e6",
+  "edit": {
+    "path": "steps[1].sense",
+    "before": "close",
+    "after": "any",
+    "reason": "Existing schema reserves directional sense for slide. Official task still requires closing the microwave."
+  },
+  "proposed_plan": {
+    "hold_true": [],
+    "parts": [
+      {
+        "id": "A",
+        "move": "free",
+        "text": "yellow and white mug: whole cup",
+        "w": 12,
+        "x": 37
+      },
+      {
+        "id": "B",
+        "move": "free",
+        "text": "yellow and white mug: loop handle on its side",
+        "w": 14,
+        "x": 44
+      },
+      {
+        "id": "C",
+        "move": "fixed",
+        "text": "microwave: open interior cavity",
+        "w": 0,
+        "x": 40
+      },
+      {
+        "id": "D",
+        "move": "hinged",
+        "text": "microwave: rectangular door with window",
+        "w": 35,
+        "x": 30
+      },
+      {
+        "id": "E",
+        "move": "hinged",
+        "text": "microwave: protruding handle on outer side of door",
+        "w": 44,
+        "x": 0
+      }
+    ],
+    "placement_goals": [
+      {
+        "obj": "A",
+        "ref": "C",
+        "relation": "inside",
+        "tolerance_m": null
+      }
+    ],
+    "regions": [],
+    "scene": "Yellow and white mug beside an open microwave and a second mug.",
+    "steps": [
+      {
+        "do": "place_in",
+        "grip": [
+          "B"
+        ],
+        "keep": [
+          {
+            "c": "upright",
+            "p": "A"
+          }
+        ],
+        "obj": "A",
+        "ref": "C",
+        "sense": "any",
+        "until": []
+      },
+      {
+        "do": "turn",
+        "grip": [
+          "E"
+        ],
+        "keep": [],
+        "obj": "D",
+        "ref": null,
+        "sense": "any",
+        "until": [
+          {
+            "o": "stop",
+            "p": null,
+            "txt": null
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "valid": true,
+    "issues": []
+  },
+  "applied": false,
+  "requires_user_review": true
+}

@@ -1,0 +1,998 @@
+{
+  "id": "resp_0503578cf28b7e60016adefc45ff1087d186f5d5d5e638d08e",
+  "object": "response",
+  "created_at": 1792998470,
+  "status": "completed",
+  "access_programs": {
+    "cyber": "standard"
+  },
+  "background": false,
+  "completed_at": 1792998488,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": "You are the continuous task executive for one Franka Panda with a parallel-jaw\nPanda gripper. Complete the official task using synchronized RGB observations,\nmeasured robot state, camera calibration and this episode's chronological\naction/result history. No object poses, depth, segmentation, contact identities,\nreward or simulator goal predicates are supplied. The two images are external\nand wrist, upright and uncropped. Older images retain their own geometry and\ntimestamp; the six most recent observation pairs are retained. All chronological\ntext, accepted outputs, measured results and opaque reasoning are retained.\n\nThe reviewed JSON expresses the user's intended objects, task goals and\nconstraints. It is the initial proposed decomposition, NOT a mandatory execution\nprogram or a requirement to satisfy every original intermediate waypoint.\nPreserve the official task, reviewed final spatial goals, established hold_true\nrelations and applicable keep constraints. You may change grips, reorder work,\nstage objects temporarily and plan new action sequences automatically. IDs keep\nthe same physical identities. A keep applies while pursuing its own intent;\nfuture intent constraints do not block unrelated current work. Necessary grasp\nand support contacts are distinct from unintended collisions.\n\nYOU OWN EXECUTION. Monitored fragments or direct motion may perform an entire\nsubtask: approach, close, lift, carry, align, lower, open at the desired\ndestination and withdraw. You need\nnot resume a native macro or obtain a native verified holding flag. An unknown\nholding estimate means uncertainty, not proof of an empty hand or a universal\nmotion prohibition. Use images across moves, measured fingers and motion error\nto maintain your own explicitly uncertain belief. A failed or unavailable native\nobserver is evidence about that observer; repeating a move without a plausible\nnew information source does not improve its answer. Do not repeatedly lift only\nto satisfy an unavailable co-motion detector. Choose short informative moves or\nanother view when evidence is insufficient. Explicit observed danger constrains\nmotion; uncertainty calls for shorter monitored steps, not automatic deadlock.\n\nEach response has belief (current evidence and uncertainty), plan (unfinished\nsubgoals and the next approach), why (what this action changes or observes), type,\nmotion, macro and execution. All keys are required. These belief/plan fields are\nYOUR estimates, never measured task-completion flags. Choose exactly one action\nand set every unused action payload to null:\n\nexecute: motion=null, macro=null, execution={segments:[...]}. Prefer execute for\na sufficiently understood free-space approach, carry or retreat, or an explicit\nshort sequence whose intermediate stages do not need new visual reasoning.\nDelegate the SAME selected pose target until measured arrival or a local event;\ndo not spend repeated model calls replaying it every five control steps. The\nlocal controller recomputes error from robot measurements every step, completes\na stage on measured arrival or finger settling, and advances the selected\nsequence unless observation_after requests a checkpoint. A stall, unexpected\nmeasured response or exhausted motion budget returns control for reconsideration.\nIt does not certify semantic attachment, placement or task success. No native scene\nregistration or motion calibration is needed for these fragments.\n\nexecution.segments contains 1..6 objects, each with exactly skill, xyz_m,\nquaternion_wxyz, gripper, profile, max_steps, observation_after. Coordinates are\nin the fixed world frame, metres; orientation is absolute right_hand wxyz.\n- move_to_pose: xyz_m is an absolute world grip-site target.\n- move_relative: xyz_m is a world displacement from the measured pose at THIS\n  stage's entry, not from the first stage or an earlier requested target.\n- approach: xyz_m is likewise a world displacement at this stage's measured\n  entry; use profile=contact for a slow monitored approach near contact.\n- set_gripper: xyz_m=null, quaternion_wxyz=null, gripper=open or close. The arm\n  holds its measured entry pose while finger-gap feedback is monitored.\n- wait: xyz_m=null, quaternion_wxyz=null, gripper=keep; retain the measured entry\n  pose and last gripper command for the requested bounded wait.\nArm-movement stages always use gripper=keep; put any finger change in a separate\nset_gripper stage. For arm stages quaternion_wxyz=null retains measured entry\norientation. max_steps is 1..120 per stage, with sum(max_steps)<=240 across the\nwhole sequence. At 20 Hz, budgets are upper bounds, not arrival guarantees.\nprofile=transit allows at most 0.30 m / 1.2 rad from a stage's measured start;\nprofile=contact allows at most 0.08 m / 0.5 rad. The unchanged OSC feedback loop\ncaps each action at 0.02 m translation (0.005 m for contact) and 0.1 rad rotation.\nThese envelopes are not permission to cross uncertain space. Choose a clear\nroute and intermediate waypoints using RGB and camera calibration. The executor\ndoes not discover obstacles or plan a collision-free path for you.\n\nobservation_after=true means STOP the sequence after this stage and return fresh\nRGB to you. Remaining stages are reported as unexecuted and are NOT automatically\nplayed or resumed after your next decision. Use this checkpoint near uncertain\ncontact or before an action whose justification depends on a preceding result.\nFor a grasp, use explicit set_gripper=close followed by an appropriately small\nmonitored test lift/checkpoint, then inspect new images; finger closure or stable\ngap alone never proves attachment. For placement, inspect whole-object support\nand pose after opening/settling. If a sequence yields on a stall, timeout or\nunexpected measured response, reconsider its path from the new evidence rather\nthan blindly repeating it. Use motion below for uncertain fine adjustment or\nwhen a very short observed action is preferable to committing a fragment.\n\nmotion: put a complete short target in motion; macro=null, execution=null. frame is world.\nposition_mode=relative means xyz_m is one world displacement from the latest\nmeasured position; absolute means world XYZ in metres. World +z is up. XYZ\nlocates gripper0_grip_site between the fingers, not the hand origin. The optional\nquaternion_wxyz is an absolute robot0_right_hand world orientation, or null to\nretain the measured orientation. gripper=keep preserves the last commanded\nopen/close setting, not an attachment assertion; open and close directly command\nthe fingers at this pose. Direct opening does not return to an earlier support.\nsteps is 1..5 at 20 Hz. The target is at most 0.05 m translation and 0.35 rad\nrotation from the latest measured pose. Each control step recomputes measured\npose error, capped at 0.02 m translation and 0.1 rad rotation. A segment may end\nbefore arrival. Inspect actual feedback and fresh images; once the route/target\nis understood, use execute for continuous measured execution toward it. Shorten\nsegments near uncertain contact. Simulation pauses\nduring inference. Closing is not proof of attachment; opening is not proof of\nstable support. Check the actual object's final pose and support in new views.\n\nmacro: motion=null, execution=null, macro={step_index,budget_steps,continuation}. step_index is\nthe zero-based reviewed step whose native hold/turn/place_on/release controller\nyou choose as an optional accelerator. budget_steps is 1..60 control actions\nbefore returning observation/control to you. Native prerequisites may be unknown\nor unavailable, and setup itself consumes the budget. Initial native calibration\nnormally requires about 190 control steps, so a 60-step calibration budget pause\nis NORMAL and may be continued; it is not evidence of failure. Inspect explicit\nphase/progress and capabilities. Choose continuation=true only to continue that same paused session\nwithout intervening direct motion. Other choices abandon its pending action\nsequence. Macros may report blocked/failed/inconclusive; decide from fresh\nevidence whether to continue or take over directly. Native release returns an\nobject to its original pick support; use direct motion with gripper=open when\nyou want to release at your present destination. Do not repeatedly select a\nmacro whose missing prerequisites are unchanged. Unknown native geometry or\nholding NEVER prohibits your direct task execution.\n\nobserve: motion=null, macro=null, execution=null. Hold the measured pose briefly and receive\nfresh observations, for example to inspect settling. This does not change the\ncamera viewpoint; move the wrist with motion when a new angle is needed.\nfinish: motion=null, macro=null, execution=null. This only requests a final fresh observation\nwhen you believe the task is complete. It never ends the episode or sets success.\nOnly the independent evaluator terminates a successful task. If observation\ncontinues, recheck unfinished spatial relations rather than repeatedly declaring\ncompletion. There is no give_up action.\n\nCamera position_world_m and rotation_world_from_camera map OpenGL camera axes to\nworld: p_world=origin+R*p_camera. Camera +X is image-right, +Y image-up, -Z forward.\nPixel u increases right and v down. For camera point [X,Y,Z], Z<0,\nu=cx+fx*X/(-Z), v=cy-fy*Y/(-Z). Pixels specify rays, not known 3-D points; infer\ndepth from the views and observed motion. Do not use image axes as world axes or\nassume image center is the grasp point. Use each image's synchronized camera\npose. The hand's local +Z is finger approach and local Y is jaw separation.\nThe grip site is 0.097 m along hand-local +Z from the hand origin; commanded XYZ\nalready locates it, so do not add this offset again. Symmetric finger pad centers\nhave midpoint [0,0,-0.0036] m relative to the grip site in hand coordinates; pad\nsize is [0.016,0.008,0.016] m, nominal open inner gap 0.079 m. Tool geometry does\nnot prove clearance or contact. Judge the whole hand, carried object and nearby\nobjects in both views. Keep task reasoning concise and output the JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-6-astra",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0503578cf28b7e60016adefc49b9ac87d1bc868a7844ddf884",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABq3vxQknXmGXmyuJrcB84Hntv1id9mhx9SAbNWGzRzUBwhmskvhK4DdE1EkJPIYkS9AxDwwVLKRf5ecxHj7TDzm6wQDvqCSNf9OK7g4VmzlUyXdIup5aeKlhp0GAmj2Dt9Di2bU-C0PdMM5m57JUlOv7B2KFGZoZeV4Jl21Co-w1coZeh79Pqne9PxuDKo24eu-VEnI3OiHs6B2cguDCIyMoDj11rGF33-asGzwKBLMTm_HInCfOttY43wjwz6sN-zNRiP-L9BAVN3ABOiHF2ApTDEwsSAJmaZgcvhbD_pjZsydVSfPjik2b7NpHoIDODLZuNhIgk8Iwzuy_9XUadJnStAuIMEeiIfK_9VvWMst_oRwI0wk0nUpKsq7qRzLfL15V-erfLmwkocoGbb7AXsMjIwN4GyizArvcYcbUCq3Ux9zqSlu1s4hQnES4FPqYIS_CopsEkYsDGahUIIHXE5836s-zJ_TNpiYTLoWiImO7UaqrOpU2uQoYgaeceLD3LM12Q3byWiU_3aCY1n2MBcQuPI4Dwv2ywrbhpruv2JtL8TAfttKEqqSjbUg8DBtfg3Hx_rLi0li1CU0C33xWHnRKIAwRcpCQXnJV1Tp037qXx7_ahMkhM4goEk9AsO6nlcdcUljiw33pSyNiVWFOMF6lws7FteeSfT0iv6BozxbBJ0J7xpO9ChquNzNbbJaUVCi8y74XMU4kMyBVWTXEX5BKlfSdeEiwogf_rzGLqy6HwF_WFexLoOL2Y155tunapQUqMPlcpJ2TXQ4iQ0nCUn4MpdjCcdM8f3MqXBH57k7BGdRQU-dWh6e2jWI0swQp9eftlvoVWxgLpYucllc1Pb6ujuhIb_L8zopbita1oFNiAufVM9CNvWv4_Q7RRz50wj-9p4jL3OJ7gorJhSUMetvKJj5njrZeA80g8py5DFD5a7eTZcSPz1ajGqL_TBXL1qF44WU7SdK6s0M96z_RDXR-39A3TlnNlh4BPJYuIEv9gnjuoZLCWBYUX0oxOdEgTEAd5cWf9GyhcOUFL3KTMhQEolWMeTePI9GiPlbYgBKZJ1Zj_1LMf3ol-JCiKXwAhK9eu8z1_RksRmUWZdI9RlN9pGbgixCeUYzzGrGpdik3Pv6v1wDdci95HjmcG5kk5ExZePwFjEFNjpzCNI49TnMOBCmnej83MHhvA_oecUW_m11QYyvkS3tMXK0s3iAFXw-i0mcD9g8fP3JZa2gWSB0S6d73IwCZQiR0E2BILgJ_cgKOLcb2V6vaYNgwsNzpJZiU2Fb0oM_72kiYjirXrc3FFxX17FFto9Oe_ua7g7tKFRDzyxtSLTnNQUxLMG1pPZpc4J2a7mMK4NuzoX1cF4BkCFvn1twmpsurAHcQ_WwTTxh5AuJZRjSGJLvy8FcJ5fdQEM3O-EN4qRXzAAjvDTp0T1QBTVrq0dv0a9tM5Ro2RBPwse_4nibZJu7_oaeQ9GeBMkJNRbQ_-01t9YwApJ3MMSjv7pKIW7QdrChNNGAuJfMBhrlu5-IFzc4W13F8uQmTQ05_icr8kid__3l95rhZ35lZQYrGE8MUvJQ9x4pJWGxrx2kPEoJlVY2c5Qqd2mLG_ni-MewYzagvVvZ7RneTFjoR0F2E98IDp-wT7itGICtaOxdJjw035TujECXg6SpLcgIElcbCuo7G6Z--kdcOv2UmSatun49JaD0WmROsbYbNFKtCG3KrwHYVliCvu_FI0WLQJwYr3QtOL1PX3F7HQYZnzn_aBr_8V3zs-R5rENuesTSatJ3T-bOLEcGwhij1q_l56sRTGc1E0lQhNAUNJtxCXyjy-zAMiKM4jBZnfk-PMeGRsNWp3FBYnVVM6Crd7yN9EvQXqOmlj4Gj2V8sOoeu_tbdDX2qZ7TAdJVuI6CcUfmgVtm3-nnNqFhHbV-G03v6eWxK3DmE6vGdEIc0e8TgtpZ_moViTXCsCluIXowoQBPz1iHKlTBoAWy0X-uitwKk806jnPt43phEBy4DAfkqBptLFPVVnDtKn6j0fXi0PK_RnoTPmfguLdq1DDkw7vpcyJyP58Ejtz8TG6zF48MfdKwOq07lDdBjvwA4JCcYn1ILXJUkuS_T88xvy_D24IoQeEgkO9pYIqyi6y5iCltfPufJchubM89jLc--AYi2hxMdRI8Hk15NVvm3fNenA0WRUDP6ieVJjBvakYVC8psehs5s6V1y50sZ6Vb-mu85L1l9klFey6Mu2FaIPsnB0uUTEfUFlmAWq54ahaYO7KpTAxns8V8nrhJaHsX4qfLkqfwcRSUZo_fOftrV8ykiwiJ0Toajdo6F_FxX43HH3Qa-x6pytc7nfGYl_QZfkMY6DiVRIVkKSM9vpn23rBT5n-VCYag4bGsHZpfCtkl9HVgqDiYmX8KabLJxdvAHOhcrwpD9NbD12nIJn0Ef9kWH772_5ZxcqQteo-JkB7A-EBGwhVoTZ5a3DTPkXckD_WNPH1nxBvoNrFDuSEPP7KgdyTQ4QNROF9CYEqsy_ZQTWijyQNrmQUEZmF3tl-81AHja4xYXcIU5nCsOu0rSRwdbVZ",
+      "summary": []
+    },
+    {
+      "id": "msg_0503578cf28b7e60016adefc50419087d19a99de561450e865",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"belief\":\"The butter is still held over the basket, beside the cream cheese. It is close to the outer side of the opening, so a 1 cm inward adjustment improves whole-object clearance. The previous insertion encountered resistance below about z=0.58 m.\",\"plan\":\"Shift inward, lower only to z=0.595 m, release into the cavity, and withdraw to inspect both objects.\",\"why\":\"This keeps the butter inside the rim while avoiding another deep-hand insertion and preserving the cream-cheese placement.\",\"type\":\"execute\",\"motion\":null,\"macro\":null,\"execution\":{\"segments\":[{\"skill\":\"move_to_pose\",\"xyz_m\":[-0.015,0.315,0.595],\"quaternion_wxyz\":null,\"gripper\":\"keep\",\"profile\":\"contact\",\"max_steps\":45,\"observation_after\":false},{\"skill\":\"set_gripper\",\"xyz_m\":null,\"quaternion_wxyz\":null,\"gripper\":\"open\",\"profile\":\"contact\",\"max_steps\":30,\"observation_after\":false},{\"skill\":\"move_relative\",\"xyz_m\":[0,0,0.12],\"quaternion_wxyz\":null,\"gripper\":\"keep\",\"profile\":\"transit\",\"max_steps\":65,\"observation_after\":true}]}}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "a9b261dc-8a5a-46df-9a79-ed3074e4ee94",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "high",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": "user-FxTtKqreaJ4ASj35duPnV9Nz",
+  "service_tier": "default",
+  "store": false,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "description": null,
+      "name": "user_check_agent_first",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "belief": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1800
+          },
+          "plan": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1800
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 600
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "execute",
+              "motion",
+              "macro",
+              "observe",
+              "finish"
+            ]
+          },
+          "motion": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "frame": {
+                    "type": "string",
+                    "enum": [
+                      "world"
+                    ]
+                  },
+                  "position_mode": {
+                    "type": "string",
+                    "enum": [
+                      "absolute",
+                      "relative"
+                    ]
+                  },
+                  "xyz_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "quaternion_wxyz": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 4,
+                        "maxItems": 4
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "gripper": {
+                    "type": "string",
+                    "enum": [
+                      "keep",
+                      "open",
+                      "close"
+                    ]
+                  },
+                  "steps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                },
+                "required": [
+                  "frame",
+                  "position_mode",
+                  "xyz_m",
+                  "quaternion_wxyz",
+                  "gripper",
+                  "steps"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "macro": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "step_index": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "budget_steps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 60
+                  },
+                  "continuation": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "step_index",
+                  "budget_steps",
+                  "continuation"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "execution": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "segments": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 6,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "skill": {
+                          "type": "string",
+                          "enum": [
+                            "move_to_pose",
+                            "move_relative",
+                            "approach",
+                            "set_gripper",
+                            "wait"
+                          ]
+                        },
+                        "xyz_m": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "minItems": 3,
+                              "maxItems": 3
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "quaternion_wxyz": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "minItems": 4,
+                              "maxItems": 4
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "gripper": {
+                          "type": "string",
+                          "enum": [
+                            "keep",
+                            "open",
+                            "close"
+                          ]
+                        },
+                        "profile": {
+                          "type": "string",
+                          "enum": [
+                            "transit",
+                            "contact"
+                          ]
+                        },
+                        "max_steps": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 120
+                        },
+                        "observation_after": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "skill",
+                        "xyz_m",
+                        "quaternion_wxyz",
+                        "gripper",
+                        "profile",
+                        "max_steps",
+                        "observation_after"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "segments"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "belief",
+          "plan",
+          "why",
+          "type",
+          "motion",
+          "macro",
+          "execution"
+        ],
+        "additionalProperties": false
+      },
+      "strict": true
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_0503578cf28b7e60016adefc460d4087d18cee91fe24b44131": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 3466,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 12,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 13,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 3508,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefa9049dc87d1aca18abc5ec4acd1": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 304,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefaa9a9a087d19e6e7f638f39f75f": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 183,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 183,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460d5c87d18449b64b6ce9f002": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 6101,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 12,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 13,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 6143,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefab5cf6487d1929acf55499b130a": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 194,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 194,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460d6c87d1808df8ee796096bf": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 4922,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 12,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 13,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 4964,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefad031b487d189dd678999f67cd4": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 216,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefae0e5b487d1a2f4996ed54b590c": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 313,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 313,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460d8087d1a4d7481bdeaba166": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5234,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 12,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 13,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5276,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefb001ee087d1bf26dd420cabd4ff": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 75,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefb062de887d18406dbc3f312130c": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 196,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 196,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460d9487d1a9a047c96ed4a292": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5234,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 12,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 13,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5276,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefb1b67e087d1abf55061be8d35ec": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 160,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefb2abad487d1a7e86c549449eb00": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 264,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 264,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460fa487d1881e5015f77c46d5": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5253,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5887,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefb5bb78087d1a0f06e9ff46cc7a5": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 336,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefb76b34c87d187b964fe8e9b6c4c": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 271,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 271,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460ff087d1ae05c5b29041edf4": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5159,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5793,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefb9b2c3c87d1963ebb7ce6ed8652": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 31,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefb9e570c87d1a971561ef6c9d3c4": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 205,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 205,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc46107887d182c131043252aada": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5090,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5724,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefbb75f6c87d19092d27bbebc5a39": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 47,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefbbb32ec87d18798b805056bb17a": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 214,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 214,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc460fb887d1a23d46d33e72c930": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5094,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5728,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefbd9395c87d1bc6cad43f3dde1d0": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 138,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefbe380e887d181ad2bcf246a99e6": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 301,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 301,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc46101c87d189fafd12526c7d8f": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5150,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5784,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc0d189887d1a27c938f16275d32": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 257,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 257,
+          "output_tokens": 0
+        },
+        "msg_0503578cf28b7e60016adefc46108887d18c76cc4fd020ecbb": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 5145,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 5779,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefc49b9ac87d1bc868a7844ddf884": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 85
+        },
+        "msg_0503578cf28b7e60016adefc50419087d19a99de561450e865": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 0,
+              "output_tokens": 265
+            }
+          ],
+          "input_tokens": 0,
+          "output_tokens": 265
+        }
+      },
+      "request_fields": {
+        "text.format": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 362,
+          "output_tokens": 0
+        },
+        "instructions": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 2099,
+          "output_tokens": 0
+        }
+      }
+    },
+    "input_tokens": 66030,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 350,
+    "output_tokens_details": {
+      "reasoning_tokens": 85
+    },
+    "total_tokens": 66380
+  },
+  "user": null,
+  "metadata": {},
+  "_subscription_transport": {
+    "terminal_output_count": 0,
+    "completed_item_count": 2,
+    "output_assembly_source": "response.output_item.done",
+    "sse_completion_verified": true,
+    "response_media_type": "text/plain"
+  },
+  "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1",
+  "agent_speedup_v2_client_version": "agent-speedup-v2-client-4",
+  "billing": "chatgpt_subscription",
+  "transport_version": "chatgpt-subscription-http-sse-v1"
+}

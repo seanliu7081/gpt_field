@@ -27,7 +27,7 @@ from .policy import Decision
 from .astra import SchemaError
 
 
-POLICY_VERSION = "agent-speedup-v2-user-check-agent-2"
+POLICY_VERSION = "agent-speedup-v2-user-check-agent-3"
 CONTROLLER = base.CONTROLLER
 MAX_MACRO_GRANT_STEPS = 60
 MAX_NATIVE_CALLS_PER_ACT = 2
@@ -65,6 +65,7 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
 
     def reset(self):
         super().reset()
+        self.ctx.user_check_view_frame = deepcopy(self.plan_lock.view_frame)
         from .agent_speedup_v2_user_check_control import build_relation_layer, refresh_relation_layer
         from .agent_speedup_v2_user_check_runtime import StableScene
         from .agent_speedup_v2_user_check_spatial import WholeObjectHeldFrameEstimator, install_spatial_layer
@@ -113,8 +114,10 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
         self._sync_framework()
 
     def _task_contract(self):
+        from .agent_speedup_v2_user_check_spatial import region_directions
         contract = self.plan_lock.task_contract.to_dict()
         contract.update(
+            region_directions=region_directions(self.plan_lock.view_frame, contract.get("regions", [])),
             goal_source="official_task_with_reviewed_goal_meanings_and_constraints",
             execution_authority="model_owned_continuous_control",
             method_rule=("Reviewed steps are initial methods and optional macro choices. The model may "
@@ -203,10 +206,12 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
         }
 
     def _context(self, view):
+        contract = self._task_contract()
         return jsonable({
             "step": self.step_index,
             "approved_plan": self.plan_lock.plan(),
-            "task_contract": self._task_contract(),
+            "task_contract": contract,
+            "region_directions": contract["region_directions"],
             "geometry": getattr(view.observation, "geometry", None),
             "capabilities": self._capabilities(),
             "measured_state": {"pose_wxyz": measured_pose(view.state),

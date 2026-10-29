@@ -1,0 +1,137 @@
+{
+  "created_at": "2026-10-27T15:34:53.451329+00:00",
+  "user_instruction": "Stop and investigate",
+  "task": 1,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "both_task_attempts_stopped": true,
+  "submitted_task_planning_requests_total": 3,
+  "completed_task_planning_responses_total": 0,
+  "policy_actions_total": 0,
+  "task_completion_time_s": null,
+  "cases": [
+    {
+      "campaign": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001",
+      "submitted_model_requests": 1,
+      "completed_model_responses": 0,
+      "policy_actions": 0,
+      "results": [
+        {
+          "artifact": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_001/task_1/review/requests/000001-54edd7d03ce54fb5a58101306e2df8b2.result.json",
+          "status": "error",
+          "error_type": "KeyboardInterrupt",
+          "error_code": null,
+          "http_status": null,
+          "elapsed_client_s": 632.7317085070536,
+          "unknown_usage_calls": 1
+        }
+      ],
+      "automatic_transport_retries": []
+    },
+    {
+      "campaign": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002",
+      "submitted_model_requests": 2,
+      "completed_model_responses": 0,
+      "policy_actions": 0,
+      "results": [
+        {
+          "artifact": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000001-faeac77614a34006ad69ac46598b64e2.result.json",
+          "status": "error",
+          "error_type": "APIError",
+          "error_code": "stream_missing_completion",
+          "http_status": null,
+          "elapsed_client_s": 900.5611571850022,
+          "unknown_usage_calls": 1
+        },
+        {
+          "artifact": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000002-f841879619e84bed871e017f5236e0af.result.json",
+          "status": "error",
+          "error_type": "KeyboardInterrupt",
+          "error_code": null,
+          "http_status": null,
+          "elapsed_client_s": 914.4842242950108,
+          "unknown_usage_calls": 2
+        }
+      ],
+      "automatic_transport_retries": [
+        {
+          "artifact": "/workspace/gpt_field/runs/agent_speedup_v2_uc7_relayout_t1_20261027_002/task_1/review/requests/000001-faeac77614a34006ad69ac46598b64e2.request.transient_retry.json",
+          "error_code": "stream_missing_completion",
+          "attempt": 1,
+          "next_attempt": 2,
+          "wait_s": 2.5807057555433817,
+          "same_observation": true,
+          "actions_executed_from_failed_response": 0
+        }
+      ]
+    }
+  ],
+  "findings": {
+    "observed_failure": "stream_missing_completion after about900s: EOF or [DONE] without required response.completed",
+    "configured_timeout_s": 180,
+    "timeout_semantics": "urllib blocking-I/O/socket timeout; no whole-request deadline",
+    "retry_semantics": "Existing bounded transient-error retry submitted another request after2.5807s; interrupted by user stop",
+    "payload_comparison": "No task-specific schema/instructions/transport regression found; payloads identical after normalizing expected task text/images/effort",
+    "missing_evidence": [
+      "response headers",
+      "first-byte time",
+      "SSE event types/counts",
+      "heartbeat and last-event times"
+    ],
+    "cause_limits": "Cannot distinguish provider delay, intermediary behavior or unexpected stream semantics from these logs alone."
+  },
+  "offline_validation": {
+    "command": ".venv/bin/python -B -m pytest -q tests/test_chatgpt_plan.py tests/test_agent_speedup_v2_client.py -k \"stream or transient\"",
+    "passed": 28,
+    "deselected": 116,
+    "subtests_passed": 53,
+    "duration_s": 1.54
+  },
+  "official_protocol_reference": "https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference",
+  "completed_at": "2026-10-27T15:42:42.625304+00:00",
+  "investigation_status": "completed_with_upstream_cause_unresolved",
+  "live_probe": {
+    "report": "/workspace/gpt_field/reports/task1_stream_investigation_20261027/tiny_probe_001.json",
+    "script": "/workspace/gpt_field/reports/task1_stream_investigation_20261027/probe_subscription_stream.py",
+    "script_sha256": "dd33aa88107afd865ac023281e87f8a46de14b069d8a3a0062c88598c7cd7766",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "submitted_requests": 1,
+    "completed_responses": 1,
+    "elapsed_s": 4.42479,
+    "headers_received_s": 1.129673,
+    "completion_s": 4.42306,
+    "events_seen": 14,
+    "event_types": {
+      "response.created": 1,
+      "response.in_progress": 1,
+      "response.output_item.added": 1,
+      "response.content_part.added": 1,
+      "response.output_text.delta": 5,
+      "other": 1,
+      "response.output_text.done": 1,
+      "response.content_part.done": 1,
+      "response.output_item.done": 1,
+      "response.completed": 1
+    },
+    "http_status": 200,
+    "response_media_type": "text/plain",
+    "no_simulator_or_task_actions": true,
+    "hard_deadline_s": 60,
+    "retries": 0
+  },
+  "conclusions": [
+    "Both task1 attempts are stopped before robot-policy execution.",
+    "Task planning submitted3requests and received0completed responses across the two launches.",
+    "One separate tiny high-effort diagnostic request completed in4.42479s using the same production opener/serializer/parser.",
+    "Authentication and basic streaming work in the diagnostic; this does not reproduce or prove the cause of the original task-payload stalls.",
+    "The180s configuration is a blocking-I/O timeout, not a whole-request deadline. Existing client retries stream_missing_completion errors.",
+    "No shared runtime source or model-control behavior was changed; isolated metadata-only diagnostic harness and reports added."
+  ],
+  "recommended_before_next_task_trial": [
+    "Persist safe SSE stage/event timing while the request is active.",
+    "Expose an explicit whole-request deadline separately from socket timeout and episode duration.",
+    "Make transport retries explicit in run metadata/progress, distinguishing HTTP requests from task restarts."
+  ],
+  "further_task_trial_started": false
+}

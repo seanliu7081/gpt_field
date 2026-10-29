@@ -1,0 +1,46 @@
+{
+  "scope": "stock Isaac Sim 5.1 model-free diagnostic setup only",
+  "started_at_utc": "20261029T050513Z",
+  "python": "/workspace/gpt_field/robodojo_uc71/runtime/a1_env/bin/python",
+  "lock_sha256": "2f31cab884b74ed949b4c7027bd7365a8380f471b2d5cb6bbdf4a9e2c560c47e",
+  "log": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a1_install_20261029T050513Z.log",
+  "free_bytes_before": 194930024448,
+  "events": [
+    {
+      "argv": [
+        "uv",
+        "venv",
+        "--python",
+        "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/bin/python3.11",
+        "/workspace/gpt_field/robodojo_uc71/runtime/a1_env"
+      ],
+      "started_at_utc": "2026-10-29T05:05:13.528319+00:00",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/workspace/gpt_field/robodojo_uc71/runtime/a1_env/bin/python",
+        "--require-hashes",
+        "--torch-backend",
+        "cu128",
+        "--extra-index-url",
+        "https://pypi.nvidia.com",
+        "--link-mode",
+        "copy",
+        "-r",
+        "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a1_requirements.lock"
+      ],
+      "started_at_utc": "2026-10-29T05:05:13.583102+00:00",
+      "returncode": 1
+    }
+  ],
+  "kit_started": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "ready_for_diagnostic": false,
+  "free_bytes_after": 193804759040
+}

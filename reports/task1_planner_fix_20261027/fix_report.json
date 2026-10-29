@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-10-27T16:32:23.941183+00:00",
+  "status": "identified_code_defects_fixed_offline_validation_passed_live_validation_pending_approval",
+  "findings": {
+    "same_planner_instructions_and_schema_in_task0_and_task1": true,
+    "task1_request_not_larger_than_successful_task0": true,
+    "task0_high_initial_plan_s": 9.190991865005344,
+    "task0_high_visible_characters": 626,
+    "task0_high_plan_steps": 2,
+    "task0_xhigh_initial_plan_s": 51.94161330698989,
+    "task1_003_stream_duration_s": 180.002943,
+    "task1_003_output_delta_events": 11484,
+    "output_delta_events_are_not_tokens": true,
+    "task1_exact_unfinished_text_not_recorded": true,
+    "precise_generation_failure_mechanism_confirmed": false
+  },
+  "fixed_defects": [
+    "Wire extension arrays now have maxItems32 matching the existing local parser bound.",
+    "Identifiers are constrained to existing part IDs (region support also permits observed_plane).",
+    "Worked example contains both required extension arrays.",
+    "Plan/replan prompt requires complete compact JSON without padding and explicitly allows empty extensions.",
+    "Opt-in transport rejects pathological plan/replan syntax whitespace and visible size without retries or partial execution.",
+    "Content-free delta-length, whitespace and bounded lexical diagnostics distinguish future output failures."
+  ],
+  "versions": {
+    "planner_prompt": "agent-speedup-v2-user-check-prompt-6",
+    "spatial": "user-check-spatial-2",
+    "transport": "user-check-stream-diagnostics-2",
+    "method_revision": 7
+  },
+  "unchanged": [
+    "model gpt-6-astra/high",
+    "task1 layout and images",
+    "controller and motion rules",
+    "strict response.completed requirement",
+    "subscription-only credentials",
+    "uncapped episode action/time limits",
+    "existing run artifacts"
+  ],
+  "validation": {
+    "final_focused_tests_passed": 104,
+    "final_focused_tests_failed": 0,
+    "existing_unrelated_failures": 2,
+    "existing_failures_reproduced_on_frozen_attempt003": true,
+    "local_preflight_passed": true,
+    "new_live_model_calls": 0,
+    "new_robot_actions": 0,
+    "live_fix_effectiveness_verified": false
+  },
+  "next_validation": {
+    "specification": "/workspace/gpt_field/reports/task1_planner_fix_20261027/validation_specification.json",
+    "scope": "one planning request using identical saved task1 images; zero robot actions; no simulator",
+    "requires_user_approval": true,
+    "approved": false
+  },
+  "official_schema_reference": "https://developers.openai.com/api/docs/guides/structured-outputs",
+  "evidence_sha256": {
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/request_comparison.json": "a16a31e4fa918e0a54996cbb97a84a8deb243fba8cb7f7642c087a9352ba8484",
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/final_validation.log": "3240e46b19a5c775a20899cce580b3e9f80db175b17d11e443f6f2fba6f4a3c2",
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/baseline_existing_failures.log": "add58e0d9a9355f2bcedfc994395d6eccd1216833f1d3b85e9cb5b06969b898b",
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/preflight_after_fix.json": "589d0b17aae66f11a3ab68f6080903d43a32e97fa5f99920ab989f9d9df72b28",
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/fix_from_attempt003.patch": "731765fc9242033a46e72fd81ad4e82bfb1a1f72bb0e3828e941ff3b752cc30a",
+    "/workspace/gpt_field/reports/task1_planner_fix_20261027/validation_specification.json": "6e35b85250164d66484a0a85aabe86022ef957a0aa2cb5ad9c29d9c19bf4f6a9"
+  }
+}

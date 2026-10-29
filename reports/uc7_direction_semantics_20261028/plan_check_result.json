@@ -1,0 +1,378 @@
+{
+ "refs": {
+  "issues": [
+   {
+    "plan_item": "V0.2",
+    "severity": "blocking",
+    "problem": "The test fails on correct code. The plate's known position projects into cell 53, not the planner's cell 61. The mug and pudding pass only with settled positions; with layout_changes.json's custom positions they sit under 1 px from a cell border.",
+    "evidence": "Step-0 external calibration from task_6/trial/requests/000001-*.request.json; settled xyz from task_6/physical_validation.json. Settled projections: pudding (-0.16,-0.14,0.4498) -> (161.5,274.1), cell 35. Mug (-0.12,0.18,0.4344) -> (379.8,298.3), cell 38, 4 px from cell 39. Plate (0.149,0.0057,0.4393) -> (260.8,441.8), cell 53, 6 px above 61. With layout_changes.json custom_xyz (z 0.48): mug u=383.3 (0.7 px from the column border), pudding v=256.9 (0.9 px from the row border). Cell 61's centre ray-casts to (0.198,0.033), 5.6 cm from the plate centre and inside the plate's 0.069 m radius. Mirroring (u -> 511-u) swaps pudding and mug (35 <-> 38); the plate sits near the centre column (53 -> 52), so it cannot detect a mirror. Planner image 1 equals observation[:, ::-1] byte for byte. Scripts: /tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/finalcheck/refs/project_cells.py and compare_review_image.py.",
+    "fix": "\"Pipeline consistency: project the settled positions (physical_validation.json objects[].settled_xyz_m) through the step-0 external calibration onto image 1 (= observation[:, ::-1]). Assert pudding -> 35 and mug -> 38, and that the mirrored projection swaps them (35 <-> 38); this pair is the double-flip detector. For the plate, assert that cell 61's centre ray-cast lies inside the plate footprint (r 0.069 m); its centre cell is 53.\""
+   },
+   {
+    "plan_item": "E1",
+    "severity": "should_fix",
+    "problem": "No evidence supports \"nearest-past-edge lands in 6/7 LIBERO side boxes\". The 7 also includes a region that no goal uses, and the g5 case sits on the box boundary rather than clearly missing it.",
+    "evidence": "Critique P0.6 (workflow_result.json) verified 4/5 anchor-relative goal boxes. The 7 entries in side_geometry.json include STUDY_SCENE3 red_coffee_mug_behind_region, marked \"behind(unused)\". aim_target requires need = r_obj + max(M16_FLOOR_M=0.005, sigma) (planner.py:250, spatial.py:334), and the anchor exclusion margin is at least HF_CELL_M=0.005. A plate (r 0.0688) therefore lands about 0.079 m past the stove edge, about 4 mm inside the 0.075 m inner edge. g5 is a push, so aim_target does not choose its endpoint. The 7.5 cm itself is correct: the burner box is at local +0.15\u00b10.095 (flat_stove.xml:21-25), so its edge is at -0.165; stove_front_region spans x[-0.09,-0.01] (push_the_plate_to_the_front_of_the_stove.bddl:33-39). Also, the current aim_target keeps the native centre-first target whenever it lies in the region (spatial.py:306-313); selection happens at :332-337.",
+    "fix": "\"Known tension: the nearest fitting spot past the anchor edge lands inside the pick-and-place side boxes (critique P0.6: 4/5 goal boxes). For g5 the box starts 7.5 cm past the stove footprint edge, so an adjacent plate (r 0.069 plus about 1 cm clearance) sits on its inner boundary, and g5 is a push that aim_target does not steer.\" E1 must also replace the early return at spatial.py:311-313, not only the selection at :332-337."
+   },
+   {
+    "plan_item": "A1 / A5 roll_deg",
+    "severity": "should_fix",
+    "problem": "asin(R[2,0]) is not roll. It is the tilt of image-right out of the horizontal plane, and it equals roll only when the optical axis is horizontal. On the LIBERO agentview it equals asin(0.849*sin(roll)).",
+    "evidence": "Output of rotation_check.py (column cam_x_tilt): roll 30 -> 25.1 deg, roll 60 -> 47.3 deg, roll 89 -> 58.1 deg. World-up in camera coordinates is R[2,:], so the roll about the viewing axis is atan2(R[2,0], R[2,1]).",
+    "fix": "\"Record roll_deg = degrees(atan2(R[2,0], R[2,1])) (null when the view is vertical); optionally also image_right_tilt_deg = degrees(asin(R[2,0])).\" Apply the same change to preparation.view_frame in A5."
+   },
+   {
+    "plan_item": "A1 documented scope / V0.1 synthetic expectations",
+    "severity": "should_fix",
+    "problem": "\"Exact for any camera position / yaw / elevation\" was measured at one anchor pixel near the image's centre column, and even there behind_err was 0.4-0.5 deg, not 0. At off-centre anchors the global 'away' direction differs from the local image-up direction even with zero roll. The roll error is also understated: it reaches about 23 deg, not 20. A2's \"farther from/nearer to that camera\" is the radial direction, which is not A1's global forward.",
+    "evidence": "finalcheck/refs/local_vs_global.py on the real agentview: right error is 0.0 deg everywhere; behind error is 7.4 deg at the pudding pixel, 9.7 deg at the mug pixel and about 17 deg at u=40/480. rotation_check.py: roll 30 -> right_err 19.2 deg, roll 60 -> 22.8 deg. The relayout mug's bearing from the camera is 13.9 deg.",
+    "fix": "\"Scope: left/right are exact at zero roll. behind/front use the camera's horizontal forward, which matches LIBERO's BDDL \u00b1x exactly; the local image-up direction at off-centre anchors deviates by up to about 17 deg on the agentview, but the four words stay correct. Under roll, words stay correct up to 89 deg and the vector error reaches about 23 deg (roll 60).\" In V0.1, use global camera-forward as the synthetic truth (or centre-column anchors), and assert words rather than 0-deg vectors off-centre. Optionally word A2's behind as \"toward the top of image 1 along the support (the camera's viewing direction)\"."
+   },
+   {
+    "plan_item": "V0.1 prototype rotation_check.py",
+    "severity": "should_fix",
+    "problem": "The cited script is the uncorrected version. It still runs the invalid below-table pitch case and reports it as a word failure, it lacks the 8-88 deg elevation sweep reported to the user, and it is not in the report's work/ folder.",
+    "evidence": "/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/rotation/rotation_check.py:72-73 sweeps pitch -15/20/40/57. At +57 the camera is at z\u22480.34, below the table plane (0.44), and the script prints words_wrong=['behind','front']. It is the only file in dirsem/rotation. The report's work/ was copied at 07:49; rotation/ was created at 08:19.",
+    "fix": "Replace the pitch loop with an elevation sweep (e.g. 8-88 deg) that keeps the camera above the support plane, with asserts that the anchor is in front of the camera and inside the image; drop +57. Copy the fixed script to reports/uc7_direction_semantics_20261028/work/rotation/ and cite that path."
+   },
+   {
+    "plan_item": "A8",
+    "severity": "should_fix",
+    "problem": "The uc client's text-replacement mechanism (:374-389) edits only self._instruction_text[kind], so it can fix base :199-200 and nothing else on the list. :505 is request content, not instructions. :1097 and :1159-1161 belong to request kinds uc7 never sends. :291 is missing from the list. The per-request relation \"computed from calibration\" has no input path.",
+    "evidence": "base :505 (_IMAGE_LABELS) is inserted into request content at :1015 inside _plan_request. :1097 is a field of _point_request (:1059-1112). :1159-1161 are labels in _repair_request (:1136-1173). uc7 trials send only agent requests (relayout t6 24/24, t7 11/11, relayout t4 11/11), and review sends a single plan request (runner :262). :291 reads \"wrist camera, turned as named\" in the repair/review instructions. request_plan (base :1028-1030) receives only images and turns; the plan fields (:1016) carry no calibration.",
+    "fix": "\"Fix :199-200 with the :374-389 replacement. Fix the :505 label by overriding _plan_request in UserCheckV2Client (pattern: ReviewedV2Client._plan_request, uc client :469-486) and rewriting the request['images'] label for image 3. Compute the wrist/external relation in the runner (prepare_review :245-264; robocasa prepare :187-196) and pass it to request_plan as a new argument. :1097, :1159-1161 and :291 are unused by uc7: leave them or list them as legacy/v3.\""
+   },
+   {
+    "plan_item": "V0.3",
+    "severity": "minor",
+    "problem": "41/41 does not count anchored directional regions.",
+    "evidence": "verify_claim.json has 21 select-by-direction, 11 caddy-compartment and 9 side-of-anchor goal-region checks (41 true), plus 4 'middle' checks that are undecidable (None). The anchored side-region inventory is 31 (design/dir_signs.txt: 23 right +y, 5 left -y, 3 front +x).",
+    "fix": "\"Every direction-selected object, caddy compartment and side-of-anchor goal region agrees (41/41 decidable = 21+11+9; 4 'middle' undecidable; 0 counterexamples), and all 31 anchored side regions have the expected sign.\""
+   },
+   {
+    "plan_item": "V0.5",
+    "severity": "minor",
+    "problem": "The html labels use U+2212 '\u2212', so an ASCII \"world -x\" check passes on the current, unfixed file.",
+    "evidence": "html :104-105 contain code point 0x2212 (\"world \u2212x\", \"world \u2212y\"); a search for 'world -x' in the html returns False today.",
+    "fix": "In the html snapshot test, match /world [+\\-\u2212][xy]/ and the phrase \"follow world axes\" (:244)."
+   },
+   {
+    "plan_item": "A2 spatial.py:59-60 / :60-63",
+    "severity": "minor",
+    "problem": "Replacing lines 59-60 whole would delete neighbouring text. The :60-63 rewrite also drops the case where anchor is null.",
+    "evidence": "spatial.py:59 begins \"anchor is a measured part id or null.\" and :60 ends \"Bounds are\". :61-62 say bounds are absolute world coordinates when anchor is null; only 'on' may have a null anchor (:97-98).",
+    "fix": "Replace only the sentence \"Relations use WORLD axes: right_of=+x, left_of=-x, behind=+y, front_of=-y; they do not mean screen directions.\" (from mid :59 to mid :60). Keep \"otherwise absolute world coordinates\" in the bounds text."
+   },
+   {
+    "plan_item": "A3/A5/A8 line ranges",
+    "severity": "minor",
+    "problem": "Several ranges are imprecise or cut mid-statement.",
+    "evidence": "PlanLock class: uc client :234-361. Semantic hash: field :241, computed :266 (semantic_plan, user_check.py:75-81), compared :319-322. prepare_review: :193-305, preparation dict :266-281 (the draft's :238-275 cuts the dict). robocasa prepare: :164-228, dict :199-214 (draft :180-212). user_check.py:260 only recomputes on load; context_sha256 is created and sealed at :335-337, bound at :240-246 and checked at :282-285. _polygon is :139-144 and _centre :147-152. Base :199-200 and :1159-1161. At runner :246, view.R is the hand rotation (contact_skills.py:268), not a camera rotation; the 0 result holds only for a top-down hand (geometry.py:1531-1534). The policy pipeline's [::-1, ::-1] is at observation.py:31.",
+    "fix": "Use these ranges. Restate the A3 rationale: \"PlanLock hashes only the plan without w/x, never the agent contract; 'beside regions' matters because replans must keep reviewed regions verbatim (framework.py:156-159).\""
+   },
+   {
+    "plan_item": "A5 wiring",
+    "severity": "minor",
+    "problem": "\"Pass the frozen frame through approval/PlanLock to A3 and A4\" names no code sites.",
+    "evidence": "PlanLock is built at runner :567 and robocasa :256 as PlanLock(review[\"plan\"], task_prompt=...). The resolver sees only ctx.scene (spatial.py:168-169); regions are installed by install_spatial_spec (spatial.py:129-136), called from StableScene.merge_plan (runtime.py:47-49). The reset-identity check is base.execute's expected_initial_observation_sha256 (runner :622). RoboCasa's external pose_source is 'synchronized_robot_mounted_camera' (robocasa_user_check_geometry.py:41, :152, enforced :69-70).",
+    "fix": "Pass review['preparation']['view_frame'] at runner :567 and robocasa :256. Install it on the scene in install_spatial_spec. Branch the trial-start digest check on pose_source 'fixed_world_camera' vs 'synchronized_robot_mounted_camera'."
+   },
+   {
+    "plan_item": "A3",
+    "severity": "minor",
+    "problem": "region_directions reaches the model only in the first executive request, and the executive payload reads the module constant directly.",
+    "evidence": "agent_client.py:472-480 sends task_contract as reviewed_goal_contract only when self._agent_history is empty. :366 sets 'instructions': AGENT_INSTRUCTIONS, so overrides of _instruction_text are ignored.",
+    "fix": "Name the path reviewed_goal_contract.task_contract.region_directions in the new AGENT_INSTRUCTIONS sentence, and edit the constant at :51-192. In V0.6, assert the field is absent from request 2's fields but present in the history."
+   },
+   {
+    "plan_item": "A6 (v3)",
+    "severity": "minor",
+    "problem": "v3 depends on more of the code that Build A changes than A6 states.",
+    "evidence": "agent_speedup_v3.py:68 defines AgentSpeedUpV3Policy(AgentFirstV2Policy), which inherits _task_contract (A3) and the scene/resolver path (A4). agent_speedup_v3_client.py:14-24 imports AgentFirstV2Client, UserCheckV2Client and AGENT_INSTRUCTIONS (the last unused).",
+    "fix": "\"v3 inherits UserCheckV2Client (v3_client.py:121) and AgentFirstV2Policy (v3.py:68), so A2-A4 change its behaviour; snapshot or freeze the v3 sources before Build A.\""
+   },
+   {
+    "plan_item": "Effort / V3",
+    "severity": "minor",
+    "problem": "The live-run count is off by one.",
+    "evidence": "\"t0-t9 incl. t6 official and relayout + g5\" is 10 + 1 + 1 = 12. The regression comparison against relayout t7 needs a rerun of it (13).",
+    "fix": "\"V3 ~12 live runs (13 with relayout t7).\""
+   }
+  ],
+  "confirmed": [
+   "The other cited lines match the current source: spatial.py:23, :211-214, :235; uc client :24, :131-138, :134-135, :374-389, :381-387; agent.py:115-126; agent_client.py:41, :179-191, :483-494; user_check.py:35-39, :236-237, :396-397; runner :246; robocasa :43-44; html :104-105, :244; base client :199, :505, :1097, :1159; contact_skills.py:283.",
+   "No double flip: review image 1 equals observation[:, ::-1] byte for byte (contact_skills.py:283 undoes observation.py:31's [::-1, ::-1]), and the calibrated projections of the relayout objects land on the objects in that image.",
+   "Recorded calibrations: the external R of relayout t6, t4_001, t6_007, t5_001 and v3 g5_001 gives right (0,1), away (-1,0), with away\u00b7forward > 0. RoboCasa coffee's robot0_agentview_left (pose_source synchronized_robot_mounted_camera) gives right (0.979,-0.202), away (0.202,0.979).",
+   "Planner cells in the relayout approved_plan: D pudding x=35, A mug x=38, B handle x=39, C plate x=61, E region x=55.",
+   "Approval binding: context_sha256 and binding_sha256 recomputed from relayout t6 review.json match the stored values, and editing preparation changes context_sha256 (preparation is in _CONTEXT_FIELDS).",
+   "Size bounds: compaction at size(fields) > 45000 and ValueError above 56000 (agent_client.py:483, :493-494); size counts compact-JSON characters (context.py:14-15). The first relayout t6 request text is 13,830 chars.",
+   "7.5 cm: the stove_front_region inner edge (-0.09) is 7.5 cm past the flat_stove burner-box edge (-0.165).",
+   "Convention check: 41/41 decidable checks, 0 counterexamples (4 'middle' checks undecidable).",
+   "The plan request carries no calibration (base :1016). METRIC is appended only to plan, replan, repair and review. The executive payload instructions are AGENT_INSTRUCTIONS only.",
+   "runtime_sha256 covers every src/gpt_field/*.py file, the runner and the html (runner :176-180), so user_check.py:396-397 refuses old approvals. review.json has quarter_turns 0. Relayout t6 had 0 macro grants. libero_goal_g5 is a valid v2 task key (agent_speedup_v2_tasks.py:107). No test pins the old direction semantics or the prompt version strings."
+  ]
+ },
+ "plumbing": {
+  "issues": [
+   {
+    "plan_item": "A5",
+    "severity": "blocking",
+    "problem": "The frozen frame never reaches the trial. The draft says 'pass through approval/PlanLock' but names no function. execute_reviewed builds the lock from the plan alone, and the client and policy receive only that lock.",
+    "evidence": "scripts/evaluate_agent_speedup_v2_user_check.py:567 `lock = PlanLock(review[\"plan\"], task_prompt=task.prompt)`; :574-575 client gets approved_plan+lock; :590-591 `(policy_factory or AgentFirstV2Policy)(client, lock=lock)`. PlanLock init fields are only approved_plan, conflict, allow_auto_replan and task_prompt (uc client :234-240).",
+    "fix": "Add 'A5b: PlanLock carries the frame'. Add an init field `view_frame: dict | None = None` to PlanLock (uc client :234-240). In __post_init__, deep-copy and validate it (finite, unit vectors), and include it in snapshot() (:346-362) so user_check_plan_history.json records it. Construct with `PlanLock(review[\"plan\"], task_prompt=task.prompt, view_frame=(review.get(\"preparation\") or {}).get(\"view_frame\"))` at runner :567. Do not add a new policy or client factory kwarg: test fakes use `(client, *, lock)` (tests/test_robocasa_user_check_runner.py:112, tests/test_agent_speedup_v2_user_check_integration.py:278)."
+   },
+   {
+    "plan_item": "A5 / RoboCasa",
+    "severity": "blocking",
+    "problem": "The RoboCasa trial path is not covered. RoboCasa execute builds its own PlanLock, so even with A5 in prepare, RoboCasa trials get no region_directions.",
+    "evidence": "scripts/evaluate_robocasa_user_check.py:256 `lock = PlanLock(review[\"plan\"], task_prompt=TASK_PROMPT)`; :297-299 client and policy receive only lock. The draft lists only the RoboCasa prepare step (:180-212).",
+    "fix": "Add: 'robocasa runner execute :256 -> PlanLock(..., view_frame=review[\"preparation\"].get(\"view_frame\"))'. RoboCasaUserCheckPolicy and RoboCasaAgentClient then inherit _task_contract and reset unchanged. State that RoboCasa needs NO new trial-start check: :286-287 already compares canonical_sha256(sensor_record(obs)), which includes obs.geometry (:87-90), with preparation.initial_sensor_sha256 (:203)."
+   },
+   {
+    "plan_item": "A4",
+    "severity": "blocking",
+    "problem": "The resolver has no route to the frame. ground_region and _ground_observed_region see only ctx and scene.user_check_regions. Those regions are installed by StableScene.merge_plan, which has no lock. The scene is also re-created mid-episode, so a scene-level attribute would be lost.",
+    "evidence": "spatial.py:166-263 (spec from scene.user_check_regions); install_spatial_spec :129-136 is called only from runtime.py:47-49 merge_plan(plan, roles, view, quarter_turns). ctx.scene = StableScene(...) is created at agent.py:69 and again at agent_macros.py:120-121 on stale geometry; uc client :790 is the legacy ReviewedV2Policy. Callers of ground_region: skills.py:37,227,243; spatial.py:292,553.",
+    "fix": "Use one ctx-level carrier. In AgentFirstV2Policy.reset() after super().reset() (agent.py:66-77), set `self.ctx.user_check_view_frame = self.plan_lock.view_frame`; ctx is created once per episode (agent_speedup_v2.py:1802). _ground_observed_region reads getattr(ctx, 'user_check_view_frame', None) and returns view_frame_unavailable when it is None. Set the same carrier in the ReviewedV2Policy episode factory (uc client :786-797), or state that the legacy path reports view_frame_unavailable for directional regions."
+   },
+   {
+    "plan_item": "A5 (trial-start digest)",
+    "severity": "should_fix",
+    "problem": "No location is given for the LIBERO digest check, and the 'existing reset-identity check' cannot carry it. Base v2 is read-only, and its reset hash excludes geometry.",
+    "evidence": "evaluate_agent_speedup_v2.py:1377-1387 hashes obs.to_dict(); CalibratedObservation.to_dict omits geometry (agent_speedup_v2_user_check_sim.py:59-64). Live calibration exists only as obs.geometry (sim.py:84-90). It is also re-sent every act (agent.py:209; agent_client.py:463-467). Fakes return PolicyObservation without geometry (tests/agent_speedup_v2_fakes.py:80-83, FakeTwoViewSim). The integration review has no preparation (integration.py:264-266).",
+    "fix": "In execute_reviewed, wrap the factory passed at runner :620 (`sim_factory or user_check_sim_factory(monitor)`). Its reset() returns obs only if, when frozen view_frame.pose_source == 'fixed_world_camera', canonical_sha256(obs.geometry['cameras']['external']) == view_frame.calibration_sha256. On mismatch raise ReviewError before the client is built: zero model calls and zero actions, consistent with runner :561-562. Skip the check when the frozen frame is absent or unavailable. The comparison is exact equality, with no tolerance."
+   },
+   {
+    "plan_item": "A5 (view_frame content)",
+    "severity": "should_fix",
+    "problem": "LIBERO reviews record no calibration at all. A digest alone cannot be re-verified offline (A6) and cannot drive the review-UI direction text or arrow. The UI JavaScript would also have to re-implement A1.",
+    "evidence": "0 occurrences of rotation_world_from_camera in task_6/review/review.json, review/initial_observation.json and the review plan request. Calibration exists only in trial agent requests. RoboCasa stores it in initial_sensors.json.",
+    "fix": "Store the full external camera block in preparation.view_frame: mujoco_name, pose_source, position, R, fovy, focal, principal point, image w/h, and the digest over that block. Also store a precomputed table relation_directions = {left_of, right_of, front_of, behind: [x, y]}. Make A3 (_task_contract), A4 (resolver), the html and the V1 checks all read that table through one pure helper in spatial.py (view_frame + plan regions -> region_directions)."
+   },
+   {
+    "plan_item": "A5 (prepare robustness)",
+    "severity": "should_fix",
+    "problem": "The draft does not say what prepare does when the observation has no calibration. If it raises, many existing offline tests break.",
+    "evidence": "Every LIBERO prepare test uses FakeV2Sim, whose reset returns PolicyObservation without .geometry: test_agent_speedup_v2_user_check_runner.py:44-52,82-95,119-130; effort.py:12-21; layout.py:23-33,94-151; planning_video.py:17-58; transport.py:238-245.",
+    "fix": "In prepare_review (runner :245-279) and RoboCasa prepare (:199-213), write `view_frame = {direction_semantics:'external_view_v1', status:'unavailable', reason:'no_external_calibration'}` when getattr(obs, 'geometry', None) is None. Do not raise. JSON stays finite (null, not NaN) because canonical_sha256 uses allow_nan=False (user_check.py:54-59)."
+   },
+   {
+    "plan_item": "A8",
+    "severity": "should_fix",
+    "problem": "The existing replacement mechanism reaches only :199. :505 is a per-request label. :1097 and :1159-1160 are never used in uc7, and on their only reachable path the 'turned' claim is true. A blanket 'not turned' text would be false on the macro-grounding path, which inherits the same instructions with a calibrated k.",
+    "evidence": "_IMAGES (:197-201) sits in the plan/replan instruction text (:312-316, copied at :698), so the uc client .replace at :374-389 reaches it. _IMAGE_LABELS['wrist clean'] (:505) is formatted per request in base _plan_request :1015 and is not instruction text. Recorded uc7 trials show only 'agent' calls: t6 relayout calls_by_kind = agent 24, point/repair/review/replan/plan 0, optional_macro_grants 0. Across uc7 dirs: 374 agent and 41 plan logs. The macro path calibrates first (agent_macros.py:107-117), then k = StepRunner.turns from cal.external (agent_speedup_v2.py:591-596).",
+    "fix": "Scope A8 to :199 and :505 only, and drop :1097/:1159-1160. For :199, use a neutral static replacement: 'Image 3/4 is the wrist camera, shown turned by the stated number of quarter turns; its left/right need not match image 1; judge direction words only in image 1.' For :505, add a `_plan_request` override in UserCheckV2Client (ReviewedV2Client already overrides it and calls super, uc client :467-482) that rewrites the wrist label using meta['quarter_turns'] ('not turned' when k=0). The calibration-based statement ('image 3's right is roughly image 1's left') needs data request_plan does not receive (runner :262-264, RoboCasa :193-194). Either drop it, or pass an explicit kwarg that UserCheckV2Client.request_plan pops before calling super; the fakes accept **kwargs."
+   },
+   {
+    "plan_item": "A6/A7",
+    "severity": "should_fix",
+    "problem": "Historical reviews would silently change meaning. The `review` command opens old review dirs with the current html, A7 rewrites the labels unconditionally, and VERSION stays the same.",
+    "evidence": "runner :793-797 and RoboCasa main 'review' call _show_review(ReviewStore(dir)); VERSION 'agent-speedup-v2-user-check-7' (user_check.py:31) is checked in _load :255-257; html :104-105 and :244 labels are static.",
+    "fix": "Choose one of two options. (a) The html shows the legacy labels ('world \u00b1x/\u00b1y, legacy semantics') whenever preparation.view_frame is absent, and 'direction unavailable' when its status is unavailable. (b) Bump VERSION (uc7.1) so old reviews fail closed in the new UI and are read only via their frozen_source html. Also add direction_semantics to framework_settings() (runner :57-90) so every manifest and summary carries the tag, including tasks without regions. Note that agent_speedup_v3.html :104-105/:244 keeps the old labels (v3 is frozen)."
+   },
+   {
+    "plan_item": "A1",
+    "severity": "should_fix",
+    "problem": "The qualifier 'when the view is not vertical' needs an epsilon, which is a tuned threshold. The finiteness check is redundant.",
+    "evidence": "With away = z \u00d7 unit(R[:2,0]), a top-down camera gives away = image-up automatically and away\u00b7(\u2212R[:2,2]) = 0. geometry validation already enforces finite, orthonormal R with det = 1 (astranomy_agentic_geometry.py:107-119). The RoboCasa test fixture uses identity R (top-down; test_robocasa_user_check_geometry.py:56-57).",
+    "fix": "Use only the strict sign test 'away\u00b7(\u2212R[:2,2]) < 0 -> unavailable (view_frame_upside_down)', with no vertical-view special case and no epsilon. Keep 'norm == 0 -> unavailable' as exact equality."
+   },
+   {
+    "plan_item": "A6 / v3 isolation",
+    "severity": "should_fix",
+    "problem": "The v3 coupling is wider than 'PlanClient inherits UserCheckV2Client'. v3 executes the live uc runner and inherits the policy, so Build A changes v3 behaviour whenever v3 runs from the live tree.",
+    "evidence": "scripts/evaluate_agent_speedup_v3.py:44-50 and :176-229: _runtime loads the LIVE uc runner and calls module.prepare_review/execute_reviewed (:267, :389). AgentSpeedUpV3Policy(AgentFirstV2Policy) (agent_speedup_v3.py:68) inherits reset and _task_contract. AgentSpeedUpV3PlanClient(UserCheckV2Client) (agent_speedup_v3_client.py:121) inherits the SPATIAL, METRIC and A8 text.",
+    "fix": "Name these coupling points in A6. Require that v3 runs only from its frozen_runtime snapshot. Add tests/test_agent_speedup_v3_*.py to V0.8."
+   },
+   {
+    "plan_item": "V0",
+    "severity": "should_fix",
+    "problem": "No offline test exercises the actual path from preparation to policy. V0.8 has no baseline of tests that already fail.",
+    "evidence": "V0.6 only stubs the transport. tests/test_agent_speedup_v3_client_prompt.py fails statically against the current source: it expects CLIENT_VERSION 'agent-speedup-v3-client-10', while agent_speedup_v3_client.py:33 has '-11' (not executed). A LIBERO geometry fixture exists in tests/test_astranomy_agentic_client.py:26-31.",
+    "fix": "Add five tests. (1) Calibrated fake prepare -> approve -> execute_reviewed asserts PlanLock.view_frame == preparation.view_frame and the first agent request's reviewed_goal_contract.task_contract.region_directions. (2) A LIBERO digest mismatch is refused with zero client calls and zero actions. (3) RoboCasa execute carries view_frame (FakeSim identity R -> right (1,0), away (0,1)). (4) A legacy review without view_frame runs with directions unavailable. (5) The A8 wrist label at k=0. Record a pre-Build-A pytest baseline before V0.8."
+   },
+   {
+    "plan_item": "A3",
+    "severity": "minor",
+    "problem": "The draft does not say region_directions.frame is present when the plan has no regions, and POLICY_VERSION is not bumped.",
+    "evidence": "Task words in t4 (left/right plate) and t5 (back compartment) need the frame without any regions. task_contract is sent only in the first executive request (agent_client.py:473-480) and persists in the transcript. POLICY_VERSION is at agent.py:28.",
+    "fix": "Always emit region_directions.frame, or {status: unavailable}; regions may be {}. Bump POLICY_VERSION. Size is not a concern: recorded first requests are 12.9k-14.0k chars against the 45,000 compaction bound."
+   },
+   {
+    "plan_item": "A2",
+    "severity": "minor",
+    "problem": "'Keep bounds null for directional relations' would become a new veto if added to the validator.",
+    "evidence": "validate_spatial_spec, spatial.py:83-127. All 5 recorded region plans already have null bounds (work/critique/plans_summary.txt).",
+    "fix": "State that the rule is planner-instruction text only, with no validate_spatial_spec rule."
+   },
+   {
+    "plan_item": "A2 / RoboCasa",
+    "severity": "minor",
+    "problem": "'Remove for plan mode' needs a split, because one ROBOT_CONTEXT constant serves both the plan and agent clients. The agent requests do carry calibration.",
+    "evidence": "scripts/evaluate_robocasa_user_check.py:38-45, :51 (plan), :59 (agent). tests/test_robocasa_user_check_runner.py:370-372 asserts three phrases in both payloads.",
+    "fix": "Use PLAN_ROBOT_CONTEXT, without the calibration sentence, for RoboCasaPlanClient, and keep ROBOT_CONTEXT for agent mode. Retain 'gripper0_right_grip_site', 'No base or torso commands' and 'Native macros are unavailable' in both."
+   },
+   {
+    "plan_item": "A5 (review UI)",
+    "severity": "minor",
+    "problem": "Auto-approved campaigns never show the UI, and the arrow overlay must comply with the CSP.",
+    "evidence": "--auto-approve approves without the UI (runner :858-865), as used by run_one.py. The CSP is style-src nonce only and img-src data: (agent_speedup_v2_user_check_server.py:118-121).",
+    "fix": "Record the draft's computed region directions in preparation (or print them in the plan_automatically_approved event). Draw the arrow with canvas or SVG attributes, not inline style attributes. Make the arrow optional and the text label the required part."
+   },
+   {
+    "plan_item": "E1",
+    "severity": "minor",
+    "problem": "'Nearest the anchor edge AND laterally aligned' implies a weighting between two criteria, which is a tuned constant.",
+    "evidence": "Draft E1 bullet 2; aim_target ranks by a single distance (spatial.py:338-341).",
+    "fix": "Use a single target point: p* = c + (max_v v\u00b7d \u2212 c\u00b7d + r_obj + M16 clearance)\u00b7d. Choose the fitting free cell nearest p*. This needs no weight and no new constant."
+   }
+  ],
+  "confirmed": [
+   "preparation is part of the hashed review context (user_check.py:35-39, _context :236-237, created :335, verified :260-263). context_sha256 is in the approval binding (:240-246), so editing preparation.view_frame breaks integrity, and ReviewStore.update cannot change preparation.",
+   "Recorded requests distinguish the two cameras by pose_source. LIBERO t6 relayout trial request 000001: external 'fixed_world_camera'. RoboCasa coffee trial 000001: 'synchronized_robot_mounted_camera' with mujoco_name robot0_agentview_left. The validators enforce this (astranomy_agentic_geometry.py:99-102; robocasa_user_check_geometry.py:69-70).",
+   "Placing region_directions inside _task_contract changes neither PlanLock's semantic hash (uc client :266, :321) nor TaskContract.reviewed_plan_sha256 (framework.py:101-112). It passes the CONTEXT_KEYS allowlist (agent_client.py:45-49).",
+   "The uc7 macro and pointing path is dormant: every recorded uc7 trial has only 'agent' calls (t6 relayout calls_by_kind agent 24, all others 0, optional_macro_grants 0). The resolver change (A4) therefore affects no recorded uc7 behaviour.",
+   "No existing test asserts the old direction text or html labels (no hits for right_of, 'WORLD axes' or 'world \u2212x' in tests/).",
+   "The draft's line references are accurate: spatial.py:23, 59-60, 211-214, 235; uc client :24, 131-138, 381-387; agent_client.py:41, 483-494; agent.py:115; html :104-105, :244; user_check.py:396-397; robocasa runner :43-44; runner :246.",
+   "libero_goal_g5 is a registered v2 task key (agent_speedup_v2_tasks.py:107), so V1 and V2 for g5 can run through the uc runner."
+  ]
+ },
+ "design": {
+  "issues": [
+   {
+    "plan_item": "V2/V3 (t6 official) + Decisions",
+    "severity": "should_fix",
+    "problem": "On the official t6 layout the pudding already starts inside the new right_of half-plane. The executive may judge the intent satisfied and never release the pudding, so 'first release on +y side' can be undefined there. A failure on that layout is then a D9/E1 effect, not a Build A direction effect. As written, the official layout cannot attribute Build A.",
+    "evidence": "Official pudding start (-0.0397, 0.1170) (runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/task_6/layout_changes.json original_xyz_m). Plate (0.149, 0.0057) (task_6/initial_state.npy idx 24-25; plate pose preserved per physical_validation.json). Plate collision radius 0.073 (work/semantics/t6_band.json), so the plate's +y edge is 0.079 < 0.117. README evidence table: t6_006/t6_011 ended with the pudding unmoved at (-0.039, 0.117).",
+    "fix": "V2: 't6 official: report the pudding outcome (physical_truth.json pudding atom numbers.com, com_margin_region_mm) but do not use it to judge direction semantics. The Build A direction criterion is judged on the t6 relayout (pudding starts at (-0.16,-0.14), outside the half-plane) and on g5.' Add a user decision: ship E1's executive-contract preference sentence in Build A (t6 official becomes a meaningful test, at the cost of one more behaviour change in the build), or keep it in E1 (t6 official stays ambiguous for Build A)."
+   },
+   {
+    "plan_item": "A1",
+    "severity": "should_fix",
+    "problem": "The scope statement and checks do not match the numerics. (a) 'Roll <= 89 deg classifies correctly' was measured only at the plate pixel. (b) behind/front are exact only on the image-centre column. (c) roll = asin(R[2,0]) is the camera-X tilt, not roll: it gives 58.1 deg for both an 89 deg and a 91 deg roll, so it cannot show upside-down. (d) The 'view not vertical' pre-test is a hidden threshold and is unnecessary.",
+    "evidence": "/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/finalcheck/design/roll_field.py, LIBERO tabletop x[-.45,.45] y[-.55,.55]: anchors with at least one word misclassified = roll 30: 29/1019, roll 45: 125/1025, roll 60: 112/1019; max right error 51-58 deg. elevation_check.py: at zero roll, local image-up vs away is up to 19-22 deg at the image edges; right/left are exact. a1_checks.py: away.(-R[:2,2]) == R[2,1]/|R[:2,0]| (max error 2.8e-14 over 1e5 random rotations). Recorded cameras: roll 0.00 deg (LIBERO t4/t5/t6), +0.92 deg (RoboCasa) (cams_roll.py).",
+    "fix": "Replace the A1 checks and scope with: 'Calibration is already validated (finite, orthonormal; astranomy_agentic_geometry.py:79-127). |R[:2,0]| below numerical eps (1e-9, as geometry._unit) -> unavailable(camera_x_vertical). R[2,1] < 0 (world-up projects to image-down; identical to away.(-R[:2,2])<0; no vertical-view pre-test; a top-down camera gives R[2,1]=0 and away=image-up from the formula) -> Decision 2. Record roll_deg = atan2(R[2,0], R[2,1]) as evidence only. Scope: right/left exact for every anchor at zero roll. behind/front = camera heading, within about 22 deg of local image-up at tabletop image edges (classification unaffected). Under roll, words are guaranteed only near the image centre: roll >= 30 deg misclassifies up to about 12% of tabletop anchors. Recorded cameras: roll 0.0 deg / 0.9 deg. The anchor-local planar projection is the generalization.' V0.1 asserts roll only at the image-centre anchor."
+   },
+   {
+    "plan_item": "A8",
+    "severity": "should_fix",
+    "problem": "The cited mechanism, the uc client __init__ text replacement, is static per request kind, so it cannot state a per-request relation. The same 'plan' instruction text is also used by optional-macro grounding, where k can be nonzero. A static 'not turned' text would then be false, and per-scene numbers in instructions break comparability (README 'Not recommended').",
+    "evidence": "user_check_client.py:374-389 runs once in __init__. agent_speedup_v2_user_check_agent_macros.py:118-119: k = runner.turns(ctx.view); PlanNeed('plan', k, ...). agent_speedup_v2.py:591-596: k comes from ctx.cal.external. agent_speedup_v2_client.py:503-506: _IMAGE_LABELS is a module constant formatted only with {edge}.",
+    "fix": "A8: 'Static replacement (all four kinds) makes the sentence k-neutral: Images 3/4 are the wrist camera, turned by the number of quarter turns stated in the request; a quarter turn is coarse and never a perspective match. Per request, a request field (not instruction text) added in the uc client request builders: wrist_quarter_turns=k, plus at k=0: not turned; not aligned with image 1. Computing the image-3 vs image-1 relation moves to E2 (calibration adapter).' V0.5: the plan payload at k=0 contains no 'turned so that its left and right match'."
+   },
+   {
+    "plan_item": "A6 / new A0 (v3 isolation, historical verifiability)",
+    "severity": "should_fix",
+    "problem": "The plan forbids rerunning v3 on the new source but has no step that creates the snapshot. The live uc7 source is uncommitted and the v3 files are untracked, so Build A edits overwrite the only working-tree copy. The v3 runner executes from ROOT.",
+    "evidence": "git status: M agent_speedup_v2_user_check_spatial.py, _client.py, _agent_client.py; ?? src/gpt_field/agent_speedup_v3_client.py, scripts/evaluate_agent_speedup_v3.py. evaluate_agent_speedup_v3.py:365-372 reads ROOT sources. agent_speedup_v3_client.py:24,121 inherits UserCheckV2Client. The v3 runner also loads the uc runner's prepare path (evaluate_agent_speedup_v3.py:47).",
+    "fix": "Add A0, before any edit: 'Freeze the current uc7+v3 tree as the baseline. With the user's OK, commit it on a branch/tag (e.g. uc7-baseline-20261028), or tar src/, scripts/ and both HTML files (precedent: runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/frozen_runtime_high.tar.gz). v3 reruns and uc7 baseline replays use only that snapshot.'"
+   },
+   {
+    "plan_item": "A5/A6 (semantics tag, VERSION)",
+    "severity": "should_fix",
+    "problem": "VERSION is not bumped, so the new server/HTML still loads old reviews and shows new labels for their right_of regions. That is a silent meaning change. approved_plan.json carries no tag. view_frame stores only a digest, so right/away cannot be re-derived later. No offline tool other than the HTML interprets directions, so the 'offline tools' clause is otherwise empty.",
+    "evidence": "user_check.py:31 VERSION; :252-254 _load accepts only an equal VERSION. grep: region relations are consumed only by spatial.py, the runtime and tests (no reports/replays). The runner writes the raw approved_plan.json. A5 lists calibration_sha256 only.",
+    "fix": "'Bump VERSION (user_check.py:31) to agent-speedup-v2-user-check-7.1, so old reviews fail to load instead of being relabelled; read them as raw JSON or with their frozen_source. Add direction_semantics=external_view_v1 to framework_settings(): it flows into execution_options (approval-bound) and every summary/manifest user_check.framework; absence = world_axes_legacy. Put the same tag in the RoboCasa manifest. Store the external calibration itself in preparation.view_frame next to the digest (mujoco_name, pose_source, position, rotation, fovy/focal/principal point, image size).'"
+   },
+   {
+    "plan_item": "A1/A3/A5 (frame unavailable)",
+    "severity": "should_fix",
+    "problem": "Only the resolver's behaviour is specified when the frame is unavailable. Preparation, region_directions, the executive and the UI are unspecified, which invites an ad-hoc veto.",
+    "evidence": "Draft A4 alone: 'No frame -> not-ready reason view_frame_unavailable'. A3 and A5 are silent.",
+    "fix": "Add to A5: 'If A1 returns unavailable, prepare still succeeds and records view_frame={direction_semantics, available:false, reason, calibration}. region_directions={..., available:false, reason, regions:{id:{relation, anchor, direction_world_xy:null}}}. AGENT_INSTRUCTIONS: If region_directions is unavailable, judge direction words in image 1 as defined; no world vector is given. The review UI and prepare stdout show the reason. The resolver is not-ready (A4). No new veto on preparation or execution.'"
+   },
+   {
+    "plan_item": "A5 (review UI / approval paths)",
+    "severity": "should_fix",
+    "problem": "The UI display of computed directions does not reach the approvals that are actually used: the failing relayout t6 plan was auto-approved and no human viewed it. Separately, reviewers can edit relation and anchor in the HTML, so a label precomputed per region goes stale. The 'arrow on image 1' needs the anchor's depth; for unrolled cameras it is always the image axis anyway.",
+    "evidence": "task_6/review/review.json: preparation.approval_mode=user_authorized_automatic, manual_review=false. task_6/approval.json: human_reviewed_generated_plan=false. Runner :858-865 auto-approve prints only ids/hashes. RoboCasa 'approve' prints only status (evaluate_robocasa_user_check.py:456-461). html :219-235 relation/anchor/bounds are editable.",
+    "fix": "'Print view_frame and per-region lines \"<id>: <relation> <anchor> -> world (x,y) [image-right|left|up|down]\" in the prepare JSON output (both runners), the plan_automatically_approved event and the RoboCasa approve output. The HTML recomputes the label client-side from preparation.view_frame on every relation/anchor edit, and shows right_xy/away_xy beside the world-bounds editor. Drop the arrow.'"
+   },
+   {
+    "plan_item": "V0.2",
+    "severity": "should_fix",
+    "problem": "The stated criterion fails on correct code: the plate's true centre projects into cell 53, not the pointed 61. The test also depends on recorded model pointing and covers only the LIBERO image path; RoboCasa reaches the same orientation by a different path.",
+    "evidence": "/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/finalcheck/design/v02_cells.py, with the task_6 request-1 calibration: pudding (-0.16,-0.14) -> cell 35 (ok); mug (-0.12,0.18) -> 38 (ok); plate (0.149,0.0057) -> pixel (261,441), cell 53, not 61. Paths: LIBERO observation.py:31 [::-1,::-1] + contact_skills.py:283 [:, ::-1]. RoboCasa robocasa_user_check_sim.py:189 (opencv) + :260 [:, ::-1].",
+    "fix": "'V0.2: (a) a deterministic composition test per pipeline: for a random raw render A, StepView.external_rgb_upright == A[::-1, :], i.e. the calibration's declared source_transform raw_mujoco_rgb_vertical_flip_no_crop (astranomy_agentic_geometry.py:28-32), for LIBERO and RoboCasa. (b) initial_state.npy object centres project into the pointed cell or one of its 8 neighbours.'"
+   },
+   {
+    "plan_item": "E1",
+    "severity": "should_fix",
+    "problem": "(a) The executive sentence is imperative ('place it at the nearest free spot...'), and A3's 'overrides direction wording' would cover it, so the preference can act as a finite-distance goal. (b) Ranking by 'nearest past edge + lateral alignment' needs a combination rule; a weighted sum is an untabled constant. (c) aim_target returns the native centre-first target whenever it lands in a region cell, so the preference rarely applies. (d) uc7 makes 0 macro grants, so the A/B only measures the text. (e) The A+E1 build has no sweep.",
+    "evidence": "spatial.py:306-313 early return. task_6 trial agent_stats counts: optional_macro_grants 0; calls_by_kind agent=24, all others 0. Rule 5.",
+    "fix": "'Executive text: Preference only: with no distance given, place it at a free spot just past the anchor's edge, roughly aligned with the anchor; any spot on that side satisfies the relation. A3: its direction vectors override direction wording. Ranking (lexicographic, no weight): among fitting free cells whose projection past the edge is within one measured held-object radius of the minimum, take the smallest |lateral offset| from the anchor centre. For directional null-bound regions, apply it before the native centre-first return (spatial.py:311-313). _measure_goal and region cells stay the half-plane. State that in uc7 the measurable effect is the executive text. Adoption needs its own all-task sweep.'"
+   },
+   {
+    "plan_item": "V3 (and V2 reuse)",
+    "severity": "should_fix",
+    "problem": "'No regression vs t4_001, t5_001/002, relayout t7' is undefined for single episodes. The RoboCasa smoke is not in the acceptance set (README acceptance had it). The plan does not say whether V2 runs count toward V3. The run count (~11) does not match the listed set (12-13). E2 has no sweep.",
+    "evidence": "Draft V3 and Effort lines. README.md:111 acceptance includes the RoboCasa coffee smoke. Rule 5.",
+    "fix": "'V3 = one frozen build, verified by identical src/gpt_field/* entries in every review.json runtime_sha256 (LIBERO and RoboCasa); V2 runs count only if they match. Set: t0-t9 official, t6 relayout, t7 relayout, g5, RoboCasa coffee (14 runs including V2's 4). Pass: every direction criterion met; no failure whose artifacts show a direction cause (wrong side, text/vector conflict) or a plan-validity failure; other failures are logged with their cause, not gated. Adopting E1 or E2 each needs its own sweep (or one Build B sweep).'"
+   },
+   {
+    "plan_item": "V2 (measurability)",
+    "severity": "should_fix",
+    "problem": "'First release ... (post-hoc truth)' mixes artifacts. physical_truth.json holds only terminal and after_release_settle states and no plate position; the first release appears only in response files.",
+    "evidence": "task_6/trial/physical_truth.json top-level keys: terminal, after_release_settle, summary (atom numbers.com, com_margin_region_mm, libero.d_site). task_6/direction_semantics_audit.json already extracts move_to_pose/set_gripper segments from response files.",
+    "fix": "'t6 relayout direction: in response files, the move_to_pose target before the first gripper=open after the pudding grasp has y > 0.079 (plate y 0.0057 + collision radius 0.073). Outcome: physical_truth after_release_settle/terminal pudding com y > 0.079, and com_margin_region_mm reported. g5: push targets have x beyond the stove's +x edge; outcome from the plate atom com_margin_region_mm. Request 000001 fields.reviewed_goal_contract.task_contract.region_directions: E=[0,1] (t6), C=[1,0] (g5). RoboCasa is plumbing only (no direction words or regions): view_frame pose_source synchronized_robot_mounted_camera, status not infrastructure_error.'"
+   },
+   {
+    "plan_item": "Decisions",
+    "severity": "should_fix",
+    "problem": "#1 restates the D9 position already settled in review round 2; it is not a choice. #2 affects no current camera, and its recommended option adds a new veto, against rule 4. Real choices are missing.",
+    "evidence": "R[2,1] = +0.849 (LIBERO t4/t6), +0.778 (t5), +0.844 (RoboCasa); never negative.",
+    "fix": "'1. E1 executive preference sentence: in Build A or in E1. 2. Upside-down camera (affects no current camera): (a) unavailable, a new never-triggered veto; (b) keep the A2 meanings (right = image-right, behind = farther from the camera, i.e. flip away when R[2,1]<0) and record roll. 3. Build A as uc7.1 (VERSION bump), not bundled with uc8. 4. S9 parts: world-axis wording highlight (display-only, cheap) and/or cell-order cue (known false alarm on t6_006). 5. Acceptance bar for single-episode regressions (V3). 6. Approve the A0 baseline snapshot/commit.'"
+   },
+   {
+    "plan_item": "V1",
+    "severity": "minor",
+    "problem": "One draft per task, with A2 and A8 changing together. 'Pointing unchanged' is undefined. The t6 relayout and the RoboCasa plan-prompt change are not covered at plan level.",
+    "evidence": "Recorded uc7 drafts exist on the same resets (runs/agent_speedup_v2_user_check_libero_10_t*_review/review.json). ROBOT_CONTEXT is appended to the plan instructions at evaluate_robocasa_user_check.py:51.",
+    "fix": "'Compare with the recorded uc7 drafts. Criteria from review.json: t6 right_of with direction (0,1); g5 front_of with (1,0); no world-axis direction in part texts (regex); regions==[] for t3/t4/t5/t9; t4 plate x cells same as or an 8-neighbour of t4_001. Add the t6-relayout prepare (custom state + expected sha) and the RoboCasa prepare (about 13 calls).'"
+   },
+   {
+    "plan_item": "A5 (trial-start digest)",
+    "severity": "minor",
+    "problem": "For LIBERO the check is redundant: any camera change alters the reset images, which are already hashed, and geometry code is in runtime_sha256. RoboCasa already performs it. The plan gives no location or terminal status.",
+    "evidence": "Runner :616-622 base.execute(expected_initial_observation_sha256=...). evaluate_robocasa_user_check.py:286-287 rejects calibration changes.",
+    "fix": "Drop it. If kept: run it in AgentFirstV2Policy before the first action as lock.stop('view_frame_mismatch'), giving plan_conflict with 0 policy actions."
+   },
+   {
+    "plan_item": "A2",
+    "severity": "minor",
+    "problem": "The text defines behind/front radially, while the code uses the camera heading. Plan/replan still invite 'state the frame' for directions although the plan request has no calibration.",
+    "evidence": "a1_checks.py: radial vs heading differs by up to 32.6 deg at LIBERO image corners. Review request 000001 has no rotation_world_from_camera.",
+    "fix": "'behind/front_of = farther from/nearer to the camera along its viewing direction (toward the top/bottom of image 1).' Plan/replan METRIC: 'You have no calibration: give directions only in image-1 viewer words; distances and heights may be in metres.'"
+   },
+   {
+    "plan_item": "A3",
+    "severity": "minor",
+    "problem": "task_contract (and so region_directions) is sent only in executive request 1. The t6 failure happened at request 11, which relied on remembered reviewed text.",
+    "evidence": "agent_client.py:472-480 pops task_contract and includes reviewed_goal_contract only when not self._agent_history. Request-1 fields were 13.8k chars.",
+    "fix": "Either also send region_directions in every request's context (hundreds of chars), or state the reliance on retained text history and check in V2 that later requests' plan texts use the same direction."
+   },
+   {
+    "plan_item": "V0.1/V0.3/V0.5",
+    "severity": "minor",
+    "problem": "The cited rotation prototype still contains the invalid pitch +57 case (camera below the table, prints behind/front wrong) and labels asin(R[2,0]) as roll. V0.3 does not record the reviewer's caveat. V0.5 lacks the A8 check, and a grep-style HTML check would hit the frozen v3 HTML.",
+    "evidence": "/tmp/claude-0/-workspace/10fe2541-a89e-49c2-8e8c-939d1a05ad07/scratchpad/dirsem/rotation/rotation_check.py: pitch loop (-15,20,40,57) prints words_wrong ['behind','front'] at +57. src/gpt_field/agent_speedup_v3.html:104-105 keeps world labels.",
+    "fix": "Fix the pitch loop (valid elevations 8-88 deg, as in finalcheck/design/elevation_check.py) and the roll label, then copy it into reports/.../work/. V0.3: '41/41 supports the frame convention only, not that every task sentence matches its goal.' V0.5: add the A8 payload check and scope the HTML check to agent_speedup_v2_user_check.html."
+   }
+  ],
+  "confirmed": [
+   "Cited lines are correct: spatial.py:23, :59-63, :139-153, :211-214, :235; uc client :24, :131-138, :374-389, METRIC appended to plan/replan/repair/review at :381-387; agent_client :41, :179-191, :477-480, :483-494; user_check.py :35-39, :236-237, :260, :394-397; runner :246 (k=0); html :104-105, :244; robocasa runner :43-44 (sentence), :51 (plan append).",
+   "preparation is in _CONTEXT_FIELDS, so view_frame is automatically bound through context_sha256 into the approval binding; claim refuses a runtime change (user_check.py:396-397).",
+   "No extra flip: LIBERO observation.py:31 [::-1,::-1] + contact_skills.py:283 [:, ::-1] = vertical flip = the calibration's source_transform; RoboCasa reaches the same orientation through opencv + [:, ::-1] (robocasa_user_check_sim.py:189,260).",
+   "Recorded frames: LIBERO t4_001/t5_001/t6 relayout right (0,1), away (-1,0), roll 0.00 deg; RoboCasa right (0.979,-0.202), away (0.202,0.979), roll +0.92 deg.",
+   "The away-sign check equals sign(R[2,1]) exactly (2.8e-14), so it fires exactly for |roll|>90 deg; with yaw/elevation changes, right is exact everywhere and behind is exact at the image centre.",
+   "The plan request carries no calibration, and the current prompt contains 'WORLD axes', 'right_of=+x' and the false 'turned so that its left...' (relayout review request 000001).",
+   "g5 is runnable with the uc7 runner as far as the code shows: --task choices (runner :758) include libero_goal_g5 (tasks.py:84-85, 105-107, frozen reset sha for ep0), with no suite restriction (evaluate_bowl_hybrid_subscription.py:385-397). It has never run under uc7; the only g5 runs are v3 g5_001/002, both evidence_acquisition_failed with no physical_truth.json.",
+   "uc7 execution made only executive calls with 0 optional macro grants (relayout t6 agent_stats), so A4 is dormant there. Request-1 fields are 13.8k chars, under the 45k bound.",
+   "TaskContract.to_dict already contains regions (framework.py:110); putting region_directions beside it in agent.py _task_contract leaves PlanLock's semantic hash unchanged.",
+   "LIBERO to_dict excludes geometry (user_check_sim.py:59-64), so S6 binding is new for LIBERO. RoboCasa already binds the calibration and checks it at reset (robocasa runner :286-287); base and torso motion are disabled (:39-41, :71), so the frozen frame equals the live frame in current RoboCasa episodes.",
+   "The relayout preserved the plate pose (physical_validation.json), so the BDDL box is a valid outcome measure there; all recorded region plans have bounds_xy_m null.",
+   "Review-round-2 positions reflected without contradiction: S6 is a must; RoboCasa uses the review-time frame; S4 is acknowledged as a semantic change; METRIC is rewritten, not deleted; g5 is added to the validation order; old approvals are refused; S7 is split into the text fix now and rotation later, with k taken from calibration."
+  ]
+ }
+}

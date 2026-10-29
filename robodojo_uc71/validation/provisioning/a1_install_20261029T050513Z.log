@@ -1,0 +1,104 @@
+{"argv": ["uv", "venv", "--python", "/workspace/gpt_field/robodojo_uc71/runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/bin/python3.11", "/workspace/gpt_field/robodojo_uc71/runtime/a1_env"], "started_at_utc": "2026-10-29T05:05:13.528319+00:00"}
+Using CPython 3.11.16 interpreter at: runtime/python-builds/cpython-3.11.16-linux-x86_64-gnu/bin/python3.11
+Creating virtual environment at: runtime/a1_env
+{"argv": ["uv", "pip", "install", "--python", "/workspace/gpt_field/robodojo_uc71/runtime/a1_env/bin/python", "--require-hashes", "--torch-backend", "cu128", "--extra-index-url", "https://pypi.nvidia.com", "--link-mode", "copy", "-r", "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a1_requirements.lock"], "started_at_utc": "2026-10-29T05:05:13.583102+00:00"}
+Using Python 3.11.16 environment at: runtime/a1_env
+Resolved 140 packages in 1.50s
+Downloading numpy (17.3MiB)
+Downloading scipy (35.9MiB)
+Downloading opencv-python-headless (47.7MiB)
+Downloading llvmlite (41.8MiB)
+Downloading matplotlib (8.2MiB)
+Downloading botocore (13.2MiB)
+Downloading torchvision (8.3MiB)
+Downloading nvidia-cusparselt-cu12 (149.5MiB)
+Downloading isaacsim-replicator (19.7MiB)
+Downloading isaacsim-sensor (14.5MiB)
+Downloading nvidia-cusolver-cu12 (248.3MiB)
+Downloading isaacsim-test (6.0MiB)
+Downloading isaacsim-asset (29.8MiB)
+Downloading isaacsim-cortex (1.2MiB)
+Downloading nvidia-nccl-cu12 (192.0MiB)
+Downloading nvidia-nvjitlink-cu12 (37.4MiB)
+Downloading nvidia-cudnn-cu12 (693.2MiB)
+Downloading isaacsim-robot-setup (4.9MiB)
+Downloading isaacsim-core (12.2MiB)
+Downloading nvidia-curand-cu12 (60.7MiB)
+Downloading isaacsim-extscache-kit (2.8GiB)
+Downloading isaacsim-ros2 (100.5MiB)
+Downloading isaacsim-extscache-kit-sdk (1.3GiB)
+Downloading isaacsim-benchmark (1.2MiB)
+Downloading isaacsim-app (4.6MiB)
+Downloading isaacsim-gui (16.5MiB)
+Downloading isaacsim-utils (2.1MiB)
+Downloading isaacsim-example (2.6MiB)
+Downloading nvidia-cuda-nvrtc-cu12 (83.9MiB)
+Downloading nvidia-cublas-cu12 (581.4MiB)
+Downloading isaacsim-code-editor (1.2MiB)
+Downloading isaacsim-robot (10.6MiB)
+Downloading nvidia-cufft-cu12 (184.2MiB)
+Downloading nvidia-cuda-cupti-cu12 (9.8MiB)
+Downloading isaacsim-robot-motion (5.9MiB)
+Downloading nvidia-cusparse-cu12 (278.5MiB)
+Downloading isaacsim-kernel (61.3MiB)
+Downloading nvidia-cufile-cu12 (1.1MiB)
+Downloading isaacsim-storage (1.1MiB)
+Downloading awscrt (8.3MiB)
+Downloading triton (149.3MiB)
+Downloading torch (1.0GiB)
+Downloading torchaudio (3.7MiB)
+Downloading pillow (6.3MiB)
+Downloading sympy (5.9MiB)
+Downloading fonttools (4.7MiB)
+Downloading cryptography (4.0MiB)
+Downloading numba (3.5MiB)
+Downloading pydantic-core (1.9MiB)
+ Downloaded nvidia-cufile-cu12
+Downloading networkx (1.6MiB)
+Downloading aiohttp (1.6MiB)
+ Downloaded isaacsim-code-editor
+ Downloaded isaacsim-benchmark
+Downloading kiwisolver (1.4MiB)
+Downloading qdldl (1.1MiB)
+ Downloaded isaacsim-cortex
+ Downloaded isaacsim-utils
+ Downloaded isaacsim-storage
+ Downloaded isaacsim-example
+ Downloaded qdldl
+ Downloaded torchaudio
+ Downloaded kiwisolver
+ Downloaded pydantic-core
+ Downloaded isaacsim-robot-setup
+ Downloaded aiohttp
+ Downloaded isaacsim-app
+ Downloaded torchvision
+ Downloaded isaacsim-test
+ Downloaded networkx
+   Building pyperclip==1.8.0
+   Building idna-ssl==1.1.0
+ Downloaded fonttools
+ Downloaded cryptography
+      Built pyperclip==1.8.0
+      Built idna-ssl==1.1.0
+ Downloaded isaacsim-robot-motion
+ Downloaded pillow
+ Downloaded numba
+ Downloaded awscrt
+ Downloaded matplotlib
+ Downloaded nvidia-cuda-cupti-cu12
+ Downloaded isaacsim-robot
+ Downloaded isaacsim-core
+ Downloaded triton
+  × Failed to download `triton==3.3.0`
+  ╰─▶ Hash mismatch for `triton==3.3.0`
+
+      Expected:
+        sha256:1f41403bfa0cbb3e24fd958ca7fee04e9681e55e539296db9aca30c42acae693
+        sha256:3161a2bf073d6b22c4e2f33f951f3e5e3001462b2570e6df9cd57565bdec2984
+        sha256:47bc87ad66fa4ef17968299acacecaab71ce40a238890acc6ad197c3abe2b8f1
+        sha256:b68c778f6c4218403a6bd01be7484f6dc9e20fe2083d22dd8aef33e3b87a10a3
+        sha256:ce4700fc14032af1e049005ae94ba908e71cd6c2df682239aed08e49bc71b742
+        sha256:fad99beafc860501d7fcc1fb7045d9496cbe2c882b1674640304949165a916e7
+
+      Computed:
+        sha256:8cf975f47838c495a6a1a71007abad31b56312924a97d78874412de3232a7993

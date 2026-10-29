@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent_resume_audit",
+  "reviewed_at_utc": "2026-10-26T07:48:17.076291+00:00",
+  "status": "passed_content_and_runtime_integrity_pending_final_delivery_inventory_refresh",
+  "scope": "Read-only final cross-artifact, receipt, CSV, clock and hash checks. No model, real simulator, general test rerun, new semantic decision window, or heldout truth access. Only reviewer audit files written.",
+  "source_evidence": {
+    "receipt_count": 5,
+    "paired_rows": 19,
+    "heldout_rows": 18,
+    "primary_terminals": 4,
+    "retry_rows": 1,
+    "unstarted_P5": 14,
+    "unstarted_P6": 18,
+    "service_sum": 3072.2981644087704,
+    "human_wait_sum": 5486.578600335051,
+    "automatic_review_sum": 276.5633395499317,
+    "requests": 28,
+    "runtime_files": 307,
+    "runtime_changes": [],
+    "prior_freeze_changes": [
+      "tooling/evaluation_summary.py",
+      "tooling/test_evaluation_summary.py"
+    ],
+    "manifest_status": "completed_execution_stopped_P5_inconclusive_P6_not_started",
+    "issues": []
+  },
+  "content_checks": {
+    "five_terminal_receipts_match_paired_csv_and_live_audit": true,
+    "original_failed_trial001_not_replaced_by_retry002": true,
+    "primary_P5_terminal_pairs": 2,
+    "primary_counts": {
+      "A": {
+        "raw900": 0,
+        "S300": 0
+      },
+      "B": {
+        "raw900": 1,
+        "S300": 0
+      }
+    },
+    "retry_pair_is_exploratory_only": true,
+    "unstarted_P5_cells_remain_unknown": 14,
+    "heldout_all_unstarted_unknown": 18,
+    "P5_not_passed": true,
+    "P6_not_started": true,
+    "manifest_final_status": "completed_execution_stopped_P5_inconclusive_P6_not_started",
+    "review_permission_exact_matrix_only": true,
+    "raw_success_and_terminal_autonomous_quality_separate": true,
+    "extra_release_settle_diagnostics_not_autonomous": true,
+    "preparation_failures_have_unknown_physical_quality": true,
+    "second_pair_initial_reset_hash_unverified_disclosed": true,
+    "wrapper_launch_variation_and_offline_limits_disclosed": true,
+    "stream_no_completed_response_does_not_mean_no_bytes_disclosed": true,
+    "S300_generalization_and_no_regression_not_claimed": true,
+    "online_stop_rule_not_mislabelled_two_failed_repairs": true,
+    "no_unproven_infrastructure_retry_for_trial004_or_trial005": true,
+    "all_per_run_costs_include_auto_review_and_finalization": true,
+    "service_cost_sum_not_misrepresented_as_wall_time": true
+  },
+  "runtime_integrity": {
+    "previous_online_freeze": "freeze_manifest_final.json",
+    "runtime_files_checked": 307,
+    "runtime_changes": [],
+    "only_prior_freeze_changes": [
+      "tooling/evaluation_summary.py",
+      "tooling/test_evaluation_summary.py"
+    ],
+    "post_execution_changes_explained": "tooling/evaluation_summary.py and tooling/test_evaluation_summary.py reporting reason corrections only; old freeze retained. Existing11-test validation read as parent evidence; not rerun by this auditor."
+  },
+  "shutdown": {
+    "record": "remaining_p5_execution.json",
+    "five_private_supervisor_checks_clear": true,
+    "remaining_experiment_processes": [],
+    "historical_t2_t3_services_touched": false
+  },
+  "resolved_review_findings": [
+    {
+      "finding": "stale manifest top-level P5_first_pair_reviewed status",
+      "resolution": "completed_execution_stopped_P5_inconclusive_P6_not_started"
+    },
+    {
+      "finding": "decision_log trial004 said no return despite unrecorded intermediate SSE",
+      "resolution": "now says no completed response"
+    },
+    {
+      "finding": "stop_rule_review was conditional while trial005 had completed",
+      "resolution": "final followup appended; initial recommendation preserved as historical review"
+    }
+  ],
+  "delivery_freeze": {
+    "status": "pending parent final inventory regeneration",
+    "draft_not_used_as_runtime_integrity_failure": true,
+    "required_final_step": "Preserve earlier delivery draft, include these final audit artifacts and regenerated manifest/status hashes, then verify final inventory. No new runtime/model/simulator work needed."
+  },
+  "reviewed_artifact_sha256": {
+    "final_report_zh.md": "7a67e0edba01ee93052b4a0f614d46fb0282043bfb141744c280825fcfd9e6c7",
+    "execution_manifest.json": "2bdd6ecdfa24aad19dfe40458e32ec78e7725824684053875a3661c2857a9fd1",
+    "online_stop.json": "0a76e453261ec983208ca40c01cafa7a672e15a133c07a26e6fc6aa6f13303d9",
+    "decision_log.md": "0e7eaf3823030c38364f9c06d57a8b4739fdad2cff497b336bc1a0592575472e",
+    "paired_results.csv": "12f1a62d58d85e057f3522d6d94f5cd4f5032eb0821d31ee3c05d961b68fcc22",
+    "heldout_results.csv": "ff478b5c92c767217a64c442b18ae83bfa95b0d19fa55d4051c7ecc924e696ed",
+    "p5_gate.json": "0ac54f7ac4974877d80979856bd44aa2481e7650436339b9ab02bb0806c75416",
+    "p6_gate.json": "7c856e4a6eb42168856c58ab0f75b9f811cdf0efc387366e98ef11de6295ac1b",
+    "sensitivity_analysis.json": "665c43c275ee409fecf660e7d208545b17ffcc18c1a2c73c16ac235f8d0319bb",
+    "live_audit.json": "3ce49f1923dd179a5d55774b81e66c40929aeadafa3aaf5f1abf59f0da3e713e",
+    "integrity_check_after_online.json": "8d05f23c2ba12a24a43ef9fa105cd9deaa87a04f41fe157980e3e8e7f285c9b2",
+    "remaining_p5_execution.json": "31019ee0bf7a6c77756770d2949558c946581091f9145a43328691a0c40cd4c9",
+    "stop_rule_review.json": "9d1386d18bfb7b62470f00f188618014a5ec1156faf60e9a8cb257ec6d82feb6",
+    "wrapper_offline_audit.json": "c9a8825042c0e1d0914199011d2436c01f4d614e020a00fc9a47b6b13d8d8408",
+    "final_independent_checks_snapshot.json": "5159fe3919954b394e50df3a98bf02e8e311b1991298b51be254c1b5695def96"
+  },
+  "additional_budget_consumed": {
+    "model_queries": 0,
+    "real_simulator_rollouts": 0,
+    "episodes": 0,
+    "semantic_decision_windows": 0
+  },
+  "open_content_or_runtime_issues": [],
+  "recommendation": "Deliver: narrow_scope verified IO engineering; freeze this online extension; P5 end-to-end efficacy inconclusive; P6 unstarted."
+}

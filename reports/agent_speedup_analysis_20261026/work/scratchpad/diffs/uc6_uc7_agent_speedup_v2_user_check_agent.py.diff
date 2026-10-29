@@ -1,0 +1,219 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/agent_speedup_v2_user_check_agent.py	2026-10-21 11:10:08.780173390 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent.py	2026-10-21 17:50:16.523816476 +0000
+@@ -21,11 +21,13 @@
+ from .agent_speedup_v2_types import PlanNeed, PointNeed, RepairNeed, jsonable
+ from .agent_speedup_v2_user_check_local import LocalRecoveryFulfiller
+ from .agent_speedup_v2_user_check_motion import LocalMotionPrimitive
++from .agent_speedup_v2_user_check_fragments import FragmentSequencePrimitive, fragment_capabilities
+ from .astranomy_agentic_motion import ShortTargetConfig, measured_pose
+ from .policy import Decision
++from .astra import SchemaError
+ 
+ 
+-POLICY_VERSION = "agent-speedup-v2-user-check-agent-1"
++POLICY_VERSION = "agent-speedup-v2-user-check-agent-2"
+ CONTROLLER = base.CONTROLLER
+ MAX_MACRO_GRANT_STEPS = 60
+ MAX_NATIVE_CALLS_PER_ACT = 2
+@@ -98,6 +100,11 @@
+         self._segment_start = None
+         self._executive_calls = 0
+         self._direct_segments = 0
++        self._fragment_grants = 0
++        self._fragment_actions = 0
++        self._direct_actions = 0
++        self._native_actions = 0
++        self._last_fragment_result = None
+         self._macro_grants = 0
+         self._model_completion_claims = []
+         self._pending_agent_events = []
+@@ -121,6 +128,7 @@
+     def _capabilities(self):
+         return {
+             "execution_owner": "model",
++            "execute": fragment_capabilities(),
+             "direct_motion": {**ShortTargetConfig().to_dict(),
+                               "can_complete_subtasks": True,
+                               "requires_registration": False,
+@@ -166,8 +174,34 @@
+                       primitive=None if self._primitive is None or self._mode != "macro"
+                       else self._primitive.name,
+                       last_feedback=deepcopy(self._last_macro_feedback))
++        status["setup_progress"] = self._macro_session.setup_progress(
++            self._primitive if self._mode == "macro" else None)
+         return status
+ 
++    def _execution_state(self, view=None):
++        active = self._mode == "fragment" and isinstance(self._primitive, FragmentSequencePrimitive)
++        measured = None if view is None else {
++            "source": "robot_proprioception", "observed_at_step": self.step_index,
++            "pose_wxyz": measured_pose(view.state), "finger_gap_mm": view.gap_mm,
++            "joint_position_rad": getattr(view.observation, "joint_position", None),
++            "joint_velocity_rad_s": getattr(view.observation, "joint_velocity", None)}
++        native = self._native_evidence()["holding_estimate"]
++        return {
++            "active": bool(active and not self._primitive.done),
++            "progress": self._primitive.progress() if active else None,
++            "last_result": deepcopy(self._last_fragment_result),
++            "shared_state": {
++                "measured_robot": measured,
++                "last_gripper_command": self.ctx.memory["user_check_gripper_command"],
++                "model_belief": deepcopy(self._belief),
++                "native_holding_estimate": native,
++                "holding_status": "native_estimate" if native is not None else "unverified",
++                "handoff_rule": "Start from current measured pose and commanded gripper; no automatic release, return-to-pick or native registration. Model belief is not measured attachment.",
++            },
++            "control_steps": {"fragment": self._fragment_actions, "direct": self._direct_actions,
++                              "native_macro": self._native_actions},
++        }
++
+     def _context(self, view):
+         return jsonable({
+             "step": self.step_index,
+@@ -184,6 +218,7 @@
+             "last_feedback": self._feedback,
+             "recent_feedback": self._feedback_history[-8:],
+             "macro": self._macro_status(),
++            "execution": self._execution_state(view),
+             "native_evidence": self._native_evidence(),
+             "task_success_source": "independent evaluator; not provided to this policy",
+         })
+@@ -201,6 +236,7 @@
+             "native_estimate": self._native_evidence(),
+             "model_estimate": self._belief,
+             "macro": self._macro_status(),
++            "execution": self._execution_state(view),
+             "task_success": "unknown_to_policy",
+             "goal_contract": self._task_contract(),
+             "model_completion_claims": self._model_completion_claims,
+@@ -225,6 +261,17 @@
+         self._executive_calls += 1
+         try:
+             answer = self.client.request_agent(view, self._context(view))
++        except SchemaError as exc:
++            calls.append(ExecutiveCall("agent", max(0., self._clock() - started),
++                                       getattr(self.client, "last_request_key", None),
++                                       str(getattr(self.client, "last_log_path", "")) or None,
++                                       False, "SchemaError"))
++            self._record_feedback({"action": "model_response", "status": "rejected",
++                                   "reason": "invalid_action_arguments", "detail": str(exc)[:1800],
++                                   "requested_action_executed": False,
++                                   "continuation": "Correct the arguments from this same physical state; preserve the current gripper command."})
++            self._need_agent = True
++            return
+         except Exception as exc:
+             calls.append(ExecutiveCall("agent", max(0., self._clock() - started),
+                                        getattr(self.client, "last_request_key", None),
+@@ -292,6 +339,17 @@
+             return
+ 
+         self._abandon_macro("model took direct control")
++        if kind == "execute":
++            self._mode = "fragment"
++            self._fragment_grants += 1
++            self._segment_start = {"step": self.step_index, "pose_wxyz": measured_pose(view.state),
++                                   "finger_gap_mm": view.gap_mm, "action_type": kind}
++            self._primitive = FragmentSequencePrimitive(
++                view, answer["execution"],
++                keep_gripper=self.ctx.memory["user_check_gripper_command"])
++            if self._primitive.done:
++                self._complete_direct()
++            return
+         self._mode = "direct"
+         if kind == "motion":
+             motion = answer["motion"]
+@@ -314,6 +372,23 @@
+     def _complete_direct(self):
+         primitive = self._primitive
+         outcome = primitive.outcome()
++        if self._mode == "fragment":
++            evidence = outcome["evidence"]
++            self._last_fragment_result = {
++                "observed_at_step": self.step_index,
++                "status": evidence.get("status", outcome["status"]),
++                "reason": outcome["reason"], "executed_steps": outcome["actions"],
++                "evidence": evidence,
++            }
++            self._record_feedback({
++                "action": "execute", **self._last_fragment_result,
++                "start": self._segment_start,
++                "semantic_result": "Measured local predicates only; grasp, support and task success require observation.",
++                "continuation": "Fresh RGB and shared measured state are available. Select a new fragment sequence, direct adjustment or optional native macro; pending segments are not automatically resumed.",
++            })
++            self._primitive = None
++            self._need_agent = True
++            return
+         self._direct_segments += 1
+         self._record_feedback({
+             "action": "direct_motion", "status": "segment_complete" if outcome["status"] == "succeeded"
+@@ -330,7 +405,7 @@
+         self._last_macro_feedback = jsonable({
+             "action": "native_macro", "status": status, "reason": reason,
+             "step_index": self._macro_index, "executed_steps": self._macro_used,
+-            "evidence": evidence, "session": self._macro_session.status(),
++            "evidence": evidence, "session": self._macro_session.status(self._primitive),
+             "last_transition": deepcopy(self._macro_transition_feedback),
+             "semantic_result": "native controller evidence only; independent evaluator decides task success",
+             "continuation": ("choose direct control, a new macro, or observe" if end else
+@@ -447,6 +522,8 @@
+                 break
+             self._need_agent = True
+         if acting is None:
++            if not self._macro_active:
++                self._mode = "direct"
+             acting = LocalMotionPrimitive(view, {
+                 "frame": "world", "position_mode": "relative", "xyz_m": [0., 0., 0.],
+                 "quaternion_wxyz": None, "gripper": "keep", "steps": 1},
+@@ -464,7 +541,8 @@
+         diagnostics = jsonable({
+             "step": self.step_index, "controller": CONTROLLER,
+             "macro": macro, "primitive": acting.name,
+-            "execution_kind": "agent_owned:" + acting.name,
++            "execution_kind": ("framework_fragment:" if self._mode == "fragment" else
++                               "native_macro:" if self._mode == "macro" else "agent_owned:") + acting.name,
+             "macro_step": self._macro_steps, "refreshed": bool(calls),
+             "routing": {"kind": "agent", "skill": None if self._agent_decision is None
+                         else self._agent_decision["type"], "params": self._agent_decision,
+@@ -500,10 +578,15 @@
+         if grip:
+             self.ctx.memory["user_check_gripper_command"] = "close" if grip > 0 else "open"
+         if self._mode == "macro" and self._macro_active:
++            self._native_actions += 1
+             self._macro_used += 1
+             self._last_macro_feedback = deepcopy(result)
+             self._macro_transition_feedback = deepcopy(result)
+         else:
++            if self._mode == "fragment":
++                self._fragment_actions += 1
++            else:
++                self._direct_actions += 1
+             self._macro_session.invalidate_after_direct(view, gripper_command=
+                 self.ctx.memory["user_check_gripper_command"])
+             if self._primitive is not None and self._primitive.done:
+@@ -516,11 +599,15 @@
+         return result
+ 
+     def _phase(self):
++        if getattr(self, "_mode", None) == "fragment":
++            return "framework_fragment"
+         if getattr(self, "_mode", None) == "macro" and getattr(self, "_macro_active", False):
+             return "agent_macro_paused" if self._macro_paused else "agent_macro"
+         return "agent_direct" if getattr(self, "_mode", None) == "direct" else "agent_decision"
+ 
+     def _macro_label(self):
++        if self._mode == "fragment":
++            return "framework_fragment"
+         if self._mode == "macro" and self._macro_index is not None:
+             step = self.plan_lock.plan()["steps"][self._macro_index]
+             return "optional:" + step["do"] + "(" + step["obj"] + ")"
+@@ -548,6 +635,10 @@
+                       user_check_framework=self.plan_lock.framework_snapshot())
+         result["counts"].update(agent_decisions=self._executive_calls,
+                                direct_segments=self._direct_segments,
++                               fragment_grants=self._fragment_grants,
++                               fragment_actions=self._fragment_actions,
++                               direct_actions=self._direct_actions,
++                               native_macro_actions=self._native_actions,
+                                optional_macro_grants=self._macro_grants)
+         result["counts"]["calls_by_need"]["agent"] = self._executive_calls
+         result["versions"]["agent_owned"] = POLICY_VERSION

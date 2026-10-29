@@ -1,0 +1,59 @@
+{
+  "reservation_id": "trial_002",
+  "status": "success",
+  "raw_libero_success": true,
+  "time_to_raw_success_s": 645.7739087290829,
+  "service_elapsed_s": 648.73408882902,
+  "human_review_wait_s": 2775.882632920984,
+  "automatic_review_compute_s": 138.10732062300667,
+  "approved_by": "codex",
+  "review_modified": false,
+  "autonomous_quality": {
+    "terminal_physical_diagnostics": {
+      "at_terminal": false,
+      "after_release_settle": true,
+      "physical_success_at_terminal": false,
+      "physical_success_after_settle": true,
+      "terminal_failing_checks": {
+        "in butter_1 basket_1_contain_region": [
+          "not_held",
+          "at_rest",
+          "supported_by_container_or_contents",
+          "not_perched_on_rim"
+        ]
+      },
+      "terminal_failure_is_hold_only": false,
+      "raw_libero_success_after_settle": true,
+      "physical_success": false,
+      "raw_libero_success": true,
+      "v2_success": false,
+      "verdict": "lenient_success",
+      "diagnosis_only": true,
+      "affects_completion": false,
+      "truth_version": "agent-speedup-v2-truth-v3"
+    },
+    "post_success_release_or_settle_is_separate_diagnostic": true,
+    "operator_action_interventions": 0,
+    "policy_fallback_counts": "see agent_stats.json"
+  },
+  "clock": {
+    "version": "speedup-service-clock-1",
+    "service_elapsed_s": 648.73408882902,
+    "human_review_wait_s": 2775.882632920984,
+    "first_raw_success_service_s": 645.7739087290829,
+    "raw_success_observed": true,
+    "raw_success_within_900": true,
+    "S300": false,
+    "evaluation_budget_s": 900.0,
+    "evaluation_budget_exhausted": false,
+    "deadline_overshoot_s": 0.0,
+    "boundary": "preparation + automatic review compute + execution + required finalization including synchronous video",
+    "excluded": "explicit human review wait only; final accounting receipt serialization follows measured persistence"
+  },
+  "arm": "A",
+  "task": "libero_10_t1",
+  "episode_index": 1,
+  "raw_evaluator_summary_status": "success",
+  "full_summary": "trial/summary.json",
+  "historical_v7_approval_reused": false
+}

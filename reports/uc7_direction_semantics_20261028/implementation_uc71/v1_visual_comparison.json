@@ -1,0 +1,42 @@
+{
+  "method": "Direct visual inspection of exact saved external grid PNGs; no generated/modified pixels, no simulator/model calls.",
+  "cases": [
+    {
+      "task": "libero_10_t4",
+      "source_images": {
+        "uc7": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t4_uc7_external_grid.png",
+        "uc71": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t4_uc71_external_grid.png"
+      },
+      "sha256": {
+        "uc7": "d54a05ac27477240dbc68d9122edd943832e765ad8741e7ef081787c37f9f74c",
+        "uc71": "d54a05ac27477240dbc68d9122edd943832e765ad8741e7ef081787c37f9f74c"
+      },
+      "same_png_bytes": true,
+      "visual_inspection": {
+        "white_mug_cell": 34,
+        "yellow_white_mug_cell": 38,
+        "left_plate_cell": 41,
+        "right_plate_cell": 48,
+        "identity_result": "Both target plates visibly match their viewer-side names; task object-to-target references unchanged despite renumbered part IDs."
+      }
+    },
+    {
+      "task": "libero_10_t5",
+      "source_images": {
+        "uc7": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t5_uc7_external_grid.png",
+        "uc71": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t5_uc71_external_grid.png"
+      },
+      "sha256": {
+        "uc7": "231fcad0c5d14abe3eb9e88e5a884e0ea8e78542d7687e619d5cb9b2a7992f3c",
+        "uc71": "231fcad0c5d14abe3eb9e88e5a884e0ea8e78542d7687e619d5cb9b2a7992f3c"
+      },
+      "same_png_bytes": true,
+      "visual_inspection": {
+        "book_cell": 46,
+        "new_back_compartment_cell": 27,
+        "old_back_compartment_cell": 28,
+        "identity_result": "The new pointer intersects the central rear compartment behind the small front cavity. It remains a physical caddy part and the book is placed inside it; no directional region is created. Grid indices denote whole cells, not certified point centers."
+      }
+    }
+  ]
+}

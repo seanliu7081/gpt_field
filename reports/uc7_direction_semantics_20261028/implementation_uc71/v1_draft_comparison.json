@@ -1,0 +1,3352 @@
+{
+  "generated_at_utc": "2026-10-28T09:39:36.126487+00:00",
+  "scope": "V1 planning drafts only; no task success or live execution claim",
+  "expected_cases": 13,
+  "prepared_cases": 13,
+  "complete": true,
+  "status": "failed",
+  "task_success_acceptance": "V2/V3 require user approval and actual task success; V1 cannot satisfy that criterion",
+  "baseline_selection": "Earliest recorded revision 7 original-layout draft by numeric directory order; fixed historical relayout draft; g5 first v3 shared-planner draft; recorded RoboCasa draft. No selection by outcome.",
+  "direction_criteria": {
+    "all_passed": true,
+    "checks_passed": 38,
+    "checks_total": 38,
+    "cases_passed": 13
+  },
+  "draft_validity": {
+    "valid_count": 12,
+    "invalid_cases": [
+      "libero_10_t9"
+    ]
+  },
+  "failures": [
+    {
+      "name": "libero_10_t9",
+      "check": "plan_schema_and_semantics_valid",
+      "evidence": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "ignored_selection",
+            "step": 1,
+            "pid": "D",
+            "text": "sense must be any except for slide"
+          }
+        ]
+      }
+    }
+  ],
+  "preparation_errors": [],
+  "cases": [
+    {
+      "name": "libero_10_t0",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t0/review.json",
+      "review_sha256": "9b1c74b479b1b25806b1ac25ecbd25126a3c199c2cc98b661b2389ee106383e6",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t0_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put both the alphabet soup and the tomato sauce in the basket",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "alphabet soup can: blue cylinder behind the milk carton",
+            "w": 47,
+            "x": 35
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "tomato sauce can: green-labeled cylinder beside the soup can",
+            "w": 44,
+            "x": 37
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "woven basket: open white-lined cavity",
+            "w": 25,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "alphabet soup can: blue cylinder behind the milk carton",
+            "reference_text": "woven basket: open white-lined cavity"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "B"
+              },
+              {
+                "c": "clear_of",
+                "p": "A"
+              }
+            ],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "tomato sauce can: green-labeled cylinder beside the soup can",
+            "reference_text": "woven basket: open white-lined cavity"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "alphabet soup: cylindrical can beside milk carton",
+            "w": 47,
+            "x": 35
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "tomato sauce: cylindrical can beside basket",
+            "w": 44,
+            "x": 37
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open lined cavity",
+            "w": 25,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          },
+          {
+            "obj": "B",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "alphabet soup: cylindrical can beside milk carton",
+            "reference_text": "basket: open lined cavity"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "tomato sauce: cylindrical can beside basket",
+            "reference_text": "basket: open lined cavity"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t1",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t1/review.json",
+      "review_sha256": "12b0c0836f64cf3ab174a803fa29e3676fde09ad16e84cbf14c83de98eaeff74",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t1_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put both the cream cheese box and the butter in the basket",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cream cheese box: flat rectangular box beside milk carton",
+            "w": 16,
+            "x": 50
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "butter: small rectangular pack with cow picture",
+            "w": 19,
+            "x": 45
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open fabric-lined cavity",
+            "w": 0,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "cream cheese box: flat rectangular box beside milk carton",
+            "reference_text": "basket: open fabric-lined cavity"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "butter: small rectangular pack with cow picture",
+            "reference_text": "basket: open fabric-lined cavity"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cream cheese box: flat rectangular package beside milk",
+            "w": 16,
+            "x": 50
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "butter: small rectangular package with cow picture",
+            "w": 19,
+            "x": 45
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open fabric-lined cavity",
+            "w": 0,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          },
+          {
+            "obj": "B",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "cream cheese box: flat rectangular package beside milk",
+            "reference_text": "basket: open fabric-lined cavity"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "butter: small rectangular package with cow picture",
+            "reference_text": "basket: open fabric-lined cavity"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t2",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t2/review.json",
+      "review_sha256": "0e30b552c5b509664ab1626f4e834b69d457aa6a20a1beb79665d8a4c4d7dc25",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t2_002_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": true,
+      "task_prompt": "turn on the stove and put the moka pot on it",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "hinged",
+            "text": "stove: raised bar on round control knob beside burner",
+            "w": 34,
+            "x": 31
+          },
+          {
+            "id": "B",
+            "move": "fixed",
+            "text": "stove: circular spiral burner on square base",
+            "w": 18,
+            "x": 47
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "moka pot: whole faceted body",
+            "w": 13,
+            "x": 45
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "moka pot: curved handle opposite its spout",
+            "w": 6,
+            "x": 36
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "C",
+            "ref": "B",
+            "relation": "centered_on",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "turn",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": [
+              {
+                "o": "effect",
+                "p": "B",
+                "txt": "the burner glows red"
+              }
+            ],
+            "object_text": "stove: raised bar on round control knob beside burner",
+            "reference_text": ""
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "C"
+              }
+            ],
+            "obj": "C",
+            "ref": "B",
+            "sense": "any",
+            "until": [],
+            "object_text": "moka pot: whole faceted body",
+            "reference_text": "stove: circular spiral burner on square base"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "hinged",
+            "text": "stove: raised bar control knob behind burner",
+            "w": 34,
+            "x": 31
+          },
+          {
+            "id": "B",
+            "move": "fixed",
+            "text": "stove: circular spiral burner on top",
+            "w": 18,
+            "x": 39
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "moka pot: whole faceted body",
+            "w": 13,
+            "x": 44
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "moka pot: curved handle on side toward pan",
+            "w": 6,
+            "x": 36
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "turn",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": null,
+            "sense": "any",
+            "until": [
+              {
+                "o": "effect",
+                "p": "B",
+                "txt": "burner glows to show it is on"
+              }
+            ],
+            "object_text": "stove: raised bar control knob behind burner",
+            "reference_text": ""
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "C"
+              }
+            ],
+            "obj": "C",
+            "ref": "B",
+            "sense": "any",
+            "until": [],
+            "object_text": "moka pot: whole faceted body",
+            "reference_text": "stove: circular spiral burner on top"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t3",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t3/review.json",
+      "review_sha256": "3a9364919c2f09f0de405dd36a7e05bbc9cfd72e5fd627eae6f2079a2ab99a9d",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t3_003_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "black bowl: whole round bowl with patterned interior",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "black bowl: exposed circular rim",
+            "w": 6,
+            "x": 44
+          },
+          {
+            "id": "C",
+            "move": "sliding",
+            "text": "cabinet bottom drawer: open rectangular cavity",
+            "w": 10,
+            "x": 46
+          },
+          {
+            "id": "D",
+            "move": "sliding",
+            "text": "cabinet bottom drawer: protruding bar on its front",
+            "w": 4,
+            "x": 45
+          },
+          {
+            "id": "E",
+            "move": "free",
+            "text": "bottle: upright narrow-necked body beside cabinet",
+            "w": 27,
+            "x": 29
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "slide",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "A"
+              },
+              {
+                "c": "clear_of",
+                "p": "E"
+              }
+            ],
+            "obj": "C",
+            "ref": null,
+            "sense": "open",
+            "until": [
+              {
+                "o": "fits",
+                "p": "A",
+                "txt": null
+              },
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "cabinet bottom drawer: open rectangular cavity",
+            "reference_text": ""
+          },
+          {
+            "do": "place_in",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              },
+              {
+                "c": "clear_of",
+                "p": "E"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "black bowl: whole round bowl with patterned interior",
+            "reference_text": "cabinet bottom drawer: open rectangular cavity"
+          },
+          {
+            "do": "slide",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "E"
+              }
+            ],
+            "obj": "C",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "cabinet bottom drawer: open rectangular cavity",
+            "reference_text": ""
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "black bowl: whole round bowl with patterned interior",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "black bowl: circular rim around its open top",
+            "w": 6,
+            "x": 44
+          },
+          {
+            "id": "C",
+            "move": "sliding",
+            "text": "cabinet: open bottom drawer cavity",
+            "w": 10,
+            "x": 46
+          },
+          {
+            "id": "D",
+            "move": "sliding",
+            "text": "cabinet: bar handle on the bottom drawer front",
+            "w": 12,
+            "x": 45
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "black bowl: whole round bowl with patterned interior",
+            "reference_text": "cabinet: open bottom drawer cavity"
+          },
+          {
+            "do": "slide",
+            "grip": [
+              "D"
+            ],
+            "keep": [],
+            "obj": "C",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "cabinet: open bottom drawer cavity",
+            "reference_text": ""
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "physical_parts_do_not_create_regions",
+          "passed": true,
+          "evidence": []
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t4",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t4/review.json",
+      "review_sha256": "cf7ea4ce127bff576e5f992b2082d5934f0ff01b4de76f38f226419f8e15dd6e",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t4_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: whole textured cup",
+            "w": 48,
+            "x": 34
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 46,
+            "x": 35
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "left plate: round top with striped border",
+            "w": 32,
+            "x": 41
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "yellow and white mug: whole two-tone cup",
+            "w": 34,
+            "x": 38
+          },
+          {
+            "id": "E",
+            "move": "free",
+            "text": "yellow and white mug: loop handle on its yellow side",
+            "w": 36,
+            "x": 37
+          },
+          {
+            "id": "F",
+            "move": "free",
+            "text": "right plate: round top with striped border",
+            "w": 0,
+            "x": 48
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "supported_on",
+            "tolerance_m": null
+          },
+          {
+            "obj": "D",
+            "ref": "F",
+            "relation": "supported_on",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: whole textured cup",
+            "reference_text": "left plate: round top with striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "E"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "D"
+              }
+            ],
+            "obj": "D",
+            "ref": "F",
+            "sense": "any",
+            "until": [],
+            "object_text": "yellow and white mug: whole two-tone cup",
+            "reference_text": "right plate: round top with striped border"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: textured cup body",
+            "w": 48,
+            "x": 34
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 46,
+            "x": 35
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "yellow and white mug: two-tone cup body",
+            "w": 34,
+            "x": 38
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "yellow and white mug: yellow loop handle on its side",
+            "w": 36,
+            "x": 37
+          },
+          {
+            "id": "E",
+            "move": "free",
+            "text": "left plate: round top with striped border",
+            "w": 32,
+            "x": 41
+          },
+          {
+            "id": "F",
+            "move": "free",
+            "text": "right plate: round top with striped border",
+            "w": 0,
+            "x": 48
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: textured cup body",
+            "reference_text": "left plate: round top with striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "C"
+              }
+            ],
+            "obj": "C",
+            "ref": "F",
+            "sense": "any",
+            "until": [],
+            "object_text": "yellow and white mug: two-tone cup body",
+            "reference_text": "right plate: round top with striped border"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "physical_parts_do_not_create_regions",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "t4_left_plate_same_or_adjacent",
+          "passed": true,
+          "evidence": {
+            "baseline_candidates": [
+              {
+                "id": "C",
+                "move": "free",
+                "text": "left plate: round top with striped border",
+                "w": 32,
+                "x": 41
+              }
+            ],
+            "current_candidates": [
+              {
+                "id": "E",
+                "move": "free",
+                "text": "left plate: round top with striped border",
+                "w": 32,
+                "x": 41
+              }
+            ],
+            "adjacency_definition": "Chebyshev distance <= 1 on the external 8x8 grid (including diagonal neighbors)",
+            "external_cell_before": 41,
+            "external_cell_after": 41,
+            "cell_distance": 0
+          }
+        },
+        {
+          "name": "t4_right_plate_same_or_adjacent",
+          "passed": true,
+          "evidence": {
+            "baseline_candidates": [
+              {
+                "id": "F",
+                "move": "free",
+                "text": "right plate: round top with striped border",
+                "w": 0,
+                "x": 48
+              }
+            ],
+            "current_candidates": [
+              {
+                "id": "F",
+                "move": "free",
+                "text": "right plate: round top with striped border",
+                "w": 0,
+                "x": 48
+              }
+            ],
+            "adjacency_definition": "Chebyshev distance <= 1 on the external 8x8 grid (including diagonal neighbors)",
+            "external_cell_before": 48,
+            "external_cell_after": 48,
+            "cell_distance": 0
+          }
+        },
+        {
+          "name": "t4_intended_mugs_target_the_intended_plates",
+          "passed": true,
+          "evidence": {
+            "white_mug_to_left_plate": true,
+            "yellow_white_mug_to_right_plate": true,
+            "resolved_steps": [
+              {
+                "do": "place_on",
+                "grip": [
+                  "B"
+                ],
+                "keep": [
+                  {
+                    "c": "upright",
+                    "p": "A"
+                  }
+                ],
+                "obj": "A",
+                "ref": "E",
+                "sense": "any",
+                "until": [],
+                "object_text": "white mug: textured cup body",
+                "reference_text": "left plate: round top with striped border"
+              },
+              {
+                "do": "place_on",
+                "grip": [
+                  "D"
+                ],
+                "keep": [
+                  {
+                    "c": "upright",
+                    "p": "C"
+                  }
+                ],
+                "obj": "C",
+                "ref": "F",
+                "sense": "any",
+                "until": [],
+                "object_text": "yellow and white mug: two-tone cup body",
+                "reference_text": "right plate: round top with striped border"
+              }
+            ]
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t5",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t5/review.json",
+      "review_sha256": "235eda3a804b4bd06f4486b224747f8cbf3e63ae0c27bd2f7b2155eab0413624",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t5_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "pick up the book and place it in the back compartment of the caddy",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "book: whole black rectangular book",
+            "w": 26,
+            "x": 46
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "caddy: rear middle cavity behind the small front cavity",
+            "w": 0,
+            "x": 28
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "mug: whole cup with a side loop handle",
+            "w": 13,
+            "x": 45
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "C"
+              }
+            ],
+            "obj": "A",
+            "ref": "B",
+            "sense": "any",
+            "until": [],
+            "object_text": "book: whole black rectangular book",
+            "reference_text": "caddy: rear middle cavity behind the small front cavity"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "book: whole black rectangular book",
+            "w": 26,
+            "x": 46
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "caddy: back rectangular compartment behind the front one",
+            "w": 0,
+            "x": 27
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "B",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "B",
+            "sense": "any",
+            "until": [],
+            "object_text": "book: whole black rectangular book",
+            "reference_text": "caddy: back rectangular compartment behind the front one"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "physical_parts_do_not_create_regions",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "t5_book_into_physical_back_compartment",
+          "passed": true,
+          "evidence": {
+            "target_parts": [
+              {
+                "id": "B",
+                "move": "free",
+                "text": "caddy: back rectangular compartment behind the front one",
+                "w": 0,
+                "x": 27
+              }
+            ],
+            "matching_steps": [
+              {
+                "do": "place_in",
+                "grip": [],
+                "keep": [],
+                "obj": "A",
+                "ref": "B",
+                "sense": "any",
+                "until": []
+              }
+            ],
+            "note": "Checks intended physical identity and step reference, not a new behind half-plane."
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t6",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t6/review.json",
+      "review_sha256": "a6b30e913db977aa2c4ab6606ff82bcbdd8c2c3de1a21235bfa82e76a6e26863",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t6_009_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {
+          "E": {
+            "relation": "right_of",
+            "anchor": "C",
+            "direction_world_xy": [
+              -1.7233905013070071e-06,
+              0.999999999998515
+            ]
+          }
+        }
+      },
+      "direction_lines": [
+        "E: right_of C → world (-1.72339e-06,+1) [image-right]"
+      ],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: rounded textured body",
+            "w": 48,
+            "x": 35
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 46,
+            "x": 36
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "plate: round top surface inside striped border",
+            "w": 12,
+            "x": 53
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "chocolate pudding: rectangular labeled packet",
+            "w": 35,
+            "x": 46
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "table: surface region to world +x side of plate",
+            "w": 0,
+            "x": 0
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "supported_on",
+            "tolerance_m": null
+          },
+          {
+            "obj": "D",
+            "ref": "E",
+            "relation": "supported_on",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: rounded textured body",
+            "reference_text": "plate: round top surface inside striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "A"
+              }
+            ],
+            "obj": "D",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "chocolate pudding: rectangular labeled packet",
+            "reference_text": "table: surface region to world +x side of plate"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: whole cup with textured sides",
+            "w": 48,
+            "x": 35
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 46,
+            "x": 36
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "plate: round top surface with striped border",
+            "w": 12,
+            "x": 53
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "chocolate pudding: rectangular package",
+            "w": 35,
+            "x": 46
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "table: surface to the right of the plate",
+            "w": 10,
+            "x": 55
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: whole cup with textured sides",
+            "reference_text": "plate: round top surface with striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [],
+            "keep": [],
+            "obj": "D",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "chocolate pudding: rectangular package",
+            "reference_text": "table: surface to the right of the plate"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "directional_region_and_intended_object_reference",
+          "passed": true,
+          "evidence": {
+            "expected_relation": "right_of",
+            "expected_anchor": "plate",
+            "expected_world_xy": [
+              0,
+              1
+            ],
+            "candidates": [
+              {
+                "spec": {
+                  "anchor": "C",
+                  "bounds_xy_m": null,
+                  "frame": "world",
+                  "id": "E",
+                  "relation": "right_of",
+                  "support": "observed_plane"
+                },
+                "anchor_text": "plate: round top surface with striped border",
+                "direction": [
+                  -1.7233905013070071e-06,
+                  0.999999999998515
+                ],
+                "vector_matches": true,
+                "object_steps": [
+                  {
+                    "do": "place_on",
+                    "grip": [],
+                    "keep": [],
+                    "obj": "D",
+                    "ref": "E",
+                    "sense": "any",
+                    "until": []
+                  }
+                ]
+              }
+            ],
+            "tolerance_note": "1e-5 numerical comparison only, no runtime threshold"
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t7",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t7/review.json",
+      "review_sha256": "1f83bd856ed433beff4ace3224ad06bc2b43a79c984af1e7937be0cc39536727",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t7_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put both the alphabet soup and the cream cheese box in the basket",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "alphabet soup: cylindrical blue can beside the other can",
+            "w": 23,
+            "x": 43
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "cream cheese box: small rectangular package near the cans",
+            "w": 44,
+            "x": 37
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open cavity inside the white lining",
+            "w": 0,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "alphabet soup: cylindrical blue can beside the other can",
+            "reference_text": "basket: open cavity inside the white lining"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "cream cheese box: small rectangular package near the cans",
+            "reference_text": "basket: open cavity inside the white lining"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "alphabet soup: cylindrical can with blue label",
+            "w": 23,
+            "x": 43
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "cream cheese box: small rectangular package",
+            "w": 44,
+            "x": 37
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open lined cavity at the top",
+            "w": 0,
+            "x": 40
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          },
+          {
+            "obj": "B",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "alphabet soup: cylindrical can with blue label",
+            "reference_text": "basket: open lined cavity at the top"
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "cream cheese box: small rectangular package",
+            "reference_text": "basket: open lined cavity at the top"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t8",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t8/review.json",
+      "review_sha256": "99da715aada8220ba62d0ca71748b0b9fe8e243db3fdd0e702138078948453f2",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t8_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put both moka pots on the stove",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "moka pot beside stove: faceted body below lid",
+            "w": 12,
+            "x": 45
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "moka pot beside stove: curved side handle",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "moka pot farther from stove: faceted body below lid",
+            "w": 17,
+            "x": 47
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "moka pot farther from stove: curved side handle",
+            "w": 9,
+            "x": 39
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "stove: square metal top surrounding circular coil",
+            "w": 23,
+            "x": 35
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "E",
+            "relation": "supported_on",
+            "tolerance_m": null
+          },
+          {
+            "obj": "C",
+            "ref": "E",
+            "relation": "supported_on",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              },
+              {
+                "c": "clear_of",
+                "p": "C"
+              }
+            ],
+            "obj": "A",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "moka pot beside stove: faceted body below lid",
+            "reference_text": "stove: square metal top surrounding circular coil"
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "C"
+              },
+              {
+                "c": "clear_of",
+                "p": "A"
+              }
+            ],
+            "obj": "C",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "moka pot farther from stove: faceted body below lid",
+            "reference_text": "stove: square metal top surrounding circular coil"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "front moka pot: whole faceted pot",
+            "w": 12,
+            "x": 45
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "front moka pot: curved side handle opposite its spout",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "right moka pot: whole faceted pot",
+            "w": 17,
+            "x": 39
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "right moka pot: curved side handle opposite its spout",
+            "w": 9,
+            "x": 39
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "stove: rectangular top surface surrounding the round burner",
+            "w": 24,
+            "x": 42
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              },
+              {
+                "c": "clear_of",
+                "p": "C"
+              }
+            ],
+            "obj": "A",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "front moka pot: whole faceted pot",
+            "reference_text": "stove: rectangular top surface surrounding the round burner"
+          },
+          {
+            "do": "place_on",
+            "grip": [
+              "D"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "C"
+              },
+              {
+                "c": "clear_of",
+                "p": "A"
+              }
+            ],
+            "obj": "C",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "right moka pot: whole faceted pot",
+            "reference_text": "stove: rectangular top surface surrounding the round burner"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t9",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t9/review.json",
+      "review_sha256": "e0e3ae7a9d65bf637230b3ac3d4c978136e1a2cf0f0590578a6804f7df1913aa",
+      "baseline_path": "runs/agent_speedup_v2_user_check_libero_10_t9_001_review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "ignored_selection",
+            "step": 1,
+            "pid": "D",
+            "text": "sense must be any except for slide"
+          }
+        ]
+      },
+      "baseline_draft_differs_from_reviewed_plan": true,
+      "task_prompt": "put the yellow and white mug in the microwave and close it",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "yellow and white mug: whole cup",
+            "w": 12,
+            "x": 37
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "yellow and white mug: projecting loop handle",
+            "w": 14,
+            "x": 36
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "microwave: interior cavity behind open door",
+            "w": 0,
+            "x": 40
+          },
+          {
+            "id": "D",
+            "move": "hinged",
+            "text": "microwave: open rectangular door",
+            "w": 35,
+            "x": 30
+          },
+          {
+            "id": "E",
+            "move": "hinged",
+            "text": "microwave: projecting handle on door",
+            "w": 44,
+            "x": 0
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "yellow and white mug: whole cup",
+            "reference_text": "microwave: interior cavity behind open door"
+          },
+          {
+            "do": "turn",
+            "grip": [
+              "E"
+            ],
+            "keep": [],
+            "obj": "D",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "microwave: open rectangular door",
+            "reference_text": ""
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "yellow and white mug: whole cup",
+            "w": 12,
+            "x": 37
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "yellow and white mug: loop handle on its side",
+            "w": 14,
+            "x": 44
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "microwave: open interior cavity",
+            "w": 0,
+            "x": 40
+          },
+          {
+            "id": "D",
+            "move": "hinged",
+            "text": "microwave: rectangular door with window",
+            "w": 35,
+            "x": 30
+          },
+          {
+            "id": "E",
+            "move": "hinged",
+            "text": "microwave: protruding handle on outer side of door",
+            "w": 44,
+            "x": 0
+          }
+        ],
+        "regions": [],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "yellow and white mug: whole cup",
+            "reference_text": "microwave: open interior cavity"
+          },
+          {
+            "do": "turn",
+            "grip": [
+              "E"
+            ],
+            "keep": [],
+            "obj": "D",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "microwave: rectangular door with window",
+            "reference_text": ""
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": false,
+          "evidence": {
+            "valid": false,
+            "issues": [
+              {
+                "code": "ignored_selection",
+                "step": 1,
+                "pid": "D",
+                "text": "sense must be any except for slide"
+              }
+            ]
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "physical_parts_do_not_create_regions",
+          "passed": true,
+          "evidence": []
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": false
+    },
+    {
+      "name": "libero_goal_g5",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_goal_g5/review.json",
+      "review_sha256": "86066cce0018cacb306860c60e4e72ffa6356397d5983d8e213810d1ef04f034",
+      "baseline_path": "runs/agent_speedup_v3_g5_001_review/review.json",
+      "baseline_kind": "v3 planning draft (shared planner), not uc7 execution evidence",
+      "baseline_version": "agent-speedup-v3-8",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "push the plate to the front of the stove",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -7.268184498698899e-08,
+            0.9999999999999973
+          ],
+          "away_xy": [
+            -0.9999999999999973,
+            -7.268184498698899e-08
+          ]
+        },
+        "regions": {
+          "C": {
+            "relation": "front_of",
+            "anchor": "B",
+            "direction_world_xy": [
+              0.9999999999999973,
+              7.268184498698899e-08
+            ]
+          }
+        }
+      },
+      "direction_lines": [
+        "C: front_of B → world (+1,+7.26818e-08) [toward external camera]"
+      ],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "plate: round dish with striped border",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "B",
+            "move": "fixed",
+            "text": "stove: square base beneath round burner",
+            "w": 41,
+            "x": 30
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "tabletop: clear surface in front of stove",
+            "w": 0,
+            "x": 47
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "bowl: open round vessel beside plate",
+            "w": 21,
+            "x": 36
+          },
+          {
+            "id": "E",
+            "move": "free",
+            "text": "packet: small rectangular block beside plate",
+            "w": 18,
+            "x": 46
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "B",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "C",
+            "relation": "front_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "push_to",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "B"
+              },
+              {
+                "c": "clear_of",
+                "p": "D"
+              },
+              {
+                "c": "clear_of",
+                "p": "E"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "plate: round dish with striped border",
+            "reference_text": "tabletop: clear surface in front of stove"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "plate: round dish with striped border",
+            "w": 5,
+            "x": 44
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "stove: square body with round burner",
+            "w": 41,
+            "x": 30
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "table: surface in front of stove",
+            "w": 0,
+            "x": 54
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "B",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "C",
+            "relation": "front_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "push_to",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "plate: round dish with striped border",
+            "reference_text": "table: surface in front of stove"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -7.268184498698899e-08,
+                0.9999999999999973
+              ],
+              "away_xy": [
+                -0.9999999999999973,
+                -7.268184498698899e-08
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "directional_region_and_intended_object_reference",
+          "passed": true,
+          "evidence": {
+            "expected_relation": "front_of",
+            "expected_anchor": "stove",
+            "expected_world_xy": [
+              1,
+              0
+            ],
+            "candidates": [
+              {
+                "spec": {
+                  "anchor": "B",
+                  "bounds_xy_m": null,
+                  "frame": "world",
+                  "id": "C",
+                  "relation": "front_of",
+                  "support": "observed_plane"
+                },
+                "anchor_text": "stove: square body with round burner",
+                "direction": [
+                  0.9999999999999973,
+                  7.268184498698899e-08
+                ],
+                "vector_matches": true,
+                "object_steps": [
+                  {
+                    "do": "push_to",
+                    "grip": [],
+                    "keep": [],
+                    "obj": "A",
+                    "ref": "C",
+                    "sense": "any",
+                    "until": []
+                  }
+                ]
+              }
+            ],
+            "tolerance_note": "1e-5 numerical comparison only, no runtime threshold"
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "libero_10_t6_relayout",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t6_relayout/review.json",
+      "review_sha256": "6b3aa666b65575b4a2b2629bc374528b29db8bc244c7f45dc89ea4cff052bc33",
+      "baseline_path": "runs/agent_speedup_v2_uc7_relayout_t6_t7_20261028_001/task_6/review/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            -1.7233905013070071e-06,
+            0.999999999998515
+          ],
+          "away_xy": [
+            -0.999999999998515,
+            -1.7233905013070071e-06
+          ]
+        },
+        "regions": {
+          "E": {
+            "relation": "right_of",
+            "anchor": "C",
+            "direction_world_xy": [
+              -1.7233905013070071e-06,
+              0.999999999998515
+            ]
+          }
+        }
+      },
+      "direction_lines": [
+        "E: right_of C → world (-1.72339e-06,+1) [image-right]"
+      ],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: tall textured cup body",
+            "w": 49,
+            "x": 38
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 0,
+            "x": 39
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "plate: round upper surface with striped border",
+            "w": 12,
+            "x": 61
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "chocolate pudding: rectangular labeled package",
+            "w": 55,
+            "x": 35
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "table: surface to the plate's world +x side",
+            "w": 29,
+            "x": 55
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: tall textured cup body",
+            "reference_text": "plate: round upper surface with striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [],
+            "keep": [],
+            "obj": "D",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "chocolate pudding: rectangular labeled package",
+            "reference_text": "table: surface to the plate's world +x side"
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "white mug: whole textured cup",
+            "w": 49,
+            "x": 38
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "white mug: loop handle on its side",
+            "w": 0,
+            "x": 39
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "plate: round top surface with striped border",
+            "w": 12,
+            "x": 53
+          },
+          {
+            "id": "D",
+            "move": "free",
+            "text": "chocolate pudding: rectangular package",
+            "w": 54,
+            "x": 35
+          },
+          {
+            "id": "E",
+            "move": "fixed",
+            "text": "table: surface to the right of the plate",
+            "w": 0,
+            "x": 55
+          }
+        ],
+        "regions": [
+          {
+            "anchor": "C",
+            "bounds_xy_m": null,
+            "frame": "world",
+            "id": "E",
+            "relation": "right_of",
+            "support": "observed_plane"
+          }
+        ],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "place_on",
+            "grip": [
+              "B"
+            ],
+            "keep": [
+              {
+                "c": "upright",
+                "p": "A"
+              }
+            ],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": [],
+            "object_text": "white mug: whole textured cup",
+            "reference_text": "plate: round top surface with striped border"
+          },
+          {
+            "do": "place_on",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "A"
+              }
+            ],
+            "obj": "D",
+            "ref": "E",
+            "sense": "any",
+            "until": [],
+            "object_text": "chocolate pudding: rectangular package",
+            "reference_text": "table: surface to the right of the plate"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                -1.7233905013070071e-06,
+                0.999999999998515
+              ],
+              "away_xy": [
+                -0.999999999998515,
+                -1.7233905013070071e-06
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "directional_region_and_intended_object_reference",
+          "passed": true,
+          "evidence": {
+            "expected_relation": "right_of",
+            "expected_anchor": "plate",
+            "expected_world_xy": [
+              0,
+              1
+            ],
+            "candidates": [
+              {
+                "spec": {
+                  "anchor": "C",
+                  "bounds_xy_m": null,
+                  "frame": "world",
+                  "id": "E",
+                  "relation": "right_of",
+                  "support": "observed_plane"
+                },
+                "anchor_text": "plate: round top surface with striped border",
+                "direction": [
+                  -1.7233905013070071e-06,
+                  0.999999999998515
+                ],
+                "vector_matches": true,
+                "object_steps": [
+                  {
+                    "do": "place_on",
+                    "grip": [],
+                    "keep": [
+                      {
+                        "c": "clear_of",
+                        "p": "A"
+                      }
+                    ],
+                    "obj": "D",
+                    "ref": "E",
+                    "sense": "any",
+                    "until": []
+                  }
+                ]
+              }
+            ],
+            "tolerance_note": "1e-5 numerical comparison only, no runtime threshold"
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    },
+    {
+      "name": "robocasa_coffee",
+      "status": "draft_prepared",
+      "review_path": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/robocasa_coffee/review.json",
+      "review_sha256": "275ba44792ea9b532b8e955bc2f516a922a3720c5b118ebfa5279d7e613e5269",
+      "baseline_path": "runs/robocasa_coffee_review_002/review.json",
+      "baseline_kind": "recorded user-check initial draft",
+      "baseline_version": "agent-speedup-v2-user-check-7",
+      "baseline_draft_validation": {
+        "valid": true,
+        "issues": []
+      },
+      "baseline_draft_differs_from_reviewed_plan": false,
+      "task_prompt": "press the button on the coffee machine to serve coffee",
+      "version": "agent-speedup-v2-user-check-7.1",
+      "same_initial_observation": true,
+      "quarter_turns": 0,
+      "region_directions": {
+        "direction_semantics": "external_view_v1",
+        "available": true,
+        "reason": null,
+        "frame": {
+          "right_xy": [
+            0.9793871426286823,
+            -0.2019921405738974
+          ],
+          "away_xy": [
+            0.2019921405738974,
+            0.9793871426286823
+          ]
+        },
+        "regions": {}
+      },
+      "direction_lines": [],
+      "before": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "sliding",
+            "text": "coffee machine: small round center button below gauge",
+            "w": 13,
+            "x": 0
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "cup: open cylindrical body beneath coffee spout",
+            "w": 22,
+            "x": 38
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "coffee machine: grated drip tray beneath cup",
+            "w": 37,
+            "x": 37
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "slide",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "B"
+              }
+            ],
+            "obj": "A",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "effect",
+                "p": "B",
+                "txt": "coffee appears inside the cup"
+              },
+              {
+                "o": "stop",
+                "p": null,
+                "txt": null
+              }
+            ],
+            "object_text": "coffee machine: small round center button below gauge",
+            "reference_text": ""
+          }
+        ]
+      },
+      "after": {
+        "parts": [
+          {
+            "id": "A",
+            "move": "sliding",
+            "text": "coffee machine: round button directly below pressure gauge",
+            "w": 13,
+            "x": 0
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "orange mug: cup beneath the dispenser",
+            "w": 29,
+            "x": 38
+          },
+          {
+            "id": "C",
+            "move": "fixed",
+            "text": "coffee machine: slotted drip tray beneath mug",
+            "w": 36,
+            "x": 37
+          }
+        ],
+        "regions": [],
+        "placement_goals": [],
+        "steps": [
+          {
+            "do": "slide",
+            "grip": [],
+            "keep": [
+              {
+                "c": "clear_of",
+                "p": "B"
+              }
+            ],
+            "obj": "A",
+            "ref": null,
+            "sense": "close",
+            "until": [
+              {
+                "o": "effect",
+                "p": "B",
+                "txt": "coffee begins flowing into the mug"
+              }
+            ],
+            "object_text": "coffee machine: round button directly below pressure gauge",
+            "reference_text": ""
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "plan_schema_and_semantics_valid",
+          "passed": true,
+          "evidence": {
+            "valid": true,
+            "issues": []
+          }
+        },
+        {
+          "name": "no_world_signed_horizontal_axis_in_part_text",
+          "passed": true,
+          "evidence": []
+        },
+        {
+          "name": "frozen_external_frame_available",
+          "passed": true,
+          "evidence": {
+            "reason": null,
+            "frame": {
+              "right_xy": [
+                0.9793871426286823,
+                -0.2019921405738974
+              ],
+              "away_xy": [
+                0.2019921405738974,
+                0.9793871426286823
+              ]
+            }
+          }
+        },
+        {
+          "name": "draft_only_no_approval_or_policy_actions",
+          "passed": true,
+          "evidence": {
+            "review_status": "draft",
+            "approved": null,
+            "policy_actions": 0
+          }
+        },
+        {
+          "name": "robocasa_synchronized_robot_mounted_camera",
+          "passed": true,
+          "evidence": {
+            "pose_source": "synchronized_robot_mounted_camera"
+          }
+        }
+      ],
+      "validation_matches_baseline_draft": true,
+      "passed": true
+    }
+  ],
+  "visual_comparison": {
+    "method": "Direct visual inspection of exact saved external grid PNGs; no generated/modified pixels, no simulator/model calls.",
+    "cases": [
+      {
+        "task": "libero_10_t4",
+        "source_images": {
+          "uc7": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t4_uc7_external_grid.png",
+          "uc71": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t4_uc71_external_grid.png"
+        },
+        "sha256": {
+          "uc7": "d54a05ac27477240dbc68d9122edd943832e765ad8741e7ef081787c37f9f74c",
+          "uc71": "d54a05ac27477240dbc68d9122edd943832e765ad8741e7ef081787c37f9f74c"
+        },
+        "same_png_bytes": true,
+        "visual_inspection": {
+          "white_mug_cell": 34,
+          "yellow_white_mug_cell": 38,
+          "left_plate_cell": 41,
+          "right_plate_cell": 48,
+          "identity_result": "Both target plates visibly match their viewer-side names; task object-to-target references unchanged despite renumbered part IDs."
+        }
+      },
+      {
+        "task": "libero_10_t5",
+        "source_images": {
+          "uc7": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t5_uc7_external_grid.png",
+          "uc71": "reports/uc7_direction_semantics_20261028/implementation_uc71/v1_draft_images/t5_uc71_external_grid.png"
+        },
+        "sha256": {
+          "uc7": "231fcad0c5d14abe3eb9e88e5a884e0ea8e78542d7687e619d5cb9b2a7992f3c",
+          "uc71": "231fcad0c5d14abe3eb9e88e5a884e0ea8e78542d7687e619d5cb9b2a7992f3c"
+        },
+        "same_png_bytes": true,
+        "visual_inspection": {
+          "book_cell": 46,
+          "new_back_compartment_cell": 27,
+          "old_back_compartment_cell": 28,
+          "identity_result": "The new pointer intersects the central rear compartment behind the small front cavity. It remains a physical caddy part and the book is placed inside it; no directional region is created. Grid indices denote whole cells, not certified point centers."
+        }
+      }
+    ]
+  }
+}

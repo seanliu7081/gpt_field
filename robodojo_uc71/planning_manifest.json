@@ -1,0 +1,159 @@
+{
+  "prepared_at_utc": "2026-10-28T18:48:45.747662+00:00",
+  "status": "plan_only_no_implementation_or_test",
+  "folder": "/workspace/gpt_field/robodojo_uc71",
+  "user_scope": "Plan native RoboDojo make_toast standard using uc7.1 Astra high and LIBERO information categories; new implementation stays under this folder.",
+  "user_information_choice": "Same information types; native two arms and three cameras (recommended)",
+  "proposed_first_test": {
+    "task": "make_toast",
+    "variant": "standard",
+    "env_config": "arx_x5",
+    "seed_directory": 0,
+    "layout_id": 0,
+    "attempts": 1,
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "billing": "chatgpt_subscription",
+    "api_key_calls": 0,
+    "native_control_action_limit": 1400,
+    "additional_episode_time_or_model_call_cap": null,
+    "live_approval_received": false
+  },
+  "robodojo_commit": "f57e1633ffed59761bc8e568cfe7530c4b33381c",
+  "xpolicylab_gitlink": "5d0be1499634d3176258c8f2e31f5fe816497b0a",
+  "uc71_source_archive_expected_sha256": "b3e8f84f3bf1b7603fad0ae0d8c4bee8a5a125b50ab08e320394b4069af57a68",
+  "sources": [
+    {
+      "url": "https://robodojo-benchmark.com/report/gpt-6-astra-eval",
+      "purpose": "Reference evaluation; medium and RoboProbe, not identical uc7.1 high comparison"
+    },
+    {
+      "url": "https://robodojo-benchmark.com/assets/Gpt6AstraEvalPage-C9ed2XQm.js",
+      "sha256": "3caf165e099102b9e9e253d8825a04f543cd0d5b629027ad32fb48c9855743fc",
+      "purpose": "Client-rendered report text inspected read-only"
+    },
+    {
+      "url": "https://robodojo-benchmark.com/doc/sim-tasks/make-toast/",
+      "purpose": "Official standard/random task and public scoring"
+    },
+    {
+      "url": "https://robodojo-benchmark.com/doc/usage/configurations/",
+      "purpose": "Native robot/cameras/timing/layout-seed conventions"
+    },
+    {
+      "url": "https://github.com/RoboDojo-Benchmark/RoboDojo/blob/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/tasks/make_toast.py",
+      "git_blob_sha": "ad01023c07768cfabb77cda2bf39a4e367b83f64",
+      "purpose": "Native task instruction, reward, partial score and action limit"
+    },
+    {
+      "url": "https://github.com/RoboDojo-Benchmark/RoboDojo/blob/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/make_toast.yml",
+      "git_blob_sha": "9605a270b45e9473b62aecb7f567b1a67c4e921d",
+      "purpose": "Standard scene composition and layout definition"
+    },
+    {
+      "url": "https://github.com/RoboDojo-Benchmark/RoboDojo/blob/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/_task.yml",
+      "git_blob_sha": "236d82eb436f19e78ff9b113343e083b20b0c885",
+      "purpose": "Standard episode count and task-specific configuration overrides"
+    },
+    {
+      "url": "https://github.com/RoboDojo-Benchmark/RoboDojo/blob/f57e1633ffed59761bc8e568cfe7530c4b33381c/src/eval_client/eval_env.py",
+      "purpose": "Native per-action counter, physics expansion and terminal rules"
+    },
+    {
+      "url": "https://github.com/RoboDojo-Benchmark/RoboDojo/blob/f57e1633ffed59761bc8e568cfe7530c4b33381c/scripts/install.sh",
+      "git_blob_sha": "31de698fd9118d533fe0a60bd1a4ffe30111956d",
+      "purpose": "Python/Isaac/PyTorch environment requirements; inspected, not executed"
+    }
+  ],
+  "local_basis_sha256": {
+    "UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md": "1c8d0f3be9eac1bb682b509d2a1d6c0aef4d4d82e63cb62af2b27071b00e165e",
+    "scripts/evaluate_agent_speedup_v2_user_check.py": "682430251fcc7231a8897c16c07b794a741f01b005cf8a6a4613e55905d05dd6",
+    "src/gpt_field/agent_speedup_v2_user_check_agent_client.py": "1ac37f66a948ed29326cc8da3d272b8f9de945aa9f37a7be5e5c00791e2b8301",
+    "scripts/evaluate_robodojo_direct.py": "24b8463d755dd1fa0044fe4f00324475d91fec0359bb114507b58304d332b7bf",
+    "robodojo_direct.md": "af46a8b94520cf1df3b2fddc90ac28fd04160f119213337d2e4440b9caa35957",
+    "scripts/evaluate_robocasa_user_check.py": "e0642703d136cb0bbfda5387982108fbe9b412046359d0ef2ff91736648c2ee7",
+    "AGENTS.md": "17ab56d83fb9897aa058a3d538524e0a5faed2d28183c3da1758cf9bf41207fd",
+    "reports/uc7_direction_semantics_20261028/implementation_uc71/uc71_release_manifest.json": "93347355d3753dffb83aad812fbe5ce1078394f1cd98b1e67c11810b323b7bea"
+  },
+  "machine_inspection": {
+    "gpu": "8 x NVIDIA GeForce RTX 4090 24564 MiB",
+    "driver_version": "610.43.02",
+    "cuda_toolkit": "12.8",
+    "render_libraries_reported": {
+      "gl": true,
+      "optix": true,
+      "vulkan": true
+    },
+    "free_space_human": "191G at inspection",
+    "workspace_is_volume": false,
+    "native_install_found_in_inspected_locations": false,
+    "native_render_test_performed": false
+  },
+  "actions_this_turn": {
+    "planning_documents_created": true,
+    "runtime_sources_edited": false,
+    "simulator_started": false,
+    "model_requests_sent": 0,
+    "packages_installed": false,
+    "assets_downloaded": false,
+    "full_task_started": false
+  },
+  "planning_artifacts_sha256": {
+    "README.md": "29986a489eb7fa6eefbb538b7f4a5d531efc51c58eff710b56b540fb9f9a43da",
+    "PLAN.md": "a09aa4a45d7f630e14e1562968797e7eda7c2ee3c825581b1548872ad1c68797",
+    "INPUT_CONTRACT.md": "e150f5dd0f88e7cc3c0be2bfbfc92e1d6763203f0e2c791a96fddf1e25567c28",
+    "planning_review.json": "e8cd57416c2340c29935db0fef1023538d0779b28708fa72c79be236328266c7"
+  },
+  "independently_retrieved_native_source_hashes": {
+    "task/RoboDojo/tasks/make_toast.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/tasks/make_toast.py",
+      "sha256": "1047f484a73d1f92304393879b51f87e33d661b6ad7937198352fe37a0d3233d",
+      "bytes": 3395
+    },
+    "task/RoboDojo/config/make_toast.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/make_toast.yml",
+      "sha256": "d190a26233db174538ff0052b4c2958a3b107f0ccc63d0fdfe28da4c7f5dc57b",
+      "bytes": 2112
+    },
+    "task/RoboDojo/config/_task.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/_task.yml",
+      "sha256": "655a87cd59fa6272bf352d32deb8ade162737b49a9824e16d428fecf0803380b",
+      "bytes": 2651
+    },
+    "src/eval_client/eval_env.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/src/eval_client/eval_env.py",
+      "sha256": "3ae75304d8a840ede2589441f987824f50b2a89cc2ef37f4d43ce0a8dbc4fd88",
+      "bytes": 45027
+    },
+    "env/observation_manager/obs_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/observation_manager/obs_manager.py",
+      "sha256": "771d6cda443b591f3e7850b901a06b4e653a2feefcbabd23608042377fe9be4b",
+      "bytes": 10484
+    },
+    "env/seed_manager/seed_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/seed_manager/seed_manager.py",
+      "sha256": "292eee4003de1c22b288ec3bc1d04d95c7aee5368f30991679ea1cc4c37247b3",
+      "bytes": 3879
+    },
+    "env/reward_manager/reward_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/reward_manager/reward_manager.py",
+      "sha256": "bc56efd3aaa861b4b38960dc4fb7778a9b4da9cf131f815ac3170300dd233a41",
+      "bytes": 46466
+    },
+    "env/reward_manager/func_parser.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/reward_manager/func_parser.py",
+      "sha256": "eb928a05c3eb6bae429a922c59e64272c2c3851c22d779143d45627e47b3a504",
+      "bytes": 112814
+    },
+    "env_cfg/sim/sim_config.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env_cfg/sim/sim_config.yml",
+      "sha256": "e442ede1c3d90fcfb50b9461c854d31b22dad9bfbb23397db228b27a6a486963",
+      "bytes": 83
+    },
+    "/tmp/robodojo_astra_report_chunk.js": {
+      "url": "https://robodojo-benchmark.com/assets/Gpt6AstraEvalPage-C9ed2XQm.js",
+      "sha256": "3caf165e099102b9e9e253d8825a04f543cd0d5b629027ad32fb48c9855743fc",
+      "bytes": 196078
+    }
+  }
+}

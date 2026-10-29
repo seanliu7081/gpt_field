@@ -1,0 +1,30 @@
+{
+  "reviewed_by": "codex",
+  "actual_images_inspected": true,
+  "image_evidence": "four original and numbered external/wrist images; A/B verified byte-identical",
+  "task": "put both the cream cheese box and the butter in the basket",
+  "step_reviews": [
+    {
+      "i": 0,
+      "do": "place_in",
+      "object": "A",
+      "reference": "C",
+      "accepted": true
+    },
+    {
+      "i": 1,
+      "do": "place_in",
+      "object": "B",
+      "reference": "C",
+      "accepted": true
+    }
+  ],
+  "object_identity_evidence": {
+    "A": "visible blue/white cream-cheese package near juice; external50/wrist24 overlap package",
+    "B": "visible red/yellow cow-picture butter package; external46 overlaps right edge, wrist28 overlaps body; coarse cell seed is not an exact grasp point",
+    "C": "open fabric-lined woven basket visible in external40; wrist0 appropriately unspecified"
+  },
+  "plan_modified": false,
+  "truth_inputs_used": false,
+  "judgment": "both requested objects are visible; two place_in steps match instruction, no added task or target; execution must ground/refine from allowed observations"
+}

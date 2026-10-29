@@ -1,0 +1,25 @@
+60 motion [('motion', 'relative', [0, 0, 0], 'close')] | Hold the grasp pose with closing commanded, then test attachment with a short lift.
+61 motion [('motion', 'relative', [0, 0, 0.025], 'keep')] | Lift vertically 25 mm, then carry toward a clear tabletop region to the plate's right if the box follows.
+62 motion [('motion', 'relative', [0.025, 0.035, 0.02], 'keep')] | Carry the pudding toward world (0.15, 0.20), a clear tabletop region to the plate's right, keeping clearance f
+63 motion [('motion', 'relative', [0.035, 0.03, 0.01], 'keep')] | Continue carrying outward and forward toward the clear region right of the plate.
+64 motion [('motion', 'relative', [0.043, 0.023, 0], 'keep')] | Continue toward the right-side tabletop destination, keeping the box at its current clearance height.
+65 motion [('motion', 'relative', [0.046, 0.016, 0], 'keep')] | Advance along world x with a modest positive-y shift to reach the tabletop beside the plate.
+66 motion [('motion', 'relative', [0.046, 0.013, 0], 'keep')] | Continue forward toward x=0.15 with a small outward adjustment, then lower and release onto the table.
+67 motion [('motion', 'relative', [0.046, 0.01, 0], 'keep')] | Continue forward toward the final tabletop pose, preserving current height and grip.
+68 motion [('motion', 'relative', [0.045, 0.01, 0], 'keep')] | Advance another bounded segment toward x=0.15 and y=0.20, then lower for release.
+69 motion [('motion', 'absolute', [0.145, 0.198, 0.475], 'keep')] | Move to the final horizontal target and begin a small descent, then release on the tabletop.
+70 motion [('motion', 'absolute', [0.145, 0.198, 0.458], 'keep')] | Complete the small horizontal adjustment and lower the box to approximately its original supported grasp heigh
+71 motion [('motion', 'relative', [0, 0, -0.006], 'keep')] | Lower another 6 mm without lateral motion, then release and verify support.
+72 motion [('motion', 'relative', [0, 0, 0], 'open')] | Open at the destination, then withdraw upward and inspect both final placements.
+73 motion [('motion', 'relative', [0, 0, 0], 'open')] | Finish opening at the supported pose before withdrawing upward to verify both placements.
+74 motion [('motion', 'relative', [0, 0, 0.035], 'open')] | Withdraw straight upward and inspect the released box's support and final separation from the plate.
+75 finish [] | Request a final fresh observation to confirm both placements remain stable.
+76 motion [('motion', 'relative', [0, 0, 0.05], 'open')] | Raise the empty open hand for a clearer view, then reassess whether the pudding should be moved closer to the 
+77 motion [('motion', 'relative', [0, 0, -0.04], 'open')] | Regrasp the pudding at the known pose, lift briefly, shift it roughly 5 cm toward the plate while retaining a 
+78 motion [('motion', 'absolute', [0.148, 0.201, 0.456], 'open')] | Descend to the previous side-grasp height, then close and shift the pudding closer to the plate.
+79 motion [('motion', 'relative', [0, 0, -0.008], 'close')] | Lower a few millimetres while closing, then verify the renewed grasp before shifting inward.
+80 motion [('motion', 'relative', [0, 0, 0], 'close')] | Let the side grasp settle, then lift only enough to clear the table for the short inward move.
+81 motion [('motion', 'relative', [0, 0, 0.023], 'keep')] | Lift briefly to check the renewed grasp, then move the box toward the plate while retaining lateral clearance.
+82 motion [('motion', 'relative', [0, -0.04, 0], 'keep')] | Shift the pudding 4 cm toward negative world y, keeping its base lifted and watching clearance from the mug ha
+83 motion [('motion', 'absolute', [0.148, 0.145, 0.477], 'keep')] | Continue toward y=0.145 for a closer right-side placement, then lower to the table.
+84 motion [('motion', 'absolute', [0.148, 0.13, 0.466], 'keep')] | Make a final small inward adjustment toward grip y=0.13 while lowering slightly, then place on the table.

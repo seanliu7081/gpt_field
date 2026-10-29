@@ -27,7 +27,7 @@ from .agent_speedup_v2_user_check_fragments import (
 )
 from .agent_speedup_v2_user_check_motion import _conform_motion, local_motion_schema
 from .astra import APIError, SchemaError, _canonical
-from .astranomy_agentic_geometry import validate_geometry_metadata
+from .robocasa_user_check_geometry import validate_geometry_metadata
 from .astranomy_agentic_motion import measured_pose
 from .chatgpt_plan import _failure_metadata
 from .contact_skills import StepView
@@ -38,14 +38,14 @@ from .ordered_transport import ordered_dumps
 
 
 CLIENT_VERSION = "user-check-agent-first-client-2"
-PROMPT_VERSION = "user-check-agent-first-prompt-2"
+PROMPT_VERSION = "user-check-agent-first-prompt-3"
 HISTORY_PROTOCOL = "persistent_task_executive_fragments_text_and_six_visual_pairs_v2"
 IMAGE_HISTORY = 6
 AGENT_KIND = "agent"
 CONTEXT_KEYS = frozenset({
     "step", "approved_plan", "task_contract", "geometry", "capabilities",
     "measured_state", "model_belief", "last_feedback", "recent_feedback",
-    "macro", "execution", "native_evidence", "task_success_source",
+    "macro", "execution", "native_evidence", "task_success_source", "region_directions",
 })
 
 AGENT_INSTRUCTIONS = """
@@ -176,6 +176,16 @@ Only the independent evaluator terminates a successful task. If observation
 continues, recheck unfinished spatial relations rather than repeatedly declaring
 completion. There is no give_up action.
 
+Direction words in the task and in reviewed regions are as seen in the external image (image 1):
+right/left = toward its image-right/left; front/behind = nearer to/farther from the external camera
+along its viewing direction. Never judge them in the wrist image. region_directions gives each
+region's world-xy direction computed from calibration; use it over any direction wording in reviewed
+text. If region_directions is unavailable, judge the words in image 1 as defined.
+The direction frame is frozen from the external view at review; later camera motion does not change
+these reviewed meanings. The full first-request contract is reviewed_goal_contract.task_contract;
+context.region_directions repeats its compact direction information in every request, even when
+there are no directional regions. Use current camera calibration to interpret the current RGB.
+
 Camera position_world_m and rotation_world_from_camera map OpenGL camera axes to
 world: p_world=origin+R*p_camera. Camera +X is image-right, +Y image-up, -Z forward.
 Pixel u increases right and v down. For camera point [X,Y,Z], Z<0,
@@ -299,7 +309,6 @@ class AgentFirstV2Client(ReviewedV2Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.image_history = IMAGE_HISTORY
-        self.reasoning_effort = "high"
         self._instruction_text[AGENT_KIND] = AGENT_INSTRUCTIONS
         self._schemas[AGENT_KIND] = agent_schema()
 
@@ -367,7 +376,7 @@ class AgentFirstV2Client(ReviewedV2Client):
             "instructions": AGENT_INSTRUCTIONS, "input": history,
             "text": {"format": {"type": "json_schema", "name": "user_check_agent_first",
                                   "strict": True, "schema": agent_schema()}},
-            "stream": True, "reasoning": {"effort": "high"},
+            "stream": True, "reasoning": {"effort": self.reasoning_effort},
             "include": ["reasoning.encrypted_content"],
         }
 
@@ -472,6 +481,14 @@ class AgentFirstV2Client(ReviewedV2Client):
             raise ValueError("executive observation step must be a nonnegative integer")
         reviewed_plan = current.pop("approved_plan", self.plan_lock.plan())
         task_contract = current.pop("task_contract", None)
+        from .agent_speedup_v2_user_check_spatial import region_directions
+        # Recompute this small payload from the frozen approval on every call;
+        # it cannot disappear with image-history trimming or stale caller context.
+        directions = region_directions(self.plan_lock.view_frame, self.plan_lock.plan().get("regions", []))
+        current["region_directions"] = directions
+        if task_contract is None:
+            task_contract = self.plan_lock.task_contract.to_dict()
+        task_contract["region_directions"] = copy.deepcopy(directions)
         fields = {"step": step, "robot_pose_wxyz": measured_pose(view.state),
                   "finger_joints_m": [float(x) for x in view.state[6:8]],
                   "geometry": geometry, "context": current}

@@ -1,0 +1,75 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/agent_speedup_v2_user_check.py	2026-10-21 11:10:08.780173390 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check.py	2026-10-21 17:50:16.523816476 +0000
+@@ -28,7 +28,7 @@
+ from .agent_speedup_v2_types import SLICE_DO_KINDS
+ 
+ 
+-VERSION = "agent-speedup-v2-user-check-6"
++VERSION = "agent-speedup-v2-user-check-7"
+ DISPLAY_NAME = "speed up v2 user check"
+ SCHEMA_VERSION = 1
+ _HASH = re.compile(r"^[0-9a-f]{64}$")
+@@ -95,8 +95,8 @@
+     return _copy(parsed)
+ 
+ 
+-def plan_validation(raw: Mapping) -> dict:
+-    """Structured issues for selectors; invalid semantic drafts stay editable."""
++def plan_validation(raw: Mapping, *, require_native: bool = False) -> dict:
++    """Validate task intents; require macro support only for native execution."""
+     clean = _parse_lossless(raw)
+     issues = [issue.to_dict() for issue in validate_plan(parse_plan(clean))]
+     from .agent_speedup_v2_user_check_spatial import validate_spatial_spec
+@@ -110,33 +110,33 @@
+                            "text": "Active clear_of forbids the contact required by this skill"})
+     if not clean["steps"]:
+         issues.append({"code": "empty_steps", "step": None, "pid": None,
+-                       "text": "At least one executable step must be reviewed"})
++                       "text": "At least one task intent must be reviewed"})
+     for i, step in enumerate(clean["steps"]):
+-        if step["do"] not in SLICE_DO_KINDS:
++        if require_native and step["do"] not in SLICE_DO_KINDS:
+             issues.append({"code": "relation_not_implemented", "step": i,
+                            "pid": step["obj"],
+                            "text": f"Step {i}: {step['do']} is not implemented in v2"})
+-        else:
+-            ignored = []
+-            if step["sense"] != "any":
+-                ignored.append("sense must be any for implemented relations")
+-            if step["do"] != "place_on" and step["ref"] is not None:
+-                ignored.append("ref must be null except for place_on")
+-            if step["do"] == "release" and step["grip"]:
+-                ignored.append("release must have an empty grip list")
+-            for criterion in step["until"]:
+-                if criterion["o"] not in ("effect", "fits") and criterion["p"] is not None:
+-                    ignored.append("stop/angle criteria must have p null")
+-                if criterion["o"] != "effect" and criterion["txt"] is not None:
+-                    ignored.append("only effect criteria accept descriptive text")
+-            for text in ignored:
+-                issues.append({"code": "ignored_selection", "step": i,
+-                               "pid": step["obj"], "text": text})
++            continue
++        ignored = []
++        if step["do"] != "slide" and step["sense"] != "any":
++            ignored.append("sense must be any except for slide")
++        if step["do"] not in ("place_on", "place_in", "push_to") and step["ref"] is not None:
++            ignored.append("ref must be null except for place_on, place_in or push_to")
++        if step["do"] == "release" and step["grip"]:
++            ignored.append("release must have an empty grip list")
++        for criterion in step["until"]:
++            if criterion["o"] not in ("effect", "fits") and criterion["p"] is not None:
++                ignored.append("stop/angle criteria must have p null")
++            if criterion["o"] != "effect" and criterion["txt"] is not None:
++                ignored.append("only effect criteria accept descriptive text")
++        for text in ignored:
++            issues.append({"code": "ignored_selection", "step": i,
++                           "pid": step["obj"], "text": text})
+     return {"valid": not issues, "issues": issues}
+ 
+ 
+ def validate_review_plan(raw: Mapping) -> dict:
+-    """Validate exact native v2 JSON and its implemented execution capabilities."""
++    """Validate exact task-intent JSON independently of optional macro availability."""
+     clean = _parse_lossless(raw)
+     validation = plan_validation(clean)
+     if not validation["valid"]:

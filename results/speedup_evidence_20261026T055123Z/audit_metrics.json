@@ -1,0 +1,2548 @@
+{
+  "audit_version": 1,
+  "scope": "historical saved records only; no model, no simulator, no heldout truth",
+  "index_entries": 229,
+  "index_categories": {
+    "infrastructure_or_protocol_interrupted": 22,
+    "raw_success": 41,
+    "user_stopped": 70,
+    "review_only": 41,
+    "incomplete_or_unclassified": 50,
+    "diagnostic_or_preparation": 5
+  },
+  "detailed_windows": 40,
+  "detailed_window_limit": 40,
+  "selection": {
+    "agent_speedup_v2_user_check_libero_10_t1_001": [
+      1,
+      3,
+      6,
+      9,
+      12,
+      13
+    ],
+    "agent_speedup_v3_t1_008": [
+      1,
+      2,
+      3,
+      10,
+      20,
+      30,
+      39,
+      40
+    ],
+    "agent_speedup_v3_t1_009": [
+      1,
+      8,
+      17,
+      20,
+      24,
+      25
+    ],
+    "agent_speedup_v3_g5_001": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "agent_speedup_v3_g5_002": [
+      1,
+      3,
+      6
+    ],
+    "agent_speedup_v3_t1_011": [
+      1,
+      2,
+      3
+    ],
+    "agent_speedup_v3_t1_012": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "runs": {
+    "agent_speedup_v2_user_check_libero_10_t1_001": {
+      "summary_path": "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json",
+      "status": "success",
+      "steps": 897,
+      "raw_success": true,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 183.39484376291512,
+        "model_pipeline_s": 182.5110229930142,
+        "model_pipeline_s_by_kind": {
+          "agent": 182.511023
+        },
+        "observe_transition_s": 6.397682213631924,
+        "policy_compute_s": 0.8838207699009217,
+        "run_state_s": 25.07602983340621,
+        "simulator_step_s": 108.38418393133907,
+        "video_render_s": 81.76617932406953
+      },
+      "elapsed_s": 416.3231316420133,
+      "control_elapsed_s": 407.15668418898713,
+      "control_without_video_s": 325.3905048649176,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 13,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 13,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 182.511023
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 13,
+        "requests_sent": 13,
+        "runner_calls_by_kind": {
+          "agent": 13
+        },
+        "tokens": {
+          "cached_input": 16128,
+          "input": 541005,
+          "output": 4781,
+          "output_by_kind": {
+            "agent": 4781,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 0,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 1418,
+          "reasoning_by_kind": {
+            "agent": 1418,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 3363,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        }
+      },
+      "request_timing": {
+        "n": 13,
+        "p50": 13.825083211995661,
+        "p90": 17.73426289758645,
+        "min": 9.268577498965897,
+        "max": 18.728716457029805,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 17.804592270986177,
+        "p90": 17.804592270986177,
+        "min": 17.804592270986177,
+        "max": 17.804592270986177,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 12,
+        "p50": 13.752644947497174,
+        "p90": 17.28592359959148,
+        "min": 9.268577498965897,
+        "max": 18.728716457029805,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 17.804592270986177,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 2,
+          "step": 34,
+          "duration_s": 13.680206682998687,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 3,
+          "step": 100,
+          "duration_s": 14.699003889982123,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 4,
+          "step": 156,
+          "duration_s": 13.241280629998073,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 5,
+          "step": 241,
+          "duration_s": 17.452945403987542,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 6,
+          "step": 300,
+          "duration_s": 10.148901023028884,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 7,
+          "step": 354,
+          "duration_s": 10.742480464978144,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 8,
+          "step": 456,
+          "duration_s": 15.348600087978411,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 9,
+          "step": 494,
+          "duration_s": 18.728716457029805,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 10,
+          "step": 624,
+          "duration_s": 10.2212223400129,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 11,
+          "step": 697,
+          "duration_s": 15.782727360026911,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 12,
+          "step": 828,
+          "duration_s": 13.825083211995661,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        },
+        {
+          "ordinal": 13,
+          "step": 891,
+          "duration_s": 9.268577498965897,
+          "source": "result.budget.elapsed_s - request.budget_elapsed_s_before (pipeline interval, includes client work)"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 897,
+        "executed": 897,
+        "feedback": 897,
+        "recorded_collision": 4,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "execute_fragment": 897,
+        "execute_fragment_feedback": 897
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 897,
+          "p50": 0.0008236109861172736,
+          "p90": 0.0012647155788727104,
+          "min": 0.00027132994728162885,
+          "max": 18.872394924983382,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": null,
+      "evidence_view_attempts": null,
+      "policy_version": "agent-speedup-v2-user-check-agent-2",
+      "performance_timings": null,
+      "preparation_s": 21.405775961000472,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 13.737720309989527,
+        "p90": 13.737720309989527,
+        "min": 13.737720309989527,
+        "max": 13.737720309989527,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": null,
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "after_release_settle": true,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": true,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in cream_cheese_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_t1_008": {
+      "summary_path": "runs/agent_speedup_v3_t1_008/summary.json",
+      "status": "success",
+      "steps": 873,
+      "raw_success": true,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 1345.2723025440937,
+        "model_pipeline_s": 1336.4772970546037,
+        "model_pipeline_s_by_kind": {
+          "agent": 1336.477297
+        },
+        "observe_transition_s": 97.79389740771148,
+        "policy_compute_s": 8.795005489489995,
+        "run_state_s": 0.22167355322744697,
+        "simulator_step_s": 110.09110631770454,
+        "video_render_s": 37.49246571154799
+      },
+      "elapsed_s": 1601.897439239081,
+      "control_elapsed_s": 1593.6161067530047,
+      "control_without_video_s": 1556.1236410414567,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 40,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 40,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 1336.477297
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 40,
+        "requests_sent": 40,
+        "runner_calls_by_kind": {
+          "agent": 40
+        },
+        "tokens": {
+          "cached_input": 143872,
+          "input": 8523018,
+          "output": 29122,
+          "output_by_kind": {
+            "agent": 29122,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 8819,
+          "reasoning_by_kind": {
+            "agent": 8819,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 20303,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 40,
+        "p50": 27.284128936531488,
+        "p90": 63.02835540907691,
+        "min": 12.36041793494951,
+        "max": 119.48043859389145,
+        "small_sample": false,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 119.48043859389145,
+        "p90": 119.48043859389145,
+        "min": 119.48043859389145,
+        "max": 119.48043859389145,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 39,
+        "p50": 25.74881129001733,
+        "p90": 45.451268276013494,
+        "min": 12.36041793494951,
+        "max": 76.62622070591897,
+        "small_sample": false,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 119.48043859389145,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 29,
+          "duration_s": 31.020660605980083,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 58,
+          "duration_s": 18.50526838400401,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 4,
+          "step": 149,
+          "duration_s": 66.84702968399506,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 5,
+          "step": 150,
+          "duration_s": 21.626938626985066,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 6,
+          "step": 155,
+          "duration_s": 18.824218226014636,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 7,
+          "step": 167,
+          "duration_s": 12.36041793494951,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 8,
+          "step": 168,
+          "duration_s": 21.692186990985647,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 9,
+          "step": 172,
+          "duration_s": 66.57108539401088,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 10,
+          "step": 176,
+          "duration_s": 15.614127418026328,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 11,
+          "step": 180,
+          "duration_s": 17.13076277100481,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 12,
+          "step": 184,
+          "duration_s": 19.73111069400329,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 13,
+          "step": 190,
+          "duration_s": 17.780739686917514,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 14,
+          "step": 191,
+          "duration_s": 32.46734919596929,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 15,
+          "step": 287,
+          "duration_s": 76.62622070591897,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 16,
+          "step": 345,
+          "duration_s": 25.445500777917914,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 17,
+          "step": 398,
+          "duration_s": 30.437705704011023,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 18,
+          "step": 404,
+          "duration_s": 22.30936086399015,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 19,
+          "step": 525,
+          "duration_s": 62.63471874408424,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 20,
+          "step": 526,
+          "duration_s": 20.22341224795673,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 21,
+          "step": 534,
+          "duration_s": 20.418170006014407,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 22,
+          "step": 585,
+          "duration_s": 20.14531899499707,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 23,
+          "step": 646,
+          "duration_s": 30.71673408499919,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 24,
+          "step": 653,
+          "duration_s": 28.819446583045647,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 25,
+          "step": 665,
+          "duration_s": 22.494764236034825,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 26,
+          "step": 666,
+          "duration_s": 25.74881129001733,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 27,
+          "step": 667,
+          "duration_s": 24.684583497000858,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 28,
+          "step": 671,
+          "duration_s": 29.708112399908714,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 29,
+          "step": 675,
+          "duration_s": 24.68272653699387,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 30,
+          "step": 679,
+          "duration_s": 30.892389437998645,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 31,
+          "step": 683,
+          "duration_s": 22.013128198916093,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 32,
+          "step": 687,
+          "duration_s": 31.541691982070915,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 33,
+          "step": 711,
+          "duration_s": 33.54162008699495,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 34,
+          "step": 713,
+          "duration_s": 41.15540565899573,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 35,
+          "step": 824,
+          "duration_s": 36.95843189605512,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 36,
+          "step": 867,
+          "duration_s": 36.480828818981536,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 37,
+          "step": 868,
+          "duration_s": 30.3712143501034,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 38,
+          "step": 869,
+          "duration_s": 37.716881235013716,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 39,
+          "step": 870,
+          "duration_s": 23.93027707899455,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 40,
+          "step": 871,
+          "duration_s": 40.659532684017904,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 873,
+        "executed": 873,
+        "feedback": 873,
+        "recorded_collision": 2,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "semantic_program": 149,
+        "semantic_program_feedback": 149,
+        "local_motion": 12,
+        "local_motion_feedback": 12,
+        "execute_fragment": 712,
+        "execute_fragment_feedback": 712
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 873,
+          "p50": 0.0019192530307918787,
+          "p90": 0.003078255383297804,
+          "min": 0.00018517998978495598,
+          "max": 121.02275816909969,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": null,
+      "evidence_view_attempts": {},
+      "policy_version": "agent-speedup-v3-6",
+      "performance_timings": {
+        "framework_full_syncs": 119,
+        "framework_light_syncs": 1668,
+        "framework_sync_s": 5.663792794686742,
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 0,
+        "visual_interaction_s": 0.0
+      },
+      "preparation_s": 20.301545953028835,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 12.942447652923875,
+        "p90": 12.942447652923875,
+        "min": 12.942447652923875,
+        "max": 12.942447652923875,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 20.301545953028835,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 1605.8746222859481,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 1626.176168238977
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "after_release_settle": true,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": true,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in cream_cheese_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_t1_009": {
+      "summary_path": "runs/agent_speedup_v3_t1_009/summary.json",
+      "status": "evidence_acquisition_failed",
+      "steps": 743,
+      "raw_success": false,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 726.3177698424552,
+        "model_pipeline_s": 721.4064355706796,
+        "model_pipeline_s_by_kind": {
+          "agent": 721.4064360250313
+        },
+        "observe_transition_s": 58.52029484324157,
+        "policy_compute_s": 4.911334271775559,
+        "run_state_s": 0.11692585446871817,
+        "simulator_step_s": 88.04261118685827,
+        "video_render_s": 24.926758376066573
+      },
+      "elapsed_s": 907.3528811290162,
+      "control_elapsed_s": 899.87905077904,
+      "control_without_video_s": 874.9522924029734,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 25,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 25,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 721.4064360250313
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 25,
+        "requests_sent": 25,
+        "runner_calls_by_kind": {
+          "agent": 25
+        },
+        "tokens": {
+          "cached_input": 38400,
+          "input": 3696336,
+          "output": 18037,
+          "output_by_kind": {
+            "agent": 18037,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 5669,
+          "reasoning_by_kind": {
+            "agent": 5669,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 12368,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 25,
+        "p50": 22.23734923696611,
+        "p90": 59.458994337823256,
+        "min": 13.74210344790481,
+        "max": 79.23978594702203,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 63.023940497078,
+        "p90": 63.023940497078,
+        "min": 63.023940497078,
+        "max": 63.023940497078,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 24,
+        "p50": 21.927989870950114,
+        "p90": 48.0009656029404,
+        "min": 13.74210344790481,
+        "max": 79.23978594702203,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 63.023940497078,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 4,
+          "duration_s": 13.805463284952566,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 62,
+          "duration_s": 26.051774262916297,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 4,
+          "step": 77,
+          "duration_s": 64.1491946639726,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 5,
+          "step": 151,
+          "duration_s": 22.23734923696611,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 6,
+          "step": 186,
+          "duration_s": 15.880749790929258,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 7,
+          "step": 281,
+          "duration_s": 22.280236059916206,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 8,
+          "step": 293,
+          "duration_s": 33.74287677893881,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 9,
+          "step": 294,
+          "duration_s": 28.466942890896462,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 10,
+          "step": 299,
+          "duration_s": 13.74210344790481,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 11,
+          "step": 300,
+          "duration_s": 19.172018215991557,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 12,
+          "step": 305,
+          "duration_s": 16.99669375398662,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 13,
+          "step": 345,
+          "duration_s": 17.929974679020233,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 14,
+          "step": 399,
+          "duration_s": 54.1115750989411,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 15,
+          "step": 410,
+          "duration_s": 17.95834602904506,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 16,
+          "step": 516,
+          "duration_s": 24.25966654100921,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 17,
+          "step": 522,
+          "duration_s": 14.13033933704719,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 18,
+          "step": 523,
+          "duration_s": 17.951288425014354,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 19,
+          "step": 640,
+          "duration_s": 79.23978594702203,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 20,
+          "step": 721,
+          "duration_s": 21.618630504934117,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 21,
+          "step": 728,
+          "duration_s": 26.14157125609927,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 22,
+          "step": 738,
+          "duration_s": 33.70525422808714,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 23,
+          "step": 741,
+          "duration_s": 15.302851187996566,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 24,
+          "step": 742,
+          "duration_s": 27.90564594999887,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 25,
+          "step": 743,
+          "duration_s": 18.813567860983312,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 743,
+        "executed": 743,
+        "feedback": 743,
+        "recorded_collision": 1,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "semantic_program": 136,
+        "semantic_program_feedback": 136,
+        "execute_fragment": 598,
+        "execute_fragment_feedback": 598,
+        "local_motion": 9,
+        "local_motion_feedback": 9
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 743,
+          "p50": 0.0012381310807541013,
+          "p90": 0.0030006671557202937,
+          "min": 0.00019085104577243328,
+          "max": 79.78924583201297,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": {
+        "acknowledged_actions": 743,
+        "active_probe_actions": 16,
+        "attachment_probes": 6,
+        "confirmation_rejections": 14,
+        "hold_supported": 1,
+        "raw_hold_supported_samples": 31,
+        "raw_release_supported_samples": 14,
+        "recovery_claims": 2,
+        "recovery_rejections": 0,
+        "references_prepared": 2,
+        "references_started": 2,
+        "release_probes": 1,
+        "release_supported": 0
+      },
+      "evidence_view_attempts": {
+        "8a12f1eca96e49f3b97a64cca3eecd78": [
+          [
+            0.02847166149837317,
+            0.00044637641487321744,
+            0.6277177585249675
+          ]
+        ]
+      },
+      "policy_version": "agent-speedup-v3-7",
+      "performance_timings": {
+        "framework_full_syncs": 74,
+        "framework_light_syncs": 1438,
+        "framework_sync_s": 1.9644782594405115,
+        "interaction_evidence_events": [
+          {
+            "evidence": {
+              "attachment_verified": false,
+              "conditional_attachment_supported": true,
+              "geometry_pose_updated": false,
+              "kind": "hold",
+              "observed_at_step": 302,
+              "reference_step": 281,
+              "source": "public_two_view_feature_motion",
+              "status": "supported",
+              "target_id": "B",
+              "task_success": "not_available_to_policy",
+              "translation_m": 0.012028059189648228,
+              "version": "agent-speedup-v3-visual-interaction-2",
+              "views": {
+                "external": {
+                  "held_residual_px": 0.4115343703074863,
+                  "hypothesis_separation_px": 3.6960457460007023,
+                  "reference_step": 281,
+                  "stationary_residual_px": 3.8311324407060536,
+                  "status": "supported",
+                  "tracked_features": 12
+                },
+                "wrist": {
+                  "held_residual_px": 1.5398857078418593,
+                  "hypothesis_separation_px": 5.74284831647125,
+                  "reference_step": 281,
+                  "stationary_residual_px": 5.864701803582924,
+                  "status": "supported",
+                  "tracked_features": 38
+                }
+              }
+            },
+            "geometry_confirmation": {
+              "accepted": true,
+              "conditional_attachment_supported": true,
+              "kind": "hold",
+              "observation_age_refreshed": false,
+              "physical_clearance_verified": false,
+              "target_id": "B",
+              "task_success": null
+            },
+            "interaction": "hold",
+            "kind": "interaction_supported",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 302
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 525
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 526
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 527
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 533
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 534
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 535
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 536
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 537
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 538
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 539
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 540
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 541
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 542
+          },
+          {
+            "geometry_confirmation": {
+              "accepted": false,
+              "reason": "current_matching_two_view_motion_support_required"
+            },
+            "interaction": "release",
+            "kind": "interaction_confirmation_rejected",
+            "object_id": "B",
+            "operation_id": "operation-1",
+            "step": 543
+          }
+        ],
+        "interaction_reference_preparation_s": 0.019276826991699636,
+        "operation_count": 1,
+        "operation_runtime_counts": {
+          "acknowledged_actions": 743,
+          "active_probe_actions": 16,
+          "attachment_probes": 6,
+          "confirmation_rejections": 14,
+          "hold_supported": 1,
+          "raw_hold_supported_samples": 31,
+          "raw_release_supported_samples": 14,
+          "recovery_claims": 2,
+          "recovery_rejections": 0,
+          "references_prepared": 2,
+          "references_started": 2,
+          "release_probes": 1,
+          "release_supported": 0
+        },
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 462,
+        "visual_interaction_s": 5.593567925971001
+      },
+      "preparation_s": 24.557774977991357,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 17.246054185088724,
+        "p90": 17.246054185088724,
+        "min": 17.246054185088724,
+        "max": 17.246054185088724,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 24.557774977991357,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 911.3954917930532,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 935.9532667710446
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "diagnosis_only": true,
+        "skipped": "status infrastructure_error (simulator state not trusted)",
+        "verdict": "truth_unavailable"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_g5_001": {
+      "summary_path": "runs/agent_speedup_v3_g5_001/summary.json",
+      "status": "evidence_acquisition_failed",
+      "steps": 21,
+      "raw_success": false,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 153.6683499388164,
+        "model_pipeline_s": 152.85663874901365,
+        "model_pipeline_s_by_kind": {
+          "agent": 152.85663858002843
+        },
+        "observe_transition_s": 3.761050133034587,
+        "policy_compute_s": 0.811711189802736,
+        "run_state_s": 0.006510545848868787,
+        "simulator_step_s": 2.519766518729739,
+        "video_render_s": 0.6130979422014207
+      },
+      "elapsed_s": 167.44298370997421,
+      "control_elapsed_s": 160.6159412660636,
+      "control_without_video_s": 160.00284332386218,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 5,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 5,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 152.85663858002843
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 5,
+        "requests_sent": 5,
+        "runner_calls_by_kind": {
+          "agent": 5
+        },
+        "tokens": {
+          "cached_input": 15360,
+          "input": 148775,
+          "output": 4270,
+          "output_by_kind": {
+            "agent": 4270,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 1162,
+          "reasoning_by_kind": {
+            "agent": 1162,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 3108,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 5,
+        "p50": 24.947383921942674,
+        "p90": 55.30265466284473,
+        "min": 10.147402349975891,
+        "max": 68.33771245006938,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 68.33771245006938,
+        "p90": 68.33771245006938,
+        "min": 68.33771245006938,
+        "max": 68.33771245006938,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 4,
+        "p50": 18.541776714497246,
+        "p90": 32.50926276398823,
+        "min": 10.147402349975891,
+        "max": 35.75006798200775,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 68.33771245006938,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 1,
+          "duration_s": 24.947383921942674,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 17,
+          "duration_s": 10.147402349975891,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 4,
+          "step": 20,
+          "duration_s": 35.75006798200775,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 5,
+          "step": 21,
+          "duration_s": 12.136169507051818,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 21,
+        "executed": 21,
+        "feedback": 21,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "local_motion": 2,
+        "local_motion_feedback": 2,
+        "execute_fragment": 19,
+        "execute_fragment_feedback": 19
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 21,
+          "p50": 0.0007944219978526235,
+          "p90": 25.17445050808601,
+          "min": 0.0006524509517475963,
+          "max": 68.53908227593638,
+          "small_sample": true,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": {
+        "acknowledged_actions": 21,
+        "active_probe_actions": 2,
+        "attachment_probes": 1,
+        "confirmation_rejections": 0,
+        "hold_supported": 0,
+        "raw_hold_supported_samples": 0,
+        "raw_release_supported_samples": 0,
+        "recovery_claims": 0,
+        "recovery_rejections": 0,
+        "references_prepared": 1,
+        "references_started": 1,
+        "release_probes": 0,
+        "release_supported": 0
+      },
+      "evidence_view_attempts": {},
+      "policy_version": "agent-speedup-v3-8",
+      "performance_timings": {
+        "framework_full_syncs": 14,
+        "framework_light_syncs": 34,
+        "framework_sync_s": 0.10735703574027866,
+        "interaction_evidence_events": [],
+        "interaction_reference_preparation_s": 0.0053263220470398664,
+        "operation_count": 1,
+        "operation_runtime_counts": {
+          "acknowledged_actions": 21,
+          "active_probe_actions": 2,
+          "attachment_probes": 1,
+          "confirmation_rejections": 0,
+          "hold_supported": 0,
+          "raw_hold_supported_samples": 0,
+          "raw_release_supported_samples": 0,
+          "recovery_claims": 0,
+          "recovery_rejections": 0,
+          "references_prepared": 1,
+          "references_started": 1,
+          "release_probes": 0,
+          "release_supported": 0
+        },
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 20,
+        "visual_interaction_s": 0.28122187312692404
+      },
+      "preparation_s": 29.82269477599766,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 23.238829096080735,
+        "p90": 23.238829096080735,
+        "min": 23.238829096080735,
+        "max": 23.238829096080735,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 29.82269477599766,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 171.36061617499217,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 201.18331095098983
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "diagnosis_only": true,
+        "skipped": "status infrastructure_error (simulator state not trusted)",
+        "verdict": "truth_unavailable"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_g5_002": {
+      "summary_path": "runs/agent_speedup_v3_g5_002/summary.json",
+      "status": "evidence_acquisition_failed",
+      "steps": 71,
+      "raw_success": false,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 163.4753944731783,
+        "model_pipeline_s": 162.12304039485753,
+        "model_pipeline_s_by_kind": {
+          "agent": 162.12303996702107
+        },
+        "observe_transition_s": 25.368659232161008,
+        "policy_compute_s": 1.3523540783207864,
+        "run_state_s": 0.019029585644602776,
+        "simulator_step_s": 7.8545843426836655,
+        "video_render_s": 2.2238166087772697
+      },
+      "elapsed_s": 205.73811753001064,
+      "control_elapsed_s": 199.1036506020464,
+      "control_without_video_s": 196.87983399326913,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 6,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 6,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 162.12303996702107
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 6,
+        "requests_sent": 6,
+        "runner_calls_by_kind": {
+          "agent": 6
+        },
+        "tokens": {
+          "cached_input": 9984,
+          "input": 206784,
+          "output": 4670,
+          "output_by_kind": {
+            "agent": 4670,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 1130,
+          "reasoning_by_kind": {
+            "agent": 1130,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 3540,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 6,
+        "p50": 21.785128890478518,
+        "p90": 41.77053805551259,
+        "min": 16.24753229599446,
+        "max": 56.87778325006366,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 56.87778325006366,
+        "p90": 56.87778325006366,
+        "min": 56.87778325006366,
+        "max": 56.87778325006366,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 5,
+        "p50": 19.398936867015436,
+        "p90": 25.66650408215355,
+        "min": 16.24753229599446,
+        "max": 26.66329286096152,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 56.87778325006366,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 16,
+          "duration_s": 17.06160858203657,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 46,
+          "duration_s": 26.66329286096152,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 4,
+          "step": 64,
+          "duration_s": 19.398936867015436,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 5,
+          "step": 65,
+          "duration_s": 24.1713209139416,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 6,
+          "step": 71,
+          "duration_s": 16.24753229599446,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 71,
+        "executed": 71,
+        "feedback": 71,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "execute_fragment": 70,
+        "execute_fragment_feedback": 70,
+        "local_motion": 1,
+        "local_motion_feedback": 1
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 71,
+          "p50": 0.001246322994120419,
+          "p90": 0.0015701729571446776,
+          "min": 0.00016726995818316936,
+          "max": 57.08546779805329,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": {
+        "acknowledged_actions": 71,
+        "active_probe_actions": 0,
+        "attachment_probes": 0,
+        "confirmation_rejections": 0,
+        "hold_supported": 0,
+        "raw_hold_supported_samples": 0,
+        "raw_release_supported_samples": 0,
+        "recovery_claims": 0,
+        "recovery_rejections": 0,
+        "references_prepared": 0,
+        "references_started": 0,
+        "release_probes": 0,
+        "release_supported": 0
+      },
+      "evidence_view_attempts": {},
+      "policy_version": "agent-speedup-v3-9",
+      "performance_timings": {
+        "framework_full_syncs": 17,
+        "framework_light_syncs": 132,
+        "framework_sync_s": 0.1566347205080092,
+        "interaction_evidence_events": [],
+        "interaction_reference_preparation_s": 0.0,
+        "operation_count": 0,
+        "operation_runtime_counts": {
+          "acknowledged_actions": 71,
+          "active_probe_actions": 0,
+          "attachment_probes": 0,
+          "confirmation_rejections": 0,
+          "hold_supported": 0,
+          "raw_hold_supported_samples": 0,
+          "raw_release_supported_samples": 0,
+          "recovery_claims": 0,
+          "recovery_rejections": 0,
+          "references_prepared": 0,
+          "references_started": 0,
+          "release_probes": 0,
+          "release_supported": 0
+        },
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 0,
+        "visual_interaction_s": 0.0
+      },
+      "preparation_s": 32.76328940305393,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 26.12048694107216,
+        "p90": 26.12048694107216,
+        "min": 26.12048694107216,
+        "max": 26.12048694107216,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 32.76328940305393,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 209.67130598204676,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 242.4345953851007
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "diagnosis_only": true,
+        "skipped": "status infrastructure_error (simulator state not trusted)",
+        "verdict": "truth_unavailable"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_t1_011": {
+      "summary_path": "runs/agent_speedup_v3_t1_011/summary.json",
+      "status": "evidence_acquisition_failed",
+      "steps": 194,
+      "raw_success": false,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 136.24211722787004,
+        "model_pipeline_s": 135.91426856210455,
+        "model_pipeline_s_by_kind": {
+          "agent": 135.91426883303797
+        },
+        "observe_transition_s": 9.036395132890902,
+        "policy_compute_s": 0.32784866576548666,
+        "run_state_s": 0.022179724532179534,
+        "simulator_step_s": 22.373520920285955,
+        "video_render_s": 4.515569199924357
+      },
+      "elapsed_s": 181.05493523401674,
+      "control_elapsed_s": 172.56200289004482,
+      "control_without_video_s": 168.04643369012047,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 3,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 3,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 135.91426883303797
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 3,
+        "requests_sent": 3,
+        "runner_calls_by_kind": {
+          "agent": 3
+        },
+        "tokens": {
+          "cached_input": 1280,
+          "input": 47211,
+          "output": 4101,
+          "output_by_kind": {
+            "agent": 4101,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 1561,
+          "reasoning_by_kind": {
+            "agent": 1561,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 2540,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 3,
+        "p50": 9.883306314004585,
+        "p90": 94.91682265321725,
+        "min": 9.385745503008366,
+        "max": 116.1752017380204,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 116.1752017380204,
+        "p90": 116.1752017380204,
+        "min": 116.1752017380204,
+        "max": 116.1752017380204,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 2,
+        "p50": 9.634525908506475,
+        "p90": 9.833550232904964,
+        "min": 9.385745503008366,
+        "max": 9.883306314004585,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 116.1752017380204,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 170,
+          "duration_s": 9.883306314004585,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 194,
+          "duration_s": 9.385745503008366,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 194,
+        "executed": 194,
+        "feedback": 194,
+        "recorded_collision": 1,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "semantic_program": 194,
+        "semantic_program_feedback": 194
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 194,
+          "p50": 0.00041538203367963433,
+          "p90": 0.0009277403121814131,
+          "min": 0.00037695199716836214,
+          "max": 116.46834972500801,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": {
+        "acknowledged_actions": 194,
+        "active_probe_actions": 0,
+        "attachment_probes": 0,
+        "confirmation_rejections": 0,
+        "hold_supported": 0,
+        "raw_hold_supported_samples": 0,
+        "raw_release_supported_samples": 0,
+        "recovery_claims": 1,
+        "recovery_rejections": 0,
+        "references_prepared": 0,
+        "references_started": 0,
+        "release_probes": 0,
+        "release_supported": 0
+      },
+      "evidence_view_attempts": {
+        "7fa767a6202344a0ad61fe7033d65d79": []
+      },
+      "policy_version": "agent-speedup-v3-10",
+      "performance_timings": {
+        "framework_full_syncs": 8,
+        "framework_light_syncs": 384,
+        "framework_sync_s": 0.0676546321483329,
+        "interaction_evidence_events": [],
+        "interaction_reference_preparation_s": 0.0,
+        "operation_count": 1,
+        "operation_runtime_counts": {
+          "acknowledged_actions": 194,
+          "active_probe_actions": 0,
+          "attachment_probes": 0,
+          "confirmation_rejections": 0,
+          "hold_supported": 0,
+          "raw_hold_supported_samples": 0,
+          "raw_release_supported_samples": 0,
+          "recovery_claims": 1,
+          "recovery_rejections": 0,
+          "references_prepared": 0,
+          "references_started": 0,
+          "release_probes": 0,
+          "release_supported": 0
+        },
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 0,
+        "visual_interaction_s": 0.0
+      },
+      "preparation_s": 29.04868951800745,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 13.900189475039952,
+        "p90": 13.900189475039952,
+        "min": 13.900189475039952,
+        "max": 13.900189475039952,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 29.04868951800745,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 185.75031327700708,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 214.79900279501453
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "diagnosis_only": true,
+        "skipped": "status infrastructure_error (simulator state not trusted)",
+        "verdict": "truth_unavailable"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    },
+    "agent_speedup_v3_t1_012": {
+      "summary_path": "runs/agent_speedup_v3_t1_012/summary.json",
+      "status": "evidence_acquisition_failed",
+      "steps": 431,
+      "raw_success": false,
+      "strict_quality_v2_success": false,
+      "timing_components": {
+        "decision_s": 355.677406908595,
+        "model_pipeline_s": 354.6852241578745,
+        "model_pipeline_s_by_kind": {
+          "agent": 354.68522447300734
+        },
+        "observe_transition_s": 17.76365518127568,
+        "policy_compute_s": 0.9921827507205307,
+        "run_state_s": 0.05386724218260497,
+        "simulator_step_s": 50.0700253121322,
+        "video_render_s": 11.188052023178898
+      },
+      "elapsed_s": 443.16364924400114,
+      "control_elapsed_s": 435.665256749955,
+      "control_without_video_s": 424.4772047267761,
+      "model_calls": {
+        "accepted_by_kind": {
+          "agent": 9,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "billing": "chatgpt_subscription",
+        "calls_by_kind": {
+          "agent": 9,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "failed_calls_by_kind": {},
+        "latency_s_by_kind": {
+          "agent": 354.68522447300734
+        },
+        "offline_mock": false,
+        "overload_retry_requests": 0,
+        "overload_retry_wait_s": 0.0,
+        "real_model_calls": 9,
+        "requests_sent": 9,
+        "runner_calls_by_kind": {
+          "agent": 9
+        },
+        "tokens": {
+          "cached_input": 8576,
+          "input": 249720,
+          "output": 9472,
+          "output_by_kind": {
+            "agent": 9472,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "over_visible_budget_by_kind": {
+            "agent": 1,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "reasoning": 4306,
+          "reasoning_by_kind": {
+            "agent": 4306,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          },
+          "unknown_usage_calls": 0,
+          "visible_budgets": {
+            "agent": 1400,
+            "plan": 340,
+            "point_coarse": 6,
+            "point_fine": 6,
+            "repair": 80,
+            "replan": 340,
+            "review": 80
+          },
+          "visible_by_kind": {
+            "agent": 5166,
+            "plan": 0,
+            "point_coarse": 0,
+            "point_fine": 0,
+            "repair": 0,
+            "replan": 0,
+            "review": 0
+          }
+        },
+        "transient_retry_codes": {},
+        "transient_retry_requests": 0,
+        "transient_retry_wait_s": 0.0
+      },
+      "request_timing": {
+        "n": 9,
+        "p50": 25.985281174071133,
+        "p90": 66.79614726924338,
+        "min": 10.545088476967067,
+        "max": 106.72924027801491,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "first_request_timing": {
+        "n": 1,
+        "p50": 106.72924027801491,
+        "p90": 106.72924027801491,
+        "min": 106.72924027801491,
+        "max": 106.72924027801491,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "subsequent_request_timing": {
+        "n": 8,
+        "p50": 22.9136275179917,
+        "p90": 53.634159205073956,
+        "min": 10.545088476967067,
+        "max": 56.81287401705049,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "request_timeline": [
+        {
+          "ordinal": 1,
+          "step": 0,
+          "duration_s": 106.72924027801491,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 2,
+          "step": 56,
+          "duration_s": 19.841973861912265,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 3,
+          "step": 197,
+          "duration_s": 10.545088476967067,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 4,
+          "step": 229,
+          "duration_s": 56.81287401705049,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 5,
+          "step": 276,
+          "duration_s": 52.27185285708401,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 6,
+          "step": 277,
+          "duration_s": 17.707862636074424,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 7,
+          "step": 297,
+          "duration_s": 25.985281174071133,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 8,
+          "step": 298,
+          "duration_s": 45.679353664047085,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        },
+        {
+          "ordinal": 9,
+          "step": 431,
+          "duration_s": 17.338112205965444,
+          "source": "v3_transport_diagnostics.elapsed_s"
+        }
+      ],
+      "trace_event_counts": {
+        "reset": 1,
+        "threshold_set": 1,
+        "action": 431,
+        "executed": 431,
+        "feedback": 431,
+        "recorded_collision": 2,
+        "user_check_terminal": 1
+      },
+      "primitive_counts": {
+        "semantic_program": 382,
+        "semantic_program_feedback": 382,
+        "execute_fragment": 47,
+        "execute_fragment_feedback": 47,
+        "local_motion": 2,
+        "local_motion_feedback": 2
+      },
+      "sampled_action_timings": {
+        "decision_latency_s": {
+          "n": 431,
+          "p50": 0.0005696320440620184,
+          "p90": 0.0012026430340483785,
+          "min": 0.00020384101662784815,
+          "max": 107.00986421201378,
+          "small_sample": false,
+          "quantile_method": "linear interpolation"
+        }
+      },
+      "operation_counts": {
+        "acknowledged_actions": 431,
+        "active_probe_actions": 1,
+        "attachment_probes": 1,
+        "confirmation_rejections": 0,
+        "hold_supported": 0,
+        "raw_hold_supported_samples": 0,
+        "raw_release_supported_samples": 0,
+        "recovery_claims": 1,
+        "recovery_rejections": 0,
+        "references_prepared": 1,
+        "references_started": 1,
+        "release_probes": 0,
+        "release_supported": 0
+      },
+      "evidence_view_attempts": {
+        "1a9bcc932d3a4ea2bcb2696819a4358c": []
+      },
+      "policy_version": "agent-speedup-v3-11",
+      "performance_timings": {
+        "framework_full_syncs": 26,
+        "framework_light_syncs": 846,
+        "framework_sync_s": 0.23602473794016987,
+        "interaction_evidence_events": [],
+        "interaction_reference_preparation_s": 0.015749425976537168,
+        "operation_count": 1,
+        "operation_runtime_counts": {
+          "acknowledged_actions": 431,
+          "active_probe_actions": 1,
+          "attachment_probes": 1,
+          "confirmation_rejections": 0,
+          "hold_supported": 0,
+          "raw_hold_supported_samples": 0,
+          "raw_release_supported_samples": 0,
+          "recovery_claims": 1,
+          "recovery_rejections": 0,
+          "references_prepared": 1,
+          "references_started": 1,
+          "release_probes": 0,
+          "release_supported": 0
+        },
+        "scope": "subset of policy act/observe timing",
+        "timing_scope": "subsets of act/observe; do not add to evaluator totals",
+        "visual_interaction_observations": 12,
+        "visual_interaction_s": 0.15426663390826434
+      },
+      "preparation_s": 22.12429243407678,
+      "preparation_request_timing": {
+        "n": 1,
+        "p50": 14.054460257990286,
+        "p90": 14.054460257990286,
+        "min": 14.054460257990286,
+        "max": 14.054460257990286,
+        "small_sample": true,
+        "quantile_method": "linear interpolation"
+      },
+      "completion_target": {
+        "achieved": false,
+        "excludes": "approval/operator wait; this final timing report's own serialization",
+        "hard_stop": false,
+        "includes": "preparation, execution, video close/drain, artifact normalization and runtime freeze",
+        "preparation_elapsed_s": 22.12429243407678,
+        "raw_libero_success_required": true,
+        "reviewed_execution_elapsed_s": 447.26940841099713,
+        "target_s": 300.0,
+        "total_service_elapsed_s": 469.3937008450739
+      },
+      "autonomous_quality_at_raw_cutoff": {
+        "affects_completion": false,
+        "diagnosis_only": true,
+        "skipped": "status infrastructure_error (simulator state not trusted)",
+        "verdict": "truth_unavailable"
+      },
+      "unavailable_distributions": [
+        "simulator step latency",
+        "per-step video cost",
+        "per-step feedback cost",
+        "finalization latency (aggregate only)"
+      ]
+    }
+  },
+  "read_errors": [],
+  "new_requests": 0,
+  "new_rollouts": 0,
+  "candidate_recommendation": "pure_IO_compact_display_and_external_snapshot_throttling_from_frozen_v7",
+  "not_claimed": [
+    "new task success",
+    "S300 improvement",
+    "physical clearance",
+    "metric perception accuracy",
+    "statistical generalization"
+  ]
+}

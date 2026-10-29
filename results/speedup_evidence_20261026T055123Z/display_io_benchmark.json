@@ -1,0 +1,153 @@
+{
+  "kind": "offline_display_io_only",
+  "trace": "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_t1_001/trace.jsonl",
+  "prefix_action_indices": [
+    0,
+    119
+  ],
+  "trace_lines_read": 363,
+  "input_sha256": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+  "steps": 120,
+  "common_input_load_s": 1.8990005910163745,
+  "order": [
+    "A1",
+    "B1",
+    "B2",
+    "A2"
+  ],
+  "source_sha256": {
+    "src/gpt_field/agent_speedup_v2_video.py": "0dc7c657cb3e13be75ab3478471333bdef831cfe8b9d3995d906e4bfa60a0dd3",
+    "src/gpt_field/agent_speedup_v1_video.py": "b423ebddaa9f9361f612c73c8ac2c1d5bfaf40eabdc3ea1cc9a3ea6e9f009cd7",
+    "src/gpt_field/agent_speedup_v3_video.py": "2e9cdf6f50375453ccc5c9d0d38512819092d6ff3f62c83ba4d8ab82d4cad3fc",
+    "src/gpt_field/video.py": "6b49c7bf6044952e86898218f5011e32de59d0ae79be9630efb504c1b8887918",
+    "src/gpt_field/direct_history_video.py": "d7b201c59a1d7c7ce107e250eda7d8e08d85afb3cfa8f392e19aa2d8a69801ce",
+    "src/gpt_field/observation.py": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e"
+  },
+  "new_model_requests": 0,
+  "new_simulator_rollouts": 0,
+  "service_success_claim": false,
+  "success_argument": false,
+  "evaluator_truth_forwarded": false,
+  "format_change": "A legacy 1600x960 with decision/action repeats; B existing compact 640x384 one frame per executed action; both initial/terminal frames",
+  "clock": "time.monotonic; create + observe + decisions + executed + synchronous close/drain; ffprobe excluded",
+  "trials": [
+    {
+      "trial": "A1",
+      "arm": "A",
+      "input_sha256_before": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "steps": 120,
+      "new_model_requests": 0,
+      "new_simulator_rollouts": 0,
+      "success_claim": false,
+      "status": "complete",
+      "render_encode_before_close_s": 10.006555055035278,
+      "close_drain_s": 0.8443010039627552,
+      "total_display_wall_s": 10.850856058998033,
+      "frame_count": 582,
+      "render_errors": 0,
+      "input_sha256_after": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "video": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/display_io/A1.mp4",
+      "ffprobe": {
+        "codec_name": "h264",
+        "width": 1600,
+        "height": 960,
+        "duration": "29.100000",
+        "nb_frames": "582"
+      },
+      "input_unchanged": true
+    },
+    {
+      "trial": "B1",
+      "arm": "B",
+      "input_sha256_before": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "steps": 120,
+      "new_model_requests": 0,
+      "new_simulator_rollouts": 0,
+      "success_claim": false,
+      "status": "complete",
+      "render_encode_before_close_s": 2.6337398340692744,
+      "close_drain_s": 0.07096655294299126,
+      "total_display_wall_s": 2.7047063870122656,
+      "frame_count": 122,
+      "render_errors": 0,
+      "input_sha256_after": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "video": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/display_io/B1.mp4",
+      "ffprobe": {
+        "codec_name": "h264",
+        "width": 640,
+        "height": 384,
+        "duration": "6.100000",
+        "nb_frames": "122"
+      },
+      "input_unchanged": true
+    },
+    {
+      "trial": "B2",
+      "arm": "B",
+      "input_sha256_before": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "steps": 120,
+      "new_model_requests": 0,
+      "new_simulator_rollouts": 0,
+      "success_claim": false,
+      "status": "complete",
+      "render_encode_before_close_s": 2.665842139045708,
+      "close_drain_s": 0.07075789000373334,
+      "total_display_wall_s": 2.736600029049441,
+      "frame_count": 122,
+      "render_errors": 0,
+      "input_sha256_after": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "video": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/display_io/B2.mp4",
+      "ffprobe": {
+        "codec_name": "h264",
+        "width": 640,
+        "height": 384,
+        "duration": "6.100000",
+        "nb_frames": "122"
+      },
+      "input_unchanged": true
+    },
+    {
+      "trial": "A2",
+      "arm": "A",
+      "input_sha256_before": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "steps": 120,
+      "new_model_requests": 0,
+      "new_simulator_rollouts": 0,
+      "success_claim": false,
+      "status": "complete",
+      "render_encode_before_close_s": 9.784263312001713,
+      "close_drain_s": 0.7422237780410796,
+      "total_display_wall_s": 10.526487090042792,
+      "frame_count": 582,
+      "render_errors": 0,
+      "input_sha256_after": "41d02d7386d3735f35ce68093b401f7a5f39214b1a6d4d4635ae1c8ed6cf540a",
+      "video": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/display_io/A2.mp4",
+      "ffprobe": {
+        "codec_name": "h264",
+        "width": 1600,
+        "height": 960,
+        "duration": "29.100000",
+        "nb_frames": "582"
+      },
+      "input_unchanged": true
+    }
+  ],
+  "median_display_wall_s": {
+    "A": 10.688671574520413,
+    "B": 2.7206532080308534
+  },
+  "B_median_reduction_fraction": 0.7454638596515277,
+  "all_inputs_unchanged": true,
+  "completed_trials": 4,
+  "interpretation": "component performance only; same saved observations/actions, not new episode, no S300 result; frame reduction is display-only and retains all actual actions",
+  "source_sha256_after": {
+    "src/gpt_field/agent_speedup_v2_video.py": "0dc7c657cb3e13be75ab3478471333bdef831cfe8b9d3995d906e4bfa60a0dd3",
+    "src/gpt_field/agent_speedup_v1_video.py": "b423ebddaa9f9361f612c73c8ac2c1d5bfaf40eabdc3ea1cc9a3ea6e9f009cd7",
+    "src/gpt_field/agent_speedup_v3_video.py": "2e9cdf6f50375453ccc5c9d0d38512819092d6ff3f62c83ba4d8ab82d4cad3fc",
+    "src/gpt_field/video.py": "6b49c7bf6044952e86898218f5011e32de59d0ae79be9630efb504c1b8887918",
+    "src/gpt_field/direct_history_video.py": "d7b201c59a1d7c7ce107e250eda7d8e08d85afb3cfa8f392e19aa2d8a69801ce",
+    "src/gpt_field/observation.py": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e"
+  },
+  "recorder_sources_unchanged": true,
+  "script_sha256": "73bcb8a1c943f5d8ec8ce435764958c34668c9644d915729c92f8cac09f6ce48"
+}

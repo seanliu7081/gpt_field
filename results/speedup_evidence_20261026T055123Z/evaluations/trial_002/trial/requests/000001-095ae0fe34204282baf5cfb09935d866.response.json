@@ -1,0 +1,430 @@
+{
+  "id": "resp_0503578cf28b7e60016adefa8e90d487d1b1affade663a2005",
+  "object": "response",
+  "created_at": 1792998030,
+  "status": "completed",
+  "access_programs": {
+    "cyber": "standard"
+  },
+  "background": false,
+  "completed_at": 1792998065,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": "You are the continuous task executive for one Franka Panda with a parallel-jaw\nPanda gripper. Complete the official task using synchronized RGB observations,\nmeasured robot state, camera calibration and this episode's chronological\naction/result history. No object poses, depth, segmentation, contact identities,\nreward or simulator goal predicates are supplied. The two images are external\nand wrist, upright and uncropped. Older images retain their own geometry and\ntimestamp; the six most recent observation pairs are retained. All chronological\ntext, accepted outputs, measured results and opaque reasoning are retained.\n\nThe reviewed JSON expresses the user's intended objects, task goals and\nconstraints. It is the initial proposed decomposition, NOT a mandatory execution\nprogram or a requirement to satisfy every original intermediate waypoint.\nPreserve the official task, reviewed final spatial goals, established hold_true\nrelations and applicable keep constraints. You may change grips, reorder work,\nstage objects temporarily and plan new action sequences automatically. IDs keep\nthe same physical identities. A keep applies while pursuing its own intent;\nfuture intent constraints do not block unrelated current work. Necessary grasp\nand support contacts are distinct from unintended collisions.\n\nYOU OWN EXECUTION. Monitored fragments or direct motion may perform an entire\nsubtask: approach, close, lift, carry, align, lower, open at the desired\ndestination and withdraw. You need\nnot resume a native macro or obtain a native verified holding flag. An unknown\nholding estimate means uncertainty, not proof of an empty hand or a universal\nmotion prohibition. Use images across moves, measured fingers and motion error\nto maintain your own explicitly uncertain belief. A failed or unavailable native\nobserver is evidence about that observer; repeating a move without a plausible\nnew information source does not improve its answer. Do not repeatedly lift only\nto satisfy an unavailable co-motion detector. Choose short informative moves or\nanother view when evidence is insufficient. Explicit observed danger constrains\nmotion; uncertainty calls for shorter monitored steps, not automatic deadlock.\n\nEach response has belief (current evidence and uncertainty), plan (unfinished\nsubgoals and the next approach), why (what this action changes or observes), type,\nmotion, macro and execution. All keys are required. These belief/plan fields are\nYOUR estimates, never measured task-completion flags. Choose exactly one action\nand set every unused action payload to null:\n\nexecute: motion=null, macro=null, execution={segments:[...]}. Prefer execute for\na sufficiently understood free-space approach, carry or retreat, or an explicit\nshort sequence whose intermediate stages do not need new visual reasoning.\nDelegate the SAME selected pose target until measured arrival or a local event;\ndo not spend repeated model calls replaying it every five control steps. The\nlocal controller recomputes error from robot measurements every step, completes\na stage on measured arrival or finger settling, and advances the selected\nsequence unless observation_after requests a checkpoint. A stall, unexpected\nmeasured response or exhausted motion budget returns control for reconsideration.\nIt does not certify semantic attachment, placement or task success. No native scene\nregistration or motion calibration is needed for these fragments.\n\nexecution.segments contains 1..6 objects, each with exactly skill, xyz_m,\nquaternion_wxyz, gripper, profile, max_steps, observation_after. Coordinates are\nin the fixed world frame, metres; orientation is absolute right_hand wxyz.\n- move_to_pose: xyz_m is an absolute world grip-site target.\n- move_relative: xyz_m is a world displacement from the measured pose at THIS\n  stage's entry, not from the first stage or an earlier requested target.\n- approach: xyz_m is likewise a world displacement at this stage's measured\n  entry; use profile=contact for a slow monitored approach near contact.\n- set_gripper: xyz_m=null, quaternion_wxyz=null, gripper=open or close. The arm\n  holds its measured entry pose while finger-gap feedback is monitored.\n- wait: xyz_m=null, quaternion_wxyz=null, gripper=keep; retain the measured entry\n  pose and last gripper command for the requested bounded wait.\nArm-movement stages always use gripper=keep; put any finger change in a separate\nset_gripper stage. For arm stages quaternion_wxyz=null retains measured entry\norientation. max_steps is 1..120 per stage, with sum(max_steps)<=240 across the\nwhole sequence. At 20 Hz, budgets are upper bounds, not arrival guarantees.\nprofile=transit allows at most 0.30 m / 1.2 rad from a stage's measured start;\nprofile=contact allows at most 0.08 m / 0.5 rad. The unchanged OSC feedback loop\ncaps each action at 0.02 m translation (0.005 m for contact) and 0.1 rad rotation.\nThese envelopes are not permission to cross uncertain space. Choose a clear\nroute and intermediate waypoints using RGB and camera calibration. The executor\ndoes not discover obstacles or plan a collision-free path for you.\n\nobservation_after=true means STOP the sequence after this stage and return fresh\nRGB to you. Remaining stages are reported as unexecuted and are NOT automatically\nplayed or resumed after your next decision. Use this checkpoint near uncertain\ncontact or before an action whose justification depends on a preceding result.\nFor a grasp, use explicit set_gripper=close followed by an appropriately small\nmonitored test lift/checkpoint, then inspect new images; finger closure or stable\ngap alone never proves attachment. For placement, inspect whole-object support\nand pose after opening/settling. If a sequence yields on a stall, timeout or\nunexpected measured response, reconsider its path from the new evidence rather\nthan blindly repeating it. Use motion below for uncertain fine adjustment or\nwhen a very short observed action is preferable to committing a fragment.\n\nmotion: put a complete short target in motion; macro=null, execution=null. frame is world.\nposition_mode=relative means xyz_m is one world displacement from the latest\nmeasured position; absolute means world XYZ in metres. World +z is up. XYZ\nlocates gripper0_grip_site between the fingers, not the hand origin. The optional\nquaternion_wxyz is an absolute robot0_right_hand world orientation, or null to\nretain the measured orientation. gripper=keep preserves the last commanded\nopen/close setting, not an attachment assertion; open and close directly command\nthe fingers at this pose. Direct opening does not return to an earlier support.\nsteps is 1..5 at 20 Hz. The target is at most 0.05 m translation and 0.35 rad\nrotation from the latest measured pose. Each control step recomputes measured\npose error, capped at 0.02 m translation and 0.1 rad rotation. A segment may end\nbefore arrival. Inspect actual feedback and fresh images; once the route/target\nis understood, use execute for continuous measured execution toward it. Shorten\nsegments near uncertain contact. Simulation pauses\nduring inference. Closing is not proof of attachment; opening is not proof of\nstable support. Check the actual object's final pose and support in new views.\n\nmacro: motion=null, execution=null, macro={step_index,budget_steps,continuation}. step_index is\nthe zero-based reviewed step whose native hold/turn/place_on/release controller\nyou choose as an optional accelerator. budget_steps is 1..60 control actions\nbefore returning observation/control to you. Native prerequisites may be unknown\nor unavailable, and setup itself consumes the budget. Initial native calibration\nnormally requires about 190 control steps, so a 60-step calibration budget pause\nis NORMAL and may be continued; it is not evidence of failure. Inspect explicit\nphase/progress and capabilities. Choose continuation=true only to continue that same paused session\nwithout intervening direct motion. Other choices abandon its pending action\nsequence. Macros may report blocked/failed/inconclusive; decide from fresh\nevidence whether to continue or take over directly. Native release returns an\nobject to its original pick support; use direct motion with gripper=open when\nyou want to release at your present destination. Do not repeatedly select a\nmacro whose missing prerequisites are unchanged. Unknown native geometry or\nholding NEVER prohibits your direct task execution.\n\nobserve: motion=null, macro=null, execution=null. Hold the measured pose briefly and receive\nfresh observations, for example to inspect settling. This does not change the\ncamera viewpoint; move the wrist with motion when a new angle is needed.\nfinish: motion=null, macro=null, execution=null. This only requests a final fresh observation\nwhen you believe the task is complete. It never ends the episode or sets success.\nOnly the independent evaluator terminates a successful task. If observation\ncontinues, recheck unfinished spatial relations rather than repeatedly declaring\ncompletion. There is no give_up action.\n\nCamera position_world_m and rotation_world_from_camera map OpenGL camera axes to\nworld: p_world=origin+R*p_camera. Camera +X is image-right, +Y image-up, -Z forward.\nPixel u increases right and v down. For camera point [X,Y,Z], Z<0,\nu=cx+fx*X/(-Z), v=cy-fy*Y/(-Z). Pixels specify rays, not known 3-D points; infer\ndepth from the views and observed motion. Do not use image axes as world axes or\nassume image center is the grasp point. Use each image's synchronized camera\npose. The hand's local +Z is finger approach and local Y is jaw separation.\nThe grip site is 0.097 m along hand-local +Z from the hand origin; commanded XYZ\nalready locates it, so do not add this offset again. Symmetric finger pad centers\nhave midpoint [0,0,-0.0036] m relative to the grip site in hand coordinates; pad\nsize is [0.016,0.008,0.016] m, nominal open inner gap 0.079 m. Tool geometry does\nnot prove clearance or contact. Judge the whole hand, carried object and nearby\nobjects in both views. Keep task reasoning concise and output the JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-6-astra",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0503578cf28b7e60016adefa9049dc87d1aca18abc5ec4acd1",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABq3vqpdL9LNKmYNYcYQgXX81wJspbhWWF_rvAynESUK9ZXTk6AlMgjqLbjQGnSxa7alJGobBEk073Lhi4U-iUqK2sMOMfhJFXCNmGxkvVTWgetSt-e4nwH9kFVsSz9uFfSUrnxra-4X4uvWda8C0uUiqAJ0XSlfcbrcnJmyJdASqu-q5csu0ppG0CosMfyqJgp71ZKCn7hdgO8jZ3G7oGlI-Qhj5P1SpJYrLVIc5WiWx3xi-BlRvyLN86vLVL-lo0dInW66Q4UZUugILKTyaubybTcJcavVT7X3QAalT6v3giob2q63vBN0NHwmk7z3tDNCYfFyZepppuf-lSQidnzDPitto3xqMyxg6UW5P71tyDwsNpSASZkwtNt9a-G-2ypt-YQRdovAVg-JCt6ECfvtQnpQ3KK-79chNFkfhI009ES68C7-2AYy0_7OL9hgmd94GKpn6ytJnizAZZkXeo-MuOBCQ2VpUdoWDS1-KbguNyciurHqSKct7jRtPjK7W4plwo_EqDIT6ljBUFGRD-HdNOk8pJmdw4HS55xyHFJh6QnTzWyNi3SmZc_PqSV6YhelhgXQC6ZHum-6khMyNw-H4ZQYKZ4kXGuXDKqeRxtlmIp_2yWNGrXtmQskbLhIjoVSN-c9lt7Y9HLV-1qk7jutW7UiS6Lt6IdjlKqGGNdla-OpeWe18ESbj4_C8YxlFpdIuVkpvj-UY__PXOLS-9dDGwjuTYNCHhd5SqTkuVURjEMm3MCQuiKaN_oQu_cl-vo8PQMy5zKarRnTyipnWYJTEjgM75PKRfjr3ZDiZeIKBVrpzsBduFO3a6QJI9cxgRv0Z1B_sO5gvFAivU7iX_wKKERaXUlvq-lqa1KxGJLp5aOEaHzc0TWhQiBxZtRvGB4gyf5nlBiKyiR-QMv0-TrQPQWb-qwOvcUab0LC01h3q78PK_FxhVNJGqkvzz4oSofYB_B7uBYLLyFOtnTKf4zOzyBd2l44rVznLUe1BOPzGviLMrr9kFPPeae4dBHeLxIkfk2rVZdJpeWwboHzp9sVltAHFK2H36BXzvrZWgfd010UFJ3a3cVBs4CY6Qk8lngz_aU2EdmSs6cxkCx8qTCKUxiuYMrxy-rlswGGNR22XiWHz-2BFZvUv1eniN1lLplgdK4LD90K5YOD6FTk__aKRk3_TyIJXSics-oCPtlTIrzpdXxqAsSyxcLckYmMQMIPK6TuhVsbKsJwEWXZB83B_q3egiDMrG8AX0dtRbfSzWAD4zU6oS_lR4McI-d6WoGbFKsFo0dXEUgIc57-LR4h07VPfwZgtjCMZ_ngAoxgGCWbewUCxnh4R45tpR7gjQqIWot6ztMEjz124iboPVdy2QbAUFNKllqnyil5-QpDTNa5ZWZdqZT2u4-XTWS5_IMj_Q8wMTnCmutApf62YOfih9gG_B-YF3rWBk2yELzFQqL72M31awR0LeFGbzz--aOc6I_Pd-ufwu-rilPyCABhz8WFq79fGbJywqU1EjZfJ7shx8mexyE8g4JbxxudyPmNtzc36VRBJ2BuNha_1Gatagug1iLOS57vD1mqX1NvHKNTTuFE6dUH_G_w-OrxuqoH2Sr7isnFPUq73gU4yymVlZYzNoENqOvSrHM390ZHJ8RYf5-neum-qpHeEv3I-KAl-lQSmYXty06SA_wKtzQbWlYKfNb-0G9V4zg9a4E3TORhe_5bVx2EJwhIIXbiC-ZXInhjm6FyUWf0gSu__65Ddd7QEWY3EIQF-davd5l16QeRvy4WEfstnof_ZtFjbXoLMby8X8EcHG6xSmmICrDyJspd6dGdZ4_lZZBvUekrYJxtX515DBH2jc5Ylrr1RUK-pqXNXR2C_NKSqPy-nUkjMwOOloQSxlLZ_uRaVfMdKCXFlrHPx7qSPwBSaL0jiTlcqHTP4SJMoMbAs-ZwYxt2s6QKNnb_iUbmuUw23PFPVL_eFP-ESq9cGWyPw9QFJHP2oZa4VjCdlChQKK-LIu0JpDx1clJJi2wJcm1KjvlFPMHjbceUdaE8jB9de1IKJ9jUnbkmGq7CfrjzhMzTCh65fi2WzdAU_rXA30WyCkeAOnvzStOWaOEVUAM_Fbv0Is0DJXa4KWP5VhuL8Oeo9hi7oilq3ySxGV0DMkGhN1qy0D3O57lWZu2EXREX5Eklb1Whf8tDWV4T-Mce1VmzDr0YSHDVk35gOamyNC6mTSDaDlWTBASVysJwgtLAhntJB2wU94N1NFx3qXu-aYAUdzq63i4COqBPcBZGr2BJxmbNYOXxkncOwwQPZyDeWnTpjdZY7MeRaY8mgXEzfZbHmSYaK4F1V94o2AtxDF3AKd1tGBtH579I2Cyyw8jx4w_t53HPFCYN6PHF8CuyNuJpVJ8sSB0vW291nm2X0J0x7NCFxN3GyreZlkOwkVTBbnJtgJUtg7Z-asTf9zjezGYwbWW5W6UWK4JNuTIOY3xFbsQB0dmwbn7KXL5hqcDxTGttne-lV9WaSemptSlcGpl4F9RLvr-mvFSpI7WZuLcJHHtJAXqHtEa8s4wul4piXMO9NPfvyVefj1_r0d53knugnIzRPIVLitLdzVrRmpKOGqZTabZH2450mr4vMk8PGV8Ngl7PbgsU5VEFT-Hx1AP6752vUtli1Z_YBMxqBO0T8cmy1MxbbSF2gzRkuLzcPQha2tRSgVOUHNNnqLLBOyqB949UKT4preGCJJMehPa0yI9P_t3aLIrDxmJKngNl_VJiWZKAHacvyRVReBhqZ1e0FTbpXB0zDLURACtpt-R3sLsIxjFS-sFID6F_pSt-qPH_-Bu7fVC9rggqu18J2K5KPezew8bDX08es3XjfHnRgHE8OkwGnkdSvTso7aF_PDCTQANEdKlyL1b_yq25du_MLgcyRqp4vnukn62C767Giw3PdNOStrLTJG2zH8_XrFZZWkH5vcmhYXO7tWF89ATLSA-qba5Blq2ku6FN4G6f1QGpT_tc9i7Yw8fW8Cmwrb5yWBzxOQTrEEnpmGHBxFsiT0vAKmCZppsqTn5pBzeWcn7SuQMNmywI5tuivc3PCy7IKypoCPnVxU093uVk0lDt1ZYdGQ9J7DiJV8ndN-1Xfrr7p14wQf9y9qYQdOJK5UxHaAa9L9xJS9ITeIjldUg7DduyqQRbeBljQ9PJuvZg1pzeS74h3G8Uca0vxsiON7mTrSiCKAlLK4P-iIq879Z_14rlCrhkLyreAFjZkDKfR1r4lgG-TCWmiD3sQxwTn2MeUSjng63UGIdoqUz_es-5RLFG_M5IjmZmAM3nepr74IkN_1sdgnU_ykbBRw8JSXUvsPFxsHkhBOFJeF4w2RRmksTwSEsLk7Yku0I6piSXw3o0vLHqT2fFpoH7wMWzmoOMGXMahr0nGPKtUNuNUIzi18Eq-i7_O_a0U1IRuuW660L-LQZ2w2E29u1sa4xOQVlUnq2yODXQngQTaukBFO68kqz8bZqheRl0e-XlrZDDJh3phy7bdevQhdPDqrZwH48Oy7Q4EV99IPV6hZO7brV5c7nyKU1KLB07RNXhCuZ7xbTLkGEFNBvMib1TKvzDURFU8stx-zK2Tt6uHFGRw8TkkWlVx65_vNoverpjZYmY3F_1n7-GfYMFZPyuHL6ly7yJZdA8nLirf3JbYmwsipckBhtD42gEc7UgeT6SPcmzMdbNRz7W-_OOzZNH01UAcpgCxUf0w30xtZ_wvRyHVAgwkPFLyvxv4JuiOnp7LuDPzwM9vs9QY0Kk_dyqGmK-e3C3EVjt8fPORaaD-nscolcDJxcwqj3fvBsyDdAP-W3vR8pY4QHMQLtL5GMeR2QYbv2aEYFL4U6bBjjWi7slKswgDC8utYRQ94qdTQFTUIJYxn8WZ5pJ864zdkwAPrFvpjsaTqzisO2VxgS0EXTDCQrsC50vRXWwf4XZrLpPr_7wuvdUlasXE-D1jMyUeghm-7Blgr1_F2_B4esC9N1L_f6kZZgc0_FLMPFChCxhhw5DFpm7ly_4CIPMi4ZrGMyQaFaI-IBycW2qwjZ6ju0K7A3c7UzpTeyWCuFPMiSC-jRYlirIg8sudUPX7IkGLJb1AxBro0TmaELOFE9J3E_qUYHciTS9bjDJ1j3kVCrYaoF728cxelxq-jyl-PdkAO4FnvFBg0_Ag3OYcSQvOFc7FoCAvCVHsovgTZFzyPNiFS-Ibk4mHR3kGkcSNMShrLmfKnbpjAIvh4WMSKh0XywJ79Azh1JjrAnrfED-6EP1-LQoICXcrwVr2VrmTfanQ_v6WpT_8xLsHEd2Kv6ynjWqtgimY3Mf4VXPOhTRuRivw7heeIinF52AO2xvrq831grb_TtsWBuulxxcPPS4zCYhhHab33UpaKEiXe9kfYg6Fvc0EXwriO-LLeZXK7WMWc1VDEd2fooNv1aJAo7ezQXRYmtIAmfBYsP6iOspInJrgHW3JDUcV-rrtqqxHalkfVd-C_FW14NmAyjU37cjYVuy6P9GfdxlpyvGU6w1iHYKIMe1Co9uxP4h4Bz4FtGMAcSXXWwKRdivtzVXSvH4kA6prLUPrNUzI2KPgJwSgHrIYjYdvFIUONuu9_kqVWBH0ybnvj-FPKnzCPMvkZwTImgh5EZfpxn1LzA61Wk2GYFVPUjwSf2sdbykUqmIkyBhPee2vxb9C3w3ru3IWPo3OxQX4hfpIyforfdzA==",
+      "summary": []
+    },
+    {
+      "id": "msg_0503578cf28b7e60016adefaa9a9a087d19e6e7f638f39f75f",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"belief\":\"Both target packs are on the table: cream cheese beside the juice at image left, and butter beside the milk near the center. The basket is to the right. The hand is open and empty; target coordinates are preliminary RGB estimates.\",\"plan\":\"Pick the cream cheese first, carry it above the basket rim, and lower and release inside; then repeat for the butter. Approach above the cream cheese for a closer grasp view.\",\"why\":\"A high approach provides a closer wrist view while avoiding the neighboring cartons.\",\"type\":\"execute\",\"motion\":null,\"macro\":null,\"execution\":{\"segments\":[{\"skill\":\"move_to_pose\",\"xyz_m\":[0.065,-0.235,0.55],\"quaternion_wxyz\":[0,1,0,0],\"gripper\":\"keep\",\"profile\":\"transit\",\"max_steps\":100,\"observation_after\":true}]}}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "ece33ac0-9acd-4076-b508-d8dff9ac4294",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "high",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": "user-FxTtKqreaJ4ASj35duPnV9Nz",
+  "service_tier": "default",
+  "store": false,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "description": null,
+      "name": "user_check_agent_first",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "belief": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1800
+          },
+          "plan": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1800
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 600
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "execute",
+              "motion",
+              "macro",
+              "observe",
+              "finish"
+            ]
+          },
+          "motion": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "frame": {
+                    "type": "string",
+                    "enum": [
+                      "world"
+                    ]
+                  },
+                  "position_mode": {
+                    "type": "string",
+                    "enum": [
+                      "absolute",
+                      "relative"
+                    ]
+                  },
+                  "xyz_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "quaternion_wxyz": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 4,
+                        "maxItems": 4
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "gripper": {
+                    "type": "string",
+                    "enum": [
+                      "keep",
+                      "open",
+                      "close"
+                    ]
+                  },
+                  "steps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                },
+                "required": [
+                  "frame",
+                  "position_mode",
+                  "xyz_m",
+                  "quaternion_wxyz",
+                  "gripper",
+                  "steps"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "macro": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "step_index": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "budget_steps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 60
+                  },
+                  "continuation": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "step_index",
+                  "budget_steps",
+                  "continuation"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "execution": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "segments": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 6,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "skill": {
+                          "type": "string",
+                          "enum": [
+                            "move_to_pose",
+                            "move_relative",
+                            "approach",
+                            "set_gripper",
+                            "wait"
+                          ]
+                        },
+                        "xyz_m": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "minItems": 3,
+                              "maxItems": 3
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "quaternion_wxyz": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "minItems": 4,
+                              "maxItems": 4
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "gripper": {
+                          "type": "string",
+                          "enum": [
+                            "keep",
+                            "open",
+                            "close"
+                          ]
+                        },
+                        "profile": {
+                          "type": "string",
+                          "enum": [
+                            "transit",
+                            "contact"
+                          ]
+                        },
+                        "max_steps": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 120
+                        },
+                        "observation_after": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "skill",
+                        "xyz_m",
+                        "quaternion_wxyz",
+                        "gripper",
+                        "profile",
+                        "max_steps",
+                        "observation_after"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "segments"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "belief",
+          "plan",
+          "why",
+          "type",
+          "motion",
+          "macro",
+          "execution"
+        ],
+        "additionalProperties": false
+      },
+      "strict": true
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_0503578cf28b7e60016adefa8ea38087d19a34c22d002d9e27": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 3466,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 8,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 308,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 9,
+              "output_tokens": 0
+            },
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 309,
+              "output_tokens": 0
+            }
+          ],
+          "input_tokens": 4100,
+          "output_tokens": 0
+        },
+        "rs_0503578cf28b7e60016adefa9049dc87d1aca18abc5ec4acd1": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 302
+        },
+        "msg_0503578cf28b7e60016adefaa9a9a087d19e6e7f638f39f75f": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "content": [
+            {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "input_tokens": 0,
+              "output_tokens": 189
+            }
+          ],
+          "input_tokens": 0,
+          "output_tokens": 189
+        }
+      },
+      "request_fields": {
+        "text.format": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 362,
+          "output_tokens": 0
+        },
+        "instructions": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "input_tokens": 2099,
+          "output_tokens": 0
+        }
+      }
+    },
+    "input_tokens": 6563,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 491,
+    "output_tokens_details": {
+      "reasoning_tokens": 302
+    },
+    "total_tokens": 7054
+  },
+  "user": null,
+  "metadata": {},
+  "_subscription_transport": {
+    "terminal_output_count": 0,
+    "completed_item_count": 2,
+    "output_assembly_source": "response.output_item.done",
+    "sse_completion_verified": true,
+    "response_media_type": "text/plain"
+  },
+  "wire_transport_version": "chatgpt-subscription-http-sse-ordered-v1",
+  "agent_speedup_v2_client_version": "agent-speedup-v2-client-4",
+  "billing": "chatgpt_subscription",
+  "transport_version": "chatgpt-subscription-http-sse-v1"
+}

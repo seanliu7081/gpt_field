@@ -1,0 +1,122 @@
+{
+  "started_at_utc": "2026-10-29T05:26:39.697427+00:00",
+  "argv": [
+    "/workspace/gpt_field/robodojo_uc71/runtime/a1_env/bin/python",
+    "-X",
+    "faulthandler",
+    "-u",
+    "/workspace/gpt_field/robodojo_uc71/scripts/provision_a1_camera.py"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/workspace/gpt_field/robodojo_uc71/runtime/a1_home",
+    "PATH": "/workspace/gpt_field/robodojo_uc71/runtime/a1_env/bin:/usr/local/bin:/usr/bin:/bin",
+    "LD_LIBRARY_PATH": "/workspace/gpt_field/robodojo_uc71/runtime/sysroot/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+    "VK_ICD_FILENAMES": "/etc/vulkan/icd.d/nvidia_icd.json",
+    "OMNI_KIT_ACCEPT_EULA": "YES",
+    "UC71_A1_AUTHORIZED_CHILD": "1",
+    "UC71_A1_OUTPUT": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a1_attempt_003",
+    "XDG_CACHE_HOME": "/workspace/gpt_field/robodojo_uc71/runtime/a1_cache",
+    "XDG_CONFIG_HOME": "/workspace/gpt_field/robodojo_uc71/runtime/a1_config",
+    "XDG_DATA_HOME": "/workspace/gpt_field/robodojo_uc71/runtime/a1_data",
+    "CUDA_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/runtime/a1_cache/cuda",
+    "WARP_CACHE_PATH": "/workspace/gpt_field/robodojo_uc71/runtime/a1_cache/warp",
+    "UC71_A1_IDENTITY_FD": "4",
+    "UC71_A1_IDENTITY_NONCE": "d69742585110451e98e6d0333025932f"
+  },
+  "gpu_uuid": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+  "wall_time_limit_s": 600,
+  "non_target_process_allocation_abort_mib": 768,
+  "non_target_context_allowance": "At most 768 MiB per idle non-target GPU for enumerated CUDA/Vulkan contexts; render and physics settings remain GPU4. Abort on any GPU process whose ownership cannot be established.",
+  "authorization_sha256": "0543c9bf11ef4979e61fe000c7853a08ab1f6940a491b0371f39ca02cc23d7f4",
+  "identity_calibration": "cuda_primary_on_off_on",
+  "precreated_primary_cuda4_context": true,
+  "automatic_retry": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "pid": 3136451,
+  "nvml_identity_binding": {
+    "nonce": "d69742585110451e98e6d0333025932f",
+    "child_pid": 3136451,
+    "child_start_ticks": 92534791,
+    "nvml_pid": 111192,
+    "gpu_uuid": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+    "verified_on_off_on": true,
+    "verified_samples": 6,
+    "method": "same-child GPU4 primary-context presence/disappearance/same-PID return"
+  },
+  "termination": "gpu_process_ownership_unresolved",
+  "unmapped_gpu_processes": [
+    {
+      "gpu_uuid": "GPU-077fe526-441e-9de0-1a7f-7ebe0955ceb9",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 386
+    },
+    {
+      "gpu_uuid": "GPU-a6fca0de-9241-4e43-52f9-98d9b14ecee9",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 194
+    },
+    {
+      "gpu_uuid": "GPU-432492db-98f7-38ef-0761-286e9462f8e9",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 194
+    },
+    {
+      "gpu_uuid": "GPU-6cfc23e5-855a-60f0-e14b-5f53d49921e8",
+      "pid": 111192,
+      "type": "C+G",
+      "process_name": "",
+      "used_memory_mib": 200
+    },
+    {
+      "gpu_uuid": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+      "pid": 111192,
+      "type": "C+G",
+      "process_name": "",
+      "used_memory_mib": 391
+    },
+    {
+      "gpu_uuid": "GPU-93ff6a97-a6dd-af9a-54b7-9e48250d4350",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 226
+    },
+    {
+      "gpu_uuid": "GPU-8de4fcf0-6650-684c-5255-09cda30c9d26",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 194
+    },
+    {
+      "gpu_uuid": "GPU-0ebc8f88-9eb4-0d18-45be-b37d34c16c20",
+      "pid": 111192,
+      "type": "C",
+      "process_name": "",
+      "used_memory_mib": 194
+    }
+  ],
+  "returncode": -11,
+  "elapsed_s": 29.38806938403286,
+  "monitoring_error": null,
+  "owned_process_identities": {
+    "3136451": 92534791,
+    "3136624": 92535509
+  },
+  "remaining_owned_pids": [],
+  "camera_render_passed": false,
+  "clean_shutdown_confirmed": false,
+  "diagnostic_passed": false
+}

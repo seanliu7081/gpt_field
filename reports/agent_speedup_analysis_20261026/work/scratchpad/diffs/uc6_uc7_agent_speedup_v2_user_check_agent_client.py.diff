@@ -1,0 +1,261 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/agent_speedup_v2_user_check_agent_client.py	2026-10-21 11:10:08.781173392 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent_client.py	2026-10-21 17:50:16.523816476 +0000
+@@ -1,6 +1,7 @@
+ """Persistent task executive for the user-check variant.
+ 
+-The executive owns the complete task; native v2 relations are optional tools.
++The executive owns the complete task; monitored fragments and native v2
++relations are optional execution tools.
+ The subscription transport, usage ledger and request/response logs are shared
+ with v2, but its stateless repair transcript and instructions are not. Native
+ pointing calls cannot erase the executive's visual/action history.
+@@ -21,6 +22,9 @@
+ )
+ from .agent_speedup_v2_user_check_client import ReviewedV2Client
+ from .agent_speedup_v2_user_check_context import _bounded, causal_nodes, size
++from .agent_speedup_v2_user_check_fragments import (
++    execution_schema, validate_execution, fragment_capabilities,
++)
+ from .agent_speedup_v2_user_check_motion import _conform_motion, local_motion_schema
+ from .astra import APIError, SchemaError, _canonical
+ from .astranomy_agentic_geometry import validate_geometry_metadata
+@@ -33,15 +37,15 @@
+ from .ordered_transport import ordered_dumps
+ 
+ 
+-CLIENT_VERSION = "user-check-agent-first-client-1"
+-PROMPT_VERSION = "user-check-agent-first-prompt-1"
+-HISTORY_PROTOCOL = "persistent_task_executive_text_and_six_visual_pairs_v1"
++CLIENT_VERSION = "user-check-agent-first-client-2"
++PROMPT_VERSION = "user-check-agent-first-prompt-2"
++HISTORY_PROTOCOL = "persistent_task_executive_fragments_text_and_six_visual_pairs_v2"
+ IMAGE_HISTORY = 6
+ AGENT_KIND = "agent"
+ CONTEXT_KEYS = frozenset({
+     "step", "approved_plan", "task_contract", "geometry", "capabilities",
+     "measured_state", "model_belief", "last_feedback", "recent_feedback",
+-    "macro", "native_evidence", "task_success_source",
++    "macro", "execution", "native_evidence", "task_success_source",
+ })
+ 
+ AGENT_INSTRUCTIONS = """
+@@ -64,8 +68,9 @@
+ future intent constraints do not block unrelated current work. Necessary grasp
+ and support contacts are distinct from unintended collisions.
+ 
+-YOU OWN EXECUTION. Direct motion may perform an entire subtask: approach, close,
+-lift, carry, align, lower, open at the desired destination and withdraw. You need
++YOU OWN EXECUTION. Monitored fragments or direct motion may perform an entire
++subtask: approach, close, lift, carry, align, lower, open at the desired
++destination and withdraw. You need
+ not resume a native macro or obtain a native verified holding flag. An unknown
+ holding estimate means uncertainty, not proof of an empty hand or a universal
+ motion prohibition. Use images across moves, measured fingers and motion error
+@@ -78,10 +83,58 @@
+ 
+ Each response has belief (current evidence and uncertainty), plan (unfinished
+ subgoals and the next approach), why (what this action changes or observes), type,
+-motion and macro. These belief/plan fields are YOUR estimates, never measured
+-task-completion flags. Choose exactly one action:
++motion, macro and execution. All keys are required. These belief/plan fields are
++YOUR estimates, never measured task-completion flags. Choose exactly one action
++and set every unused action payload to null:
++
++execute: motion=null, macro=null, execution={segments:[...]}. Prefer execute for
++a sufficiently understood free-space approach, carry or retreat, or an explicit
++short sequence whose intermediate stages do not need new visual reasoning.
++Delegate the SAME selected pose target until measured arrival or a local event;
++do not spend repeated model calls replaying it every five control steps. The
++local controller recomputes error from robot measurements every step, completes
++a stage on measured arrival or finger settling, and advances the selected
++sequence unless observation_after requests a checkpoint. A stall, unexpected
++measured response or exhausted motion budget returns control for reconsideration.
++It does not certify semantic attachment, placement or task success. No native scene
++registration or motion calibration is needed for these fragments.
++
++execution.segments contains 1..6 objects, each with exactly skill, xyz_m,
++quaternion_wxyz, gripper, profile, max_steps, observation_after. Coordinates are
++in the fixed world frame, metres; orientation is absolute right_hand wxyz.
++- move_to_pose: xyz_m is an absolute world grip-site target.
++- move_relative: xyz_m is a world displacement from the measured pose at THIS
++  stage's entry, not from the first stage or an earlier requested target.
++- approach: xyz_m is likewise a world displacement at this stage's measured
++  entry; use profile=contact for a slow monitored approach near contact.
++- set_gripper: xyz_m=null, quaternion_wxyz=null, gripper=open or close. The arm
++  holds its measured entry pose while finger-gap feedback is monitored.
++- wait: xyz_m=null, quaternion_wxyz=null, gripper=keep; retain the measured entry
++  pose and last gripper command for the requested bounded wait.
++Arm-movement stages always use gripper=keep; put any finger change in a separate
++set_gripper stage. For arm stages quaternion_wxyz=null retains measured entry
++orientation. max_steps is 1..120 per stage, with sum(max_steps)<=240 across the
++whole sequence. At 20 Hz, budgets are upper bounds, not arrival guarantees.
++profile=transit allows at most 0.30 m / 1.2 rad from a stage's measured start;
++profile=contact allows at most 0.08 m / 0.5 rad. The unchanged OSC feedback loop
++caps each action at 0.02 m translation (0.005 m for contact) and 0.1 rad rotation.
++These envelopes are not permission to cross uncertain space. Choose a clear
++route and intermediate waypoints using RGB and camera calibration. The executor
++does not discover obstacles or plan a collision-free path for you.
++
++observation_after=true means STOP the sequence after this stage and return fresh
++RGB to you. Remaining stages are reported as unexecuted and are NOT automatically
++played or resumed after your next decision. Use this checkpoint near uncertain
++contact or before an action whose justification depends on a preceding result.
++For a grasp, use explicit set_gripper=close followed by an appropriately small
++monitored test lift/checkpoint, then inspect new images; finger closure or stable
++gap alone never proves attachment. For placement, inspect whole-object support
++and pose after opening/settling. If a sequence yields on a stall, timeout or
++unexpected measured response, reconsider its path from the new evidence rather
++than blindly repeating it. Use motion below for uncertain fine adjustment or
++when a very short observed action is preferable to committing a fragment.
+ 
+-motion: put a complete short target in motion and macro=null. frame is world.
++motion: put a complete short target in motion; macro=null, execution=null. frame is world.
+ position_mode=relative means xyz_m is one world displacement from the latest
+ measured position; absolute means world XYZ in metres. World +z is up. XYZ
+ locates gripper0_grip_site between the fingers, not the hand origin. The optional
+@@ -92,17 +145,20 @@
+ steps is 1..5 at 20 Hz. The target is at most 0.05 m translation and 0.35 rad
+ rotation from the latest measured pose. Each control step recomputes measured
+ pose error, capped at 0.02 m translation and 0.1 rad rotation. A segment may end
+-before arrival. Inspect actual feedback and fresh images; use repeated observed
+-segments for longer travel. Shorten segments near contact. Simulation pauses
++before arrival. Inspect actual feedback and fresh images; once the route/target
++is understood, use execute for continuous measured execution toward it. Shorten
++segments near uncertain contact. Simulation pauses
+ during inference. Closing is not proof of attachment; opening is not proof of
+ stable support. Check the actual object's final pose and support in new views.
+ 
+-macro: motion=null, macro={step_index,budget_steps,continuation}. step_index is
++macro: motion=null, execution=null, macro={step_index,budget_steps,continuation}. step_index is
+ the zero-based reviewed step whose native hold/turn/place_on/release controller
+ you choose as an optional accelerator. budget_steps is 1..60 control actions
+ before returning observation/control to you. Native prerequisites may be unknown
+-or unavailable, and setup itself consumes the budget. Inspect macro status and
+-capabilities. Choose continuation=true only to continue that same paused session
++or unavailable, and setup itself consumes the budget. Initial native calibration
++normally requires about 190 control steps, so a 60-step calibration budget pause
++is NORMAL and may be continued; it is not evidence of failure. Inspect explicit
++phase/progress and capabilities. Choose continuation=true only to continue that same paused session
+ without intervening direct motion. Other choices abandon its pending action
+ sequence. Macros may report blocked/failed/inconclusive; decide from fresh
+ evidence whether to continue or take over directly. Native release returns an
+@@ -111,10 +167,10 @@
+ macro whose missing prerequisites are unchanged. Unknown native geometry or
+ holding NEVER prohibits your direct task execution.
+ 
+-observe: motion=null, macro=null. Hold the measured pose briefly and receive
++observe: motion=null, macro=null, execution=null. Hold the measured pose briefly and receive
+ fresh observations, for example to inspect settling. This does not change the
+ camera viewpoint; move the wrist with motion when a new angle is needed.
+-finish: motion=null, macro=null. This only requests a final fresh observation
++finish: motion=null, macro=null, execution=null. This only requests a final fresh observation
+ when you believe the task is complete. It never ends the episode or sets success.
+ Only the independent evaluator terminates a successful task. If observation
+ continues, recheck unfinished spatial relations rather than repeatedly declaring
+@@ -150,9 +206,10 @@
+         "belief": {"type": "string", "minLength": 1, "maxLength": 1800},
+         "plan": {"type": "string", "minLength": 1, "maxLength": 1800},
+         "why": {"type": "string", "minLength": 1, "maxLength": 600},
+-        "type": {"type": "string", "enum": ["motion", "macro", "observe", "finish"]},
++        "type": {"type": "string", "enum": ["execute", "motion", "macro", "observe", "finish"]},
+         "motion": {"anyOf": [motion, {"type": "null"}]},
+         "macro": {"anyOf": [macro, {"type": "null"}]},
++        "execution": {"anyOf": [execution_schema(), {"type": "null"}]},
+     }
+     return {"type": "object", "properties": properties, "required": list(properties),
+             "additionalProperties": False}
+@@ -163,14 +220,14 @@
+     try:
+         schema = agent_schema()
+         if not isinstance(value, Mapping) or set(value) != set(schema["required"]):
+-            raise ValueError("executive response must contain exactly belief, plan, why, type, motion, macro")
++            raise ValueError("executive response must contain exactly belief, plan, why, type, motion, macro, execution")
+         for key in ("belief", "plan", "why"):
+             item = value[key]
+             if (not isinstance(item, str) or not item.strip()
+                     or len(item) > schema["properties"][key]["maxLength"]):
+                 raise ValueError(f"{key} must be a nonempty bounded string")
+         action = value["type"]
+-        if action not in ("motion", "macro", "observe", "finish"):
++        if action not in ("execute", "motion", "macro", "observe", "finish"):
+             raise ValueError("unknown executive action")
+         if action == "motion":
+             if value["macro"] is not None:
+@@ -192,11 +249,46 @@
+                 raise ValueError("macro continuation must be boolean")
+         elif value["macro"] is not None:
+             raise ValueError("macro must be null for this action")
++        if action == "execute":
++            validate_execution(value["execution"])
++        elif value["execution"] is not None:
++            raise ValueError("execution must be null for this action")
+         return copy.deepcopy(dict(value))
+     except (ValueError, TypeError, KeyError) as exc:
+         raise SchemaError(f"agent output: {exc}") from None
+ 
+ 
++def _execution_evidence_view(value, budget=7000):
++    """Keep stage outcomes and stall causes ahead of verbose controller detail."""
++    if size(value) <= budget:
++        return copy.deepcopy(value)
++    stage_rows = []
++    stage_keys = {"skill", "segment_index", "stage_index", "stage", "segment"}
++    retained = ("skill", "segment_index", "stage_index", "stage", "segment", "status",
++                "reason", "executed_steps", "requested_steps", "max_steps", "observation_after",
++                "position_error_m", "orientation_error_rad", "finger_gap_mm", "gap_mm",
++                "progress", "stall", "arrival", "measurements", "thresholds")
++
++    def collect(item, path):
++        if isinstance(item, dict):
++            if stage_keys.intersection(item) and any(key in item for key in ("status", "reason", "progress")):
++                stage_rows.append({"path": path, **{key: item[key] for key in retained if key in item}})
++            for key, child in item.items():
++                if isinstance(child, (dict, list, tuple)):
++                    collect(child, path + "." + key)
++        elif isinstance(item, (list, tuple)):
++            for index, child in enumerate(item):
++                if isinstance(child, (dict, list, tuple)):
++                    collect(child, path + f"[{index}]")
++
++    collect(value, "execution")
++    usable = max(1000, budget - 500)
++    return {"summary": _bounded(value, int(usable * .5)),
++            "stage_outcomes": _bounded(stage_rows[-12:], int(usable * .25)),
++            "causes": _bounded(causal_nodes(value), int(usable * .25)),
++            "full_detail": "execution_audit"}
++
++
+ class AgentFirstV2Client(ReviewedV2Client):
+     """Task-wide decision history, independent of optional native pointing calls."""
+ 
+@@ -365,6 +457,10 @@
+         if not isinstance(context, Mapping) or set(context) - CONTEXT_KEYS:
+             raise ValueError("executive context contains unexpected fields")
+         current = copy.deepcopy(dict(context))
++        capabilities = current.setdefault("capabilities", {})
++        if not isinstance(capabilities, dict):
++            raise ValueError("executive capabilities must be an object")
++        capabilities["execute"] = fragment_capabilities()
+         geometry = current.pop("geometry", None)
+         if geometry is None:
+             geometry = getattr(view.observation, "geometry", None)
+@@ -386,12 +482,14 @@
+         # Retain terminal causal details before bounding large native controller
+         # internals. The original full feedback remains in runtime audit files.
+         if size(fields) > 45000:
+-            for key in ("native_evidence", "last_feedback", "recent_feedback"):
++            budgets = {"execution": 7000, "native_evidence": 5000,
++                       "last_feedback": 7000, "recent_feedback": 4500}
++            for key, budget in budgets.items():
+                 if key in current:
+-                    original = current[key]
+-                    current[key] = {"summary": _bounded(original, 5000),
+-                                    "causes": causal_nodes(original), "full_detail": "execution_audit"}
+-            fields["context_detail_compaction"] = "large_native_evidence_only; goals_and_sensor_geometry_preserved"
++                    current[key] = _execution_evidence_view(current[key], budget)
++            fields["context_detail_compaction"] = (
++                "large_execution_evidence_only; stage_outcomes_and_causes_prioritized; "
++                "goals_and_sensor_geometry_preserved")
+         json.dumps(fields, allow_nan=False)
+         if size(fields) > 56000:
+             raise ValueError("executive current observation exceeds bounded request text size")

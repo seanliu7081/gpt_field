@@ -1,0 +1,26 @@
+{
+  "protocol_tests": {
+    "passed": 11,
+    "log": "baseline_protocol_tests_final.txt"
+  },
+  "budget_score_tests": {
+    "passed": 11,
+    "source": "tooling/test_evaluation_summary.py",
+    "independent_verification": "independent_review.json",
+    "additional_regression": "actual reservation claim file and separate infrastructure annotation",
+    "post_execution_addition": "Final stop reason does not replace terminal facts or turn unstarted cells into failures; 232578a"
+  },
+  "real_policy_replay": "baseline_replay_attempt1.json",
+  "display_IO_benchmark": "display_io_benchmark.json",
+  "new_model_requests": 0,
+  "new_simulator_rollouts": 0,
+  "no_new_success_claim": true,
+  "scope": "Offline protocol/equivalence/analysis validation; 28 live requests and 5 preparation attempts are accounted separately in execution_manifest.json.",
+  "wrapper_offline_audit": {
+    "comparison_pairs": 4,
+    "passed": true,
+    "evidence": "wrapper_offline_audit.json",
+    "new_model_calls": 0,
+    "real_simulator_rollouts": 0
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": "robodojo-uc71-source-pins-1",
+  "recorded_at_utc": "2026-10-29T04:35:29.489365+00:00",
+  "status": "reviewed_source_pins_checkout_and_runtime_verification_pending",
+  "native_repository": {
+    "url": "https://github.com/RoboDojo-Benchmark/RoboDojo.git",
+    "commit": "f57e1633ffed59761bc8e568cfe7530c4b33381c"
+  },
+  "gitlinks": [
+    {
+      "path": "XPolicyLab",
+      "url": "https://github.com/XPolicyLab/XPolicyLab.git",
+      "commit": "5d0be1499634d3176258c8f2e31f5fe816497b0a"
+    },
+    {
+      "path": "third_party/IsaacLab",
+      "url": "https://github.com/yuechen0614/IsaacLab.git",
+      "commit": "afca7b09d60d8beb9c1cb28b43066499940b969b"
+    },
+    {
+      "path": "third_party/curobo",
+      "url": "https://github.com/yuechen0614/curobo.git",
+      "commit": "d17b54ce32cba095c0b000c4c58777075d11de0e"
+    }
+  ],
+  "gitlink_provenance": "Exact commit identifiers retained from archived review workflow; repository URLs verified against cached .gitmodules. Verify gitlink objects in the pinned checkout before install; never submodule update --remote.",
+  "assets": {
+    "repository": "RoboDojo-Benchmark/RoboDojo",
+    "repository_type": "dataset",
+    "revision": "269457a3b42d8d0ae69898a601f2c1487c2f826e",
+    "url": "https://huggingface.co/datasets/RoboDojo-Benchmark/RoboDojo/tree/269457a3b42d8d0ae69898a601f2c1487c2f826e",
+    "required_subset_only": true,
+    "transitive_asset_manifest": "pending_dependency_resolution",
+    "training_data_and_checkpoints_required": false
+  },
+  "selected_layout": {
+    "path": "Assets/Eval_Layout/RoboDojo/arx_x5/0/make_toast_0.json",
+    "seed_directory": 0,
+    "sorted_layout_id": 0,
+    "bytes": 8679,
+    "sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28",
+    "lfs_oid_sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28",
+    "git_blob_oid": "bf2f77aeb84807e10935e9a13692f7526133df39",
+    "policy_visibility": "Never serialize this layout or its object labels/poses into model requests or local controller targets."
+  },
+  "core": {
+    "version": "agent-speedup-v2-user-check-7.1",
+    "source_archive_sha256": "b3e8f84f3bf1b7603fad0ae0d8c4bee8a5a125b50ab08e320394b4069af57a68",
+    "release_manifest_sha256": "93347355d3753dffb83aad812fbe5ce1078394f1cd98b1e67c11810b323b7bea",
+    "reuse": "Read-only frozen core or an exact local snapshot; separately hash all adapter differences."
+  },
+  "planned_packages": {
+    "python": "3.11",
+    "isaac_sim": "5.1.0",
+    "torch": "2.7.0+cu128",
+    "installed_by_this_record": false,
+    "package_lock": "pending_resolution_and_verification"
+  },
+  "cached_evidence": [
+    {
+      "source_cache_path": "/tmp/claude-0/-workspace/6db53f70-7510-4b1b-9d87-79dcd2a46bba/scratchpad/review_provisioning/raw/.gitmodules",
+      "evidence_path": "docs/source_evidence/robodojo.gitmodules",
+      "sha256": "60435605d5a62c4a57aaf726cdf84fccb1b9e9ddec7e35afd2f563f66b28613b",
+      "bytes": 365
+    },
+    {
+      "source_cache_path": "/tmp/claude-0/-workspace/6db53f70-7510-4b1b-9d87-79dcd2a46bba/scratchpad/review_libero_parity/env_observation_manager_obs_manager.py",
+      "evidence_path": "docs/source_evidence/native_obs_manager.py.txt",
+      "sha256": "771d6cda443b591f3e7850b901a06b4e653a2feefcbabd23608042377fe9be4b",
+      "bytes": 10484
+    },
+    {
+      "source_cache_path": "/tmp/claude-0/-workspace/6db53f70-7510-4b1b-9d87-79dcd2a46bba/scratchpad/challenge_provisioning/hf/make_toast_0.json",
+      "evidence_path": "docs/source_evidence/make_toast_layout0.evaluator_only.json",
+      "sha256": "f78afb3f82b6d9ce2399b13a8ce8a1508134565e7e8cd97f8a8532854fbc0b28",
+      "bytes": 8679
+    }
+  ],
+  "native_source_content_sha256": {
+    "task/RoboDojo/tasks/make_toast.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/tasks/make_toast.py",
+      "sha256": "1047f484a73d1f92304393879b51f87e33d661b6ad7937198352fe37a0d3233d",
+      "bytes": 3395
+    },
+    "task/RoboDojo/config/make_toast.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/make_toast.yml",
+      "sha256": "d190a26233db174538ff0052b4c2958a3b107f0ccc63d0fdfe28da4c7f5dc57b",
+      "bytes": 2112
+    },
+    "task/RoboDojo/config/_task.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/task/RoboDojo/config/_task.yml",
+      "sha256": "655a87cd59fa6272bf352d32deb8ade162737b49a9824e16d428fecf0803380b",
+      "bytes": 2651
+    },
+    "src/eval_client/eval_env.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/src/eval_client/eval_env.py",
+      "sha256": "3ae75304d8a840ede2589441f987824f50b2a89cc2ef37f4d43ce0a8dbc4fd88",
+      "bytes": 45027
+    },
+    "env/observation_manager/obs_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/observation_manager/obs_manager.py",
+      "sha256": "771d6cda443b591f3e7850b901a06b4e653a2feefcbabd23608042377fe9be4b",
+      "bytes": 10484
+    },
+    "env/seed_manager/seed_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/seed_manager/seed_manager.py",
+      "sha256": "292eee4003de1c22b288ec3bc1d04d95c7aee5368f30991679ea1cc4c37247b3",
+      "bytes": 3879
+    },
+    "env/reward_manager/reward_manager.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/reward_manager/reward_manager.py",
+      "sha256": "bc56efd3aaa861b4b38960dc4fb7778a9b4da9cf131f815ac3170300dd233a41",
+      "bytes": 46466
+    },
+    "env/reward_manager/func_parser.py": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env/reward_manager/func_parser.py",
+      "sha256": "eb928a05c3eb6bae429a922c59e64272c2c3851c22d779143d45627e47b3a504",
+      "bytes": 112814
+    },
+    "env_cfg/sim/sim_config.yml": {
+      "url": "https://raw.githubusercontent.com/RoboDojo-Benchmark/RoboDojo/f57e1633ffed59761bc8e568cfe7530c4b33381c/env_cfg/sim/sim_config.yml",
+      "sha256": "e442ede1c3d90fcfb50b9461c854d31b22dad9bfbb23397db228b27a6a486963",
+      "bytes": 83
+    },
+    "/tmp/robodojo_astra_report_chunk.js": {
+      "url": "https://robodojo-benchmark.com/assets/Gpt6AstraEvalPage-C9ed2XQm.js",
+      "sha256": "3caf165e099102b9e9e253d8825a04f543cd0d5b629027ad32fb48c9855743fc",
+      "bytes": 196078
+    }
+  },
+  "archived_review": {
+    "path": "planning_archive_20261029/review_20261028/REVIEW.md",
+    "sha256": "a7e337ef43b973dd832e4076afa3ecfa02e4dd77079b7081ae20e2320726bd1d",
+    "workflow_path": "planning_archive_20261029/review_20261028/workflow_result.json",
+    "workflow_sha256": "e80b8894d85a0231d4f8c307fd565d234a47e5d7937c759e3b53370bac02c1f0"
+  },
+  "actions_for_this_inventory": {
+    "remote_reads": 0,
+    "remote_writes": 0,
+    "package_installs": 0,
+    "simulator_starts": 0,
+    "model_calls": 0,
+    "cached_evidence_copied": true
+  },
+  "limitations": "Pin evidence is not proof of installed versions or working rendering. Asset dependency closure, package hashes and runtime GPU/calibration checks remain required."
+}

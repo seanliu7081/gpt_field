@@ -1,0 +1,1000 @@
+{
+  "agent_stats": "agent_stats.json",
+  "api_calls": 13,
+  "api_key_calls": 0,
+  "api_key_fallback": false,
+  "benchmark_completed": true,
+  "billing": "chatgpt_subscription",
+  "budget": {
+    "api_calls": 13,
+    "api_key_calls": 0,
+    "billing": "chatgpt_subscription",
+    "cached_input_tokens": 26112,
+    "configuration": {
+      "cache_write_price_per_million": null,
+      "cached_input_price_per_million": null,
+      "endpoint": "https://api.openai.com/v1/responses",
+      "input_price_per_million": null,
+      "max_api_calls": null,
+      "max_cost_usd": null,
+      "max_input_tokens": 1050000,
+      "max_output_tokens": 8192,
+      "max_wall_time_s": null,
+      "model": "gpt-6-astra",
+      "output_price_per_million": null,
+      "timeout_s": 180
+    },
+    "cost_usd_upper_bound": null,
+    "elapsed_s": 439.98158784303814,
+    "input_tokens": 535783,
+    "max_api_calls": null,
+    "max_cost_usd": null,
+    "max_wall_time_s": null,
+    "output_token_limit_sent": null,
+    "output_tokens": 4448,
+    "reasoning_tokens": 1452,
+    "reservation_per_call_usd": null,
+    "snapshot_version": "chatgpt-subscription-http-sse-v1",
+    "subscription_cost_usd": null,
+    "subscription_inference_calls": 13,
+    "unknown_usage_calls": 0,
+    "usage_accounting": "Server-reported tokens; account subscription limits apply; no API-key billing"
+  },
+  "calibration": null,
+  "calls_by_kind": {
+    "agent": 13,
+    "plan": 0,
+    "point_coarse": 0,
+    "point_fine": 0,
+    "repair": 0,
+    "replan": 0,
+    "review": 0
+  },
+  "cleanup_errors": [],
+  "client_task_prompt": "put both the cream cheese box and the butter in the basket",
+  "collision": {
+    "allowed_classes": [
+      "finger_object",
+      "finger_articulated_part",
+      "manipulated_object_support"
+    ],
+    "collision_policy": "record_only",
+    "counts": {
+      "active_positive_distance_contacts": 0,
+      "checks": 26495,
+      "forbidden_contact_points": 3508,
+      "physics_substeps": 25475,
+      "points_finger_articulated_part": 0,
+      "points_finger_object": 138566,
+      "points_manipulated_object_scene": 1448,
+      "points_manipulated_object_support": 495,
+      "points_passive_scene": 729192,
+      "points_robot_internal": 0,
+      "points_robot_nonfinger_manipulated_object": 1019,
+      "points_robot_object": 468,
+      "points_robot_scene": 573,
+      "positive_distance_contacts_ignored": 0,
+      "unmapped_contact_points": 0
+    },
+    "detected": true,
+    "enabled": true,
+    "first_by_class": {
+      "finger_object": {
+        "action_index": 108,
+        "class": "finger_object",
+        "contact_distance_m": -2.4164088094877002e-05,
+        "contact_pos": [
+          0.027103068801643843,
+          0.08273618884815537,
+          0.45417992152000003
+        ],
+        "geom1": {
+          "body": "gripper0_finger_joint2_tip",
+          "finger_side": "right",
+          "id": 81,
+          "name": "gripper0_finger2_pad_collision",
+          "owner": "robot0_gripper",
+          "role": "robot_finger"
+        },
+        "geom2": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 21
+      },
+      "manipulated_object_scene": {
+        "action_index": 984,
+        "class": "manipulated_object_scene",
+        "contact_distance_m": -8.150555266212357e-08,
+        "contact_pos": [
+          0.044763458969135285,
+          0.24554534581462975,
+          0.4537597546894805
+        ],
+        "geom1": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "basket_1_main",
+          "finger_side": null,
+          "id": 157,
+          "name": "basket_1_g1",
+          "owner": "basket_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 6
+      },
+      "manipulated_object_support": {
+        "action_index": 108,
+        "class": "manipulated_object_support",
+        "contact_distance_m": -7.848000009233469e-08,
+        "contact_pos": [
+          -0.0030418337459142686,
+          0.08276035293625028,
+          0.43675996076000007
+        ],
+        "geom1": {
+          "body": "living_room_table_col",
+          "finger_side": null,
+          "id": 10,
+          "name": "geom_10",
+          "owner": "arena",
+          "role": "arena"
+        },
+        "geom2": {
+          "body": "butter_1_main",
+          "finger_side": null,
+          "id": 155,
+          "name": "butter_1_g1",
+          "owner": "butter_1",
+          "role": "object"
+        },
+        "phase": "action",
+        "physics_substep": 21
+      },
+      "robot_nonfinger_manipulated_object": {
+        "action_index": 353,
+        "class": "robot_nonfinger_manipulated_object",
+        "contact_distance_m": -2.288871980718608e-05,
+        "contact_pos": [
+          0.005467394521552678,
+          0.1961705316755072,
+          0.5730879308030573
+        ],
+        "geom1": {
+          "body": "basket_1_main",
+          "finger_side": null,
+          "id": 158,
+          "name": "basket_1_g2",
+          "owner": "basket_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "gripper0_right_gripper",
+          "finger_side": null,
+          "id": 75,
+          "name": "gripper0_hand_collision",
+          "owner": "robot0_gripper",
+          "role": "robot"
+        },
+        "phase": "action",
+        "physics_substep": 4
+      },
+      "robot_object": {
+        "action_index": 551,
+        "class": "robot_object",
+        "contact_distance_m": -4.135814969485804e-05,
+        "contact_pos": [
+          0.06514320415413904,
+          -0.12657743313019704,
+          0.5563380796701806
+        ],
+        "geom1": {
+          "body": "milk_1_main",
+          "finger_side": null,
+          "id": 151,
+          "name": "milk_1_g2",
+          "owner": "milk_1",
+          "role": "object"
+        },
+        "geom2": {
+          "body": "gripper0_right_gripper",
+          "finger_side": null,
+          "id": 75,
+          "name": "gripper0_hand_collision",
+          "owner": "robot0_gripper",
+          "role": "robot"
+        },
+        "phase": "action",
+        "physics_substep": 2
+      },
+      "robot_scene": {
+        "action_index": 92,
+        "class": "robot_scene",
+        "contact_distance_m": -2.1674250291203734e-06,
+        "contact_pos": [
+          0.04030219724055757,
+          0.11604856404162965,
+          0.4367593878167508
+        ],
+        "geom1": {
+          "body": "living_room_table_col",
+          "finger_side": null,
+          "id": 10,
+          "name": "geom_10",
+          "owner": "arena",
+          "role": "arena"
+        },
+        "geom2": {
+          "body": "gripper0_rightfinger",
+          "finger_side": "right",
+          "id": 80,
+          "name": "gripper0_finger2_collision",
+          "owner": "robot0_gripper",
+          "role": "robot_finger"
+        },
+        "phase": "action",
+        "physics_substep": 10
+      }
+    },
+    "first_event": {
+      "action_index": 92,
+      "class": "robot_scene",
+      "contact_distance_m": -2.1674250291203734e-06,
+      "contact_pos": [
+        0.04030219724055757,
+        0.11604856404162965,
+        0.4367593878167508
+      ],
+      "geom1": {
+        "body": "living_room_table_col",
+        "finger_side": null,
+        "id": 10,
+        "name": "geom_10",
+        "owner": "arena",
+        "role": "arena"
+      },
+      "geom2": {
+        "body": "gripper0_rightfinger",
+        "finger_side": "right",
+        "id": 80,
+        "name": "gripper0_finger2_collision",
+        "owner": "robot0_gripper",
+        "role": "robot_finger"
+      },
+      "phase": "action",
+      "physics_substep": 10
+    },
+    "forbidden_classes": [
+      "robot_scene",
+      "robot_nonfinger_manipulated_object",
+      "robot_object",
+      "manipulated_object_scene"
+    ],
+    "goal_aware": true,
+    "goal_objects": [
+      "basket_1",
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "goal_region_predicates": {
+      "basket_1_contain_region": "in"
+    },
+    "goal_regions": {
+      "basket_1_contain_region": "basket_1"
+    },
+    "held_objects": [
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "ignored_classes": [
+      "robot_internal",
+      "passive_scene"
+    ],
+    "manipulated_objects": [
+      "basket_1",
+      "butter_1",
+      "cream_cheese_1"
+    ],
+    "mode": "generic_contact_v2",
+    "pairs_by_class": {
+      "finger_object": [
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger1_pad_collision"
+          ],
+          "points": 30407
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger2_pad_collision"
+          ],
+          "points": 29845
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger1_pad_collision"
+          ],
+          "points": 23936
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 108,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger2_pad_collision"
+          ],
+          "points": 23480
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 8560
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "cream_cheese_1:cream_cheese_1_g1",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 8556
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 6733
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 109,
+          "first_phase": "action",
+          "pair": [
+            "butter_1:butter_1_g1",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 6726
+        },
+        {
+          "class": "finger_object",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g5",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 323
+        }
+      ],
+      "manipulated_object_scene": [
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g1",
+            "butter_1:butter_1_g1"
+          ],
+          "points": 1448
+        }
+      ],
+      "manipulated_object_support": [
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 984,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "basket_1:basket_1_g1"
+          ],
+          "points": 479
+        },
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 108,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "butter_1:butter_1_g1"
+          ],
+          "points": 12
+        },
+        {
+          "class": "manipulated_object_support",
+          "first_action_index": 685,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "cream_cheese_1:cream_cheese_1_g1"
+          ],
+          "points": 4
+        }
+      ],
+      "robot_nonfinger_manipulated_object": [
+        {
+          "class": "robot_nonfinger_manipulated_object",
+          "first_action_index": 353,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g2",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 779
+        },
+        {
+          "class": "robot_nonfinger_manipulated_object",
+          "first_action_index": 356,
+          "first_phase": "action",
+          "pair": [
+            "basket_1:basket_1_g5",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 240
+        }
+      ],
+      "robot_object": [
+        {
+          "class": "robot_object",
+          "first_action_index": 551,
+          "first_phase": "action",
+          "pair": [
+            "milk_1:milk_1_g2",
+            "robot0_gripper:gripper0_hand_collision"
+          ],
+          "points": 468
+        }
+      ],
+      "robot_scene": [
+        {
+          "class": "robot_scene",
+          "first_action_index": 92,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "robot0_gripper:gripper0_finger2_collision"
+          ],
+          "points": 293
+        },
+        {
+          "class": "robot_scene",
+          "first_action_index": 92,
+          "first_phase": "action",
+          "pair": [
+            "arena:geom_10",
+            "robot0_gripper:gripper0_finger1_collision"
+          ],
+          "points": 280
+        }
+      ]
+    },
+    "stop_on_collision": false,
+    "success_qualification": "raw_libero_goal",
+    "version": "agent-speedup-v2-generic-contact-v2"
+  },
+  "collision_v1_record_only": null,
+  "completion_time_eligible": true,
+  "control_elapsed_s": 438.20645677496213,
+  "control_without_video_s": 412.564615558018,
+  "diagnostic_complete": false,
+  "elapsed_s": 446.47358018904924,
+  "episode_index": 1,
+  "error": null,
+  "error_traceback": null,
+  "evaluation_completed": true,
+  "evaluation_scored": true,
+  "failure_reason": null,
+  "final_controller": "agent_relation",
+  "final_macro": "framework_fragment",
+  "final_primitive": "execute_fragment",
+  "final_relation": {
+    "do": null,
+    "phase": "framework_fragment",
+    "pids": null,
+    "relation": null,
+    "step_i": null
+  },
+  "finalization": {
+    "deferred_signals": [],
+    "stage": "complete"
+  },
+  "first_close_event": {
+    "action_index": 103,
+    "action_ordinal": 104,
+    "controller": "agent_relation",
+    "full_closure_verified": false,
+    "grasp_verified": false,
+    "gripper_joint_delta": [
+      -0.0004597395038416288,
+      0.00023168166228505066
+    ],
+    "macro": "framework_fragment",
+    "primitive": "execute_fragment"
+  },
+  "gripper_close_actions": 594,
+  "gripper_neutral_actions": 0,
+  "gripper_open_actions": 425,
+  "history_stats": {
+    "accepted_by_kind": {
+      "agent": 13,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "accepted_requests": 13,
+    "agent_decisions": 13,
+    "calls_by_kind": {
+      "agent": 13,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "image_history_limit": 6,
+    "messages": 38,
+    "output_tokens_by_kind": {
+      "agent": 4448,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "over_visible_budget_by_kind": {
+      "agent": 0,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "overload_retry_policy": "same-observation-overload-backoff-v1",
+    "overload_retry_requests": 0,
+    "overload_retry_wait_s": 0.0,
+    "protocol": "persistent_task_executive_fragments_text_and_six_visual_pairs_v2",
+    "reask_rejected_for_dropped_steps": 0,
+    "reask_requests": 0,
+    "reasoning_replay": "opaque_encrypted_output_items",
+    "reasoning_tokens_by_kind": {
+      "agent": 1452,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "repair_step_visible_token_budget": 300,
+    "retained_image_pairs": 6,
+    "text_history": "all_executive_observations_accepted_outputs_and_measured_feedback",
+    "transient_retry_codes": {},
+    "transient_retry_policy": "agent-speedup-v2-transient-retry-1",
+    "transient_retry_requests": 0,
+    "transient_retry_wait_s": 0.0,
+    "visible_token_budgets": {
+      "agent": 1400,
+      "plan": 340,
+      "point_coarse": 6,
+      "point_fine": 6,
+      "repair": 80,
+      "replan": 340,
+      "review": 80
+    },
+    "visible_tokens_by_kind": {
+      "agent": 2996,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    }
+  },
+  "incomplete_episodes": 0,
+  "interpretation": "One zero-shot agent_speedup_v2 episode. Only raw LIBERO success completes the evaluation; v2_success additionally needs the diagnosis-only strict physical truth (AC-2). Collisions are evaluator-only secondary metrics.",
+  "ledger": "ledger.json",
+  "ledger_entries": 0,
+  "libero_success": true,
+  "libero_success_observed": true,
+  "lint_check": {
+    "allowlist_sha256": "fe1c5da7b24dcd75c1a04fec1fbcf94f2340b5a748cd0483b7e6d0c548316f92",
+    "failing": {},
+    "missing": [],
+    "part_nouns_sha256": "4172f284104e7fefb03cf350e89b893a3aed1b60ea9a7ebd64e35a965fc1837d",
+    "passed": true,
+    "require_all": true,
+    "vocabulary_sha256": "2542b2d9cd83b34b76547712695f3219c1cb2ea70e80374188007d8e29b747b7",
+    "vocabulary_size": 66
+  },
+  "live_gate": "none: user decision 2026-10-19 (live-first); no zero-model-call gate before live runs; the T0 lint (require_all) must pass for a CLI live run",
+  "max_api_calls": null,
+  "max_policy_steps": null,
+  "max_wall_time_s": null,
+  "measured_feedback_count": 1019,
+  "method": "agent_speedup_v2",
+  "mock_response_calls": 0,
+  "mode": "live_chatgpt_subscription_agent_speedup_v2",
+  "model_calls": {
+    "accepted_by_kind": {
+      "agent": 13,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "billing": "chatgpt_subscription",
+    "calls_by_kind": {
+      "agent": 13,
+      "plan": 0,
+      "point_coarse": 0,
+      "point_fine": 0,
+      "repair": 0,
+      "replan": 0,
+      "review": 0
+    },
+    "failed_calls_by_kind": {},
+    "latency_s_by_kind": {
+      "agent": 279.537864
+    },
+    "offline_mock": false,
+    "overload_retry_requests": 0,
+    "overload_retry_wait_s": 0.0,
+    "real_model_calls": 13,
+    "requests_sent": 13,
+    "runner_calls_by_kind": {
+      "agent": 13
+    },
+    "tokens": {
+      "cached_input": 26112,
+      "input": 535783,
+      "output": 4448,
+      "output_by_kind": {
+        "agent": 4448,
+        "plan": 0,
+        "point_coarse": 0,
+        "point_fine": 0,
+        "repair": 0,
+        "replan": 0,
+        "review": 0
+      },
+      "over_visible_budget_by_kind": {
+        "agent": 0,
+        "plan": 0,
+        "point_coarse": 0,
+        "point_fine": 0,
+        "repair": 0,
+        "replan": 0,
+        "review": 0
+      },
+      "reasoning": 1452,
+      "reasoning_by_kind": {
+        "agent": 1452,
+        "plan": 0,
+        "point_coarse": 0,
+        "point_fine": 0,
+        "repair": 0,
+        "replan": 0,
+        "review": 0
+      },
+      "unknown_usage_calls": 0,
+      "visible_budgets": {
+        "agent": 1400,
+        "plan": 340,
+        "point_coarse": 6,
+        "point_fine": 6,
+        "repair": 80,
+        "replan": 340,
+        "review": 80
+      },
+      "visible_by_kind": {
+        "agent": 2996,
+        "plan": 0,
+        "point_coarse": 0,
+        "point_fine": 0,
+        "repair": 0,
+        "replan": 0,
+        "review": 0
+      }
+    }
+  },
+  "model_completion": null,
+  "model_declared_complete": false,
+  "mount_decision": {
+    "base_estimate_xyz": [
+      -0.50119,
+      0.00873,
+      0.42449
+    ],
+    "base_xyz": [
+      -0.50119,
+      0.00873,
+      0.42449
+    ],
+    "distance_to_verified_m": 0.5128,
+    "frontal_allowed": true,
+    "frontal_stretch_limit_m": 0.742,
+    "frontal_stretch_stop_m": 0.757,
+    "ruling": "R-5b",
+    "shoulder_xyz": [
+      -0.50119,
+      0.00873,
+      0.75749
+    ],
+    "thresholds": [
+      {
+        "derivation": "half the distance to the nearest other LIBERO mount (spec \u00a75.3)",
+        "label": "RULING",
+        "name": "VERIFIED_MOUNT_GATE_M",
+        "value": 0.045
+      },
+      {
+        "derivation": "R-5b: guards tightened by the start-pose spread bound",
+        "label": "RULING",
+        "name": "UNVERIFIED_GUARD_TIGHTENING_M",
+        "value": 0.028
+      }
+    ]
+  },
+  "nominal_events_missing": [
+    "relation_plan",
+    "plan_validation",
+    "step_start",
+    "step_end",
+    "calibration",
+    "registration",
+    "pointing",
+    "contact_plan",
+    "contact",
+    "wedge",
+    "effect",
+    "held_frame",
+    "transit",
+    "observer",
+    "stays_check"
+  ],
+  "operator_stop_after_steps": null,
+  "operator_stop_command": "touch /workspace/gpt_field/results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial/operator_stop.request.json",
+  "oracle": {
+    "enabled": false,
+    "report": null
+  },
+  "outcomes_recorded_at_finalization": 0,
+  "output": "/workspace/gpt_field/results/speedup_evidence_20261026T055123Z/evaluations/trial_003/trial",
+  "parse_check": {
+    "atoms": [
+      {
+        "atom": [
+          "in",
+          "cream_cheese_1",
+          "basket_1_contain_region"
+        ],
+        "expected_relation": "place_in",
+        "planned": true
+      },
+      {
+        "atom": [
+          "in",
+          "butter_1",
+          "basket_1_contain_region"
+        ],
+        "expected_relation": "place_in",
+        "planned": true
+      }
+    ],
+    "diagnosis_only": true,
+    "note": null,
+    "plan_available": true,
+    "plan_match": {
+      "all_atoms_planned": true,
+      "atoms": [
+        {
+          "atom": [
+            "in",
+            "cream_cheese_1",
+            "basket_1_contain_region"
+          ],
+          "plan_steps": [
+            0,
+            1
+          ],
+          "plan_steps_text_match": [
+            0
+          ],
+          "planned": true,
+          "planned_with_text_match": true
+        },
+        {
+          "atom": [
+            "in",
+            "butter_1",
+            "basket_1_contain_region"
+          ],
+          "plan_steps": [
+            0,
+            1
+          ],
+          "plan_steps_text_match": [
+            1
+          ],
+          "planned": true,
+          "planned_with_text_match": true
+        }
+      ],
+      "hold_true": [],
+      "plan_available": true,
+      "plan_steps_without_atom": [],
+      "rule": "relation level: turn+effect / TurnOn-TurnOff, place_on / On, place_in / In or On(object), slide / Open-Close, push_to / On(zone); text match: an atom argument shares a name token with the step's part text",
+      "version": "agent-speedup-v2-plan-match-1"
+    },
+    "planned_note": "plan_match is authoritative; atoms[].planned is copied from it runner-side (the M0 truth module leaves it None)",
+    "planned_source": "plan_match (agent-speedup-v2-plan-match-1)"
+  },
+  "path_length_m": 2.8624009447759735,
+  "pending_action_index": null,
+  "physical_truth": {
+    "affects_completion": false,
+    "after_release_settle": true,
+    "at_terminal": false,
+    "diagnosis_only": true,
+    "physical_success": false,
+    "physical_success_after_settle": true,
+    "physical_success_at_terminal": false,
+    "raw_libero_success": true,
+    "raw_libero_success_after_settle": true,
+    "terminal_failing_checks": {
+      "in cream_cheese_1 basket_1_contain_region": [
+        "not_held",
+        "at_rest",
+        "supported_by_container_or_contents",
+        "not_perched_on_rim"
+      ]
+    },
+    "terminal_failure_is_hold_only": false,
+    "truth_version": "agent-speedup-v2-truth-v3",
+    "v2_success": false,
+    "verdict": "lenient_success"
+  },
+  "plan_steps": [],
+  "prompt_version": "user-check-agent-first-prompt-2",
+  "reasoning_effort": "high",
+  "relation_outcome_counts": {},
+  "relation_outcome_sequence": [],
+  "relation_outcomes": 0,
+  "relation_plan": {
+    "hold_true": [],
+    "parts": [
+      {
+        "id": "A",
+        "move": "free",
+        "text": "cream cheese box: flat rectangular package beside juice",
+        "w": 24,
+        "x": 50
+      },
+      {
+        "id": "B",
+        "move": "free",
+        "text": "butter: rectangular package with cow picture",
+        "w": 28,
+        "x": 46
+      },
+      {
+        "id": "C",
+        "move": "free",
+        "text": "basket: open cavity inside cloth-lined woven walls",
+        "w": 0,
+        "x": 40
+      }
+    ],
+    "placement_goals": [],
+    "regions": [],
+    "scene": "Cream cheese box and butter on a table beside an open woven basket.",
+    "steps": [
+      {
+        "do": "place_in",
+        "grip": [],
+        "keep": [],
+        "obj": "A",
+        "ref": "C",
+        "sense": "any",
+        "until": []
+      },
+      {
+        "do": "place_in",
+        "grip": [],
+        "keep": [],
+        "obj": "B",
+        "ref": "C",
+        "sense": "any",
+        "until": []
+      }
+    ]
+  },
+  "requested_episodes": 1,
+  "runner_pointing_events": 0,
+  "scored_episodes": 1,
+  "seed": 7,
+  "smoke_script": null,
+  "smoke_steps": null,
+  "startup_to_initial_observation_s": 6.430719492025673,
+  "status": "success",
+  "step_budget": {
+    "by_phase": {
+      "framework_fragment": 1019
+    },
+    "by_plan_step": [],
+    "steps": 1019
+  },
+  "steps": 1019,
+  "stop_on_model_complete": false,
+  "stuck_alerts": [],
+  "success_rate": 1.0,
+  "suite": "libero_10",
+  "task": "put both the cream cheese box and the butter in the basket",
+  "task_id": 1,
+  "task_key": "libero_10_t1",
+  "task_success": true,
+  "timing_components": {
+    "decision_s": 280.6107236894313,
+    "model_pipeline_s": 279.53786375024356,
+    "model_pipeline_s_by_kind": {
+      "agent": 279.537864
+    },
+    "observe_transition_s": 7.647440938744694,
+    "policy_compute_s": 1.0728599391877651,
+    "run_state_s": 0.1081264055101201,
+    "simulator_step_s": 121.99194845627062,
+    "video_render_s": 25.641841216944158
+  },
+  "timing_components_note": "model_pipeline_s is included in decision_s; policy_compute_s = decision_s - model_pipeline_s; model_pipeline_s_by_kind splits model_pipeline_s by request kind (diagnostics api_calls); observe_transition_s, simulator_step_s and video_render_s are separate; run_state_s (run_state.json writes, inside control time) is informational. control_without_video_s = control_elapsed_s - video_render_s. Terminal truth, video and cleanup are excluded from control_elapsed_s.",
+  "trace": "trace.jsonl",
+  "v2_event_counts": {},
+  "v2_success": false,
+  "v2_success_rule": "raw LIBERO success AND strict physical truth (release-and-settle counterfactual when only hold checks fail); the same rule in live and smoke mode (lead decision L5)",
+  "video": "episode.mp4",
+  "video_enabled": true,
+  "video_error": null,
+  "video_partial": null
+}

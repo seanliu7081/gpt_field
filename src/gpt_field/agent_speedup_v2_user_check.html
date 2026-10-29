@@ -23,6 +23,7 @@
     .images{display:grid;grid-template-columns:1fr 1fr;gap:10px}.images figure{margin:0}.images img{width:100%;border-radius:7px;background:var(--soft);display:block}.images figcaption{font-size:12px;margin-top:5px;color:var(--muted)}
     #message{border:1px solid #e7c0b9;background:#fff1ee;color:var(--error);border-radius:9px;padding:11px 14px;margin-bottom:16px;white-space:pre-wrap}#validation{color:var(--error);font-size:13px}#validation ul{padding-left:20px}
     .success{color:var(--accent)}.footer{border-top:1px solid var(--line);margin-top:18px;padding-top:15px}details{margin-top:12px}summary{cursor:pointer;font-weight:550}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);padding:14px;border-radius:9px;font:12px/1.5 ui-monospace,monospace;max-height:460px;overflow:auto}
+    mark.axis-wording{background:#fff0b3;color:#594300;border-radius:3px;padding:0 2px}.direction-note{font:12px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}.display-note{color:#78631c;font-size:12px}
     .binding{font:11px/1.7 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--muted)}[hidden]{display:none!important}:focus-visible{outline:3px solid #78b8ae;outline-offset:2px}
     @media(max-width:850px){.layout{grid-template-columns:1fr}main{margin-top:18px}.card{padding:17px}}
     @media(max-width:500px){.form{grid-template-columns:1fr}.rule,.rule.until,.rule.hold-true{grid-template-columns:minmax(0,1fr) 36px}.rule select{grid-column:1}.rule .remove{grid-column:2;grid-row:1/span 2}.rule.hold-true .remove{grid-row:1/span 3}.rule.until .phrase{grid-column:1/-1}.images{grid-template-columns:1fr}.toolbar button{font-size:13px}select{font-size:16px}.part{grid-template-columns:1fr}}
@@ -49,6 +50,7 @@
       <div class="card">
         <h2>Objects and parts <small>parts</small></h2>
         <p class="muted">Names come from the model's observations. Select the parts to include and how each can move. Their image locations are refreshed during execution.</p>
+        <p id="axis-wording-note" class="display-note" hidden>Highlighted world-axis wording is a display diagnostic. Frozen external-view directions take precedence; this highlighting does not block approval.</p>
         <div id="parts" class="parts"></div>
       </div>
       <div class="card">
@@ -60,6 +62,7 @@
       <div class="card">
         <h2>Initial scene</h2>
         <p id="scene" class="muted"></p>
+        <p id="view-frame-summary" class="direction-note"></p>
         <div id="images" class="images"></div>
         <details><summary>Run binding details</summary><div id="bindings" class="binding"></div></details>
       </div>
@@ -101,8 +104,8 @@
     quarter_turn:"Quarter turn",half_turn:"Half turn",
     on:"On a surface",in:"Inside",closed:"Already closed",
     supported_on:"Object supported by target surface",centered_on:"Object centered on target",inside:"Entire object inside target bounds",
-    left_of:"Left of anchor (world −x)",right_of:"Right of anchor (world +x)",
-    front_of:"In front of anchor (world −y)",behind:"Behind anchor (world +y)",near:"Near anchor"
+    left_of:"Left of anchor (image-left in external view)",right_of:"Right of anchor (image-right in external view)",
+    front_of:"In front of anchor (toward external camera)",behind:"Behind anchor (away along external view)",near:"Near anchor"
   };
   const title = value => (labels[value] ? labels[value] + " · " : "") + value;
   const node = (tag, text, className) => {
@@ -111,6 +114,33 @@
     if (className) out.className = className;
     return out;
   };
+  // Display helpers only: they do not create plan issues or affect approval.
+  const worldAxisWording = () => /\bworld\s*[+\-−]\s*[xy]\b/gi;
+  const directionLabels = {right_of:"image-right",left_of:"image-left",front_of:"toward external camera",behind:"away along external view"};
+  function vectorText(vector) {
+    return vector.map(value => {
+      const number = Number(Number(value).toPrecision(6));
+      return number > 0 ? "+" + number : String(number);
+    }).join(",");
+  }
+  function regionDirectionLine(region, frame) {
+    if (!Object.hasOwn(directionLabels, region.relation)) return null;
+    const prefix = `${region.id}: ${region.relation} ${region.anchor}`;
+    const direction = frame?.available ? frame.relation_directions?.[region.relation] : null;
+    const mapped = direction ? `world (${vectorText(direction)})` : `unavailable (${frame?.reason || "view_frame_unavailable"})`;
+    return `${prefix} → ${mapped} [${directionLabels[region.relation]}]`;
+  }
+  function appendPartWording(parent, text) {
+    let cursor = 0;
+    for (const match of text.matchAll(worldAxisWording())) {
+      parent.append(document.createTextNode(text.slice(cursor, match.index)));
+      const mark = node("mark", match[0], "axis-wording");
+      mark.title = "Display diagnostic: use the frozen external-view direction over this wording.";
+      parent.append(mark);
+      cursor = match.index + match[0].length;
+    }
+    parent.append(document.createTextNode(text.slice(cursor)));
+  }
   const editable = () => !busy && record && record.status === "draft";
   const planSchema = () => schema.plan_schema.properties;
   const stepSchema = () => planSchema().steps.items.properties;
@@ -184,6 +214,7 @@
   }
   function renderParts() {
     const target = el("parts"); target.replaceChildren();
+    el("axis-wording-note").hidden = !record.plan.parts.some(part => worldAxisWording().test(part.text));
     record.draft_plan.parts.forEach(original => {
       const index=record.plan.parts.findIndex(part=>part.id===original.id);
       const part=index>=0?record.plan.parts[index]:original;
@@ -196,7 +227,8 @@
         if(included.checked) plan.parts.push(clone(original));
         else plan.parts.splice(index,1);
       }));
-      const caption=node("span");caption.append(node("strong", part.id + " · "), document.createTextNode(part.text));
+      const caption=node("span");caption.append(node("strong", part.id + " · "));
+      appendPartWording(caption, part.text);
       text.append(included,caption);
       row.append(text, select(part.move, optionEnums(planSchema().parts.items.properties.move),
         value => change(plan => { plan.parts[index].move = value; }), part.id + " movement type",index<0));
@@ -241,7 +273,9 @@
             }),part.id+" region boundary"));
         }
       }
-      const note=node("small",region.anchor?"Bounds are relative to the anchor center. Left, right, front and behind follow world axes, not image directions.":"Bounds use world coordinates. Placement requires an observed support surface within the region.","wide");
+      const direction = regionDirectionLine(region, record.preparation?.view_frame);
+      if (direction) form.append(node("p", direction, "wide direction-note"));
+      const note=node("small",(region.anchor?"Bounds are relative to the anchor center. ":"Bounds use world coordinates. ")+"Left and right follow image 1's external view; front and behind mean nearer and farther along that view. Directions are frozen at review, never judged in the wrist image. Placement requires observed support.","wide");
       form.append(note);
     }
     parent.append(form);
@@ -409,6 +443,10 @@
     const states={draft:busy?"Saving…":"Awaiting review",approved:"Plan approved",consumed:"Plan used for execution"};
     el("state").textContent=states[record.status] || record.status;
     el("scene").textContent=record.plan.scene;
+    const viewFrame = record.preparation?.view_frame;
+    el("view-frame-summary").textContent = viewFrame?.available
+      ? `Frozen external view (image 1): right → world (${vectorText(viewFrame.right_xy)}); away → world (${vectorText(viewFrame.away_xy)}).`
+      : `External-view directions: calibration unavailable (${viewFrame?.reason || "view_frame_unavailable"}). Judge direction words in the initial external image, never the wrist image.`;
     el("bindings").replaceChildren();
     for(const [label,key] of [["Initial observation","initial_observation_sha256"],["Runtime","runtime_sha256"]]) {
       const value=record[key];

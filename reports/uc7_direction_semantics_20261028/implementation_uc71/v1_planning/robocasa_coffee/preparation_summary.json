@@ -1,0 +1,194 @@
+{
+  "display_diagnostics": [],
+  "model_budget": {
+    "api_calls": 1,
+    "api_key_calls": 0,
+    "billing": "chatgpt_subscription",
+    "cached_input_tokens": 0,
+    "configuration": {
+      "cache_write_price_per_million": null,
+      "cached_input_price_per_million": null,
+      "endpoint": "https://api.openai.com/v1/responses",
+      "input_price_per_million": null,
+      "max_api_calls": null,
+      "max_cost_usd": null,
+      "max_input_tokens": 1050000,
+      "max_output_tokens": 8192,
+      "max_wall_time_s": null,
+      "model": "gpt-6-astra",
+      "output_price_per_million": null,
+      "timeout_s": 180
+    },
+    "cost_usd_upper_bound": null,
+    "elapsed_s": 29.235827716998756,
+    "input_tokens": 4448,
+    "max_api_calls": null,
+    "max_cost_usd": null,
+    "max_wall_time_s": null,
+    "output_token_limit_sent": null,
+    "output_tokens": 516,
+    "reasoning_tokens": 316,
+    "reservation_per_call_usd": null,
+    "snapshot_version": "chatgpt-subscription-http-sse-v1",
+    "subscription_cost_usd": null,
+    "subscription_inference_calls": 1,
+    "unknown_usage_calls": 0,
+    "usage_accounting": "Server-reported tokens; account subscription limits apply; no API-key billing"
+  },
+  "plan": {
+    "hold_true": [
+      {
+        "a": "B",
+        "b": "C",
+        "rel": "on"
+      }
+    ],
+    "parts": [
+      {
+        "id": "A",
+        "move": "sliding",
+        "text": "coffee machine: round button directly below pressure gauge",
+        "w": 13,
+        "x": 0
+      },
+      {
+        "id": "B",
+        "move": "free",
+        "text": "orange mug: cup beneath the dispenser",
+        "w": 29,
+        "x": 38
+      },
+      {
+        "id": "C",
+        "move": "fixed",
+        "text": "coffee machine: slotted drip tray beneath mug",
+        "w": 36,
+        "x": 37
+      }
+    ],
+    "placement_goals": [],
+    "regions": [],
+    "scene": "Coffee machine with a mug beneath its dispenser on the drip tray.",
+    "steps": [
+      {
+        "do": "slide",
+        "grip": [],
+        "keep": [
+          {
+            "c": "clear_of",
+            "p": "B"
+          }
+        ],
+        "obj": "A",
+        "ref": null,
+        "sense": "close",
+        "until": [
+          {
+            "o": "effect",
+            "p": "B",
+            "txt": "coffee begins flowing into the mug"
+          }
+        ]
+      }
+    ]
+  },
+  "policy_actions": 0,
+  "region_direction_lines": [],
+  "region_directions": {
+    "available": true,
+    "direction_semantics": "external_view_v1",
+    "frame": {
+      "away_xy": [
+        0.2019921405738974,
+        0.9793871426286823
+      ],
+      "right_xy": [
+        0.9793871426286823,
+        -0.2019921405738974
+      ]
+    },
+    "reason": null,
+    "regions": {}
+  },
+  "status": "review_required",
+  "validation": {
+    "issues": [],
+    "valid": true
+  },
+  "view_frame": {
+    "available": true,
+    "away_xy": [
+      0.2019921405738974,
+      0.9793871426286823
+    ],
+    "calibration_sha256": "9b64f7a5a7f96f0c9fd2937266e1eeaa3f7edcc3f3a9ab39dc7d2c5a2f117d80",
+    "direction_semantics": "external_view_v1",
+    "external_camera": {
+      "focal_length_px": [
+        443.4050067376326,
+        443.4050067376326
+      ],
+      "fovy_deg": 60.0,
+      "mujoco_name": "robot0_agentview_left",
+      "pose_source": "synchronized_robot_mounted_camera",
+      "position_world_m": [
+        0.09021507800362999,
+        -1.3000000001303855,
+        1.7500000000007812
+      ],
+      "principal_point_px": [
+        255.5,
+        255.5
+      ],
+      "rotation_world_from_camera": [
+        [
+          0.9792973845320813,
+          0.09726115808109848,
+          -0.17752999683813428
+        ],
+        [
+          -0.20197362855829382,
+          0.5281292976892554,
+          -0.8247945794494831
+        ],
+        [
+          0.013538316572630271,
+          0.8435755520704573,
+          0.5368398289372741
+        ]
+      ]
+    },
+    "image": {
+      "height": 512,
+      "pixel_axes": "u_right_v_down",
+      "pixel_centers": "integer",
+      "source_transform": "raw_mujoco_rgb_vertical_flip_no_crop",
+      "width": 512
+    },
+    "inverted": false,
+    "reason": null,
+    "relation_directions": {
+      "behind": [
+        0.2019921405738974,
+        0.9793871426286823
+      ],
+      "front_of": [
+        -0.2019921405738974,
+        -0.9793871426286823
+      ],
+      "left_of": [
+        -0.9793871426286823,
+        0.2019921405738974
+      ],
+      "right_of": [
+        0.9793871426286823,
+        -0.2019921405738974
+      ]
+    },
+    "right_xy": [
+      0.9793871426286823,
+      -0.2019921405738974
+    ],
+    "roll_deg": 0.9194455835322998
+  }
+}

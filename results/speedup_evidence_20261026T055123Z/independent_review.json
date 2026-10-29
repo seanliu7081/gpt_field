@@ -1,0 +1,144 @@
+{
+  "reviewer": "independent_subagent_p0_inventory",
+  "status": "passed_no_remaining_code_blockers_for_explicitly_reviewed_P5",
+  "scope": "read-only code review plus isolated offline tests; no model/simulator or task execution",
+  "source_hashes": {
+    "tooling/evaluation_summary.py": "b4ab18aad80de93286c97749672d36c6490b6dbc661fecd1218e82bfb8046273",
+    "tooling/test_evaluation_summary.py": "5024df8ec4a0745b507234c8b7f0ecf9e698b9df3e6d6d0e64d01d13e53d42ca",
+    "baseline/scripts/evaluate_speedup_evidence.py": "ed5f0b833e1a57944b7b425822e2c01bec29dc8053bce9a3950c3a4c2bba7219",
+    "baseline/src/gpt_field/agent_speedup_evidence_clock.py": "2a3f44454982fa89e75c10afd8f3347d8dbbe769ffdf047a19f701527b0c6126",
+    "baseline/src/gpt_field/agent_speedup_evidence_adapter.py": "ee21b86fd04664ef1ebcf79b7c4b392211461d5328da6aa15429dd01ee1379dd",
+    "baseline/src/gpt_field/agent_speedup_evidence_review.py": "5523a705d2eff7ba7286f5cd877a0a52d7cddf314557ae7e5bd2d5fce4a89df2",
+    "candidate_spec.md": "33d609a890f5d07cfff84bb6d7b7df0e3a923e2beef43a31d8cfd32742d22dde",
+    "execution_manifest.json": "4884d634ae8272a5fe31c1941129b602209a299b11d324708b3c8e1abfd70469"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "blocking",
+      "status": "resolved_verified",
+      "file": "tooling/evaluation_summary.py",
+      "finding": "Terminal records missing raw success or finite service measurements were treated as observed failures.",
+      "evidence": "Original 9-pair synthetic missing-metric input returned freeze, counts 0/0.",
+      "resolution": "measured_terminal/finite_seconds preserve missing metrics as inconclusive; 9 focused tests passed independently."
+    },
+    {
+      "id": "R2",
+      "severity": "blocking",
+      "status": "resolved_verified",
+      "file": "tooling/evaluation_summary.py",
+      "finding": "20% common-success speed branch admitted raw successes occurring after the common900-second window.",
+      "evidence": "Original 9 pairs A=1500s/B=1100s, first raw1400/1050 returned continue with raw900=0/0.",
+      "resolution": "Common-success branch now requires both first raw<=900; regression passed."
+    },
+    {
+      "id": "R3",
+      "severity": "blocking",
+      "status": "resolved_code_review",
+      "file": "baseline/scripts/evaluate_speedup_evidence.py",
+      "finding": "The preparation SIGALRM enclosed sim.start/reset/close and source persistence, risking an interrupted simulator transaction or required finalization.",
+      "resolution": "Preparation uses boundary checks; TimedClient transport owns request deadline. Same-clock nested decision/transport timer is explicitly reentrant; independent nested call succeeded."
+    },
+    {
+      "id": "R4",
+      "severity": "blocking",
+      "status": "resolved_verified",
+      "file": "baseline/scripts/evaluate_speedup_evidence.py",
+      "finding": "A copied reservation JSON could create a second path-local claim and bypass cumulative reservations.",
+      "resolution": "Actual runner rejects copied valid-hash reservations; canonical ledger match is required. Exclusive claim now uses path.resolve().with_suffix so aliases share one claim; final protocol suite includes symlink regression."
+    },
+    {
+      "id": "R5",
+      "severity": "blocking",
+      "status": "resolved_verified",
+      "file": "baseline/src/gpt_field/agent_speedup_evidence_review.py",
+      "finding": "Delegated Codex review was represented as manual_browser_review in the inherited v7 immutable review and nested artifacts.",
+      "resolution": "Independent saved-public-observation fixture: pending approval rejected; explicit Codex binding preserved manual_review=false and source/reset/plan; second claim rejected. Normalizer text and labels corrected."
+    },
+    {
+      "id": "R6",
+      "severity": "blocking",
+      "status": "resolved_verified",
+      "file": "baseline/scripts/evaluate_speedup_evidence.py",
+      "finding": "Budget exhaustion during approve or before run occurred outside terminal-result handling, leaving consumed service labeled awaiting_review.",
+      "requested_fix": "Persist budget exhaustion and evidence_result at those boundaries without resetting clock; do not finish paused human review.",
+      "resolution": "Actual runner.cli approve invoked with expired temporary service clock and unapproved fixture: terminal evaluation_budget_exhausted receipt persisted; automatic_review_compute_s>0; draft remained unapproved; no model/simulator."
+    },
+    {
+      "id": "R7",
+      "severity": "minor",
+      "status": "resolved_verified",
+      "file": "tooling/evaluation_summary.py",
+      "finding": "CSV S300 assignment should require measured_terminal, and exact20% improvement can suffer subtract-from-one rounding.",
+      "requested_fix": "Leave invalid metric S300 blank; use numerically stable ratio or declared floating tolerance.",
+      "resolution": "CSV S300 now written only for measured_terminal records; paired reduction uses (av-bv)/av. Focused summary tests pass."
+    }
+  ],
+  "independent_validation": {
+    "evaluation_summary_tests": {
+      "passed": 9,
+      "failed": 0,
+      "final_rerun": "9 tests passed after CSV and ratio corrections"
+    },
+    "preflight": {
+      "arms": [
+        "A",
+        "B"
+      ],
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "api_calls": 0,
+      "credentials_checked": false,
+      "simulator_started": false,
+      "files_written_by_preflight": false,
+      "api_client_preparation_framework_policy_synthetic_observation_equal": true,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "image_size": 512
+    },
+    "clock_checks": [
+      "human100-second wait excluded",
+      "delegated20-second compute counted",
+      "first raw event retained",
+      "actual short SIGALRM deadline fired and timer restored",
+      "same-clock nested transport accepted"
+    ],
+    "budget_checks": [
+      "five original reservations stayed charged",
+      "fifth global infrastructure retry rejected after four across different originals"
+    ],
+    "truth_boundary": "Evaluator-only adapter reads sim.status raw flag into clock; no additional policy inputs or policy truth imports. Actual online request equality remains P2 replay acceptance responsibility.",
+    "baseline_protocol_suite": {
+      "source": "baseline_protocol_tests_final.txt",
+      "passed": 11,
+      "failed": 0,
+      "execution": "P2 agent execution; independent static review of test definitions and log; not redundantly rerun"
+    },
+    "full_saved_replay": {
+      "source": "baseline_replay_attempt1.json",
+      "status": "passed",
+      "actions_AB_historical_exact": 897,
+      "feedback_AB_exact": 897,
+      "decision_diagnostics_AB_exact": 897,
+      "requests_AB_and_historical_exact": 13,
+      "new_model_requests": 0,
+      "new_simulator_rollouts": 0,
+      "limitation": "Saved-response diagnostic, not independent task performance; missing intermediate camera/joint serialization not invented."
+    },
+    "review_binding_checks": [
+      "pending draft cannot approve",
+      "Codex identity preserved",
+      "source/reset/plan unchanged on identity bind",
+      "single-use second claim rejected",
+      "actual expired approve CLI persists terminal receipt and never approves draft"
+    ]
+  },
+  "authorization": "No new task review delegation inferred. New plans still require user review or specific delegation; old consumed approvals cannot run new conditions.",
+  "limitations": [
+    "No new online task measurements; no five-minute or generality claim.",
+    "P5/P6 remain gate-controlled and incomplete; absence is not a negative measured result.",
+    "Original failed attempts and retry rows must remain primary ledger; retries only sensitivity."
+  ],
+  "final_decision": "Continue preparation only within reserved cumulative P5 budget. Do not approve or execute new matrix conditions until fresh human plan review or specifically scoped delegation exists. P6 remains closed until P5 passes.",
+  "limits": "This review establishes accounting, isolation and offline compatibility. It does not establish task success, S300 improvement, autonomous quality improvement or generality."
+}

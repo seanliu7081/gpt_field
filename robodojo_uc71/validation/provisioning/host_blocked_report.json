@@ -1,0 +1,117 @@
+{
+  "status": "blocked_renderer_initialization",
+  "ready_for_native": false,
+  "recorded_at_utc": "2026-10-29T04:44:47.185663+00:00",
+  "scope": "Stage A0 isolated model-free procedural RTX-camera check only",
+  "python": "/workspace/gpt_field/robodojo_uc71/runtime/a0_env/bin/python",
+  "python_version": "3.11.16",
+  "isaacsim_version": "5.1.0.0",
+  "nvidia_driver_version": "610.43.02",
+  "gpu_index": 4,
+  "gpu_uuid": "GPU-e1a460e9-e272-b227-222e-0dbb77c248c5",
+  "vendor_license_authorization": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/vendor_authorization.json",
+  "dependency_check": "uv pip check passed after both install invocations",
+  "attempts": [
+    {
+      "directory": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a0_attempt_001",
+      "exit_code": -11,
+      "elapsed_s": 22.46599639300257,
+      "classification": "pre-frame missing dependency/settings; secondary teardown SIGSEGV",
+      "first_image": false,
+      "repair_authorization": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/setup_repair_authorization.json"
+    },
+    {
+      "directory": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/a0_attempt_002",
+      "exit_code": -11,
+      "elapsed_s": 7.582460222998634,
+      "classification": "native SIGSEGV enabling Hydra renderer while opening first USD stage",
+      "last_phase": "kit_startup_returned",
+      "first_image": false,
+      "stop_rule_triggered": true
+    }
+  ],
+  "last_python_stack": [
+    "omni.kit.widget.viewport.impl.texture.__enable_hydra_engine (texture.py:377)",
+    "omni.kit.widget.viewport.impl.texture.__set_hd_engine (texture.py:489)",
+    "omni.kit.widget.viewport.impl.texture._on_stage_opened (texture.py:314)",
+    "omni.kit.widget.viewport.widget.__on_stage_opened (widget.py:530)",
+    "omni.usd._impl.api._new_stage_python_wrapper / _new_stage_sync",
+    "provision_a0_camera.py:59 context.new_stage()"
+  ],
+  "limitations": [
+    "No RGB frame was produced; native RoboDojo rendering, physics, reset determinism and task execution remain untested.",
+    "The stack identifies renderer initialization, not a unique causal driver defect.",
+    "No C-level librtx.scenedb.plugin.so stack was captured; it must not be claimed as a proven crash location.",
+    "No driver change, renderer setting sweep or further launch was attempted after the second crash.",
+    "The first attempt secondary teardown crash is retained separately, not erased by setup repair."
+  ],
+  "gpu_isolation": {
+    "kit_active_physical_gpu": 4,
+    "gpu_0_3_memory_before_mib": [
+      21394,
+      21394,
+      21394,
+      21394
+    ],
+    "gpu_0_3_memory_after_mib": [
+      21394,
+      21394,
+      21394,
+      21394
+    ],
+    "gpu4_memory_before_mib": 1,
+    "gpu4_memory_after_mib": 1,
+    "terminal_gpu_snapshot": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/gpu_terminal.csv",
+    "terminal_compute_processes": "/workspace/gpt_field/robodojo_uc71/validation/provisioning/compute_processes_terminal.csv"
+  },
+  "owned_processes_still_running": [],
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "full_task_started": false,
+  "full_task_authorized": false,
+  "robodojo_checkout_downloaded": false,
+  "robodojo_assets_downloaded": false,
+  "native_preview_available": false,
+  "system_modifications": {
+    "driver_changes": false,
+    "global_package_installs": false,
+    "global_env_edits": false,
+    "libXt": "task-local verified .deb extraction only"
+  },
+  "requirements_lock_sha256": "4e12559814d5db9cd75bcb498f9cc77aba935e5cad6695f09669b8316e21081b",
+  "source_sha256": {
+    "provision_a0_camera.py": "800796e32a05fa896b3ddebfa09fc93efdb0abd41dccb1293761e95556762c88",
+    "provision_a0_install.py": "b57ac0eee42e848b082fc64ed4d034af39a0eba713f2629cd166fde76dbf6340",
+    "provision_a0_launch.py": "4145a2b53c4ea235c604effdc8c2e68c9748c7203f749fa5423306b1cb019bb4",
+    "provision_a0_system_lib.py": "b971340414313aa8de7ffe2a6d9723903257ff2c1c911bffbe14cbcc0169155f"
+  },
+  "attempt_artifact_sha256": {
+    "a0_attempt_001/a0_camera.kit": "cf1a273f1c37bc55bdd9dc08c0bd5fbe917738cd2261eaf2b98959170cbb01f0",
+    "a0_attempt_001/a0_requirements.in": "2b9df850f531d146ae850984020d6aea5a9fd54df4d55277ed31045232d4095a",
+    "a0_attempt_001/a0_requirements.lock": "6db263f6ec4a29102642e177c8b67c74e78cf1f00320bb4e9e593319c3e607be",
+    "a0_attempt_001/authorization_snapshot.json": "d579e5d33cc7daff746031e6dfee73d03a137d8c938be3220dc9f7ddca27c9a6",
+    "a0_attempt_001/gpu_after.csv": "a0bb31755ad9b1790a3d0ff27ff4f3bf770fef8271d997a449f38c9a986976c7",
+    "a0_attempt_001/gpu_before.csv": "a0bb31755ad9b1790a3d0ff27ff4f3bf770fef8271d997a449f38c9a986976c7",
+    "a0_attempt_001/kit_arguments.json": "ee5e48e4a1457d0cce869fb59e647d1a7cf79ad57ca76d64b92d82451721ebc4",
+    "a0_attempt_001/launch.json": "91323f099a3ac463d433a37f7c52bd57bb10dc322226c384c7ec658f73f6915e",
+    "a0_attempt_001/launch_result.json": "2a93ff77fc42318e395ba63af1d8d92cc7c8b1e54569bfe4a20b39be395e97c5",
+    "a0_attempt_001/provision_a0_camera.py": "aecceb0efcbb12aeeec6b69b3d0c5918238411aebc3ea21b302490a97a2034a1",
+    "a0_attempt_001/provision_a0_launch.py": "81d4c8446f15871085d5f878a3ef4aa76e69ec863e25298375d51b75b7c2ef62",
+    "a0_attempt_001/stdout_stderr.log": "58ded6f3d9af24aec0ca43651aaf605fa6390c943b08e9d9ecc56e68602d7084",
+    "a0_attempt_002/a0_camera.kit": "717585951f5d0f5b64045143914d6a258b870e7ab7c2367de0efdba7ae72956d",
+    "a0_attempt_002/a0_requirements.in": "b34e3015855ca97df5d9cf92a0ce4994b83c51eb603e2e5d1d53b2402a20256c",
+    "a0_attempt_002/a0_requirements.lock": "4e12559814d5db9cd75bcb498f9cc77aba935e5cad6695f09669b8316e21081b",
+    "a0_attempt_002/authorization_snapshot.json": "d579e5d33cc7daff746031e6dfee73d03a137d8c938be3220dc9f7ddca27c9a6",
+    "a0_attempt_002/camera_progress.json": "8ddbf76540876f62a149705aebeab680320f6c636e1a1e2c49adb2ca242b318b",
+    "a0_attempt_002/gpu_after.csv": "a0bb31755ad9b1790a3d0ff27ff4f3bf770fef8271d997a449f38c9a986976c7",
+    "a0_attempt_002/gpu_before.csv": "a0bb31755ad9b1790a3d0ff27ff4f3bf770fef8271d997a449f38c9a986976c7",
+    "a0_attempt_002/kit_arguments.json": "860e8320dd5193b8a68f8939cbfee6a1fc1b8b7d455b2e2aa74eebbaef78a948",
+    "a0_attempt_002/launch.json": "8f5a775f6aee9413e566c3b6f9665648db9dd244904646091cfa850b7220cef1",
+    "a0_attempt_002/launch_result.json": "04676968d28eea341068be89ac2ab621e8142d62ac2d25f835e99c0b37770ee8",
+    "a0_attempt_002/provision_a0_camera.py": "800796e32a05fa896b3ddebfa09fc93efdb0abd41dccb1293761e95556762c88",
+    "a0_attempt_002/provision_a0_launch.py": "4145a2b53c4ea235c604effdc8c2e68c9748c7203f749fa5423306b1cb019bb4",
+    "a0_attempt_002/setup_repair_authorization.json": "330094c3a28f87ca742cbdf7662dd107f6396f7f9cf7521c585f12d3589c4c01",
+    "a0_attempt_002/stdout_stderr.log": "9118956aba419fb2f835332dbde6028e9bbc510ce475934746bed4d993f1c6be"
+  },
+  "next_action": "Hold all native launches/assets until an explicitly reviewed compatible-host or supported remediation plan."
+}

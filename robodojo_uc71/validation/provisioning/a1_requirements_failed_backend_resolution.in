@@ -1,0 +1,7 @@
+# NVIDIA's stock Isaac Sim 5.1 Python installation, isolated from A0.
+# The stock base.python experience loads the base application's full extension set.
+isaacsim[all,extscache]==5.1.0.0
+# Resolve these three against PyTorch's explicit cu128 backend.
+torch==2.7.0+cu128
+torchvision==0.22.0+cu128
+torchaudio==2.7.0+cu128

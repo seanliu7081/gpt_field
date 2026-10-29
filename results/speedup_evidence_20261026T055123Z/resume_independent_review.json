@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent_resume_audit",
+  "updated_at_utc": "2026-10-26T07:10:10.901384+00:00",
+  "status": "first_pair_terminal_independent_review_complete",
+  "read_only_scope": "No model/simulator calls, source/runtime changes, policy inputs, or approvals by this auditor. Initial RGB inspected independently; this file is audit-only.",
+  "authorization": {
+    "evidence": "delegated_review_authorization.json",
+    "observed_user_answer": "授权上述具体矩阵逐份代审（推荐）",
+    "scope": "t1/t5/t7 seed7 P5 ep1-3 A/B; P6 ep4-6 conditional on P5; individual RGB/object/goal/all-step review; no real robot or other tasks"
+  },
+  "source_freeze": {
+    "manifest": "freeze_manifest_final.json",
+    "files_checked": 315,
+    "mismatches": [],
+    "mismatches_after_first_pair": []
+  },
+  "budget_snapshot": {
+    "primary_P5": 2,
+    "primary_P6": 0,
+    "infrastructure_retries": 1,
+    "original_failure_preserved": "trial_001",
+    "retry_link": "trial_002 -> trial_001",
+    "no_refund_or_reset": true,
+    "detailed_audit_windows_conservative_total": 46,
+    "detailed_audit_limit": 60,
+    "detail": "Initial40 + independent5 + root A-k4 one additional; no further semantic windows read by independent auditor."
+  },
+  "scheduling": {
+    "evidence": "paired_schedule_protocol.json",
+    "judgment": "acceptable fixed-setting interpretation of interleaved A/B; plan does not require serial completion",
+    "clock_rule": "After delegated review-begin all automatic review, queue, execution and required finalization time counts; never resume/pause to erase machine queue. Keep old explicit human-authorization wait distinct.",
+    "registered_before_first_policy_action": true,
+    "parallel_pair_dedicated_identical_GPU_slots": [
+      1,
+      2
+    ],
+    "alternate_start_and_slot_per_pair": true,
+    "limitations": [
+      "Shared CPU/OS/storage/subscription service contention remains part of this fixed evaluation setting.",
+      "First pair used historical prepared drafts with explicit human wait and approximately 138 seconds automated review; these seconds cannot be subtracted for S300."
+    ],
+    "handoff_caveat": "Approximately0.45/0.94seconds from recorded authorization receipt to review-begin remained in inherited human pause. This sub-second dispatch residual is disclosed, not erased or retroactively rewritten. Both services exceed600seconds, so no S300/raw900 conclusion changes. Entire138second delegated review and all post-approval queue/execution/finalization are counted."
+  },
+  "first_pair": {
+    "trial_002": {
+      "review_status": "consumed",
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "plan_modified": false,
+      "approved_by": "codex",
+      "automatic_review_compute_s": 138.10732062300667,
+      "human_wait_s": 2775.882632920984,
+      "clock_paused": false,
+      "initial_observation": {
+        "expected_sha256": "21c44c26ba5ba018160282e07ec0374dbea561c140c69e7ece4f2c53bc101695",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "21c44c26ba5ba018160282e07ec0374dbea561c140c69e7ece4f2c53bc101695"
+      },
+      "image_hashes": [
+        "e01f8cb0482096278d6cc3199f3914869725760f6f7e1fde6b5c8405dba02e39",
+        "3bd20afabe80401f1dcc53ffe6037364bf659ecd6a05a84c6267c8f2ccca2b8f",
+        "ede54f7981e5b8db1d2ec800d222b781f15ce6abaf1aa5426529b8f6c9ebd3af",
+        "98f21db387b517c599ff60f0700c7137cd5d84ad4e36f7dbaf9f806c80cca496"
+      ],
+      "single_use_claim": true,
+      "terminal_result": {
+        "status": "success",
+        "raw_libero_success": true,
+        "time_to_raw_success_s": 645.7739087290829,
+        "service_elapsed_s": 648.73408882902,
+        "human_review_wait_s": 2775.882632920984,
+        "automatic_review_compute_s": 138.10732062300667,
+        "approved_by": "codex",
+        "review_modified": false,
+        "S300": false,
+        "raw_success_within_900": true,
+        "steps": 830,
+        "execution_model_requests": 11,
+        "total_model_requests_including_preparation": 12,
+        "api_key_calls": 0
+      },
+      "terminal_quality": {
+        "at_terminal": false,
+        "after_release_settle": true,
+        "physical_success_at_terminal": false,
+        "physical_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in butter_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "raw_libero_success_after_settle": true,
+        "physical_success": false,
+        "raw_libero_success": true,
+        "v2_success": false,
+        "verdict": "lenient_success",
+        "diagnosis_only": true,
+        "affects_completion": false,
+        "truth_version": "agent-speedup-v2-truth-v3"
+      },
+      "post_success_diagnostic_action_count": 38,
+      "policy_actions_do_not_include_diagnostic_actions": true,
+      "collision_detected": true,
+      "timing_components": {
+        "decision_s": 253.2584186817985,
+        "model_pipeline_s": 252.3439512689365,
+        "simulator_step_s": 101.79827802604996,
+        "observe_transition_s": 6.401322720688768,
+        "video_render_s": 79.13482420949731,
+        "run_state_s": 24.57919081253931,
+        "policy_compute_s": 0.9144674128619954,
+        "model_pipeline_s_by_kind": {
+          "agent": 252.343951
+        }
+      },
+      "clock_finished": true,
+      "clock_pause_resets_after_review_begin": 0,
+      "authorization_to_resume_handoff_residual_s_approx": 0.4537928104400635,
+      "approval_to_execution_counted_s": 1.6623497030232102,
+      "raw_time_then_finalization_s": 2.9601800999371335,
+      "timing_definition_consistent": true
+    },
+    "trial_003": {
+      "review_status": "consumed",
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "plan_modified": false,
+      "approved_by": "codex",
+      "automatic_review_compute_s": 138.45601892692503,
+      "human_wait_s": 2710.695967414067,
+      "clock_paused": false,
+      "initial_observation": {
+        "expected_sha256": "21c44c26ba5ba018160282e07ec0374dbea561c140c69e7ece4f2c53bc101695",
+        "expected_source": "argument",
+        "matched": true,
+        "sha256": "21c44c26ba5ba018160282e07ec0374dbea561c140c69e7ece4f2c53bc101695"
+      },
+      "image_hashes": [
+        "e01f8cb0482096278d6cc3199f3914869725760f6f7e1fde6b5c8405dba02e39",
+        "3bd20afabe80401f1dcc53ffe6037364bf659ecd6a05a84c6267c8f2ccca2b8f",
+        "ede54f7981e5b8db1d2ec800d222b781f15ce6abaf1aa5426529b8f6c9ebd3af",
+        "98f21db387b517c599ff60f0700c7137cd5d84ad4e36f7dbaf9f806c80cca496"
+      ],
+      "single_use_claim": true,
+      "terminal_result": {
+        "status": "success",
+        "raw_libero_success": true,
+        "time_to_raw_success_s": 611.9867904338753,
+        "service_elapsed_s": 614.0114279978443,
+        "human_review_wait_s": 2710.695967414067,
+        "automatic_review_compute_s": 138.45601892692503,
+        "approved_by": "codex",
+        "review_modified": false,
+        "S300": false,
+        "raw_success_within_900": true,
+        "steps": 1019,
+        "execution_model_requests": 13,
+        "total_model_requests_including_preparation": 14,
+        "api_key_calls": 0
+      },
+      "terminal_quality": {
+        "at_terminal": false,
+        "after_release_settle": true,
+        "physical_success_at_terminal": false,
+        "physical_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in cream_cheese_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "raw_libero_success_after_settle": true,
+        "physical_success": false,
+        "raw_libero_success": true,
+        "v2_success": false,
+        "verdict": "lenient_success",
+        "diagnosis_only": true,
+        "affects_completion": false,
+        "truth_version": "agent-speedup-v2-truth-v3"
+      },
+      "post_success_diagnostic_action_count": 38,
+      "policy_actions_do_not_include_diagnostic_actions": true,
+      "collision_detected": true,
+      "timing_components": {
+        "decision_s": 280.6107236894313,
+        "model_pipeline_s": 279.53786375024356,
+        "simulator_step_s": 121.99194845627062,
+        "observe_transition_s": 7.647440938744694,
+        "video_render_s": 25.641841216944158,
+        "run_state_s": 0.1081264055101201,
+        "policy_compute_s": 1.0728599391877651,
+        "model_pipeline_s_by_kind": {
+          "agent": 279.537864
+        }
+      },
+      "clock_finished": true,
+      "clock_pause_resets_after_review_begin": 0,
+      "authorization_to_resume_handoff_residual_s_approx": 0.9374399185180664,
+      "approval_to_execution_counted_s": 0.9663358939578757,
+      "raw_time_then_finalization_s": 2.0246375639690086,
+      "timing_definition_consistent": true
+    }
+  },
+  "observations": [
+    {
+      "kind": "independent_RGB_review",
+      "evidence": "evaluations/trial_002/review_image_[0-3].png",
+      "conclusion": "Original external/wrist RGB and numbered grids independently inspected. A cream-cheese package, B cow-labelled butter and C open basket match both unchanged two-step place_in plans. Grid cells are coarse seeds, not exact grasp coordinates."
+    },
+    {
+      "kind": "mechanism_attribution",
+      "conclusion": "First execution responses already differ: A chose cheese first, B butter first. This is allowed independent model sampling, not proof the IO change altered decisions. End-to-end differences require aggregate paired evidence; saved replay establishes IO equivalence."
+    },
+    {
+      "kind": "stall_close_provenance",
+      "trial": "trial_003",
+      "evidence": "launches/trial_003/run.log, model calls 2-4",
+      "conclusion": "Local controller stopped the stalled descent before the planned closure; fingers remained open. A new model request used new RGB (centered package and fingers alongside) to explicitly request closure plus short test lift; later attachment statement used lift evidence. No local direct stall-to-close or stall-to-grasp acceptance was found. Contact quality must remain separately reported."
+    },
+    {
+      "kind": "quality_semantics",
+      "conclusion": "summary.physical_truth can aggregate post-success release-and-settle counterfactual. Do not call its aggregate verdict autonomous completion; report terminal atoms and after_release_settle separately."
+    }
+  ],
+  "terminal_first_pair_review": "passed accounting/source/reset/review checks; neither arm reaches S300 or autonomous terminal physical quality",
+  "P5_gate": "pending remaining preregistered conditions; no advancement claim",
+  "P6": "not permitted before actual P5 pass",
+  "first_pair_images_identical": true,
+  "additional_detailed_decision_windows": [
+    {
+      "trial": "trial_002",
+      "model_request_k": 1
+    },
+    {
+      "trial": "trial_003",
+      "model_request_k": 1
+    },
+    {
+      "trial": "trial_003",
+      "model_request_k": 2
+    },
+    {
+      "trial": "trial_003",
+      "model_request_k": 3
+    },
+    {
+      "trial": "trial_003",
+      "model_request_k": 4
+    }
+  ],
+  "additional_detailed_decision_windows_count": 5,
+  "first_pair_executed_retry_comparison": {
+    "service_reduction_fraction": 0.05352371862229553,
+    "S300_A": false,
+    "S300_B": false,
+    "autonomous_terminal_physical_A": false,
+    "autonomous_terminal_physical_B": false,
+    "warning": "Exploratory executed retry A vs B only; original A trial001 infrastructure failure remains primary ledger. One pair cannot advance P5 or establish IO causal full-task benefit."
+  },
+  "next_batch_review_requirement": "On successful prepare, immediately resume service clock for delegated automatic review; no waiting behind other execution may remain labelled human review."
+}

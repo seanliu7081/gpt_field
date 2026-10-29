@@ -1,0 +1,170 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/agent_speedup_v2_user_check_agent_macros.py	2026-10-21 11:10:08.781173392 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent_macros.py	2026-10-21 17:50:16.523816476 +0000
+@@ -9,6 +9,7 @@
+ from copy import deepcopy
+ 
+ from . import agent_speedup_v2 as base
++from .agent_speedup_v2_primitives import CalibratePlus
+ from .agent_speedup_v2_user_check_constraints import ConstraintRunnerMixin, causal_feedback
+ from .agent_speedup_v2_user_check_plan import with_extensions
+ from .agent_speedup_v2_user_check_runtime import StableScene, compact_evidence
+@@ -48,6 +49,7 @@
+         self._monitor_keys = set()
+         self._geometry_stale = False
+         self._start_step = int(getattr(ctx, "step", 0))
++        self._end_step = self._start_step
+ 
+     @property
+     def active(self):
+@@ -61,7 +63,9 @@
+             return False
+         self.step_index, self.result = step_index, None
+         self._start_step = int(self.ctx.step)
++        self._end_step = None
+         self._monitor_keys = set(self.ctx.monitor.keys())
++        self.runner = None
+         self.started = False
+         self.generator = self._execute()
+         return True
+@@ -76,6 +80,7 @@
+             return self.generator.send(reply)
+         except StopIteration as stop:
+             self.generator = None
++            self._end_step = int(self.ctx.step)
+             self.result = stop.value or {"status": "returned", "reason": "native_skill_returned"}
+             return None
+ 
+@@ -152,16 +157,123 @@
+                 "native_status_is_not_task_success": True,
+                 "direct_control_available": True}
+ 
+-    def status(self):
++    def _actions_consumed(self):
++        end = int(self.ctx.step) if self._end_step is None else self._end_step
++        return max(0, end - self._start_step)
++
++    def setup_progress(self, primitive=None):
++        """Describe native setup work, without treating a grant boundary as failure.
++
++        The host owns the live primitive. Passing it supplies measured stage
++        progress; omitting it deliberately leaves those details unknown. The
++        nominal calibration cost documents the existing implementation and is
++        neither a timeout nor permission to skip its required measurements.
++        """
++        phase = None if self.runner is None else self.runner.phase
++        selected = None
++        raw = self.lock.plan()
++        if self.step_index is not None and 0 <= self.step_index < len(raw["steps"]):
++            selected = raw["steps"][self.step_index]
++        supported = selected is not None and selected["do"] in {"hold", "turn", "place_on", "release"}
++        calibrated = getattr(self.ctx, "cal", None) is not None
++        cal = primitive if isinstance(primitive, CalibratePlus) else None
++        current = None if cal is None else cal.current
++        result_status = (self.result or {}).get("status")
++        primitive_failed = cal is not None and cal.status == "failed"
++        if result_status in {"unavailable", "failed", "cancelled"}:
++            status = result_status
++        elif primitive_failed:
++            status = "failed"
++        elif self.active and phase in {None, "calibrate", "plan", "register"}:
++            status = "normal_initialization"
++        elif self.active:
++            status = "executing_skill"
++        elif result_status is not None:
++            status = "returned"
++        else:
++            status = "not_requested"
++
++        required_parts = set()
++        if selected is not None:
++            required_parts.update((selected["obj"], selected.get("ref"), *selected.get("grip", ())))
++            required_parts.update(item["p"] for item in selected.get("keep", ()))
++            required_parts.update(item.get("p") for item in selected.get("until", ()))
++            for claim in raw.get("hold_true", ()):
++                required_parts.update((claim["a"], claim.get("b")))
++            required_parts.discard(None)
++
++        # A completed/failed/cancelled session cannot be resumed. An active
++        # generator may continue at a host-issued pause; it never restarts its
++        # calibration merely because the previous action grant was exhausted.
++        resumable = self.active and supported and not primitive_failed
++        calibration_status = ("calibrated" if calibrated else "failed" if primitive_failed
++                              else "pending" if supported else "not_requested")
++        return base.jsonable({
++            "status": status,
++            "phase": phase,
++            "observed_at_step": int(self.ctx.step),
++            "actions_consumed": self._actions_consumed(),
++            "calibrated": calibrated,
++            "calibration": {
++                "status": calibration_status,
++                "stage_detail_available": cal is not None,
++                "actions_consumed": None if cal is None else cal.actions_executed,
++                "completed_stages": None if cal is None else deepcopy(cal.stage_outcomes),
++                "current_stage": None if cal is None else cal.stage,
++                "current_stage_actions": None if current is None else current.actions_executed,
++                "pending_stages": None if cal is None else list(cal._queue),
++                "stages_started": None if cal is None else list(cal.stages_run),
++                "conditional_third_close": None if cal is None else cal.third_close,
++                "estimated_total_steps": 190,
++                "estimate_source": "CalibratePlus implementation docstring; nominal full cold setup",
++                "estimate_is_hard_cap": False,
++                "estimate_note": ("This is an approximate full-calibration cost, not remaining work or a "
++                                  "failure threshold. Settling, probes and a conditional third close vary. "
++                                  "A 60-action grant normally cannot finish cold calibration."),
++                "interpretation": ("Closing, opening and yawing the empty hand are calibration progress. "
++                                   "Unchanged task objects during these stages do not establish a stall."),
++            },
++            "required_capabilities": [] if not supported else [
++                {"capability": "native_robot_image_calibration", "phase": "calibrate",
++                 "available": calibrated,
++                 "reason": "Native image-space control needs measured gripper, image-motion and camera relations."},
++                {"capability": "current_view_plan_grounding", "phase": "plan",
++                 "reason": "Refresh approved identities' image cells after calibration motion; preserve intent."},
++                {"capability": "selected_step_part_registration", "phase": "register",
++                 "part_ids": sorted(required_parts),
++                 "reason": "Measure selected-step geometry and applicable constraints; future steps do not add roles."},
++            ],
++            "following_setup_cost": {
++                "grounding": "A current-view plan model request follows calibration.",
++                "registration": ("Required selected-step geometry may need pointing model requests and "
++                                 "observed probe actions; their cost is additional to the calibration estimate."),
++                "skill_execution": "Task-directed manipulation starts only after native prerequisites are available.",
++            },
++            "budget_pause": {
++                "is_failure": False,
++                "meaning": "A host action-grant boundary is a normal observation/decision boundary, not a native failure.",
++                "resume_available_at_pause": resumable,
++                "resume": ({"step_index": self.step_index, "continuation": True} if resumable else None),
++                "instruction": ("If only the grant expired, continue the same paused macro to retain its "
++                                "primitive and setup progress, or choose direct control. Diagnose an actual "
++                                "failed outcome separately; this status does not certify future success."),
++            },
++            "scope": ("These prerequisites belong only to the selected native macro. They never gate "
++                      "direct motion or generic fragments using available robot/camera facts. An unavailable "
++                      "native image-motion estimate is not silently replaced with assumed calibration."),
++        })
++
++    def status(self, primitive=None):
+         runner = self.runner
+         pending = list(getattr(self.ctx, "pending_outcomes", ()) or ())
+         last = pending[-1] if pending else None
+         return base.jsonable({
+             "active": self.active, "step_index": self.step_index,
+             "phase": None if runner is None else runner.phase,
+-            "actions_since_start": int(self.ctx.step) - self._start_step,
++            "actions_since_start": self._actions_consumed(),
+             "geometry_stale_after_direct": self._geometry_stale,
+             "result": self.result,
++            "setup_progress": self.setup_progress(primitive),
+             "native_holding_estimate": getattr(getattr(self.ctx, "holding", None), "pid", None),
+             "last_outcome": None if last is None else {
+                 "relation": last.relation, "status": last.status, "reason": last.reason,
+@@ -173,6 +285,7 @@
+         if self.generator is not None:
+             self.generator.close()
+             self.generator = None
++            self._end_step = int(self.ctx.step)
+             self.result = {"status": "cancelled", "reason": reason,
+                            "physical_effects_preserved": True}
+         # Do not leave a paused controller's private observer preempting all

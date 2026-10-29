@@ -1,0 +1,42 @@
+{
+  "recorded_at_utc": "2026-10-29T05:28:40.035537+00:00",
+  "attempt": "a1_attempt_003",
+  "raw_result_preserved": true,
+  "raw_returncode": -11,
+  "raw_termination_label": "gpu_process_ownership_unresolved",
+  "interpretation": "Stock SimulationApp child exited with SIGSEGV during viewport initialization; post-exit NVML cleanup was incorrectly labeled as unresolved ownership by the monitor.",
+  "reasoning": [
+    "ON/OFF/ON calibration verified the same child NVML PID before stock startup.",
+    "The preceding monitor sample contains the live child with its expected start ticks and accepted NVML alias.",
+    "Final monitor sample has zero live owned processes while NVML still reports only that already-bound PID, with declining memory.",
+    "The launcher removes aliases when the child is no longer live, then enters its ownership guard. Its cleanup only signals live owned processes, so this final zero-live-process guard cannot account for the preceding SIGSEGV.",
+    "The preserved vendor log records Fatal Python error: Segmentation fault during SimulationApp._wait_for_viewport."
+  ],
+  "child_pid": 3136451,
+  "nvml_pid": 111192,
+  "last_monitor_owned_processes": [],
+  "all_unmapped_pids_equal_verified_alias": true,
+  "peak_owned_mib_per_gpu": {
+    "0": 694,
+    "1": 694,
+    "2": 694,
+    "3": 700,
+    "4": 752,
+    "5": 694,
+    "6": 694,
+    "7": 694
+  },
+  "camera_frame_created": false,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "remaining_owned_pids": [],
+  "scope_limitation": "Standard SimulationApp with explicitly precreated GPU4 primary CUDA context for namespace identity calibration; no native RoboDojo environment.",
+  "sha256": {
+    "launch_result.json": "98732151c9c745f9f4e9cffa311e0a8b571020e0a72651f2445fc8303cdd2254",
+    "gpu_monitor.jsonl": "cdcce16cd8ebe6fdb39fb0cf1f96e1ae1cfb669ff16954e62d2653741492998c",
+    "stdout_stderr.log": "7aa36aae590b39ac7c217454bee8fa1b0ba848189210d20a83a8fe9677d2b529",
+    "cuda_identity_binding.json": "e328467ed1fce39a6f3ffc2602b39aa878c253ddd6fcf39fdc10ec7d84b9c036",
+    "cuda_identity_child.json": "cf6c1013549dde44ac16d1be42fd0a2c4a6efe16c9d2420e7709dad1612af490",
+    "loaded_graphics_libraries.json": "44a24b3c7583a8441199975ef7b5a8d5fa2d028b14eef92b43599d1f4a36e7cd"
+  }
+}

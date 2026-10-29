@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent_resume_audit",
+  "created_at_utc": "2026-10-26T07:27:42.137471+00:00",
+  "scope": "Read-only metadata review of plan sections9/10, manifest, budget ledger, request and clock status. No model/simulator invocation, semantic decision window, holdout truth, or baseline/frozen modification.",
+  "recommendation_now": "freeze current online extension; narrow_scope verified IO engineering; P5 inconclusive and P6 not started",
+  "decision_status": "final: second matching preparation deadline verified; repeated-failure stop condition observed",
+  "plan_basis": [
+    {
+      "section": "9",
+      "rule": "P6 requires P5 pass; frozen holdout conditions must remain untouched and unretuned."
+    },
+    {
+      "section": "10",
+      "rule": "Repeated failures without new evidence or testable explanation: do not repeat full episodes; move to state-level diagnosis or end the branch."
+    },
+    {
+      "section": "2",
+      "rule": "Budgets are hard upper bounds, not required quotas; all failures and retries share cumulative accounting."
+    }
+  ],
+  "observed_trial_004": {
+    "status": "evaluation_budget_exhausted",
+    "arm": "B",
+    "task": "libero_10_t1",
+    "episode_index": 2,
+    "service_elapsed_s": 901.0327912470093,
+    "deadline_event_service_s": 900.0003546940861,
+    "deadline_source": "in_flight_model_deadline",
+    "deadline_overshoot_s": 1.0327912470092997,
+    "request_attempts": 1,
+    "request_kind": "plan",
+    "billing": "chatgpt_subscription",
+    "api_key_calls": 0,
+    "unknown_usage_calls": 1,
+    "transport_pending_until_cancel_s": 893.3681769659743,
+    "usable_response_persisted": false,
+    "review_created": false,
+    "policy_trace_created": false,
+    "raw_libero_success": false,
+    "S300": false,
+    "automatic_review_compute_s": 0.0,
+    "human_wait_s": 0.0,
+    "independent_infrastructure_error_evidence": false,
+    "classification": "initial model-request/transport path censored by the full-service deadline; cause unresolved"
+  },
+  "trial_005_at_review": {
+    "reservation_exists": true,
+    "terminal_result": null,
+    "session_exists": true
+  },
+  "required_before_stopping_for_repeated_failure": [
+    "Actual terminal evidence for a second independently initiated allowed attempt, not merely waiting650 seconds or an unstarted reservation.",
+    "Both attempts show the same preparation/model-request stage, no completed usable plan, no policy actions, and effective900-second exhaustion with required cleanup recorded; do not confuse absent complete output with no streamed data.",
+    "Retain per-request attempts, service event times, absence/presence of explicit transport/provider errors and usage status; do not infer server-side compute duration from waiting alone.",
+    "Explain why no new actionable/testable cause was identified; new scenario cells could be informative in principle, but repeating a currently shared unavailable prerequisite does not test the IO mechanism.",
+    "Keep original results and debits. Do not label the long tail infrastructure or grant a retry unless independent evidence establishes an allowed infrastructure cause."
+  ],
+  "conditional_decisions": {
+    "if_A_succeeds": "Repeated-failure condition is not established. Continue the remaining predeclared P5 comparisons within scope/budget, preserving B timeout; analyze stochastic/service latency without an extra B retry.",
+    "if_A_also_censored_same_stage_without_new_cause": "Stopping further online repetition is defensible under section10, but not mandatory evidence that the IO algorithm fails. Freeze this online campaign/extension, mark P5 efficacy inconclusive and P6 not started. Preserve engineering-only IO branch with narrow_scope recommendation.",
+    "if_A_fails_differently": "Do not collapse distinct causes into one repeated defect; inspect only necessary metadata and apply the actual stopping rule.",
+    "if_new_service_health_or_causal_evidence_arrives": "That evidence can make remaining originally registered P5 conditions informative, but it never resets budgets, changes the900 window, permits P6 without pass, or expands beyond the user-approved matrix."
+  },
+  "mechanism_attribution": {
+    "supported": "Frozen action/request equivalence and saved-frame ABBA display-IO component cost reduction remain valid; first executed A-retry/B pair gives raw successes above300 seconds and only5.35% exploratory complete-service reduction.",
+    "unsupported": [
+      "The IO change caused the initial-plan latency tail.",
+      "The remote model spent the entire pending interval computing.",
+      "Two preparation timeouts falsify IO equivalence or establish universal failure across t1/t5/t7.",
+      "The900-second incomplete durations are successful completion times or speedup observations.",
+      "The two-repair stopping rule was exhausted: no repair rounds for this pending-request event have occurred."
+    ],
+    "reason": "The pure IO treatment acts during execution recording/status writes; the blocked initial planning path is shared and occurs before any policy action or display recorder execution."
+  },
+  "remaining_authorized_informative_work_without_new_runs": [
+    "Completed: offline actual-wrapper versus direct-CLI request/exception equivalence test; it did not produce a repair target and consumed zero live model queries/rollouts/episodes.",
+    "Collect complete terminal receipts, request errors and timing/censoring metadata for trial004 and the reserved A comparison; inspect actual declared source/reset/config bindings.",
+    "Reconcile original/retry ledger, measured terminal denominators, missing unstarted cells, and manifest counters; retain both original credential-store failure and retry cost.",
+    "Finish P5 per-condition table, strict original-ledger gate, separately labelled retry sensitivity, and P6 unstarted reasons.",
+    "Finish autonomy quality distinctions (raw terminal predicate vs release/withdraw/support vs extra38-step diagnostic), model/subscription request totals, timing attribution and saved-source integrity.",
+    "Preserve raw logs/failures and reproducible launch/freeze commands; update Chinese report and route decisions without claiming five-minute performance or generality."
+  ],
+  "additional_work_limits": "Do not start an extra health-check model query, alternative candidate, repeated episode, or holdout run merely to consume unused budget. New requests/rollouts need a concrete hypothesis and debit in the existing relevant cap; this audit launches none.",
+  "budget_ledger_snapshot": {
+    "P5_original_reservations": 4,
+    "P6_original_reservations": 0,
+    "infrastructure_retries": 1,
+    "detailed_audit_windows": 46,
+    "additional_semantic_windows_this_review": 0,
+    "manifest_P5_consumed_snapshot": 4,
+    "manifest_counter_stale": false
+  },
+  "reporting_labels": {
+    "observed_timeout": "raw=false,S300=false, incomplete preparation; autonomous terminal physical quality unknown because no policy executed",
+    "reserved_unstarted": "unobserved/not_started, not an observed policy failure; reservation debit retained",
+    "P5_if_stopped_early": "inconclusive; incomplete frozen matrix, no engineering advancement",
+    "P6": "not_started_P5_gate_unmet; never call holdout failures or infer results",
+    "route_recommendation_if_two_matching_timeouts": "narrow_scope for verified IO engineering; freeze current online extension; end-to-end claim inconclusive"
+  },
+  "updated_at_utc": "2026-10-26T07:48:17.076291+00:00",
+  "wrapper_causal_review": {
+    "launch_variation": "trial002/003 preparation used direct frozen CLI; trial004/005 use new runpy launcher before the same frozen cli. Both arms within case2 use same launcher.",
+    "candidate_hypothesis": "runpy entry context might alter preparation arguments, request construction or deadline propagation",
+    "test_artifacts": [
+      "wrapper_offline_audit.py",
+      "wrapper_offline_audit.json"
+    ],
+    "test_passed": true,
+    "wrapper_sha256": "57c23b0d9198c246adbf82ad2e699e8a9bb32d3226ac9d58feedcaca00b1bcb8",
+    "runner_sha256": "ed5f0b833e1a57944b7b425822e2c01bec29dc8053bce9a3950c3a4c2bba7219",
+    "tested_conditions": "A/B x successful fixed response/injected EvaluationBudgetExceeded; actual direct CLI versus actual wrapper; existing FakeV2Sim/ScriptedV2Transport; socket connects and subprocess launches prohibited",
+    "result": "Four paired offline cases pass. Captured endpoint/payload/timeout/header-name hashes equal; one fixed request, zero actions, same result. review-begin occurs only after successful prepare; no approval. Failure exits before handoff.",
+    "interpretation": "This specific request/exception-path hypothesis did not reproduce. Static call order and offline results make wrapper-caused request alteration unsupported; they do not prove network timing equivalence or exclude every entry/environment interaction.",
+    "new_evidenced_fix_target": false,
+    "remaining_uncertainty": "No intermediate SSE event telemetry persisted; possible provider queue, streaming incomplete output, client/network behavior cannot be separated from existing metadata. Launcher variation must be disclosed rather than retroactively erased."
+  },
+  "streaming_semantics": {
+    "completed_response_required": "chatgpt_plan.read_completed_response accepts only a valid response.completed envelope; intermediate SSE items do not form a usable plan.",
+    "timeout_s_180": "Passed to the underlying urllib operation; it is not a180-second total request budget. Ongoing bytes/SSE can leave the request pending until the outer900-second service deadline.",
+    "evidence_limit": "No completed .response artifact or valid review plan was produced. This does not establish zero network bytes, zero SSE events, or no server response.",
+    "root_cause_label": "initial plan request path exceeded available service window without completed response; remote versus local cause unresolved"
+  },
+  "offline_wrapper_validation_budget": {
+    "new_model_queries": 0,
+    "real_simulator_rollouts": 0,
+    "episode_reservations": 0,
+    "semantic_audit_windows": 0,
+    "fake_preparation_cases": 8,
+    "paired_checks": 4,
+    "frozen_source_modified": false,
+    "original_failure_logs_modified": false
+  },
+  "chinese_report_review": {
+    "reviewed_snapshot_sha256": "cd6eccfaa20a88093ac9b155d1cac90074d010ca18c71f9f5a911738db439e9f",
+    "status": "no overclaim found; pending final refresh and clarifications",
+    "passed_points": [
+      "Original trial001 failure and associated trial002 retry are kept separate.",
+      "First executed A-retry/B pair is explicitly labelled, with both service times above300 and5.35% not attributed wholly to IO.",
+      "Strict physical terminal quality and additional38-action release/settle diagnosis are separate; raw truncation is not proof of permanent inability to finish.",
+      "Second condition lacks cross-arm initial SHA verification; same official episode/seed is not claimed as a verified matching hash.",
+      "New runpy launch handoff and incomplete-response/SSE limits are disclosed; no unproven infrastructure retry is claimed.",
+      "No P5 pass, P6 result, five-minute achievement, or generality success is claimed."
+    ],
+    "final_update_items": [
+      "State explicitly that preparation failures and unstarted cells have unknown/unassessed autonomous physical quality, not observed quality failures.",
+      "Add completed4-pair wrapper offline verification with0 new model queries/0 real simulator rollouts and disclose its network-timing limitation.",
+      "Refresh paired_results.csv, p5_gate.json and manifest counters after terminal trial005; current paired CSV still labels terminal trial004 awaiting_review.",
+      "Report primary original-ledger success counts/denominators separately from exploratory executed retry pair.",
+      "Preserve missing second-pair reset-hash verification as a comparison limitation even if both requests timeout."
+    ],
+    "scope": "Read-only review of current in-progress report; parent owns edits and final status update."
+  },
+  "conclusion": "Both trial004 and trial005 ended at the fixed service deadline before any valid plan or policy execution. The repeated-failure rule supports stopping this online extension without spending the remaining matrix. Full-task efficacy remains inconclusive; prior IO equivalence/component evidence is preserved; no claim of a proved provider outage, failed IO mechanism, or two failed controller repairs.",
+  "initial_review_recommendation": "continue existing reserved trial_005 A comparison within unchanged900 service seconds; trial_004 B alone is not repeated-failure evidence",
+  "initial_review_conclusion": "No evidenced wrapper request/exception-path defect was reproduced by permitted offline verification. One observed planning deadline is retained; a second matching terminal result is required before invoking repeated-failure stopping. Conditional freeze applies to this online extension, while P5 efficacy remains inconclusive and validated IO engineering remains narrow-scope.",
+  "final_followup": {
+    "reviewed_at_utc": "2026-10-26T07:48:17.076291+00:00",
+    "trial_005_status": "evaluation_budget_exhausted",
+    "trial_005_service_elapsed_s": 900.9528483679751,
+    "trial_005_deadline_overshoot_s": 0.9528483679750934,
+    "trial_005_raw_libero_success": false,
+    "trial_005_automatic_review_compute_s": 0.0,
+    "trial_005_human_review_wait_s": 0.0,
+    "policy_actions": 0,
+    "reason": "Second arm has same preparation/completed-plan prerequisite failure with unchanged900-second service deadline; no completed response or approved plan, no independent infrastructure cause. Offline wrapper hypothesis did not reproduce.",
+    "stop_record": "online_stop.json",
+    "second_pair_initial_hash_verified": false,
+    "qualification": "Same registered official task/episode/seed and same failure stage; exact paired reset image hash is not proven."
+  }
+}

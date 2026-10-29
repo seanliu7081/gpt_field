@@ -1,0 +1,64 @@
+{
+  "source_run": "agent_speedup_v2_uc7_relayout_t0_t4_20261027_001",
+  "source_response_sha256": "f918b7a854440a5d48bfa6f75a85c691ea6f69bf12ab4a197c30c71655caa872",
+  "task": "put both the alphabet soup and the tomato sauce in the basket",
+  "plan": {
+    "scene": "Two food cans on a table beside an open, cloth-lined basket.",
+    "parts": [
+      {
+        "id": "A",
+        "text": "alphabet soup: cylindrical can with blue label",
+        "move": "free",
+        "w": 52,
+        "x": 37
+      },
+      {
+        "id": "B",
+        "text": "tomato sauce: cylindrical can with tomato pictures",
+        "move": "free",
+        "w": 48,
+        "x": 34
+      },
+      {
+        "id": "C",
+        "text": "basket: open cloth-lined cavity",
+        "move": "free",
+        "w": 0,
+        "x": 40
+      }
+    ],
+    "hold_true": [],
+    "steps": [
+      {
+        "do": "place_in",
+        "obj": "A",
+        "grip": [],
+        "ref": "C",
+        "sense": "any",
+        "keep": [
+          {
+            "c": "upright",
+            "p": "A"
+          }
+        ],
+        "until": []
+      },
+      {
+        "do": "place_in",
+        "obj": "B",
+        "grip": [],
+        "ref": "C",
+        "sense": "any",
+        "keep": [
+          {
+            "c": "upright",
+            "p": "B"
+          }
+        ],
+        "until": []
+      }
+    ],
+    "regions": [],
+    "placement_goals": []
+  }
+}

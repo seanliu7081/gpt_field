@@ -1,0 +1,52 @@
+{
+  "recorded_at_utc": "2026-10-29T05:14:08.800257+00:00",
+  "outcomes": [
+    {
+      "attempt": "a1_mask_only_001",
+      "termination": "non_target_gpu_allocation_guard",
+      "returncode": 255,
+      "elapsed_s": 5.552470394060947,
+      "classification": "startup_allocation_guard_before_render",
+      "cuda_mask_warning_present": false,
+      "gdb_sigsegv": false,
+      "crash_plugin": null,
+      "first_image_produced": false,
+      "gpu_peak_used_mib": {
+        "0": 396,
+        "1": 396,
+        "2": 396,
+        "3": 411,
+        "4": 396,
+        "5": 396,
+        "6": 396,
+        "7": 396
+      },
+      "log_sha256": "10fa35620657cb400b1d68c7d17de7a5537ea21208a55162d69a39894ae571ee"
+    },
+    {
+      "attempt": "a1_mask_only_002",
+      "termination": null,
+      "returncode": 255,
+      "elapsed_s": 15.544097288977355,
+      "classification": "native_renderer_sigsegv",
+      "cuda_mask_warning_present": false,
+      "gdb_sigsegv": true,
+      "crash_plugin": "librtx.scenedb.plugin.so",
+      "first_image_produced": false,
+      "gpu_peak_used_mib": {
+        "0": 704,
+        "1": 704,
+        "2": 704,
+        "3": 719,
+        "4": 793,
+        "5": 704,
+        "6": 704,
+        "7": 704
+      },
+      "log_sha256": "26c3807b4df62c2bf077157da356ac75c1da6175935d39057fbddbfbaf109768"
+    }
+  ],
+  "finding": "Removing CUDA_VISIBLE_DEVICES was not sufficient to repair the minimal Kit renderer. Stock complete installation remains the separate control.",
+  "model_calls": 0,
+  "benchmark_actions": 0
+}

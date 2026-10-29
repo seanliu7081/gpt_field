@@ -1,0 +1,58 @@
+camera +X (image right) world: [-0.  1. -0.]  view dir: [-0.8488 -0.     -0.5288]
+
+-- plane z=0.425
+cell 35 uv=(160,288) -> world (-0.159,-0.144)  cell footprint dx=0.169 dy=0.119
+cell 38 uv=(352,288) -> world (-0.159,+0.146)  cell footprint dx=0.169 dy=0.120
+cell 43 uv=(160,352) -> world (-0.013,-0.125)  cell footprint dx=0.127 dy=0.101
+cell 53 uv=(288,416) -> world (+0.099,+0.038)  cell footprint dx=0.099 dy=0.079
+cell 54 uv=(352,416) -> world (+0.099,+0.111)  cell footprint dx=0.099 dy=0.087
+cell 55 uv=(416,416) -> world (+0.099,+0.185)  cell footprint dx=0.099 dy=0.096
+cell 60 uv=(224,480) -> world (+0.187,-0.033)  cell footprint dx=0.079 dy=0.070
+cell 61 uv=(288,480) -> world (+0.187,+0.034)  cell footprint dx=0.079 dy=0.070
+cell 62 uv=(352,480) -> world (+0.187,+0.100)  cell footprint dx=0.079 dy=0.077
+cell 63 uv=(416,480) -> world (+0.187,+0.166)  cell footprint dx=0.079 dy=0.084
+cell 64 uv=(480,480) -> world (+0.187,+0.232)  cell footprint dx=0.079 dy=0.091
+
+-- plane z=0.44
+cell 35 uv=(160,288) -> world (-0.138,-0.140)  cell footprint dx=0.165 dy=0.116
+cell 38 uv=(352,288) -> world (-0.138,+0.142)  cell footprint dx=0.165 dy=0.116
+cell 43 uv=(160,352) -> world (+0.004,-0.122)  cell footprint dx=0.124 dy=0.098
+cell 53 uv=(288,416) -> world (+0.113,+0.036)  cell footprint dx=0.096 dy=0.076
+cell 54 uv=(352,416) -> world (+0.113,+0.108)  cell footprint dx=0.096 dy=0.085
+cell 55 uv=(416,416) -> world (+0.113,+0.180)  cell footprint dx=0.096 dy=0.093
+cell 60 uv=(224,480) -> world (+0.199,-0.032)  cell footprint dx=0.077 dy=0.068
+cell 61 uv=(288,480) -> world (+0.199,+0.033)  cell footprint dx=0.077 dy=0.068
+cell 62 uv=(352,480) -> world (+0.199,+0.097)  cell footprint dx=0.077 dy=0.075
+cell 63 uv=(416,480) -> world (+0.199,+0.161)  cell footprint dx=0.077 dy=0.081
+cell 64 uv=(480,480) -> world (+0.199,+0.226)  cell footprint dx=0.077 dy=0.088
+
+plate centre -> [261.  450.8] cell 61
+plate +y edge                                 -> uv=( 324.6, 450.8) cell 62
+plate -y edge                                 -> uv=( 197.5, 450.8) cell 60
+plate +x edge (near cam)                      -> uv=( 261.6, 506.3) cell 61
+plate -x edge                                 -> uv=( 260.6, 404.2) cell 53
+old-rule region start x=0.223                 -> uv=( 261.6, 510.7) cell 61
+x=0.30,y=0                                    -> uv=( 255.5, 587.8) cell None
+x=0.35,y=0                                    -> uv=( 255.5, 648.6) cell None
+release (0.29,-0.02)                          -> uv=( 233.1, 576.7) cell None
+final pudding relayout (0.276,-0.020)         -> uv=( 233.6, 561.8) cell None
+t6_007 success (0.145,0.146)                  -> uv=( 389.2, 447.9) cell 55
+t6_009 final (0.187,0.170)                    -> uv=( 419.9, 480.1) cell 63
+t6_006 old-rule region centre (0.234,-0.009)  -> uv=( 246.2, 520.7) cell None
+
+LIBERO plate_right_region box corners (x 0.10..0.20, y 0.05..0.15):
+  (0.10,0.05) -> uv=( 298.9, 417.0) cell 53
+  (0.10,0.15) -> uv=( 385.5, 417.0) cell 55
+  (0.20,0.05) -> uv=( 304.7, 490.8) cell 61
+  (0.20,0.15) -> uv=( 403.1, 490.8) cell 63
+
+bottom image edge (v=511) on plane: x at u=255.5 -> [ 0.223 -0.     0.425]
+image bottom-left/right corners on plane: [ 0.223 -0.251  0.425] [0.223 0.251 0.425]
+
+P0.5 sign test: region cell vs anchor cell and vs true plate centre (z=0.425)
+  relayout                 E55->(+0.099,+0.185) C61->(+0.187,+0.034)  d=+y: (E-C).y=+0.152  (E-plate).y=+0.179 | old +x: (E-C).x=-0.088 (E-plate).x=-0.050; edge test y>0.075? True
+  t6_006                   E43->(-0.013,-0.125) C60->(+0.187,-0.033)  d=+y: (E-C).y=-0.092  (E-plate).y=-0.131 | old +x: (E-C).x=-0.200 (E-plate).x=-0.162; edge test y>0.075? False
+  t6_007                   E54->(+0.099,+0.111) C53->(+0.099,+0.038)  d=+y: (E-C).y=+0.074  (E-plate).y=+0.105 | old +x: (E-C).x=-0.000 (E-plate).x=-0.050; edge test y>0.075? True
+  t6_001..005 (no region)  E55->(+0.099,+0.185) C53->(+0.099,+0.038)  d=+y: (E-C).y=+0.148  (E-plate).y=+0.179 | old +x: (E-C).x=-0.000 (E-plate).x=-0.050; edge test y>0.075? True
+  t6_009                   region x=0 -> no pointed cell; check cannot run
+  t6_011                   region x=0 -> no pointed cell; check cannot run

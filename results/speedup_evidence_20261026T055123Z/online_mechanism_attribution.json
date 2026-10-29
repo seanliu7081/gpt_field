@@ -1,0 +1,353 @@
+{
+  "version": "online-mechanism-attribution-1",
+  "scope": "First terminal online pair; structural summary/stats/timing fields only, no new semantic request/trace window review",
+  "new_detailed_decision_windows_reviewed": 0,
+  "no_policy_or_runtime_changes": true,
+  "records": [
+    {
+      "record_id": "online_display_io:trial_002:v1",
+      "kind": "online_display_IO",
+      "trial_id": "trial_002",
+      "arm": "A",
+      "retry_of": "trial_001",
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "candidate": "v7_compact_display_io",
+      "terminal_status": "success",
+      "raw_libero_success": true,
+      "time_to_raw_success_s": 645.7739087290829,
+      "service_elapsed_s": 648.73408882902,
+      "S300": false,
+      "policy_steps": 830,
+      "policy_model_requests": 11,
+      "preparation_model_request_files": 1,
+      "execution_model_request_files": 11,
+      "action_sources": {
+        "fragment_actions": 829,
+        "fragment_grants": 11,
+        "direct_actions": 1,
+        "direct_segments": 0,
+        "hold_actions": 1,
+        "hold_actions_by_cause": {},
+        "native_macro_actions": 0,
+        "optional_macro_grants": 0,
+        "local_retries": 0,
+        "preemptions": 0,
+        "rejections": {
+          "api_error": 0,
+          "consecutive": 0,
+          "parse_error": 0,
+          "schema_error": 0
+        }
+      },
+      "action_count_caution": "fragment_actions + direct_actions count policy actions; hold_actions is an overlapping subcategory, not extra steps. Empty hold_actions_by_cause does not establish why the hold occurred.",
+      "costs": {
+        "decision_s": 253.2584186817985,
+        "model_pipeline_s": 252.3439512689365,
+        "policy_compute_s": 0.9144674128619954,
+        "simulator_step_s": 101.79827802604996,
+        "observe_transition_s": 6.401322720688768,
+        "video_render_s": 79.13482420949731,
+        "run_state_s": 24.57919081253931,
+        "display_and_status_control_s": 103.71401502203662,
+        "video_render_per_policy_action_ms": 95.34316169818953,
+        "run_state_per_policy_action_ms": 29.613482906673866,
+        "control_elapsed_s": 466.8556067410391,
+        "evaluator_elapsed_s": 475.7968770220177,
+        "service_elapsed_s": 648.73408882902,
+        "automatic_review_compute_s": 138.10732062300667,
+        "human_review_wait_s": 2775.882632920984,
+        "clock_boundary_service_s": {
+          "human_review_wait_start": 29.124124879017472,
+          "automatic_review_start": 29.12454995000735,
+          "approval_complete": 167.2321236630669,
+          "reviewed_execution_start": 168.89447352604475,
+          "policy_and_evaluator_finished": 648.7328747670399,
+          "required_artifacts_persisted": 648.7340872390196
+        }
+      },
+      "io_participation": {
+        "compact_recorder_enabled": false,
+        "compact_recorder_measurement": null,
+        "snapshot_adapter_enabled_by_frozen_arm_branch": false,
+        "snapshot_marker": null,
+        "terminal_run_state_bytes": 1278375,
+        "configured_snapshot_interval_s": null,
+        "published_snapshot_count": null,
+        "skipped_snapshot_count": null,
+        "measurement_limit": "Frozen B runtime branch applies the adapter; actual current_state_only marker and measured run_state_s show its active path. Gate published/skipped counters were not persisted; no count is fabricated.",
+        "display_errors": null
+      },
+      "autonomous_quality": {
+        "terminal_strict": false,
+        "terminal_raw": true,
+        "terminal_atoms": [
+          {
+            "atom": [
+              "in",
+              "cream_cheese_1",
+              "basket_1_contain_region"
+            ],
+            "strict": true,
+            "checks": {
+              "at_rest": true,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": true,
+              "not_perched_on_rim": true,
+              "supported_by_container_or_contents": true
+            },
+            "why_not": []
+          },
+          {
+            "atom": [
+              "in",
+              "butter_1",
+              "basket_1_contain_region"
+            ],
+            "strict": false,
+            "checks": {
+              "at_rest": false,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": false,
+              "not_perched_on_rim": false,
+              "supported_by_container_or_contents": false
+            },
+            "why_not": [
+              "not_held",
+              "at_rest",
+              "supported_by_container_or_contents",
+              "not_perched_on_rim"
+            ]
+          }
+        ],
+        "after_release_settle_strict": true,
+        "extra_diagnostic_actions": 38,
+        "diagnostic_assistance_is_autonomous_completion": false,
+        "operator_action_interventions": 0,
+        "note": "Last target remained held/unsettled without container support at terminal. Extra 38 open/lift/settle actions are independent diagnostic assistance, not autonomous release/withdrawal success."
+      },
+      "error": null,
+      "cleanup_errors": [],
+      "new_detailed_decision_windows_reviewed": 0,
+      "source_sha256": {
+        "evaluations/trial_002/evidence_result.json": "48f9f5558f5ba62a7dcbe0d35a347b026df764380d97c071ff39e9f3e210b857",
+        "evaluations/trial_002/service_clock.json": "d00e35a1999a13b5f9c35612228e899c45f8c15a0765a9567f9d93058ff6a27d",
+        "evaluations/trial_002/trial/summary.json": "425f86dc9ca6b0c4f44447687501abac57f386e3305ecf4b0950c3e4bcaa55b1",
+        "evaluations/trial_002/trial/agent_stats.json": "7137c03ee7c357513ba6271c1638f8c0dd670e292ecc489de24dcd5e4ad34a43",
+        "evaluations/trial_002/trial/run_state.json": "fdfb62bd13e781c875fba5d186e0455f2b66d2b4015a2a32dc2b2f8b427e77a6",
+        "evaluations/trial_002/trial/physical_truth.json": "76c8f59e20cd13ae14e614210bcbfc4eee8f0e7986b48d88b639b09f3c144bbf",
+        "evaluations/trial_002/session.json": "a523408a66f296f229a9f97b7f05588f9360bcdc01f813f55059104dabbf8652",
+        "baseline/scripts/evaluate_speedup_evidence.py": "ed5f0b833e1a57944b7b425822e2c01bec29dc8053bce9a3950c3a4c2bba7219",
+        "baseline/src/gpt_field/agent_speedup_v3_performance.py": "d156d78a0264e2761fea9a3176f6ac35486e673ba8ae6a2e51a3ac5fdbd60895"
+      }
+    },
+    {
+      "record_id": "online_display_io:trial_003:v1",
+      "kind": "online_display_IO",
+      "trial_id": "trial_003",
+      "arm": "B",
+      "retry_of": null,
+      "task": "libero_10_t1",
+      "episode_index": 1,
+      "candidate": "v7_compact_display_io",
+      "terminal_status": "success",
+      "raw_libero_success": true,
+      "time_to_raw_success_s": 611.9867904338753,
+      "service_elapsed_s": 614.0114279978443,
+      "S300": false,
+      "policy_steps": 1019,
+      "policy_model_requests": 13,
+      "preparation_model_request_files": 1,
+      "execution_model_request_files": 13,
+      "action_sources": {
+        "fragment_actions": 1019,
+        "fragment_grants": 13,
+        "direct_actions": 0,
+        "direct_segments": 0,
+        "hold_actions": 0,
+        "hold_actions_by_cause": {},
+        "native_macro_actions": 0,
+        "optional_macro_grants": 0,
+        "local_retries": 0,
+        "preemptions": 0,
+        "rejections": {
+          "api_error": 0,
+          "consecutive": 0,
+          "parse_error": 0,
+          "schema_error": 0
+        }
+      },
+      "action_count_caution": "fragment_actions + direct_actions count policy actions; hold_actions is an overlapping subcategory, not extra steps. Empty hold_actions_by_cause does not establish why the hold occurred.",
+      "costs": {
+        "decision_s": 280.6107236894313,
+        "model_pipeline_s": 279.53786375024356,
+        "policy_compute_s": 1.0728599391877651,
+        "simulator_step_s": 121.99194845627062,
+        "observe_transition_s": 7.647440938744694,
+        "video_render_s": 25.641841216944158,
+        "run_state_s": 0.1081264055101201,
+        "display_and_status_control_s": 25.749967622454278,
+        "video_render_per_policy_action_ms": 25.16373034047513,
+        "run_state_per_policy_action_ms": 0.10611030962720323,
+        "control_elapsed_s": 438.20645677496213,
+        "evaluator_elapsed_s": 446.47358018904924,
+        "service_elapsed_s": 614.0114279978443,
+        "automatic_review_compute_s": 138.45601892692503,
+        "human_review_wait_s": 2710.695967414067,
+        "clock_boundary_service_s": {
+          "human_review_wait_start": 24.297180049004965,
+          "automatic_review_start": 24.29762020893395,
+          "approval_complete": 162.7539270358393,
+          "reviewed_execution_start": 163.7202628199011,
+          "policy_and_evaluator_finished": 614.0101223158417,
+          "required_artifacts_persisted": 614.0114264278673
+        }
+      },
+      "io_participation": {
+        "compact_recorder_enabled": true,
+        "compact_recorder_measurement": {
+          "version": "agent-speedup-v3-compact-video-6",
+          "render_s": 21.56116378295701,
+          "encode_write_s": 0.6846098018577322,
+          "event_write_s": 0.07473361189477146,
+          "close_drain_s": 0.07037669094279408,
+          "rendered_frames": 1021,
+          "decision_events": 1019,
+          "executed_events": 1019,
+          "frame_count": 1021,
+          "canvas": [
+            640,
+            384
+          ],
+          "encoding": "synchronous; drained before returning",
+          "close_drain_contains_terminal_render_and_write": true,
+          "no_additional_simulator_render": true
+        },
+        "snapshot_adapter_enabled_by_frozen_arm_branch": true,
+        "snapshot_marker": "current_state_only",
+        "terminal_run_state_bytes": 63829,
+        "configured_snapshot_interval_s": 1.0,
+        "published_snapshot_count": null,
+        "skipped_snapshot_count": null,
+        "measurement_limit": "Frozen B runtime branch applies the adapter; actual current_state_only marker and measured run_state_s show its active path. Gate published/skipped counters were not persisted; no count is fabricated.",
+        "display_errors": null
+      },
+      "autonomous_quality": {
+        "terminal_strict": false,
+        "terminal_raw": true,
+        "terminal_atoms": [
+          {
+            "atom": [
+              "in",
+              "cream_cheese_1",
+              "basket_1_contain_region"
+            ],
+            "strict": false,
+            "checks": {
+              "at_rest": false,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": false,
+              "not_perched_on_rim": false,
+              "supported_by_container_or_contents": false
+            },
+            "why_not": [
+              "not_held",
+              "at_rest",
+              "supported_by_container_or_contents",
+              "not_perched_on_rim"
+            ]
+          },
+          {
+            "atom": [
+              "in",
+              "butter_1",
+              "basket_1_contain_region"
+            ],
+            "strict": true,
+            "checks": {
+              "at_rest": true,
+              "below_rim_footprint_inside_walls": true,
+              "com_over_cavity": true,
+              "lowest_point_below_rim": true,
+              "no_outside_support": true,
+              "not_held": true,
+              "not_perched_on_rim": true,
+              "supported_by_container_or_contents": true
+            },
+            "why_not": []
+          }
+        ],
+        "after_release_settle_strict": true,
+        "extra_diagnostic_actions": 38,
+        "diagnostic_assistance_is_autonomous_completion": false,
+        "operator_action_interventions": 0,
+        "note": "Last target remained held/unsettled without container support at terminal. Extra 38 open/lift/settle actions are independent diagnostic assistance, not autonomous release/withdrawal success."
+      },
+      "error": null,
+      "cleanup_errors": [],
+      "new_detailed_decision_windows_reviewed": 0,
+      "source_sha256": {
+        "evaluations/trial_003/evidence_result.json": "7583c7de323a58a39a1e49ae598bd0bd96931d4bae26389e443c95196aca4a00",
+        "evaluations/trial_003/service_clock.json": "b749c6215e686aeba7264a8ee91d2b6ffc2aa8bca7adf829d130f262055051e3",
+        "evaluations/trial_003/trial/summary.json": "fd3a4e3b150a002e85df8559605634eca94830cdeb73a0fc1e3afa5d43a7a3d7",
+        "evaluations/trial_003/trial/agent_stats.json": "6da095aa24d3cd5a975d5757352ae5bc64fede40d9766733dc5793d4c308ecc3",
+        "evaluations/trial_003/trial/run_state.json": "03bacef5e386c9dca3760defe08d1df78d509ec931b13dc3e51abbf260b4160c",
+        "evaluations/trial_003/trial/physical_truth.json": "d3d243538b7bd1f5f1de2537c016a4da8ebcf35e4152ad46e7e374baae40c5c0",
+        "evaluations/trial_003/session.json": "acf685a6977831e35c723e5eacc140ba1b2349e217c2a055821e96446992f764",
+        "baseline/scripts/evaluate_speedup_evidence.py": "ed5f0b833e1a57944b7b425822e2c01bec29dc8053bce9a3950c3a4c2bba7219",
+        "baseline/src/gpt_field/agent_speedup_v3_performance.py": "d156d78a0264e2761fea9a3176f6ac35486e673ba8ae6a2e51a3ac5fdbd60895",
+        "evaluations/trial_003/trial/episode.timing.json": "8aeecebfe68de0eb8fc0111fd6bcdcc02e15e9a76c327c11a7650c86d1e904a5"
+      }
+    }
+  ],
+  "paired_descriptive_comparison": {
+    "pair": "libero_10_t1_episode1_seed7",
+    "A_trial": "trial_002",
+    "A_is_infrastructure_retry_of": "trial_001",
+    "B_trial": "trial_003",
+    "original_infrastructure_failure_retained": true,
+    "policy_steps_A_B": [
+      830,
+      1019
+    ],
+    "policy_requests_A_B": [
+      11,
+      13
+    ],
+    "full_request_files_including_preparation_A_B": [
+      12,
+      14
+    ],
+    "observed_B_minus_A_service_s": -34.722660831175745,
+    "observed_relative_service_reduction": 0.053523718622295546,
+    "observed_B_minus_A_model_pipeline_s": 27.193912481307052,
+    "observed_B_minus_A_simulator_step_s": 20.193670430220664,
+    "observed_B_minus_A_display_and_status_control_s": -77.96404739958234,
+    "causal_total_latency_improvement_established": false,
+    "reason": "A/B used independent new model responses and different trajectories: 830 versus 1019 actions and 11 versus 13 policy requests. Measured online cost participation is descriptive, not an equal-work causal comparison. Prior identical-input 897-action replay and ABBA display benchmark provide separate equivalence/component evidence.",
+    "scheduling_limitation": "Fixed paired overlapping execution on dedicated identical GPUs still shares OS/model-service contention.",
+    "quality": "Both raw successes exceed 300 s and both strict terminal qualities fail; 38 extra diagnostic actions yield strict success afterward, which is not autonomous completion."
+  },
+  "timing_accounting": [
+    "model_pipeline_s is included in decision_s; do not add both.",
+    "run_state_s and video_render_s are components within control time, not extra full-service intervals.",
+    "Compact recorder timers overlap evaluator video_render_s. close_drain_s includes terminal render/write; do not sum all recorder timers.",
+    "Full service includes preparation, actual automatic review/scheduling, execution and necessary finalization. Human approval wait alone is excluded.",
+    "Snapshot published/skipped counts and legacy recorder frame/drain counts were not persisted by these online runs and are left unknown."
+  ],
+  "evidence_links": [
+    "baseline_replay_attempt1.json",
+    "display_io_benchmark.json",
+    "paired_schedule_protocol.json",
+    "live_audit.json"
+  ]
+}

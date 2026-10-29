@@ -1,0 +1,271 @@
+{
+  "metadata": {
+    "action_interface": "world_delta_xyz_axisangle_gripper_7",
+    "action_split_indexes": {
+      "base": [
+        7,
+        10
+      ],
+      "right": [
+        0,
+        6
+      ],
+      "right_gripper": [
+        6,
+        7
+      ],
+      "torso": [
+        10,
+        11
+      ]
+    },
+    "actual_arm_controller": {
+      "class": "OperationalSpaceController",
+      "control_dim": 6,
+      "input_max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "input_min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "input_ref_frame": "world",
+      "input_type": "delta",
+      "output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "output_min": [
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.5,
+        -0.5,
+        -0.5
+      ]
+    },
+    "actual_torso_input_type": "absolute",
+    "arm_only_tolerance": {
+      "base_translation_m": 0.001,
+      "base_yaw_rad": 0.001,
+      "torso_translation_m": 0.001,
+      "violation": "infrastructure_error_not_task_outcome"
+    },
+    "base_control": "zero_velocity",
+    "base_joint_names": [
+      "mobilebase0_joint_mobile_forward",
+      "mobilebase0_joint_mobile_side",
+      "mobilebase0_joint_mobile_yaw"
+    ],
+    "benchmark": "RoboCasa",
+    "contact_policy": "record_only",
+    "contact_sampling": "control_endpoint",
+    "control_freq_hz": 20,
+    "controller": {
+      "body_parts": {
+        "base": {
+          "interpolation": "null",
+          "type": "JOINT_VELOCITY"
+        },
+        "right": {
+          "damping_ratio": 1,
+          "damping_ratio_limits": [
+            0,
+            10
+          ],
+          "gripper": {
+            "type": "GRIP"
+          },
+          "impedance_mode": "fixed",
+          "input_max": 1,
+          "input_min": -1,
+          "input_ref_frame": "world",
+          "input_type": "delta",
+          "interpolation": null,
+          "kp": 150,
+          "kp_limits": [
+            0,
+            300
+          ],
+          "orientation_limits": null,
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "output_min": [
+            -0.05,
+            -0.05,
+            -0.05,
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "position_limits": null,
+          "ramp_ratio": 0.2,
+          "type": "OSC_POSE",
+          "uncouple_pos_ori": true
+        },
+        "torso": {
+          "interpolation": "null",
+          "kp": 2000,
+          "type": "JOINT_POSITION"
+        }
+      },
+      "composite_controller_specific_configs": {
+        "body_part_ordering": [
+          "right",
+          "right_gripper",
+          "base",
+          "torso"
+        ]
+      },
+      "type": "HYBRID_MOBILE_BASE"
+    },
+    "episode_action_cap": null,
+    "episode_time_cap": null,
+    "external_camera": "robot0_agentview_left",
+    "image_size": 512,
+    "layout_id": 0,
+    "mobile_mode": -1,
+    "mujoco_version": "3.2.6",
+    "observation_sync": "fresh_endpoint_rgb_robot_sensors_camera_calibration",
+    "robocasa_source": "/workspace/past_action_robocasa/robocasa/robocasa/__init__.py",
+    "robocasa_version": "0.2.0",
+    "robosuite_source": "/workspace/past_action_robocasa/robosuite/robosuite/__init__.py",
+    "robosuite_version": "1.5.2",
+    "robot": "PandaOmron",
+    "rotation_scale_rad": 0.5,
+    "seed": 7,
+    "sim_version": "robocasa-coffee-user-check-sim-v1",
+    "simulator_action_dimension": 12,
+    "style_id": 0,
+    "success_qualification": "raw_robocasa_check_success",
+    "task": "CoffeePressButton",
+    "torso_control": "absolute_reset_position",
+    "translation_scale_m": 0.05,
+    "wrist_camera": "robot0_eye_in_hand"
+  },
+  "status": {
+    "base_displacement_from_reset": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "contacts": {
+      "count": 17,
+      "mode": "raw_endpoint_contacts",
+      "policy": "record_only",
+      "records": [
+        {
+          "distance_m": -3.007956253007014e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g1"
+        },
+        {
+          "distance_m": -3.3190048223751177e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g2"
+        },
+        {
+          "distance_m": -3.703968132205796e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g4"
+        },
+        {
+          "distance_m": -2.9669166811581434e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g7"
+        },
+        {
+          "distance_m": -3.834768516164597e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g8"
+        },
+        {
+          "distance_m": -3.1180560868647457e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g13"
+        },
+        {
+          "distance_m": -2.802653835156003e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g14"
+        },
+        {
+          "distance_m": -3.7458621461941032e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g15"
+        },
+        {
+          "distance_m": -3.2525233090040856e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g17"
+        },
+        {
+          "distance_m": -3.661693623478496e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g18"
+        },
+        {
+          "distance_m": -2.8974499706723512e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g19"
+        },
+        {
+          "distance_m": -3.5336410100680238e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g20"
+        },
+        {
+          "distance_m": -3.703842083468696e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g21"
+        },
+        {
+          "distance_m": -3.871959976954905e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g23"
+        },
+        {
+          "distance_m": -3.585420220192756e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g24"
+        },
+        {
+          "distance_m": -3.5736729797976447e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g26"
+        },
+        {
+          "distance_m": -3.523482870015738e-06,
+          "geom1": "coffee_machine_main_group_g15",
+          "geom2": "obj_g30"
+        }
+      ]
+    },
+    "robocasa_success": false,
+    "steps": 0,
+    "success": false,
+    "terminated": false,
+    "torso_displacement_from_reset_m": [
+      0.0
+    ]
+  }
+}

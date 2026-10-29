@@ -1,0 +1,69 @@
+{
+  "atoms": [
+    {
+      "atom": [
+        "in",
+        "cream_cheese_1",
+        "basket_1_contain_region"
+      ],
+      "expected_relation": "place_in",
+      "planned": true
+    },
+    {
+      "atom": [
+        "in",
+        "butter_1",
+        "basket_1_contain_region"
+      ],
+      "expected_relation": "place_in",
+      "planned": true
+    }
+  ],
+  "diagnosis_only": true,
+  "note": null,
+  "plan_available": true,
+  "plan_match": {
+    "all_atoms_planned": true,
+    "atoms": [
+      {
+        "atom": [
+          "in",
+          "cream_cheese_1",
+          "basket_1_contain_region"
+        ],
+        "plan_steps": [
+          0,
+          1
+        ],
+        "plan_steps_text_match": [
+          0
+        ],
+        "planned": true,
+        "planned_with_text_match": true
+      },
+      {
+        "atom": [
+          "in",
+          "butter_1",
+          "basket_1_contain_region"
+        ],
+        "plan_steps": [
+          0,
+          1
+        ],
+        "plan_steps_text_match": [
+          1
+        ],
+        "planned": true,
+        "planned_with_text_match": true
+      }
+    ],
+    "hold_true": [],
+    "plan_available": true,
+    "plan_steps_without_atom": [],
+    "rule": "relation level: turn+effect / TurnOn-TurnOff, place_on / On, place_in / In or On(object), slide / Open-Close, push_to / On(zone); text match: an atom argument shares a name token with the step's part text",
+    "version": "agent-speedup-v2-plan-match-1"
+  },
+  "planned_note": "plan_match is authoritative; atoms[].planned is copied from it runner-side (the M0 truth module leaves it None)",
+  "planned_source": "plan_match (agent-speedup-v2-plan-match-1)"
+}

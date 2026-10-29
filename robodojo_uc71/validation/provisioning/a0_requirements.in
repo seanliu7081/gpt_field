@@ -1,0 +1,9 @@
+# Render-only vendor subset; no RoboDojo, IsaacLab, torch, robot or task assets.
+# Installing these is gated on explicit NVIDIA EULA acceptance.
+isaacsim[extscache]==5.1.0.0
+# Replicator imports these eagerly; versions match isaacsim-core 5.1.0.0 metadata.
+# Installing only this import closure avoids pulling the unrelated torch stack.
+botocore==1.39.11
+boto3==1.39.11
+imageio==2.37.0
+scipy==1.15.3

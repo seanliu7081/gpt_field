@@ -1,0 +1,11 @@
+--- agent_speedup_v2_user_check_libero_10_t6_007/frozen_source/agent_speedup_v2_user_check_client.py	2026-10-21 11:10:08.781173392 +0000
++++ agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_client.py	2026-10-21 17:50:16.524816477 +0000
+@@ -165,7 +165,7 @@
+ 
+ def _capability_issues(raw):
+     codes = {"empty_steps", "relation_not_implemented", "ignored_selection", "spatial_spec", "constraint_conflict"}
+-    return [ExecutionPlanIssue(**issue) for issue in plan_validation(raw)["issues"] if issue["code"] in codes]
++    return [ExecutionPlanIssue(**issue) for issue in plan_validation(raw, require_native=True)["issues"] if issue["code"] in codes]
+ 
+ 
+ def _held_identity_issues(raw, bindings):

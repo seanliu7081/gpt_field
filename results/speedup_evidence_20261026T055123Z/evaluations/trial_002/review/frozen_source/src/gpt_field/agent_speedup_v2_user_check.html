@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Speed Up v2 User Check · Pre-test Plan Review</title>
+  <style nonce="__CSP_NONCE__">
+    :root{color-scheme:light;--ink:#172c32;--muted:#60747b;--line:#d6e1e1;--surface:#fff;--soft:#f2f6f5;--accent:#136d64;--error:#a33a32}
+    *{box-sizing:border-box}body{margin:0;background:#eaf0ef;color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{max-width:1180px;margin:24px auto;padding:0 18px 30px}header{margin-bottom:22px}.eyebrow{font-size:12px;letter-spacing:.12em;font-weight:650;color:var(--accent)}
+    h1{font-size:29px;line-height:1.2;margin:8px 0 10px}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 10px}p{margin:7px 0}
+    .muted,small{color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);gap:18px;align-items:start}
+    .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
+    button,select{font:inherit;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);min-height:39px}button{padding:7px 12px;cursor:pointer}
+    button:disabled,select:disabled{opacity:.52;cursor:default}button.primary{background:var(--accent);border-color:var(--accent);color:#fff}.danger{color:var(--error)}select{width:100%;padding:7px;min-width:0}
+    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.tabs button{text-align:left;white-space:pre-line;flex:1 1 140px}.tabs button[aria-pressed="true"]{background:#e2f1ec;border-color:var(--accent)}
+    .form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field label{font-size:13px;font-weight:600}.field code{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+    .wide{grid-column:1/-1}.rule{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 36px;gap:8px;margin:9px 0}.rule.until{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 36px}.rule .phrase{grid-column:1/3}
+    .rule.hold-true{grid-template-columns:100px minmax(0,1fr) minmax(0,1fr) 36px}.remove{padding:3px;min-width:34px}.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer;margin:12px 0}.check input{width:18px;height:18px;accent-color:var(--accent);margin-top:3px;flex-shrink:0}
+    .review-box{background:var(--soft);padding:9px 14px;border-radius:9px;margin:16px 0 0}.parts{display:grid;gap:11px}.part{border-top:1px solid var(--line);padding-top:12px;display:grid;grid-template-columns:minmax(0,1fr) 185px;gap:10px;align-items:center}.part:first-child{border:0;padding-top:0}
+    .badge{font-size:11px;font-weight:650;padding:3px 7px;border-radius:20px;background:#e2f1ec;color:var(--accent)}.status-line{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin-top:12px}
+    .images{display:grid;grid-template-columns:1fr 1fr;gap:10px}.images figure{margin:0}.images img{width:100%;border-radius:7px;background:var(--soft);display:block}.images figcaption{font-size:12px;margin-top:5px;color:var(--muted)}
+    #message{border:1px solid #e7c0b9;background:#fff1ee;color:var(--error);border-radius:9px;padding:11px 14px;margin-bottom:16px;white-space:pre-wrap}#validation{color:var(--error);font-size:13px}#validation ul{padding-left:20px}
+    .success{color:var(--accent)}.footer{border-top:1px solid var(--line);margin-top:18px;padding-top:15px}details{margin-top:12px}summary{cursor:pointer;font-weight:550}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);padding:14px;border-radius:9px;font:12px/1.5 ui-monospace,monospace;max-height:460px;overflow:auto}
+    .binding{font:11px/1.7 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--muted)}[hidden]{display:none!important}:focus-visible{outline:3px solid #78b8ae;outline-offset:2px}
+    @media(max-width:850px){.layout{grid-template-columns:1fr}main{margin-top:18px}.card{padding:17px}}
+    @media(max-width:500px){.form{grid-template-columns:1fr}.rule,.rule.until,.rule.hold-true{grid-template-columns:minmax(0,1fr) 36px}.rule select{grid-column:1}.rule .remove{grid-column:2;grid-row:1/span 2}.rule.hold-true .remove{grid-row:1/span 3}.rule.until .phrase{grid-column:1/-1}.images{grid-template-columns:1fr}.toolbar button{font-size:13px}select{font-size:16px}.part{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">SPEED UP V2 USER CHECK</div>
+    <h1>Pre-test Plan Review</h1>
+    <p id="task">Loading the model's draft for this run…</p>
+    <p class="muted">The model proposes an initial plan. Adjust each step using the selections below, then review and approve it without writing JSON. During execution, the model can revise its plan in response to feedback.</p>
+    <div class="status-line"><span class="badge" id="state">Loading</span><span id="context"></span></div>
+  </header>
+  <div id="message" role="alert" hidden></div>
+  <div id="content" class="layout" hidden>
+    <section>
+      <div class="card">
+        <div class="toolbar"><h2 class="grow">Task steps</h2><button id="add-step" type="button">＋ Add step</button></div>
+        <nav id="tabs" class="tabs" aria-label="Select a plan step"></nav>
+        <div id="step-editor"></div>
+        <div id="validation" role="status" aria-live="polite"></div>
+      </div>
+      <div class="card">
+        <h2>Objects and parts <small>parts</small></h2>
+        <p class="muted">Names come from the model's observations. Select the parts to include and how each can move. Their image locations are refreshed during execution.</p>
+        <div id="parts" class="parts"></div>
+      </div>
+      <div class="card">
+        <div class="toolbar"><h2 class="grow">Existing relations to preserve <small>hold_true</small></h2><button id="add-held" type="button">＋ Add relation</button></div>
+        <div id="held"></div>
+      </div>
+    </section>
+    <aside>
+      <div class="card">
+        <h2>Initial scene</h2>
+        <p id="scene" class="muted"></p>
+        <div id="images" class="images"></div>
+        <details><summary>Run binding details</summary><div id="bindings" class="binding"></div></details>
+      </div>
+      <div class="card">
+        <h2>Approve the initial plan</h2>
+        <p id="progress" role="status" aria-live="polite"></p>
+        <label class="check"><input id="final-check" type="checkbox"><span>I have reviewed the initial scene, object list, every step, and the relations to preserve. I approve this plan for the test and allow the model to replan automatically during execution.</span></label>
+        <button id="approve" type="button" class="primary">Approve plan for this test</button>
+        <p class="muted"><small>Approval locks editing on this page. The model may adjust grasp choices and steps using execution feedback without another review; changes are recorded. Each new test requires review of its initial plan.</small></p>
+        <div class="footer">
+          <button id="reload" type="button">Reload</button>
+          <details><summary>Generated plan JSON · Read only</summary><p class="muted"><small>Image grid cells are refreshed during execution and are not user selections.</small></p><pre id="preview" aria-label="Read-only plan JSON"></pre></details>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+<script nonce="__CSP_NONCE__">
+"use strict";
+(() => {
+  const el = id => document.getElementById(id);
+  const clone = obj => JSON.parse(JSON.stringify(obj));
+  const fragment = new URLSearchParams(location.hash.slice(1));
+  let token = fragment.get("token");
+  const sessionKey = "speedup-v2-user-check:" + location.origin;
+  if (token) {
+    try { sessionStorage.setItem(sessionKey, token); } catch (_) {}
+    history.replaceState(null, "", location.pathname);
+  } else {
+    try { token = sessionStorage.getItem(sessionKey); } catch (_) {}
+  }
+  let schema, record, active = 0, busy = false, finalChecked = false;
+  const labels = {
+    hold:"Pick up and hold",turn:"Turn a part",place_on:"Place on a surface",release:"Release",
+    slide:"Slide or pull open",place_in:"Place inside",push_to:"Push to a target",
+    free:"Freely movable",fixed:"Fixed",hinged:"Rotates on a hinge",sliding:"Moves along a track",unknown:"Unknown",
+    any:"Executor chooses",open:"Open",close:"Close",upright:"Maintain orientation",clear_of:"Keep clear of",
+    effect:"Specified visual effect",stop:"Mechanical stop reached",fits:"Enough space to fit",
+    quarter_turn:"Quarter turn",half_turn:"Half turn",
+    on:"On a surface",in:"Inside",closed:"Already closed",
+    supported_on:"Object supported by target surface",centered_on:"Object centered on target",inside:"Entire object inside target bounds",
+    left_of:"Left of anchor (world −x)",right_of:"Right of anchor (world +x)",
+    front_of:"In front of anchor (world −y)",behind:"Behind anchor (world +y)",near:"Near anchor"
+  };
+  const title = value => (labels[value] ? labels[value] + " · " : "") + value;
+  const node = (tag, text, className) => {
+    const out = document.createElement(tag);
+    if (text !== undefined) out.textContent = text;
+    if (className) out.className = className;
+    return out;
+  };
+  const editable = () => !busy && record && record.status === "draft";
+  const planSchema = () => schema.plan_schema.properties;
+  const stepSchema = () => planSchema().steps.items.properties;
+  const partOptions = () => record.plan.parts.map(part => [part.id, `${part.id} · ${part.text}`]);
+  const optionEnums = property => property.enum.map(value => [value, title(value)]);
+  const showMessage = message => { el("message").textContent = message; el("message").hidden = !message; };
+  const limit = key => key === "hold_true" ? planSchema().hold_true.maxItems : stepSchema()[key].maxItems;
+  function select(value, options, onChange, label, disabled = false) {
+    const input = node("select");
+    input.setAttribute("aria-label", label);
+    input.disabled = disabled || !editable();
+    for (const [key, text, unavailable] of options) {
+      const option = node("option", text);
+      option.value = key === null ? "" : String(key);
+      option.disabled = Boolean(unavailable);
+      input.append(option);
+    }
+    input.value = value === null || value === undefined ? "" : String(value);
+    input.addEventListener("change", () => onChange(input.value === "" ? null : input.value));
+    return input;
+  }
+  function field(parent, label, code, input) {
+    const wrap = node("div", undefined, "field");
+    const heading = node("label", label); heading.append(node("code", code));
+    const id = "field-" + code.replace(/[^a-z0-9]/gi, "-") + "-" + active;
+    input.id = id; heading.htmlFor = id;
+    wrap.append(heading, input); parent.append(wrap);
+  }
+  function button(text, handler, disabled = false, className) {
+    const out = node("button", text, className);
+    out.type = "button"; out.disabled = disabled || !editable();
+    out.addEventListener("click", handler); return out;
+  }
+  async function api(path, body) {
+    const response = await fetch(path, {
+      method: body === undefined ? "GET" : "POST",
+      headers: {"Authorization":"Bearer " + (token || ""), ...(body === undefined ? {} : {"Content-Type":"application/json"})},
+      body: body === undefined ? undefined : JSON.stringify(body),
+      cache:"no-store", credentials:"omit"
+    });
+    let data;
+    try { data = await response.json(); } catch (_) { throw new Error("Unable to read the server response. Check that the run is still waiting for review."); }
+    if (!response.ok) {
+      const error = new Error(data.error || "Request failed"); error.status = response.status; throw error;
+    }
+    return data;
+  }
+  async function save(nextPlan, reviewedSteps) {
+    if (!editable()) return;
+    busy = true; finalChecked = false; showMessage(""); render();
+    try {
+      record = await api("/api/update", {plan:nextPlan,expected_revision:record.revision,reviewed_steps:reviewedSteps});
+    } catch (error) {
+      if (error.status === 409) {
+        try { record = await api("/api/review"); } catch (_) {}
+        showMessage("The review revision has changed. We tried to load the latest plan; please review it again.\n" + error.message);
+      } else {
+        showMessage("Changes were not saved. The last successfully saved plan is shown.\n" + error.message);
+      }
+    } finally { busy = false; render(); }
+  }
+  function change(mutator) {
+    if (!editable()) return;
+    const next = clone(record.plan); mutator(next);
+    return save(next, []);
+  }
+  function changeStep(mutator) { return change(plan => mutator(plan.steps[active], plan)); }
+  function removeButton(handler, label) {
+    const out = button("×", handler, false, "remove danger");
+    out.setAttribute("aria-label", label); return out;
+  }
+  function renderParts() {
+    const target = el("parts"); target.replaceChildren();
+    record.draft_plan.parts.forEach(original => {
+      const index=record.plan.parts.findIndex(part=>part.id===original.id);
+      const part=index>=0?record.plan.parts[index]:original;
+      const row = node("div", undefined, "part");
+      const text = node("label",undefined,"check"),included=node("input");
+      included.type="checkbox";included.checked=index>=0;
+      included.disabled=!editable() || (index>=0 && record.plan.parts.length===1);
+      included.setAttribute("aria-label","Include part "+part.id);
+      included.addEventListener("change",()=>change(plan=>{
+        if(included.checked) plan.parts.push(clone(original));
+        else plan.parts.splice(index,1);
+      }));
+      const caption=node("span");caption.append(node("strong", part.id + " · "), document.createTextNode(part.text));
+      text.append(included,caption);
+      row.append(text, select(part.move, optionEnums(planSchema().parts.items.properties.move),
+        value => change(plan => { plan.parts[index].move = value; }), part.id + " movement type",index<0));
+      target.append(row);
+      if(index>=0) renderSpatialPart(target,part);
+    });
+  }
+  function renderSpatialPart(parent,part) {
+    const region=(record.plan.regions || []).find(r=>r.id===part.id);
+    const form=node("div",undefined,"form");
+    field(form,"Target type",part.id+".kind",select(region?"region":"object",
+      [["object","Physical object or part"],["region","Spatial region on a surface"]],value=>change(plan=>{
+        plan.regions=(plan.regions || []).filter(r=>r.id!==part.id);
+        if(value==="region") {
+          plan.regions.push({id:part.id,support:"observed_plane",anchor:null,relation:"on",frame:"world",bounds_xy_m:null});
+          plan.parts.find(p=>p.id===part.id).move="fixed";
+        }
+      }),part.id+" target type"));
+    if(region) {
+      const update=(key,value)=>change(plan=>{plan.regions.find(r=>r.id===part.id)[key]=value;});
+      const other=partOptions().filter(([id])=>id!==part.id);
+      field(form,"Support surface",part.id+".support",select(region.support,
+        [["observed_plane","Currently observed support plane"],...other],v=>update("support",v),part.id+" support surface"));
+      field(form,"Anchor object",part.id+".anchor",select(region.anchor,
+        [[null,"No anchor"],...other],v=>change(plan=>{
+          const r=plan.regions.find(r=>r.id===part.id);r.anchor=v;if(!v)r.relation="on";
+        }),part.id+" anchor"));
+      field(form,"Relative position",part.id+".relation",select(region.relation,
+        ["on","left_of","right_of","front_of","behind","near"].map(v=>[v,title(v),v!=="on"&&!region.anchor]),
+        v=>update("relation",v),part.id+" relative position"));
+      field(form,"Region bounds",part.id+".bounds",select(region.bounds_xy_m?"bounded":"observed",
+        [["observed","Use visible surface and relative position"],["bounded","Select world-coordinate bounds (metres)"]],
+        v=>update("bounds_xy_m",v==="bounded"?[[-.15,.15],[-.15,.15]]:null),part.id+" region bounds"));
+      if(region.bounds_xy_m) {
+        const choices=[-.5,-.3,-.2,-.15,-.1,-.05,-.02,0,.02,.05,.1,.15,.2,.3,.5];
+        for(let axis=0;axis<2;axis++) for(let end=0;end<2;end++) {
+          const current=region.bounds_xy_m[axis][end];
+          const values=[...new Set([...choices,current])].sort((a,b)=>a-b);
+          field(form,(axis?"Y":"X")+(end?" maximum":" minimum"),`${part.id}.bounds.${axis}.${end}`,
+            select(current,values.map(v=>[v,String(v)]),v=>change(plan=>{
+              plan.regions.find(r=>r.id===part.id).bounds_xy_m[axis][end]=Number(v);
+            }),part.id+" region boundary"));
+        }
+      }
+      const note=node("small",region.anchor?"Bounds are relative to the anchor center. Left, right, front and behind follow world axes, not image directions.":"Bounds use world coordinates. Placement requires an observed support surface within the region.","wide");
+      form.append(note);
+    }
+    parent.append(form);
+  }
+
+  function renderPlacement(parent,step) {
+    if(step.do!=="place_on" || !step.ref) return;
+    const goal=(record.plan.placement_goals || []).find(g=>g.obj===step.obj&&g.ref===step.ref);
+    const update=(key,value)=>change(plan=>{
+      plan.placement_goals=plan.placement_goals || [];
+      let g=plan.placement_goals.find(g=>g.obj===step.obj&&g.ref===step.ref);
+      if(!g){g={obj:step.obj,ref:step.ref,relation:"supported_on",tolerance_m:null};plan.placement_goals.push(g);}
+      g[key]=value;
+    });
+    field(parent,"Whole-object placement goal","placement.relation",select(goal?.relation || "supported_on",
+      ["supported_on","centered_on","inside"].map(v=>[v,title(v)]),v=>update("relation",v),"Whole-object placement goal"));
+    const values=[...new Set([.005,.01,.02,.03,.05,goal?.tolerance_m].filter(v=>v!==null&&v!==undefined))].sort((a,b)=>a-b);
+    field(parent,"Position tolerance","placement.tolerance_m",select(goal?.tolerance_m ?? null,
+      [[null,"Use measurement precision"],...values.map(v=>[v,`${v*1000} mm`])],
+      v=>update("tolerance_m",v===null?null:Number(v)),"Placement position tolerance"));
+  }
+  function renderHeld() {
+    const target = el("held"); target.replaceChildren();
+    const rows = record.plan.hold_true;
+    if (!rows.length) target.append(node("p", "No existing relations declared.", "muted"));
+    rows.forEach((item, index) => {
+      const row = node("div", undefined, "rule hold-true");
+      const update = (key, value) => change(plan => { plan.hold_true[index][key] = value; });
+      row.append(
+        select(item.rel, optionEnums(planSchema().hold_true.items.properties.rel), value => update("rel",value), "Existing relation " + (index+1)),
+        select(item.a, partOptions(), value => update("a",value), "Relation subject " + (index+1)),
+        select(item.b, [[null,"No related object"],...partOptions()], value => update("b",value), "Relation reference " + (index+1)),
+        removeButton(() => change(plan => plan.hold_true.splice(index,1)), "Remove existing relation " + (index+1))
+      ); target.append(row);
+    });
+    el("add-held").disabled = !editable() || rows.length >= limit("hold_true");
+  }
+  function renderKeep(parent, step) {
+    const section = node("div", undefined, "wide");
+    section.append(node("h3", "Constraints during this step · keep"));
+    step.keep.forEach((item, index) => {
+      const row = node("div", undefined, "rule");
+      row.append(
+        select(item.c, optionEnums(stepSchema().keep.items.properties.c),
+          value => changeStep(s => { s.keep[index].c=value; }), "Constraint " + (index+1)),
+        select(item.p, partOptions(), value => changeStep(s => { s.keep[index].p=value; }), "Constraint object " + (index+1)),
+        removeButton(() => changeStep(s => s.keep.splice(index,1)), "Remove constraint " + (index+1))
+      ); section.append(row);
+    });
+    section.append(button("＋ Add constraint", () => changeStep(s => s.keep.push({c:"upright",p:s.obj})), step.keep.length >= limit("keep")));
+    parent.append(section);
+  }
+  function renderUntil(parent, step) {
+    const section = node("div", undefined, "wide");
+    section.append(node("h3", "Completion criteria · until"));
+    const allowed = schema.allowed_until[step.do] || [];
+    const choices = stepSchema().until.items.properties.o.enum.map(value =>
+      [value,title(value)+(allowed.includes(value)?"":" (not applicable to this relation)"),!allowed.includes(value)]);
+    const phrases = [...new Set((record.draft_plan.steps || []).flatMap(s => (s.until || []).map(u => u.txt)).filter(Boolean))];
+    step.until.forEach((item,index) => {
+      const row = node("div",undefined,"rule until");
+      row.append(
+        select(item.o, choices, value => changeStep(s => {
+          const criterion=s.until[index];criterion.o=value;
+          if(!["effect","fits"].includes(value)) criterion.p=null;
+          if(value!=="effect") criterion.txt=null;
+        }), "Completion criterion " + (index+1)),
+        select(item.p, [[null,"No part required"],...partOptions().map(option=>[...option,!["effect","fits"].includes(item.o)])],
+          value => changeStep(s => { s.until[index].p=value; }), "Part to observe " + (index+1),
+          !["effect","fits"].includes(item.o) && item.p===null),
+        removeButton(() => changeStep(s => s.until.splice(index,1)), "Remove completion criterion " + (index+1))
+      );
+      const textChoices = [...new Set([...phrases, item.txt].filter(Boolean))];
+      const phrase = select(item.txt, [[null,"No additional description"],...textChoices.map(text => [text,text,item.o!=="effect"])],
+        value => changeStep(s => { s.until[index].txt=value; }), "Model-proposed completion effect " + (index+1),
+        item.o!=="effect" && item.txt===null);
+      phrase.classList.add("phrase"); row.append(phrase); section.append(row);
+    });
+    if (!step.until.length) section.append(node("p", "Use the relation's built-in physical completion checks. Turn actions require an additional completion criterion.", "muted"));
+    section.append(button("＋ Add criterion", () => changeStep(s => {
+      const kind=allowed[0]; s.until.push({o:kind,p:kind==="effect"?s.ref:null,txt:kind==="effect"?(phrases[0] || null):null});
+    }), step.until.length >= limit("until") || !allowed.length));
+    parent.append(section);
+  }
+  function renderSteps() {
+    const steps = record.plan.steps;
+    active = Math.max(0,Math.min(active,steps.length-1));
+    const tabs = el("tabs"); tabs.replaceChildren();
+    const reviewed = new Set(record.reviewed_steps || []);
+    steps.forEach((step,index) => {
+      const tab = node("button", `${index+1}. ${title(step.do)}\n${reviewed.has(index)?"✓ Reviewed":"Needs review"}`);
+      tab.type="button"; tab.setAttribute("aria-pressed", String(index===active));
+      tab.disabled = busy;
+      tab.addEventListener("click",()=>{active=index; render();}); tabs.append(tab);
+    });
+    el("add-step").disabled = !editable() || steps.length >= planSchema().steps.maxItems;
+    const editor=el("step-editor"); editor.replaceChildren();
+    if (!steps.length) { editor.append(node("p","Add at least one task step.","muted")); return; }
+    const step=steps[active];
+    const toolbar=node("div",undefined,"toolbar");
+    toolbar.append(node("small",`Step ${active+1} of ${steps.length}`,"grow"));
+    toolbar.append(
+      button("Move up",()=>change(plan=>{[plan.steps[active-1],plan.steps[active]]=[plan.steps[active],plan.steps[active-1]];active--;}),active===0),
+      button("Move down",()=>change(plan=>{[plan.steps[active+1],plan.steps[active]]=[plan.steps[active],plan.steps[active+1]];active++;}),active===steps.length-1),
+      button("Remove",()=>change(plan=>plan.steps.splice(active,1)),false,"danger")
+    ); editor.append(toolbar);
+    const form=node("div",undefined,"form");
+    field(form,"Action","do",select(step.do,stepSchema().do.enum.map(value=>
+      [value,title(value)+(schema.implemented_do.includes(value)?"":" (direct model control)")]),
+      value=>changeStep(s=>{
+        s.do=value;
+        if(value!=="slide") s.sense="any";
+        if(!["place_on","place_in","push_to"].includes(value)) s.ref=null;
+        if(value==="release") s.grip=[];
+        s.until=s.until.filter(u=>(schema.allowed_until[value] || []).includes(u.o));
+      }),"Action relation"));
+    field(form,"Object to manipulate","obj",select(step.obj,partOptions(),value=>changeStep(s=>{s.obj=value;}),"Object to manipulate"));
+    field(form,"Preferred grasp part","grip[0]",select(step.grip[0] || null,[[null,step.do==="release"?"No grasp part needed for release":"Grasp the object itself"],...partOptions().map(option=>[...option,step.do==="release"])],
+      value=>changeStep(s=>{s.grip=value?[value,...s.grip.slice(1).filter(p=>p!==value)]:[];}),"Preferred grasp part",step.do==="release" && !step.grip.length));
+    field(form,"Alternative grasp part","grip[1]",select(step.grip[1] || null,[[null,"No alternative"],...partOptions().map(option=>[...option,option[0]===step.grip[0]])],
+      value=>changeStep(s=>{s.grip=[s.grip[0],...(value?[value]:[])];}),"Alternative grasp part",!step.grip.length));
+    const needsRef=["place_on","place_in","push_to"].includes(step.do);
+    field(form,"Target reference","ref",select(step.ref,[[null,"No target reference"],...partOptions().map(option=>[...option,!needsRef])],
+      value=>changeStep(s=>{s.ref=value;}),"Target reference",!needsRef && step.ref===null));
+    field(form,"Movement direction","sense",select(step.sense,optionEnums(stepSchema().sense).map(option=>[...option,step.do!=="slide" && option[0]!=="any"]),
+      value=>changeStep(s=>{s.sense=value;}),"Movement direction",step.do!=="slide" && step.sense==="any"));
+    renderPlacement(form,step);renderKeep(form,step); renderUntil(form,step); editor.append(form);
+    const checkBox=node("div",undefined,"review-box");
+    const label=node("label",undefined,"check"), input=node("input");
+    input.type="checkbox"; input.checked=reviewed.has(active); input.disabled=!editable();
+    input.setAttribute("aria-label","I have reviewed this step");
+    input.addEventListener("change",()=>{
+      const next=new Set(record.reviewed_steps || []); input.checked?next.add(active):next.delete(active);
+      save(clone(record.plan),[...next].sort((a,b)=>a-b));
+    }); label.append(input,node("span","I have reviewed all selections for this step")); checkBox.append(label); editor.append(checkBox);
+  }
+  function renderValidation() {
+    const target=el("validation");target.replaceChildren();
+    const validation=record.validation || {valid:false,issues:[{text:"No validation result received from the server."}]};
+    if (validation.valid) target.append(node("p","✓ Plan format and execution capability checks passed.","success"));
+    else {
+      target.append(node("p","Resolve these plan issues before approval:"));
+      const list=node("ul");
+      for(const issue of validation.issues || []) {
+        list.append(node("li",(Number.isInteger(issue.step)?`Step ${issue.step+1}: `:"")+(issue.text || issue.message || issue.code || String(issue))));
+      } target.append(list);
+    }
+  }
+  function renderImages() {
+    const target=el("images");target.replaceChildren();
+    const images=record.preparation?.review_images || record.images || [];
+    for(const source of images) {
+      const data=source.data_url;
+      if(typeof data!=="string" || !/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/=\r\n]+$/.test(data)) continue;
+      const figure=node("figure"),img=node("img");
+      img.src=data;img.alt=source.label || "Initial RGB image for this run";figure.append(img,node("figcaption",img.alt));target.append(figure);
+    }
+    if(!target.childElementCount) target.append(node("p","This review has no initial RGB preview.","muted"));
+  }
+  function render() {
+    if(!record || !schema) return;
+    el("content").hidden=false;
+    el("task").textContent=record.task_prompt || record.task_key || "Current task";
+    el("context").textContent=`Task ${record.task_key} · Initial state ${record.episode_index} · Plan revision ${record.revision}`;
+    const states={draft:busy?"Saving…":"Awaiting review",approved:"Plan approved",consumed:"Plan used for execution"};
+    el("state").textContent=states[record.status] || record.status;
+    el("scene").textContent=record.plan.scene;
+    el("bindings").replaceChildren();
+    for(const [label,key] of [["Initial observation","initial_observation_sha256"],["Runtime","runtime_sha256"]]) {
+      const value=record[key];
+      el("bindings").append(node("div",label+": "+(value && typeof value==="object"?JSON.stringify(value):value || "—")));
+    }
+    renderSteps();renderParts();renderHeld();renderValidation();renderImages();
+    const semantic=clone(record.plan);semantic.parts.forEach(part=>{delete part.w;delete part.x;});
+    el("preview").textContent=JSON.stringify(semantic,null,2);
+    const count=new Set(record.reviewed_steps || []).size,total=record.plan.steps.length;
+    el("progress").textContent=record.status==="draft"?`${count} of ${total} steps reviewed`:"The initial plan is approved. Automatic replanning is allowed during execution. Follow progress in the run's terminal output.";
+    const ready=editable() && total>0 && count===total && Boolean(record.validation?.valid);
+    el("final-check").disabled=!ready;el("final-check").checked=finalChecked;
+    el("approve").disabled=!ready || !finalChecked;
+    el("reload").disabled=busy;
+  }
+  el("add-step").addEventListener("click",()=>change(plan=>{
+    plan.steps.push({do:"hold",obj:plan.parts[0].id,grip:[],ref:null,sense:"any",keep:[],until:[]});active=plan.steps.length-1;
+  }));
+  el("add-held").addEventListener("click",()=>change(plan=>plan.hold_true.push({rel:"on",a:plan.parts[0].id,b:null})));
+  el("final-check").addEventListener("change",()=>{finalChecked=el("final-check").checked;render();});
+  el("approve").addEventListener("click",async()=>{
+    if(el("approve").disabled || !finalChecked) return;
+    busy=true;showMessage("");render();
+    try { record=await api("/api/approve",{expected_revision:record.revision,reviewed_steps:record.reviewed_steps}); }
+    catch(error) {
+      showMessage("The plan has not been approved.\n"+error.message);
+      if(error.status===409) {try{record=await api("/api/review");}catch(_){}}
+    }
+    finally{busy=false;finalChecked=false;render();}
+  });
+  async function load() {
+    if(busy) return;busy=true;showMessage("");
+    try {
+      if(!token) throw new Error("The access token for this review is missing. Open the complete review link printed by the run command.");
+      [schema,record]=await Promise.all([api("/api/schema"),api("/api/review")]);
+      active=0;finalChecked=false;
+    } catch(error) {showMessage(error.message);}
+    finally {busy=false;render();}
+  }
+  el("reload").addEventListener("click",load);
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,12 @@
 # GPT field
 
+## iPad experiment workflow
+
+Use ChatGPT Codex/Remote to work with this Vast workspace from an iPad, read
+compact experiment summaries, and request private HTTPS rollout-video links.
+See [MOBILE_WORKFLOW.md](MOBILE_WORKFLOW.md) for pairing, chat examples, the
+status/media helpers, and service controls.
+
 ## Contact-region feedback (opt-in)
 
 `--contact-region-feedback apply` selects the new operation client and local

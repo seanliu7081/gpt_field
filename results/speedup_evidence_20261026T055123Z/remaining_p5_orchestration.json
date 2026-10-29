@@ -1,0 +1,79 @@
+{
+  "recorded_at_utc": "2026-10-26T07:40:43.852866+00:00",
+  "status": "stopped_new_runs_repeated_preparation_noncompletion",
+  "completed_pair_condition": {
+    "task": "libero_10_t1",
+    "episode_index": 2,
+    "seed": 7
+  },
+  "trials": [
+    "trial_004",
+    "trial_005"
+  ],
+  "raw_success": {
+    "A": false,
+    "B": false
+  },
+  "S300": {
+    "A": false,
+    "B": false
+  },
+  "service_elapsed_s": {
+    "A": 900.9528483679751,
+    "B": 901.0327912470093
+  },
+  "approval_count": 0,
+  "policy_actions": 0,
+  "infrastructure_classification": "not established; only outer EvaluationBudgetExceeded, no recorded HTTP/connection error",
+  "cause": "unresolved; no completed subscription response before unchanged service budget",
+  "not_a_two_repair_failure_claim": true,
+  "stop_rule": "plan section10 repeated failure without new evidence or testable explanation; parent instructed stop new comparable requests after both arms prepare-exhaust",
+  "remaining_original_P5_budget": 14,
+  "unused_P5_pairs": [
+    {
+      "task": "libero_10_t1",
+      "episode_index": 3,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t5",
+      "episode_index": 1,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t5",
+      "episode_index": 2,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t5",
+      "episode_index": 3,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t7",
+      "episode_index": 1,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t7",
+      "episode_index": 2,
+      "seed": 7
+    },
+    {
+      "task": "libero_10_t7",
+      "episode_index": 3,
+      "seed": 7
+    }
+  ],
+  "P6_started": false,
+  "additional_retries_used_by_this_agent": 0,
+  "freeze_runtime_changed": false,
+  "launcher": {
+    "path": "launches/prepare_then_begin_review.py",
+    "sha256": "57c23b0d9198c246adbf82ad2e699e8a9bb32d3226ac9d58feedcaca00b1bcb8",
+    "review_begin_entered": false,
+    "approval_logic_present": false
+  },
+  "source_causality_limit": "Both exhausted prepares used the new launch wrapper; frozen SSE transport has no __main__/runpy dependency, but no empirical completion evidence isolates the waiting cause. Do not assert an external outage."
+}

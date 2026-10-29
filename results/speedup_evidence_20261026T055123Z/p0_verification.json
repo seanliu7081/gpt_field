@@ -1,0 +1,3288 @@
+{
+  "repository": "/workspace/gpt_field",
+  "observation": "read_only_P0_no_model_no_simulator",
+  "current_versions": {
+    "src/gpt_field/agent_speedup_v3.py": {
+      "constants": {
+        "POLICY_VERSION": "agent-speedup-v3-11"
+      },
+      "sha256": "1ca34b5a9ecedd4370403f9d724496e3430a76e038d04c5d1a59893a20abd3da",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_client.py": {
+      "constants": {
+        "CLIENT_VERSION": "agent-speedup-v3-client-11",
+        "PROMPT_VERSION": "agent-speedup-v3-prompt-10",
+        "HISTORY_PROTOCOL": "persistent_v3_raw_audit_compact_wire_six_visual_pairs_10"
+      },
+      "sha256": "3e6aaedfa40b7c263018098a5876de08ef6049ea40b2fe2d44a5e67405829b69",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_fragments.py": {
+      "constants": {
+        "FRAGMENT_VERSION": "agent-speedup-v3-adaptive-fragments-10"
+      },
+      "sha256": "b38952e54510b6d23f7125d9bfe1a43012a964d9a5856588d0a728ca813d396f",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_geometry.py": {
+      "constants": {
+        "GEOMETRY_VERSION": "agent-speedup-v3-geometry-8"
+      },
+      "sha256": "298d3c3c9ff08ab0097d8b8073b7bf2607fa43367784366df7d22bb38a4da4f3",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_interaction.py": {
+      "constants": {
+        "VERSION": "agent-speedup-v3-visual-interaction-2"
+      },
+      "sha256": "f2acbfef32cb87e1256607d24d6010e64eb2794bf37eac44060a2e5abf81b0d3",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_local_geometry.py": {
+      "constants": {
+        "LOCAL_GEOMETRY_VERSION": "agent-speedup-v3-local-geometry-10"
+      },
+      "sha256": "abfdc42ca0e6ce0ab8bbe3c311b86f645c03498f9aa6b906084a8e24180e934e",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_observation.py": {
+      "constants": {},
+      "sha256": "85a64ac0c960ec0e48019544ffd84f1b2cc3d470ea20c04d0ff2558fd28c9e9b",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_operation.py": {
+      "constants": {
+        "OPERATION_VERSION": "agent-speedup-v3-persistent-operation-2"
+      },
+      "sha256": "d3b037ea22d328c83dedcaa4e125d4c527d87ee842eb4d38a95198468f77b11d",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_perception.py": {
+      "constants": {
+        "VERSION": "agent-speedup-v3-local-rgb-geometry-1"
+      },
+      "sha256": "48c09ff15f7bfd90662a2325b9118b1923f221084cfd86762f31fc565abebb0e",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_performance.py": {
+      "constants": {
+        "PERFORMANCE_VERSION": "agent-speedup-v3-performance-6"
+      },
+      "sha256": "d156d78a0264e2761fea9a3176f6ac35486e673ba8ae6a2e51a3ac5fdbd60895",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_program.py": {
+      "constants": {
+        "PROGRAM_VERSION": "agent-speedup-v3-semantic-program-4"
+      },
+      "sha256": "52c0ac48d2312e194548985101005de5776e62eee767c379692e5dfdebbaac49",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_review.py": {
+      "constants": {
+        "VERSION": "agent-speedup-v3-11"
+      },
+      "sha256": "529df4afaa301d59e536d12883ba9d6f9812a069e4ba9a24d2df4e9f6fbd8834",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_server.py": {
+      "constants": {},
+      "sha256": "af53e7db15b2266c9cae67a1b62cec3698c8b4861454b657ca2fdbce35e1aa54",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_transport.py": {
+      "constants": {
+        "TRANSPORT_VERSION": "agent-speedup-v3-bounded-subscription-1"
+      },
+      "sha256": "bf1a3b64bddd773fe7ab138aec217b6834f7984bf9e5dded7bf4ba74b9107d3d",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_video.py": {
+      "constants": {
+        "VIDEO_VERSION": "agent-speedup-v3-compact-video-6"
+      },
+      "sha256": "2e9cdf6f50375453ccc5c9d0d38512819092d6ff3f62c83ba4d8ab82d4cad3fc",
+      "nlink": 1
+    },
+    "src/gpt_field/agent_speedup_v3_visual_watch.py": {
+      "constants": {
+        "VISUAL_WATCH_VERSION": "agent-speedup-v3-visual-watch-7"
+      },
+      "sha256": "77db52358948fce245c4b92c0859ea8b18d3a9ed8081f7d93581dd61a6c376d2",
+      "nlink": 1
+    }
+  },
+  "v7_baseline": {
+    "run": "runs/agent_speedup_v2_user_check_libero_10_t1_001",
+    "review": "runs/agent_speedup_v2_user_check_libero_10_t1_001/user_check_review.json",
+    "manifest_file_count": 300,
+    "matching_file_count": 300,
+    "source_map": [
+      {
+        "relative_path": "scripts/evaluate_agent_speedup_v1.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_agent_speedup_v1.py",
+        "exists": true,
+        "sha256": "1c08712974ca90a07bcb6080f546ae451da5042f60352afc2f7dabb3c4a9101f",
+        "expected_sha256": "1c08712974ca90a07bcb6080f546ae451da5042f60352afc2f7dabb3c4a9101f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "scripts/evaluate_agent_speedup_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_agent_speedup_v2.py",
+        "exists": true,
+        "sha256": "7492396639416a717502109556cdb3f90963f79d1791ad7f7b96aeae412148ce",
+        "expected_sha256": "7492396639416a717502109556cdb3f90963f79d1791ad7f7b96aeae412148ce",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "scripts/evaluate_agent_speedup_v2_user_check.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_agent_speedup_v2_user_check.py",
+        "exists": true,
+        "sha256": "249122fae1efe93c3af0f50f9f9f168c3889b982d0918a12327f60fa5cb408fa",
+        "expected_sha256": "249122fae1efe93c3af0f50f9f9f168c3889b982d0918a12327f60fa5cb408fa",
+        "matches": true,
+        "nlink": 11
+      },
+      {
+        "relative_path": "scripts/evaluate_bowl_field_history.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_bowl_field_history.py",
+        "exists": true,
+        "sha256": "12238b622ce451d941318617018e442431b0adb0e06d36d8c5f9e98735da6dd8",
+        "expected_sha256": "12238b622ce451d941318617018e442431b0adb0e06d36d8c5f9e98735da6dd8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "scripts/evaluate_bowl_hybrid_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_bowl_hybrid_subscription.py",
+        "exists": true,
+        "sha256": "f1bfa3254d2db577ced53e8bc15c7e2836928e62113ca4b69fe3be831a164e8f",
+        "expected_sha256": "f1bfa3254d2db577ced53e8bc15c7e2836928e62113ca4b69fe3be831a164e8f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "scripts/evaluate_bowl_subscription_close.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/evaluate_bowl_subscription_close.py",
+        "exists": true,
+        "sha256": "ab20ea69530f2db2a8526aef0ea52a0c93949bab835b3c9d802ef0bf8bd4c458",
+        "expected_sha256": "ab20ea69530f2db2a8526aef0ea52a0c93949bab835b3c9d802ef0bf8bd4c458",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/__init__.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/__init__.py",
+        "exists": true,
+        "sha256": "bd6ab62598007f8d792dd432ec445f8ac3d55347ef30f119eca553edcddd7771",
+        "expected_sha256": "bd6ab62598007f8d792dd432ec445f8ac3d55347ef30f119eca553edcddd7771",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/__main__.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/__main__.py",
+        "exists": true,
+        "sha256": "6a170fc866c867a1e5812daad308396f0940a23f2ecf55e56be39d5d67d23f10",
+        "expected_sha256": "6a170fc866c867a1e5812daad308396f0940a23f2ecf55e56be39d5d67d23f10",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/action.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/action.py",
+        "exists": true,
+        "sha256": "535c8f7ed6c7869a752a515932b8af7ac07daca7191246491b5f0ec835d2331d",
+        "expected_sha256": "535c8f7ed6c7869a752a515932b8af7ac07daca7191246491b5f0ec835d2331d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v1.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v1.py",
+        "exists": true,
+        "sha256": "47ba34af24951279cddc4057f7a97d26a5819d2c1c26020b696bee8919552726",
+        "expected_sha256": "47ba34af24951279cddc4057f7a97d26a5819d2c1c26020b696bee8919552726",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v1_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v1_client.py",
+        "exists": true,
+        "sha256": "81e5eecef503f1d6aa397a5f896e01f3effbd46a4d7e07b15f93d80d6ddd6fb0",
+        "expected_sha256": "81e5eecef503f1d6aa397a5f896e01f3effbd46a4d7e07b15f93d80d6ddd6fb0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v1_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v1_video.py",
+        "exists": true,
+        "sha256": "b423ebddaa9f9361f612c73c8ac2c1d5bfaf40eabdc3ea1cc9a3ea6e9f009cd7",
+        "expected_sha256": "b423ebddaa9f9361f612c73c8ac2c1d5bfaf40eabdc3ea1cc9a3ea6e9f009cd7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2.py",
+        "exists": true,
+        "sha256": "897269172c302f382d1da7612a45c53501b83d53407448ca28853f16488ec70b",
+        "expected_sha256": "897269172c302f382d1da7612a45c53501b83d53407448ca28853f16488ec70b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_client.py",
+        "exists": true,
+        "sha256": "33bd1ef20d1dc46c7ad3125961a6e73f657b624cb4385746ba2cdc8050767394",
+        "expected_sha256": "33bd1ef20d1dc46c7ad3125961a6e73f657b624cb4385746ba2cdc8050767394",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_contacts.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_contacts.py",
+        "exists": true,
+        "sha256": "b4c2a81f627ffd7609a723ed5bfa66ca762c5751e071eea7866212d1bfbc6453",
+        "expected_sha256": "b4c2a81f627ffd7609a723ed5bfa66ca762c5751e071eea7866212d1bfbc6453",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_geometry.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_geometry.py",
+        "exists": true,
+        "sha256": "b0c37d0d633b1ea74f7b5f1033d30591bd6eebc9ae29e681a7b1c41fc6538a24",
+        "expected_sha256": "b0c37d0d633b1ea74f7b5f1033d30591bd6eebc9ae29e681a7b1c41fc6538a24",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_observers.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_observers.py",
+        "exists": true,
+        "sha256": "30566ea87e10b53907ec2758a1a492dab46708b7fb74fa5519e3b7093658aa57",
+        "expected_sha256": "30566ea87e10b53907ec2758a1a492dab46708b7fb74fa5519e3b7093658aa57",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_plan.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_plan.py",
+        "exists": true,
+        "sha256": "17ab6a5ec27262f98fec4750822e4d60270b6a6a21bb3836087bccef31421e11",
+        "expected_sha256": "17ab6a5ec27262f98fec4750822e4d60270b6a6a21bb3836087bccef31421e11",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_planner.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_planner.py",
+        "exists": true,
+        "sha256": "bb2bc421b3cb35766f6b767fa06803b13beb2e83b91d03ec733a89c895dccadc",
+        "expected_sha256": "bb2bc421b3cb35766f6b767fa06803b13beb2e83b91d03ec733a89c895dccadc",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_primitives.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_primitives.py",
+        "exists": true,
+        "sha256": "d848824755a51fa59a461db25d7daab83328dd2990fe0ede9002e2844dd6a444",
+        "expected_sha256": "d848824755a51fa59a461db25d7daab83328dd2990fe0ede9002e2844dd6a444",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_relations.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_relations.py",
+        "exists": true,
+        "sha256": "c8fd36eb91841341786ef0e82aa68301c5b33faa3ed75791a28c9e93cc16e591",
+        "expected_sha256": "c8fd36eb91841341786ef0e82aa68301c5b33faa3ed75791a28c9e93cc16e591",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_robot.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_robot.py",
+        "exists": true,
+        "sha256": "0f18337dc032ad1895839d45b7de74157436874745adf38f7f00575540806288",
+        "expected_sha256": "0f18337dc032ad1895839d45b7de74157436874745adf38f7f00575540806288",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_scene.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_scene.py",
+        "exists": true,
+        "sha256": "387974d7c6345907a429c7df31b70d6a50809cae77fac9e03325c1980d4ae347",
+        "expected_sha256": "387974d7c6345907a429c7df31b70d6a50809cae77fac9e03325c1980d4ae347",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_sim.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_sim.py",
+        "exists": true,
+        "sha256": "a09bf4c9c3f5753c543db210734c50636772a15c380d09dac5917be6d86b1654",
+        "expected_sha256": "a09bf4c9c3f5753c543db210734c50636772a15c380d09dac5917be6d86b1654",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_tasks.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_tasks.py",
+        "exists": true,
+        "sha256": "2e08f340dea3bcf0b90e1acd0a1eca3e76ee12ba354515daa79d71da5ca8dce8",
+        "expected_sha256": "2e08f340dea3bcf0b90e1acd0a1eca3e76ee12ba354515daa79d71da5ca8dce8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_thresholds.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_thresholds.py",
+        "exists": true,
+        "sha256": "e638027e9ffa304bd60c5fe7e1e5716eab82302d39d2eecf688af2064c50b4d1",
+        "expected_sha256": "e638027e9ffa304bd60c5fe7e1e5716eab82302d39d2eecf688af2064c50b4d1",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_truth.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_truth.py",
+        "exists": true,
+        "sha256": "95dea9d1c76685428b55c7d90f91ecf22fb1e4e30b5a1168ef2236a37e9856bf",
+        "expected_sha256": "95dea9d1c76685428b55c7d90f91ecf22fb1e4e30b5a1168ef2236a37e9856bf",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_types.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_types.py",
+        "exists": true,
+        "sha256": "729fbe76d5e8234f5950d40e5150e6830be745ee6b78fae24e47edb6bddc069b",
+        "expected_sha256": "729fbe76d5e8234f5950d40e5150e6830be745ee6b78fae24e47edb6bddc069b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check.html",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check.html",
+        "exists": true,
+        "sha256": "b89702045ff551fbd44105bbf746058d3a0a3bbf1cb583e372f69c75620e9c7c",
+        "expected_sha256": "b89702045ff551fbd44105bbf746058d3a0a3bbf1cb583e372f69c75620e9c7c",
+        "matches": true,
+        "nlink": 22
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check.py",
+        "exists": true,
+        "sha256": "9105f566029b2520382dc4ecc329e73dd46181df9ede2d5aa8085d63bdc53ea2",
+        "expected_sha256": "9105f566029b2520382dc4ecc329e73dd46181df9ede2d5aa8085d63bdc53ea2",
+        "matches": true,
+        "nlink": 23
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_agent.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent.py",
+        "exists": true,
+        "sha256": "4593dc2192f6c487165a270b4bc27eaf412221bf5f8578152de74ba84c8c78a9",
+        "expected_sha256": "4593dc2192f6c487165a270b4bc27eaf412221bf5f8578152de74ba84c8c78a9",
+        "matches": true,
+        "nlink": 23
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent_client.py",
+        "exists": true,
+        "sha256": "72dcf84c9409cc4167eea2894e6c57165807917c40512cc5d8724dd551e0aeb5",
+        "expected_sha256": "72dcf84c9409cc4167eea2894e6c57165807917c40512cc5d8724dd551e0aeb5",
+        "matches": true,
+        "nlink": 11
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_agent_macros.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_agent_macros.py",
+        "exists": true,
+        "sha256": "43aa39c091f85573efd35d91eb6c97f75f433e57a7dfe1e7caf293c61099502e",
+        "expected_sha256": "43aa39c091f85573efd35d91eb6c97f75f433e57a7dfe1e7caf293c61099502e",
+        "matches": true,
+        "nlink": 23
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_client.py",
+        "exists": true,
+        "sha256": "842fdae6f22667de33bf2df30f14d8edea656c43713fce42d6eaca24ac403f8e",
+        "expected_sha256": "842fdae6f22667de33bf2df30f14d8edea656c43713fce42d6eaca24ac403f8e",
+        "matches": true,
+        "nlink": 23
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_constraints.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_constraints.py",
+        "exists": true,
+        "sha256": "495391c5bf42d04ae56c624360c991c55b4d282167e6962f4ef85446711f5695",
+        "expected_sha256": "495391c5bf42d04ae56c624360c991c55b4d282167e6962f4ef85446711f5695",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_context.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_context.py",
+        "exists": true,
+        "sha256": "711bc9c62167faecc0a115519e1c71cdedff071c1a79f710246506aa487e43cf",
+        "expected_sha256": "711bc9c62167faecc0a115519e1c71cdedff071c1a79f710246506aa487e43cf",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_control.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_control.py",
+        "exists": true,
+        "sha256": "3ec4a37f83d34d09351e1601aa7f142dbf8ba2a2af186c971dca85d291124ed7",
+        "expected_sha256": "3ec4a37f83d34d09351e1601aa7f142dbf8ba2a2af186c971dca85d291124ed7",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_fragments.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_fragments.py",
+        "exists": true,
+        "sha256": "c12293f33709b4f9546022bb048377b12231bf2730316ab23f2adbafc9bc5562",
+        "expected_sha256": "c12293f33709b4f9546022bb048377b12231bf2730316ab23f2adbafc9bc5562",
+        "matches": true,
+        "nlink": 23
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_framework.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_framework.py",
+        "exists": true,
+        "sha256": "d754c8972dc6106499354745614dcf944c5f11943acece9e558474e1a1742740",
+        "expected_sha256": "d754c8972dc6106499354745614dcf944c5f11943acece9e558474e1a1742740",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_local.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_local.py",
+        "exists": true,
+        "sha256": "8dfcd07e9bb9cc138d919d400117de8362094e76ed74722a47883a4a850c5f5a",
+        "expected_sha256": "8dfcd07e9bb9cc138d919d400117de8362094e76ed74722a47883a4a850c5f5a",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_motion.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_motion.py",
+        "exists": true,
+        "sha256": "3dbbb00b960768193c35dec86e934fb01385da2eacaf54f1afa92eb4294bc4c4",
+        "expected_sha256": "3dbbb00b960768193c35dec86e934fb01385da2eacaf54f1afa92eb4294bc4c4",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_plan.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_plan.py",
+        "exists": true,
+        "sha256": "fec872d5622459208ea0ada3d503fbc357d35b2d6f5a36569c8bfc9d1c45c4f2",
+        "expected_sha256": "fec872d5622459208ea0ada3d503fbc357d35b2d6f5a36569c8bfc9d1c45c4f2",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_runtime.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_runtime.py",
+        "exists": true,
+        "sha256": "9b046433af30b77061bbda87030e673dcfbb7cd23fbea8b58cbe20331f47bac4",
+        "expected_sha256": "9b046433af30b77061bbda87030e673dcfbb7cd23fbea8b58cbe20331f47bac4",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_server.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_server.py",
+        "exists": true,
+        "sha256": "4e85d0ea3486e25862083f458fee343d18b7bad2fe2f08b8d6750095d996be22",
+        "expected_sha256": "4e85d0ea3486e25862083f458fee343d18b7bad2fe2f08b8d6750095d996be22",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_sim.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_sim.py",
+        "exists": true,
+        "sha256": "69656dce671350a62e87872de50edd7d298be14631d0b2068ae3f4e099e6bc19",
+        "expected_sha256": "69656dce671350a62e87872de50edd7d298be14631d0b2068ae3f4e099e6bc19",
+        "matches": true,
+        "nlink": 11
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_skills.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_skills.py",
+        "exists": true,
+        "sha256": "caf08ced5b776fc55dd99518e7c286941cc11e11b3c156c47631e795f573b318",
+        "expected_sha256": "caf08ced5b776fc55dd99518e7c286941cc11e11b3c156c47631e795f573b318",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_user_check_spatial.py",
+        "exists": true,
+        "sha256": "f773f3650f9a2306b1b4276b9f893dbe962309abc4a6d83bfcfc99798188603a",
+        "expected_sha256": "f773f3650f9a2306b1b4276b9f893dbe962309abc4a6d83bfcfc99798188603a",
+        "matches": true,
+        "nlink": 24
+      },
+      {
+        "relative_path": "src/gpt_field/agent_speedup_v2_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/agent_speedup_v2_video.py",
+        "exists": true,
+        "sha256": "0dc7c657cb3e13be75ab3478471333bdef831cfe8b9d3995d906e4bfa60a0dd3",
+        "expected_sha256": "0dc7c657cb3e13be75ab3478471333bdef831cfe8b9d3995d906e4bfa60a0dd3",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astra.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astra.py",
+        "exists": true,
+        "sha256": "3c1ae3860b77e6e88b052cda25b7f9197dffc99679758c436d196257cdae4321",
+        "expected_sha256": "3c1ae3860b77e6e88b052cda25b7f9197dffc99679758c436d196257cdae4321",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astranomy_agentic_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astranomy_agentic_client.py",
+        "exists": true,
+        "sha256": "2ea100486d3eff77966956e1e59d86f95d83dfaca58408af7e8a32851112f7da",
+        "expected_sha256": "2ea100486d3eff77966956e1e59d86f95d83dfaca58408af7e8a32851112f7da",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astranomy_agentic_geometry.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astranomy_agentic_geometry.py",
+        "exists": true,
+        "sha256": "0ff19d48f9a47ec4c809da8e35d65d9a6a1d67c5a45098a35868021f9182e83a",
+        "expected_sha256": "0ff19d48f9a47ec4c809da8e35d65d9a6a1d67c5a45098a35868021f9182e83a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astranomy_agentic_motion.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astranomy_agentic_motion.py",
+        "exists": true,
+        "sha256": "487f7841b4f19d67f2771f8f3298bbadbfbd5eeced81b2f2f1fb20e3f8e4c4a4",
+        "expected_sha256": "487f7841b4f19d67f2771f8f3298bbadbfbd5eeced81b2f2f1fb20e3f8e4c4a4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astranomy_agentic_prompt.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astranomy_agentic_prompt.py",
+        "exists": true,
+        "sha256": "f06a4a4af91c84ed19bfc27135fbf8f5842fdcd1ced238dcef7c38a4517e1317",
+        "expected_sha256": "f06a4a4af91c84ed19bfc27135fbf8f5842fdcd1ced238dcef7c38a4517e1317",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/astranomy_agentic_sim.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/astranomy_agentic_sim.py",
+        "exists": true,
+        "sha256": "4ac7d4fce3b071b66f578f477448026e42e36a9ee11007896e060dfe48b764ee",
+        "expected_sha256": "4ac7d4fce3b071b66f578f477448026e42e36a9ee11007896e060dfe48b764ee",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/attempt_memory.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/attempt_memory.py",
+        "exists": true,
+        "sha256": "05f843ffb9c8709dca73ce431ca2a638d9774d1b206ed96a64f367871f92abae",
+        "expected_sha256": "05f843ffb9c8709dca73ce431ca2a638d9774d1b206ed96a64f367871f92abae",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/baselines.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/baselines.py",
+        "exists": true,
+        "sha256": "0ec73dec0c61e08cd12905f704d36d31baf138e218f3a310544814ef6a453c07",
+        "expected_sha256": "0ec73dec0c61e08cd12905f704d36d31baf138e218f3a310544814ef6a453c07",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/block_feedback_history.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/block_feedback_history.py",
+        "exists": true,
+        "sha256": "3da6df1a7b6cdb4dc00cad06da04ecdebfe2bf9f245c57c77e33769ebacc4a34",
+        "expected_sha256": "3da6df1a7b6cdb4dc00cad06da04ecdebfe2bf9f245c57c77e33769ebacc4a34",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/chatgpt_auth.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/chatgpt_auth.py",
+        "exists": true,
+        "sha256": "d042664658abcde4f54e66b4f8656166d0f449e941dc2bac6d124ef81be22841",
+        "expected_sha256": "d042664658abcde4f54e66b4f8656166d0f449e941dc2bac6d124ef81be22841",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/chatgpt_direct.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/chatgpt_direct.py",
+        "exists": true,
+        "sha256": "27051e624e72a748d65ad666ab2bd36114c3bff69980896a1afcaaae9f32c54b",
+        "expected_sha256": "27051e624e72a748d65ad666ab2bd36114c3bff69980896a1afcaaae9f32c54b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/chatgpt_plan.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/chatgpt_plan.py",
+        "exists": true,
+        "sha256": "dcbeef68480a710345b570a1d01e86a23feedbbfe31a865a164045cf1430ca79",
+        "expected_sha256": "dcbeef68480a710345b570a1d01e86a23feedbbfe31a865a164045cf1430ca79",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/cli.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/cli.py",
+        "exists": true,
+        "sha256": "309e4a009273173a80db6293f9ab5c8611baee4017cf634db8a7b48fe2436f6c",
+        "expected_sha256": "309e4a009273173a80db6293f9ab5c8611baee4017cf634db8a7b48fe2436f6c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/compact_field.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/compact_field.py",
+        "exists": true,
+        "sha256": "4ac5637b119aae26cb299fcd56ce3e8e123b36391d1aa3b0ff02f296892f815b",
+        "expected_sha256": "4ac5637b119aae26cb299fcd56ce3e8e123b36391d1aa3b0ff02f296892f815b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/compact_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/compact_subscription.py",
+        "exists": true,
+        "sha256": "b69d5a2e8a05e08bbb55d031da0b82282f87f792fa2d2b18dae44c17bd071ec0",
+        "expected_sha256": "b69d5a2e8a05e08bbb55d031da0b82282f87f792fa2d2b18dae44c17bd071ec0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_diagnostic_policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_diagnostic_policy.py",
+        "exists": true,
+        "sha256": "0e5d2d12bfe8ad37d837f83793ecb2b7dc359f6f0c540cdcf354fc8cbf9f32d4",
+        "expected_sha256": "0e5d2d12bfe8ad37d837f83793ecb2b7dc359f6f0c540cdcf354fc8cbf9f32d4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_diagnostic_sim.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_diagnostic_sim.py",
+        "exists": true,
+        "sha256": "e8888aaf8a8489ebcfbcc480f5a5d54539b274f9b1480754e89cad91c17bc2fe",
+        "expected_sha256": "e8888aaf8a8489ebcfbcc480f5a5d54539b274f9b1480754e89cad91c17bc2fe",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_geometry_v13.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_geometry_v13.py",
+        "exists": true,
+        "sha256": "c84d7c95abf2732e0a0d02f992a00c0c1420894363b60421ded1238a98435a2a",
+        "expected_sha256": "c84d7c95abf2732e0a0d02f992a00c0c1420894363b60421ded1238a98435a2a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_region_feedback.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_region_feedback.py",
+        "exists": true,
+        "sha256": "8af55e9850c1d57155d61b6d71d3b60f1647ec0da59641d32ac84ecd8da331d0",
+        "expected_sha256": "8af55e9850c1d57155d61b6d71d3b60f1647ec0da59641d32ac84ecd8da331d0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_region_policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_region_policy.py",
+        "exists": true,
+        "sha256": "89e7f479563d1c65c8ab4f91d5f9065faa594fc889392ea28422f481c963ccf8",
+        "expected_sha256": "89e7f479563d1c65c8ab4f91d5f9065faa594fc889392ea28422f481c963ccf8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/contact_skills.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/contact_skills.py",
+        "exists": true,
+        "sha256": "48b4dda3762a098c52525e20cc3862917642dc649640295699031a534cca2098",
+        "expected_sha256": "48b4dda3762a098c52525e20cc3862917642dc649640295699031a534cca2098",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/demo_direct_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/demo_direct_subscription.py",
+        "exists": true,
+        "sha256": "0246968e215a64f5132a34a3d3c8e9cfb3f006ccc81809ae0664afb7789715a7",
+        "expected_sha256": "0246968e215a64f5132a34a3d3c8e9cfb3f006ccc81809ae0664afb7789715a7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/demo_direct_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/demo_direct_video.py",
+        "exists": true,
+        "sha256": "b6a730356d6cedd0063cdbd04ca1fc040cb6c64df71657784dac8b305ca2bb7d",
+        "expected_sha256": "b6a730356d6cedd0063cdbd04ca1fc040cb6c64df71657784dac8b305ca2bb7d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/demonstration.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/demonstration.py",
+        "exists": true,
+        "sha256": "b52e225dbc22fb969532de27dee5fca0e8a6c2a48676ae8ad2d3b450dbdbd708",
+        "expected_sha256": "b52e225dbc22fb969532de27dee5fca0e8a6c2a48676ae8ad2d3b450dbdbd708",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/diagnostics.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/diagnostics.py",
+        "exists": true,
+        "sha256": "f551c1be3a28662fcf7bf4fbac64baef44b61da5e38acf1b1a80f8e7bec788a6",
+        "expected_sha256": "f551c1be3a28662fcf7bf4fbac64baef44b61da5e38acf1b1a80f8e7bec788a6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/direct_history.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/direct_history.py",
+        "exists": true,
+        "sha256": "3f6afa6aa3213f562a547534aa6437e4facfb7ef9fb26033b9c48be931062f8a",
+        "expected_sha256": "3f6afa6aa3213f562a547534aa6437e4facfb7ef9fb26033b9c48be931062f8a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/direct_history_resume.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/direct_history_resume.py",
+        "exists": true,
+        "sha256": "47bce0f856d209e4286ff56962e9f4355770512105f3b9087921fbf123fb9652",
+        "expected_sha256": "47bce0f856d209e4286ff56962e9f4355770512105f3b9087921fbf123fb9652",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/direct_history_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/direct_history_video.py",
+        "exists": true,
+        "sha256": "d7b201c59a1d7c7ce107e250eda7d8e08d85afb3cfa8f392e19aa2d8a69801ce",
+        "expected_sha256": "d7b201c59a1d7c7ce107e250eda7d8e08d85afb3cfa8f392e19aa2d8a69801ce",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/distance_planner.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/distance_planner.py",
+        "exists": true,
+        "sha256": "f607e0e9f37cd694301a476db71df6e9bf3e18b0bd103941e85ed3fc3b6cfe2d",
+        "expected_sha256": "f607e0e9f37cd694301a476db71df6e9bf3e18b0bd103941e85ed3fc3b6cfe2d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/distance_policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/distance_policy.py",
+        "exists": true,
+        "sha256": "470db608bc08cd85caa6a7119d983b0073860282d2524d550e17eb62452639fb",
+        "expected_sha256": "470db608bc08cd85caa6a7119d983b0073860282d2524d550e17eb62452639fb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/distance_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/distance_subscription.py",
+        "exists": true,
+        "sha256": "b33feb452413e3e33077aea4ed92c746ce2b18a9264d697aaa6c1b39e346728e",
+        "expected_sha256": "b33feb452413e3e33077aea4ed92c746ce2b18a9264d697aaa6c1b39e346728e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/distance_tasks.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/distance_tasks.py",
+        "exists": true,
+        "sha256": "3cc2d51e7dc63e3416b88806266cd7d41ebe18642aafebcb79e7913a0abade01",
+        "expected_sha256": "3cc2d51e7dc63e3416b88806266cd7d41ebe18642aafebcb79e7913a0abade01",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/distance_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/distance_video.py",
+        "exists": true,
+        "sha256": "28b02df1c4b27170f5d6a1febeaa731b5df5183d0239cd0ca8dab29d9155f91c",
+        "expected_sha256": "28b02df1c4b27170f5d6a1febeaa731b5df5183d0239cd0ca8dab29d9155f91c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/experiment.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/experiment.py",
+        "exists": true,
+        "sha256": "1867c43fcd52b8f78ed707e6cfa3490eed57ed5d37e35674dd89fc084b0ddb70",
+        "expected_sha256": "1867c43fcd52b8f78ed707e6cfa3490eed57ed5d37e35674dd89fc084b0ddb70",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/external_axes.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/external_axes.py",
+        "exists": true,
+        "sha256": "09a3814c119e45fec7bbca40c3241864e50d5f892e860473ba867ec849802d8e",
+        "expected_sha256": "09a3814c119e45fec7bbca40c3241864e50d5f892e860473ba867ec849802d8e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/field.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/field.py",
+        "exists": true,
+        "sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499",
+        "expected_sha256": "4f87ca5cc692c7f4ef48ba36314496b102f48e4f1c4060a016b7a15ef2dc6499",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/field_grounding.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/field_grounding.py",
+        "exists": true,
+        "sha256": "2c25fa83f0538a690800cbdb8c4f65fbf037fd906109ee2ecead319a3cc77210",
+        "expected_sha256": "2c25fa83f0538a690800cbdb8c4f65fbf037fd906109ee2ecead319a3cc77210",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/field_history.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/field_history.py",
+        "exists": true,
+        "sha256": "34a8cbabfbf24cd8a433623d6d2344a79bf523be11036de74b363759897804cd",
+        "expected_sha256": "34a8cbabfbf24cd8a433623d6d2344a79bf523be11036de74b363759897804cd",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/field_history_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/field_history_video.py",
+        "exists": true,
+        "sha256": "d13c1897be95351282d0a757a63b29310fc1c94d5a1ee6e9f034f740056ef337",
+        "expected_sha256": "d13c1897be95351282d0a757a63b29310fc1c94d5a1ee6e9f034f740056ef337",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/fine_distance_planner.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/fine_distance_planner.py",
+        "exists": true,
+        "sha256": "3f97d6aad048f8a39527deb643582700ed53b905feb0b807e0233c292caaa239",
+        "expected_sha256": "3f97d6aad048f8a39527deb643582700ed53b905feb0b807e0233c292caaa239",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/historical_zero_shot_direct.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/historical_zero_shot_direct.py",
+        "exists": true,
+        "sha256": "318eeaf1ca8f70b5929262acdec3a34b970a9c212083cc20a495b997a9fb3bcd",
+        "expected_sha256": "318eeaf1ca8f70b5929262acdec3a34b970a9c212083cc20a495b997a9fb3bcd",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/hybrid_policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/hybrid_policy.py",
+        "exists": true,
+        "sha256": "796cb224a90876c1c25193d03bae8f54367b5b921f991d893993721d07e4b698",
+        "expected_sha256": "796cb224a90876c1c25193d03bae8f54367b5b921f991d893993721d07e4b698",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/hybrid_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/hybrid_subscription.py",
+        "exists": true,
+        "sha256": "562f8ef6607e9fc1bc0b93f2e090b7c93754fde4ed7e54082489bab1ff1f3001",
+        "expected_sha256": "562f8ef6607e9fc1bc0b93f2e090b7c93754fde4ed7e54082489bab1ff1f3001",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/hybrid_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/hybrid_video.py",
+        "exists": true,
+        "sha256": "8664c9443146ce3ef337f6393fe7d93643f3fc398f9fc212711e4f4efaf7adb6",
+        "expected_sha256": "8664c9443146ce3ef337f6393fe7d93643f3fc398f9fc212711e4f4efaf7adb6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/libero.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/libero.py",
+        "exists": true,
+        "sha256": "fcc95f7fe88faeb045580003ffe10508c766f5b3ac45cb19f0d8cdf40af63560",
+        "expected_sha256": "fcc95f7fe88faeb045580003ffe10508c766f5b3ac45cb19f0d8cdf40af63560",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/local_visual_feedback.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/local_visual_feedback.py",
+        "exists": true,
+        "sha256": "d3464bd4908c3fe8d00755e510555294479ad4204e7e5cbf97c2432e9c29adee",
+        "expected_sha256": "d3464bd4908c3fe8d00755e510555294479ad4204e7e5cbf97c2432e9c29adee",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/mark_prompting.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/mark_prompting.py",
+        "exists": true,
+        "sha256": "fd21f563f505b00edc321e3945a8b25f83243855ce4cad00bbcf2cfa9fcacc90",
+        "expected_sha256": "fd21f563f505b00edc321e3945a8b25f83243855ce4cad00bbcf2cfa9fcacc90",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/observation.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/observation.py",
+        "exists": true,
+        "sha256": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e",
+        "expected_sha256": "c8dd33e67c16f0f45d128aba8b0a63a1150e12025a674c38774678fa61935d3e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/operation_contract.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/operation_contract.py",
+        "exists": true,
+        "sha256": "be7876414237e7308437e1d7b51a4151ff78b48238ff485af4b984305ac468d7",
+        "expected_sha256": "be7876414237e7308437e1d7b51a4151ff78b48238ff485af4b984305ac468d7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/operation_visual.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/operation_visual.py",
+        "exists": true,
+        "sha256": "3506383efec18055cb72cba7847b99307c9afdcd903fd941297df40521d39af7",
+        "expected_sha256": "3506383efec18055cb72cba7847b99307c9afdcd903fd941297df40521d39af7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/ordered_transport.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/ordered_transport.py",
+        "exists": true,
+        "sha256": "e439eb2e832773a46f4a5ffe10f473dd9367b3d417161705661304d638e39410",
+        "expected_sha256": "e439eb2e832773a46f4a5ffe10f473dd9367b3d417161705661304d638e39410",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/planner.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/planner.py",
+        "exists": true,
+        "sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1",
+        "expected_sha256": "e39a9de9d820781e849432cc3ddc297d7644fda5625fba1f19e0475ab6dd69e1",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/policy.py",
+        "exists": true,
+        "sha256": "eb382bc6e9f90d5be9046566d3217ea58013f8ce4185c1af80fc98067d0e92cc",
+        "expected_sha256": "eb382bc6e9f90d5be9046566d3217ea58013f8ce4185c1af80fc98067d0e92cc",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/report.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/report.py",
+        "exists": true,
+        "sha256": "aa9318e9e6559f9b64c67eb0679547bf64c8f9bd8b9e764265cc2411bca8c4f1",
+        "expected_sha256": "aa9318e9e6559f9b64c67eb0679547bf64c8f9bd8b9e764265cc2411bca8c4f1",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robodojo_direct_client.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robodojo_direct_client.py",
+        "exists": true,
+        "sha256": "9726559e0afa64671c29733c20d9ed3c9ab7f11bf72d969accb534ed74a7dde6",
+        "expected_sha256": "9726559e0afa64671c29733c20d9ed3c9ab7f11bf72d969accb534ed74a7dde6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robodojo_direct_motion.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robodojo_direct_motion.py",
+        "exists": true,
+        "sha256": "28dea8889477451b2710d96e8a88829d674a74a85fd655697add42fdcb3d0005",
+        "expected_sha256": "28dea8889477451b2710d96e8a88829d674a74a85fd655697add42fdcb3d0005",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robodojo_direct_sim.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robodojo_direct_sim.py",
+        "exists": true,
+        "sha256": "6d2746cbf1d52cb0b4ebc8de80e5e4dafa6449dc95a9df27d887c6fb3c9971bb",
+        "expected_sha256": "6d2746cbf1d52cb0b4ebc8de80e5e4dafa6449dc95a9df27d887c6fb3c9971bb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robot_facts_v2.json",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robot_facts_v2.json",
+        "exists": true,
+        "sha256": "1f5da32f78e1c83b1aeef02a0807520a27f006947a1c3e099e9c1849e78cf532",
+        "expected_sha256": "1f5da32f78e1c83b1aeef02a0807520a27f006947a1c3e099e9c1849e78cf532",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robot_geometry_guidance.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robot_geometry_guidance.py",
+        "exists": true,
+        "sha256": "1bae920286937f747fff754270d64613c4b0a099bb7389e605bcf19aedbbdb38",
+        "expected_sha256": "1bae920286937f747fff754270d64613c4b0a099bb7389e605bcf19aedbbdb38",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robot_tool_geometry.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robot_tool_geometry.py",
+        "exists": true,
+        "sha256": "0e4c806bc43882084b8928919c1ce6ce1bfa23e8bff604351470ca1038789d5e",
+        "expected_sha256": "0e4c806bc43882084b8928919c1ce6ce1bfa23e8bff604351470ca1038789d5e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robot_translation_response.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robot_translation_response.py",
+        "exists": true,
+        "sha256": "2ccc7d0082180a57a838cbf1045af20d99595b7368ca852efd2e6bbc4706cfc1",
+        "expected_sha256": "2ccc7d0082180a57a838cbf1045af20d99595b7368ca852efd2e6bbc4706cfc1",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/robot_translation_response_v25.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/robot_translation_response_v25.py",
+        "exists": true,
+        "sha256": "be23ba4454ee16765dec025c95a7c8a018d6884c7f52289b939ee0eae1f8d4ab",
+        "expected_sha256": "be23ba4454ee16765dec025c95a7c8a018d6884c7f52289b939ee0eae1f8d4ab",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/schema.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/schema.py",
+        "exists": true,
+        "sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09",
+        "expected_sha256": "f6f1b8a40de432bbecd1025aeacfc4677bfe194547bb743a2222298c1686bc09",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_gripper.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_gripper.py",
+        "exists": true,
+        "sha256": "c2fc027ae69726668ce3238f5539578bacb72541baf1481aa6bbb07f175a088d",
+        "expected_sha256": "c2fc027ae69726668ce3238f5539578bacb72541baf1481aa6bbb07f175a088d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_history.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_history.py",
+        "exists": true,
+        "sha256": "21adf9530e4ebc7c5804662d6af61e89b0109a9972f7d9fef03e974868d7035a",
+        "expected_sha256": "21adf9530e4ebc7c5804662d6af61e89b0109a9972f7d9fef03e974868d7035a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_hybrid.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_hybrid.py",
+        "exists": true,
+        "sha256": "9622e2fa4e79a88218dc581d3734a87118efdc4b335669868f71045555bb49ca",
+        "expected_sha256": "9622e2fa4e79a88218dc581d3734a87118efdc4b335669868f71045555bb49ca",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_pregrasp.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_pregrasp.py",
+        "exists": true,
+        "sha256": "306ba7ccae40f6abb370791d1199267c71e8a9e8ef062f2e21ada9beda6dbe1f",
+        "expected_sha256": "306ba7ccae40f6abb370791d1199267c71e8a9e8ef062f2e21ada9beda6dbe1f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_v2.py",
+        "exists": true,
+        "sha256": "6fad0b837d472fd6ed1cdb4a915624eacc85f28026738b66631c59cf9ba9eab0",
+        "expected_sha256": "6fad0b837d472fd6ed1cdb4a915624eacc85f28026738b66631c59cf9ba9eab0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_v3.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_v3.py",
+        "exists": true,
+        "sha256": "d40e31a57965ee91a46b631f81e99c641d8a4a2b4c5612c44fbd78ac42d4e577",
+        "expected_sha256": "d40e31a57965ee91a46b631f81e99c641d8a4a2b4c5612c44fbd78ac42d4e577",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_v3_video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_v3_video.py",
+        "exists": true,
+        "sha256": "6be9e3371d5ae3a90ea5e35c384441259d1900c78b887575a527030d80eaa037",
+        "expected_sha256": "6be9e3371d5ae3a90ea5e35c384441259d1900c78b887575a527030d80eaa037",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_v4.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_v4.py",
+        "exists": true,
+        "sha256": "9e594dd3a4973c3b4c766c8d2d76f43ae5578d52362fccf5e9a8551932f0ddc2",
+        "expected_sha256": "9e594dd3a4973c3b4c766c8d2d76f43ae5578d52362fccf5e9a8551932f0ddc2",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/speed_first_visual.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/speed_first_visual.py",
+        "exists": true,
+        "sha256": "afb5f596daabac6267cdfacc549d81ca57ee74070111846823f9e78088631390",
+        "expected_sha256": "afb5f596daabac6267cdfacc549d81ca57ee74070111846823f9e78088631390",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/target_identity_guidance.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/target_identity_guidance.py",
+        "exists": true,
+        "sha256": "b878668ebc3dfa7eb1a7f52f4181f29b2b8fb2ec8eec494d7af988b9c74c0568",
+        "expected_sha256": "b878668ebc3dfa7eb1a7f52f4181f29b2b8fb2ec8eec494d7af988b9c74c0568",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/tracking.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/tracking.py",
+        "exists": true,
+        "sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64",
+        "expected_sha256": "32ce2a63e7fa62ea08f8d2fd76f69f79583ae88258e39148cb1e2c1c0931ab64",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/uncertainty_egress_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/uncertainty_egress_v23.py",
+        "exists": true,
+        "sha256": "a1022a6e9fbb4aac7257cd754e30c4ca6335bf792b02fc6d663e40b35f04652a",
+        "expected_sha256": "a1022a6e9fbb4aac7257cd754e30c4ca6335bf792b02fc6d663e40b35f04652a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/video.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/video.py",
+        "exists": true,
+        "sha256": "6b49c7bf6044952e86898218f5011e32de59d0ae79be9630efb504c1b8887918",
+        "expected_sha256": "6b49c7bf6044952e86898218f5011e32de59d0ae79be9630efb504c1b8887918",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_boundary_evidence_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_boundary_evidence_v27.py",
+        "exists": true,
+        "sha256": "faef0e7e45b505abe7001ede164473d236276eba43ee5de0d9b9955d9cee246f",
+        "expected_sha256": "faef0e7e45b505abe7001ede164473d236276eba43ee5de0d9b9955d9cee246f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_contact_alignment_v13.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_contact_alignment_v13.py",
+        "exists": true,
+        "sha256": "300c725ce393964886d426864844a6d8e7269fd8290bfc74731375fb0926a605",
+        "expected_sha256": "300c725ce393964886d426864844a6d8e7269fd8290bfc74731375fb0926a605",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_egress_evidence_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_egress_evidence_v23.py",
+        "exists": true,
+        "sha256": "c89e04525091fc876529555c63e73cb760e717cbfe56bd15325fa86a7bdb6e84",
+        "expected_sha256": "c89e04525091fc876529555c63e73cb760e717cbfe56bd15325fa86a7bdb6e84",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v11.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v11.py",
+        "exists": true,
+        "sha256": "2886997d4fb173190e9167f3ba884f87933f65a5ff9f42e004e5c2708d86c7a6",
+        "expected_sha256": "2886997d4fb173190e9167f3ba884f87933f65a5ff9f42e004e5c2708d86c7a6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v12.py",
+        "exists": true,
+        "sha256": "2bdb2375fe9c0defe02617232fdd56dae95ead5d2075a1087444059f4b4699d4",
+        "expected_sha256": "2bdb2375fe9c0defe02617232fdd56dae95ead5d2075a1087444059f4b4699d4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v14.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v14.py",
+        "exists": true,
+        "sha256": "06a678a4d6e67227b40480a68fa30955241a7723b20a77dadc373b65defe5c50",
+        "expected_sha256": "06a678a4d6e67227b40480a68fa30955241a7723b20a77dadc373b65defe5c50",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v17.py",
+        "exists": true,
+        "sha256": "37bec91c63218a8cf7e9ffc20fd01fa04507228201985225d92f633aa83a08fe",
+        "expected_sha256": "37bec91c63218a8cf7e9ffc20fd01fa04507228201985225d92f633aa83a08fe",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v21.py",
+        "exists": true,
+        "sha256": "875df1471712283d7976b6c4fedbd6ef214f7f745bc02498d51a099d1e608361",
+        "expected_sha256": "875df1471712283d7976b6c4fedbd6ef214f7f745bc02498d51a099d1e608361",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_compact_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_compact_v35.py",
+        "exists": true,
+        "sha256": "fa66f9277b494dac86bf484e2db19250f79e234a27357fc1dedd686a91ec34cc",
+        "expected_sha256": "fa66f9277b494dac86bf484e2db19250f79e234a27357fc1dedd686a91ec34cc",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_feedback_transaction_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_feedback_transaction_v34.py",
+        "exists": true,
+        "sha256": "b8054847d34cf18f6b2adeffea4799dc9312998e8013d4897c82b7265bb6b4e0",
+        "expected_sha256": "b8054847d34cf18f6b2adeffea4799dc9312998e8013d4897c82b7265bb6b4e0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field.py",
+        "exists": true,
+        "sha256": "eb92fda1f186d36d93767f53b4daa39f5070f93bdddedcda105802d2a9aa668e",
+        "expected_sha256": "eb92fda1f186d36d93767f53b4daa39f5070f93bdddedcda105802d2a9aa668e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy.py",
+        "exists": true,
+        "sha256": "fffeb410be635a3cd53d47e4f2b561f6ebcc89887e2d22f5edf1ef3783875e44",
+        "expected_sha256": "fffeb410be635a3cd53d47e4f2b561f6ebcc89887e2d22f5edf1ef3783875e44",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v10.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v10.py",
+        "exists": true,
+        "sha256": "8c2491b22c5070272d45a7d3294685bc2b780c809c0acd4052884ca1ab04fc19",
+        "expected_sha256": "8c2491b22c5070272d45a7d3294685bc2b780c809c0acd4052884ca1ab04fc19",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v11.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v11.py",
+        "exists": true,
+        "sha256": "e2c5628cabdc246ebd7eea6c4136621ec704e3153062b5e9c48e9cf188ed6e91",
+        "expected_sha256": "e2c5628cabdc246ebd7eea6c4136621ec704e3153062b5e9c48e9cf188ed6e91",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v12.py",
+        "exists": true,
+        "sha256": "f88a0225e87473a93d99b359969ce2fcfbd2eeac72869f29e71ce88f79fed850",
+        "expected_sha256": "f88a0225e87473a93d99b359969ce2fcfbd2eeac72869f29e71ce88f79fed850",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v13.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v13.py",
+        "exists": true,
+        "sha256": "17f36320bf67e62a9bd2aa7837ff9fab213e1d0a8227100a5b5cb213d7164b3b",
+        "expected_sha256": "17f36320bf67e62a9bd2aa7837ff9fab213e1d0a8227100a5b5cb213d7164b3b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v14.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v14.py",
+        "exists": true,
+        "sha256": "0b4f230634ed52323f2f04abad23c5c3fce79d31c254d0b5baafe3e0665bf0fe",
+        "expected_sha256": "0b4f230634ed52323f2f04abad23c5c3fce79d31c254d0b5baafe3e0665bf0fe",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v15.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v15.py",
+        "exists": true,
+        "sha256": "374f04f640ee9a029501575ceff0b1de85eefc86f1f4a97ca892b4171a7fa7cb",
+        "expected_sha256": "374f04f640ee9a029501575ceff0b1de85eefc86f1f4a97ca892b4171a7fa7cb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v16.py",
+        "exists": true,
+        "sha256": "f8c1d27e6498b3f8d85af2ef57341ff38de5945bf75fc511ea8706dbe5fd7ef5",
+        "expected_sha256": "f8c1d27e6498b3f8d85af2ef57341ff38de5945bf75fc511ea8706dbe5fd7ef5",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v17.py",
+        "exists": true,
+        "sha256": "67d7d956dd8c9a4c936cd870ac6c3470760d5a052ceb70a617154d851ac9319a",
+        "expected_sha256": "67d7d956dd8c9a4c936cd870ac6c3470760d5a052ceb70a617154d851ac9319a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v18.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v18.py",
+        "exists": true,
+        "sha256": "b756316aa618cc78659cd400613d2dfc811e5630293cf48f331d3a0b1931b678",
+        "expected_sha256": "b756316aa618cc78659cd400613d2dfc811e5630293cf48f331d3a0b1931b678",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v19.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v19.py",
+        "exists": true,
+        "sha256": "3dadfc46be836ba985f269c3e04038474b0dd72c521cd852bee3328eef216f83",
+        "expected_sha256": "3dadfc46be836ba985f269c3e04038474b0dd72c521cd852bee3328eef216f83",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v2.py",
+        "exists": true,
+        "sha256": "21f56a2e73ae6f832f640617d0003f4609c0191c32d92f1994cd2340c1280095",
+        "expected_sha256": "21f56a2e73ae6f832f640617d0003f4609c0191c32d92f1994cd2340c1280095",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v20.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v20.py",
+        "exists": true,
+        "sha256": "40fe352c88bd4dd047716fc553f10ef8f90618ac086aac25336d45aec772ffe7",
+        "expected_sha256": "40fe352c88bd4dd047716fc553f10ef8f90618ac086aac25336d45aec772ffe7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v21.py",
+        "exists": true,
+        "sha256": "0017f0b1d804907cf18737f42481520ba98dd97764df9c06aecc93e1e6394c28",
+        "expected_sha256": "0017f0b1d804907cf18737f42481520ba98dd97764df9c06aecc93e1e6394c28",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v22.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v22.py",
+        "exists": true,
+        "sha256": "a864182c2290b9be568a9b0cb3e463405d65b2e85f14b378200f002f68e68d95",
+        "expected_sha256": "a864182c2290b9be568a9b0cb3e463405d65b2e85f14b378200f002f68e68d95",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v23.py",
+        "exists": true,
+        "sha256": "1a3acec4e150ffd362289767e88e29332f8d914258435bd355d527ede2adc383",
+        "expected_sha256": "1a3acec4e150ffd362289767e88e29332f8d914258435bd355d527ede2adc383",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v24.py",
+        "exists": true,
+        "sha256": "65b44fb2dde275760948fffda02c0bd9b878db0cb65a3f25049741d50573ce59",
+        "expected_sha256": "65b44fb2dde275760948fffda02c0bd9b878db0cb65a3f25049741d50573ce59",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v25.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v25.py",
+        "exists": true,
+        "sha256": "71f7f301d86f749fd869ef095136e5d22f558f18ef943f33cb7a64ec2f537170",
+        "expected_sha256": "71f7f301d86f749fd869ef095136e5d22f558f18ef943f33cb7a64ec2f537170",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v26.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v26.py",
+        "exists": true,
+        "sha256": "c35223043f74f64d29cd3459b2d0d51aa5bfc8753f2017e51b2428e68c62ceb4",
+        "expected_sha256": "c35223043f74f64d29cd3459b2d0d51aa5bfc8753f2017e51b2428e68c62ceb4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v27.py",
+        "exists": true,
+        "sha256": "e92b37230182f72a0e45acd2adc41ca760c3805177852fd3989c1aed7f4adb6e",
+        "expected_sha256": "e92b37230182f72a0e45acd2adc41ca760c3805177852fd3989c1aed7f4adb6e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v28.py",
+        "exists": true,
+        "sha256": "93345ce9797f18fb0abf46cfa6b24de2d2e97444781978020564dd76dbdb9d57",
+        "expected_sha256": "93345ce9797f18fb0abf46cfa6b24de2d2e97444781978020564dd76dbdb9d57",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v29.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v29.py",
+        "exists": true,
+        "sha256": "0e0e8cf72cb4a3c5e13046a2eb5a37b445d1c2d7232bedade3f6d522f2927ceb",
+        "expected_sha256": "0e0e8cf72cb4a3c5e13046a2eb5a37b445d1c2d7232bedade3f6d522f2927ceb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v3.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v3.py",
+        "exists": true,
+        "sha256": "224acbbde3af4cb5095dbaaafcf9b71a8f4a1f3833a3f69715dd9f8c24f1694d",
+        "expected_sha256": "224acbbde3af4cb5095dbaaafcf9b71a8f4a1f3833a3f69715dd9f8c24f1694d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v30.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v30.py",
+        "exists": true,
+        "sha256": "bce0c1f666ccd0d0f0f8137bce1b8f20ee859369653a10a078543bf1d4072e7b",
+        "expected_sha256": "bce0c1f666ccd0d0f0f8137bce1b8f20ee859369653a10a078543bf1d4072e7b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v31.py",
+        "exists": true,
+        "sha256": "00918844ac2216aae0b6c955d3614ae2c7c4a56e2b2d1aac17fd552ff19f1c31",
+        "expected_sha256": "00918844ac2216aae0b6c955d3614ae2c7c4a56e2b2d1aac17fd552ff19f1c31",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v32.py",
+        "exists": true,
+        "sha256": "59244bba315ef398da28757625e63dd280085b900f8ebcbb32c1605949a6d6e5",
+        "expected_sha256": "59244bba315ef398da28757625e63dd280085b900f8ebcbb32c1605949a6d6e5",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v33.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v33.py",
+        "exists": true,
+        "sha256": "b96801c5f25360de408680b6e6ff152ef527c516b2ab4eee76beace830a6c9b4",
+        "expected_sha256": "b96801c5f25360de408680b6e6ff152ef527c516b2ab4eee76beace830a6c9b4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v34.py",
+        "exists": true,
+        "sha256": "42e1384e60c52444ad0e778236707b05fae56abb7f4ddc5494fedef66a25edaa",
+        "expected_sha256": "42e1384e60c52444ad0e778236707b05fae56abb7f4ddc5494fedef66a25edaa",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v35.py",
+        "exists": true,
+        "sha256": "8d3e930fe88f5ae97a2dc0f3e78df006b085ba654732db85c15396c2f794f5b0",
+        "expected_sha256": "8d3e930fe88f5ae97a2dc0f3e78df006b085ba654732db85c15396c2f794f5b0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v36.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v36.py",
+        "exists": true,
+        "sha256": "fb667a9d4e9bec8ec35869cef2431a6cd4871b2135d8d322faba995c7a761be2",
+        "expected_sha256": "fb667a9d4e9bec8ec35869cef2431a6cd4871b2135d8d322faba995c7a761be2",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v4.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v4.py",
+        "exists": true,
+        "sha256": "51fd7482efa4e3f4e37f17992ecf1bc44bd07046da0806e740ccdb098300e796",
+        "expected_sha256": "51fd7482efa4e3f4e37f17992ecf1bc44bd07046da0806e740ccdb098300e796",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v5.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v5.py",
+        "exists": true,
+        "sha256": "66a807ae331eda2a295033bc10d39bf250b76837eca8c93245cec8fa75727000",
+        "expected_sha256": "66a807ae331eda2a295033bc10d39bf250b76837eca8c93245cec8fa75727000",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v6.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v6.py",
+        "exists": true,
+        "sha256": "3d4174a6ee5869745327ff27c8649175ee15afafd2be45ee40e654652df0c44a",
+        "expected_sha256": "3d4174a6ee5869745327ff27c8649175ee15afafd2be45ee40e654652df0c44a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v7.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v7.py",
+        "exists": true,
+        "sha256": "07ce93fde2c9f726bf2d5a36e136256e1388fe218dbfa5bc5d3544c527a579f6",
+        "expected_sha256": "07ce93fde2c9f726bf2d5a36e136256e1388fe218dbfa5bc5d3544c527a579f6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v8.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v8.py",
+        "exists": true,
+        "sha256": "67e0205440fccca398d2ac668be26632916a1683884c10b4e39b9d28844abd95",
+        "expected_sha256": "67e0205440fccca398d2ac668be26632916a1683884c10b4e39b9d28844abd95",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_policy_v9.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_policy_v9.py",
+        "exists": true,
+        "sha256": "7107f710cca4bc4e13b5bb71b01e80ae28b97c66f613a5f507ef69c8e945469d",
+        "expected_sha256": "7107f710cca4bc4e13b5bb71b01e80ae28b97c66f613a5f507ef69c8e945469d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_proposals_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_proposals_v31.py",
+        "exists": true,
+        "sha256": "c7b3d24a755b3b52f01b855baf7a34be5e558a7a2ac313c236f678760b03ca07",
+        "expected_sha256": "c7b3d24a755b3b52f01b855baf7a34be5e558a7a2ac313c236f678760b03ca07",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_proposals_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_proposals_v34.py",
+        "exists": true,
+        "sha256": "79bf0d694374b32d88c8c3cefe23c010334623cf23b2dc9874d562e623ae60c0",
+        "expected_sha256": "79bf0d694374b32d88c8c3cefe23c010334623cf23b2dc9874d562e623ae60c0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_proposals_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_proposals_v35.py",
+        "exists": true,
+        "sha256": "854f0c086906114aa7cd347c3d8c93aaebb9079faef574ae986936553358a4fe",
+        "expected_sha256": "854f0c086906114aa7cd347c3d8c93aaebb9079faef574ae986936553358a4fe",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription.py",
+        "exists": true,
+        "sha256": "716abfd0e919dd608b91b8dc11e5d2e6061127275c295a34b3428c1284a2ca7a",
+        "expected_sha256": "716abfd0e919dd608b91b8dc11e5d2e6061127275c295a34b3428c1284a2ca7a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v10.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v10.py",
+        "exists": true,
+        "sha256": "abb13835a75deb7ffdcf5e5d62fbe0a00ca36bfb8fe77060ee73188490eb4756",
+        "expected_sha256": "abb13835a75deb7ffdcf5e5d62fbe0a00ca36bfb8fe77060ee73188490eb4756",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v11.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v11.py",
+        "exists": true,
+        "sha256": "edf8201bc0c7402a023bc009009bf7298f8cb6c3037ff24fad6baeabd085a3bd",
+        "expected_sha256": "edf8201bc0c7402a023bc009009bf7298f8cb6c3037ff24fad6baeabd085a3bd",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v12.py",
+        "exists": true,
+        "sha256": "50ab088275f44e2d20d85f445a00a380185e8bbd2cc421099f899471084094df",
+        "expected_sha256": "50ab088275f44e2d20d85f445a00a380185e8bbd2cc421099f899471084094df",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v13.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v13.py",
+        "exists": true,
+        "sha256": "4dcdd08ecebc71937a550513c866e8854d144ce3714493938f15479341c13b55",
+        "expected_sha256": "4dcdd08ecebc71937a550513c866e8854d144ce3714493938f15479341c13b55",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v14.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v14.py",
+        "exists": true,
+        "sha256": "283670ec147a27f4c085db964f6333a8d6451683ad2a78577cabef981beebe8b",
+        "expected_sha256": "283670ec147a27f4c085db964f6333a8d6451683ad2a78577cabef981beebe8b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v15.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v15.py",
+        "exists": true,
+        "sha256": "4141ada9cebf697afe1ac27c18cc8c977e30a231044a9f6d09b412df345581d6",
+        "expected_sha256": "4141ada9cebf697afe1ac27c18cc8c977e30a231044a9f6d09b412df345581d6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v16.py",
+        "exists": true,
+        "sha256": "6a289f181d0f74ef173e775435f47215cdb3b43e3f4524102dd855cf55fdfc3f",
+        "expected_sha256": "6a289f181d0f74ef173e775435f47215cdb3b43e3f4524102dd855cf55fdfc3f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v17.py",
+        "exists": true,
+        "sha256": "2710683df11653fd08e9124620b9a7fb23a8a6fbf65988ea6de661ff8d918f4a",
+        "expected_sha256": "2710683df11653fd08e9124620b9a7fb23a8a6fbf65988ea6de661ff8d918f4a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v18.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v18.py",
+        "exists": true,
+        "sha256": "3d94350c6b5748715ccf276281b2372158f1a9d951b922c8be482af4b672f636",
+        "expected_sha256": "3d94350c6b5748715ccf276281b2372158f1a9d951b922c8be482af4b672f636",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v19.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v19.py",
+        "exists": true,
+        "sha256": "1c3a3a4634bb0dd817058a318b9428d1abdc1cd16a05f83983f8c62ad63947b2",
+        "expected_sha256": "1c3a3a4634bb0dd817058a318b9428d1abdc1cd16a05f83983f8c62ad63947b2",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v2.py",
+        "exists": true,
+        "sha256": "564b8b0325a5cd396c13c486423fe21ce5c1b3acca7006a51e2bfdfd3d3067c2",
+        "expected_sha256": "564b8b0325a5cd396c13c486423fe21ce5c1b3acca7006a51e2bfdfd3d3067c2",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v20.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v20.py",
+        "exists": true,
+        "sha256": "89e547a814474885b39c2f989951e2bd4bd8742c891926c6565d90be7535be8b",
+        "expected_sha256": "89e547a814474885b39c2f989951e2bd4bd8742c891926c6565d90be7535be8b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v21.py",
+        "exists": true,
+        "sha256": "e847819584710ab3a6c79cc577d674d0942422093ac478c4717d1b03ab884211",
+        "expected_sha256": "e847819584710ab3a6c79cc577d674d0942422093ac478c4717d1b03ab884211",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v22.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v22.py",
+        "exists": true,
+        "sha256": "48927d01bb03f4c3c5ca15eb96158ce770ef18c924f83428d5dd2bbf91ed055d",
+        "expected_sha256": "48927d01bb03f4c3c5ca15eb96158ce770ef18c924f83428d5dd2bbf91ed055d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v23.py",
+        "exists": true,
+        "sha256": "3ade121b701140207d01a986dd79ea540ce30f41528d580660301fa598178334",
+        "expected_sha256": "3ade121b701140207d01a986dd79ea540ce30f41528d580660301fa598178334",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v24.py",
+        "exists": true,
+        "sha256": "d082ac7f489b1d0a317a081831fdd6e78a05dca59fb3f31e521e75248c7187bb",
+        "expected_sha256": "d082ac7f489b1d0a317a081831fdd6e78a05dca59fb3f31e521e75248c7187bb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v25.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v25.py",
+        "exists": true,
+        "sha256": "d6a8809cba5f98612e5b0ec5e212a4d12ad98fa0775ff3b3182fa72b1cb0e088",
+        "expected_sha256": "d6a8809cba5f98612e5b0ec5e212a4d12ad98fa0775ff3b3182fa72b1cb0e088",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v26.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v26.py",
+        "exists": true,
+        "sha256": "824b4d5af8eb4a6a033786b7bd6766c5e4b984e8d43abf7b5b2537bfed86c229",
+        "expected_sha256": "824b4d5af8eb4a6a033786b7bd6766c5e4b984e8d43abf7b5b2537bfed86c229",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v27.py",
+        "exists": true,
+        "sha256": "50a70249f9529f717767b85f0604946be30a14115d5536eb32d418fca6660957",
+        "expected_sha256": "50a70249f9529f717767b85f0604946be30a14115d5536eb32d418fca6660957",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v28.py",
+        "exists": true,
+        "sha256": "2d0d45dcf5e7cc2467f5b2e197d728ddc2dcfb0e0fac4c1c2bc5dd3486e22a55",
+        "expected_sha256": "2d0d45dcf5e7cc2467f5b2e197d728ddc2dcfb0e0fac4c1c2bc5dd3486e22a55",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v29.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v29.py",
+        "exists": true,
+        "sha256": "69316ef9887fa324d0ec029ccaee0fb8349b1939dbee3ddddb24d6825abd4200",
+        "expected_sha256": "69316ef9887fa324d0ec029ccaee0fb8349b1939dbee3ddddb24d6825abd4200",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v3.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v3.py",
+        "exists": true,
+        "sha256": "2d5be189482c1fcb12b635b1cd7e61bea7ebcd801ef10614d37297cac1c7d223",
+        "expected_sha256": "2d5be189482c1fcb12b635b1cd7e61bea7ebcd801ef10614d37297cac1c7d223",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v30.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v30.py",
+        "exists": true,
+        "sha256": "2b089cbbd0039d8c357484313730fab46b24c107761c27c7e4daf0cc43907b16",
+        "expected_sha256": "2b089cbbd0039d8c357484313730fab46b24c107761c27c7e4daf0cc43907b16",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v31.py",
+        "exists": true,
+        "sha256": "76372aea191dc8a68066c8bb4cccfe713ddda5db33a4f460e0e357ba30fc094c",
+        "expected_sha256": "76372aea191dc8a68066c8bb4cccfe713ddda5db33a4f460e0e357ba30fc094c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v32.py",
+        "exists": true,
+        "sha256": "ab64227a513cc57efc26e2c7b37fb8be227930120e39ce6856b708bd42d31649",
+        "expected_sha256": "ab64227a513cc57efc26e2c7b37fb8be227930120e39ce6856b708bd42d31649",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v33.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v33.py",
+        "exists": true,
+        "sha256": "f9c0c7a492817f438b0f08d193a510d64d23469623a3d3a28586cf6223b451d8",
+        "expected_sha256": "f9c0c7a492817f438b0f08d193a510d64d23469623a3d3a28586cf6223b451d8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v34.py",
+        "exists": true,
+        "sha256": "ee31ae94d981f78431ae3589b877fa52ca9f7e0f4e9f8e8be4ecb3fa3786ab10",
+        "expected_sha256": "ee31ae94d981f78431ae3589b877fa52ca9f7e0f4e9f8e8be4ecb3fa3786ab10",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v35.py",
+        "exists": true,
+        "sha256": "80e8777c1181a5a7f65959a161df58a6c0afad14b0dc7a2319867be16db81da3",
+        "expected_sha256": "80e8777c1181a5a7f65959a161df58a6c0afad14b0dc7a2319867be16db81da3",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v36.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v36.py",
+        "exists": true,
+        "sha256": "d62eddf5cdd35f9c68d98da2bb1ec2feed09da768b4ea11abd6b32f04249cd6f",
+        "expected_sha256": "d62eddf5cdd35f9c68d98da2bb1ec2feed09da768b4ea11abd6b32f04249cd6f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v4.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v4.py",
+        "exists": true,
+        "sha256": "7634887c1246d151ff6f557f6d57354f57ffa34e810a94c2ab5a3ea31ce3e719",
+        "expected_sha256": "7634887c1246d151ff6f557f6d57354f57ffa34e810a94c2ab5a3ea31ce3e719",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v5.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v5.py",
+        "exists": true,
+        "sha256": "ca696eb26417fb0354a0ae8ac9407d7608ce4b02fa1339fad371b0c69f04298d",
+        "expected_sha256": "ca696eb26417fb0354a0ae8ac9407d7608ce4b02fa1339fad371b0c69f04298d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v6.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v6.py",
+        "exists": true,
+        "sha256": "476633d06b1b9b9a96068f05c04cdfd6d604f4143628f7a8bc70587301da464f",
+        "expected_sha256": "476633d06b1b9b9a96068f05c04cdfd6d604f4143628f7a8bc70587301da464f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v7.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v7.py",
+        "exists": true,
+        "sha256": "78619832633a07cc8c950cfed8c64bb658bdd462df67f2f94dc0031ca98bee31",
+        "expected_sha256": "78619832633a07cc8c950cfed8c64bb658bdd462df67f2f94dc0031ca98bee31",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v8.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v8.py",
+        "exists": true,
+        "sha256": "6a41b70e5907761ea8fae8ed32fafdd70d30d2e0dcab20391a3f88dc7257400c",
+        "expected_sha256": "6a41b70e5907761ea8fae8ed32fafdd70d30d2e0dcab20391a3f88dc7257400c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_subscription_v9.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_subscription_v9.py",
+        "exists": true,
+        "sha256": "496108d7bdd1a0ca2fcf03258222d4c97596aa59187fd75e98e58b42f7da003d",
+        "expected_sha256": "496108d7bdd1a0ca2fcf03258222d4c97596aa59187fd75e98e58b42f7da003d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v10.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v10.py",
+        "exists": true,
+        "sha256": "3362762709004625a8535ca8b46c378874fbc7b2ee236f0d0add8401f916d7d7",
+        "expected_sha256": "3362762709004625a8535ca8b46c378874fbc7b2ee236f0d0add8401f916d7d7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v11.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v11.py",
+        "exists": true,
+        "sha256": "40ff8faf8b0c81ec4639e3c8ab62cc9bb0ee17b025aa1c133d4900ea0f156aba",
+        "expected_sha256": "40ff8faf8b0c81ec4639e3c8ab62cc9bb0ee17b025aa1c133d4900ea0f156aba",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v12.py",
+        "exists": true,
+        "sha256": "92d80141d21fe56b0b8384e352d6e317c647597ebb5a1504364625dfa0262dd9",
+        "expected_sha256": "92d80141d21fe56b0b8384e352d6e317c647597ebb5a1504364625dfa0262dd9",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v13.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v13.py",
+        "exists": true,
+        "sha256": "65b201533538f2a715d357a994cd8e32d0091d97d43195d50341f694042f1a06",
+        "expected_sha256": "65b201533538f2a715d357a994cd8e32d0091d97d43195d50341f694042f1a06",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v16.py",
+        "exists": true,
+        "sha256": "dae67ca4f52dfcb1011c1618f4800047eecd26d9ba645200dc649b5e696383d2",
+        "expected_sha256": "dae67ca4f52dfcb1011c1618f4800047eecd26d9ba645200dc649b5e696383d2",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v17.py",
+        "exists": true,
+        "sha256": "8836d93aba91d396617009bcca8a65a896f4a0292c528c6e392d425f1caa1498",
+        "expected_sha256": "8836d93aba91d396617009bcca8a65a896f4a0292c528c6e392d425f1caa1498",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v19.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v19.py",
+        "exists": true,
+        "sha256": "068a87ef82b7d4085cdee356731d4678efc06b3bb8fad0a50e5a7a5c6a503ee5",
+        "expected_sha256": "068a87ef82b7d4085cdee356731d4678efc06b3bb8fad0a50e5a7a5c6a503ee5",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v2.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v2.py",
+        "exists": true,
+        "sha256": "27329a0e1e551ee94997877c8f7679ba841ed9883789dd4fa0d5939613c1d62c",
+        "expected_sha256": "27329a0e1e551ee94997877c8f7679ba841ed9883789dd4fa0d5939613c1d62c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v20.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v20.py",
+        "exists": true,
+        "sha256": "94517dba8d881ec08955bc5b396ea468ed13eb24d5eedfb5144bbf2bf82f2fbd",
+        "expected_sha256": "94517dba8d881ec08955bc5b396ea468ed13eb24d5eedfb5144bbf2bf82f2fbd",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v21.py",
+        "exists": true,
+        "sha256": "fbfd7bb4882c3f30a2ffc5fc56c15d7914acbe76db4542f1fc025518daf054eb",
+        "expected_sha256": "fbfd7bb4882c3f30a2ffc5fc56c15d7914acbe76db4542f1fc025518daf054eb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v22.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v22.py",
+        "exists": true,
+        "sha256": "79c753df807b12d8ec46b06cb37b11bddac8d645e8456c3914e526a4a2466d00",
+        "expected_sha256": "79c753df807b12d8ec46b06cb37b11bddac8d645e8456c3914e526a4a2466d00",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v23.py",
+        "exists": true,
+        "sha256": "4c954fc8d24d4ce0293b89d4e29ddf29aea975036c929087d15a3e60bbb45d00",
+        "expected_sha256": "4c954fc8d24d4ce0293b89d4e29ddf29aea975036c929087d15a3e60bbb45d00",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v24.py",
+        "exists": true,
+        "sha256": "26275f3460a9d9acc39254084295ca202e69d6661827d6a447a6b9fe5b4791ff",
+        "expected_sha256": "26275f3460a9d9acc39254084295ca202e69d6661827d6a447a6b9fe5b4791ff",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v25.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v25.py",
+        "exists": true,
+        "sha256": "6ff49352dcf93d9254631f7698b7265d36a8dd75861423ab6f609884eb521598",
+        "expected_sha256": "6ff49352dcf93d9254631f7698b7265d36a8dd75861423ab6f609884eb521598",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v27.py",
+        "exists": true,
+        "sha256": "198b6a120616f17184fae9e7eaedf2b04b0c38eb19a4fe52e6c42135ff2bd52b",
+        "expected_sha256": "198b6a120616f17184fae9e7eaedf2b04b0c38eb19a4fe52e6c42135ff2bd52b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v29.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v29.py",
+        "exists": true,
+        "sha256": "be7ac5d975f8e5064f7ed75d5bb5cb159b4481899eb5b545259456bd0d161d10",
+        "expected_sha256": "be7ac5d975f8e5064f7ed75d5bb5cb159b4481899eb5b545259456bd0d161d10",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v3.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v3.py",
+        "exists": true,
+        "sha256": "4f47bd35ab5b0fe05d40152e04c5184117d75f2916d0106bf3d68e6261bbb192",
+        "expected_sha256": "4f47bd35ab5b0fe05d40152e04c5184117d75f2916d0106bf3d68e6261bbb192",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v31.py",
+        "exists": true,
+        "sha256": "da45bd0f28deaef2b2fe8c2103373f00f78c7b4b9a4a3f2227ba08f807c1b71c",
+        "expected_sha256": "da45bd0f28deaef2b2fe8c2103373f00f78c7b4b9a4a3f2227ba08f807c1b71c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v33.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v33.py",
+        "exists": true,
+        "sha256": "0a3a012c05d0d6d1580fa0380a99c4d9d1627b31758036526b7a01f85cbf1848",
+        "expected_sha256": "0a3a012c05d0d6d1580fa0380a99c4d9d1627b31758036526b7a01f85cbf1848",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v34.py",
+        "exists": true,
+        "sha256": "4e3943871691c25b23aa8f7a4052efcd4f5bb76a90fcab04620fb807b5453559",
+        "expected_sha256": "4e3943871691c25b23aa8f7a4052efcd4f5bb76a90fcab04620fb807b5453559",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v4.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v4.py",
+        "exists": true,
+        "sha256": "b2964b894f00baee4cf3f63c690aa4507eec86fb5451c68320b416c2ed21ca23",
+        "expected_sha256": "b2964b894f00baee4cf3f63c690aa4507eec86fb5451c68320b416c2ed21ca23",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v5.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v5.py",
+        "exists": true,
+        "sha256": "ab8a15f68dc785ef255029459c6e1f568512d48c5385d7370074aff4c8df0ad7",
+        "expected_sha256": "ab8a15f68dc785ef255029459c6e1f568512d48c5385d7370074aff4c8df0ad7",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v6.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v6.py",
+        "exists": true,
+        "sha256": "3f733298334e0d07e4ef2e89a57500f782fa2400d5ada3aa3e37f988902cd945",
+        "expected_sha256": "3f733298334e0d07e4ef2e89a57500f782fa2400d5ada3aa3e37f988902cd945",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v8.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v8.py",
+        "exists": true,
+        "sha256": "3c342f3547095fdaec898947cb677e19192b81b06159e651d6f8ba8c599e6dec",
+        "expected_sha256": "3c342f3547095fdaec898947cb677e19192b81b06159e651d6f8ba8c599e6dec",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_field_v9.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_field_v9.py",
+        "exists": true,
+        "sha256": "e29171a374f784d2b0714b3f693b63c61fc5fbc6a433885885ab9e4a4a8537ce",
+        "expected_sha256": "e29171a374f784d2b0714b3f693b63c61fc5fbc6a433885885ab9e4a4a8537ce",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_goal_field_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_goal_field_v31.py",
+        "exists": true,
+        "sha256": "cad72890fa597f97a54618e6ea862f571dd0bad6d99e2570267c9f00e04a7446",
+        "expected_sha256": "cad72890fa597f97a54618e6ea862f571dd0bad6d99e2570267c9f00e04a7446",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_goal_replay_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_goal_replay_v32.py",
+        "exists": true,
+        "sha256": "0bc35e0b3f4d561b87c16f53d2b02d1b01729bce7c3c72cdb091fcc1075bd6c6",
+        "expected_sha256": "0bc35e0b3f4d561b87c16f53d2b02d1b01729bce7c3c72cdb091fcc1075bd6c6",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_hand_outline_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_hand_outline_v34.py",
+        "exists": true,
+        "sha256": "cbd5fa87488d905e03634593024f8da1a828ac7cfb5f3a6f139980ec7dd43e48",
+        "expected_sha256": "cbd5fa87488d905e03634593024f8da1a828ac7cfb5f3a6f139980ec7dd43e48",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_heading_evidence_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_heading_evidence_v28.py",
+        "exists": true,
+        "sha256": "dbf73ee53e0e41ca4874552b82bb8d479b6279843acc54391b1daffeeb904e31",
+        "expected_sha256": "dbf73ee53e0e41ca4874552b82bb8d479b6279843acc54391b1daffeeb904e31",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_intent_replan_v36.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_intent_replan_v36.py",
+        "exists": true,
+        "sha256": "2db499301d2c5187cd552095d0b82b70b245899aaefef6888716177adebe6c3f",
+        "expected_sha256": "2db499301d2c5187cd552095d0b82b70b245899aaefef6888716177adebe6c3f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_intent_watch_v36.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_intent_watch_v36.py",
+        "exists": true,
+        "sha256": "812e1ac10351ed66c9e1471259ecd96fee277fa32efa616c1a1a52dd8bf9188b",
+        "expected_sha256": "812e1ac10351ed66c9e1471259ecd96fee277fa32efa616c1a1a52dd8bf9188b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v10.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v10.py",
+        "exists": true,
+        "sha256": "1dd25998e37a93767450e4b5cc953d1a37a7925e5bb5ea45ed962a6d754b2a76",
+        "expected_sha256": "1dd25998e37a93767450e4b5cc953d1a37a7925e5bb5ea45ed962a6d754b2a76",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v12.py",
+        "exists": true,
+        "sha256": "edb9cdaf4817d02bc11f766e75f68bfbdbab71fc1cf6a9d3a1c77b091d20fef3",
+        "expected_sha256": "edb9cdaf4817d02bc11f766e75f68bfbdbab71fc1cf6a9d3a1c77b091d20fef3",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v21.py",
+        "exists": true,
+        "sha256": "f884519dfe1c550a6ebba66c10671ed09f7514248937970ad7dded9112cd5775",
+        "expected_sha256": "f884519dfe1c550a6ebba66c10671ed09f7514248937970ad7dded9112cd5775",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v32.py",
+        "exists": true,
+        "sha256": "c7a7e2c3e51d7798c5bebbb45180698195c63cab0b42e0c50e3fcf6088ca4c14",
+        "expected_sha256": "c7a7e2c3e51d7798c5bebbb45180698195c63cab0b42e0c50e3fcf6088ca4c14",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v4.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v4.py",
+        "exists": true,
+        "sha256": "45f1943b2f9933fdefb71f10d45d7bcf468bae12329588b6025d0003a5c5213d",
+        "expected_sha256": "45f1943b2f9933fdefb71f10d45d7bcf468bae12329588b6025d0003a5c5213d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v5.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v5.py",
+        "exists": true,
+        "sha256": "e4be7f6be545e616804f0516c0090d041fe7b674ddd123a9a934fb2d60a06188",
+        "expected_sha256": "e4be7f6be545e616804f0516c0090d041fe7b674ddd123a9a934fb2d60a06188",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v6.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v6.py",
+        "exists": true,
+        "sha256": "06d63a72043aacada2415478825d9b69e3802c5046602990a84c815e20e3efa8",
+        "expected_sha256": "06d63a72043aacada2415478825d9b69e3802c5046602990a84c815e20e3efa8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v7.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v7.py",
+        "exists": true,
+        "sha256": "9575e473c327250ecd9ff086d703acd450ad479e74416e92ffea8e7b1033d040",
+        "expected_sha256": "9575e473c327250ecd9ff086d703acd450ad479e74416e92ffea8e7b1033d040",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_monitor_v8.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_monitor_v8.py",
+        "exists": true,
+        "sha256": "81ea2d6dfa90ec10cc0e15db149e4185d8af5fec35f02f3bc5e5f2ee06074ebc",
+        "expected_sha256": "81ea2d6dfa90ec10cc0e15db149e4185d8af5fec35f02f3bc5e5f2ee06074ebc",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_motion_diagnostic_v15.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_motion_diagnostic_v15.py",
+        "exists": true,
+        "sha256": "bdef0cb636a89e3a1f73393765d548db7c543733433313803d91472547739042",
+        "expected_sha256": "bdef0cb636a89e3a1f73393765d548db7c543733433313803d91472547739042",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_navigation_fields_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_navigation_fields_v35.py",
+        "exists": true,
+        "sha256": "a8ac9134b3f262cf65ff1818e52523a985001ed68be1acdd888c49cd4afc9e33",
+        "expected_sha256": "a8ac9134b3f262cf65ff1818e52523a985001ed68be1acdd888c49cd4afc9e33",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_neighbor_track_v26.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_neighbor_track_v26.py",
+        "exists": true,
+        "sha256": "1ab8c744cc5391475a34aa625aa371a78b8c380a2afae801b2d733a27f6ecf11",
+        "expected_sha256": "1ab8c744cc5391475a34aa625aa371a78b8c380a2afae801b2d733a27f6ecf11",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_objective_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_objective_v32.py",
+        "exists": true,
+        "sha256": "8f2a8dfb992053276fe60d8136a208a3d50f4a3c52cfaf9f5cc8ab4be646a361",
+        "expected_sha256": "8f2a8dfb992053276fe60d8136a208a3d50f4a3c52cfaf9f5cc8ab4be646a361",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_candidates_v18.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_candidates_v18.py",
+        "exists": true,
+        "sha256": "ed4f866f61656d3cc18137a63cf1f72e9b40ce35f5891b374c9d36a271065b88",
+        "expected_sha256": "ed4f866f61656d3cc18137a63cf1f72e9b40ce35f5891b374c9d36a271065b88",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_candidates_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_candidates_v24.py",
+        "exists": true,
+        "sha256": "853ce77912c0dc7f98ae0d217d6aaacbd1b373a138b4d4bf9147c16061f224c1",
+        "expected_sha256": "853ce77912c0dc7f98ae0d217d6aaacbd1b373a138b4d4bf9147c16061f224c1",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_candidates_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_candidates_v28.py",
+        "exists": true,
+        "sha256": "4b3965dc37a33c54fe3667502fdf9af7adaa2c9ea2ba6debf543ead36b617d76",
+        "expected_sha256": "4b3965dc37a33c54fe3667502fdf9af7adaa2c9ea2ba6debf543ead36b617d76",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_candidates_v30.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_candidates_v30.py",
+        "exists": true,
+        "sha256": "842a298fb9e3b37b5bbef2ac209c91cd4bb6738c7d78c63ff6ab69e78a0c9557",
+        "expected_sha256": "842a298fb9e3b37b5bbef2ac209c91cd4bb6738c7d78c63ff6ab69e78a0c9557",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_candidates_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_candidates_v32.py",
+        "exists": true,
+        "sha256": "23dbdedfb2bf85a7a73d809d6fc736127f19bef5aac8253084eba95a60ebe118",
+        "expected_sha256": "23dbdedfb2bf85a7a73d809d6fc736127f19bef5aac8253084eba95a60ebe118",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_diagnostic_v14.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_diagnostic_v14.py",
+        "exists": true,
+        "sha256": "cf27a54a36b6ecb74ee7c00b598aa88442bbcf8c25511cfca7a33463d8a9aeae",
+        "expected_sha256": "cf27a54a36b6ecb74ee7c00b598aa88442bbcf8c25511cfca7a33463d8a9aeae",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_overlay.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_overlay.py",
+        "exists": true,
+        "sha256": "e06f9f894eec1ec45f41215c10ad1848f3752149725426ddbf58cf2acf80d96c",
+        "expected_sha256": "e06f9f894eec1ec45f41215c10ad1848f3752149725426ddbf58cf2acf80d96c",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_replay_v18.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_replay_v18.py",
+        "exists": true,
+        "sha256": "1f4e00c876c3e0bfc705f8c18519efbb27de7c82c324e154f98fb9e1bb040d4f",
+        "expected_sha256": "1f4e00c876c3e0bfc705f8c18519efbb27de7c82c324e154f98fb9e1bb040d4f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_review_v30.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_review_v30.py",
+        "exists": true,
+        "sha256": "b3221e20d1329e03bd551cb8658c9545f893a794995c55c393ec99927f03b8e3",
+        "expected_sha256": "b3221e20d1329e03bd551cb8658c9545f893a794995c55c393ec99927f03b8e3",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_review_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_review_v34.py",
+        "exists": true,
+        "sha256": "60accb0e33da7882f36ca0e1984b9ecc8d56e6844302afa1a79507a1915ff645",
+        "expected_sha256": "60accb0e33da7882f36ca0e1984b9ecc8d56e6844302afa1a79507a1915ff645",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_track_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_track_v21.py",
+        "exists": true,
+        "sha256": "96997ec6b8afe9a5c71a8de5f1fae9507fbd4483254b8d64cf5583d595b05555",
+        "expected_sha256": "96997ec6b8afe9a5c71a8de5f1fae9507fbd4483254b8d64cf5583d595b05555",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reference_track_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reference_track_v32.py",
+        "exists": true,
+        "sha256": "c84e3f1a6f6e1ed0fda41da621f42d51ecdaa7b92f31068e52e8321df7e8545d",
+        "expected_sha256": "c84e3f1a6f6e1ed0fda41da621f42d51ecdaa7b92f31068e52e8321df7e8545d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_reverse_evidence_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_reverse_evidence_v28.py",
+        "exists": true,
+        "sha256": "db9feea1c8c2b0c151fb391bc549cc7f75172229777ac4aa74943d186113852d",
+        "expected_sha256": "db9feea1c8c2b0c151fb391bc549cc7f75172229777ac4aa74943d186113852d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_rotation_guard_v8.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_rotation_guard_v8.py",
+        "exists": true,
+        "sha256": "82644f6f6f8ffde3367653a3b94a4024eb2914f4b9b9c45d37af8dded89bbf66",
+        "expected_sha256": "82644f6f6f8ffde3367653a3b94a4024eb2914f4b9b9c45d37af8dded89bbf66",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_route_exposure_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_route_exposure_v24.py",
+        "exists": true,
+        "sha256": "2f5a178d69656c81565d1a32fa835b49cdcbe6e74913faa42df2ba56aca0c78f",
+        "expected_sha256": "2f5a178d69656c81565d1a32fa835b49cdcbe6e74913faa42df2ba56aca0c78f",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_route_exposure_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_route_exposure_v27.py",
+        "exists": true,
+        "sha256": "bff9a7ff67eedf5a7b03b79acb0ab8020bd23eb9b022c9807532d1d3cd6bb34d",
+        "expected_sha256": "bff9a7ff67eedf5a7b03b79acb0ab8020bd23eb9b022c9807532d1d3cd6bb34d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_guard_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_guard_v16.py",
+        "exists": true,
+        "sha256": "6d6e931f513fc070be5d69063b5732858c7ef0e6b92294657e96f87ed71666f8",
+        "expected_sha256": "6d6e931f513fc070be5d69063b5732858c7ef0e6b92294657e96f87ed71666f8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_guard_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_guard_v17.py",
+        "exists": true,
+        "sha256": "ef176d89f9d63aa590427ecddd8d8dfcc530154dba11f6370958c68dde0d7162",
+        "expected_sha256": "ef176d89f9d63aa590427ecddd8d8dfcc530154dba11f6370958c68dde0d7162",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_guard_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_guard_v23.py",
+        "exists": true,
+        "sha256": "42c51f5ecf25348d4900a3ffd92b1e7f32cfda981bcff5229b2b54eb6ca06c94",
+        "expected_sha256": "42c51f5ecf25348d4900a3ffd92b1e7f32cfda981bcff5229b2b54eb6ca06c94",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_inventory_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_inventory_v16.py",
+        "exists": true,
+        "sha256": "bc7221572493c0b10973dc35b569c49612b994fd1d706bdbb93a3c7d44cb6dc8",
+        "expected_sha256": "bc7221572493c0b10973dc35b569c49612b994fd1d706bdbb93a3c7d44cb6dc8",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_inventory_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_inventory_v17.py",
+        "exists": true,
+        "sha256": "e1a13ee790d1cb9ec4d0576c29a82411bd6409f85a47afc51ef5f78185ffba92",
+        "expected_sha256": "e1a13ee790d1cb9ec4d0576c29a82411bd6409f85a47afc51ef5f78185ffba92",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_scene_inventory_v31.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_scene_inventory_v31.py",
+        "exists": true,
+        "sha256": "806a8b84b85ddaa457acc5491723ae4bb2f83480ad96a581f5aa43501cb3cbcb",
+        "expected_sha256": "806a8b84b85ddaa457acc5491723ae4bb2f83480ad96a581f5aa43501cb3cbcb",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_task_progress_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_task_progress_v21.py",
+        "exists": true,
+        "sha256": "1c81ebd68074c4c79eaa35f81b6c938324da7661bcd7061a3b90fc510f360e41",
+        "expected_sha256": "1c81ebd68074c4c79eaa35f81b6c938324da7661bcd7061a3b90fc510f360e41",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v11.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v11.py",
+        "exists": true,
+        "sha256": "f6d57f388892137249741d3a038b4a8c23f4624ead019ca41ec2360bf1a0d115",
+        "expected_sha256": "f6d57f388892137249741d3a038b4a8c23f4624ead019ca41ec2360bf1a0d115",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v12.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v12.py",
+        "exists": true,
+        "sha256": "ba76a64a44247b73dcc1f790078e0bb2177ae3bcf80820fed9ca35b9819d804a",
+        "expected_sha256": "ba76a64a44247b73dcc1f790078e0bb2177ae3bcf80820fed9ca35b9819d804a",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v14.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v14.py",
+        "exists": true,
+        "sha256": "fb1270386962e0d30ebd70fef4cdcf78372d1f42b9f281b0023e273b3f2e1630",
+        "expected_sha256": "fb1270386962e0d30ebd70fef4cdcf78372d1f42b9f281b0023e273b3f2e1630",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v15.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v15.py",
+        "exists": true,
+        "sha256": "a5a084e06e78a8883ed70df1314ba2bf655caa7d01e5af750865f6bd081809ba",
+        "expected_sha256": "a5a084e06e78a8883ed70df1314ba2bf655caa7d01e5af750865f6bd081809ba",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v16.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v16.py",
+        "exists": true,
+        "sha256": "b66ccfba1a512438cb18c89f4b84857d9c09e143b7e8f07d69b6835445fa0f12",
+        "expected_sha256": "b66ccfba1a512438cb18c89f4b84857d9c09e143b7e8f07d69b6835445fa0f12",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v17.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v17.py",
+        "exists": true,
+        "sha256": "51351f6f04b20f81db9c4f92474fc3c1f78842d105bc4f9658bf5a57833fcf05",
+        "expected_sha256": "51351f6f04b20f81db9c4f92474fc3c1f78842d105bc4f9658bf5a57833fcf05",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v19.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v19.py",
+        "exists": true,
+        "sha256": "da62f590d64d29619ead864b0af8381942098abdb27cbbbf44cf7304b73e9e79",
+        "expected_sha256": "da62f590d64d29619ead864b0af8381942098abdb27cbbbf44cf7304b73e9e79",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v21.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v21.py",
+        "exists": true,
+        "sha256": "740c26229344858089d3364511501a0cba88108c6052d859af35ccf73254c0ee",
+        "expected_sha256": "740c26229344858089d3364511501a0cba88108c6052d859af35ccf73254c0ee",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v23.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v23.py",
+        "exists": true,
+        "sha256": "b02524ca3038b43059c7f3aaf226e90f59bfd923a7b772e182a4a87e26baade4",
+        "expected_sha256": "b02524ca3038b43059c7f3aaf226e90f59bfd923a7b772e182a4a87e26baade4",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v24.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v24.py",
+        "exists": true,
+        "sha256": "74267bdd36564725dc8dbefbae60732ea3cc7a5dec050a50f726e69c4ee8bb8d",
+        "expected_sha256": "74267bdd36564725dc8dbefbae60732ea3cc7a5dec050a50f726e69c4ee8bb8d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v25.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v25.py",
+        "exists": true,
+        "sha256": "4b0b4f70dccd625b0be2a0d3777fa5116eb53ed246706541588ab7e6d7e4f576",
+        "expected_sha256": "4b0b4f70dccd625b0be2a0d3777fa5116eb53ed246706541588ab7e6d7e4f576",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v26.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v26.py",
+        "exists": true,
+        "sha256": "edf6a70f63a330e7a945b64343ec689298e4f0b334eeb7ddefa257876005a441",
+        "expected_sha256": "edf6a70f63a330e7a945b64343ec689298e4f0b334eeb7ddefa257876005a441",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v27.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v27.py",
+        "exists": true,
+        "sha256": "bf7040f957e05e170f19a02e291db1d0b234c58631941e9bb0a732172f5a669e",
+        "expected_sha256": "bf7040f957e05e170f19a02e291db1d0b234c58631941e9bb0a732172f5a669e",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v28.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v28.py",
+        "exists": true,
+        "sha256": "717c553466c32edd7f9cad07e38792ef861d86753da68f4a76ebf5d348299ea0",
+        "expected_sha256": "717c553466c32edd7f9cad07e38792ef861d86753da68f4a76ebf5d348299ea0",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v29.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v29.py",
+        "exists": true,
+        "sha256": "7b74f89a9ad5a48bbc674ef5d1aefbaf081c1b562d1c5c4ef9d8d9b38c6db230",
+        "expected_sha256": "7b74f89a9ad5a48bbc674ef5d1aefbaf081c1b562d1c5c4ef9d8d9b38c6db230",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v30.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v30.py",
+        "exists": true,
+        "sha256": "8b4f77bd00baf4ea63c418e3b5263e163fd7f9f9c4b27f153247a54be9c09439",
+        "expected_sha256": "8b4f77bd00baf4ea63c418e3b5263e163fd7f9f9c4b27f153247a54be9c09439",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v32.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v32.py",
+        "exists": true,
+        "sha256": "94707b335f3735f9d84ee2b55aa0ec6729dbf2db466d1fae2bfe57d4c7d6587b",
+        "expected_sha256": "94707b335f3735f9d84ee2b55aa0ec6729dbf2db466d1fae2bfe57d4c7d6587b",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v33.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v33.py",
+        "exists": true,
+        "sha256": "428d1a0e49d9d5ad50671985ef37bd63a7b1a783c9b15387a0fe0622983c7450",
+        "expected_sha256": "428d1a0e49d9d5ad50671985ef37bd63a7b1a783c9b15387a0fe0622983c7450",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v34.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v34.py",
+        "exists": true,
+        "sha256": "297e03a306b4c5387e64e40eebd24f430f0081029367953ac4b5a9c019ebfe93",
+        "expected_sha256": "297e03a306b4c5387e64e40eebd24f430f0081029367953ac4b5a9c019ebfe93",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_translation_guard_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_translation_guard_v35.py",
+        "exists": true,
+        "sha256": "f2aad1a9f3b0554ba0aa3d1c3d2bf7ab6358691548eb245e80ced96c15d01b9d",
+        "expected_sha256": "f2aad1a9f3b0554ba0aa3d1c3d2bf7ab6358691548eb245e80ced96c15d01b9d",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/visual_wrist_goal_v35.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/visual_wrist_goal_v35.py",
+        "exists": true,
+        "sha256": "0c117b8de1946ddce3815978ad188b6ed2856bc222180e15be26f2194f730201",
+        "expected_sha256": "0c117b8de1946ddce3815978ad188b6ed2856bc222180e15be26f2194f730201",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/wrist_servo.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/wrist_servo.py",
+        "exists": true,
+        "sha256": "5fdfe8af584976684579a6e02663af5d45cb869b2f9c8d342397084479053199",
+        "expected_sha256": "5fdfe8af584976684579a6e02663af5d45cb869b2f9c8d342397084479053199",
+        "matches": true,
+        "nlink": 26
+      },
+      {
+        "relative_path": "src/gpt_field/zero_shot_direct_subscription.py",
+        "source": "runs/agent_speedup_v2_user_check_libero_10_t1_001/frozen_source/zero_shot_direct_subscription.py",
+        "exists": true,
+        "sha256": "f8410322a63bcafe80d9da067349a4e3d27f94430018cf1fa71571bb8ecfa684",
+        "expected_sha256": "f8410322a63bcafe80d9da067349a4e3d27f94430018cf1fa71571bb8ecfa684",
+        "matches": true,
+        "nlink": 26
+      }
+    ],
+    "reconstruction": "Copy each flattened source by runtime_sha256 relative path into independent src/gpt_field and scripts; no basename collisions; do not use hardlinks. Set PYTHONPATH to copied src. Existing frozen_source alone is not import-layout complete."
+  },
+  "latest_v3_runtime_differences": [],
+  "approval_records": [
+    {
+      "path": "runs/agent_speedup_v3_g5_001_review/review.json",
+      "version": "agent-speedup-v3-8",
+      "task_key": "libero_goal_g5",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementation of the five-stage general framework plan, automatic delegated initial-plan review and real tests at its declared gates. This draft is for gate C2, task libero_goal_g5, episode 0. Codex must inspect fresh initial images and all plan steps, explicitly approve this one draft, then run this one frozen episode. Keep gpt-6-astra high through the ChatGPT subscription, independent raw success and record-only contact audit. The 300-second target includes preparation and complete execution/finalization excluding approval wait; it is not a stop condition. No blind approval, model or API-key fallback, hidden object truth, task-specific motion distances, or smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0
+      ],
+      "approved_at": "2026-10-25T17:26:01.750959+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_g5_002_review/review.json",
+      "version": "agent-speedup-v3-9",
+      "task_key": "libero_goal_g5",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementation of the five-stage general framework plan, automatic delegated initial-plan review and real tests at its declared gates. This draft is for gate C2_fix, task libero_goal_g5, episode 0. Codex must inspect fresh initial images and all plan steps, explicitly approve this one draft, then run this one frozen episode. Keep gpt-6-astra high through the ChatGPT subscription, independent raw success and record-only contact audit. The 300-second target includes preparation and complete execution/finalization excluding approval wait; it is not a stop condition. No blind approval, model or API-key fallback, hidden object truth, task-specific motion distances, or smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0
+      ],
+      "approved_at": "2026-10-25T17:35:45.405235+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_009_review/review.json",
+      "version": "agent-speedup-v3-7",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementation of the five-stage general framework plan, automatic delegated initial-plan review and real tests at its declared gates. This draft is for gate A, task libero_10_t1, episode 0. Codex must inspect fresh initial images and all plan steps, explicitly approve this one draft, then run this one frozen episode. Keep gpt-6-astra high through the ChatGPT subscription, independent raw success and record-only contact audit. The 300-second target includes preparation and complete execution/finalization excluding approval wait; it is not a stop condition. No blind approval, model or API-key fallback, hidden object truth, task-specific motion distances, or smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T16:42:22.235264+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_010_review/review.json",
+      "version": "agent-speedup-v3-8",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementation of the five-stage general framework plan, automatic delegated initial-plan review and real tests at its declared gates. This draft is for gate B, task libero_10_t1, episode 0. Codex must inspect fresh initial images and all plan steps, explicitly approve this one draft, then run this one frozen episode. Keep gpt-6-astra high through the ChatGPT subscription, independent raw success and record-only contact audit. The 300-second target includes preparation and complete execution/finalization excluding approval wait; it is not a stop condition. No blind approval, model or API-key fallback, hidden object truth, task-specific motion distances, or smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T17:05:38.218218+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_011_review/review.json",
+      "version": "agent-speedup-v3-10",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "The user authorized cleanup of redundant historical artifacts, implementation of the lean general v3 redesign, and one automatic real t1 evaluation after code freeze. This delegation applies only to libero_10_t1, episode 0, agent_speedup_v3_t1_011. The redesign uses persistent scene and interaction evidence with goal-local geometry advice: unknown free-space coverage remains unknown and is not a mandatory coverage certificate; exact coupled-command, controller-limit, material-change, payload-shape and measured-tracking guards remain. Codex must inspect the fresh initial external and wrist images and every initial-plan step, explicitly approve this one draft, then run this one frozen episode. Delegation alone does not approve a plan. Use gpt-6-astra with high reasoning effort through the ChatGPT subscription only. Retain independent raw LIBERO success, record-only forbidden-contact audit, full action/model evidence, and videos. The 300-second completion target includes preparation and complete execution/finalization, excluding review wait; it is not an episode stop condition. Do not use blind approval, automatic episode retries, another model or API-key fallback, simulator object truth in policy input, task-specific motion distances, or an additional smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T18:51:48.271665+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_012_review/review.json",
+      "version": "agent-speedup-v3-11",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "The user authorized cleanup of redundant historical artifacts, implementation of the lean general v3 redesign and automatic real t1 validation, including a fresh causal test after repairing the tracking-to-observation interface exposed by t1_011. This delegation applies only to libero_10_t1, episode 0, agent_speedup_v3_t1_012. The redesign uses persistent scene and interaction evidence with goal-local geometry advice: unknown free-space coverage remains unknown and is not a mandatory coverage certificate; exact coupled-command, controller-limit, material-change, payload-shape and measured-tracking guards remain. Codex must inspect the fresh initial external and wrist images and every initial-plan step, explicitly approve this one draft, then run this one frozen episode. Delegation alone does not approve a plan. Use gpt-6-astra with high reasoning effort through the ChatGPT subscription only. Retain independent raw LIBERO success, record-only forbidden-contact audit, full action/model evidence, and videos. The 300-second completion target includes preparation and complete execution/finalization, excluding review wait; it is not an episode stop condition. Do not use blind approval, automatic episode retries, another model or API-key fallback, simulator object truth in policy input, task-specific motion distances, or an additional smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T19:01:52.141352+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_001/review.json",
+      "version": "agent-speedup-v3-1",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "manual_browser_review",
+      "approval_provenance": null,
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-23T18:53:54.019296+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_002/review.json",
+      "version": "agent-speedup-v3-2",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User explicitly requested: implement this fix and retry the t1, just approve the plan yourself. Scope: one t1 retry; Codex inspects images and plan before approving.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-23T19:37:33.527281+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_003/review.json",
+      "version": "agent-speedup-v3-3",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User requested: re test it on t1, after revision 3 fixes. Retain the prior explicit t1 review delegation: just approve the plan yourself. Scope: one fresh t1 episode; Codex inspects this new draft and images before approval.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-24T01:56:27.327699+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_004/review.json",
+      "version": "agent-speedup-v3-4",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User explicitly requested implementing steps 1, 2, 3 together and authorized: you can automatically approve the plan, and just test on the t1 for now. Scope: one fresh revision 4 t1 episode. Codex inspects the new draft and images, approves it, then executes once.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-24T03:16:34.058433+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_005/review.json",
+      "version": "agent-speedup-v3-4.1",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User explicitly requested fixing subscription_sharing_user_unavailable and retesting t1. Retain explicit delegated plan approval from the prior turn. Scope: one fresh t1 episode with revision 4 motion and bounded subscription lookup recovery. Codex inspects the new draft/images, approves, and executes once; no automatic episode restart.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-24T03:53:06.853250+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_006_compact/review.json",
+      "version": "agent-speedup-v3-5",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementing the complete agreed fix plan and one fresh t1 retest, with the existing explicit delegation of initial-plan review and approval to Codex. Scope: revision 5 geometry and motion evidence fixes, targeted observation, bounded subscription transport, and truthful timing. Codex must inspect the fresh draft and images, explicitly approve that draft, then execute the single episode once. No automatic approval, episode restart, task switch, or simulator-truth access is authorized.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-24T16:10:20.113095+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_007/review.json",
+      "version": "agent-speedup-v3-5",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementing the complete agreed fix plan and one fresh t1 retest, with the existing explicit delegation of initial-plan review and approval to Codex. Scope: revision 5 geometry and motion evidence fixes, targeted observation, bounded subscription transport, and truthful timing. Codex must inspect the fresh draft and images, explicitly approve that draft, then execute the single episode once. No automatic approval, task switch, or simulator-truth access is authorized. This fresh attempt follows the repaired null boundary witness failure in run006; the prior run remains preserved.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-24T16:17:12.660927+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t1_review_008/review.json",
+      "version": "agent-speedup-v3-6",
+      "task_key": "libero_10_t1",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized the generic five-minute optimization plan and one fresh LIBERO-10 t1 episode-0 evaluation, with the existing explicit delegation of initial-plan review and approval to Codex. Scope: revision 6 policy/context and geometry optimization, low-overhead recording, and truthful end-to-end timing. Codex must inspect the fresh images and complete draft, explicitly approve that draft, then execute this single episode once. The 300-second target is a reporting target, not a forced stop or a success rule. No automatic approval, model/API fallback, task-specific coordinates, episode restart, or simulator-truth access is authorized.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T08:56:23.302257+00:00"
+    },
+    {
+      "path": "runs/agent_speedup_v3_t2_review_001/review.json",
+      "version": "agent-speedup-v3-1",
+      "task_key": "libero_10_t2",
+      "episode_index": 0,
+      "status": "draft",
+      "approval_mode": "manual_browser_review",
+      "approval_provenance": null,
+      "reviewed_steps": [],
+      "approved_at": null
+    },
+    {
+      "path": "runs/agent_speedup_v3_t3_review_001/review.json",
+      "version": "agent-speedup-v3-1",
+      "task_key": "libero_10_t3",
+      "episode_index": 0,
+      "status": "draft",
+      "approval_mode": "manual_browser_review",
+      "approval_provenance": null,
+      "reviewed_steps": [],
+      "approved_at": null
+    },
+    {
+      "path": "runs/agent_speedup_v3_t7_001_review/review.json",
+      "version": "agent-speedup-v3-8",
+      "task_key": "libero_10_t7",
+      "episode_index": 0,
+      "status": "consumed",
+      "approval_mode": "user_delegated_agent_review",
+      "approval_provenance": {
+        "authorization_note": "User authorized implementation of the five-stage general framework plan, automatic delegated initial-plan review and real tests at its declared gates. This draft is for gate C1, task libero_10_t7, episode 0. Codex must inspect fresh initial images and all plan steps, explicitly approve this one draft, then run this one frozen episode. Keep gpt-6-astra high through the ChatGPT subscription, independent raw success and record-only contact audit. The 300-second target includes preparation and complete execution/finalization excluding approval wait; it is not a stop condition. No blind approval, model or API-key fallback, hidden object truth, task-specific motion distances, or smoke run.",
+        "authorized_by": "user",
+        "automatically_approved": false,
+        "reviewer": "codex",
+        "scope": "this_initial_plan_and_one_execution"
+      },
+      "reviewed_steps": [
+        0,
+        1
+      ],
+      "approved_at": "2026-10-25T17:16:53.201345+00:00"
+    }
+  ],
+  "active_services": [
+    {
+      "pid": 1237967,
+      "task": "libero_10_t2",
+      "status": "waiting_for_manual_draft_review",
+      "review_version": "agent-speedup-v3-1",
+      "output_exists": false
+    },
+    {
+      "pid": 1237968,
+      "task": "libero_10_t3",
+      "status": "waiting_for_manual_draft_review",
+      "review_version": "agent-speedup-v3-1",
+      "output_exists": false
+    }
+  ],
+  "reserved_conditions_check": {
+    "summary_files_parsed": 184,
+    "source_scope": "runs/**/summary.json excluding duplicate runtime, base_v2_artifacts, snapshots and frozen_source directories; review metadata also checked",
+    "matched_task_records": [
+      {
+        "path": "runs/agent_speedup_v3_t1_001/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_002/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v2_user_check_libero_10_t5_001/summary.json",
+        "task_key": "libero_10_t5",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_003/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v2_user_check_libero_10_t1_001/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v2_user_check_libero_10_t5_002/summary.json",
+        "task_key": "libero_10_t5",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_004/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_005/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_006/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_007/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_008/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_009/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_010/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t7_001/summary.json",
+        "task_key": "libero_10_t7",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_011/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v3_t1_012/summary.json",
+        "task_key": "libero_10_t1",
+        "episode_index": 0,
+        "seed": 7
+      },
+      {
+        "path": "runs/agent_speedup_v2_user_check_libero_10_t7_001/summary.json",
+        "task_key": "libero_10_t7",
+        "episode_index": 0,
+        "seed": 7
+      }
+    ],
+    "seen_episode_values": [
+      0
+    ],
+    "proposed_screening_episodes": [
+      1,
+      2,
+      3
+    ],
+    "proposed_heldout_episodes": [
+      4,
+      5,
+      6
+    ],
+    "reserved_episode_overlap": false,
+    "truth_read": false,
+    "read_errors": []
+  },
+  "permission_conclusion": {
+    "new_task_execution": "Current user authorizes plan implementation and simulation within gates and cumulative budgets. Initial-plan review remains separate.",
+    "delegated_review": "Historical t1 notes express a review preference but concrete authorizations bind single consumed runs, especially latest t1_012 limited to task t1 episode 0 and named run. t7/g5 delegation similarly tied to historical gates. No unconsumed blanket delegation for proposed t1/t5/t7 episodes 1-6 found.",
+    "required_before_new_delegated_reviews": "Explicitly scoped permission covering this experiment tasks t1/t5/t7 episodes1-6 and both A/B plans, or human review of each fresh bound plan; no request needed for read-only/offline work and implemented authorized fixes.",
+    "draft_services": "Do not approve old t2/t3 drafts or stop their services as part of this evidence package."
+  }
+}

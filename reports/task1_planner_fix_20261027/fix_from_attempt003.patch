@@ -1,0 +1,660 @@
+--- before/src/gpt_field/agent_speedup_v2_user_check_client.py
++++ after/src/gpt_field/agent_speedup_v2_user_check_client.py
+@@ -12,7 +12,8 @@
+ 
+ from . import agent_speedup_v2 as base
+ from .agent_speedup_v2 import AgentSpeedUpV2Policy, StepRunner
+-from .agent_speedup_v2_client import AgentSpeedUpV2Client
++from .agent_speedup_v2_client import AgentSpeedUpV2Client, WORKED_EXAMPLE
++from .ordered_transport import ordered_dumps
+ from .agent_speedup_v2_plan import PlanIssue
+ from .agent_speedup_v2_user_check_plan import parse_plan, native_plan, variant_plan_schema, with_extensions, validate_plan
+ from .agent_speedup_v2_user_check import canonical_sha256, plan_validation, semantic_plan
+@@ -20,9 +21,24 @@
+ from .agent_speedup_v2_user_check_runtime import FrameworkRunnerMixin, StableScene, compact_evidence
+ 
+ 
+-PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-5"
++PROMPT_VERSION = "agent-speedup-v2-user-check-prompt-6"
+ USER_CHECK_REASONING_EFFORT = "high"
+ USER_CHECK_REASONING_EFFORTS = ("high", "xhigh")
++
++COMPACT_PLAN_INSTRUCTIONS = """
++OUTPUT SERIALIZATION. Emit exactly one compact JSON object conforming to the
++schema. Do not indent or align fields, insert blank lines, or pad between tokens.
++Use ordinary spaces inside text values where needed. Finish immediately after
++the closing brace; do not append whitespace. Keep every required field and the
++complete requested plan, including every task object and unfinished goal.
++This changes formatting, not task content. regions and placement_goals must
++always be present; use [] when no extension is needed.
++""".strip()
++
++
++def user_check_worked_example():
++    """Complete variant example without changing the baseline client's example."""
++    return {**copy.deepcopy(WORKED_EXAMPLE), "regions": [], "placement_goals": []}
+ 
+ 
+ def validate_reasoning_effort(value):
+@@ -358,7 +374,9 @@
+         from .agent_speedup_v2_user_check_spatial import SPATIAL_INSTRUCTIONS
+         for kind in ("plan", "replan"):
+             self._schemas[kind] = variant_plan_schema()
+-            self._instruction_text[kind] += SPATIAL_INSTRUCTIONS
++            self._instruction_text[kind] = self._instruction_text[kind].replace(
++                ordered_dumps(WORKED_EXAMPLE), ordered_dumps(user_check_worked_example()))
++            self._instruction_text[kind] += "\n" + SPATIAL_INSTRUCTIONS
+         forbidden = "Never give directions, distances, heights, angles or coordinates."
+         for kind in ("plan", "replan", "repair", "review"):
+             self._instruction_text[kind] = self._instruction_text[kind].replace(forbidden, "")
+@@ -367,6 +385,8 @@
+                 "you name what matters and which physical relations to establish; "
+                 "during recovery you may also select short local motions.")
+             self._instruction_text[kind] += METRIC_INSTRUCTIONS
++        for kind in ("plan", "replan"):
++            self._instruction_text[kind] += "\n" + COMPACT_PLAN_INSTRUCTIONS
+ 
+     def validate_response(self, data, grid):
+         if self._request_kind not in ("plan", "replan"):
+--- before/src/gpt_field/agent_speedup_v2_user_check_spatial.py
++++ after/src/gpt_field/agent_speedup_v2_user_check_spatial.py
+@@ -18,31 +18,42 @@
+ from . import agent_speedup_v2_planner as planner
+ from . import agent_speedup_v2_relations as relations
+ from .agent_speedup_v2_scene import HeldFrameEstimator
+-from .agent_speedup_v2_types import HF_SOURCES, HandPose, ObsReport, jsonable
+-
+-SPATIAL_VERSION = "user-check-spatial-1"
++from .agent_speedup_v2_types import HF_SOURCES, PIDS, HandPose, ObsReport, jsonable
++
++SPATIAL_VERSION = "user-check-spatial-2"
+ REGION_RELATIONS = ("on", "left_of", "right_of", "front_of", "behind", "near")
+ PLACEMENT_RELATIONS = ("supported_on", "centered_on", "inside")
+ _NUM = {"type": "number"}
+ _NULL = {"type": "null"}
+ _PAIR = {"type": "array", "items": _NUM, "minItems": 2, "maxItems": 2}
++# Match the extension parser's existing 32-item limit on the wire, too.
++# These are plan representation limits, not episode/action/time budgets.
++SPATIAL_MAX_ITEMS = 32
++_PART_ID = {"type": "string", "enum": list(PIDS)}
+ SPATIAL_PLAN_PROPERTIES = {
+-    "regions": {"type": "array", "items": {"type": "object", "additionalProperties": False,
+-        "properties": {"id": {"type": "string"}, "support": {"type": "string"},
+-            "anchor": {"anyOf": [{"type": "string"}, _NULL]},
++    "regions": {"type": "array", "maxItems": SPATIAL_MAX_ITEMS,
++        "items": {"type": "object", "additionalProperties": False,
++        "properties": {"id": _PART_ID,
++            "support": {"type": "string", "enum": [*PIDS, "observed_plane"]},
++            "anchor": {"anyOf": [_PART_ID, _NULL]},
+             "relation": {"type": "string", "enum": list(REGION_RELATIONS)},
+             "frame": {"type": "string", "enum": ["world"]},
+             "bounds_xy_m": {"anyOf": [{"type": "array", "items": _PAIR, "minItems": 2,
+                                           "maxItems": 2}, _NULL]}},
+         "required": ["id", "support", "anchor", "relation", "frame", "bounds_xy_m"]}},
+-    "placement_goals": {"type": "array", "items": {"type": "object", "additionalProperties": False,
+-        "properties": {"obj": {"type": "string"}, "ref": {"type": "string"},
++    "placement_goals": {"type": "array", "maxItems": SPATIAL_MAX_ITEMS,
++        "items": {"type": "object", "additionalProperties": False,
++        "properties": {"obj": _PART_ID, "ref": _PART_ID,
+             "relation": {"type": "string", "enum": list(PLACEMENT_RELATIONS)},
+             "tolerance_m": {"anyOf": [_NUM, _NULL]}},
+         "required": ["obj", "ref", "relation", "tolerance_m"]}},
+ }
+ SPATIAL_INSTRUCTIONS = """
+-A physical object and a surface region are distinct. Put a bare surface region in
++A physical object and a surface region are distinct. Both regions and
++placement_goals are required arrays; use [] when an extension is unnecessary.
++Do not invent or repeat entries to fill an array. Every region id is a distinct
++existing part id A-H; each placement (obj,ref) pair appears at most once.
++Put a bare surface region in
+ regions as {id,support,anchor,relation,frame,bounds_xy_m}; keep its id in parts so a
+ place_on ref can reference it. support is a measured part id or observed_plane;
+ anchor is a measured part id or null. Relations use WORLD axes: right_of=+x,
+@@ -51,7 +62,7 @@
+ anchor is set, otherwise absolute world coordinates. null bounds use observed
+ support extent. near requires explicit bounds. Never manufacture safe geometry:
+ unobserved region cells require observation, while a region already grounded in
+-observed support may be refreshed with an occupied hand. placement_goals optionally
++observed support may be refreshed with an occupied hand. Entries in placement_goals
+ specify supported_on, centered_on or inside for an existing place_on (obj,ref).
+ centered_on asks for the WHOLE OBJECT's centre, not a handle or gripper point;
+ tolerance_m=null derives tolerance from measured uncertainty and available space.
+--- before/src/gpt_field/agent_speedup_v2_user_check_transport.py
++++ after/src/gpt_field/agent_speedup_v2_user_check_transport.py
+@@ -24,7 +24,13 @@
+ from .astra import APIError, ENDPOINT
+ from .ordered_transport import ordered_dumps, ordered_sse_transport
+ 
+-TRANSPORT_VERSION = "user-check-stream-diagnostics-1"
++TRANSPORT_VERSION = "user-check-stream-diagnostics-2"
++MAX_TEXT_PARTS = 16
++MAX_LEXICAL_DEPTH = 128
++PLAN_FORMAT_NAMES = frozenset({"agent_speedup_v2_plan", "agent_speedup_v2_replan"})
++MAX_PLAN_VISIBLE_CHARACTERS = 131072
++MAX_PLAN_JSON_WHITESPACE_RUN = 2048
++JSON_WHITESPACE = frozenset(" \t\r\n")
+ EVENT_TYPES = frozenset({
+     "response.created", "response.queued", "response.in_progress", "response.completed",
+     "response.failed", "response.incomplete", "response.error", "error",
+@@ -43,6 +49,7 @@
+     "stream_invalid_output_index", "stream_duplicate_output_item", "stream_terminal_output_mismatch",
+     "stream_missing_completed_output_items", "server_is_overloaded", "rate_limit_exceeded",
+     "insufficient_quota", "invalid_api_key", "invalid_request_error", "server_error", "unknown_error",
++    "plan_output_whitespace_limit", "plan_visible_output_limit",
+ })
+ SAFE_ERROR_TYPES = frozenset({
+     "APIError", "TimeoutError", "URLError", "HTTPError", "OSError", "ConnectionError",
+@@ -75,6 +82,14 @@
+         "deadline_error_code": "request_deadline_exceeded", "deadline_retried": False,
+         "progress_file": "requests/<request UUID>.stream.json" if stream_progress else None,
+         "logged_content": "phase, timing, counts, allowlisted event types and response metadata only",
++        "visible_output_diagnostics": "delta character/UTF-8/whitespace counts and bounded lexical state; no text",
++        "max_tracked_output_parts": MAX_TEXT_PARTS, "max_lexical_depth": MAX_LEXICAL_DEPTH,
++        "plan_output_guard": {
++            "scope": sorted(PLAN_FORMAT_NAMES), "requires_strict_json_schema": True,
++            "max_visible_characters": MAX_PLAN_VISIBLE_CHARACTERS,
++            "max_consecutive_json_syntax_whitespace": MAX_PLAN_JSON_WHITESPACE_RUN,
++            "whitespace_inside_strings_excluded": True, "guard_failures_retried": False,
++        },
+         "partial_output_executable": False,
+     }
+ 
+@@ -170,10 +185,158 @@
+         self.flush()
+ 
+ 
++class _TextPartShape:
++    """Bounded lexical state only: root closure is never a JSON-validity claim."""
++    def __init__(self):
++        self.stack = []
++        self.depth = self.syntax_whitespace = self.syntax_run = self.max_syntax_run = 0
++        self.whitespace_run = self.max_whitespace_run = 0
++        self.in_string = self.escaped = self.depth_limited = self.anomaly = False
++        self.root_kind = None
++        self.root_closed = self.trailing = False
++
++    def feed(self, text):
++        for char in text:
++            self.whitespace_run = self.whitespace_run + 1 if char in JSON_WHITESPACE else 0
++            self.max_whitespace_run = max(self.max_whitespace_run, self.whitespace_run)
++            if self.in_string:
++                self.syntax_run = 0
++                if ord(char) < 32:
++                    self.anomaly = True
++                if self.escaped:
++                    self.escaped = False
++                    if char not in '"\\/bfnrtu':
++                        self.anomaly = True
++                elif char == "\\":
++                    self.escaped = True
++                elif char == '"':
++                    self.in_string = False
++                continue
++            if char in JSON_WHITESPACE:
++                self.syntax_whitespace += 1
++                self.syntax_run += 1
++                self.max_syntax_run = max(self.max_syntax_run, self.syntax_run)
++                continue
++            self.syntax_run = 0
++            if self.root_closed:
++                self.trailing = True
++            if self.root_kind is None:
++                self.root_kind = "object" if char == "{" else "array" if char == "[" else "other"
++            if char == '"':
++                self.in_string = True
++            elif char in "{[":
++                self.depth += 1
++                if self.depth <= MAX_LEXICAL_DEPTH:
++                    self.stack.append(char)
++                else:
++                    self.depth_limited = True
++            elif char in "}]":
++                if self.depth == 0:
++                    self.anomaly = True
++                else:
++                    if self.depth <= MAX_LEXICAL_DEPTH:
++                        if self.stack.pop() != ("{" if char == "}" else "["):
++                            self.anomaly = True
++                    self.depth -= 1
++                    if self.depth == 0 and self.root_kind in ("object", "array"):
++                        self.root_closed = True
++
++    def snapshot(self):
++        return {"container_depth": self.depth, "inside_string": self.in_string,
++                "escape_pending": self.escaped, "root_kind": self.root_kind,
++                "root_closed_candidate": self.root_closed and not (self.anomaly or self.trailing or self.depth_limited),
++                "lexical_anomaly": self.anomaly, "trailing_non_whitespace": self.trailing,
++                "depth_tracking_limited": self.depth_limited}
++
++
++class _VisibleOutput:
++    def __init__(self, progress, guard):
++        self.progress, self.guard, self.parts = progress, guard, {}
++        progress.data.update(
++            visible_delta_events=0, visible_characters=0, visible_utf8_bytes=0,
++            visible_whitespace_characters=0, visible_syntax_whitespace_characters=0,
++            longest_visible_whitespace_run=0, longest_json_whitespace_run=0,
++            visible_invalid_delta_events=0, visible_untracked_delta_events=0,
++            visible_invalid_unicode_events=0, visible_output_parts={}, plan_output_guard_applied=guard,
++            visible_shape_note="Lexical root closure is a candidate only; strict completed-response parsing remains authoritative.")
++
++    def _check(self, shape=None, characters=None):
++        if not self.guard:
++            return
++        if characters is not None and characters > MAX_PLAN_VISIBLE_CHARACTERS:
++            raise _error("plan_visible_output_limit", "Plan visible output exceeded its character bound")
++        if shape is not None and shape.max_syntax_run > MAX_PLAN_JSON_WHITESPACE_RUN:
++            raise _error("plan_output_whitespace_limit", "Plan output exceeded its JSON syntax whitespace bound")
++
++    def delta(self, event):
++        text = event.get("delta")
++        stats = self.progress.data
++        if not isinstance(text, str):
++            stats["visible_invalid_delta_events"] += 1
++            return
++        stats["visible_delta_events"] += 1
++        stats["visible_characters"] += len(text)
++        stats["visible_whitespace_characters"] += sum(char in JSON_WHITESPACE for char in text)
++        try:
++            stats["visible_utf8_bytes"] += len(text.encode("utf-8"))
++        except UnicodeError:
++            stats["visible_invalid_unicode_events"] += 1
++        if text:
++            stats.setdefault("first_visible_output_s", self.progress.elapsed())
++            stats["last_visible_output_s"] = self.progress.elapsed()
++        self._check(characters=stats["visible_characters"])
++        indexes = (event.get("output_index"), event.get("content_index"))
++        if any(type(index) is not int or not 0 <= index <= 4095 for index in indexes):
++            stats["visible_untracked_delta_events"] += 1
++            return
++        key = f"{indexes[0]}:{indexes[1]}"
++        if key not in self.parts:
++            if len(self.parts) >= MAX_TEXT_PARTS:
++                stats["visible_untracked_delta_events"] += 1
++                return
++            self.parts[key] = _TextPartShape()
++        part = self.parts[key]
++        before = part.syntax_whitespace
++        part.feed(text)
++        stats["visible_syntax_whitespace_characters"] += part.syntax_whitespace - before
++        stats["longest_visible_whitespace_run"] = max(stats["longest_visible_whitespace_run"], part.max_whitespace_run)
++        stats["longest_json_whitespace_run"] = max(stats["longest_json_whitespace_run"], part.max_syntax_run)
++        stats["visible_output_parts"][key] = part.snapshot()
++        self._check(part)
++
++    def completed_text(self, text):
++        if self.guard and isinstance(text, str):
++            self._check(characters=len(text))
++            part = _TextPartShape()
++            part.feed(text)
++            self._check(part)
++
++    def event(self, event, kind):
++        if kind == "response.output_text.delta":
++            self.delta(event)
++        elif self.guard and kind == "response.output_text.done":
++            self.completed_text(event.get("text"))
++        elif self.guard and kind in ("response.output_item.done", "response.completed"):
++            response = event.get("response")
++            items = response.get("output", []) if kind == "response.completed" and isinstance(response, dict) else [event.get("item")]
++            if not isinstance(items, list):
++                return
++            total = 0
++            for item in items:
++                if not isinstance(item, dict) or item.get("type") != "message" or not isinstance(item.get("content"), list):
++                    continue
++                for part in item["content"]:
++                    if isinstance(part, dict) and part.get("type") == "output_text" and isinstance(part.get("text"), str):
++                        total += len(part["text"])
++                        self._check(characters=total)
++                        self.completed_text(part["text"])
++
++
+ class _ObservedLines:
+-    def __init__(self, lines, progress, check):
++    def __init__(self, lines, progress, check, guard=False):
+         self.lines, self.progress, self.check = iter(lines), progress, check
+         self.event_name, self.data_lines, self.first = None, [], True
++        self.visible = _VisibleOutput(progress, guard)
+ 
+     def __iter__(self):
+         return self
+@@ -231,6 +394,8 @@
+         stats["event_types"][label] = stats["event_types"].get(label, 0) + 1
+         if kind in ("ping", "heartbeat") or self.event_name in ("ping", "heartbeat"):
+             stats["heartbeat_events"] += 1
++        if isinstance(event, dict):
++            self.visible.event(event, kind)
+         response = event.get("response") if isinstance(event, dict) else None
+         if isinstance(response, dict):
+             stats["response_id"] = _safe_id(response.get("id"), "resp_")
+@@ -280,7 +445,12 @@
+                     if media_type not in ("text/plain", "text/event-stream"):
+                         raise protocol._protocol_error("Subscription endpoint did not return an SSE stream",
+                             http_status=status, error_code="unexpected_response_content_type")
+-                    completed = protocol.read_completed_response(_ObservedLines(response, progress, check))
++                    text_options = payload.get("text")
++                    text_format = text_options.get("format") if isinstance(text_options, dict) else None
++                    guard = (isinstance(text_format, dict) and text_format.get("type") == "json_schema"
++                             and text_format.get("strict") is True and isinstance(text_format.get("name"), str)
++                             and text_format["name"] in PLAN_FORMAT_NAMES)
++                    completed = protocol.read_completed_response(_ObservedLines(response, progress, check, guard))
+                     check()
+                     reasoning = completed.get("reasoning")
+                     effort = reasoning.get("effort") if isinstance(reasoning, dict) else None
+--- before/tests/test_agent_speedup_v2_user_check_transport.py
++++ after/tests/test_agent_speedup_v2_user_check_transport.py
+@@ -33,6 +33,17 @@
+              "content": [{"type": "output_text", "text": json.dumps(PLAN if value is None else value)}]}]}}
+     return [b": heartbeat\r\n", b"\r\n", b'data: {"type":"heartbeat"}\n', b"\n",
+             ("data: " + json.dumps(final) + "\n").encode(), b"\n"]
++
++
++def delta_lines(text, *, output_index=1, content_index=0):
++    event = {"type": "response.output_text.delta", "output_index": output_index,
++             "content_index": content_index, "item_id": "msg_fixture", "delta": text}
++    return [("data: " + json.dumps(event) + "\n").encode(), b"\n"]
++
++
++def plan_payload(name="agent_speedup_v2_plan"):
++    return {**PAYLOAD, "text": {"format": {"type": "json_schema", "name": name,
++                                           "strict": True, "schema": {"type": "object"}}}}
+ 
+ 
+ class Response:
+@@ -310,3 +321,125 @@
+                               task_key=TASK.key, episode_index=0, monitor_options=monitor,
+                               request_deadline_s=value)
+     assert not (tmp_path / "review").exists()
++
++
++def test_visible_delta_counts_shape_and_unicode_are_content_free_and_reset(tmp_path, monkeypatch):
++    value = {"text": SECRET + ' café \\" quote', "values": [1, 2]}
++    visible = json.dumps(value, ensure_ascii=False, indent=2)
++    chunks = [visible[start:start + 3] for start in range(0, len(visible), 3)]
++    lines = [line for chunk in chunks for line in delta_lines(chunk)] + completed_lines(value)
++    response = Response(lines)
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: response)
++    current = [tmp_path / "000001-fixture.request.json"]
++    client_transport = transport.UserCheckSubscriptionTransport(
++        request_deadline_s=1., stream_progress=True, request_path=lambda: current[0])
++    baseline = transport.protocol.read_completed_response(lines)
++    result = client_transport(ENDPOINT, plan_payload(), {}, 5.)
++    assert result["output"] == baseline["output"]
++    stats = report(tmp_path)
++    assert stats["visible_delta_events"] == len(chunks)
++    assert stats["visible_characters"] == len(visible)
++    assert stats["visible_utf8_bytes"] == len(visible.encode("utf-8"))
++    assert stats["visible_whitespace_characters"] == sum(char in " \t\r\n" for char in visible)
++    assert stats["longest_json_whitespace_run"] == 5
++    assert stats["first_visible_output_s"] <= stats["last_visible_output_s"] <= stats["completion_s"]
++    shape = stats["visible_output_parts"]["1:0"]
++    assert shape["root_closed_candidate"] and shape["container_depth"] == 0
++    assert not shape["inside_string"] and not shape["lexical_anomaly"]
++    assert SECRET not in json.dumps(stats)
++    current[0] = tmp_path / "000002-fixture.request.json"
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(completed_lines(value)))
++    client_transport(ENDPOINT, plan_payload(), {}, 5.)
++    second = json.loads((tmp_path / "000002-fixture.stream.json").read_text())
++    assert second["visible_characters"] == 0 and not second["visible_output_parts"]
++    assert "first_visible_output_s" not in second
++
++
++def test_lexical_state_is_bounded_and_mismatched_brackets_are_not_closed_candidates():
++    progress = transport._Progress(None, transport.transport_settings(), time.monotonic)
++    output = transport._VisibleOutput(progress, guard=False)
++    for index in range(transport.MAX_TEXT_PARTS + 2):
++        output.delta({"delta": "{", "output_index": index, "content_index": 0})
++    assert len(output.parts) == len(progress.data["visible_output_parts"]) == transport.MAX_TEXT_PARTS
++    assert progress.data["visible_untracked_delta_events"] == 2
++    output.delta({"delta": "]", "output_index": 0, "content_index": 0})
++    assert progress.data["visible_output_parts"]["0:0"]["lexical_anomaly"]
++    assert not progress.data["visible_output_parts"]["0:0"]["root_closed_candidate"]
++    output.delta({"delta": "[" * 200 + "]" * 200 + "}", "output_index": 1, "content_index": 0})
++    shape = progress.data["visible_output_parts"]["1:0"]
++    assert shape["depth_tracking_limited"] and not shape["root_closed_candidate"]
++    assert len(output.parts["1:0"].stack) <= transport.MAX_LEXICAL_DEPTH
++
++
++def test_long_whitespace_inside_strings_passes_plan_guard(tmp_path, monkeypatch):
++    value = {"text": SECRET + " " * (transport.MAX_PLAN_JSON_WHITESPACE_RUN + 100)}
++    visible = json.dumps(value)
++    lines = delta_lines(visible[:30]) + delta_lines(visible[30:]) + completed_lines(value)
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(lines))
++    result = observed(tmp_path, 1.)(ENDPOINT, plan_payload(), {}, 5.)
++    stats = report(tmp_path)
++    assert result["status"] == "completed" and stats["parser_verified_completion"]
++    assert stats["longest_visible_whitespace_run"] > transport.MAX_PLAN_JSON_WHITESPACE_RUN
++    assert stats["longest_json_whitespace_run"] == 1
++    assert SECRET not in json.dumps(stats)
++
++
++@pytest.mark.parametrize("mode", ["plan", "replan"])
++def test_cross_delta_structural_whitespace_guard_is_not_retried_by_real_planner(tmp_path, monkeypatch, mode):
++    limit = transport.MAX_PLAN_JSON_WHITESPACE_RUN
++    lines = delta_lines("{") + delta_lines(" " * (limit // 2)) + delta_lines("\n" * (limit // 2 + 1))
++    calls = []
++    response = Response(lines)
++    def opener(*args):
++        calls.append(True)
++        return response
++    monkeypatch.setattr(transport.protocol, "_open_public", opener)
++    client = UserCheckV2Client(task_prompt=TASK.prompt, token_provider=lambda: "offline", log_dir=tmp_path)
++    transport.configure_client_transport(client, request_deadline_s=1., stream_progress=True)
++    with pytest.raises(APIError) as failure:
++        client.predict({"fields": {}, "images": []}, mode=mode)
++    assert failure.value.error_code == "plan_output_whitespace_limit"
++    assert failure.value.error_code not in TRANSIENT_ERROR_CODES
++    assert len(calls) == client.budget_snapshot()["api_calls"] == 1 and response.closed
++    stats = json.loads(next(tmp_path.glob("*.stream.json")).read_text())
++    assert stats["longest_json_whitespace_run"] == limit + 1
++    assert stats["plan_output_guard_applied"] and not stats["parser_verified_completion"]
++    assert not list(tmp_path.glob("*.transient_retry.json"))
++    assert signal.getitimer(signal.ITIMER_REAL) == (0., 0.)
++
++
++def test_visible_character_guard_and_executive_scope(tmp_path, monkeypatch):
++    lines = delta_lines("x" * (transport.MAX_PLAN_VISIBLE_CHARACTERS + 1))
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(lines))
++    with pytest.raises(APIError) as failure:
++        observed(tmp_path / "plan", 1.)(ENDPOINT, plan_payload(), {}, 5.)
++    assert failure.value.error_code == "plan_visible_output_limit"
++    assert failure.value.error_code not in TRANSIENT_ERROR_CODES
++    # The executive keeps its previous behavior; the new early guards are plan-only.
++    executive_lines = delta_lines(" " * (transport.MAX_PLAN_JSON_WHITESPACE_RUN + 1)) + completed_lines()
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(executive_lines))
++    result = observed(tmp_path / "executive", 1.)(ENDPOINT, plan_payload("user_check_agent_first"), {}, 5.)
++    assert result["status"] == "completed"
++    assert not report(tmp_path / "executive")["plan_output_guard_applied"]
++
++
++def test_completed_only_text_is_guarded_without_double_counting_deltas(tmp_path, monkeypatch):
++    lines = completed_lines()
++    final = json.loads(lines[-2].decode()[len("data: "):])
++    final["response"]["output"][-1]["content"][0]["text"] = "{" + " " * (transport.MAX_PLAN_JSON_WHITESPACE_RUN + 1) + '"ok":true}'
++    lines[-2] = ("data: " + json.dumps(final) + "\n").encode()
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(lines))
++    with pytest.raises(APIError) as failure:
++        observed(tmp_path, 1.)(ENDPOINT, plan_payload(), {}, 5.)
++    assert failure.value.error_code == "plan_output_whitespace_limit"
++    assert report(tmp_path)["visible_delta_events"] == 0
++
++
++def test_malformed_delta_value_does_not_change_completed_parser_or_leak(tmp_path, monkeypatch):
++    lines = delta_lines([SECRET]) + completed_lines()
++    expected = transport.protocol.read_completed_response(lines)
++    monkeypatch.setattr(transport.protocol, "_open_public", lambda *args: Response(lines))
++    result = observed(tmp_path, 1.)(ENDPOINT, plan_payload(), {}, 5.)
++    assert result["output"] == expected["output"]
++    assert report(tmp_path)["visible_invalid_delta_events"] == 1
++    assert SECRET not in json.dumps(report(tmp_path))
+--- /dev/null
++++ after/tests/test_agent_speedup_v2_user_check_plan_output.py
+@@ -0,0 +1,100 @@
++"""Planner output bounds and prompt consistency; offline, with no simulator."""
++import copy
++import json
++from pathlib import Path
++
++import pytest
++
++from gpt_field.agent_speedup_v2_client import AgentSpeedUpV2Client, WORKED_EXAMPLE
++from gpt_field.agent_speedup_v2_plan import PlanParseError
++from gpt_field.agent_speedup_v2_user_check import plan_validation
++from gpt_field.agent_speedup_v2_user_check_client import UserCheckV2Client
++from gpt_field.agent_speedup_v2_user_check_plan import parse_plan
++from gpt_field.agent_speedup_v2_user_check_spatial import validate_spatial_spec
++from gpt_field.astra import SchemaError
++
++
++TASK = "put both the cream cheese box and the butter in the basket"
++REQUEST = {"fields": {}, "images": []}
++
++
++def example_from_payload(payload):
++    prefix = "EXAMPLE (other objects; cells illustrative): "
++    line = next(x for x in payload["instructions"].splitlines() if x.startswith(prefix))
++    return json.loads(line[len(prefix):])
++
++
++@pytest.mark.parametrize("mode", ["plan", "replan"])
++def test_real_payload_example_has_every_required_field_and_roundtrips(mode):
++    baseline_before = copy.deepcopy(WORKED_EXAMPLE)
++    client = UserCheckV2Client(task_prompt=TASK)
++    payload = client.build_payload(REQUEST, mode=mode)
++    example = example_from_payload(payload)
++    schema = payload["text"]["format"]["schema"]
++    assert set(example) == set(schema["required"]) == set(schema["properties"])
++    assert client.validate_response(example, client.grid) == example
++    assert parse_plan(example).to_json() == example
++    assert plan_validation(example, require_native=False)["valid"]
++    assert example["regions"] == example["placement_goals"] == []
++    assert "Finish immediately after" in payload["instructions"]
++    assert "complete requested plan" in payload["instructions"]
++    baseline = AgentSpeedUpV2Client(task_prompt=TASK).build_payload(REQUEST, mode=mode)
++    assert example_from_payload(baseline) == WORKED_EXAMPLE == baseline_before
++    assert "OUTPUT SERIALIZATION" not in baseline["instructions"]
++
++
++def spatial_plan():
++    client = UserCheckV2Client(task_prompt=TASK)
++    raw = example_from_payload(client.build_payload(REQUEST, mode="plan"))
++    raw["regions"] = [{"id": "F", "support": "B", "anchor": None,
++                       "relation": "on", "frame": "world", "bounds_xy_m": None}]
++    raw["parts"].append({"id": "F", "text": "shoe box: inner floor region",
++                         "move": "fixed", "w": 44, "x": 37})
++    raw["placement_goals"] = [{"obj": "A", "ref": "F", "relation": "inside", "tolerance_m": None}]
++    raw["steps"][0].update(do="place_on", ref="F")
++    return raw
++
++
++@pytest.mark.parametrize("field", ["regions", "placement_goals"])
++def test_wire_and_local_array_limits_agree(field):
++    client = UserCheckV2Client(task_prompt=TASK)
++    schema = client.build_payload(REQUEST, mode="plan")["text"]["format"]["schema"]
++    assert schema["properties"][field]["maxItems"] == 32
++    valid = spatial_plan()
++    assert not validate_spatial_spec(valid)
++    assert client.validate_response(valid, client.grid) == valid
++    oversized = copy.deepcopy(valid)
++    oversized[field] *= 33
++    with pytest.raises(PlanParseError, match="array length"):
++        parse_plan(oversized)
++    with pytest.raises(SchemaError):
++        client.validate_response(oversized, client.grid)
++
++
++@pytest.mark.parametrize("field,key", [("regions", "id"), ("regions", "support"),
++                                      ("regions", "anchor"), ("placement_goals", "obj"),
++                                      ("placement_goals", "ref")])
++def test_extension_identifiers_cannot_expand_into_unbounded_text(field, key):
++    raw = spatial_plan()
++    raw[field][0][key] = "unbounded identifier " * 100
++    with pytest.raises(PlanParseError):
++        parse_plan(raw)
++
++
++def test_observed_plane_and_nullable_fields_remain_supported():
++    raw = spatial_plan()
++    raw["regions"][0].update(support="observed_plane", anchor=None,
++                             bounds_xy_m=[[-.05, .05], [-.05, .05]])
++    assert parse_plan(raw).to_json() == raw
++    assert not validate_spatial_spec(raw)
++
++
++def test_saved_successful_task0_plan_is_preserved_exactly():
++    fixture = json.loads((Path(__file__).parent / "fixtures/user_check_task0_plan.json").read_text())
++    client = UserCheckV2Client(task_prompt=fixture["task"])
++    client.build_payload(REQUEST, mode="plan")
++    raw = fixture["plan"]
++    assert client.validate_response(raw, client.grid) == raw
++    assert parse_plan(raw).to_json() == raw
++    assert len(raw["steps"]) == 2
++    assert {s["obj"] for s in raw["steps"]} == {"A", "B"}
+--- /dev/null
++++ after/tests/fixtures/user_check_task0_plan.json
+@@ -0,0 +1,64 @@
++{
++  "source_run": "agent_speedup_v2_uc7_relayout_t0_t4_20261027_001",
++  "source_response_sha256": "f918b7a854440a5d48bfa6f75a85c691ea6f69bf12ab4a197c30c71655caa872",
++  "task": "put both the alphabet soup and the tomato sauce in the basket",
++  "plan": {
++    "scene": "Two food cans on a table beside an open, cloth-lined basket.",
++    "parts": [
++      {
++        "id": "A",
++        "text": "alphabet soup: cylindrical can with blue label",
++        "move": "free",
++        "w": 52,
++        "x": 37
++      },
++      {
++        "id": "B",
++        "text": "tomato sauce: cylindrical can with tomato pictures",
++        "move": "free",
++        "w": 48,
++        "x": 34
++      },
++      {
++        "id": "C",
++        "text": "basket: open cloth-lined cavity",
++        "move": "free",
++        "w": 0,
++        "x": 40
++      }
++    ],
++    "hold_true": [],
++    "steps": [
++      {
++        "do": "place_in",
++        "obj": "A",
++        "grip": [],
++        "ref": "C",
++        "sense": "any",
++        "keep": [
++          {
++            "c": "upright",
++            "p": "A"
++          }
++        ],
++        "until": []
++      },
++      {
++        "do": "place_in",
++        "obj": "B",
++        "grip": [],
++        "ref": "C",
++        "sense": "any",
++        "keep": [
++          {
++            "c": "upright",
++            "p": "B"
++          }
++        ],
++        "until": []
++      }
++    ],
++    "regions": [],
++    "placement_goals": []
++  }
++}
