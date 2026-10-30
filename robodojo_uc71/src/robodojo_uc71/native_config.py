@@ -1,7 +1,8 @@
-"""Native configuration and fail-closed adapters for a reset-only preview.
+"""Native configuration and explicit adapters for preview and UC71 execution.
 
 Importing this module starts no simulator, transport, or CUDA work. Native source
-files remain untouched; the two explicit module substitutions are preview-only.
+files remain untouched. Both backends disable native model transport; only the
+legacy joint backend disables cuRobo. The parent UC71 client owns model requests.
 """
 from __future__ import annotations
 
@@ -37,12 +38,17 @@ class DisabledPreviewPlanner:
         raise RuntimeError("Scene-aware planning is disabled in the joint-mode reset-only preview")
 
 
-def install_preview_adapters() -> dict:
-    """Avoid eager transport/cuRobo imports without installing permissive stubs."""
+def install_preview_adapters(*, control_backend="legacy_joint") -> dict:
+    """Disable native transport and select the declared planner backend."""
+    from .official_control import validate_control_backend
+    validate_control_backend(control_backend)
     replacements = {
         CLIENT_MODULE: ("WsModelClient", ResetOnlyClient),
-        PLANNER_MODULE: ("CuroboPlanner", DisabledPreviewPlanner),
     }
+    if control_backend == "legacy_joint":
+        replacements[PLANNER_MODULE] = ("CuroboPlanner", DisabledPreviewPlanner)
+    elif getattr(sys.modules.get(PLANNER_MODULE), "__preview_adapter__", False):
+        raise RuntimeError("Official control cannot reuse a disabled preview planner")
     if any(name in sys.modules for name in replacements):
         raise RuntimeError("Preview adapters must precede native evaluator/planner imports")
     for name, (symbol, implementation) in replacements.items():
@@ -52,7 +58,9 @@ def install_preview_adapters() -> dict:
         sys.modules[name] = module
     return {
         CLIENT_MODULE: "ResetOnlyClient: exactly one reset; no transport imported or constructed",
-        PLANNER_MODULE: "DisabledPreviewPlanner: every constructor call raises; need_planner is false",
+        PLANNER_MODULE: ("native CuroboPlanner: official end-effector IK and scene constraints"
+            if control_backend == "official_ee" else
+            "DisabledPreviewPlanner: every constructor call raises; need_planner is false"),
     }
 
 
@@ -68,7 +76,7 @@ def add_native_import_paths(root: Path) -> list[str]:
     return [str(path) for path in paths]
 
 
-def build_native_preview_config(root: Path, run_id: str):
+def build_native_preview_config(root: Path, run_id: str, *, control_backend="legacy_joint"):
     """Use native loaders/processors, then only constrain scope and planner use."""
     from omegaconf import OmegaConf
 
@@ -100,12 +108,14 @@ def build_native_preview_config(root: Path, run_id: str):
     config.sim.seed = [0]
     config.camera.default_frequency = config.eval_cfg.observation.get("collect_freq", 0)
     for robot in config.robot.robots:
-        robot.need_planner = False
-    validate_native_preview_config(config)
+        robot.need_planner = control_backend == "official_ee"
+    validate_native_preview_config(config, control_backend=control_backend)
     return config
 
 
-def validate_native_preview_config(config) -> None:
+def validate_native_preview_config(config, *, control_backend="legacy_joint") -> None:
+    from .official_control import validate_control_backend
+    validate_control_backend(control_backend)
     if (config.eval_cfg.task_name != "make_toast" or config.eval_cfg.config_name != "arx_x5"
             or config.eval_cfg.seed != 0 or config.eval_cfg.num_envs != 1
             or config.eval_cfg.eval_batch is not False or config.sim.scene.num_envs != 1
@@ -118,9 +128,9 @@ def validate_native_preview_config(config) -> None:
         raise ValueError("Native Make Toast physics/stabilization configuration changed")
     robots = config.robot.robots
     if len(robots) != 2 or any(robot.robot_name != "x5" or robot.get("coupled", False)
-                             or robot.need_planner is not False
+                             or robot.need_planner is not (control_backend == "official_ee")
                              or robot.enabled_self_collisions is not False for robot in robots):
-        raise ValueError("Preview requires both native X5 robots, no planner, and native self-collision settings")
+        raise ValueError("Require both native X5 robots, selected backend planners, and native self-collision settings")
 
 
 def forbid_policy_actions(env) -> list[str]:
@@ -131,3 +141,24 @@ def forbid_policy_actions(env) -> list[str]:
     for name in names:
         setattr(env, name, forbidden)
     return names
+
+
+def validate_native_planners(env, control_backend="legacy_joint"):
+    """Check the selected native action path without invoking either solver."""
+    from .official_control import validate_control_backend
+    validate_control_backend(control_backend)
+    manager = env.robot_manager
+    if control_backend == "legacy_joint":
+        if manager.planner or manager.ik_solver:
+            raise ValueError("legacy_control_requires_disabled_native_planners")
+        return
+    names = {r.robot_name for r in manager.robot_list if r.type == "target"}
+    if not names or set(manager.planner) != names or set(manager.ik_solver) != names:
+        raise ValueError("official_control_requires_all_native_ik_solvers")
+    for name in names:
+        planner = manager.planner[name]
+        if (manager.ik_solver[name] is not planner
+                or type(planner).__module__ != PLANNER_MODULE
+                or type(planner).__name__ != "CuroboPlanner"
+                or not callable(getattr(planner, "solve_ik_to_joint", None))):
+            raise ValueError("official_control_requires_unmodified_native_planner")

@@ -18,7 +18,8 @@ def main():
     if not args.launch or args.ipc_fd < 3: parser.error("Explicit --launch and an inherited dedicated socket fd are required")
     # This proof precedes numpy, native runtime, bundle, Kit and native imports.
     from robodojo_uc71.worker_isolation import enforce_child_boundary
-    enforce_child_boundary(credential_store="/workspace/gpt_field/.private/chatgpt_plan",parent_pid=args.parent_pid)
+    from robodojo_uc71.host_runtime import CREDENTIAL_STORE
+    enforce_child_boundary(credential_store=CREDENTIAL_STORE,parent_pid=args.parent_pid)
     from robodojo_uc71.native_runtime import WorkerRuntimeSpec, run_native_worker
     from robodojo_uc71.native_runtime_bundle import VerifiedRuntimeBundle
     spec = WorkerRuntimeSpec.load(args.spec)

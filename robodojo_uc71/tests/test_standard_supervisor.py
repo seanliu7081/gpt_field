@@ -48,6 +48,28 @@ def test_unmanaged_entry_point_never_spawns(supervisor, monkeypatch, tmp_path):
     spawn.assert_not_called()
 
 
+@pytest.mark.parametrize("failure",["busy_gpu","disconnected","invalid_token"])
+def test_gpu_and_auth_failures_do_not_claim_or_consume_attempt(supervisor,monkeypatch,tmp_path,failure):
+    import gpt_field.chatgpt_auth as auth
+    monkeypatch.setattr(supervisor.os,"getuid",lambda:0)
+    monkeypatch.setenv("UC71_STANDARD_SUPERVISOR","1")
+    manifest = {"attempt_dir":str(tmp_path),"configuration":{"runtime":{"minimum_free_mib":16384}}}
+    monkeypatch.setattr(supervisor,"preflight",lambda _,**kw:({"gpu_binding":{}},manifest,{}))
+    gpu = {"processes":[{"pid":123}] if failure=="busy_gpu" else [],"memory_free":"24000 MiB"}
+    monkeypatch.setattr(supervisor,"gpu_snapshot",lambda:[gpu])
+    monkeypatch.setattr(supervisor,"validate_single_gpu",lambda *_:gpu)
+    credentials = Mock()
+    credentials.status.return_value = {"connected":failure!="disconnected"}
+    credentials.access_token.side_effect = ValueError("invalid_token_fixture")
+    monkeypatch.setattr(auth,"SubscriptionCredentials",Mock(return_value=credentials))
+    spawn = Mock(); monkeypatch.setattr(supervisor.subprocess,"Popen",spawn)
+    with pytest.raises(ValueError):
+        supervisor.run(tmp_path/"spec.json")
+    assert not (tmp_path/"launch_claim.json").exists()
+    assert not (tmp_path/"consumed.json").exists()
+    spawn.assert_not_called()
+
+
 def test_approval_must_match_exact_manifest_before_acceptance(supervisor, tmp_path):
     attempt = tmp_path / "attempt"; attempt.mkdir()
     manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64}
@@ -114,6 +136,22 @@ def test_runtime_paths_fail_before_launch_and_preserve_venv_python_symlink(super
     runtime["worker_script"] = str(tmp_path/"unreviewed_worker.py")
     with pytest.raises(ValueError,match="reviewed_native_worker"):
         supervisor.verify_runtime_executables(runtime)
+
+
+def test_conda_record_is_required_in_the_exact_approval_file_closure(supervisor,tmp_path,monkeypatch):
+    runtime = {name:"unused-fixture" for name in
+        ("python","library_path","icd","overlay_target","compat_target","worker_script")}
+    runtime.update(maximum_wall_time_s=10800,ready_timeout_s=600,minimum_free_mib=16384,
+                   environment_record=str(tmp_path/"install_status.json"))
+    frozen = {}
+    for name in ("install_status.json","requirements.lock","package_inventory.json"):
+        path=tmp_path/name; path.write_text("synthetic fixture"); frozen[str(path)]=supervisor.file_sha256(path)
+    verifier=Mock(); monkeypatch.setattr(supervisor,"verify_runtime_executables",verifier)
+    supervisor.verify_runtime_configuration(runtime,frozen)
+    verifier.assert_called_once_with(runtime)
+    for omitted in frozen:
+        with pytest.raises(ValueError,match="conda_environment_must_be_bound"):
+            supervisor.verify_runtime_configuration(runtime,{key:value for key,value in frozen.items() if key!=omitted})
 
 
 def shutdown_fixture(supervisor,tmp_path,monkeypatch):

@@ -17,7 +17,7 @@ import traceback
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE / "src"))
 from robodojo_uc71.native_config import (EXPECTED_CAMERAS, ResetOnlyClient, add_native_import_paths,
-    build_native_preview_config, forbid_policy_actions, install_preview_adapters)
+    build_native_preview_config, forbid_policy_actions, install_preview_adapters, validate_native_planners)
 from new_host_camera import query_cuda_identity, renderer_table_identity, write_durable_json
 from provision_native_common import (PINS, asset_path, digest, pins, require_camera_gate,
     require_native_checkout)
@@ -27,6 +27,54 @@ REVIEWED_INCOMPLETE_ASSET_MANIFEST_SHA256 = "d031d8bd55746879907ce36e2e7fe8e55d2
 MISSING_STAND_TEXTURE = "/home/kaslensu/Desktop/textures/Image_0.png"
 STAND_ASSET = "Assets/Object/RoboDojo/Geometry/camera_stand/00000/object.usd"
 STAND_ASSET_SHA256 = "6c4b9ec4cd325f6e47d862b87e7dddbe9adc5e9a5aa0f04224c47d0f16a600a8"
+
+
+def preview_control_arguments(parser, args) -> None:
+    """Require an explicit setup only for the official backend, before work."""
+    if (args.control_backend == "official_ee") != (args.official_setup is not None):
+        parser.error("--official-setup is required exactly when --control-backend official_ee is selected")
+
+
+def verify_preview_control_setup(control_backend: str, official_setup: Path | None,
+                                 *, native: Path, python: Path) -> dict | None:
+    if control_backend not in ("legacy_joint", "official_ee"):
+        raise ValueError("unsupported_preview_control_backend")
+    if control_backend == "legacy_joint":
+        if official_setup is not None:
+            raise ValueError("legacy_preview_must_not_activate_official_dependencies")
+        return None
+    if official_setup is None:
+        raise ValueError("official_preview_setup_record_required")
+    from robodojo_uc71.official_control_setup import verify_setup_record
+    path = official_setup.resolve(strict=True)
+    before = digest(path)
+    record = verify_setup_record(path)
+    source = {Path(row["path"]).resolve(): row["sha256"] for row in record["source_files"]}
+    native = native.resolve(strict=True)
+    pin_data = pins()
+    curobo_commit = next(row["commit"] for row in pin_data["gitlinks"] if row["path"] == "third_party/curobo")
+    required = ("env/planner_manager/curobo_planner.py", "env/robot_manager/robot_manager.py",
+                "Assets/Robots/x5/robot_config.yml", "Assets/Robots/x5/X5A.urdf", "Assets/Robots/x5/curobo.yml")
+    if (Path(record.get("python", "")).resolve() != python.resolve(strict=True)
+            or record.get("native_commit") != pin_data["native_repository"]["commit"]
+            or record.get("curobo_commit") != curobo_commit
+            or any(source.get(native / name) != digest(native / name) for name in required)
+            or digest(path) != before):
+        raise ValueError("official_preview_setup_does_not_bind_native_runtime")
+    return {"path": str(path), "sha256": before, "overlay_target": record["overlay_target"],
+            "python": str(python.resolve()), "native_commit": record["native_commit"],
+            "curobo_commit": record["curobo_commit"]}
+
+
+def preview_source_files(control_backend="legacy_joint") -> list[Path]:
+    paths = [BASE / "scripts" / name for name in
+             ("prepare_native_preview.py", "new_host_camera.py", "provision_native_common.py")]
+    paths += [BASE / "src/robodojo_uc71" / name for name in
+              ("native_config.py", "native_robot_inventory.py", "native_measurements.py")]
+    if control_backend == "official_ee":
+        paths += [BASE / "src/robodojo_uc71" / name for name in
+                  ("official_control_setup.py", "official_control.py", "approval.py", "controller.py", "schema.py")]
+    return paths
 
 
 def verify_asset_diagnostic_assessment(native: Path, assets_path: Path, assets: dict,
@@ -285,11 +333,12 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
         write_durable_json(output / "renderer_identity.json", renderer)
         if not renderer["uuid_prefix_and_pci_bus_match"] or not zero_delay_active():
             raise RuntimeError("Native preview GPU identity or zero-delay camera settings did not verify")
-        adaptations = install_preview_adapters()
+        adaptations = install_preview_adapters(control_backend=args.control_backend)
         from src.eval_client.eval_env import create_eval_env
         env = create_eval_env(config, app, resume_state=None)
-        if type(env.model_client) is not ResetOnlyClient or env.robot_manager.planner or env.robot_manager.ik_solver:
-            raise RuntimeError("Preview transport/planner exclusion failed")
+        if type(env.model_client) is not ResetOnlyClient:
+            raise RuntimeError("Preview transport exclusion failed")
+        validate_native_planners(env, args.control_backend)
         guarded_methods = forbid_policy_actions(env)
         selected = Path(env.seed_manager.seed_info[0]["scene_layout"]).resolve()
         if str(selected) != preparation["layout_path"] or digest(selected) != preparation["layout_sha256"]:
@@ -308,8 +357,9 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
         progress("native_layout0_reset_returned", **counters)
         if (env.device != "cpu" or env.use_fabric is not False or env.num_envs != 1
                 or list(env.env_seeds) != [0] or env.model_client.reset_calls != 1
-                or env.take_action_cnt != [0] or env.robot_manager.planner or env.robot_manager.ik_solver):
+                or env.take_action_cnt != [0]):
             raise RuntimeError("Native reset violated the preview scope/configuration")
+        validate_native_planners(env, args.control_backend)
         # Register exactly the native predicates; never infer success from reset's success=True flag.
         env.run_reward()
         env.get_score()
@@ -319,7 +369,7 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
         module_provenance = {}
         for name in ("numpy", "torch", "omegaconf", "gymnasium", "shapely", "transforms3d",
                      "h5py", "isaaclab", "isaaclab_tasks", "isaacsim", "websockets",
-                     "hid", "setuptools", "pkg_resources", "_distutils_hack"):
+                     "hid", "setuptools", "pkg_resources", "_distutils_hack", "curobo", "warp", "cuda"):
             module = sys.modules.get(name)
             if module is not None:
                 module_provenance[name] = {"file": str(getattr(module, "__file__", None)),
@@ -376,6 +426,8 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
         if monitor.is_fatal() or monitor.get_broken_envs() or env.take_action_cnt != [0]:
             raise RuntimeError("Native preview health or zero-action contract failed")
         result = {"schema": "robodojo-native-preview-result-1", "preview_render_passed": True,
+                  "control_backend": args.control_backend, "official_setup": preparation["official_setup"],
+                  "native_motion_qualified": False,
                   "diagnostic_render_passed": True, "standard_ready": False, "asset_fidelity_passed": False,
                   "dependency_closure_complete": preparation["dependency_closure_complete"],
                   "asset_diagnostic_assessment": preparation["asset_diagnostic_assessment"],
@@ -393,7 +445,8 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
                   "reward_predicates_registered": True, "task_success_assessed": False,
                   "policy_action_methods_guarded": guarded_methods, "adaptations": adaptations,
                   "physics_device": env.device, "use_fabric": env.use_fabric,
-                  "native_planner_instances": 0, "native_ik_solver_instances": 0,
+                  "native_planner_instances": len(env.robot_manager.planner),
+                  "native_ik_solver_instances": len(env.robot_manager.ik_solver),
                   "full_test_authorized": False, "gpu_peak_source": "parent gpu_monitor.jsonl; child makes no peak-memory claim"}
         write_durable_json(output / "preview_result.json", result)
         progress("three_native_rgb_images_saved", images=[item["path"] for item in images])
@@ -414,6 +467,8 @@ def run_preview(args, config, preparation, binding, output, progress) -> int:
         healthy = monitor is not None and not monitor.is_fatal() and not monitor.get_broken_envs()
         ready = bool(result and no_pending_exception and not cleanup_errors and healthy)
         evidence = {"schema": "robodojo-native-preview-preclose-1", "ready_for_shutdown": ready,
+                    "control_backend": args.control_backend, "official_setup": preparation["official_setup"],
+                    "native_motion_qualified": False,
                     "pause_seconds": args.pause_seconds,
                     "standard_ready": False, "asset_fidelity_passed": False,
                     "dependency_closure_complete": preparation["dependency_closure_complete"],
@@ -454,10 +509,14 @@ def main() -> int:
     parser.add_argument("--cuda-ordinal", type=int, required=True)
     parser.add_argument("--shutdown-mode", choices=("full", "stock-fast"), default="full")
     parser.add_argument("--launch", action="store_true")
+    parser.add_argument("--control-backend", choices=("legacy_joint", "official_ee"), default="legacy_joint")
+    parser.add_argument("--official-setup", type=Path,
+                        help="Verified cuRobo setup record; required only for official_ee")
     parser.add_argument("--asset-diagnostic-assessment", type=Path,
                         help="Exact reviewed native_assets_002 diagnostic assessment; never grants Standard readiness")
     parser.add_argument("--parent-log", type=Path, help="Supervisor stdout/stderr log; required with --launch")
     args = parser.parse_args()
+    preview_control_arguments(parser, args)
     if args.kit_index != 0 or args.cuda_ordinal != 0 or "CUDA_VISIBLE_DEVICES" in os.environ:
         raise SystemExit("This preview requires a single unmasked GPU with explicit Kit/CUDA ordinal 0")
     native, output = args.native_root.resolve(strict=True), args.output.resolve()
@@ -475,25 +534,41 @@ def main() -> int:
                                pause_seconds=args.pause_seconds)
     preparation = verify_manifests(native, args.source_manifest.resolve(strict=True),
                                    args.asset_manifest.resolve(strict=True), pins(), args.asset_diagnostic_assessment)
+    official_setup = verify_preview_control_setup(args.control_backend, args.official_setup,
+                                                  native=native, python=Path(sys.executable))
     if preparation["camera_gate"]["gpu_uuid"] != binding["gpu_uuid"]:
         raise SystemExit("Preview GPU differs from the reviewed procedural camera gate")
-    output.mkdir(parents=True, exist_ok=False)
-    os.chdir(output)
-    os.environ["ROBODOJO_RUN_ID"] = output.name
-    preparation["import_paths"] = add_native_import_paths(native)
-    config = build_native_preview_config(native, output.name)
+    output.mkdir(parents=True, exist_ok=False, mode=0o700)
+    try:
+        if official_setup is not None:
+            from robodojo_uc71.official_control_setup import activate_setup_record
+            activated = activate_setup_record(official_setup["path"], output / "official_control_cache")
+            if (digest(Path(official_setup["path"])) != official_setup["sha256"]
+                    or any(activated[key] != official_setup[key] for key in
+                           ("overlay_target", "native_commit", "curobo_commit"))):
+                raise ValueError("official_control_setup_changed_before_native_imports")
+        os.chdir(output)
+        os.environ["ROBODOJO_RUN_ID"] = output.name
+        preparation["import_paths"] = add_native_import_paths(native)
+        config = build_native_preview_config(native, output.name, control_backend=args.control_backend)
+    except BaseException as error:
+        write_durable_json(output / "preview_failure.json", {"stage": "native_configuration_preparation",
+            "error_type": type(error).__name__, "error": str(error), "traceback": traceback.format_exc(),
+            "control_backend": args.control_backend, "official_setup": official_setup,
+            "simulator_starts": 0, "model_calls": 0, "benchmark_actions": 0,
+            "native_motion_qualified": False})
+        raise
     from omegaconf import OmegaConf
     write_durable_json(output / "native_configuration.json", OmegaConf.to_container(config, resolve=True))
     preparation.update(schema="robodojo-native-preview-preparation-1", authorization=auth,
+        control_backend=args.control_backend, official_setup=official_setup, native_motion_qualified=False,
         native_root=str(native), native_configuration_sha256=digest(output / "native_configuration.json"),
-        source_file_sha256={str(Path(__file__).resolve()): digest(Path(__file__)),
-            str(BASE / "src/robodojo_uc71/native_config.py"): digest(BASE / "src/robodojo_uc71/native_config.py"),
-            str(BASE / "src/robodojo_uc71/native_robot_inventory.py"): digest(BASE / "src/robodojo_uc71/native_robot_inventory.py"),
-            str(BASE / "src/robodojo_uc71/native_measurements.py"): digest(BASE / "src/robodojo_uc71/native_measurements.py"),
-            str(BASE / "scripts/new_host_camera.py"): digest(BASE / "scripts/new_host_camera.py"),
-            str(BASE / "scripts/provision_native_common.py"): digest(BASE / "scripts/provision_native_common.py")},
+        source_file_sha256={str(path): digest(path) for path in preview_source_files(args.control_backend)},
         replaced_native_module_sha256={name: digest(native / name) for name in
-            ("env/planner_manager/curobo_planner.py", "XPolicyLab/client_server/ws/model_client.py")},
+            (("env/planner_manager/curobo_planner.py", "XPolicyLab/client_server/ws/model_client.py")
+             if args.control_backend == "legacy_joint" else ("XPolicyLab/client_server/ws/model_client.py",))},
+        native_control_module_sha256={"env/planner_manager/curobo_planner.py":
+                                     digest(native / "env/planner_manager/curobo_planner.py")},
         binding=binding, shutdown_mode=args.shutdown_mode, pause_seconds=args.pause_seconds, launch_requested=args.launch,
         model_calls=0, benchmark_actions=0, full_test_authorized=False)
     write_durable_json(output / "preparation.json", preparation)

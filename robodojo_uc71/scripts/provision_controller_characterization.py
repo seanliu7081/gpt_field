@@ -313,8 +313,9 @@ def verify_controller_evidence(child, binding, identity, preparation_expected, s
             or Path(p).stat().st_uid != WORKER_UID for p in logs)):
         raise ValueError("Native logger did not write to worker-private TMPDIR")
     cuda = read_json(child/"cuda_identity.json"); renderer = read_json(child/"renderer_identity.json")
-    if (not exact_fields(cuda, {"gpu_uuid": binding["gpu_uuid"], "cuda_ordinal": 0, "device_count": 1,
+    if (not exact_fields(cuda, {"gpu_uuid": binding["gpu_uuid"], "cuda_ordinal": 0,
             "primary_context_created": False, "child_pid": identity["pid"], "child_start_ticks": identity["start_ticks"]})
+            or type(cuda.get("device_count")) is not int or cuda["device_count"] < 1
             or normalize_pci(cuda.get("pci_bus_id", "")) != normalize_pci(binding["pci_bus_id"])):
         raise ValueError("Actual CUDA identity differs")
     parsed = renderer_table_identity(log_text, binding)

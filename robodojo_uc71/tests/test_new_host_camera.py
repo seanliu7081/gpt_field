@@ -38,7 +38,7 @@ class CameraDiagnosticTests(unittest.TestCase):
     def test_pci_domain_normalization(self):
         self.assertEqual(camera.normalize_pci("00000000:01:00.0"), "0000:01:00.0")
 
-    def test_single_device_binding_rejects_multi_gpu_and_busy(self):
+    def test_single_device_binding_rejects_duplicate_gpu_and_busy(self):
         binding = {**self.binding, "kit_index": 0, "cuda_ordinal": 0}
         gpu = {"index": 0, "uuid": binding["gpu_uuid"], "pci_bus_id": "0000:81:00.0", "processes": []}
         self.assertEqual(launch.validate_single_gpu([gpu], binding, require_idle=True), gpu)
@@ -46,6 +46,16 @@ class CameraDiagnosticTests(unittest.TestCase):
             launch.validate_single_gpu([gpu, gpu], binding)
         with self.assertRaises(ValueError):
             launch.validate_single_gpu([{**gpu, "processes": [{"pid": 1}]}], binding, require_idle=True)
+
+    def test_one_selected_gpu_on_a_multi_gpu_host(self):
+        binding = {**self.binding, "kit_index": 0, "cuda_ordinal": 0}
+        selected = {"index":0,"uuid":binding["gpu_uuid"],"pci_bus_id":"0000:81:00.0","processes":[]}
+        other = {"index":1,"uuid":"GPU-other","pci_bus_id":"0000:82:00.0","processes":[{"pid":123}]}
+        self.assertEqual(launch.validate_single_gpu([other,selected],binding,require_idle=True),selected)
+        with self.assertRaises(ValueError):
+            launch.validate_single_gpu([other],binding)
+        with self.assertRaises(ValueError):
+            launch.validate_single_gpu([other,{**selected,"pci_bus_id":"0000:83:00.0"}],binding)
 
     def test_environment_does_not_inherit_credentials_masks_or_python_paths(self):
         with patch.dict(os.environ, {"OPENAI_API_KEY": "secret", "CUDA_VISIBLE_DEVICES": "4", "PYTHONPATH": "/bad", "LD_LIBRARY_PATH": "/bad"}):

@@ -43,7 +43,7 @@ serverurl=unix://{output}/control.sock
 [program:robodojo_standard]
 command={command}
 directory={BASE.parent}
-environment=UC71_STANDARD_SUPERVISOR="1",PYTHONPATH="{imports}",PYTHONNOUSERSITE="1",PYTHONDONTWRITEBYTECODE="1"
+environment=UC71_STANDARD_SUPERVISOR="1",PATH="{python.parent}:/usr/bin:/bin",PYTHONPATH="{imports}",PYTHONNOUSERSITE="1",PYTHONDONTWRITEBYTECODE="1"
 autostart=false
 autorestart=false
 startretries=0

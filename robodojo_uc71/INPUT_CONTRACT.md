@@ -10,7 +10,7 @@ The user selected **the same information types**, with **two native ARX arms and
 | Execution RGB | External and wrist,512×512 delivery | Head and both wrists, synchronized native 640×480; no crop, resize or padding |
 | Measured robot state | EEF pose, finger state, arm joints/velocities where the existing execution schema exposes them | Six measured arm positions/velocities and both measured finger joints per ARX arm; measured/derived poses labeled; native gripper command echo kept separate from measurements |
 | Model-visible geometry | Allowlisted camera calibration and fixed tool/gripper geometry with provenance | Equivalent ARX tool/gripper calibration fields; no fabricated Panda channels or added full-body geometry |
-| Controller-internal robot model | Robot kinematics/control machinery is not automatically part of Astra's geometry payload | Full ARX URDF/link geometry, kinematic chains and complete joint limits remain internal to robot-only control; do not forward them wholesale |
+| Controller-internal robot model | Robot kinematics/control machinery is not automatically part of Astra's geometry payload | Full ARX robot geometry, kinematic chains and joint limits stay inside official cuRobo control; do not forward them wholesale |
 | Camera calibration | Intrinsics, external transform, wrist mount and current robot-derived transform | Actual three-camera calibration for native delivered pixels; no scene/object calibration |
 | Directions | Frozen external-camera `external_view_v1` | One frozen head-camera frame; neither wrist redefines world/image left/right |
 | Approved plan | Review-bound goal contract/constraints | Same authority; any arm-aware schema change explicitly versioned |
@@ -24,7 +24,7 @@ The user selected **the same information types**, with **two native ARX arms and
 | Remaining native budget | No equivalent remaining-episode-budget field in the uncapped LIBERO contract | Evaluator/operator only by default; do not forward the upstream reference policy's remaining-step field into Astra |
 | Reward/success details | Evaluator controls stopping; not an answer source | Native reward/partial score/numeric criteria separated from model observations and controller feedback |
 | Demonstrations | Not used in these reviewed tests | No teleop videos/trajectories, report solution videos, training examples or oracle waypoints |
-| Planner scene model | No privileged object-truth planner | Robot-only kinematics; no simulator scene collision world or object-specific grasp/lever target injection |
+| Planner scene model | No privileged object-truth planner | Official backend uses the pinned native fixed table cuboid and self-collision model internally; no added scene reconstruction, simulator object poses or object-specific target injection. This controller change is disclosed in the prompt and review packet. |
 
 The human-facing plan may describe scoring so the user understands the experiment. That description must not be concatenated into Astra's instructions. The only added public rule is: **“A task counts as complete only when both arms are back at the pose they started the episode in.”** This generic rule is part of the versioned prompt, in both planning and execution. Exact distances/angles, remaining-bread scoring clauses and native partial/full scores remain evaluator-only. There is no automatic homing controller.
 

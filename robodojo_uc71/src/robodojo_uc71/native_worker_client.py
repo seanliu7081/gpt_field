@@ -35,7 +35,8 @@ from .controller import ArmState, measured_tcp_pose
 from .fragment_executor import ActionReceipt, RobotMeasurement
 from .ipc import JsonLineChannel
 from .lifecycle import EpisodeLifecycle, NativeResult, load_terminal_or_crash
-from .native_episode import validate_joint_action
+from .official_control import (OFFICIAL_EE, validate_control_action,
+                               validate_control_backend, validate_ik_status)
 from .schema import (ARMS, CAMERAS, calibration_binding, public_json, validate_calibration,
                      validate_observation, validate_robot, vector)
 
@@ -98,7 +99,8 @@ class ParentCapture:
 
 class NativeWorkerClient:
     def __init__(self, channel: JsonLineChannel, *, manifest: Mapping, expected_worker: Mapping,
-                 verify_tracked_worker, initial_gripper_commands: Mapping[str, str]):
+                 verify_tracked_worker, initial_gripper_commands: Mapping[str, str],
+                 control_backend: str = "legacy_joint"):
         if not isinstance(channel, JsonLineChannel) or channel.role != "parent" or not callable(verify_tracked_worker):
             raise WorkerClientError("tracked_parent_channel_required")
         identity = dict(expected_worker)
@@ -109,6 +111,9 @@ class NativeWorkerClient:
         if set(initial_gripper_commands) != set(ARMS) or any(v not in ("open", "close") for v in initial_gripper_commands.values()):
             raise WorkerClientError("initial_gripper_commands_required")
         self.manifest = deepcopy(dict(manifest)); verify_manifest(self.manifest)
+        self.control_backend = validate_control_backend(control_backend)
+        if self.manifest["configuration"].get("control_backend", "legacy_joint") != self.control_backend:
+            raise WorkerClientError("manifest_control_backend_mismatch")
         self.channel, self.identity, self._tracked = channel, identity, verify_tracked_worker
         self._pid = os.getpid()
         self._attempt = Path(self.manifest["attempt_dir"]).resolve(strict=True)
@@ -123,6 +128,7 @@ class NativeWorkerClient:
         self._ready_hash = self._fixed_calibration = None
         self._last_ticket = self._capture_index = 0
         self._verified_timings = {}
+        self._verified_ik_status = {}
         self.last_worker_terminal = None
 
     def _alive(self):
@@ -162,6 +168,8 @@ class NativeWorkerClient:
         self._alive()
         if self._binding is None or self._ready is None: raise WorkerClientError("existing_consumed_binding_required")
         verify_manifest(self.manifest, verify_files=verify_files)
+        if self.manifest["configuration"].get("control_backend", "legacy_joint") != self.control_backend:
+            raise WorkerClientError("manifest_control_backend_mismatch")
         approval, approved_hash = _record(self._attempt / "approval.json")
         consumed, consumed_hash = _record(self._attempt / "consumed.json")
         ready, ready_hash = _record(self.worker_output / "ready.json")
@@ -206,7 +214,12 @@ class NativeWorkerClient:
     def _measurement(self, response, *, capture=False, evaluator=False):
         _keys(response, {"control", "public"} | ({"evaluator"} if evaluator else set()), "unexpected_worker_response_fields")
         control, public = response["control"], response["public"]
-        _keys(control, {"arms", "finger_position_m"}, "unexpected_control_fields")
+        expected_control = {"arms", "finger_position_m"}
+        if evaluator and self.control_backend == OFFICIAL_EE:
+            expected_control.add("ik_status")
+        _keys(control, expected_control, "unexpected_control_fields")
+        if "ik_status" in expected_control:
+            validate_ik_status(control["ik_status"])
         _keys(control["arms"], ARMS, "both_control_arms_required")
         _keys(control["finger_position_m"], ARMS, "both_measured_fingers_required")
         _keys(public, {"robot", "images", "calibration"} if capture else {"robot"}, "unexpected_public_fields")
@@ -318,6 +331,16 @@ class NativeWorkerClient:
                 or receipt["native_callback_state"]["reward"] != reward
                 or receipt["native_callback_state"]["end_flag"] != result.end_flag):
             raise WorkerClientError("native_receipt_accounting_invalid")
+        if self.control_backend == OFFICIAL_EE:
+            if receipt.get("control_backend") != OFFICIAL_EE:
+                raise WorkerClientError("native_receipt_backend_invalid")
+            statuses = validate_ik_status(receipt.get("ik_status"))
+            prior = self._verified_ik_status.get(ticket)
+            if prior is not None and prior != statuses:
+                raise WorkerClientError("native_ik_status_changed")
+            self._verified_ik_status[ticket] = statuses
+        elif receipt.get("control_backend", "legacy_joint") != "legacy_joint" or "ik_status" in receipt:
+            raise WorkerClientError("native_receipt_backend_invalid")
         terminal = self._terminal(evaluator["terminal"])
         ended = result.end_flag or ticket == 1400
         if (ended != (terminal is not None)
@@ -352,17 +375,23 @@ class NativeWorkerClient:
             if (self.state != "RUNNING" or snapshot["state"] != "RUNNING"
                     or type(ticket) is not int or ticket != snapshot["in_flight"] or ticket != self._last_ticket+1):
                 raise WorkerClientError("monotonic_reserved_parent_ticket_required")
-            action = validate_joint_action(joint_action)
+            action = validate_control_action(joint_action, self.control_backend)
             self.check_binding()
             self._last_ticket = ticket  # No resend after an uncertain dispatch.
             sent = True
-            response = self._request("action", {"ticket": ticket, "joint_action": action})
+            action_key = "ee_action" if self.control_backend == OFFICIAL_EE else "joint_action"
+            response = self._request("action", {"ticket": ticket, action_key: action})
             verified = self._native_result(response, ticket)
             write_private_record(self.output / f"action_{ticket:04d}.json", {"scope": "evaluator_only", **response["evaluator"]})
             self._grippers = {arm: "open" if action[arm+"_ee_joint_state"][0] == 1 else "close" for arm in ARMS}
             measurement, _ = self._measurement(response, evaluator=True)
+            ik_status = None
+            if self.control_backend == OFFICIAL_EE:
+                ik_status = validate_ik_status(response["control"]["ik_status"])
+                if ik_status != self._verified_ik_status[ticket]:
+                    raise WorkerClientError("native_ik_feedback_receipt_disagreement")
             if verified.end_flag or ticket == 1400: self.state = "TERMINAL"
-            return ActionReceipt(measurement, verified)
+            return ActionReceipt(measurement, verified, ik_status)
         except BaseException as error:
             self._poison()
             # The worker commits its evaluator receipt before robot feedback.

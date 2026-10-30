@@ -51,7 +51,9 @@ from .controller import ArmState, measured_tcp_pose
 from .fragment_executor import RobotMeasurement
 from .ipc import JsonLineChannel
 from .lifecycle import EpisodeLifecycle
-from .native_episode import NativeEpisodeActionAdapter, validate_joint_action
+from .native_episode import NativeEpisodeActionAdapter
+from .official_control import (OFFICIAL_EE, validate_control_action,
+                               validate_control_backend, validate_ik_status)
 from .schema import ARMS, CAMERAS, public_json, validate_calibration, validate_robot, vector
 
 
@@ -118,7 +120,7 @@ class NativeWorkerSession:
                  worker_identity: Mapping, verify_runtime_readiness, measure_robot,
                  capture_rgb, expected_layout_path: str | Path, expected_layout_sha256: str,
                  registration_evidence_id: str, initial_gripper_commands: Mapping[str, str],
-                 precreated_worker_output: bool = False):
+                 precreated_worker_output: bool = False, control_backend: str = "legacy_joint"):
         if not isinstance(channel, JsonLineChannel) or channel.role != "worker":
             raise WorkerSessionError("worker_channel_required")
         identity = dict(worker_identity)
@@ -134,6 +136,9 @@ class NativeWorkerSession:
         self.channel, self.env = channel, env
         self.manifest = deepcopy(dict(manifest))
         verify_manifest(self.manifest)
+        self.control_backend = validate_control_backend(control_backend)
+        if self.manifest["configuration"].get("control_backend", "legacy_joint") != self.control_backend:
+            raise WorkerSessionError("manifest_control_backend_mismatch")
         self._identity = identity
         self._verify_runtime, self._measure, self._capture = verify_runtime_readiness, measure_robot, capture_rgb
         self._layout = Path(expected_layout_path).resolve(strict=True)
@@ -203,6 +208,8 @@ class NativeWorkerSession:
         if os.getpid() != self._identity["pid"]:
             raise WorkerSessionError("worker_process_identity_changed")
         verify_manifest(self.manifest, verify_files=False)
+        if self.manifest["configuration"].get("control_backend", "legacy_joint") != self.control_backend:
+            raise WorkerSessionError("manifest_control_backend_mismatch")
         approval, approval_hash = _read_record(self._attempt / "approval.json")
         consumed, consumed_hash = _read_record(self._attempt / "consumed.json")
         binding = self._claim_binding
@@ -276,8 +283,9 @@ class NativeWorkerSession:
     def _handle(self, method, payload):
         if self._closed:
             raise WorkerSessionError("worker_session_closed")
+        action_key = "ee_action" if self.control_backend == OFFICIAL_EE else "joint_action"
         required = {"ready": set(), "begin": {"approval_sha256", "consumed_sha256", "claim_nonce", "ready_sha256"},
-                    "measure": set(), "capture": set(), "action": {"ticket", "joint_action"}, "close": set()}
+                    "measure": set(), "capture": set(), "action": {"ticket", action_key}, "close": set()}
         if method not in required or not isinstance(payload, dict) or set(payload) != required[method]:
             raise WorkerSessionError("unsupported_worker_request")
         if method == "close":
@@ -311,7 +319,7 @@ class NativeWorkerSession:
             self._adapter = NativeEpisodeActionAdapter(self.env, lifecycle=self.lifecycle,
                 verify_authorization=self._authorize_action, expected_layout_path=self._layout,
                 expected_layout_sha256=self._layout_hash, registration_evidence_id=self._registration_id,
-                episode_evidence_id=consumed["claim_nonce"])
+                episode_evidence_id=consumed["claim_nonce"], control_backend=self.control_backend)
             self.state = "RUNNING"
             return {"state": "RUNNING", "claim_nonce": consumed["claim_nonce"]}
         if self.state not in ("READY", "RUNNING", "TERMINAL"):
@@ -358,7 +366,7 @@ class NativeWorkerSession:
         ticket = payload["ticket"]
         if type(ticket) is not int or ticket != self.lifecycle.submitted_actions + 1:
             raise WorkerSessionError("parent_action_ticket_mismatch")
-        action = validate_joint_action(payload["joint_action"])
+        action = validate_control_action(payload[action_key], self.control_backend)
         if self.lifecycle.reserve_action() != ticket:
             raise WorkerSessionError("worker_action_ticket_mismatch")
         receipt = self._adapter.dispatch(ticket, action)
@@ -371,6 +379,8 @@ class NativeWorkerSession:
             self.state = "TERMINAL"
         terminal = self._persist_terminal()
         response = self._measurement(self._readonly(self._measure))
+        if self.control_backend == OFFICIAL_EE:
+            response["control"]["ik_status"] = validate_ik_status(receipt.ik_status)
         response["evaluator"] = {"native_result": asdict(receipt.native_result),
             "receipt": {"path": str(path), "sha256": file_sha256(path)}, "terminal": terminal}
         return response

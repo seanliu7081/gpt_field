@@ -27,6 +27,7 @@ from robodojo_uc71.approval import canonical_sha256, consume_authorization, file
 from robodojo_uc71.ipc import JsonLineChannel
 from robodojo_uc71.native_worker_client import NativeWorkerClient, write_private_record, _record
 from robodojo_uc71.worker_isolation import popen_identity, share_approval_record
+from robodojo_uc71.host_runtime import CREDENTIAL_STORE
 from provision_new_host_camera import (child_environment, gpu_process_aliases, gpu_snapshot,
     owned_processes, process_record, terminate_owned, validate_single_gpu)
 
@@ -113,6 +114,24 @@ def verify_runtime_executables(runtime):
         if (not path.is_absolute() or path.resolve(strict=True) != path
                 or (not path.is_file() if name == "icd" else not path.is_dir())):
             raise ValueError("existing_canonical_runtime_dependencies_required")
+    if runtime.get("environment_record"):
+        from robodojo_uc71.host_runtime import verify_conda_record
+        verify_conda_record(python, runtime["environment_record"])
+
+
+def verify_runtime_configuration(runtime, frozen):
+    required = {"python", "library_path", "icd", "overlay_target", "compat_target", "worker_script",
+                "maximum_wall_time_s", "ready_timeout_s", "minimum_free_mib"}
+    if (set(runtime) not in (required, required | {"environment_record"})
+            or type(runtime["maximum_wall_time_s"]) is not int or not 600 <= runtime["maximum_wall_time_s"] <= 10800
+            or runtime["ready_timeout_s"] != 600 or runtime["minimum_free_mib"] != 16384):
+        raise ValueError("bounded_runtime_configuration_required")
+    if "environment_record" in runtime:
+        path = Path(runtime["environment_record"])
+        for artifact in (path, path.with_name("requirements.lock"), path.with_name("package_inventory.json")):
+            if frozen.get(str(artifact)) != file_sha256(artifact):
+                raise ValueError("conda_environment_must_be_bound_to_approval")
+    verify_runtime_executables(runtime)
 
 
 def _artifact(path):
@@ -184,6 +203,22 @@ def verify_supporting_runtime_evidence(spec,manifest,record,preclose,preparation
         raise ValueError("worker_approved_preparation_closure_changed")
     # Compare against the actual controller diagnostic bound by the runtime bundle.
     bundle,_ = _artifact(Path(spec["runtime_bundle_path"]))
+    backend = bundle.get("control_backend", "legacy_joint")
+    if (manifest["configuration"].get("control_backend", "legacy_joint") != backend
+            or preparation.get("control_backend", "legacy_joint") != backend):
+        raise ValueError("worker_preparation_control_backend_changed")
+    if backend == "official_ee":
+        path = root/"official_control_modules.json"
+        official_modules,digest = _artifact(path)
+        if digest != preclose.get("official_control_modules_sha256"):
+            raise ValueError("official_module_provenance_unbound")
+        setup_ref = bundle["official_control"]["setup"]
+        setup,setup_digest = _artifact(Path(setup_ref["path"]))
+        if setup_digest != setup_ref["sha256"] or set(official_modules) != {"curobo", "warp"}:
+            raise ValueError("official_module_provenance_invalid")
+        from robodojo_uc71.native_runtime import validate_official_module_provenance
+        validate_official_module_provenance(setup, official_modules)
+        bindings["official_control_modules"] = {"path":str(path),"sha256":digest}
     baseline = bundle["evidence"]["controller_launch"]
     launch,launch_hash = _artifact(Path(baseline["path"]))
     if launch_hash != baseline["sha256"]:
@@ -226,6 +261,9 @@ def preflight(spec_path, *, require_approval=False):
     bundle = VerifiedRuntimeBundle.load(spec["runtime_bundle_path"], spec["native_root"])
     bundle.verify()
     configuration = manifest["configuration"]
+    backend = configuration.get("control_backend", "legacy_joint")
+    if backend != bundle.control_backend:
+        raise ValueError("approved_control_backend_differs_from_runtime_bundle")
     preparation = expected_native_preparation(spec)
     frozen = {row["path"]:row["sha256"] for row in manifest["files"].values()}
     if (configuration.get("task_prompt") != TASK_INSTRUCTION
@@ -237,18 +275,13 @@ def preflight(spec_path, *, require_approval=False):
     expected = execution_configuration(controller_config=bundle.controller_config,
         monitoring=bundle.monitoring_settings, limits=bundle.execution_limits,
         initial_gripper_commands={"left": "open", "right": "open"},
-        controller_capabilities=bundle.controller_capabilities)
+        controller_capabilities=bundle.controller_capabilities, control_backend=backend)
     if configuration.get("execution") != expected:
         raise ValueError("approved_execution_settings_differ_from_characterization")
     if configuration.get("model") != {"name": "gpt-6-astra", "reasoning_effort": "high", "request_deadline_s": 180}:
         raise ValueError("approved_subscription_model_contract_required")
     runtime = configuration["runtime"]
-    if (set(runtime) != {"python", "library_path", "icd", "overlay_target", "compat_target", "worker_script",
-            "maximum_wall_time_s", "ready_timeout_s", "minimum_free_mib"}
-            or type(runtime["maximum_wall_time_s"]) is not int or not 600 <= runtime["maximum_wall_time_s"] <= 10800
-            or runtime["ready_timeout_s"] != 600 or runtime["minimum_free_mib"] != 16384):
-        raise ValueError("bounded_runtime_configuration_required")
-    verify_runtime_executables(runtime)
+    verify_runtime_configuration(runtime, frozen)
     attempt = Path(manifest["attempt_dir"])
     meta = attempt.lstat()
     worker_meta = (attempt / "worker").lstat()
@@ -380,12 +413,18 @@ def run(spec_path):
         raise ValueError("private_root_supervisor_required")
     spec, manifest, bundle = preflight(spec_path, require_approval=True)
     attempt, runtime = Path(manifest["attempt_dir"]), manifest["configuration"]["runtime"]
-    # Exclusive launch claim prevents a pre-BEGIN crash being silently retried.
-    write_private_record(attempt / "launch_claim.json", {"manifest_sha256": manifest["manifest_sha256"],
-        "approval_sha256": verify_approval(manifest), "parent_pid": os.getpid(), "automatic_retry": False})
+    # Validate recoverable infrastructure before creating the irreversible claim.
     before = gpu_snapshot(); device = validate_single_gpu(before, spec["gpu_binding"])
     if device["processes"] or int(device["memory_free"].split()[0]) < runtime["minimum_free_mib"]:
         raise ValueError("approved_gpu_must_be_idle_with_required_headroom")
+    from gpt_field.chatgpt_auth import SubscriptionCredentials
+    credentials = SubscriptionCredentials(CREDENTIAL_STORE)
+    if credentials.status().get("connected") is not True:
+        raise ValueError("chatgpt_subscription_sign_in_required")
+    credentials.access_token()  # Validate/refresh credentials; never log them.
+    # Exclusive launch claim prevents a pre-BEGIN crash being silently retried.
+    write_private_record(attempt / "launch_claim.json", {"manifest_sha256": manifest["manifest_sha256"],
+        "approval_sha256": verify_approval(manifest), "parent_pid": os.getpid(), "automatic_retry": False})
     write_private_record(attempt / "gpu_before.json", {"devices": before})
     environment = child_environment(Path(runtime["python"]), Path(spec["runtime_dir"]),
         spec["gpu_binding"], Path(runtime["icd"]), Path(runtime["library_path"]), "stock-fast")
@@ -422,7 +461,8 @@ def run(spec_path):
             monitor.thread.start()
             channel = JsonLineChannel(left, role="parent", timeout_s=runtime["ready_timeout_s"])
             client = NativeWorkerClient(channel, manifest=manifest, expected_worker=expected_worker,
-                verify_tracked_worker=monitor.tracked, initial_gripper_commands={"left": "open", "right": "open"})
+                verify_tracked_worker=monitor.tracked, initial_gripper_commands={"left": "open", "right": "open"},
+                control_backend=bundle.control_backend)
             ready = client.ready(); channel.timeout_s = 30.
             if not monitor.tracked(expected_worker): raise RuntimeError("worker_exited_before_consumption")
             consumed = consume_authorization(manifest, attempt, ready, expected_worker=expected_worker)
@@ -433,9 +473,7 @@ def run(spec_path):
             from robodojo_uc71.client import NativeExecutiveClient
             from robodojo_uc71.native_episode_runner import NativeEpisodeRunner
             from gpt_field.astra import AstraConfig
-            from gpt_field.chatgpt_auth import SubscriptionCredentials
             configuration = manifest["configuration"]
-            credentials = SubscriptionCredentials('/workspace/gpt_field/.private/chatgpt_plan')
             model = NativeExecutiveClient(AstraConfig(model="gpt-6-astra", timeout_s=180.),
                 task_prompt=configuration["task_prompt"], token_provider=credentials.access_token,
                 approved_plan=configuration["approved_plan"], direction_frame=configuration["direction_frame"],

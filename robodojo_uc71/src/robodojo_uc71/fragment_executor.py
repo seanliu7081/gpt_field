@@ -8,19 +8,24 @@ Integration contract (no simulator/model imports or launch authorization here):
   joint positions per arm, in metres. Finger gap is their declared sum proxy,
   never an object/contact/grasp measurement. Jacobian/TCP calibration belongs to
   the caller and must be independently validated before native execution.
-* send_native_joint_action(ticket, action) performs exactly ONE acknowledged
+* send_native_joint_action(ticket, action), whose legacy callback name is kept
+  for compatibility, performs exactly ONE acknowledged
   native env.take_action, including native interpolation, and returns the
   post-action RobotMeasurement plus the registered evaluator's NativeResult.
-  Actions use pinned RoboDojo keys {left,right}_arm_joint_state (six radians)
-  and {left,right}_ee_joint_state (one normalized scalar: open=1, close=0).
+  Legacy actions use {left,right}_arm_joint_state (six radians); official_ee
+  actions use {left,right}_ee_pose (world link6 xyz+wxyz). Both use
+  {left,right}_ee_joint_state (one normalized scalar: open=1, close=0).
   NativeResult is passed only to lifecycle accounting; no reward or object
   truth enters target generation or the allowlisted model-facing feedback.
 * Required MonitoringSettings have no guessed ARX defaults. Supplying values
   does not calibrate or validate this candidate. ControllerConfig remains the
   existing uncalibrated candidate; live readiness is an external gate.
-* Targets are resolved once from each stage's measured entry. Every dispatch
-  recomputes control from the latest acknowledged measurement. The inactive arm
-  holds its measured joint reference from the latest arm handoff; both grippers
+* Targets are resolved once from each stage's measured entry. Legacy dispatch
+  recomputes differential control from the latest acknowledged measurement;
+  official_ee sends the complete target through native cuRobo/interpolation.
+  The inactive arm holds its measured joint reference in legacy mode and its
+  measured link6 pose in official mode; the latter does not guarantee identical
+  joint angles. Official mode does not use the legacy DLS speed limits. Grippers
   latch. Only explicit model-selected stages run. Wait/checkpoints yield; pending
   stages are discarded, with no automatic resume, retreat, lift, or release.
   Direct motion yields on stable measured arrival or its requested allowance.
@@ -42,6 +47,8 @@ import numpy as np
 from .controller import (ArmState, ControllerConfig, ControllerError,
                          DualArmController, measured_tcp_pose, orientation_error_world)
 from .lifecycle import EpisodeLifecycle, LifecycleError, NativeResult
+from .official_control import (LEGACY_JOINT, OFFICIAL_EE, OfficialEEController,
+                               validate_control_backend, validate_ik_status)
 from .schema import (ARMS, ExecutionLimits, validate_controller_capabilities,
                      validate_decision, validate_feedback, vector)
 
@@ -56,6 +63,7 @@ class RobotMeasurement:
 class ActionReceipt:
     measurement: RobotMeasurement
     native_result: NativeResult
+    ik_status: Mapping[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -120,7 +128,8 @@ class FragmentExecutor:
                  send_native_joint_action: Callable[[int, dict], ActionReceipt],
                  gripper_commands: Mapping[str, str], monitoring: MonitoringSettings,
                  controller_config: ControllerConfig, limits: ExecutionLimits | None = None,
-                 stop_requested: Callable[[], bool] | None = None):
+                 stop_requested: Callable[[], bool] | None = None,
+                 control_backend: str = LEGACY_JOINT):
         if not isinstance(lifecycle, EpisodeLifecycle):
             raise TypeError("Caller-owned EpisodeLifecycle is required")
         if set(gripper_commands) != set(ARMS) or any(v not in _GRIP for v in gripper_commands.values()):
@@ -133,8 +142,11 @@ class FragmentExecutor:
         if not isinstance(self._limits, ExecutionLimits):
             raise TypeError("ExecutionLimits is required")
         self._grippers = dict(gripper_commands)
-        self._controller = DualArmController(
-            gripper_commands={a: _GRIP[g] for a, g in gripper_commands.items()}, config=controller_config)
+        self.control_backend = validate_control_backend(control_backend)
+        latches = {a: _GRIP[g] for a, g in gripper_commands.items()}
+        self._controller = (OfficialEEController(gripper_commands=latches)
+            if self.control_backend == OFFICIAL_EE else
+            DualArmController(gripper_commands=latches, config=controller_config))
         self._active_arm = None
         self._busy = False
 
@@ -255,10 +267,13 @@ class FragmentExecutor:
                 except ControllerError as exc:
                     reason = "joint_limit" if str(exc) in ("no_joint_motion_available", "inactive_hold_outside_live_limits") else "ik_unavailable"
                     return outcome("blocked", reason)
-                action = {}
-                for name in ARMS:
-                    action[f"{name}_arm_joint_state"] = list(command.joint_positions[name])
-                    action[f"{name}_ee_joint_state"] = [command.gripper_commands[name]]
+                if self.control_backend == OFFICIAL_EE:
+                    action = command
+                else:
+                    action = {}
+                    for name in ARMS:
+                        action[f"{name}_arm_joint_state"] = list(command.joint_positions[name])
+                        action[f"{name}_ee_joint_state"] = [command.gripper_commands[name]]
                 ticket = self.lifecycle.reserve_action()
                 submitted += 1
                 if grip != "keep":
@@ -270,6 +285,8 @@ class FragmentExecutor:
                     self.lifecycle.complete_action(ticket, receipt.native_result)
                     confirmed += 1
                     sample = _measurement(receipt.measurement)
+                    ik_status = (validate_ik_status(receipt.ik_status)
+                                 if self.control_backend == OFFICIAL_EE else None)
                 except Exception:
                     raise FragmentExecutionError("native_action_or_measurement_unavailable") from None
                 distance, angle = errors()
@@ -280,6 +297,12 @@ class FragmentExecutor:
                 last["measurements"] = measurements[-32:]
                 if self.lifecycle.state != "RUNNING":
                     return outcome("blocked", "interrupted")
+                # Native IK failure has already consumed this action and may
+                # have applied the gripper or retained prior joint commands.
+                # Report it only after the actual dispatch/measurement; do not
+                # replace native behavior, claim zero movement or retry.
+                if ik_status is not None and "Fail" in ik_status.values():
+                    return outcome("blocked", "ik_unavailable")
                 arrival_count = arrival_count + 1 if arrived(distance, angle) else 0
                 gap = last["finger_gap_m"]
                 gap_history.append(gap)

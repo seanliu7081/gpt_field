@@ -103,11 +103,61 @@ class NativeEnv:
             self.is_episode_end()
 
 
-def setup(tmp_path, verifier=None, configure=None):
+class OfficialNativeEnv(NativeEnv):
+    """Synthetic native EEF dispatch, including native failed-IK behavior."""
+    def __init__(self, layout):
+        super().__init__(layout)
+        planner = NS(robot_cfg={"synthetic_kinematics": True},
+                     scene_model={"synthetic_table": True}, ik_solver=object())
+        self.robot_manager.planner = {"x5": planner}
+        self.robot_manager.ik_solver = {"x5": planner}
+        self.robot_manager.solve_ik = self.solve_ik
+        for robot in self.robot_manager.robot_list:
+            robot.robot_name = "x5"
+        self.ik_status = {"left": "Success", "right": "Success"}
+        self.ik_calls = []
+        self.skip_ik_arm = None
+        self.joint_targets = {arm: [0.] * 6 for arm in self.ik_status}
+        self.gripper_targets = {arm: [1.] for arm in self.ik_status}
+
+    def solve_ik(self, *, target_pose, env_idx, robot):
+        assert env_idx == 0 and self.take_action_cnt[0] == len(self.actions)
+        arm = robot.arm_name.removesuffix("_arm")
+        self.ik_calls.append((arm, deepcopy(target_pose)))
+        return {"status": self.ik_status[arm], "joint_value": [.1] * 6,
+                "native_private_reason": "must never cross the control boundary"}
+
+    def take_action(self, ee_action):
+        self.actions.append(deepcopy(ee_action))
+        self.take_action_cnt[0] += self.counter_increment
+        for robot in self.robot_manager.robot_list:
+            arm = robot.arm_name.removesuffix("_arm")
+            if arm != self.skip_ik_arm:
+                result = self.robot_manager.solve_ik(target_pose=ee_action[f"{arm}_ee_pose"],
+                    env_idx=0, robot=robot)
+                if result["status"] == "Success":
+                    self.joint_targets[arm] = result["joint_value"]
+            # Just like the pinned native dispatcher, Fail leaves the previous
+            # arm command in force while the gripper command still executes.
+            self.gripper_targets[arm] = deepcopy(ee_action[f"{arm}_ee_joint_state"])
+        for _ in range(self.step_count):
+            self.sim_step(render=False)
+        for _ in range(self.callback_count):
+            self.is_episode_end()
+
+
+def ee_action():
+    return {"left_ee_pose": [.1, .2, .3, 1., 0., 0., 0.],
+            "right_ee_pose": [.4, .5, .6, 1., 0., 0., 0.],
+            "left_ee_joint_state": [0.], "right_ee_joint_state": [1.]}
+
+
+def setup(tmp_path, verifier=None, configure=None, *, control_backend="legacy_joint"):
     layout = tmp_path / "arx_x5" / "0" / "make_toast_0.json"
     layout.parent.mkdir(parents=True)
     layout.write_text('{"synthetic_only": true}\n')
-    env, lifecycle = NativeEnv(layout), running()
+    env_type = OfficialNativeEnv if control_backend == "official_ee" else NativeEnv
+    env, lifecycle = env_type(layout), running()
     if configure is not None:
         configure(env)
     verifications = []
@@ -117,8 +167,80 @@ def setup(tmp_path, verifier=None, configure=None):
     adapter = NativeEpisodeActionAdapter(env, lifecycle=lifecycle,
         verify_authorization=authorized if verifier is None else verifier,
         expected_layout_path=layout, expected_layout_sha256=hashlib.sha256(layout.read_bytes()).hexdigest(),
-        registration_evidence_id="synthetic-registration", episode_evidence_id="synthetic-episode")
+        registration_evidence_id="synthetic-registration", episode_evidence_id="synthetic-episode",
+        control_backend=control_backend)
     return env, lifecycle, adapter, verifications
+
+
+@pytest.mark.parametrize("failed_arm", [None, "left", "right"])
+def test_official_ee_delegates_once_and_preserves_native_failed_ik_and_grippers(tmp_path, failed_arm):
+    env, lifecycle, adapter, approvals = setup(tmp_path, control_backend="official_ee")
+    if failed_arm:
+        env.ik_status[failed_arm] = "Fail"
+        env.joint_targets[failed_arm] = [.3] * 6
+    original_ik = env.robot_manager.solve_ik
+    ticket = lifecycle.reserve_action()
+    receipt = adapter.dispatch(ticket, ee_action())
+    lifecycle.complete_action(ticket, receipt.native_result)
+    assert env.actions == [ee_action()] and len(approvals) == 1
+    assert env.ik_calls == [(arm, ee_action()[f"{arm}_ee_pose"]) for arm in ("left", "right")]
+    assert env.robot_manager.solve_ik == original_ik
+    assert env.take_action_cnt == [1] and env.live_steps == 10
+    assert env.reward_manager.calls == env.terminal_calls == lifecycle.confirmed_actions == 1
+    assert env.gripper_targets == {"left": [0.], "right": [1.]}
+    if failed_arm:
+        assert env.joint_targets[failed_arm] == [.3] * 6
+    assert receipt.ik_status == env.ik_status
+    assert receipt.evaluator_receipt["ik_status"] == env.ik_status
+    assert receipt.evaluator_receipt["control_backend"] == "official_ee"
+    assert "native_private_reason" not in json.dumps(receipt.evaluator_receipt)
+
+
+@pytest.mark.parametrize("change", ["unknown_key", "joint_key", "quaternion", "gripper"])
+def test_official_ee_invalid_targets_never_dispatch(tmp_path, change):
+    env, lifecycle, adapter, approvals = setup(tmp_path, control_backend="official_ee")
+    invalid = ee_action()
+    if change == "unknown_key": invalid["scene_object"] = [1.]
+    elif change == "joint_key": invalid["left_arm_joint_state"] = [0.] * 6
+    elif change == "quaternion": invalid["left_ee_pose"][3:] = [0.] * 4
+    else: invalid["left_ee_joint_state"] = [.5]
+    with pytest.raises(NativeEpisodeError):
+        adapter.dispatch(lifecycle.reserve_action(), invalid)
+    assert not env.actions and not env.ik_calls and not approvals
+
+
+def test_official_ee_missing_native_ik_call_cannot_create_confirmed_action(tmp_path):
+    env, lifecycle, adapter, _ = setup(tmp_path, control_backend="official_ee")
+    env.skip_ik_arm = "right"
+    ticket = lifecycle.reserve_action()
+    with pytest.raises(NativeEpisodeError, match="native_ik_calls_incomplete"):
+        adapter.dispatch(ticket, ee_action())
+    assert lifecycle.confirmed_actions == 0 and env.live_steps == 0
+    assert env.take_action_cnt == [1]
+    with pytest.raises(NativeEpisodeError, match="adapter_failed_no_retry"):
+        adapter.dispatch(ticket, ee_action())
+    assert len(env.actions) == 1
+
+
+def test_official_ee_changed_solver_is_rejected_before_dispatch(tmp_path):
+    env, lifecycle, adapter, approvals = setup(tmp_path, control_backend="official_ee")
+    env.robot_manager.ik_solver["x5"] = object()
+    with pytest.raises(NativeEpisodeError, match="official_native_ik_binding_changed"):
+        adapter.dispatch(lifecycle.reserve_action(), ee_action())
+    assert not env.actions and not approvals
+
+
+@pytest.mark.parametrize("change", ["scene", "solver"])
+def test_official_ee_native_planner_mutation_is_rejected_before_dispatch(tmp_path, change):
+    env, lifecycle, adapter, approvals = setup(tmp_path, control_backend="official_ee")
+    planner = env.robot_manager.planner["x5"]
+    if change == "scene":
+        planner.scene_model["synthetic_table"] = False
+    else:
+        planner.ik_solver = object()
+    with pytest.raises(NativeEpisodeError, match="official_native_planner_configuration_changed"):
+        adapter.dispatch(lifecycle.reserve_action(), ee_action())
+    assert not env.actions and not approvals
 
 
 def test_receipt_wall_clock_uses_actual_begin_dispatch_and_callback_boundaries(tmp_path,monkeypatch):

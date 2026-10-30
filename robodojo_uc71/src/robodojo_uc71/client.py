@@ -38,7 +38,9 @@ def _replace(text, old, new):
     return text.replace(old, new)
 
 
-def executive_instructions(limits=ExecutionLimits()):
+def executive_instructions(limits=ExecutionLimits(), *, control_backend="legacy_joint"):
+    from .official_control import validate_control_backend
+    validate_control_backend(control_backend)
     text = AGENT_INSTRUCTIONS
     text = _replace(text, "one Franka Panda with a parallel-jaw\nPanda gripper.",
                     "two native ARX X5 arms, each with a parallel-jaw gripper.")
@@ -73,12 +75,21 @@ calibration.tools contains fixed tool/gripper calibration only. tool_pose_wxyz a
 Native Panda macros and their geometric observers are unavailable in this explicitly reduced pilot. Use generic fragments/direct motions; no task-specific grasp, insertion, lever or homing routine is supplied.
 The first execution observation contains the measured starting robot poses and remains in this attempt's text history. """ + PUBLIC_HOME_RULE + """
 The step field labels model observations; it is not an episode action counter. No remaining native budget or evaluator progress is supplied. Tool geometry does not prove clearance or contact. Judge both arms, carried objects and nearby objects in all three views. Keep task reasoning concise and output JSON only."""
+    if control_backend == "official_ee":
+        text = text.replace("The robot-only controller uses bounded measured-error joint targets; its declared capabilities give the reviewed physical limits.",
+            "The official RoboDojo controller solves cuRobo IK for the final target and interpolates in joint space. Transit/contact profiles bound segment targets and arrival checks; they do not impose different Cartesian execution speeds.")
+        text = text.replace("pose error through the declared bounded robot-only controller.",
+            "the requested final pose through official cuRobo IK and native joint interpolation.")
+        text = text.replace("The other arm holds its measured handoff reference and keeps its requested gripper command.",
+            "The other arm receives its frozen measured handoff Cartesian pose and keeps its requested gripper command; IK can change its joint configuration.")
+        text += "\nOfficial control: continue specifying the calibrated tool pose; the adapter converts it to native world link6. Both arms undergo IK on each action. IK failure can retain a previous joint target while the requested gripper action still executes; feedback reports ik_unavailable after that native action. No legacy differential-IK speed or joint-increment limits are claimed. Official IK uses a fixed table model and self-collision checks, which do not describe all scene obstacles.\n"
     return text.strip()
 
 
-def prompt_diff(limits=ExecutionLimits()):
+def prompt_diff(limits=ExecutionLimits(), *, control_backend="legacy_joint"):
     return "".join(difflib.unified_diff(AGENT_INSTRUCTIONS.splitlines(True),
-        executive_instructions(limits).splitlines(True), fromfile="frozen_uc71", tofile="native_dual_arx"))
+        executive_instructions(limits, control_backend=control_backend).splitlines(True),
+        fromfile="frozen_uc71", tofile="native_dual_arx_"+control_backend))
 
 
 def _main_thread():
@@ -175,7 +186,9 @@ class NativeExecutiveClient(AgentFirstV2Client):
         self._tool_binding = None
         self._last_step = None
         self._last_decision = None
-        self._native_instructions = executive_instructions(self.limits)
+        self._native_instructions = executive_instructions(self.limits, control_backend=(
+            "official_ee" if self.controller_capabilities.get("version") == "robodojo-uc71-official-ee-controller-1"
+            else "legacy_joint"))
         if "lock" in kwargs:
             raise ValueError("The native client constructs its own validated plan lock")
         lock = NativePlanLock(approved_plan, task_prompt=kwargs["task_prompt"], direction_frame=direction_frame)

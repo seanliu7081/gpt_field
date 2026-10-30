@@ -1,5 +1,26 @@
 # Implementation decisions — 2026-10-29
 
+2026-10-30 control decision: implement the user's requested official RoboDojo
+EEF backend (`official_ee`) for new packets. UC71 retains generic fragments and
+robot feedback; calibrated tool targets are converted to world link6 poses,
+then the pinned native cuRobo IK, joint interpolation and gripper driver execute
+them. Both arms use IK; the inactive arm holds a Cartesian pose rather than
+guaranteed identical joint angles. The native fixed table/self-collision model
+is permitted internally and disclosed; it is not policy observation data.
+An IK failure preserves native previous-joint-command and gripper behavior and
+is reported after action accounting. Old DLS increment/speed claims and old
+controller qualification do not transfer. See [the implementation contract](official_control.md).
+
+2026-10-30 host adaptation: use GPU 0 (`GPU-5e601970-3bfa-34f4-d99c-98b2ff594e91`)
+on the two-GPU host, checking UUID, PCI address, CUDA ordinal and the sole active
+Kit renderer. The consolidated Conda installation has a separate versioned,
+hash-bound inventory record; historical overlay-count checks are preserved for
+their original schema. Subscription credentials use this repository's private
+store owned by the root parent, with real worker isolation verified as UID 65534.
+Supervisor is installed with automatic start/restart disabled. These changes
+qualify infrastructure only; native scene/controller qualification and a fresh
+task review remain. See [current setup](conda_setup.md).
+
 This is the decision record at creation. Later scoped licence acceptance and the failed A0 renderer check are recorded in [current implementation status](../IMPLEMENTATION_STATUS.md).
 
 Implementation is authorized for native `make_toast` Standard, seed-directory 0 / layout ID 0. The full test remains unstarted until its concrete preview and plan receive separate approval. The unchanged reviewed documents are in [planning_archive_20261029](../planning_archive_20261029/); [the JSON record](implementation_decisions.json) is the structured decision record.

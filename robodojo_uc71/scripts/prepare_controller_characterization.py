@@ -19,9 +19,10 @@ import uuid
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE / "src"))
 from robodojo_uc71.worker_isolation import enforce_child_boundary
+from robodojo_uc71.host_runtime import CREDENTIAL_STORE
 BOUNDARY_PROOF = None
 if __name__ == "__main__" and "--launch" in sys.argv:
-    BOUNDARY_PROOF = enforce_child_boundary(credential_store="/workspace/gpt_field/.private/chatgpt_plan",
+    BOUNDARY_PROOF = enforce_child_boundary(credential_store=CREDENTIAL_STORE,
         parent_pid=int(os.environ["UC71_CONTROLLER_PARENT_PID"]))
 import numpy as np
 from robodojo_uc71.controller import measured_tcp_pose, orientation_error_world

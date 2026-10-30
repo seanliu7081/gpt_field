@@ -19,7 +19,8 @@ import subprocess
 import time
 
 from new_host_camera import normalize_pci, renderer_table_identity
-from prepare_native_preview import EXPECTED_CAMERAS, check_authorization, verify_manifests
+from prepare_native_preview import (EXPECTED_CAMERAS, check_authorization, verify_manifests,
+    preview_control_arguments, preview_source_files, verify_preview_control_setup)
 from provision_native_common import digest, pins
 from provision_native_dependencies import METADATA_CODE, PINS as DEPENDENCY_PINS, package_map
 from provision_native_compatibility import verify_compatibility_record
@@ -134,6 +135,11 @@ def verify_pause(child: Path, result: dict, seconds: int) -> dict:
 
 def verify_dependencies(python: Path, install_path: Path, dependency_path: Path) -> dict:
     installed, dependencies = read_json(install_path), read_json(dependency_path)
+    if installed.get("schema") == "robodojo-conda-runtime-1":
+        from robodojo_uc71.host_runtime import verify_conda_record
+        if install_path.resolve() != dependency_path.resolve():
+            raise ValueError("consolidated_conda_requires_one_runtime_record")
+        return verify_conda_record(python, install_path)
     base_lock = install_path.with_name("requirements.lock")
     original = read_json(install_path.with_name("package_inventory.json"))
     target = BASE / "runtime/native_overlay"
@@ -180,13 +186,23 @@ def verify_dependencies(python: Path, install_path: Path, dependency_path: Path)
 
 def verify_preview_evidence(child: Path, binding: dict, identity: dict, preparation_expected: dict,
                             source_hashes: dict, parent_log: Path, python: Path,
-                            authorization_expected: dict, pause_seconds: int = 0) -> dict:
+                            authorization_expected: dict, pause_seconds: int = 0, *,
+                            control_backend: str = "legacy_joint", official_setup_expected: dict | None = None) -> dict:
     """Validate durable child evidence; exit zero alone is never sufficient."""
     result = read_json(child / "preview_result.json")
     ready = read_json(child / "preview_preclose_ready.json")
     preparation = read_json(child / "preparation.json")
     cuda = read_json(child / "cuda_identity.json")
     renderer = read_json(child / "renderer_identity.json")
+    if (control_backend not in ("legacy_joint", "official_ee")
+            or (control_backend == "official_ee") != (official_setup_expected is not None)):
+        raise ValueError("Preview control backend/setup binding is invalid")
+    for evidence in (preparation, result, ready):
+        if (evidence.get("control_backend", "legacy_joint") != control_backend
+                or evidence.get("official_setup") != official_setup_expected
+                or evidence.get("native_motion_qualified", False) is not False):
+            raise ValueError("Preview control backend/setup or reset-only qualification scope changed")
+    planner_count = 1 if control_backend == "official_ee" else 0
     log_text = parent_log.read_text(errors="replace")
     startup_errors = [line for line in log_text.splitlines() if re.search(
         r"ModuleNotFoundError:|ImportError:|Failed to import python module|Failed to startup python extension", line)]
@@ -198,7 +214,7 @@ def verify_preview_evidence(child: Path, binding: dict, identity: dict, preparat
         "binding": binding, "shutdown_mode": "stock-fast", "reset_calls": 1,
         "native_client_reset_calls": 1, "model_calls": 0, "benchmark_actions": 0,
         "native_take_action_count": [0], "physics_device": "cpu", "use_fabric": False,
-        "native_planner_instances": 0, "native_ik_solver_instances": 0,
+        "native_planner_instances": planner_count, "native_ik_solver_instances": planner_count,
         "reward_predicates_registered": True, "task_success_assessed": False, "full_test_authorized": False}
     expected_ready = {"schema": "robodojo-native-preview-preclose-1", "ready_for_shutdown": True,
         "no_pending_exception": True, "native_env_close_returned": True, "physx_monitor_healthy": True,
@@ -239,11 +255,7 @@ def verify_preview_evidence(child: Path, binding: dict, identity: dict, preparat
             or result.get("layout_path") != preparation_expected["layout_path"]
             or result.get("layout_sha256") != preparation_expected["layout_sha256"]):
         raise ValueError("Native result/preparation/source/layout hashes differ")
-    expected_helpers = {str(SCRIPTS / name) for name in (
-        "prepare_native_preview.py", "new_host_camera.py", "provision_native_common.py")}
-    expected_helpers.add(str(BASE / "src/robodojo_uc71/native_config.py"))
-    expected_helpers.add(str(BASE / "src/robodojo_uc71/native_robot_inventory.py"))
-    expected_helpers.add(str(BASE / "src/robodojo_uc71/native_measurements.py"))
+    expected_helpers = {str(path) for path in preview_source_files(control_backend)}
     if set(preparation.get("source_file_sha256", {})) != expected_helpers:
         raise ValueError("Child helper provenance is incomplete")
     for name, expected_hash in preparation["source_file_sha256"].items():
@@ -253,6 +265,18 @@ def verify_preview_evidence(child: Path, binding: dict, identity: dict, preparat
     if (not loaded_modules or result.get("loaded_module_provenance_sha256")
             != digest(child / "loaded_module_provenance.json")):
         raise ValueError("Loaded-module provenance is missing or differs from the result hash")
+    if control_backend == "official_ee":
+        overlay = Path(official_setup_expected["overlay_target"]).resolve()
+        for name in ("curobo", "warp"):
+            filename = loaded_modules.get(name, {}).get("file")
+            if (not isinstance(filename, str) or not Path(filename).is_absolute()
+                    or not Path(filename).is_file() or Path(filename).is_symlink()
+                    or not Path(filename).resolve().is_relative_to(overlay)):
+                raise ValueError("Official preview imported an unbound native control dependency")
+        configuration = read_json(child / "native_configuration.json")
+        robots = configuration.get("robot", {}).get("robots", [])
+        if len(robots) != 2 or any(row.get("robot_name") != "x5" or row.get("need_planner") is not True for row in robots):
+            raise ValueError("Official preview did not enable both native X5 planners")
     robot_inventory = verify_robot_inventory(child, result.get("robot_inventory", {}))
     camera_inventory = verify_camera_inventory(child, result.get("camera_inventory", {}))
     pause = verify_pause(child, result, pause_seconds)
@@ -263,10 +287,11 @@ def verify_preview_evidence(child: Path, binding: dict, identity: dict, preparat
         raise ValueError("Image capture advanced native physics")
     if any((child / name).exists() for name in ("preview_failure.json", "preview_close_failure.json")):
         raise ValueError("Child recorded an execution or close failure")
-    cuda_expected = {"gpu_uuid": binding["gpu_uuid"], "cuda_ordinal": 0, "device_count": 1,
+    cuda_expected = {"gpu_uuid": binding["gpu_uuid"], "cuda_ordinal": 0,
                      "primary_context_created": False, "child_pid": identity["pid"],
                      "child_start_ticks": identity["start_ticks"]}
     if (not exact_fields(cuda, cuda_expected)
+            or type(cuda.get("device_count")) is not int or cuda["device_count"] < 1
             or normalize_pci(cuda.get("pci_bus_id", "")) != normalize_pci(binding["pci_bus_id"])):
         raise ValueError("CUDA metadata identity differs from the owned child/GPU")
     parsed_renderer = renderer_table_identity(log_text, binding)
@@ -316,6 +341,8 @@ print(json.dumps(rows))
             or row["shape"] != [480, 640, 3] or row["dtype"] != "uint8" or not row["std"] > 0 for row in decoded):
         raise ValueError("Independent PNG decoding failed the native RGB contract")
     return {"preclose_ready_verified": True, "native_render_verified": True,
+            "control_backend": control_backend, "official_setup": official_setup_expected,
+            "native_motion_qualified": False,
             "extension_startup_clean": True,
             "cuda_identity_verified": True, "renderer_identity_verified": True,
             "preview_result_sha256": result_hash, "preparation_sha256": preparation_hash,
@@ -334,6 +361,9 @@ def main() -> int:
     parser.add_argument("--gpu-uuid")
     parser.add_argument("--pci-bus-id")
     parser.add_argument("--pause-seconds", type=int, choices=(0, 300), default=0)
+    parser.add_argument("--control-backend", choices=("legacy_joint", "official_ee"), default="legacy_joint")
+    parser.add_argument("--official-setup", type=Path,
+                        help="Verified cuRobo setup record; required only for official_ee")
     parser.add_argument("--compatibility-record", type=Path,
                         help="Reviewed isolated hidapi/setuptools compatibility installation")
     parser.add_argument("--asset-diagnostic-assessment", type=Path,
@@ -343,6 +373,7 @@ def main() -> int:
     parser.add_argument("--vk-icd", type=Path, default=Path("/etc/vulkan/icd.d/nvidia_icd.json"))
     parser.add_argument("--eula-record", type=Path, default=BASE / "validation/provisioning/vendor_authorization.json")
     args = parser.parse_args()
+    preview_control_arguments(parser, args)
     python, output = args.python.absolute(), args.output.resolve()
     if (not python.is_file() or not os.access(python, os.X_OK) or not 30 <= args.timeout_s <= 1200
             or args.minimum_free_mib < 16384 or not args.vk_icd.is_file()):
@@ -372,6 +403,8 @@ def main() -> int:
     source_path, assets_path = args.source_manifest.resolve(strict=True), args.asset_manifest.resolve(strict=True)
     asset_assessment = args.asset_diagnostic_assessment.resolve(strict=True) if args.asset_diagnostic_assessment else None
     native = Path(read_json(source_path)["root"]).resolve(strict=True)
+    official_setup = verify_preview_control_setup(args.control_backend, args.official_setup,
+                                                  native=native, python=python)
     preparation = verify_manifests(native, source_path, assets_path, pins(), asset_assessment)
     if preparation["camera_gate"]["gpu_uuid"] != binding["gpu_uuid"]:
         parser.error("Native preparation gate is bound to another GPU")
@@ -385,7 +418,7 @@ def main() -> int:
     kernel = Path("/proc/driver/nvidia/version").read_text()
     if not re.search(r"\b" + re.escape(gpu["driver_version"]) + r"\b", kernel):
         parser.error("Injected kernel and NVML driver versions differ")
-    output.mkdir(parents=True, exist_ok=False)
+    output.mkdir(parents=True, exist_ok=False, mode=0o700)
     for name in ("home", "cache", "config", "data", "scripts_snapshot"):
         (output / name).mkdir()
     child_output = output / "preview"  # Child creates it exclusively.
@@ -395,6 +428,8 @@ def main() -> int:
     helpers.append(BASE / "src/robodojo_uc71/native_config.py")
     helpers.append(BASE / "src/robodojo_uc71/native_robot_inventory.py")
     helpers.append(BASE / "src/robodojo_uc71/native_measurements.py")
+    helpers.append(BASE / "src/robodojo_uc71/host_runtime.py")
+    helpers = sorted(set(helpers + preview_source_files(args.control_backend)))
     source_hashes = {str(path): digest(path) for path in helpers}
     for path in helpers:
         shutil.copyfile(path, output / "scripts_snapshot" / path.name)
@@ -406,7 +441,11 @@ def main() -> int:
         shutil.copyfile(asset_assessment, output / "asset_diagnostic_assessment.json")
     if compatibility_path is not None:
         shutil.copyfile(compatibility_path, output / "compatibility_install_status.json")
-    for name, value in (("gpu_before.json", before), ("preflight_preparation.json", preparation),
+    if official_setup is not None:
+        shutil.copyfile(official_setup["path"], output / "official_setup.json")
+    for name, value in (("gpu_before.json", before), ("preflight_preparation.json", {
+                        **preparation, "control_backend": args.control_backend,
+                        "official_setup": official_setup, "native_motion_qualified": False}),
                         ("dependency_binding.json", dependency_info)):
         write_json(output / name, value)
     (output / "kernel_driver.txt").write_text(kernel)
@@ -423,12 +462,17 @@ def main() -> int:
             "--pci-bus-id", binding["pci_bus_id"], "--kit-index", "0", "--cuda-ordinal", "0",
             "--shutdown-mode", "stock-fast", "--parent-log", str(parent_log), "--launch"]
     argv.extend(("--pause-seconds", str(args.pause_seconds)))
+    argv.extend(("--control-backend", args.control_backend))
+    if official_setup is not None:
+        argv.extend(("--official-setup", official_setup["path"]))
     if asset_assessment is not None:
         argv.extend(("--asset-diagnostic-assessment", str(asset_assessment)))
     record = {"schema": "robodojo-native-preview-launch-1", "started_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "argv": argv, "environment": environment, "binding": binding, "source_file_sha256": source_hashes,
         "authorization_sha256": digest(auth_path), "dependency_binding": dependency_info,
         "compatibility_binding": compatibility_info,
+        "control_backend": args.control_backend, "official_setup": official_setup,
+        "native_motion_qualified": False,
         "pause_seconds": args.pause_seconds,
         "preparation": preparation, "wall_time_limit_s": args.timeout_s, "minimum_free_mib": args.minimum_free_mib,
         "local_library_sha256": {path.name: digest(path) for path in library_path.iterdir() if path.is_file()},
@@ -537,7 +581,8 @@ def main() -> int:
         if initial is None:
             raise ValueError("Owned child identity is missing")
         record.update(verify_preview_evidence(child_output, binding, initial, preparation, source_hashes,
-                                             parent_log, python, authorization, pause_seconds=args.pause_seconds))
+            parent_log, python, authorization, pause_seconds=args.pause_seconds,
+            control_backend=args.control_backend, official_setup_expected=official_setup))
         if digest(auth_path) != record["authorization_sha256"]:
             raise ValueError("Preview authorization changed during this attempt")
         if any(digest(Path(name)) != value for name, value in source_hashes.items()):
@@ -548,6 +593,9 @@ def main() -> int:
             raise ValueError("Package metadata or dependency records changed during this attempt")
         if compatibility_path is not None and verify_compatibility_record(python, compatibility_path, dependency_info) != compatibility_info:
             raise ValueError("Compatibility metadata or installation record changed during this attempt")
+        if verify_preview_control_setup(args.control_backend, args.official_setup,
+                native=native, python=python) != official_setup:
+            raise ValueError("Official control dependency closure changed during this attempt")
         record["bindings_unchanged_after_preview"] = True
     except Exception as error:
         record["evidence_validation_error"] = f"{type(error).__name__}: {error}"

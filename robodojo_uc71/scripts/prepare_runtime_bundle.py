@@ -199,7 +199,12 @@ def write(path, value):
     Path(path).chmod(0o444)
 
 
-def prepare(paths, *, native_root, python, output=None, assemble=False):
+def prepare(paths, *, native_root, python, output=None, assemble=False,
+            control_backend="legacy_joint", official_setup=None, official_qualification=None):
+    from robodojo_uc71.official_control import validate_control_backend
+    validate_control_backend(control_backend)
+    if control_backend == "official_ee" and (official_setup is None or official_qualification is None):
+        raise AssemblyError("official_setup_and_fresh_native_qualification_required")
     if os.getuid() != 0:
         raise AssemblyError("root_required_to_test_separate_reader_uid")
     if assemble and output is None:
@@ -209,6 +214,14 @@ def prepare(paths, *, native_root, python, output=None, assemble=False):
         raise AssemblyError("fresh_canonical_output_directory_required")
     # No candidate or pass record exists before completed_controller and reviews.
     document = build_document(paths)
+    if control_backend == "official_ee":
+        document["control_backend"] = control_backend
+        document["official_control"] = {"setup": entry(official_setup), "qualification": entry(official_qualification)}
+        names = ("official_control.py", "official_control_setup.py", "official_control_readiness.py",
+                 "native_config.py", "native_episode.py", "native_worker_protocol.py", "native_worker_client.py",
+                 "native_episode_runner.py", "client.py")
+        document["program_files"].extend(entry(BASE/"src/robodojo_uc71"/name) for name in names)
+        document["limitations"].append("Legacy diagnostics support robot geometry only; official EEF motion requires its separately bound current-host qualification. Legacy DLS speeds and joint-increment limits do not apply.")
     parent = output.parent if output is not None else Path(tempfile.gettempdir())
     with tempfile.TemporaryDirectory(prefix=".runtime-bundle-validation-", dir=parent) as temporary:
         staging = Path(temporary); staging.chmod(0o755)
@@ -251,9 +264,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verify-existing-bundle", type=Path)
     parser.add_argument("--native-root", type=Path, default=BASE / "runtime/native/RoboDojo")
-    parser.add_argument("--python", type=Path, default=BASE / "runtime/new_host_env/bin/python")
+    parser.add_argument("--python", type=Path, default=Path(sys.executable))
     parser.add_argument("--output", type=Path)
     parser.add_argument("--assemble", action="store_true")
+    parser.add_argument("--control-backend", choices=("official_ee", "legacy_joint"), default="official_ee")
+    parser.add_argument("--official-setup", type=Path)
+    parser.add_argument("--official-qualification", type=Path)
     for name, relative in DEFAULTS.items():
         parser.add_argument("--" + name.replace("_", "-"), type=Path, default=DEFAULT_ROOT / relative)
     for name in ("controller_launch", "controller_review", "controller_independent_review", "native_isolation"):
@@ -270,7 +286,8 @@ def main():
     paths.update({key: getattr(args, key) for key in ("controller_launch", "controller_review", "controller_independent_review")})
     paths["native_isolation"] = args.native_isolation or args.controller_launch.parent / "worker/controller/worker_isolation.json"
     print(json.dumps(prepare(paths, native_root=args.native_root, python=args.python,
-        output=args.output, assemble=args.assemble), indent=2))
+        output=args.output, assemble=args.assemble, control_backend=args.control_backend,
+        official_setup=args.official_setup, official_qualification=args.official_qualification), indent=2))
     return 0
 
 

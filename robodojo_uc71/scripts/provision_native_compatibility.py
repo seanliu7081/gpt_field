@@ -95,6 +95,13 @@ def locked_versions(text: str) -> dict:
 def verify_compatibility_record(python: Path, path: Path, dependency_info: dict) -> dict:
     """Read-only parent gate; the single setuptools override is explicit."""
     record = read_json(path)
+    if record.get("schema") == "robodojo-conda-runtime-1":
+        from robodojo_uc71.host_runtime import verify_conda_record
+        verified = verify_conda_record(python, path)
+        if (dependency_info.get("layout") != "consolidated_conda"
+                or dependency_info.get("record_sha256") != verified["record_sha256"]):
+            raise ValueError("conda_compatibility_record_not_bound_to_dependencies")
+        return verified
     target = BASE / "runtime/native_compat"
     if (record.get("schema") != "robodojo-native-compatibility-1"
             or record.get("ready_for_native_preview_compatibility") is not True

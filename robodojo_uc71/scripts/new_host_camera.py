@@ -69,8 +69,8 @@ def query_cuda_identity(binding: dict) -> dict:
     checked("cuInit", 0)
     count = ctypes.c_int()
     checked("cuDeviceGetCount", ctypes.byref(count))
-    if count.value != 1:
-        raise RuntimeError("The metadata check requires exactly one visible CUDA device")
+    if not 0 <= binding["cuda_ordinal"] < count.value:
+        raise RuntimeError("The selected CUDA ordinal is unavailable")
     device = ctypes.c_int()
     checked("cuDeviceGet", ctypes.byref(device), binding["cuda_ordinal"])
     raw_uuid = (ctypes.c_ubyte * 16)()

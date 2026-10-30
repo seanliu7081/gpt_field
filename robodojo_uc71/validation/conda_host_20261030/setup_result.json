@@ -1,0 +1,88 @@
+{
+  "schema": "robodojo-current-host-setup-result-1",
+  "recorded_at_utc": "2026-10-30T05:59:14.088629+00:00",
+  "environment": "robodojo_uc71",
+  "python": "/home/haotian/miniforge3/envs/robodojo_uc71/bin/python",
+  "runtime_record": "/home/haotian/code/gpt_field/robodojo_uc71/validation/conda_host_20261030/runtime_001/install_status.json",
+  "runtime_layout": "consolidated_conda",
+  "python_distributions": 161,
+  "supervisor_version": "4.3.0",
+  "subscription": {
+    "connected": true,
+    "plan_use_granted": true
+  },
+  "credential_owner_uid": 0,
+  "worker_uid": 65534,
+  "worker_isolation_verified": true,
+  "worker_home_traversal_acl": "user:65534:--x",
+  "selected_gpu": {
+    "gpu_uuid": "GPU-5e601970-3bfa-34f4-d99c-98b2ff594e91",
+    "pci_bus_id": "00000000:01:00.0",
+    "kit_index": 0,
+    "cuda_ordinal": 0
+  },
+  "camera_diagnostic_passed": true,
+  "camera_visual_review": "640x480 red and green cubes visible on a gray platform",
+  "shutdown_mode": "stock-fast",
+  "full_plugin_cleanup_proven": false,
+  "gpu_processes_released": true,
+  "gpu_memory_released": true,
+  "tests": {
+    "offline_tests_root.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "593",
+      "time": "157.730",
+      "timestamp": "2026-10-30T05:53:36.513483+00:00",
+      "hostname": "helper41"
+    },
+    "offline_tests_final_targeted.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "103",
+      "time": "0.794",
+      "timestamp": "2026-10-30T05:56:24.861527+00:00",
+      "hostname": "helper41"
+    }
+  },
+  "distinct_passing_tests_across_runs": 594,
+  "core_files_verified": 851,
+  "model_calls": 0,
+  "benchmark_actions": 0,
+  "full_test_started": false,
+  "remaining_before_full_task": [
+    "Fresh native reset/cameras/paused-physics qualification on this host",
+    "Fresh isolated controller/gripper qualification and measured runtime bundle",
+    "Current-host planning preview and exact approval packet; archived approval was consumed"
+  ],
+  "artifacts": {
+    "worker_setup_result.json": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/root_setup_001/result.json",
+      "sha256": "347c5784df8b1e0b78009a7670b916498af57977663e4ce53596a468bb97a786"
+    },
+    "offline_tests_root.xml": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/root_setup_001/pytest.xml",
+      "sha256": "42e9aa3bb121d474919236ace2ce570a2005e1b170fc3ac4b0c44befe7b456db"
+    },
+    "offline_tests_final_targeted.xml": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/final_targeted.xml",
+      "sha256": "af3b081cb9ff3a5234e582160a138c86224c95ab2181a7ddd209cd84f240a0a6"
+    },
+    "camera_launch_result.json": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/camera_001/launch_result.json",
+      "sha256": "a32b01939dd2061afb0364a56e4f60863f42467232ba618acbc7e016ab232def"
+    },
+    "cuda_identity.json": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/camera_001/cuda_identity.json",
+      "sha256": "de8684bd29b9a200ed975a932f847ff62cf1e584dfe79b0dac241ac689ef26ec"
+    },
+    "renderer_identity.json": {
+      "source": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/host_fix_20261030/camera_001/active_renderer_identity.json",
+      "sha256": "66dc323c11daefe06a4a0fc966aed8479f92f5e911e830ec890e9004c98838cc"
+    }
+  }
+}

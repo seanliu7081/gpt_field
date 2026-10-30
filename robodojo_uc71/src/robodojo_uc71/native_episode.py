@@ -1,4 +1,4 @@
-"""Candidate single-episode joint-action adapter; no simulator/model launch API.
+"""Single-episode native action adapter; no simulator/model launch API.
 
 Construct only around an already reset Standard make_toast/arx_x5 layout-0 env,
 after native run_reward() registered its predicates. Construction does not reset,
@@ -10,7 +10,9 @@ The caller owns EpisodeLifecycle: reserve_action() first, pass that ticket to
 dispatch(), persist the returned evaluator_receipt, then complete_action() with
 native_result. On failure the adapter is permanently poisoned; the caller must
 stop/persist infrastructure_error, with its reserved action left unconfirmed.
-There is no retry, ticket cancellation, horizon extension, reset, or EEF mode.
+There is no retry, ticket cancellation, horizon extension, or reset. The explicit
+official_ee backend delegates EEF targets to native take_action without replacing
+its IK, failed-IK behavior, interpolation, or gripper handling.
 
 Pinned EvalEnv.take_action invokes is_episode_end once after native interpolation
 and reward_manager.step. is_episode_end internally calls get_reward once but
@@ -34,6 +36,7 @@ from contextlib import ExitStack, contextmanager
 from copy import deepcopy
 from dataclasses import asdict, dataclass
 import hashlib
+import json
 import math
 from pathlib import Path
 import re
@@ -41,6 +44,8 @@ from threading import Lock
 from time import monotonic
 
 from .lifecycle import EpisodeLifecycle, NativeResult
+from .official_control import (OFFICIAL_EE, validate_control_action,
+                               validate_control_backend, validate_ik_status)
 from .schema import vector
 
 
@@ -60,6 +65,7 @@ class NativeEpisodeError(RuntimeError):
 class NativeActionReceipt:
     native_result: NativeResult
     evaluator_receipt: dict
+    ik_status: dict | None = None
 
 
 def validate_joint_action(action: dict) -> dict:
@@ -94,6 +100,25 @@ def _hash(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def _planner_signature(planner) -> str:
+    """Bind native robot/scene settings without exposing them as feedback."""
+    names = ("yml_path", "robot_cfg", "scene_model", "frame_bias", "tool_frames",
+             "ee_link", "active_joints_name", "cspace_joint_names", "cspace_retract_config",
+             "use_cuda_graph", "use_graph_planner", "dt")
+
+    def serializable(value):
+        if isinstance(value, Path):
+            return str(value)
+        if callable(getattr(value, "tolist", None)):
+            return value.tolist()
+        raise TypeError("unsupported_native_planner_setting")
+
+    payload = {name: getattr(planner, name, None) for name in names}
+    raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False,
+                     default=serializable).encode()
+    return hashlib.sha256(raw).hexdigest()
+
+
 @contextmanager
 def _observe_method(owner, name, wrapper):
     prior = vars(owner).get(name, _MISSING)
@@ -110,7 +135,8 @@ def _observe_method(owner, name, wrapper):
 class NativeEpisodeActionAdapter:
     def __init__(self, env, *, lifecycle: EpisodeLifecycle, verify_authorization,
                  expected_layout_path: str | Path, expected_layout_sha256: str,
-                 registration_evidence_id: str, episode_evidence_id: str):
+                 registration_evidence_id: str, episode_evidence_id: str,
+                 control_backend: str = "legacy_joint"):
         # NativeWorkerSession constructs this immediately after consumed BEGIN.
         # This is evaluator-only wall time; it neither advances nor times replay.
         self._policy_begin_monotonic = monotonic()
@@ -125,6 +151,10 @@ class NativeEpisodeActionAdapter:
             if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9_.:/-]{1,200}", value):
                 raise NativeEpisodeError("evaluator_evidence_identity_required")
         self.env, self.lifecycle = env, lifecycle
+        try:
+            self.control_backend = validate_control_backend(control_backend)
+        except ValueError:
+            raise NativeEpisodeError("invalid_control_backend") from None
         self._authorize = verify_authorization
         self._layout = Path(expected_layout_path).resolve(strict=True)
         if self._layout.name != "make_toast_0.json" or self._layout.parent.name != "0":
@@ -145,6 +175,22 @@ class NativeEpisodeActionAdapter:
             self._native_end = env.is_episode_end
             self._native_reward = self._reward_manager.get_reward
             self._native_step = env.sim_step
+            self._planner_binding = self._ik_binding = self._native_ik = None
+            self._planner_signatures = self._planner_children = None
+            if self.control_backend == OFFICIAL_EE:
+                robot_manager = env.robot_manager
+                if (not isinstance(robot_manager.planner, dict) or not robot_manager.planner
+                        or not isinstance(robot_manager.ik_solver, dict) or not robot_manager.ik_solver
+                        or not callable(getattr(robot_manager, "solve_ik", None))):
+                    raise NativeEpisodeError("official_native_ik_required")
+                self._planner_binding = dict(robot_manager.planner)
+                self._ik_binding = dict(robot_manager.ik_solver)
+                self._native_ik = robot_manager.solve_ik
+                self._planner_signatures = {name: _planner_signature(planner)
+                    for name, planner in self._planner_binding.items()}
+                self._planner_children = {name: tuple(getattr(planner, field, None)
+                    for field in ("motion_planner", "motion_planner_batch", "ik_solver"))
+                    for name, planner in self._planner_binding.items()}
             self._check_live()
             if (self._counter() != 0 or lifecycle.submitted_actions != 0
                     or lifecycle.confirmed_actions != 0 or lifecycle.snapshot()["in_flight"] is not None):
@@ -177,8 +223,28 @@ class NativeEpisodeActionAdapter:
             raise NativeEpisodeError("standard_caller_lifecycle_required")
         if (env.num_envs != 1 or env.step_lim != ACTION_LIMIT or env.task_name != "make_toast"
                 or env.config_name != "arx_x5" or list(env.env_seeds) != [0]
-                or env.robot_manager.planner or env.robot_manager.ik_solver
                 or getattr(env, "interact", False)):
+            raise NativeEpisodeError("standard_episode_configuration_changed")
+        robot_manager = env.robot_manager
+        if self.control_backend == OFFICIAL_EE:
+            names = {robot.robot_name for robot in robot_manager.robot_list}
+            if (set(robot_manager.planner) != names or set(robot_manager.ik_solver) != names
+                    or set(self._planner_binding) != names or set(self._ik_binding) != names
+                    or any(robot_manager.planner[name] is not self._planner_binding[name]
+                           or robot_manager.ik_solver[name] is not self._ik_binding[name]
+                           or robot_manager.planner[name] is not robot_manager.ik_solver[name]
+                           for name in names)
+                    or robot_manager.solve_ik != self._native_ik):
+                raise NativeEpisodeError("official_native_ik_binding_changed")
+            for name in names:
+                planner = robot_manager.planner[name]
+                children = tuple(getattr(planner, field, None)
+                    for field in ("motion_planner", "motion_planner_batch", "ik_solver"))
+                if (_planner_signature(planner) != self._planner_signatures[name]
+                        or any(current is not frozen for current, frozen in
+                               zip(children, self._planner_children[name]))):
+                    raise NativeEpisodeError("official_native_planner_configuration_changed")
+        elif robot_manager.planner or robot_manager.ik_solver:
             raise NativeEpisodeError("standard_episode_configuration_changed")
         if (env.reward_manager is not self._reward_manager
                 or self._reward_manager.check_list is not self._registered_check_container):
@@ -222,7 +288,10 @@ class NativeEpisodeActionAdapter:
                 raise NativeEpisodeError("monotonic_reserved_ticket_required")
             self._check_reserved(ticket)
             self._last_ticket = ticket  # consumed locally even if authorization or native execution fails
-            clean = validate_joint_action(action)
+            try:
+                clean = validate_control_action(action, self.control_backend)
+            except ValueError:
+                raise NativeEpisodeError("invalid_native_control_action") from None
             if self._authorize(ticket, deepcopy(clean)) is not True:
                 raise NativeEpisodeError("dispatch_not_authorized")
             self._check_live()  # authorization cannot silently alter environment/configuration
@@ -245,10 +314,32 @@ class NativeEpisodeActionAdapter:
         time_before, physics_before = self._clock(), self._physics_counter()
         state = {"step_calls": 0, "end_calls": 0, "reward_calls": 0, "inside_end": False}
         callback = {}
+        ik_status = {}
+
+        def observed_ik(*args, **kwargs):
+            # The pinned evaluator calls solve_ik exactly once per target arm,
+            # with these keyword arguments before interpolation. Delegate the
+            # original call unchanged and retain only its public status enum.
+            if (args or set(kwargs) != {"target_pose", "env_idx", "robot"}
+                    or kwargs["env_idx"] != 0 or state["step_calls"] or self._counter() != ticket):
+                raise NativeEpisodeError("unexpected_native_ik_call")
+            robot = kwargs["robot"]
+            if not any(robot is entry for entry in env.robot_manager.robot_list):
+                raise NativeEpisodeError("unexpected_native_ik_robot")
+            arm = {"left_arm": "left", "right_arm": "right"}.get(robot.arm_name)
+            if arm is None or arm in ik_status or kwargs["target_pose"] != action[f"{arm}_ee_pose"]:
+                raise NativeEpisodeError("unexpected_native_ik_target")
+            result = self._native_ik(*args, **kwargs)
+            if not isinstance(result, dict) or result.get("status") not in ("Success", "Fail"):
+                raise NativeEpisodeError("invalid_native_ik_status")
+            ik_status[arm] = result["status"]
+            return result
 
         def observed_step(*args, **kwargs):
             if state["step_calls"] >= SUBSTEPS or state["end_calls"] or self._counter() != ticket:
                 raise NativeEpisodeError("unexpected_native_physics_step")
+            if self.control_backend == OFFICIAL_EE and set(ik_status) != {"left", "right"}:
+                raise NativeEpisodeError("native_ik_calls_incomplete")
             before, counter = self._clock(), self._physics_counter()
             state["step_calls"] += 1
             result = self._native_step(*args, **kwargs)
@@ -301,6 +392,8 @@ class NativeEpisodeActionAdapter:
             hooks.enter_context(_observe_method(env, "sim_step", observed_step))
             hooks.enter_context(_observe_method(env, "is_episode_end", observed_end))
             hooks.enter_context(_observe_method(manager, "get_reward", observed_reward))
+            if self.control_backend == OFFICIAL_EE:
+                hooks.enter_context(_observe_method(env.robot_manager, "solve_ik", observed_ik))
             self._take_action(deepcopy(action))
         if (state["step_calls"] != SUBSTEPS or state["end_calls"] != 1 or state["reward_calls"] != 1
                 or self._counter() != ticket or self._physics_counter() != physics_before + SUBSTEPS
@@ -326,4 +419,8 @@ class NativeEpisodeActionAdapter:
             "physics_time_before_s": time_before, "physics_time_after_s": self._clock(),
             "native_terminal_callback_calls": state["end_calls"], "native_reward_callback_calls": state["reward_calls"],
             "native_callback_state": callback, "native_result": asdict(result),"timing":timing}
+        if self.control_backend == OFFICIAL_EE:
+            statuses = validate_ik_status(ik_status)
+            receipt.update(control_backend=self.control_backend, ik_status=statuses)
+            return NativeActionReceipt(result, receipt, deepcopy(statuses))
         return NativeActionReceipt(result, receipt)

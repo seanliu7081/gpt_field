@@ -1,0 +1,239 @@
+{
+  "recorded_at_utc": "2026-10-29T23:25:41.785383+00:00",
+  "environment": "robodojo_uc71",
+  "python_executable": "/home/haotian/miniforge3/envs/robodojo_uc71/bin/python",
+  "versions": {
+    "python": "3.11.16",
+    "isaacsim": "5.1.0.0",
+    "torch": "2.7.0+cu128",
+    "torchvision": "0.22.0+cu128",
+    "torchaudio": "2.7.0+cu128",
+    "numpy": "1.26.0",
+    "setuptools": "80.9.0",
+    "wheel": "0.45.1",
+    "pytest": "8.4.2"
+  },
+  "package_check": "passed",
+  "core_files_verified": 851,
+  "source_commit": "f57e1633ffed59761bc8e568cfe7530c4b33381c",
+  "asset_files_verified": 214,
+  "asset_fidelity_complete": false,
+  "camera": {
+    "returncode": 0,
+    "timed_out": false,
+    "capture_passed": true,
+    "gpu_processes_released": true,
+    "gpu_memory_released": true,
+    "model_calls": 0,
+    "benchmark_actions": 0,
+    "passed": true
+  },
+  "camera_visual_review": "Passed: red and green cubes visible on a gray platform at 640x480",
+  "offline_tests": {
+    "initial": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "34",
+      "skipped": "0",
+      "tests": "577",
+      "time": "159.097",
+      "timestamp": "2026-10-29T23:20:10.246720+00:00",
+      "hostname": "helper41"
+    },
+    "video_after_ffmpeg_install": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "4",
+      "time": "1.023",
+      "timestamp": "2026-10-29T23:24:16.421774+00:00",
+      "hostname": "helper41"
+    },
+    "combined_passing": 544,
+    "remaining_root_permission_failures": [
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor.test_missing_clearance_stops_after_bounded_motionless_wait",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_missing_clearance_stops_a0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor.test_fresh_root_owned_review_is_bound_to_exact_request",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_fresh_root_owned_review_i0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor.test_ambiguous_review_stops_without_dispatch",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_ambiguous_review_stops_wi0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor.test_raw_joint_drift_invalidates_accepted_visual_review",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_raw_joint_drift_invalidat0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_private_root_records_reject_worker_writable_or_wrong_owner",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_private_root_records_reje0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_private_temp_preparation_requires_owner_mode_and_real_write",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_private_temp_preparation_0/tmp'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_actual_native_file_handler_must_stay_under_private_temp",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_actual_native_file_handle0/tmp/isaaclab/logs/isaaclab_synthetic.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_spec_is_exact_existing_path_and_safe_boot_nonce",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_spec_is_exact_existing_pa0/spec.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_full_preparation_requires_human_bound_explicit_published_defect_policy",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_full_preparation_requires0/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[diagnostic]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_diagnostic_or_unbound_ass0/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[prompt]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_diagnostic_or_unbound_ass1/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[manifest]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_diagnostic_or_unbound_ass2/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[upgrade]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_diagnostic_or_unbound_ass3/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[missing_approval]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_diagnostic_or_unbound_ass4/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_ready_captures_fresh_images_and_exact_paused_state_without_advancing",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_ready_captures_fresh_imag0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[bundle]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_readiness_cannot_ignore_f0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[instruction]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_readiness_cannot_ignore_f1/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[physics]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_readiness_cannot_ignore_f2/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime.test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[approval_write]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_readiness_cannot_ignore_f3/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_approval_must_match_exact_manifest_before_acceptance",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_approval_must_match_exact0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_private_runtime_directory_modes_checked_before_spawn",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_private_runtime_directory0/attempt/runtime'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_existing_empty_log_is_group_readable_under_supervisor_umask0077",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_existing_empty_log_is_gro0/native.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_worker_log_error_closes_fd_and_rejects_links",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_worker_log_error_closes_f0/native.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_binds_private_paths_modules_graphics_and_actual_callback_timing",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_binds_private_pa0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[hash]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[pid]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_1/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[token]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_2/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[logger]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_3/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[module]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_4/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[graphics]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_5/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[approval]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_6/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[timing]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_7/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor.test_preclose_rejects_changed_or_inconsistent_supporting_evidence[failure]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-37/test_preclose_rejects_changed_8/attempt/approval.json'"
+      }
+    ]
+  },
+  "artifacts": {
+    "runtime/setup_conda_20261029/source_verification.json": {
+      "sha256": "d987408bf24857c90b9f983cabab692422b0535a6b703f265dfcfb665fc27599",
+      "bytes": 1289
+    },
+    "runtime/setup_conda_20261029/assets_verification.json": {
+      "sha256": "5efddb7124ddedacda26b47281d521d1ef7936726cf5b8ed8aeabfe7a68fdba2",
+      "bytes": 3777
+    },
+    "runtime/setup_conda_20261029/offline_tests.xml": {
+      "sha256": "068e18fcaaa666feb73b08383a082162fabaf33f1098ee71aa16730d50c232a7",
+      "bytes": 188701
+    },
+    "runtime/setup_conda_20261029/video_tests.xml": {
+      "sha256": "6537240aa2c61f678c0fe5faf61e73b64fea174bd344b78fc0f14f312e230bdc",
+      "bytes": 805
+    },
+    "runtime/setup_conda_20261029/camera_002/result.json": {
+      "sha256": "d5706b8e8fb5364d913fff76fc4f71e7b5bc94b4eb5b514bf416f0b5503b9c53",
+      "bytes": 199
+    },
+    "runtime/setup_conda_20261029/camera_002/capture.json": {
+      "sha256": "6ca40f4559c46063600480948155f56161c573448cb13f8f25f2a39a4fa2018c",
+      "bytes": 804
+    },
+    "runtime/setup_conda_20261029/camera_002/rgb.png": {
+      "sha256": "e08a81d2417c877c4c77ec92603c8c4dd9bb056ed945a024c1a174e694790ffb",
+      "bytes": 130756
+    },
+    "runtime/setup_conda_20261029/pip-freeze.txt": {
+      "sha256": "e01291f05c0e92f0f0e273445683e2b68432af5fe6677697b8b423f169d979f9",
+      "bytes": 3598
+    },
+    "runtime/setup_conda_20261029/conda-explicit.txt": {
+      "sha256": "a5feb1dd51adc15d76141cbaa18fdbb554a016d0bb256db04071e6dfdc623cff",
+      "bytes": 6136
+    }
+  },
+  "scope": {
+    "model_calls": 0,
+    "benchmark_actions": 0,
+    "native_reset_repeated": false,
+    "full_task_launched": false
+  },
+  "limitations": [
+    "33 existing test fixtures require root ownership operations unavailable to the current user.",
+    "Historical full-task supervisor requires privileged worker isolation and new host/path/GPU bindings.",
+    "Recorded published-asset defects preserved.",
+    "Stock fast camera shutdown does not prove full plugin teardown."
+  ]
+}

@@ -1,0 +1,636 @@
+{
+  "schema": "robodojo-official-control-implementation-validation-1",
+  "recorded_at_utc": "2026-10-30T11:00:09.684024+00:00",
+  "control_backend": "official_ee",
+  "tests": {
+    "total": 723,
+    "passed": 690,
+    "failed": 33,
+    "errors": 0,
+    "official_backend_tests_passed": 118,
+    "all_failures_are_root_permission_fixtures": true,
+    "root_test_access": "sudo -n requires password; no bypass used",
+    "failures": [
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor::test_missing_clearance_stops_after_bounded_motionless_wait",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_missing_clearance_stops_a0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor::test_fresh_root_owned_review_is_bound_to_exact_request",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_fresh_root_owned_review_i0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor::test_ambiguous_review_stops_without_dispatch",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_ambiguous_review_stops_wi0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_controller_characterization_supervisor::test_raw_joint_drift_invalidates_accepted_visual_review",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_raw_joint_drift_invalidat0/attempt/operator_reviews'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_private_root_records_reject_worker_writable_or_wrong_owner",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_root_records_reje0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_private_temp_preparation_requires_owner_mode_and_real_write",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_temp_preparation_0/tmp'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_actual_native_file_handler_must_stay_under_private_temp",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_actual_native_file_handle0/tmp/isaaclab/logs/isaaclab_synthetic.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_spec_is_exact_existing_path_and_safe_boot_nonce",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_spec_is_exact_existing_pa0/spec.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_full_preparation_requires_human_bound_explicit_published_defect_policy",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_full_preparation_requires0/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[diagnostic]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass0/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[prompt]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass1/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[manifest]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass2/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[upgrade]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass3/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[missing_approval]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass4/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_ready_captures_fresh_images_and_exact_paused_state_without_advancing",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_ready_captures_fresh_imag0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[bundle]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f0/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[instruction]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f1/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[physics]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f2/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_native_runtime::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[approval_write]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f3/manifest.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_approval_must_match_exact_manifest_before_acceptance",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_approval_must_match_exact0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_private_runtime_directory_modes_checked_before_spawn",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_runtime_directory0/attempt/runtime'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_existing_empty_log_is_group_readable_under_supervisor_umask0077",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_existing_empty_log_is_gro0/native.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_worker_log_error_closes_fd_and_rejects_links",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_worker_log_error_closes_f0/native.log'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_binds_private_paths_modules_graphics_and_actual_callback_timing",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_binds_private_pa0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[hash]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_0/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[pid]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_1/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[token]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_2/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[logger]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_3/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[module]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_4/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[graphics]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_5/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[approval]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_6/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[timing]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_7/attempt/approval.json'"
+      },
+      {
+        "test": "robodojo_uc71.tests.test_standard_supervisor::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[failure]",
+        "message": "PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_8/attempt/approval.json'"
+      }
+    ],
+    "log": {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/validation/official_control_20261030/offline_tests.log",
+      "sha256": "8813928447258eeb7e72e1399355992ded0288f132bbacd0ee4d8d5942c4e8ad"
+    },
+    "xml": {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/validation/official_control_20261030/offline_tests.xml",
+      "sha256": "220cb7891428ba2933a728705bd55543745538445a6b43230964d937065f1d99"
+    }
+  },
+  "native_ik_check": {
+    "path": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/official_control/ik_check_003/result.json",
+    "sha256": "ad20537c6d680bf0ce9e7667d8dce6585d2cd99bb9b4f9b37b79c900c085d58b"
+  },
+  "setup": {
+    "path": "/home/haotian/code/gpt_field/robodojo_uc71/runtime/official_control/setup_v5.json",
+    "sha256": "41b7678993627c6a24eac4e1d877aa789a17485c89cda987b1b774903433f192"
+  },
+  "frozen_core": {
+    "files": 851,
+    "mismatches": []
+  },
+  "model_calls": 0,
+  "simulator_starts": 0,
+  "benchmark_actions": 0,
+  "native_motion_qualified": false,
+  "full_test_authorized": false,
+  "source_files": [
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/__init__.py",
+      "sha256": "f9be2e19bcce5b28f5e8c86c1a7c117047c350d8f5d40a510fda7839d88984ec"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/approval.py",
+      "sha256": "34cbbc1b24ead94669cee168a505b4a24c350b49abb1135a1ec05a313327421b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/attempt_evidence.py",
+      "sha256": "51a71c816405e77527a7cfdc33aa341c81dd2df6a516b55511736a2d4a713ac8"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/client.py",
+      "sha256": "deca057dc4d956e28837007b80e2b7a2c949150fe815e1e309c6deba22467c08"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/controller.py",
+      "sha256": "c246c6dcbfe1561656b60e629b4336ef3b53ad8934dc420e0056e9579372bd63"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/controller_characterization.py",
+      "sha256": "71a0d08146659a35c80613dee335088532f09f639542beda2da3a2679d3f5078"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/fragment_executor.py",
+      "sha256": "95b6e090d15329c3089cd03311975108743567b1aaba6f3fe86ced6fcac86c8b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/history.py",
+      "sha256": "904d38a6b70e46728eaaac48c683c4fb11179e2b6e3008854cc0477fd711fc30"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/host_runtime.py",
+      "sha256": "d3a48d787dd31d2a28ad43819f84bcfc0983e65c233f2159bb6e084970586000"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/ipc.py",
+      "sha256": "41db6747d45ceedd958908f3e7a204186ad6cf6b74d3f9a668ffd0a580bb2e17"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/lifecycle.py",
+      "sha256": "7ce0709a6e7e8ad188074a2526318774e1b547558cddc501cbdc0819167739e2"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_action_observer.py",
+      "sha256": "45a229cda651af8ecd968b467201cf36417e63478f09862207f9979ae5e9baca"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_characterization.py",
+      "sha256": "8380338e3d13daaeb7d1f3d0a982fee257f977044d9c77bb72345e83447c4d48"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_config.py",
+      "sha256": "0388388ecbb9486288522344c68fe747e173502f53a39270a47e093ab9f86a34"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_episode.py",
+      "sha256": "3e8be618359362cc1c31d4b8cbfa38e6cc3e6325c78e0da239c5d69dc7d314b0"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_episode_runner.py",
+      "sha256": "73c57764d3e5c339382c73ab03e1f83bced6da58af5410e1050ebeb49b0f7124"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_measurements.py",
+      "sha256": "7faab6c76a4f36bf8fcbc104a9fdafd9878074e5f7efa44937e1e6466d92e424"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_reconciliation.py",
+      "sha256": "4bb8baab976f6229aa4b8f43220e4936b100dfbace3146183a45806b377ca68b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_robot_inventory.py",
+      "sha256": "f9e8ea25aa218b1e31554bf62bde4180114d5371f7f2cbd9730e6df72452362e"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_runtime.py",
+      "sha256": "da9e9f5b35df406bb194767858ef6d033e55bf25c3de3f56eb98277ae4a5a288"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_runtime_bundle.py",
+      "sha256": "502e8f4133a0f3d0057163a853b8b455150c38a36fc80ee38815b157e1f91539"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_worker_client.py",
+      "sha256": "5907795005799bd6646027a8436e3c2b620e350b5e1fcebcb2ecc927db7521ba"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/native_worker_protocol.py",
+      "sha256": "a3567ff3f74745795cf02fa6fd5fe18a890bb1d11a416b39c754ef78eb9d9a4f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/official_control.py",
+      "sha256": "3de447b6120a96f59c6df734bf3a467f74f00c3718b7989b6acc29334599214f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/official_control_readiness.py",
+      "sha256": "b690b4c3064a192a22b0eceb2c49cc877380b8b75335b7f87c2a521cb3cf184c"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/official_control_setup.py",
+      "sha256": "955ce705a0afbafd963e6f6a26824be7015ddde736f5f054e6e3b3a4423a8399"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/planning.py",
+      "sha256": "959cbd633b1c6a5a97a2fade24db883cc045819098cc27337416c6c27b6b1dcb"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/reset_binding.py",
+      "sha256": "5c3d34261428f2f7ed068b98549ee376a1ccd07f58918bc89a374ac9a572073f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/schema.py",
+      "sha256": "1ccf42e4f5084087a2a8295c71639f5aac19677959a76492af987d1e8cae53ec"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/src/robodojo_uc71/worker_isolation.py",
+      "sha256": "3c46bf7226c4140cb10a8c8be57ddc1e2e2d5529e5c03ad04a537a4b1dd650c8"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/analyze_joint_probe.py",
+      "sha256": "3254117d0f8ed7c7fd49a332436da278a8621ebd6a55021d0a6810daa0c91ddf"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/audit_native_materials.py",
+      "sha256": "c86a74ee16a41fb596a80ce22a93b1f5e127d4da524cb434c0dfa104e2cf2843"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/check_conda_camera.py",
+      "sha256": "cfa2dbbbd2b229d0353cf3b3c263e501cf8e76963ad34d58bd46ae7671f15366"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/check_host.py",
+      "sha256": "6bfd26d260a95c6889b22a8548374f7461875f2cec53ead2c2af07962ec28f88"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/check_joint_probe_projection.py",
+      "sha256": "4eb118330060c20b4b3ada33099b9d8becfb97b8b4499e4a5ce6fbf76ccf7099"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/check_official_ik.py",
+      "sha256": "e0232a91b19d4a3b4a5b1fd9e3aee33dc3750556486f4eb9107eab51cc8a4f60"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/check_robot_projection.py",
+      "sha256": "1c90415f394fc81396242bb9ba2c3214bc99fb3a3578e31713d4afc8db7dbcf5"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/configure_host_worker.py",
+      "sha256": "9a2a2874e8b05a693d0103dbe31241cc28c4baed75b1db0f18b6597ffbbc5823"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/derive_tool_candidate.py",
+      "sha256": "a243f1d20150787add1bdc9f17c6c5d4f5c51fac4015e315a897a6d6130af235"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/new_host_camera.py",
+      "sha256": "aaf48012048e56b707c6e9846450d43c6077d5d66092549a8c917f21ed90a5ff"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_conda_runtime.py",
+      "sha256": "d826587caf6605f1b66fff04fa1edc4d46514facbccdf2f5bf79efcb676881c8"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_controller_characterization.py",
+      "sha256": "f4ecdabff45b7c0ad0fcdfeb0756449fefa5c629a437ea873e0719f63bfef0b1"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_initial_plan.py",
+      "sha256": "ac480400846f8c7e2928a2c5ab349fb96dddc6fa4591fd1b2813f855998d349f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_native_characterization.py",
+      "sha256": "7e88465f16bf2c896466fc8025f8e555428b500aeb353938e1838efefc6709ec"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_native_preview.py",
+      "sha256": "769c8fc574d637ce20c486567ecdacfc240ff75ffa96546595a0e6e86d896ff1"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_review_packet.py",
+      "sha256": "675a327a147ffc3c96cc201747d81a1e77897d8a2a1a071b4df01d42e30e3021"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_runtime_bundle.py",
+      "sha256": "af1e3a85bcf67a87ceb5db735e58d511e2a9288cee483d07d44284a1cded4e5a"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/prepare_standard_service.py",
+      "sha256": "a2968b1a265c7d2fb89d5826527394051270d3a72ee937fc3b18fc682b21ae5b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a0_camera.py",
+      "sha256": "800796e32a05fa896b3ddebfa09fc93efdb0abd41dccb1293761e95556762c88"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a0_install.py",
+      "sha256": "b57ac0eee42e848b082fc64ed4d034af39a0eba713f2629cd166fde76dbf6340"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a0_launch.py",
+      "sha256": "4145a2b53c4ea235c604effdc8c2e68c9748c7203f749fa5423306b1cb019bb4"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a0_system_lib.py",
+      "sha256": "b971340414313aa8de7ffe2a6d9723903257ff2c1c911bffbe14cbcc0169155f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a1_camera.py",
+      "sha256": "4780ae67876c441e5bbcf6cbd28489a8588a5ed0ccd13822d50c1deb07e3d811"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a1_identity.py",
+      "sha256": "0abaacb7593986554f7921b85e470ab131d37b040da5ed6964cb6d03440dfb24"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a1_install.py",
+      "sha256": "1bba882ba27849d6993219436e3a946427227734d053c3d4f4005b0585a20b36"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a1_launch.py",
+      "sha256": "7abcaa12e7bbd2120d6453c0030bc3acecac80f7fb9c5b721fa2882cc4d20d7f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_a1_mask_only.py",
+      "sha256": "e1354102c738b683a4fb5b2e6566056ff0012d6b5247327d3d56addd8b79701b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_controller_characterization.py",
+      "sha256": "2d1679e9a19cb51e22134582c6c2ff51256bfd2ba7c4d3a78f247d20378d9091"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_assets.py",
+      "sha256": "46fd87bd3df52dc1dc1645e48d4e6526eefdb7aa24af4feadcaa4ffa96f1985b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_characterization.py",
+      "sha256": "4d6d02801f614efbc5ea2fdc47dfec320d197275b507c22667f0e2e05b614514"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_common.py",
+      "sha256": "856a9b6556adc5bfde39e4f4ef4c68dd84c0a20c8232b6a86ebfdfb153f59325"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_compatibility.py",
+      "sha256": "59e1971675f48446bd552a52c8212cc84f914e7595c674be7100eaff1a150515"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_dependencies.py",
+      "sha256": "c04141cdf26bb30aae2ce2ce9bb24938f302d301c610f26902ab1b15ebddc5cc"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_preview.py",
+      "sha256": "f6e137ac30a374557a3ed6f8c3bdc2bf4f1604fd23ba9f031248585660aa106c"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_source.py",
+      "sha256": "68c2dafd11e75f8bcc398d567a1aacdf4e3cc0423798928ef383dcb6b5beecab"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_native_test.py",
+      "sha256": "af9cfefecc763e22cd806cd25bba131f2ba40d1c685a41155688103ccb84996a"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_new_host_camera.py",
+      "sha256": "984a1f28b9a7e2f107843a392da94b766d656a5ba8975b5666e1eabc7c0584e8"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/provision_new_host_install.py",
+      "sha256": "7982eca5b35dab43630ba7b4f2d7bd6d01dfd74c636b17561d6ca635f895cb76"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_native_worker.py",
+      "sha256": "5c402d1c0f312a9c32c24adb543a1129659b2ebf455faabce36c86e63d5c1fb5"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py",
+      "sha256": "2cf1419e4ddb25f2f4963f6e642f5c3340fae92be07cbb8f0aca417d85ee96dd"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/setup_official_control.py",
+      "sha256": "1ca848fd049b61aed84b7e9b9df00c1647d4f810e6b83cbbd6521a7938ba2936"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/scripts/verify_core.py",
+      "sha256": "badee6caeaa501591dd080a054bf938acaa06fd12f0c6f59d415b9400eef1e83"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/client_fixtures.py",
+      "sha256": "ee27459674a7d443af1e111298b74d99ce0ff07256d3de158cd3868db3880a36"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_approval.py",
+      "sha256": "2f68a203c41b38a29b911a0b296e5a854a7a78e3605dc591a66c40db916f9c08"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_attempt_evidence.py",
+      "sha256": "513b3198ca316a90f3ace0a0ad42cd2b4f6bf761c0f8b9f836c0514e318bfe28"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_client_native.py",
+      "sha256": "1c09b621e138f9a1e0a9f5891a76053ae5e738d11a77be3bf08cddc5ec3fbe3d"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_conda_runtime.py",
+      "sha256": "a506a867c9f32d2d598fd5eb0d1d0d8b1f5db2906d4ff6582d0ebc3abac4f9ad"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_controller.py",
+      "sha256": "cca5ee319c879e1fa34f6904b3a4c9fb9f311daa58cff4682eaefc1d1e204814"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_controller_characterization.py",
+      "sha256": "51883990e9b93b71474066acf420907d97a3ecd1f484db84ddd88276ea1715a5"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_controller_characterization_supervisor.py",
+      "sha256": "36f64a335f1c9257380668aeac7b856ebce7281c1901ce84c48afbbfde19cac2"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_controller_numerical_resolution.py",
+      "sha256": "0e1b49cd0fd526c35aa858fb98536ab6c1a05e1db4a516f2def7de0987b5cd1e"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_controller_preview_basis.py",
+      "sha256": "e0e87a01430d9355bf175f0b0aa4c94d9f59c3fd5e4890db6b508e3bb7a9cbd3"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_fragment_executor.py",
+      "sha256": "43523ddd1f7dd5c6d184bfddace3c2848b3c56bcd9fc1d50cc9100743f148cbd"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_host_preflight.py",
+      "sha256": "73ad6f1a5e4cbdaf91e12175c335dfdc7af0006d220b40e2a66b8a14d79a86cd"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_host_worker_setup.py",
+      "sha256": "94d4d751dbf5a2ea5d6eb11b12d27d672cff72facc2f82e16cd4c1c4cf01fdf3"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_ipc.py",
+      "sha256": "e4fa6280e8c4f3a83877b642b6aa1677b96f04d655ad414e69ba45551919a312"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_lifecycle.py",
+      "sha256": "3c72802ecc52c4b6bbd5006acfd74f5b330691a070601fb82ff13ec68855c59c"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_characterization.py",
+      "sha256": "8a5d8c5903e9d5810948a8653b8ebb74cc07e35438d6a36e527a4d8f222b3243"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_characterization_launcher.py",
+      "sha256": "5f4d9e5308cba79ada1ff495288abad9fcd18a02f848f6df3f07a276d84c328c"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_characterization_supervisor.py",
+      "sha256": "778eead3b82af11f2dc755f7a27f098238ea361069c79823a5131cf321b037dc"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_episode.py",
+      "sha256": "fd3aa645e799b9b0258e16baea3f7fce043b3795b760fe4013aaf5e63a0a11fc"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_episode_runner.py",
+      "sha256": "8ebb67cc59eaf2f9f39b2d6a35346c68cac52d8dbb465a344720daaef290fb95"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_measurements.py",
+      "sha256": "8fc09baf89f1d31242ce4a7ae1de1845e33f7b35f349d50923faafd8179198b2"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_preview.py",
+      "sha256": "faefdc03c884bdcb76a95f25d6db3f59d1646f1a12821d214fe68f3d67a7c7b9"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_preview_supervisor.py",
+      "sha256": "dbd3b78b7bafc26216c3c05663f3e73caf35756ead4698f4630b129486a6e9a3"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_reconciliation.py",
+      "sha256": "10328e3d91ee6423106fb2c19af98e7373a2d05b0718e558280db808da85f6e5"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_runtime.py",
+      "sha256": "2c9fc0c80a314af49bc49ac0e747ce44c4b1739ca4168352348162060e7532ed"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_runtime_bundle.py",
+      "sha256": "9ee5595adc57d71231137a01b7e4a0907027808f1d74cc98229eef2a0f768e3b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_worker_output.py",
+      "sha256": "82a3bb5714e953d0af3741bd6d2443ee87b47f9da7fe2ecf1c7a4e0ee617bf7f"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_native_worker_protocol.py",
+      "sha256": "0c56651b6e21f94ea4bd5e07ad40cbcaeaf6472768411b49169e51a7583a8af9"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_new_host_camera.py",
+      "sha256": "b669d3f2694aba348b86928b535548b9324e88b75f718f72e57e058a2bc3199b"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_control.py",
+      "sha256": "4c0be06a215d4dd96a736956cd0dfc6e9dde01cddfe924d1762bd5c8fa647227"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_control_readiness.py",
+      "sha256": "9322aceea196017843dcf7fabc02950b33c4997d4c8be41309890db1783ecc62"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_control_setup.py",
+      "sha256": "a16d03ff628b4e8835a060c758696b86596468a09703b3e790053dd438c3b19d"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_fragment_executor.py",
+      "sha256": "ff6d2030311ab32c3f14722def24606fb4c0a1009f754bdc5133b4451ab7d493"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_native_preview.py",
+      "sha256": "6c807ae0a0c8098ed50452d30a2397074ace2edc4e7e3d12728d11de1f39fa0d"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_native_transport.py",
+      "sha256": "252d8ace76766e35026443691c5748fbf5a1485866c29d1c89a4347d9f5cc5b8"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_official_runtime_integration.py",
+      "sha256": "11ef614c93296f2e4be898c113fba7695ccb672eafde7f397bf25172c7c378ee"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_open_clearance_preview.py",
+      "sha256": "b0ec1d6b274a8e10ec3da37bf56acac684056f3b2c417230859d54ebd48f2be7"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_open_clearance_preview_supervisor.py",
+      "sha256": "306ea9dc7a5cbc23f9d8a37100ad4fc247177d9dad888c6118e22d261851043e"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_prepare_runtime_bundle.py",
+      "sha256": "800c56a23b0a03702d46c7d7cb8d1287da65ea15efb90c9600b5d430bb6a213d"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_reset_binding.py",
+      "sha256": "029d890eb51483eb043dad2606153f77361fdbe8ca61f531d0df33b030512df0"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_review_packet.py",
+      "sha256": "736735eb4e948f62e387a217e71bfe7859fde8b74c30076f5c77e7b99787e2a4"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_schema_native.py",
+      "sha256": "ddc58156ef032a7108293e749ac843c0977b5869a72758b484e05664c1cc9bdf"
+    },
+    {
+      "path": "/home/haotian/code/gpt_field/robodojo_uc71/tests/test_standard_supervisor.py",
+      "sha256": "1cd5e0a03d54ca346c9a427983da84877840bef7f84ad49cbbd3e4b3e30f083b"
+    }
+  ],
+  "initial_report_note": "Preserved initial run collected an interim renamed pytest fixture (21 errors) and omitted Conda bin from PATH (ffmpeg unavailable); final run fixes both. Root permission failures remain explicit."
+}

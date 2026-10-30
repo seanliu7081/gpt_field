@@ -28,6 +28,7 @@ from prepare_standard_service import prepare_service
 from provision_native_common import pins
 from provision_controller_characterization import prepare_worker_git_config
 from provision_new_host_camera import child_environment
+from robodojo_uc71.host_runtime import default_runtime_config, verify_conda_record
 
 
 def shared_json(path, value):
@@ -252,9 +253,20 @@ class FileBindings:
 
 def prepare(args):
     if os.getuid() != 0: raise ValueError("root_preparation_required")
-    v = BASE / "validation/new_host_20261029"
+    runtime_config = default_runtime_config()
+    runtime_record = getattr(args, "runtime_record", None)
+    if runtime_record is None:
+        raise ValueError("current_conda_runtime_record_required")
+    verified_runtime = verify_conda_record(Path(runtime_config["python"]), runtime_record)
+    runtime_record = Path(verified_runtime["record"])
+    runtime_config["environment_record"] = str(runtime_record)
+    v = getattr(args, "evidence_root", None) or BASE / "validation/new_host_20261029"
+    v = Path(v).resolve(strict=True)
     native = BASE / "runtime/native/RoboDojo"
     bundle = VerifiedRuntimeBundle.load(args.runtime_bundle, native); bundle.verify()
+    backend = getattr(args, "control_backend", "official_ee")
+    if bundle.control_backend != backend:
+        raise ValueError("requested_control_backend_requires_matching_qualified_bundle")
     source, assets, assessment = (v / "native_source_001/source_manifest.json",
         v / "native_assets_002/asset_manifest.json", v / "native_assets002_diagnostic_assessment.json")
     preparation = verify_manifests(native, source, assets, pins(), assessment)
@@ -323,18 +335,19 @@ def prepare(args):
         "request_payload_audit":payload_check,
         "human_approval_pending":True,"policy_model_calls":0})
     shared_json(packet / "calibration.json",calibration)
+    from robodojo_uc71.client import prompt_diff, executive_instructions
+    shared_json(packet / "controller_disclosure.json", {
+        "control_backend": backend, "controller_capabilities": bundle.controller_capabilities,
+        "executive_instructions": executive_instructions(bundle.execution_limits, control_backend=backend),
+        "prompt_diff": prompt_diff(bundle.execution_limits, control_backend=backend)})
     shared_json(packet / "preview.json",{"schema":"robodojo-standard-review-preview-1",
         "images":reference["image_files"],"task_prompt":instruction,"instruction_source":instruction_source,
         "plan":{"path":str(packet/"reviewed_plan.json"),"sha256":file_sha256(packet/"reviewed_plan.json")},
         "runtime_bundle":{"path":str(args.runtime_bundle.resolve()),"sha256":file_sha256(args.runtime_bundle)},
         "full_test_authorized":False,"full_test_started":False})
-    binding = {"gpu_uuid":"GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2","pci_bus_id":"0000:01:00.0",
-               "kit_index":0,"cuda_ordinal":0}
-    runtime_config = {"python":str(BASE/"runtime/new_host_env/bin/python"),
-        "library_path":str(BASE/"runtime/new_host_sysroot_002/usr/lib/x86_64-linux-gnu"),
-        "icd":"/etc/vulkan/icd.d/nvidia_icd.json","overlay_target":str(BASE/"runtime/native_overlay"),
-        "compat_target":str(BASE/"runtime/native_compat"),"worker_script":str(BASE/"scripts/run_native_worker.py"),
-        "maximum_wall_time_s":10800,"ready_timeout_s":600,"minimum_free_mib":16384}
+    binding = preview_launch["binding"]
+    from provision_new_host_camera import gpu_snapshot, validate_single_gpu
+    validate_single_gpu(gpu_snapshot(), binding, require_idle=True)
     manifest_path, spec_path = packet/"manifest.json", packet/"worker_spec.json"
     spec = {"schema":"robodojo-native-worker-spec-1","manifest_path":str(manifest_path),
         "runtime_bundle_path":str(args.runtime_bundle.resolve()),"native_root":str(native),
@@ -344,6 +357,9 @@ def prepare(args):
     managed = prepare_service(service,python=runtime_config["python"],spec=spec_path,
         overlay=runtime_config["overlay_target"],compatibility=runtime_config["compat_target"])
     files = FileBindings()
+    for path in (runtime_record, runtime_record.with_name("requirements.lock"),
+                 runtime_record.with_name("package_inventory.json")):
+        files.add(path)
     historical = getattr(args, "historical_aliases", [])
     for path, digest in historical: files.load_historical_aliases(path, digest)
     for path, _ in historical: files.document_closure(path)
@@ -370,12 +386,13 @@ def prepare(args):
     for relative in ("install_001/install_status.json","native_dependencies_001/install_status.json",
                      "native_compatibility_001/install_status.json"):
         files.document_closure(v/relative)
-    configuration = {"task_prompt":instruction,"approved_plan":plan,
+    configuration = {"task_prompt":instruction,"approved_plan":plan,"control_backend":backend,
         "direction_frame":direction_frame_from_calibration(calibration),
         "model":{"name":"gpt-6-astra","reasoning_effort":"high","request_deadline_s":180},
         "execution":execution_configuration(controller_config=bundle.controller_config,
             monitoring=bundle.monitoring_settings,limits=bundle.execution_limits,
-            initial_gripper_commands={"left":"open","right":"open"},controller_capabilities=bundle.controller_capabilities),
+            initial_gripper_commands={"left":"open","right":"open"},controller_capabilities=bundle.controller_capabilities,
+            control_backend=backend),
         "runtime":runtime_config,"asset_policy":published_asset_policy(preparation),
         "native_standard":{"action_limit":1400,"substeps_per_action":10,"physics_dt_s":.004,"layout":0},
         "scope":{"qualitative_pilot":True,"matched_reference_reproduction":False,
@@ -415,4 +432,9 @@ if __name__ == "__main__":
         parser.add_argument("--"+name,type=Path,required=True)
     parser.add_argument("--historical-aliases", action="append", nargs=2, default=[], metavar=("PATH", "SHA256"),
         help="Explicit reviewed historical-source companion; repeat for multiple hash-bound companions.")
+    parser.add_argument("--evidence-root", type=Path,
+                        help="Current-host qualified evidence tree; historical records are never rewritten")
+    parser.add_argument("--runtime-record", type=Path, required=True,
+                        help="Verified current-host consolidated Conda install_status.json")
+    parser.add_argument("--control-backend", choices=("official_ee", "legacy_joint"), default="official_ee")
     print(json.dumps(prepare(parser.parse_args())))

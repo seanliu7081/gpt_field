@@ -1,5 +1,12 @@
 # Implementation status — Make Toast Standard, layout 0
 
+Current status, 2026-10-30: official RoboDojo EEF control is implemented for
+new packets, and the real cuRobo initialization/FK/IK check passed. Fresh native
+motion/gripper qualification and a new reviewed packet are still required.
+See [official control](docs/official_control.md) and the current-host README.
+The earlier readiness statement and reports below are historical and do not
+qualify the changed controller or authorize another full task attempt.
+
 **Ready for user approval of the frozen Make Toast Standard layout-0 attempt.** The native harness, complete controller diagnostic, measured parameter selection and independent review passed their preparation checks. The largest sampled native-scene memory use was 5,741 MiB VRAM, with at least 18,341 MiB free. One planning-only inference produced the original validated plan without edits; no execution-policy request or benchmark action has run. Approval remains absent and unconsumed. The complete model-driven parent/worker launch remains unexercised. See the [concrete approval brief](validation/new_host_20261029/FULL_TEST_REVIEW.md).
 
 The pinned native source and submodules are verified. The selected 214 asset files total 457,282,229 bytes, with an additional audited 15.2 MiB of NVIDIA material resources. One connected normal texture is absent from the published camera-stand package; robot materials also contain out-of-scope bindings. The reset-only diagnostics preserve original assets and explicitly leave Standard readiness and asset fidelity false. An isolated compatibility overlay repaired both startup import errors (`hid` and `pkg_resources`); the second native launch has clean extension startup. See the [latest native review](validation/new_host_20261029/native_preview002_review.json).

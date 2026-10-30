@@ -24,13 +24,14 @@ from test_native_episode import NativeEnv, action
 
 
 class Case:
-    def __init__(self, tmp_path, *, candidate=False, initial_override=None):
+    def __init__(self, tmp_path, *, candidate=False, initial_override=None,
+                 env_type=NativeEnv, control_backend="legacy_joint"):
         layout = tmp_path / "arx_x5/0/make_toast_0.json"
         layout.parent.mkdir(parents=True)
         layout.write_text('{"synthetic_only":true}\n')
         self.attempt = tmp_path / "attempt"
         self.attempt.mkdir()
-        self.env = NativeEnv(layout)
+        self.env = env_type(layout)
         self.identity = {"pid": os.getpid(), "boot_nonce": "synthetic-fresh-worker-nonce"}
         self.sensor = {"synthetic_sensors": ["head", "left_wrist", "right_wrist"]}
         self.start = {"synthetic_robot_start": [0.] * 6}
@@ -39,8 +40,11 @@ class Case:
         self.phases = []
         self.capture_override = None
         self.measurement_override = None
+        configuration = {"native_limit": 1400}
+        if control_backend != "legacy_joint":
+            configuration["control_backend"] = control_backend
         self.manifest = build_manifest(task_key="make_toast", attempt_dir=self.attempt,
-            bindings={"layout": layout}, configuration={"native_limit": 1400},
+            bindings={"layout": layout}, configuration=configuration,
             sensor_sha256=canonical_sha256(self.sensor), start_state_sha256=canonical_sha256(self.start),
             preview_sha256="c" * 64, preparation_worker={"pid": 999, "boot_nonce": "synthetic-preview-worker-nonce"})
         parent, worker = socket.socketpair()
@@ -50,7 +54,8 @@ class Case:
             worker_identity=self.identity, verify_runtime_readiness=self.readiness,
             measure_robot=self.measure, capture_rgb=self.capture, expected_layout_path=layout,
             expected_layout_sha256=file_sha256(layout), registration_evidence_id="synthetic-registration",
-            initial_gripper_commands=initial_override or {"left": "open", "right": "open"})
+            initial_gripper_commands=initial_override or {"left": "open", "right": "open"},
+            control_backend=control_backend)
 
     def readiness(self, phase):
         self.phases.append(phase)
@@ -61,7 +66,9 @@ class Case:
             return self.measurement_override()
         arms = {}
         for arm in ("left", "right"):
-            q = np.asarray(self.env.actions[-1][f"{arm}_arm_joint_state"] if self.env.actions else [0.] * 6)
+            values = (self.env.joint_targets[arm] if hasattr(self.env, "joint_targets") else
+                      self.env.actions[-1][f"{arm}_arm_joint_state"] if self.env.actions else [0.] * 6)
+            q = np.asarray(values)
             arms[arm] = ArmState(q, np.zeros(6), np.zeros(3), [1., 0., 0., 0.], np.eye(6),
                 -np.ones(6) * 3, np.ones(6) * 3, np.ones(6) * 5, np.zeros(3))
         return RobotMeasurement(arms, {arm: [.02, .02] for arm in arms})

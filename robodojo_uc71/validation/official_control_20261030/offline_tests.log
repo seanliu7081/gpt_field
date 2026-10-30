@@ -1,0 +1,1207 @@
+...................................................................FFFF. [  9%]
+........................................................................ [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 39%]
+...................................................................F.FFF [ 49%]
+FFFFFF.FFFFF............................................................ [ 59%]
+........................................................................ [ 69%]
+........................................................................ [ 79%]
+........................................................................ [ 89%]
+...........................................................FFFF..FFFFFFF [ 99%]
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_missing_clearance_stops_after_bounded_motionless_wait __________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_missing_clearance_stops_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181680d0>
+
+    def test_missing_clearance_stops_after_bounded_motionless_wait(tmp_path, monkeypatch):
+>       output, stage, prep, capture, verify, clock = wait_fixture(tmp_path, monkeypatch)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controller_characterization_supervisor.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_missing_clearance_stops_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181680d0>
+decision = None, drift = False
+
+    def wait_fixture(tmp_path, monkeypatch, decision=None, drift=False):
+        attempt = tmp_path/"attempt"; output = attempt/"worker/controller"; output.mkdir(parents=True)
+        reviews = attempt/"operator_reviews"; reviews.mkdir(mode=0o750)
+>       os.chown(reviews, 0, 65534); os.chmod(reviews, 0o750)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_missing_clearance_stops_a0/attempt/operator_reviews'
+
+tests/test_controller_characterization_supervisor.py:25: PermissionError
+____________ test_fresh_root_owned_review_is_bound_to_exact_request ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_fresh_root_owned_review_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080180e5410>
+
+    def test_fresh_root_owned_review_is_bound_to_exact_request(tmp_path, monkeypatch):
+>       output, stage, prep, capture, verify, clock = wait_fixture(tmp_path, monkeypatch, "clear_for_empty_gripper_timing")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controller_characterization_supervisor.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_fresh_root_owned_review_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080180e5410>
+decision = 'clear_for_empty_gripper_timing', drift = False
+
+    def wait_fixture(tmp_path, monkeypatch, decision=None, drift=False):
+        attempt = tmp_path/"attempt"; output = attempt/"worker/controller"; output.mkdir(parents=True)
+        reviews = attempt/"operator_reviews"; reviews.mkdir(mode=0o750)
+>       os.chown(reviews, 0, 65534); os.chmod(reviews, 0o750)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_fresh_root_owned_review_i0/attempt/operator_reviews'
+
+tests/test_controller_characterization_supervisor.py:25: PermissionError
+_________________ test_ambiguous_review_stops_without_dispatch _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_ambiguous_review_stops_wi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018769cd0>
+
+    def test_ambiguous_review_stops_without_dispatch(tmp_path, monkeypatch):
+>       output, stage, prep, capture, verify, _ = wait_fixture(tmp_path, monkeypatch, "ambiguous_or_not_clear")
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controller_characterization_supervisor.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_ambiguous_review_stops_wi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018769cd0>
+decision = 'ambiguous_or_not_clear', drift = False
+
+    def wait_fixture(tmp_path, monkeypatch, decision=None, drift=False):
+        attempt = tmp_path/"attempt"; output = attempt/"worker/controller"; output.mkdir(parents=True)
+        reviews = attempt/"operator_reviews"; reviews.mkdir(mode=0o750)
+>       os.chown(reviews, 0, 65534); os.chmod(reviews, 0o750)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_ambiguous_review_stops_wi0/attempt/operator_reviews'
+
+tests/test_controller_characterization_supervisor.py:25: PermissionError
+___________ test_raw_joint_drift_invalidates_accepted_visual_review ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_raw_joint_drift_invalidat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181574d0>
+
+    def test_raw_joint_drift_invalidates_accepted_visual_review(tmp_path, monkeypatch):
+>       output, stage, prep, capture, verify, _ = wait_fixture(tmp_path, monkeypatch, "clear_for_empty_gripper_timing", drift=True)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controller_characterization_supervisor.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_raw_joint_drift_invalidat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181574d0>
+decision = 'clear_for_empty_gripper_timing', drift = True
+
+    def wait_fixture(tmp_path, monkeypatch, decision=None, drift=False):
+        attempt = tmp_path/"attempt"; output = attempt/"worker/controller"; output.mkdir(parents=True)
+        reviews = attempt/"operator_reviews"; reviews.mkdir(mode=0o750)
+>       os.chown(reviews, 0, 65534); os.chmod(reviews, 0o750)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_raw_joint_drift_invalidat0/attempt/operator_reviews'
+
+tests/test_controller_characterization_supervisor.py:25: PermissionError
+_______ test_private_root_records_reject_worker_writable_or_wrong_owner ________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_private_root_records_reje0')
+
+    def test_private_root_records_reject_worker_writable_or_wrong_owner(tmp_path):
+>       path = root_record(tmp_path/"manifest.json",{"synthetic_only":True})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_private_root_records_reje0/manifest.json')
+value = {'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_root_records_reje0/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_______ test_private_temp_preparation_requires_owner_mode_and_real_write _______
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_private_temp_preparation_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181859d0>
+
+    def test_private_temp_preparation_requires_owner_mode_and_real_write(tmp_path,monkeypatch):
+        expected = runtime.private_runtime_paths(tmp_path); temporary = Path(expected["tmpdir"])
+>       temporary.mkdir(mode=0o700); os.chown(temporary,65534,65534)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_temp_preparation_0/tmp'
+
+tests/test_native_runtime.py:47: PermissionError
+_________ test_actual_native_file_handler_must_stay_under_private_temp _________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_actual_native_file_handle0')
+
+    def test_actual_native_file_handler_must_stay_under_private_temp(tmp_path):
+        import logging
+        expected = Path(runtime.private_runtime_paths(tmp_path)["isaaclab_log_directory"])
+        expected.mkdir(parents=True)
+        good = logging.FileHandler(expected/"isaaclab_synthetic.log")
+        bad = logging.FileHandler(tmp_path/"shared.log")
+        try:
+>           os.chown(good.baseFilename,65534,65534)
+E           PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_actual_native_file_handle0/tmp/isaaclab/logs/isaaclab_synthetic.log'
+
+tests/test_native_runtime.py:65: PermissionError
+_____________ test_spec_is_exact_existing_path_and_safe_boot_nonce _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_spec_is_exact_existing_pa0')
+
+    def test_spec_is_exact_existing_path_and_safe_boot_nonce(tmp_path):
+        names = {f.name for f in runtime.fields(runtime.WorkerRuntimeSpec)}
+        item = tmp_path/"input"; item.write_text("synthetic")
+        spec = {name:str(item) for name in names-{"gpu_binding","boot_nonce"}}
+        spec.update(schema="robodojo-native-worker-spec-1",boot_nonce="synthetic-worker-nonce",
+            gpu_binding={"gpu_uuid":"GPU-synthetic", "pci_bus_id":"0000:01:00.0", "kit_index":0,"cuda_ordinal":0})
+>       path = root_record(tmp_path/"spec.json",spec)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_spec_is_exact_existing_pa0/spec.json')
+value = {'asset_assessment_path': '/tmp/pytest-of-haotian/pytest-59/test_spec_is_exact_existing_pa0/input', 'asset_manifest_pa...e', 'gpu_binding': {'cuda_ordinal': 0, 'gpu_uuid': 'GPU-synthetic', 'kit_index': 0, 'pci_bus_id': '0000:01:00.0'}, ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_spec_is_exact_existing_pa0/spec.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_full_preparation_requires_human_bound_explicit_published_defect_policy __
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_full_preparation_requires0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181a5ad0>
+
+    def test_full_preparation_requires_human_bound_explicit_published_defect_policy(tmp_path, monkeypatch):
+>       prep,manifest,_ = policy_case(tmp_path,monkeypatch)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_full_preparation_requires0/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_full_preparation_requires0', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_full_preparation_requires0/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+__ test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[diagnostic] __
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080180f0a50>
+kind = 'diagnostic'
+
+    @pytest.mark.parametrize("kind",["diagnostic","prompt","manifest","upgrade","missing_approval"])
+    def test_diagnostic_or_unbound_assets_cannot_authorize_full_worker(tmp_path, monkeypatch, kind):
+>       prep,manifest,approval = policy_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass0/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass0', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass0/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+____ test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[prompt] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018749290>
+kind = 'prompt'
+
+    @pytest.mark.parametrize("kind",["diagnostic","prompt","manifest","upgrade","missing_approval"])
+    def test_diagnostic_or_unbound_assets_cannot_authorize_full_worker(tmp_path, monkeypatch, kind):
+>       prep,manifest,approval = policy_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass1/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass1', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass1/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+___ test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[manifest] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018185110>
+kind = 'manifest'
+
+    @pytest.mark.parametrize("kind",["diagnostic","prompt","manifest","upgrade","missing_approval"])
+    def test_diagnostic_or_unbound_assets_cannot_authorize_full_worker(tmp_path, monkeypatch, kind):
+>       prep,manifest,approval = policy_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass2/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass2', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass2/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+___ test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[upgrade] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080186648d0>
+kind = 'upgrade'
+
+    @pytest.mark.parametrize("kind",["diagnostic","prompt","manifest","upgrade","missing_approval"])
+    def test_diagnostic_or_unbound_assets_cannot_authorize_full_worker(tmp_path, monkeypatch, kind):
+>       prep,manifest,approval = policy_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass3/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass3', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass3/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[missing_approval] _
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018251050>
+kind = 'missing_approval'
+
+    @pytest.mark.parametrize("kind",["diagnostic","prompt","manifest","upgrade","missing_approval"])
+    def test_diagnostic_or_unbound_assets_cannot_authorize_full_worker(tmp_path, monkeypatch, kind):
+>       prep,manifest,approval = policy_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:95: in policy_case
+    root_record(tmp_path/"approval.json",approval)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass4/approval.json')
+value = {'approval_mode': 'manual_chat_review', 'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass4', 'attempts': 1, 'manifest_sha256': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', ...}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_diagnostic_or_unbound_ass4/approval.json'
+
+tests/test_native_runtime.py:19: PermissionError
+__ test_ready_captures_fresh_images_and_exact_paused_state_without_advancing ___
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_ready_captures_fresh_imag0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080180d7710>
+
+    def test_ready_captures_fresh_images_and_exact_paused_state_without_advancing(tmp_path, monkeypatch):
+>       case,callback,bundle,output = callback_case(tmp_path,monkeypatch)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:163: in callback_case
+    manifest_path = root_record(tmp_path/"manifest.json",manifest)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_ready_captures_fresh_imag0/manifest.json')
+value = {'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_ready_captures_fresh_imag0/attempt', 'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_ready_captures_fresh_imag0/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[bundle] _
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080182777d0>
+kind = 'bundle'
+
+    @pytest.mark.parametrize("kind",["bundle","instruction","physics","approval_write"])
+    def test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract(tmp_path, monkeypatch,kind):
+>       case,callback,bundle,_ = callback_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:163: in callback_case
+    manifest_path = root_record(tmp_path/"manifest.json",manifest)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f0/manifest.json')
+value = {'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f0/attempt', 'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f0/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[instruction] _
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080181a2250>
+kind = 'instruction'
+
+    @pytest.mark.parametrize("kind",["bundle","instruction","physics","approval_write"])
+    def test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract(tmp_path, monkeypatch,kind):
+>       case,callback,bundle,_ = callback_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:163: in callback_case
+    manifest_path = root_record(tmp_path/"manifest.json",manifest)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f1/manifest.json')
+value = {'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f1/attempt', 'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f1/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[physics] _
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801889cb10>
+kind = 'physics'
+
+    @pytest.mark.parametrize("kind",["bundle","instruction","physics","approval_write"])
+    def test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract(tmp_path, monkeypatch,kind):
+>       case,callback,bundle,_ = callback_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:163: in callback_case
+    manifest_path = root_record(tmp_path/"manifest.json",manifest)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f2/manifest.json')
+value = {'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f2/attempt', 'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f2/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+_ test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[approval_write] _
+
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080180d7150>
+kind = 'approval_write'
+
+    @pytest.mark.parametrize("kind",["bundle","instruction","physics","approval_write"])
+    def test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract(tmp_path, monkeypatch,kind):
+>       case,callback,bundle,_ = callback_case(tmp_path,monkeypatch)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_runtime.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_runtime.py:163: in callback_case
+    manifest_path = root_record(tmp_path/"manifest.json",manifest)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f3/manifest.json')
+value = {'attempt_dir': '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f3/attempt', 'synthetic_only': True}
+
+    def root_record(path, value):
+>       path.write_text(json.dumps(value)); os.chown(path,0,65534); path.chmod(0o640)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_readiness_cannot_ignore_f3/manifest.json'
+
+tests/test_native_runtime.py:19: PermissionError
+__________ test_approval_must_match_exact_manifest_before_acceptance ___________
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_approval_must_match_exact0')
+
+    def test_approval_must_match_exact_manifest_before_acceptance(supervisor, tmp_path):
+        attempt = tmp_path / "attempt"; attempt.mkdir()
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64}
+        with pytest.raises(FileNotFoundError): supervisor.verify_approval(manifest)
+        approval = {"schema":"robodojo-uc71-human-approval-1","approval_mode":"manual_chat_review",
+            "manual_browser_review":False,"attempt_dir":str(attempt),"attempts":1,
+            "user_message":"offline fixture only","manifest_sha256":"c"*64,"preview_sha256":"b"*64}
+>       path = attempt / "approval.json"; path.write_text(json.dumps(approval)); os.chown(path,0,65534); path.chmod(0o640)
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_approval_must_match_exact0/attempt/approval.json'
+
+tests/test_standard_supervisor.py:80: PermissionError
+__________ test_private_runtime_directory_modes_checked_before_spawn ___________
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_private_runtime_directory0')
+
+    def test_private_runtime_directory_modes_checked_before_spawn(supervisor, tmp_path):
+        attempt = tmp_path / "attempt"
+        runtime = attempt / "runtime"
+        attempt.mkdir(); runtime.mkdir()
+        paths = [attempt / "worker", *(runtime / name for name in ("home","cache","config","data","tmp"))]
+        for path in paths: path.mkdir()
+>       for path in [runtime,*paths]: os.chown(path,65534,65534); path.chmod(0o700)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_private_runtime_directory0/attempt/runtime'
+
+tests/test_standard_supervisor.py:92: PermissionError
+_____ test_existing_empty_log_is_group_readable_under_supervisor_umask0077 _____
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_existing_empty_log_is_gro0')
+
+    def test_existing_empty_log_is_group_readable_under_supervisor_umask0077(supervisor,tmp_path):
+>       path = tmp_path/"native.log"; path.touch(); os.chown(path,0,65534); path.chmod(0o640)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_existing_empty_log_is_gro0/native.log'
+
+tests/test_standard_supervisor.py:100: PermissionError
+______________ test_worker_log_error_closes_fd_and_rejects_links _______________
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_worker_log_error_closes_f0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080187ce150>
+
+    def test_worker_log_error_closes_fd_and_rejects_links(supervisor,tmp_path,monkeypatch):
+>       path = tmp_path/"native.log"; path.touch(); os.chown(path,0,65534); path.chmod(0o640)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_worker_log_error_closes_f0/native.log'
+
+tests/test_standard_supervisor.py:114: PermissionError
+_ test_preclose_binds_private_paths_modules_graphics_and_actual_callback_timing _
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_binds_private_pa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801824a250>
+
+    def test_preclose_binds_private_paths_modules_graphics_and_actual_callback_timing(supervisor,tmp_path,monkeypatch):
+>       spec,manifest,record,_,_ = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:240: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_binds_private_pa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801824a250>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_binds_private_pa0/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+___ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[hash] ____
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801826f510>
+kind = 'hash'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801826f510>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_0/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+____ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[pid] ____
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801828cd50>
+kind = 'pid'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801828cd50>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_1/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+___ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[token] ___
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801814e190>
+kind = 'token'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801814e190>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_2/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+__ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[logger] ___
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018266810>
+kind = 'logger'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018266810>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_3/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+__ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[module] ___
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801888d3d0>
+kind = 'module'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801888d3d0>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_4/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+_ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[graphics] __
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018791f90>
+kind = 'graphics'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018791f90>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_5/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+_ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[approval] __
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018855510>
+kind = 'approval'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018855510>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_6/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+__ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[timing] ___
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018846f50>
+kind = 'timing'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x708018846f50>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_7/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+__ test_preclose_rejects_changed_or_inconsistent_supporting_evidence[failure] __
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801879b5d0>
+kind = 'failure'
+
+    @pytest.mark.parametrize("kind",["hash","pid","token","logger","module","graphics","approval","timing","failure"])
+    def test_preclose_rejects_changed_or_inconsistent_supporting_evidence(supervisor,tmp_path,monkeypatch,kind):
+>       spec,manifest,record,root,close_path = shutdown_fixture(supervisor,tmp_path,monkeypatch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_standard_supervisor.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+supervisor = <module 'standard_supervisor_test' from '/home/haotian/code/gpt_field/robodojo_uc71/scripts/run_standard_attempt.py'>
+tmp_path = PosixPath('/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70801879b5d0>
+
+    def shutdown_fixture(supervisor,tmp_path,monkeypatch):
+        """Synthetic on-disk producer-shaped proof; no native bootstrap is run."""
+        from robodojo_uc71 import native_runtime
+        attempt = tmp_path/"attempt"; root = attempt/"runtime/bootstrap"; root.mkdir(parents=True)
+        (attempt/"worker").mkdir()
+        def save(path,value):
+            path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(value)); return path
+        def digest(path): return supervisor.file_sha256(path)
+        spec = {"runtime_dir":str(attempt/"runtime"),"manifest_path":str(attempt/"manifest.json"),
+            "native_root":str(tmp_path/"native"),"boot_nonce":"synthetic-worker-nonce",
+            "gpu_binding":{"gpu_uuid":"GPU-synthetic","pci_bus_id":"0000:01:00.0","kit_index":0,"cuda_ordinal":0}}
+        for name in ("source_manifest_path","asset_manifest_path","asset_assessment_path"):
+            spec[name] = str(save(tmp_path/(name+".json"),{"synthetic_only":True}))
+        baseline = tmp_path/"baseline"; basechild = baseline/"worker/controller"
+        base_module = save(basechild/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        current_module = save(root/"kit-portable/data/kit/module.py",{"synthetic_module":True})
+        modules = {"synthetic_only":{"file":str(base_module),"version":"test-only"}}
+        module_path = save(basechild/"loaded_module_provenance.json",modules)
+        result_path = save(basechild/"controller_result.json",{"loaded_module_provenance_sha256":digest(module_path)})
+        library = tmp_path/"libcuda.synthetic.so"; library.write_text("not an actual loaded library")
+        launch_path = save(baseline/"launch_result.json",{"controller_result_sha256":digest(result_path),
+            "child_loaded_graphics_library_paths":[str(library)]})
+        spec["runtime_bundle_path"] = str(save(tmp_path/"bundle.json",{"evidence":{"controller_launch":{
+            "path":str(launch_path),"sha256":digest(launch_path)}}}))
+        expected = {"asset_fidelity_passed":False,"dependency_closure_complete":False,
+            "source_manifest_sha256":digest(Path(spec["source_manifest_path"])),
+            "asset_manifest_sha256":digest(Path(spec["asset_manifest_path"])),
+            "asset_diagnostic_assessment":{"sha256":digest(Path(spec["asset_assessment_path"])),
+                "known_missing_reference":"/synthetic/missing.png"}}
+        monkeypatch.setattr(supervisor,"expected_native_preparation",lambda _:expected.copy())
+        program = tmp_path/"program.py"; program.write_text("# synthetic fixture only\n")
+        monkeypatch.setattr(native_runtime,"runtime_program_files",lambda:[program])
+        required = [program,*[Path(spec[name]) for name in
+            ("runtime_bundle_path","source_manifest_path","asset_manifest_path","asset_assessment_path")]]
+        source_hashes = {str(path):digest(path) for path in required}
+        manifest = {"attempt_dir":str(attempt),"manifest_sha256":"a"*64,"preview_sha256":"b"*64,
+            "configuration":{"asset_policy":native_runtime.published_asset_policy(expected)},
+            "files":{str(i):{"path":str(path),"sha256":digest(path)} for i,path in enumerate(required)}}
+        approval_path = save(attempt/"approval.json",{"schema":"robodojo-uc71-human-approval-1",
+            "approval_mode":"manual_chat_review","manual_browser_review":False,"manifest_sha256":"a"*64,
+            "preview_sha256":"b"*64,"attempt_dir":str(attempt),"attempts":1,"user_message":"SYNTHETIC FIXTURE ONLY"})
+>       os.chown(approval_path,0,65534); approval_path.chmod(0o640)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 1] Operation not permitted: '/tmp/pytest-of-haotian/pytest-59/test_preclose_rejects_changed_8/attempt/approval.json'
+
+tests/test_standard_supervisor.py:198: PermissionError
+- generated xml file: /home/haotian/code/gpt_field/robodojo_uc71/validation/official_control_20261030/offline_tests.xml -
+=========================== short test summary info ============================
+FAILED tests/test_controller_characterization_supervisor.py::test_missing_clearance_stops_after_bounded_motionless_wait
+FAILED tests/test_controller_characterization_supervisor.py::test_fresh_root_owned_review_is_bound_to_exact_request
+FAILED tests/test_controller_characterization_supervisor.py::test_ambiguous_review_stops_without_dispatch
+FAILED tests/test_controller_characterization_supervisor.py::test_raw_joint_drift_invalidates_accepted_visual_review
+FAILED tests/test_native_runtime.py::test_private_root_records_reject_worker_writable_or_wrong_owner
+FAILED tests/test_native_runtime.py::test_private_temp_preparation_requires_owner_mode_and_real_write
+FAILED tests/test_native_runtime.py::test_actual_native_file_handler_must_stay_under_private_temp
+FAILED tests/test_native_runtime.py::test_spec_is_exact_existing_path_and_safe_boot_nonce
+FAILED tests/test_native_runtime.py::test_full_preparation_requires_human_bound_explicit_published_defect_policy
+FAILED tests/test_native_runtime.py::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[diagnostic]
+FAILED tests/test_native_runtime.py::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[prompt]
+FAILED tests/test_native_runtime.py::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[manifest]
+FAILED tests/test_native_runtime.py::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[upgrade]
+FAILED tests/test_native_runtime.py::test_diagnostic_or_unbound_assets_cannot_authorize_full_worker[missing_approval]
+FAILED tests/test_native_runtime.py::test_ready_captures_fresh_images_and_exact_paused_state_without_advancing
+FAILED tests/test_native_runtime.py::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[bundle]
+FAILED tests/test_native_runtime.py::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[instruction]
+FAILED tests/test_native_runtime.py::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[physics]
+FAILED tests/test_native_runtime.py::test_readiness_cannot_ignore_failed_bundle_instruction_or_readonly_contract[approval_write]
+FAILED tests/test_standard_supervisor.py::test_approval_must_match_exact_manifest_before_acceptance
+FAILED tests/test_standard_supervisor.py::test_private_runtime_directory_modes_checked_before_spawn
+FAILED tests/test_standard_supervisor.py::test_existing_empty_log_is_group_readable_under_supervisor_umask0077
+FAILED tests/test_standard_supervisor.py::test_worker_log_error_closes_fd_and_rejects_links
+FAILED tests/test_standard_supervisor.py::test_preclose_binds_private_paths_modules_graphics_and_actual_callback_timing
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[hash]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[pid]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[token]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[logger]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[module]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[graphics]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[approval]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[timing]
+FAILED tests/test_standard_supervisor.py::test_preclose_rejects_changed_or_inconsistent_supporting_evidence[failure]
+33 failed, 690 passed in 219.00s (0:03:39)

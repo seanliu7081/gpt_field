@@ -7,5 +7,30 @@ __pycache__/
 previews/
 runs/
 
+# Local validation caches, downloads and simulator scratch directories.
+# Keep lockfiles, test fixtures, final reports and hash-bound evidence visible.
+# Existing tracked historical artifacts remain tracked.
+/validation/**/home/
+/validation/**/cache/
+/validation/**/.cache/
+/validation/**/uv-cache/
+/validation/**/tmp/
+/validation/**/kit-portable/
+/validation/**/wheelhouse/
+/validation/**/downloads/
+/validation/**/*.whl
+/validation/**/*.deb
+
+# Diagnostic console output; stdout_stderr.log is deliberately retained because
+# an existing test reads it. Final offline_tests.log/XML remain visible too.
+/validation/**/pip*.log
+/validation/**/install_*.log
+/validation/**/kit.log
+/validation/**/kit_*.log
+/validation/**/isaac_sim*.log
+/validation/**/isaaclab_*.log
+/validation/**/offline_tests_initial.log
+/validation/**/offline_tests_initial.xml
+
 # Preserve every file covered by the frozen release manifest.
 !vendor/uc71/src/gpt_field.egg-info/

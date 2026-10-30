@@ -17,6 +17,7 @@ import numpy as np
 
 from .approval import ApprovalError, VerifiedFileHashCache, canonical_sha256
 from .controller import ControllerConfig, measured_tcp_pose
+from .official_control import validate_control_backend
 from .fragment_executor import MonitoringSettings, RobotMeasurement
 from .native_measurements import NativeMeasurements, native_link6_tool_candidate
 from .reset_binding import CAMERAS, verify_fresh_reset
@@ -64,6 +65,7 @@ class VerifiedRuntimeBundle:
         self._json_records = {}
         self._reset_verified = None
         self._readers = {}
+        self.control_backend = validate_control_backend(self.document.get("control_backend", "legacy_joint"))
         self.verify()
         geometry = self._read("geometry")
         self._tool_transform = np.asarray(geometry["link6_from_tool"], dtype=float)
@@ -292,6 +294,8 @@ class VerifiedRuntimeBundle:
 
     def verify(self):
         d = self.document
+        if validate_control_backend(d.get("control_backend", "legacy_joint")) != self.control_backend:
+            raise RuntimeBundleError("runtime_control_backend_changed")
         self._verify_file({"path": str(self.path), "sha256": self._hash})
         if (canonical_sha256(d) != self._content_hash
                 or d.get("schema") != "robodojo-runtime-bundle-1"
@@ -385,7 +389,29 @@ class VerifiedRuntimeBundle:
                 or projection.get("full_test_authorized") is not False):
             raise RuntimeBundleError("actual_moving_camera_projection_review_required")
         self._projection_closure(projection, joint)
+        if self.control_backend == "official_ee":
+            from .official_control_readiness import verify_official_readiness
+            self._official_setup = verify_official_readiness(d.get("official_control"),
+                geometry=d["evidence"]["geometry"], reset_reference=d["evidence"]["reset_reference"],
+                parameters=d["parameters"])
+            required = {Path(__file__).with_name(name).resolve() for name in
+                ("official_control.py", "official_control_setup.py", "official_control_readiness.py",
+                 "native_config.py", "native_episode.py", "native_worker_protocol.py", "native_worker_client.py",
+                 "native_episode_runner.py", "client.py")}
+            if not required <= {Path(row["path"]).resolve() for row in d["program_files"]}:
+                raise RuntimeBundleError("official_control_program_closure_missing")
+        elif "official_control" in d:
+            raise RuntimeBundleError("legacy_bundle_cannot_claim_official_qualification")
         return True
+
+    def activate_official_dependencies(self, cache_root):
+        """Load only the frozen, verified task-local overlay in the native worker."""
+        from .official_control_setup import activate_setup_record
+        self.verify()
+        if self.control_backend != "official_ee":
+            raise RuntimeBundleError("official_backend_required")
+        record = activate_setup_record(self.document["official_control"]["setup"]["path"], cache_root)
+        return record["overlay_target"]
 
     def measure(self, env):
         self.verify()
@@ -423,6 +449,9 @@ class VerifiedRuntimeBundle:
 
     @property
     def controller_capabilities(self):
+        if self.control_backend == "official_ee":
+            return validate_controller_capabilities({"version": "robodojo-uc71-official-ee-controller-1",
+                "status": "validated", **self.monitoring_settings.checked()})
         c = self.controller_config
         return validate_controller_capabilities({"version": "robodojo-uc71-robot-only-controller-1",
             "status": "validated", "action_translation_m": {

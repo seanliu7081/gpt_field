@@ -1,5 +1,20 @@
 # RoboDojo uc7.1 implementation plan — reviewed revision
 
+Control update, 2026-10-30: the user authorized implementing official RoboDojo
+control. New packets select `official_ee`, using the pinned native cuRobo solver,
+interpolation, gripper mapping and actuators. This supersedes the original
+robot-only Jacobian choice below. [The new contract](docs/official_control.md)
+discloses the fixed native table/self-collision model, Cartesian inactive-arm
+hold, and native IK-failure behavior. Installation/offline verification does not
+replace fresh native motion/gripper qualification or full-test approval.
+
+Current-host update, 2026-10-30: Conda, GPU-0 rendering, ChatGPT subscription
+sign-in and isolated worker permissions are verified; Supervisor is installed.
+Fresh native reset/controller qualification and a new current-host review packet
+remain. No Make Toast attempt has started on this host. See [setup evidence](validation/conda_host_20261030/setup_result.json).
+The decisions below retain their original scope; historical approvals and runtime
+records do not authorize or qualify the migrated installation.
+
 Updated 2026-10-29. Implementation of **Make Toast Standard, seed-directory 0 / layout ID 0** is authorized. The user accepted NVIDIA's Omniverse licence for isolated setup and model-free GPU 4 checks. **The full test has not been approved or started.** Original planning documents and the independent review remain unchanged in [planning_archive_20261029](planning_archive_20261029/).
 
 ## Experiment and disclosed adaptations
@@ -16,7 +31,7 @@ This is a versioned uc7.1 RoboDojo adapter, not the byte-identical Panda control
 2. Preserve the official **1,400-action hard stop**. Each native action is ten 0.004-second physics substeps, giving 56 seconds of simulated policy motion. This is neither model-call count nor wall time. Characterize both arms and grippers model-free, then freeze the physical speed mapping before a model attempt. No uncapped continuation is authorized. Any future extension needs separate approval and must be labeled an extended-horizon diagnostic, not a Standard success or an equivalent LIBERO result.
 3. Send all three cameras at native 640×480 without resize, crop or padding. Version the rectangular planning grid, pixel grounding and geometry validation.
 4. Implement a bounded live-smoke option, but do not execute it without a separate concrete approval. No automatic task retry, including a zero-action failure.
-5. Use current-host GPU 0, UUID `GPU-a9e034f8-a424-d7fe-6eaa-45667dd2c6b2`, PCI `0000:01:00.0`. Verify CUDA and Kit identity and active renderer. NVIDIA licence acceptance and the current implementation request cover setup; full-test approval remains pending.
+5. Use current-host GPU 0, UUID `GPU-5e601970-3bfa-34f4-d99c-98b2ff594e91`, PCI `0000:01:00.0`. The host has two GPUs; select and verify this UUID, CUDA ordinal 0 and Kit renderer 0. NVIDIA licence acceptance and the current implementation request cover setup; full-test approval remains pending.
 
 Native arm joint positions are measured; native gripper scalar state is the previous command. Read both physical finger joints and velocities explicitly. Do not infer grasp success from the command or fabricate Panda channels. `data_source: teleop` affects native physics stabilization and must be preserved even though no demonstrations enter the policy.
 
@@ -36,7 +51,7 @@ After A0 passes, fetch exact gitlinks and only the required pinned asset depende
 
 Use a separate credential-free simulator worker and a main-thread model client. Preserve native resolved configuration, self-collision override, PhysX monitor startup, synchronous camera capture, action interpolation, ten-substep schedule, reset preparation and registered reward checks. Bypass the native multi-episode/restart driver and reject any layout substitution. Keep dedicated IPC independent of stdout/stderr redirection. Never send model requests from a websocket worker thread.
 
-Use joint-action mode with robot-only FK/Jacobian control, live joint limits and bounded targets. The native EEF IK path's scene obstacle must not supply privileged scene geometry. Calibrate robot tool pose and camera projection against actual rendered robot landmarks; preserve optical conventions and a frozen head-camera direction frame. Do not guess TCP offsets. Characterize transit, contact, home unfolding and gripper timings, disclose speed units, and freeze settings before the pilot. Physics remains paused during model and approval waits; validate a 300-second idle interval without simulator watchdog failure or hidden physics heartbeats.
+Use the official EEF path and its pinned cuRobo robot model, fixed table cuboid and self-collision checking. These native controller inputs remain internal; they do not add object poses or collision maps to the policy. Convert the calibrated UC71 TCP to native link6 using the target orientation. Preserve native joint interpolation and gripper execution, with measured arrival feedback. The old DLS increments and speed limits do not apply. Calibrate tool pose and camera projection against rendered robot landmarks; preserve optical conventions and a frozen head-camera direction frame. Characterize both arms, inactive-arm Cartesian hold, IK failure and gripper timing before the pilot. Physics remains paused during model and approval waits; validate a 300-second idle interval without simulator watchdog failure or hidden physics heartbeats.
 
 ## Information boundary
 

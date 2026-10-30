@@ -36,7 +36,7 @@ def program_files() -> list[Path]:
         "provision_new_host_camera.py", "provision_native_common.py",
         "provision_native_dependencies.py", "provision_native_compatibility.py")
     modules = ("native_config.py", "native_robot_inventory.py", "native_measurements.py",
-               "native_action_observer.py", "native_characterization.py")
+               "native_action_observer.py", "native_characterization.py", "host_runtime.py")
     return [*(BASE / "scripts" / name for name in scripts),
             *(BASE / "src/robodojo_uc71" / name for name in modules)]
 

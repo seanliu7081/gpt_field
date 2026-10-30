@@ -17,6 +17,7 @@ BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE / "src"))
 from robodojo_uc71.approval import file_sha256
 from robodojo_uc71.native_worker_client import write_private_record
+from robodojo_uc71.host_runtime import CREDENTIAL_STORE
 
 
 def public_instruction(native_root):
@@ -59,7 +60,7 @@ def main():
     output = args.output.resolve()
     output.mkdir(mode=0o700, parents=False, exist_ok=False)
     # Construction is offline. The provider is invoked only by request_plan.
-    credentials = SubscriptionCredentials('/workspace/gpt_field/.private/chatgpt_plan')
+    credentials = SubscriptionCredentials(CREDENTIAL_STORE)
     client = NativePlanClient(AstraConfig(model="gpt-6-astra", timeout_s=180.), task_prompt=instruction,
         token_provider=credentials.access_token, log_dir=output / "subscription_logs",
         reasoning_effort="high", request_deadline_s=180)

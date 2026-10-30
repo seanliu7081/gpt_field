@@ -250,8 +250,12 @@ def validate_controller_capabilities(value):
     if not isinstance(value, dict) or set(value) - positive - counts - profiles - {"status", "version"}:
         raise ValueError("Controller capabilities have non-allowlisted fields")
     clean = deepcopy(value)
-    if "version" in clean and clean["version"] != "robodojo-uc71-robot-only-controller-1":
+    if "version" in clean and clean["version"] not in (
+            "robodojo-uc71-robot-only-controller-1", "robodojo-uc71-official-ee-controller-1"):
         raise ValueError("Unknown controller capability version")
+    if clean.get("version") == "robodojo-uc71-official-ee-controller-1" and (
+            set(clean) & {"action_translation_m", "action_rotation_rad", "max_joint_step_rad", "joint_target_lead_rad"}):
+        raise ValueError("Official IK does not inherit the legacy differential-controller step limits")
     if "status" in clean and clean["status"] not in ("candidate_unvalidated", "validated"):
         raise ValueError("Invalid controller validation status")
     for key in positive & clean.keys():

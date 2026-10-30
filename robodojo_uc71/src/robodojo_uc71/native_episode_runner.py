@@ -35,6 +35,7 @@ import threading
 import numpy as np
 
 from .controller import ControllerConfig
+from .official_control import validate_control_backend
 from .fragment_executor import FragmentExecutionError, FragmentExecutor, MonitoringSettings
 from .native_worker_client import (NativeWorkerClient, ParentCapture, VerifiedActionFollowupError,
                                   WorkerClientError, write_private_record)
@@ -46,11 +47,24 @@ class EpisodeRunnerError(RuntimeError):
 
 
 def execution_configuration(*, controller_config: ControllerConfig, monitoring: MonitoringSettings,
-                            limits: ExecutionLimits, initial_gripper_commands, controller_capabilities) -> dict:
+                            limits: ExecutionLimits, initial_gripper_commands, controller_capabilities,
+                            control_backend="legacy_joint") -> dict:
+    control_backend = validate_control_backend(control_backend)
     controller_config.validate()
     if not isinstance(limits, ExecutionLimits): raise TypeError("ExecutionLimits required")
     capability = validate_controller_capabilities(controller_capabilities)
     c = controller_config
+    if control_backend == "official_ee":
+        expected = {"version": "robodojo-uc71-official-ee-controller-1",
+                    "status": capability.get("status"), **monitoring.checked()}
+        if capability != expected or capability.get("status") not in ("candidate_unvalidated", "validated"):
+            raise EpisodeRunnerError("official_controller_capabilities_do_not_match_execution_settings")
+        return {"control_backend": control_backend, "monitoring": monitoring.checked(),
+                "limits": asdict(limits), "initial_gripper_commands": dict(initial_gripper_commands),
+                "controller_capabilities": capability,
+                "native_semantics": {"target_frame": "world_link6", "inactive_arm_hold": "cartesian_pose",
+                    "ik_failure": "native_previous_joint_command_and_gripper_then_observe",
+                    "scene_geometry": "official_table_and_self_collision", "custom_dls": False}}
     expected = {"version": "robodojo-uc71-robot-only-controller-1", "status": capability.get("status"),
         "action_translation_m": {"transit": c.transit_translation_speed_m_s/c.control_hz,
                                  "contact": c.contact_translation_speed_m_s/c.control_hz},
@@ -80,13 +94,15 @@ class NativeEpisodeRunner:
             raise EpisodeRunnerError("executive_execution_contract_mismatch")
         expected = execution_configuration(controller_config=controller_config, monitoring=monitoring,
             limits=limits, initial_gripper_commands=worker.initial_gripper_commands,
-            controller_capabilities=model_client.controller_capabilities)
+            controller_capabilities=model_client.controller_capabilities,
+            control_backend=worker.manifest["configuration"].get("control_backend", "legacy_joint"))
         if worker.manifest["configuration"].get("execution") != expected:
             raise EpisodeRunnerError("execution_configuration_not_in_approved_manifest")
         if stop_requested is not None and not callable(stop_requested): raise TypeError("stop callback required")
         self.worker, self.lifecycle, self.model = worker, worker.lifecycle, model_client
         self._pid, self._monitoring, self._controller, self._limits = os.getpid(), monitoring, controller_config, limits
         self._stop_requested = stop_requested or (lambda: False)
+        self._control_backend = worker.manifest["configuration"].get("control_backend", "legacy_joint")
         self._executor = self._current_capture = self._last_action_capture = None
         self._feedback = self._execution = None
         self._step = 0
@@ -134,7 +150,7 @@ class NativeEpisodeRunner:
             self._executor = FragmentExecutor(lifecycle=self.lifecycle, measure=self.worker.measure,
                 send_native_joint_action=self._dispatch, gripper_commands=self.worker.initial_gripper_commands,
                 monitoring=self._monitoring, controller_config=self._controller, limits=self._limits,
-                stop_requested=self._stopped)
+                stop_requested=self._stopped, control_backend=self._control_backend)
         except BaseException:
             self._infrastructure_stop()
             raise

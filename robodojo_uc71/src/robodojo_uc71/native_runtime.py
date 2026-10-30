@@ -31,8 +31,8 @@ import traceback
 from .approval import canonical_sha256, file_sha256, verify_manifest
 from .ipc import JsonLineChannel
 from .native_config import (ResetOnlyClient, add_native_import_paths, build_native_preview_config,
-                            install_preview_adapters, validate_native_preview_config)
-from .native_episode import validate_joint_action
+                            install_preview_adapters, validate_native_preview_config, validate_native_planners)
+from .official_control import validate_control_action, validate_control_backend
 from .native_episode_runner import execution_configuration
 from .native_measurements import capture_camera_inventory, capture_paused_physics_state
 from .native_robot_inventory import capture_robot_inventory
@@ -44,11 +44,52 @@ from .worker_isolation import WORKER_GID, WORKER_UID, enforce_child_boundary
 BASE = Path(__file__).resolve().parents[2]
 SCRIPTS = BASE / "scripts"
 TASK_INSTRUCTION = "Pick up two slices of bread, place them into the toaster, and press the lever down."
-CREDENTIAL_STORE = Path("/workspace/gpt_field/.private/chatgpt_plan")
+from .host_runtime import CREDENTIAL_STORE
 
 
 class NativeRuntimeError(RuntimeError):
     pass
+
+
+def validate_official_module_provenance(setup, modules):
+    """Bind each loaded package label to its verified overlay entry point.
+
+    Checking only membership in installed_files would permit swapped packages
+    or both labels naming one installed file. This check reads only two source
+    files and neither imports the packages nor initializes their runtimes.
+    """
+    try:
+        if not isinstance(setup, Mapping) or not isinstance(modules, Mapping):
+            raise ValueError
+        overlay = Path(setup["overlay_target"])
+        if (not overlay.is_absolute() or not overlay.is_dir() or overlay.is_symlink()
+                or overlay.resolve(strict=True) != overlay or set(modules) != {"curobo", "warp"}):
+            raise ValueError
+        rows = setup["installed_files"]
+        if not isinstance(rows, list) or not rows:
+            raise ValueError
+        installed = {}
+        for row in rows:
+            if (not isinstance(row, Mapping) or set(row) != {"path", "sha256"}
+                    or not isinstance(row["path"], str) or row["path"] in installed
+                    or not isinstance(row["sha256"], str)
+                    or re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) is None):
+                raise ValueError
+            installed[row["path"]] = row["sha256"]
+        for name in ("curobo", "warp"):
+            entry = modules[name]
+            if (not isinstance(entry, Mapping) or set(entry) != {"path", "sha256"}
+                    or not isinstance(entry["path"], str)):
+                raise ValueError
+            path = Path(entry["path"])
+            if (path != overlay/name/"__init__.py" or not path.is_file() or path.is_symlink()
+                    or path.resolve(strict=True) != path
+                    or installed.get(str(path)) != entry["sha256"]
+                    or file_sha256(path) != entry["sha256"]):
+                raise ValueError
+    except (KeyError, TypeError, ValueError, OSError):
+        raise NativeRuntimeError("official_module_provenance_invalid") from None
+    return True
 
 
 def private_runtime_paths(runtime_dir: Path):
@@ -166,7 +207,8 @@ def runtime_program_files():
     modules = ("native_runtime.py", "native_runtime_bundle.py", "native_config.py", "native_robot_inventory.py",
         "native_measurements.py", "native_worker_protocol.py", "native_episode.py", "native_episode_runner.py",
         "native_worker_client.py", "fragment_executor.py", "controller.py", "schema.py", "lifecycle.py",
-        "approval.py", "ipc.py", "reset_binding.py", "worker_isolation.py")
+        "approval.py", "ipc.py", "reset_binding.py", "worker_isolation.py", "host_runtime.py",
+        "official_control.py", "official_control_setup.py", "official_control_readiness.py", "client.py")
     return [*(Path(__file__).with_name(name) for name in modules),
         *(SCRIPTS/name for name in ("run_native_worker.py","new_host_camera.py","prepare_native_preview.py","provision_native_common.py")),
         BASE/"configs/source_pins.json"]
@@ -204,7 +246,8 @@ def verify_human_preparation_approval(manifest, preparation):
 
 class NativeExecutionGuard:
     """One setup reset; afterward only a verified session ticket can dispatch."""
-    def __init__(self, env):
+    def __init__(self, env, *, control_backend="legacy_joint"):
+        self.control_backend = validate_control_backend(control_backend)
         self.env, self.session = env, None
         self.reset_used = self._reset_permit = self._reset_active = self._inside = False
         self._armed = None
@@ -219,7 +262,7 @@ class NativeExecutionGuard:
             try: return reset(*args, **kwargs)
             finally: self._reset_active = False
         def guarded_take(action):
-            clean = validate_joint_action(action)
+            clean = validate_control_action(action, self.control_backend)
             if (self._inside or self.session is None or self.session.state != "RUNNING" or self._armed is None
                     or self.session.lifecycle.snapshot()["in_flight"] != self._armed[0]
                     or env.take_action_cnt != [self._armed[0]-1] or clean != self._armed[1]):
@@ -246,6 +289,8 @@ class NativeExecutionGuard:
 
     def bind(self, session: NativeWorkerSession):
         if self.session is not None or not self.reset_used: raise NativeRuntimeError("guard_binding_is_single_use_after_reset")
+        if session.manifest.get("configuration", {}).get("control_backend", "legacy_joint") != self.control_backend:
+            raise NativeRuntimeError("guard_backend_differs_from_approved_session")
         self.session = session
         original = session._authorize_action
         def authorize(ticket, action):
@@ -263,6 +308,7 @@ class RuntimeCallbacks:
         self.guard, self.monitor, self.config = guard, monitor, config
         self._save_rgb, self._write = save_rgb, write_json
         self._starts = 0
+        self.control_backend = validate_control_backend(manifest.get("configuration", {}).get("control_backend", "legacy_joint"))
 
     def _clock(self):
         return (float(self.env.sim.sim.current_time), self.env.sim._sim_step_counter,
@@ -286,10 +332,13 @@ class RuntimeCallbacks:
     def verify(self, phase):
         before = self._clock()
         if (self.bundle.verify() is not True or self.monitor.is_fatal() or self.monitor.get_broken_envs()
-                or type(self.env.model_client) is not ResetOnlyClient or self.env.model_client.reset_calls != 1
-                or self.env.robot_manager.planner or self.env.robot_manager.ik_solver):
+                or type(self.env.model_client) is not ResetOnlyClient or self.env.model_client.reset_calls != 1):
             raise NativeRuntimeError("runtime_bundle_or_native_monitor_failed")
-        validate_native_preview_config(self.config)
+        validate_native_planners(self.env, self.control_backend)
+        if self.control_backend == "legacy_joint":
+            validate_native_preview_config(self.config)
+        else:
+            validate_native_preview_config(self.config, control_backend=self.control_backend)
         root_readonly_record(Path(self.approval["path"]))
         current_manifest = root_readonly_record(Path(self.preparation["manifest_path"]))
         if current_manifest != self.manifest:
@@ -354,23 +403,29 @@ def run_native_worker(spec: WorkerRuntimeSpec, *, ipc_fd: int, parent_pid: int, 
         raise NativeRuntimeError("approved_gpu_differs_from_verified_preparation")
     bundle = bundle_loader(spec.runtime_bundle_path,spec.native_root)
     if bundle.verify() is not True: raise NativeRuntimeError("runtime_bundle_not_verified")
+    backend = validate_control_backend(manifest["configuration"].get("control_backend", "legacy_joint"))
+    if backend != getattr(bundle, "control_backend", "legacy_joint"):
+        raise NativeRuntimeError("approved_control_backend_differs_from_bundle")
     expected = execution_configuration(controller_config=bundle.controller_config, monitoring=bundle.monitoring_settings,
         limits=bundle.execution_limits, initial_gripper_commands={"left":"open","right":"open"},
-        controller_capabilities=bundle.controller_capabilities)
+        controller_capabilities=bundle.controller_capabilities, control_backend=backend)
     if manifest["configuration"].get("execution") != expected:
         raise NativeRuntimeError("approved_execution_differs_from_measured_bundle")
     output = spec.runtime_dir/"bootstrap"
     output.mkdir(mode=0o700, exist_ok=False)
     private_paths = prepare_private_runtime_paths(spec.runtime_dir)
     write_durable_json(output/"private_path_preparation.json",private_paths)
+    if backend == "official_ee":
+        bundle.activate_official_dependencies(output/"official_control_cache")
     os.chdir(output)
     run_id = "standard-" + spec.boot_nonce
     os.environ["ROBODOJO_RUN_ID"] = run_id
     add_native_import_paths(spec.native_root)
-    config = build_native_preview_config(spec.native_root,run_id)
+    config = build_native_preview_config(spec.native_root,run_id, control_backend=backend)
     from omegaconf import OmegaConf
     write_durable_json(output/"native_configuration.json",OmegaConf.to_container(config,resolve=True))
     preparation.update(schema="robodojo-native-worker-preparation-1",manifest_sha256=manifest["manifest_sha256"],
+        control_backend=backend,
         manifest_path=str(spec.manifest_path),
         runtime_bundle_sha256=file_sha256(spec.runtime_bundle_path),human_approval=approval,
         binding=spec.gpu_binding,worker_identity={"pid":os.getpid(),"boot_nonce":spec.boot_nonce},
@@ -406,12 +461,13 @@ def run_native_worker(spec: WorkerRuntimeSpec, *, ipc_fd: int, parent_pid: int, 
         write_durable_json(output/"renderer_identity.json",renderer)
         if renderer["uuid_prefix_and_pci_bus_match"] is not True or not zero_delay_active():
             raise NativeRuntimeError("native_renderer_or_camera_synchronization_failed")
-        adaptations = install_preview_adapters()
+        adaptations = install_preview_adapters(control_backend=backend)
         from src.eval_client.eval_env import create_eval_env
         env = create_eval_env(config,app,resume_state=None)
-        if type(env.model_client) is not ResetOnlyClient or env.robot_manager.planner or env.robot_manager.ik_solver:
-            raise NativeRuntimeError("native_model_transport_and_planners_must_be_disabled")
-        guard = NativeExecutionGuard(env); guard.reset_once()
+        if type(env.model_client) is not ResetOnlyClient:
+            raise NativeRuntimeError("native_model_transport_must_be_disabled")
+        validate_native_planners(env, backend)
+        guard = NativeExecutionGuard(env, control_backend=backend); guard.reset_once()
         import logging
         write_durable_json(output/"native_logging_paths.json",
             verify_native_logging_paths(spec.runtime_dir,logging.getLogger().handlers))
@@ -439,6 +495,18 @@ def run_native_worker(spec: WorkerRuntimeSpec, *, ipc_fd: int, parent_pid: int, 
             if module is not None:
                 modules[name] = {"file":str(getattr(module,"__file__",None)),"version":str(getattr(module,"__version__",None))}
         write_durable_json(output/"loaded_module_provenance.json",modules)
+        if backend == "official_ee":
+            overlay = Path(bundle._official_setup["overlay_target"]).resolve(strict=True)
+            official_modules = {}
+            for name in ("curobo", "warp"):
+                module = sys.modules.get(name)
+                path = getattr(module, "__file__", None)
+                if path is None or not Path(path).resolve(strict=True).is_relative_to(overlay):
+                    raise NativeRuntimeError("official_module_outside_verified_overlay")
+                official_modules[name] = {"path":str(Path(path).resolve()), "sha256":file_sha256(path)}
+            validate_official_module_provenance(bundle._official_setup, official_modules)
+            bundle.verify()
+            write_durable_json(output/"official_control_modules.json",official_modules)
         callbacks = RuntimeCallbacks(env=env,bundle=bundle,manifest=manifest,preparation=preparation,
             approval=approval,output=output,guard=guard,monitor=monitor,config=config,
             save_rgb=save_rgb_images,write_json=write_durable_json)
@@ -447,7 +515,8 @@ def run_native_worker(spec: WorkerRuntimeSpec, *, ipc_fd: int, parent_pid: int, 
             worker_identity={"pid":os.getpid(),"boot_nonce":spec.boot_nonce},verify_runtime_readiness=callbacks.verify,
             measure_robot=callbacks.measure,capture_rgb=callbacks.capture,expected_layout_path=selected,
             expected_layout_sha256=preparation["layout_sha256"],registration_evidence_id=registration_id,
-            initial_gripper_commands={"left":"open","right":"open"},precreated_worker_output=True)
+            initial_gripper_commands={"left":"open","right":"open"},precreated_worker_output=True,
+            control_backend=backend)
         guard.bind(session)
         write_durable_json(output/"runtime_initialized.json",{"adaptations":adaptations,
             "reset_calls":1,"model_calls":0,"native_policy_actions":0,"waiting_for_actual_ready_request":True})
@@ -488,6 +557,9 @@ def run_native_worker(spec: WorkerRuntimeSpec, *, ipc_fd: int, parent_pid: int, 
                      "loaded_module_provenance","loaded_graphics_library_paths"):
             path = output/(name+".json")
             evidence[name+"_sha256"] = file_sha256(path) if path.is_file() else None
+        if backend == "official_ee":
+            path = output/"official_control_modules.json"
+            evidence["official_control_modules_sha256"] = file_sha256(path) if path.is_file() else None
         write_durable_json(output/"worker_preclose_ready.json",evidence)
         if app is not None:
             try:

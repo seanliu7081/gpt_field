@@ -1,5 +1,14 @@
 # UC7.1 native ARX model/plan adaptation
 
+2026-10-30 update: new execution packets now select the official cuRobo EEF
+backend. Its coordinate conversion, both-arm IK, Cartesian inactive-arm hold,
+failure semantics and validation scope are specified in
+[official_control.md](official_control.md). Controller capabilities and the
+review-bound executive prompt select this backend explicitly and omit legacy
+DLS speed/increment claims. The frozen policy core is unchanged.
+The status paragraph below describes the original implementation stage;
+current host setup is recorded in the main README.
+
 Status: offline client/schema implementation only. The native RTX smoke failed during Hydra initialization before a first frame. Simulator integration, actual RGB/calibration, controller timing and task execution are **unvalidated**. No preview, approval or successful native task is implied by these files or their mocked tests.
 
 ## Frozen reuse

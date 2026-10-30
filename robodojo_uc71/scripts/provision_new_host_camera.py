@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One bounded, isolated new-host camera check; never a benchmark launcher.
 
-Explicit bindings support exactly one GPU. This preserves old A0/A1 evidence and
+Explicit bindings select one GPU even on a multi-GPU host. This preserves old A0/A1 evidence and
 requires a fresh output directory. No automatic retry, task import or model call.
 """
 from __future__ import annotations
@@ -156,10 +156,13 @@ def classify_terminal_exit(returncode: int, monitor_reason: str | None, sent_sig
 
 
 def validate_single_gpu(snapshot: list[dict], binding: dict, *, require_idle: bool = False) -> dict:
-    if len(snapshot) != 1:
-        raise ValueError("This new-host diagnostic supports exactly one physical GPU")
-    gpu = snapshot[0]
-    if (gpu["uuid"] != binding["gpu_uuid"] or gpu["index"] != 0
+    # NVML enumerates the whole host; renderer/CUDA identity is checked separately.
+    # Keep the historical function name for callers and archived records.
+    matches = [gpu for gpu in snapshot if gpu["uuid"] == binding["gpu_uuid"]]
+    if len(matches) != 1 or len({gpu["uuid"] for gpu in snapshot}) != len(snapshot):
+        raise ValueError("Exactly one matching GPU UUID is required")
+    gpu = matches[0]
+    if (gpu["index"] != 0
             or normalize_pci(gpu["pci_bus_id"]) != normalize_pci(binding["pci_bus_id"])
             or binding["kit_index"] != 0 or binding["cuda_ordinal"] != 0):
         raise ValueError("Explicit single-GPU identity, PCI address, or ordinal binding differs")
@@ -258,6 +261,9 @@ def main() -> int:
     if eula.get("nvidia_eula_accepted") is not True:
         parser.error("The preserved NVIDIA licence acceptance is missing")
     installed = json.loads(args.install_record.read_text())
+    if installed.get("schema") == "robodojo-conda-runtime-1":
+        from robodojo_uc71.host_runtime import verify_conda_record
+        verify_conda_record(python, args.install_record)
     lock = args.install_record.with_name("requirements.lock")
     inventory_path = args.install_record.with_name("package_inventory.json")
     if (installed.get("ready_for_diagnostic") is not True or Path(installed["python"]).absolute() != python
