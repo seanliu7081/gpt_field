@@ -1,0 +1,602 @@
+{
+  "document": "UC7.1 LIBERO-10 evaluation and factual review notes",
+  "prepared_on": "2026-10-30",
+  "scope": "Read-only source and saved-result review; no tests or model/simulator requests run",
+  "claims": [
+    {
+      "id": "success_layers",
+      "text": "Report official success, terminal strict physical success, diagnostic release/settle success and v2_success as separate quantities.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "172-188"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "893-923"
+        }
+      ],
+      "avoid": "Do not use video SUCCESS or runner exit code 0 as proof of strict physical completion."
+    },
+    {
+      "id": "v2_formula",
+      "text": "Let R be raw official success at episode end, T strict terminal conjunction, H the per-atom hold-only exception, S strict after diagnostic release/settle, and Rs raw after settle. v2_success = R AND [T OR (H AND S AND Rs)].",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "873-923"
+        }
+      ],
+      "avoid": "Post-settle success alone is insufficient."
+    },
+    {
+      "id": "hold_only_per_atom",
+      "text": "For every failing terminal atom, all failed checks must belong to HELD_CHECKS and that same atom must fail not_held or robot_not_touching_part. HELD_CHECKS = not_held, robot_not_touching_part, at_rest, joint_at_rest, orientation_kept. Support and containment failures are outside the set.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "71-77"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "884-890"
+        }
+      ],
+      "avoid": "Do not defer an unheld moving object merely because another object is held."
+    },
+    {
+      "id": "t1_result_explanation",
+      "text": "Task 1 has raw=true, strict terminal=false, strict after diagnostic=true and v2=false. Butter fails not_held, at_rest, supported_by_container_or_contents, lowest_point_below_rim, not_perched_on_rim; cream cheese fails at_rest alone. Both objects therefore independently prevent the per-atom hold-only exception.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/result_summary.json",
+          "lines": "8-11,39-55"
+        },
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/physical_truth.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "884-903"
+        }
+      ],
+      "avoid": "Do not re-score this run as v2_success=true after diagnostic settling."
+    },
+    {
+      "id": "t0_result_explanation",
+      "text": "Task 0 has raw=true and both terminal and after-diagnostic strict=false. Alphabet soup passes. Tomato sauce lacks admissible container/contents support at the stop and after diagnostic settling; after settling the not_held and at_rest checks pass but supported_by_container_or_contents and not_perched_on_rim remain false.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/result_summary.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/physical_truth.json",
+          "lines": null
+        }
+      ],
+      "avoid": "The failed check named not_perched_on_rim is not by itself proof that the object is literally perched on the top rim; it detects absence of admissible below-rim support."
+    },
+    {
+      "id": "strict_inside_rules",
+      "text": "Strict inside checks cover no robot holding, rest, admissible container/contents support, no outside support, lowest collision point at least 10 mm below rim, support at least 5 mm below rim, below-rim footprint within walls with 5 mm tolerance, and COM over cavity. Inside does not require orientation_kept under D1.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "50-67"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "553-580"
+        }
+      ],
+      "avoid": "A tilted object inside the basket can pass strict inside if the required support/containment/rest checks pass."
+    },
+    {
+      "id": "rest_window",
+      "text": "With sufficient history, object rest uses maximum displacement below 1 mm and rotation below 1 degree relative to current pose over the recent window (10 steps here); it replaces the instantaneous-velocity rest Boolean. Without enough history, fallback thresholds are 0.01 m/s and 0.10 rad/s.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "50-68"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "496-520"
+        }
+      ],
+      "avoid": "A recorded instantaneous speed above 0.01 m/s does not necessarily contradict at_rest=true when rest_source is window_10_steps."
+    },
+    {
+      "id": "diagnostic_protocol",
+      "text": "The 38-action counterfactual runs only after terminal artifacts are captured: open 10, lift 8 with action_z=0.5, settle 20. It is evaluator diagnosis, excluded from scored policy actions and completion time.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "76-77"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_truth.py",
+          "lines": "829-862"
+        },
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "184-202"
+        }
+      ],
+      "avoid": "Do not append these 38 actions to reported task actions or present their final state as the scored endpoint."
+    },
+    {
+      "id": "calibration_boundary",
+      "text": "Executive requests receive synchronized RGB, measured robot state, camera/robot geometry and history. Initial plan/replan prompt explicitly says no calibration and requests external-view direction words; prepare computes/fixes camera direction data for review and later execution.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+          "lines": "51-59,179-201"
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_client.py",
+          "lines": "131-145,403-412"
+        },
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "45-49"
+        }
+      ],
+      "avoid": "Do not call the whole framework uncalibrated RGB-only, and do not imply the initial planner receives the executive geometry payload."
+    },
+    {
+      "id": "optional_macros",
+      "text": "The model owns execution. Generic measured fragments or direct motion can complete whole subtasks without a native holding certificate or native scene registration/motion calibration. Native hold/turn/place_on/release macros are optional accelerators, leased for 1-60 control actions; their setup consumes that budget.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+          "lines": "61-100,154-168"
+        }
+      ],
+      "avoid": "Do not portray v7.1 as a mandatory native skill chain or treat unavailable native geometry as a universal movement prohibition."
+    },
+    {
+      "id": "fragments_not_safety_proof",
+      "text": "The local controller recomputes target error and returns on arrival/events/checkpoints/budget. It does not certify semantic attachment, placement or success and does not discover obstacles or plan a collision-free whole-arm path.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+          "lines": "90-135,189-201"
+        }
+      ],
+      "avoid": "Measured pose arrival, stable finger gap, motion envelopes and initially collision-free layouts do not establish full collision safety."
+    },
+    {
+      "id": "direction_limits",
+      "text": "external_view_v1 is a global horizontal convention: projected external-camera +X is viewer-right and up cross right is away. This is not a local perspective Jacobian. Large roll/local plane/inverted-view policy is deferred; inverted views retain the formula and are diagnosed rather than vetoed. A nearly vertical camera X projection (norm < 1e-9) makes the frame unavailable.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+          "lines": "158-211"
+        },
+        {
+          "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/README.md",
+          "lines": "7-15"
+        }
+      ],
+      "avoid": "Do not claim arbitrary perspective/roll/inversion invariance or that wrist rotation was changed."
+    },
+    {
+      "id": "direction_test_scope",
+      "text": "Both Oct30 reviewed plans contain regions=[]. The two basket episodes exercise the UC7.1 pipeline and carry the direction contract, but cannot alone establish correctness of directional-region execution.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/reviewed_plan.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/reviewed_plan.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+          "lines": "179-187"
+        }
+      ],
+      "avoid": "Do not cite t0/t1 as a new right_of/front_of validation or as a full LIBERO-10 sweep."
+    },
+    {
+      "id": "release_v0",
+      "text": "Oct28 release V0 comparison reports baseline 279 passed / 59 failed; UC7.1 350 passed / 59 failed; all 71 added tests passed; 0 added failures and 0 lost old tests. The 59 failures were pre-existing.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/README.md",
+          "lines": "34-50"
+        }
+      ],
+      "avoid": "Do not claim the repository test suite is fully green."
+    },
+    {
+      "id": "release_v1",
+      "text": "Oct28 V1 is a planning-only set of 13 scenes: 10 LIBERO-10 + g5 + t6 relayout + RoboCasa coffee. All 13 drafts generated, 38/38 direction/part-pointing checks passed, original draft legality 12/13 due t9 do=turn,sense=close. There were no execution calls, policy actions, approvals or API-key calls in V1.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/README.md",
+          "lines": "52-64"
+        }
+      ],
+      "avoid": "V1 overall had not passed; the corrected t9 suggestion must not replace original draft validity."
+    },
+    {
+      "id": "catalog_is_scope",
+      "text": "Task IDs are zero-based 0-9. The registry table is supported task scope and official prompt mapping, not evidence of ten completed current-version runs.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+          "lines": "52-73,103-104"
+        },
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "20-21,188"
+        }
+      ]
+    },
+    {
+      "id": "timing",
+      "text": "Eligible official completion time is control_elapsed_s - video_render_s. It includes execution-model waiting, local computation, simulator actions and control logging; excludes initial planning, approval, reset/startup, postepisode diagnostic and cleanup. Video duration omits inference waiting and is not completion time.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "190-222"
+        }
+      ],
+      "avoid": "Do not infer a speedup ratio from different t0/t1 tasks, incomparable layouts or incomplete baselines."
+    },
+    {
+      "id": "calls",
+      "text": "Task 0: 10 execution requests accepted + 1 prior planning request used = 11 unique task requests. Task 1: 12 execution requests accepted + 1 prior planning request used = 13. Each execution reused its saved draft, adding zero new planning calls at launch. Both use Astra high/subscription with zero API-key calls.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/result_summary.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/result_summary.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "204-216"
+        }
+      ],
+      "avoid": "Do not count reused drafts as free overall, or count them twice in actual campaign sends."
+    },
+    {
+      "id": "retries",
+      "text": "No automatic full episode retry. Same-request retries remain limited: overload category up to two retries; transient stream/network category up to two total retries. Categories have independent counters, so mixed errors do not imply a three-send ceiling. HTTP520/unknown_error and deadline exceeded are not retryable under this policy.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+          "lines": "157-170"
+        }
+      ],
+      "avoid": "Do not say all automatic retries are disabled or that every request has at most 3 sends."
+    },
+    {
+      "id": "record_only_collisions",
+      "text": "Collision contacts are recorded independently and do not stop these episodes. Report aggregate counts as flagged contact-point samples across physics checks, not distinct impacts or unique collisions.",
+      "sources": [
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/result_summary.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/result_summary.json",
+          "lines": null
+        },
+        {
+          "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+          "lines": "140-152"
+        }
+      ],
+      "avoid": "Do not imply successful collision avoidance or treat contact counts as collision events."
+    }
+  ],
+  "tasks": [
+    {
+      "task_key": "libero_10_t0",
+      "task_id": 0,
+      "official_prompt": "put both the alphabet soup and the tomato sauce in the basket",
+      "scene": "LIVING_ROOM_SCENE2",
+      "official_reset_observation_sha256": "f9fbbbd914dd6b1181185f5cd543c88742a9c2174ee849a016dc7446186a75ec",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "53-54"
+      },
+      "oct30_campaign_status": "completed_one_rearranged_attempt"
+    },
+    {
+      "task_key": "libero_10_t1",
+      "task_id": 1,
+      "official_prompt": "put both the cream cheese box and the butter in the basket",
+      "scene": "LIVING_ROOM_SCENE2",
+      "official_reset_observation_sha256": "e92ca405b5cfca11e74b915a9ae3c86abcc307ba7847377d1d6d83bc3c25d9cc",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "55-56"
+      },
+      "oct30_campaign_status": "completed_one_rearranged_attempt"
+    },
+    {
+      "task_key": "libero_10_t2",
+      "task_id": 2,
+      "official_prompt": "turn on the stove and put the moka pot on it",
+      "scene": "KITCHEN_SCENE3",
+      "official_reset_observation_sha256": "7b854d9bd19a0d91a843980142f15b6586416ff51790e447b044d6c89d1eceef",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "57-58"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t3",
+      "task_id": 3,
+      "official_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "scene": "KITCHEN_SCENE4",
+      "official_reset_observation_sha256": "dac6a0409193f4a5f66eb6845579633a693d49c741d2426f6a350dd172c41358",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "59-60"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t4",
+      "task_id": 4,
+      "official_prompt": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "scene": "LIVING_ROOM_SCENE5",
+      "official_reset_observation_sha256": "f2a4645e9e1e8b9f18f2e65f1eced6bb9030863cd4b0759541fb1d5e5fbf237f",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "61-62"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t5",
+      "task_id": 5,
+      "official_prompt": "pick up the book and place it in the back compartment of the caddy",
+      "scene": "STUDY_SCENE1",
+      "official_reset_observation_sha256": "a3efc19d471093640e59183b62a2968fd3bc97f8d109ae0f5a8d94b2614876b2",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "63-64"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t6",
+      "task_id": 6,
+      "official_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "scene": "LIVING_ROOM_SCENE6",
+      "official_reset_observation_sha256": "59d7c04f412daf02dc8818807d8343bda70e6f4dcffa2dfdb16cf9cb35bd048e",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "65-66"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t7",
+      "task_id": 7,
+      "official_prompt": "put both the alphabet soup and the cream cheese box in the basket",
+      "scene": "LIVING_ROOM_SCENE1",
+      "official_reset_observation_sha256": "5ed858a8309893828ce7646d9187890c96345bfd9f5354e0f2815fe6ff565c2c",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "67-68"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t8",
+      "task_id": 8,
+      "official_prompt": "put both moka pots on the stove",
+      "scene": "KITCHEN_SCENE8",
+      "official_reset_observation_sha256": "d07133dc3b5ced57c573b9148abfc1416f66e38b91618f8b0e83b09962cbc4bb",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "69-70"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    },
+    {
+      "task_key": "libero_10_t9",
+      "task_id": 9,
+      "official_prompt": "put the yellow and white mug in the microwave and close it",
+      "scene": "KITCHEN_SCENE6",
+      "official_reset_observation_sha256": "8fcb564920ae9fe1a37d775922d53e5df515e89d924133516c3158b13920c1a5",
+      "source": {
+        "path": "/workspace/gpt_field/src/gpt_field/agent_speedup_v2_tasks.py",
+        "lines": "71-72"
+      },
+      "oct30_campaign_status": "not_part_of_this_two_task_campaign"
+    }
+  ],
+  "current_campaign": [
+    {
+      "task_id": 0,
+      "result": {
+        "status": "terminal_official_success_strict_physical_failure",
+        "task_key": "libero_10_t0",
+        "version": "agent-speedup-v2-user-check-7.1",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "layout": "rearranged, episode 0, seed 7",
+        "official_success": true,
+        "strict_terminal_success": false,
+        "strict_after_release_settle_success": false,
+        "v2_success": false,
+        "completion_time_eligible": true,
+        "official_completion_time_without_video_s": 394.5202226128895,
+        "recorded_control_elapsed_s": 532.0383845760953,
+        "video_render_s": 137.51816196320578,
+        "policy_actions": 885,
+        "execution_requests": 10,
+        "accepted_execution_responses": 10,
+        "reused_initial_planning_requests": 1,
+        "new_initial_planning_requests_this_execution": 0,
+        "total_unique_requests_for_task": 11,
+        "api_key_calls": 0,
+        "collision_policy": "record_only",
+        "collision_flagged_samples": 11943,
+        "terminal_failing_checks": {
+          "in tomato_sauce_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "after_settle_failing_checks": {
+          "['in', 'tomato_sauce_1', 'basket_1_contain_region']": [
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "task_1_started": false,
+        "video": "trial/episode.mp4",
+        "terminal_frame": "terminal_frame.png",
+        "updated_at": "2026-10-30T16:14:59.014639+00:00"
+      },
+      "truth_summary": {
+        "affects_completion": false,
+        "after_release_settle": false,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": false,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in tomato_sauce_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "diagnostic_actions": 38,
+      "plan_has_directional_regions": false
+    },
+    {
+      "task_id": 1,
+      "result": {
+        "status": "terminal_official_success_strict_terminal_failure_diagnostic_settle_pass",
+        "task_key": "libero_10_t1",
+        "version": "agent-speedup-v2-user-check-7.1",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "layout": "rearranged, episode 0, seed 7",
+        "official_success": true,
+        "strict_terminal_success": false,
+        "strict_after_release_settle_success": true,
+        "v2_success": false,
+        "completion_time_eligible": true,
+        "official_completion_time_without_video_s": 341.1609662992414,
+        "recorded_control_elapsed_s": 450.994430199964,
+        "video_render_s": 109.83346390072256,
+        "policy_actions": 715,
+        "execution_requests": 12,
+        "accepted_execution_responses": 12,
+        "reused_initial_planning_requests": 1,
+        "new_initial_planning_requests_this_execution": 0,
+        "total_unique_requests_for_task": 13,
+        "api_key_calls": 0,
+        "collision_policy": "record_only",
+        "collision_flagged_samples": 4035,
+        "collision_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 18591,
+          "forbidden_contact_points": 4035,
+          "physics_substeps": 17875,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 98206,
+          "points_manipulated_object_scene": 1682,
+          "points_manipulated_object_support": 881,
+          "points_passive_scene": 510097,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 1112,
+          "points_robot_object": 0,
+          "points_robot_scene": 1241,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        },
+        "terminal_failing_checks": {
+          "in butter_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "lowest_point_below_rim",
+            "not_perched_on_rim"
+          ],
+          "in cream_cheese_1 basket_1_contain_region": [
+            "at_rest"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "after_settle_failing_checks": {},
+        "video": "trial/episode.mp4",
+        "terminal_frame": "terminal_frame.png",
+        "updated_at": "2026-10-30T16:32:03.306202+00:00"
+      },
+      "truth_summary": {
+        "affects_completion": false,
+        "after_release_settle": true,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": true,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in butter_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "lowest_point_below_rim",
+            "not_perched_on_rim"
+          ],
+          "in cream_cheese_1 basket_1_contain_region": [
+            "at_rest"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "diagnostic_actions": 38,
+      "plan_has_directional_regions": false
+    }
+  ],
+  "suggested_short_result_sentence": "Both approved rearranged episodes reached official LIBERO success. Neither passed v2 strict physical success at the scored endpoint. Task 1 passed the separate release-and-settle diagnostic; Task 0 still failed admissible-support checks.",
+  "review_checklist": [
+    "Separate official/terminal-strict/diagnostic/v2 columns.",
+    "Task catalog must not imply complete sweep.",
+    "Use current v7.1 naming and protocol; v7 PDF is historical.",
+    "Only native macros need native scene registration/calibration; camera geometry is permitted for executive.",
+    "Planning/replanning payload has no calibration.",
+    "Keep mathematical direction convention plus limits together.",
+    "Measured controller envelopes are not obstacle-planning guarantees.",
+    "Report release test failures honestly.",
+    "No t0/t1 speedup ratio; no speedup evidence inferred from product name.",
+    "38 diagnostic actions are not policy actions.",
+    "Place source paths and run identifiers in PDF provenance."
+  ]
+}

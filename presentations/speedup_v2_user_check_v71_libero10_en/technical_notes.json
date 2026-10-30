@@ -1,0 +1,555 @@
+{
+  "title": "Agent Speedup v2 User Check 7.1 — LIBERO-10 Technical Notes",
+  "generated_date": "2026-10-30",
+  "scope": {
+    "framework": "agent-speedup-v2-user-check-7.1",
+    "direction_semantics": "external_view_v1",
+    "release": "Version A including A9; excludes E1, E2 image rotation, UC8 changes",
+    "evidence_policy": "Static source inspection only. No model, simulator or new scene-test calls performed for this document.",
+    "source_root": "/workspace/gpt_field"
+  },
+  "sources": {
+    "protocol": {
+      "path": "UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+      "lines": "1–49, 66–89, 147–214"
+    },
+    "runner": {
+      "path": "scripts/evaluate_agent_speedup_v2_user_check.py",
+      "lines": "64–96, 165–211, 214–307, 550–625"
+    },
+    "review": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check.py",
+      "lines": "31–43, 75–145, 161–184, 230–246, 309–408"
+    },
+    "server": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_server.py",
+      "lines": "1–5, 29–35, 57–84, 130–149, 217–250"
+    },
+    "native_schema": {
+      "path": "src/gpt_field/agent_speedup_v2_plan.py",
+      "lines": "79–92, 173–224"
+    },
+    "enums": {
+      "path": "src/gpt_field/agent_speedup_v2_types.py",
+      "lines": "58–65"
+    },
+    "variant_schema": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_plan.py",
+      "lines": "11–40, 82–89"
+    },
+    "spatial": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_spatial.py",
+      "lines": "26–138, 158–252, 292–365"
+    },
+    "agent": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_agent.py",
+      "lines": "55–153, 210–256, 310–406, 495–604"
+    },
+    "agent_client": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_agent_client.py",
+      "lines": "40–49, 205–268, 271–299, 302–522"
+    },
+    "plan_client": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_client.py",
+      "lines": "131–151, 248–338"
+    },
+    "fragments": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_fragments.py",
+      "lines": "21–64, 80–165, 169–389"
+    },
+    "short_target": {
+      "path": "src/gpt_field/astranomy_agentic_motion.py",
+      "lines": "102–122, 144–163"
+    },
+    "motion": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_motion.py",
+      "lines": "64–80"
+    },
+    "sim": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_sim.py",
+      "lines": "1–6, 25–64, 78–90, 111–130"
+    },
+    "retry": {
+      "path": "src/gpt_field/agent_speedup_v2_client.py",
+      "lines": "139–150, 903–914"
+    },
+    "transport": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_transport.py",
+      "lines": "1–6, 68–94, 103–128"
+    },
+    "direction_display": {
+      "path": "src/gpt_field/agent_speedup_v2_user_check_direction_display.py",
+      "lines": "1–4, 11–34, 44–57"
+    }
+  },
+  "architecture": {
+    "summary": "A persistent multimodal executive owns task interpretation, geometric estimates, route/grasp choice, visual verification and recovery. A deterministic executor accepts bounded commands, observes measured feedback and returns control. The independent evaluator owns success and physical truth.",
+    "components": [
+      {
+        "name": "Preparation",
+        "role": "Official task registry + frozen custom initial state -> reset observation -> one structured plan draft; stores zero policy actions, images, runtime/configuration inventory, view frame and model budget.",
+        "sources": [
+          "runner:250–303",
+          "protocol:53–74"
+        ]
+      },
+      {
+        "name": "ReviewStore / browser UI",
+        "role": "Human inspects initial plan and grounding, edits selectors, checks every intent and approves a context-bound revision. Review server never invokes runner/model/simulator.",
+        "sources": [
+          "review:173–184,353–408",
+          "server:1–5"
+        ]
+      },
+      {
+        "name": "PlanLock + task contract",
+        "role": "Preserves initial goals, entity identity, regions and applicable constraints while allowing model-selected execution order, grips and recovery methods. Approval scope is initial_plan_only.",
+        "sources": [
+          "agent:116–129",
+          "plan_client:248–324"
+        ]
+      },
+      {
+        "name": "AgentFirstV2Client",
+        "role": "Two synchronized RGB images + current measured state, camera/gripper geometry, capabilities and persistent history -> strict JSON decision.",
+        "sources": [
+          "agent_client:364–381,460–522"
+        ]
+      },
+      {
+        "name": "AgentFirstV2Policy",
+        "role": "Dispatches execute/motion/optional macro; returns fresh feedback at each boundary; records model belief separately from robot measurements.",
+        "sources": [
+          "agent:210–256,310–406"
+        ]
+      },
+      {
+        "name": "Fragment / short-target executor",
+        "role": "Task-independent OSC conversion and bounded numerical feedback; no object identity, grasp certificate or task success oracle.",
+        "sources": [
+          "fragments:142–165",
+          "short_target:102–122"
+        ]
+      },
+      {
+        "name": "Independent evaluator / recorder",
+        "role": "Official stopping signal, terminal strict truth, after-settle diagnostics, contact log, video, requests and full audit; hidden truth not sent to policy.",
+        "sources": [
+          "protocol:147–186",
+          "sim:117–130"
+        ]
+      }
+    ],
+    "loop": "observe -> executive strict JSON -> validate -> bounded measured action(s) -> handoff/feedback + fresh RGB -> executive",
+    "no_task_specific_branches": true,
+    "caveat": "Optional native macro apparatus is retained, but its registration/grasp prerequisites are not universal gates on model-owned direct control."
+  },
+  "configuration": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high (planning and execution)",
+    "billing": "ChatGPT subscription/OAuth; API-key calls must remain zero",
+    "tasks": "libero_10_t0 through libero_10_t9, zero-based",
+    "initial_state": "Official index 0 / seed 7; current campaign uses physically validated rearranged object XY",
+    "simulator": "Panda / OSC_POSE / 20 Hz",
+    "rgb": "external and wrist, native 512×512",
+    "reset_settle": "10 environment setup actions, excluded from policy action count",
+    "video": "1600×960, 20 fps; --planning-video",
+    "request_deadline_s": 180,
+    "episode_caps": "No full-task wall time, action or call cap; fragment bounds are local",
+    "sources": [
+      "protocol:9–33"
+    ]
+  },
+  "observation_boundary": {
+    "planning": {
+      "allowed": "Task text + external/wrist plan images (clean and gridded); no camera calibration in initial/replan request.",
+      "direction_instruction": "Use image-1 viewer directions; metric distances/heights may be prose but do not command motion.",
+      "sources": [
+        "runner:267–285",
+        "plan_client:131–151"
+      ]
+    },
+    "execution": {
+      "allowed": [
+        "two synchronized upright RGB images",
+        "state8-derived measured grip-site position/right-hand orientation/finger joints",
+        "seven measured arm-joint positions and velocities",
+        "allowlisted camera calibration and fixed gripper geometry",
+        "official task language and reviewed goal contract",
+        "executive beliefs, accepted decisions and measured action feedback"
+      ],
+      "sources": [
+        "sim:25–64,78–90,111–122",
+        "agent:210–256",
+        "agent_client:460–522"
+      ]
+    },
+    "excluded": [
+      "BDDL numeric target boxes",
+      "simulator object poses",
+      "contact/support truth",
+      "official success predicates",
+      "evaluator answer keys"
+    ],
+    "separation": "Simulator agent_geometry is separate from evaluator geometry/truth/settle_truth operations. Cached robot measurements share the RGB observation timestamp. Wrist pose_source must be observed_robot_pose_fixed_mount.",
+    "reset_hash_caveat": "CalibratedObservation.to_dict preserves original state8 reset identity; joint channels are explicitly removed from that serialization. Do not describe initial_observation_sha256 as a hash of every execution-visible sensor field.",
+    "sources": [
+      "protocol:35–49",
+      "sim:1–6,39–64,117–130",
+      "agent_client:473–478"
+    ]
+  },
+  "plan_schema": {
+    "closed_objects": true,
+    "all_properties_required": true,
+    "top_level": [
+      "scene",
+      "parts",
+      "hold_true",
+      "steps",
+      "regions",
+      "placement_goals"
+    ],
+    "scene": "string, 1–80 characters",
+    "parts": {
+      "count": "1–8",
+      "fields": {
+        "id": "A–H",
+        "text": "3–60 characters",
+        "move": [
+          "free",
+          "fixed",
+          "hinged",
+          "sliding",
+          "unknown"
+        ],
+        "w": "wrist grid integer 0–64",
+        "x": "external grid integer 0–64"
+      }
+    },
+    "grid": "8×8; 1–64 row-major from top left; 0 means not visible",
+    "hold_true": {
+      "max_items": 3,
+      "fields": {
+        "rel": [
+          "on",
+          "in",
+          "open",
+          "closed",
+          "effect"
+        ],
+        "a": "A–H",
+        "b": "A–H or null"
+      }
+    },
+    "steps": {
+      "schema_count": "0–6; review semantic validator requires at least one",
+      "fields": {
+        "do": [
+          "hold",
+          "turn",
+          "slide",
+          "place_on",
+          "place_in",
+          "push_to",
+          "release"
+        ],
+        "obj": "A–H",
+        "grip": "0–2 A–H IDs in preference order",
+        "ref": "A–H or null",
+        "sense": [
+          "any",
+          "open",
+          "close"
+        ],
+        "keep": "0–3 objects {c: upright|clear_of, p: A–H}",
+        "until": "0–3 objects {o: effect|stop|fits|quarter_turn|half_turn, p: A–H|null, txt: string<=40|null}"
+      }
+    },
+    "regions": {
+      "max_items": 32,
+      "fields": {
+        "id": "Existing A–H ID",
+        "support": "A–H or observed_plane",
+        "anchor": "A–H or null",
+        "relation": [
+          "on",
+          "left_of",
+          "right_of",
+          "front_of",
+          "behind",
+          "near"
+        ],
+        "frame": "world",
+        "bounds_xy_m": "[[xmin,xmax],[ymin,ymax]] or null; metres"
+      }
+    },
+    "placement_goals": {
+      "max_items": 32,
+      "fields": {
+        "obj": "A–H",
+        "ref": "A–H",
+        "relation": [
+          "supported_on",
+          "centered_on",
+          "inside"
+        ],
+        "tolerance_m": "positive finite number or null"
+      }
+    },
+    "semantic_validation": [
+      "Plan must round-trip exactly; non-ASCII text that base parser would sanitize is rejected for review.",
+      "At least one intent, valid part references, no duplicate IDs, appropriate move priors, grip-object consistency and criterion rules.",
+      "For non-slide steps, sense must be any; ref allowed only for place_on/place_in/push_to; release grip list must be empty.",
+      "Stop/angle criterion p must be null; descriptive txt only for effect.",
+      "Region IDs unique, existing and not their own support/anchor; support/anchor must be physical parts, not other regions.",
+      "All region relations other than on need anchor; near needs explicit bounds; numeric bounds finite and increasing.",
+      "Placement pair unique, known IDs, non-region object; positive finite tolerance or null.",
+      "Active clear_of that contradicts required manipulation contact is flagged."
+    ],
+    "important_distinction": "All seven do values are legal reviewed task intents for agent control. Only hold/turn/place_on/release have optional native macro implementations. Do not describe place_in as invalid in the current executive.",
+    "parser_compatibility": "Strict model output requires regions and placement_goals, normally [] when unused; older persisted native plans without these arrays remain readable by parser.",
+    "sources": [
+      "native_schema:79–92,199–224",
+      "enums:58–65",
+      "variant_schema:33–40,82–89",
+      "spatial:38–138",
+      "review:84–145"
+    ]
+  },
+  "approval_and_ui": {
+    "review_state_machine": "draft -> approved -> consumed; updating a plan creates draft state again and clears approval",
+    "immutable_context_fields": [
+      "schema_version",
+      "version",
+      "id",
+      "created_at",
+      "task_key",
+      "episode_index",
+      "task_prompt",
+      "initial_observation_sha256",
+      "runtime_sha256",
+      "draft_plan",
+      "preparation"
+    ],
+    "context_hash": "SHA256(canonical JSON of immutable context fields); preparation includes execution options and frozen view_frame",
+    "approval_binding": "SHA256(canonical JSON {context_sha256, plan, revision, reviewed_steps})",
+    "state_hash": "SHA256(all persisted review fields except state_sha256)",
+    "optimistic_concurrency": "update/approve require matching expected_revision; stale revisions rejected",
+    "selector_edit_scope": "Scene text cannot change. Selected parts must preserve original id/text/w/x. Effect descriptions must come from draft. Selectors such as move and step fields may change subject to exact schema and semantic validation.",
+    "edit_recheck": "If the plan changes, checked-step list is cleared. Every step must be checked to approve.",
+    "one_use": "claim checks approved status, task/episode, initial observation identity and full runtime/configuration hash mapping; writes durable .review-claimed.json before consumed state so a crash fails closed.",
+    "ordering": "execute_reviewed claims before first execution model request. Actual reset mismatch later still consumes this attempt with zero policy actions.",
+    "ui": "Loopback only (127.0.0.1/localhost). Private fragment-token URL; bearer API auth, Host/Origin/Sec-Fetch-Site checks. UI only reads/updates/approves one ReviewStore; approval does not itself execute.",
+    "authorized_replanning": "Initial goals/constraints persist; automatic execution adaptation is model authority, not another human approval.",
+    "sources": [
+      "review:31–43,173–184,230–246,346–408",
+      "server:1–5,57–84,130–149,217–250",
+      "runner:550–625",
+      "plan_client:319–324"
+    ]
+  },
+  "direction_contract": {
+    "version": "external_view_v1",
+    "definitions": [
+      "R = external rotation_world_from_camera",
+      "r = normalize(R[0:2,0])",
+      "a = (-r_y, r_x) = world_up × r",
+      "right_of = +r; left_of = -r; behind = +a; front_of = -a"
+    ],
+    "unavailable": "No external calibration, or norm(R[:2,0]) < 1e-9 (camera_x_vertical); no fallback to fixed world axes",
+    "diagnostic_roll": "roll_deg = degrees(atan2(R[2,0],R[2,1])) unless both up components zero; inverted = R[2,1] < 0",
+    "storage_flow": [
+      "build_view_frame(external calibration + image conventions) at prepare",
+      "preparation.view_frame enters context hash",
+      "PlanLock validates/fixes same frame",
+      "task contract receives region_directions, including empty region lists",
+      "each executive request recomputes compact region_directions from frozen approval",
+      "solver and UI/log display consume shared mapping"
+    ],
+    "solver": "For an anchor polygon V and side vector d, keep support cell p only if p·d > max(v·d for v in V). Mask also requires measured/observed support and excludes known obstacle footprints.",
+    "bounds": "frame=world denotes metric bounds coordinates; bounds relative to anchor centre if anchor supplied, otherwise absolute world. Prompt requests bounds=null for directional relations. Null directional bounds do not insert benchmark goal boxes.",
+    "a9": "Highlights world ±x/±y in part text for human diagnostic attention only; does not mutate plan or add validator veto.",
+    "wrist": "Wrist image never defines task left/right. UC7.1 changes planning wording, not image rotations.",
+    "limitations": "This is a global horizontal convention, not a local perspective Jacobian. Off-centre projection and large roll/inversion can disagree with pixel directions; inverted views are diagnosed but not vetoed. Do not infer universal camera support or direction-repair validation from nondirectional t0/t1 basket plans.",
+    "sources": [
+      "spatial:56–87,158–252,292–365",
+      "runner:287–303,596–597",
+      "agent:116–129",
+      "agent_client:482–498",
+      "direction_display:1–34",
+      "plan_client:141–151"
+    ]
+  },
+  "executive_response": {
+    "fields": {
+      "belief": "string 1–1800, model estimate",
+      "plan": "string 1–1800, model execution strategy (not a replacement structured review plan)",
+      "why": "string 1–600",
+      "type": [
+        "execute",
+        "motion",
+        "macro",
+        "observe",
+        "finish"
+      ],
+      "motion": "matching payload or null",
+      "macro": "matching payload or null",
+      "execution": "matching payload or null"
+    },
+    "branch_rules": [
+      {
+        "type": "execute",
+        "effect": "Validated 1–6 segment fragment sequence; fresh measured feedback/RGB at handoff."
+      },
+      {
+        "type": "motion",
+        "effect": "Short target {frame:world, position_mode:absolute|relative, xyz_m:[3], quaternion_wxyz:[4]|null, gripper:keep|open|close, steps:1..5}; no recovery_goal field in executive branch."
+      },
+      {
+        "type": "macro",
+        "effect": "{step_index:nonnegative, budget_steps:1..60, continuation:boolean}; optional native hold/turn/place_on/release. Selection uses initial approved steps. continuation needs same paused macro index."
+      },
+      {
+        "type": "observe",
+        "effect": "One measured-pose hold action retaining previous gripper command, then fresh image."
+      },
+      {
+        "type": "finish",
+        "effect": "Records model completion claim and one measured-pose hold; cannot stop or set evaluator success."
+      }
+    ],
+    "dispatch": "At most one executive answer per act(). Rejected command receives explicit observation hold; next model call sees measured feedback. No automatic episode retry/repair cap is introduced here.",
+    "sources": [
+      "agent_client:205–268",
+      "motion:64–80",
+      "agent:131–153,310–406,495–535"
+    ]
+  },
+  "fragments": {
+    "version": "user-check-measured-fragments-1",
+    "sequence_limits": {
+      "min_segments": 1,
+      "max_segments": 6,
+      "max_steps_per_segment": 120,
+      "max_sum_steps": 240
+    },
+    "segment_fields": [
+      "skill",
+      "xyz_m",
+      "quaternion_wxyz",
+      "gripper",
+      "profile",
+      "max_steps",
+      "observation_after"
+    ],
+    "skills": [
+      "move_to_pose",
+      "move_relative",
+      "approach",
+      "set_gripper",
+      "wait"
+    ],
+    "profiles": {
+      "transit": {
+        "max_target_translation_m": 0.3,
+        "max_target_rotation_rad": 1.2,
+        "max_action_translation_m": 0.02,
+        "max_action_rotation_rad": 0.1,
+        "arrival_position_m": 0.004,
+        "arrival_rotation_rad": 0.06
+      },
+      "contact": {
+        "max_target_translation_m": 0.08,
+        "max_target_rotation_rad": 0.5,
+        "max_action_translation_m": 0.005,
+        "max_action_rotation_rad": 0.1,
+        "arrival_position_m": 0.002,
+        "arrival_rotation_rad": 0.04
+      }
+    },
+    "target_rules": [
+      "move_to_pose uses absolute world XYZ. move_relative and approach resolve a world displacement once from measured segment-entry pose.",
+      "Approach requires contact profile. All arm motion requires gripper=keep; opening/closing is a separate set_gripper segment.",
+      "Null orientation keeps measured segment-entry orientation; nonnull is absolute world quaternion_wxyz, normalized on validation.",
+      "set_gripper and wait require null XYZ and quaternion. set_gripper holds entry pose while commanding fingers; wait retains entry pose and command.",
+      "All fields validated before actions. Each segment rechecks translation/rotation envelope against its own measured entry, including later segments.",
+      "Target rejection may issue zero actions for that segment; action translation clipped by profile and rotation by0.1rad."
+    ],
+    "measured_completions": {
+      "pose": "Position and orientation tolerance hold for 2 consecutive measured samples; entry measurement may count, but completion only acknowledged after a real action.",
+      "gripper": "At least8 opening or12 closing actions, 5 recent gaps spanning<=0.6mm, and2 pose-arrival samples. This is gap stability, not a grasp certificate.",
+      "wait": "Runs max_steps then yields."
+    },
+    "handoff_conditions": {
+      "complete": "All segments satisfy measured completion predicates.",
+      "checkpoint": "observation_after=true or completed wait stops sequence; later segments remain unexecuted.",
+      "stalled": "Motion segment after>=16 actions: over12 most recent samples, weighted error e=position_error_m+0.05*orientation_error_rad improves by<0.0008m; yields segment_stall.",
+      "gap_change": "While maintaining close outside set_gripper, gap rises>=6mm above observed minimum for3 consecutive samples; yields maintained_grip_gap_changed.",
+      "budget": "max_steps expires before predicate or execution limit reached.",
+      "envelope": "Target too far, rotated too much, or nonfinite."
+    },
+    "continuation": "No implicit retry or resume. After any checkpoint/intervention the model must submit a new sequence from current observation; pending segments never autoplay.",
+    "epistemic_limit": "Measured pose/gap success does not prove object identity, grasp, support, collision-free path or task success. Stall does not certify contact or global impossibility.",
+    "sources": [
+      "fragments:21–64,80–165,169–389"
+    ]
+  },
+  "persistent_history": {
+    "protocol": "persistent_task_executive_fragments_text_and_six_visual_pairs_v2",
+    "retention": "All executive textual observations, accepted outputs and measured feedback; latest6 image pairs including current request; accepted opaque encrypted reasoning items replayed.",
+    "first_request": "Includes reviewed_goal_contract.initial_plan and task_contract. Later requests retain them in text history; region_directions explicitly reattached on every request.",
+    "state_separation": "shared state labels measured_robot, native_estimate and model_estimate separately; task_success remains unknown_to_policy.",
+    "compaction": "Current evidence text >45,000 chars triggers only large execution/native/feedback compaction with stage outcomes and causal details prioritized; goals and sensor geometry preserved. Request rejected above56,000 chars. Full audit stays on disk.",
+    "usage": "1400 visible-token target tracked for executive responses, not a total task call cap.",
+    "sources": [
+      "agent_client:271–299,324–340,364–381,450–455,482–512",
+      "agent:210–256"
+    ]
+  },
+  "transport": {
+    "channels": "Subscription only; no model/API-key fallback",
+    "deadline": "180s after authentication, covering serialization, HTTP open and complete SSE stream; POSIX main-thread SIGALRM + monotonic checks; not episode budget or socket timeout.",
+    "partial_output": "Not executable; strict completed response envelope required.",
+    "retry_eligibility": "Only before any response envelope exists and before observation count changes / history commit.",
+    "overload": "error_code=server_is_overloaded AND http_status in {503,None}: max2 retries for that category.",
+    "transient": "stream_missing_completion, stream_truncated_event, subscription_stream_interrupted, subscription_network_error: aggregate max2 retries for this category.",
+    "independent_counts": "Overload and transient counters independent. Mixed failures can exceed3 total sends; do not promise one universal3-send ceiling.",
+    "backoff": "Base2 exponential + uniform0..1s jitter, at least server retry_after_s; reject retry if computed wait>60s.",
+    "not_retryable": "HTTP520/unknown_error, request_deadline_exceeded, and arbitrary503 errors without matching overload code; no task-level rerun.",
+    "diagnostics": "requests/<UUID>.stream.json logs content-free phase/timing/counts/allowlisted metadata. Retry logs record same observation, no committed history, zero actions from failed response.",
+    "sources": [
+      "retry:139–150,903–914",
+      "agent_client:402–458",
+      "transport:1–6,68–94,103–128",
+      "protocol:157–170"
+    ]
+  },
+  "evaluation_and_limits": {
+    "signals": [
+      "official task/libero success",
+      "strict physical success at terminal",
+      "framework v2_success",
+      "post-release/settle strict diagnostic result"
+    ],
+    "stopping": "Official LIBERO success stops; model finish and local primitive success are not task completion. Collision monitor is record-only.",
+    "hold_only_exception": "Do not equate v2_success with after-settle success. Exception requires every failed terminal subcheck qualify terminal_failure_is_hold_only plus raw+strict diagnostic success. Support failures excluded.",
+    "timing": "Only eligible official-success cases: task_completion_time_s=control_elapsed_s-video_render_s. Includes execution model waiting, local computation and sim steps; excludes preparation/review/reset, terminal diagnostics and cleanup.",
+    "current_evidence": "t0/t1 are one attempt each on custom layouts, not full LIBERO-10 sweep. They have no directional region relation, so they do not validate directional repair. No speedup claim without comparable completed baseline.",
+    "contact_counts": "Repeated contact points/samples are not counts of independent collision incidents.",
+    "sources": [
+      "protocol:147–214"
+    ]
+  },
+  "technical_caveats_for_author": [
+    "The word plan occurs twice: initial typed goal/intent plan, and executive plan string describing its strategy. Keep them visually distinct.",
+    "Do not copy old v3 no-calibration/RGB-only or strict macro-only handoff descriptions into current UC7.1.",
+    "Do not label native placement verification as universal executive gate; direct control can finish subtasks without native certification, independent evaluator decides.",
+    "Do not state that only initial approved step order/grips can execute; persistent goals and applicable constraints, not exact method, are the continuing contract.",
+    "Do not say all request retries disabled or every error retries twice.",
+    "Review file integrity hashes are reproducibility/freshness mechanisms, not cryptographic identity/authentication proof of a particular human.",
+    "Source displays several legacy component versions; framework version7.1 coexists with agent prompt3 / client2 / policy3 / fragment1. Do not conflate component version strings.",
+    "Planning video arrows are derived current-fragment target-error control fields, not a computed obstacle field or safety certificate.",
+    "bounds=null directional side is not narrowed to evaluator benchmark region; retain this distinction in diagrams."
+  ]
+}

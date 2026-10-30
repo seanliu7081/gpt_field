@@ -1,0 +1,3434 @@
+{
+  "generated_utc": "2026-10-30T17:08:40.544175+00:00",
+  "title": "Agent speedup v2 user check 7.1 on LIBERO-10: technical framework and recorded t0/t1 evidence",
+  "campaign": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001",
+  "evidence_scope": "Two individual, human-approved rearranged-layout task attempts (t0 and t1), init 0, seed 7. This is not a full LIBERO-10 sweep, a statistical success estimate, a direction-relation evaluation, or a causal speedup comparison.",
+  "provenance": {
+    "release_manifest": {
+      "path": "reports/uc7_direction_semantics_20261028/implementation_uc71/uc71_release_manifest.json",
+      "sha256": "93347355d3753dffb83aad812fbe5ce1078394f1cd98b1e67c11810b323b7bea",
+      "bytes": 144084
+    },
+    "campaign_results": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/campaign_results.json",
+      "sha256": "b58474493aeaad6daa6fd25a47fb28129ff9ccb87b6bc6b3f100d688f6d7e8b8",
+      "bytes": 4216
+    },
+    "source_integrity_preparation": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/source_integrity_preparation.json",
+      "sha256": "c77e26b9e25b6662fd746d41b6620fd8230925b51a29f0f408af108de936e3fc",
+      "bytes": 556
+    },
+    "offline_validation": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/offline_validation.json",
+      "sha256": "67ccf2693dde5413dec380c5b96a6c2ab1ff1b949cc20ae40b257c676ab95249",
+      "bytes": 674
+    },
+    "layout_validation_summary": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/layout_validation_summary.json",
+      "sha256": "63937c435fd8527440a57f77c327596fb25ba62a6179ab002aad310af547c25c",
+      "bytes": 1872
+    },
+    "layout_visual_review": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/layout_visual_review.json",
+      "sha256": "3078246293ad9df97039cfdaa15fa3edf657b0a888c79da060ff849e9962e60c",
+      "bytes": 1067
+    },
+    "plan_review_audit": {
+      "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/plan_review_audit.json",
+      "sha256": "e7d359f12a7125d99175c138ab39d6315703d0d1db5ec04d662b3c4e78f96b1e",
+      "bytes": 7158
+    },
+    "UC7_1_ASTRA_HIGH_TEST_PROTOCOL": {
+      "path": "UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md",
+      "sha256": "1c8d0f3be9eac1bb682b509d2a1d6c0aef4d4d82e63cb62af2b27071b00e165e",
+      "bytes": 21254
+    }
+  },
+  "tasks": {
+    "t0": {
+      "result": {
+        "status": "terminal_official_success_strict_physical_failure",
+        "task_key": "libero_10_t0",
+        "version": "agent-speedup-v2-user-check-7.1",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "layout": "rearranged, episode 0, seed 7",
+        "official_success": true,
+        "strict_terminal_success": false,
+        "strict_after_release_settle_success": false,
+        "v2_success": false,
+        "completion_time_eligible": true,
+        "official_completion_time_without_video_s": 394.5202226128895,
+        "recorded_control_elapsed_s": 532.0383845760953,
+        "video_render_s": 137.51816196320578,
+        "policy_actions": 885,
+        "execution_requests": 10,
+        "accepted_execution_responses": 10,
+        "reused_initial_planning_requests": 1,
+        "new_initial_planning_requests_this_execution": 0,
+        "total_unique_requests_for_task": 11,
+        "api_key_calls": 0,
+        "collision_policy": "record_only",
+        "collision_flagged_samples": 11943,
+        "terminal_failing_checks": {
+          "in tomato_sauce_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "after_settle_failing_checks": {
+          "['in', 'tomato_sauce_1', 'basket_1_contain_region']": [
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "task_1_started": false,
+        "video": "trial/episode.mp4",
+        "terminal_frame": "terminal_frame.png",
+        "updated_at": "2026-10-30T16:14:59.014639+00:00"
+      },
+      "config": {
+        "suite": "libero_10",
+        "task_id": 0,
+        "task_key": "libero_10_t0",
+        "task": "put both the alphabet soup and the tomato sauce in the basket",
+        "seed": 7,
+        "episode_index": 0,
+        "benchmark_variant": "custom_initial_layout",
+        "direction_semantics": "external_view_v1",
+        "method": "agent_speedup_v2_user_check",
+        "mode": "live_chatgpt_subscription_agent_speedup_v2_user_check",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "max_api_calls": null,
+        "max_policy_steps": null,
+        "max_wall_time_s": null,
+        "zero_shot": false,
+        "calibration": null,
+        "human_reviewed_plan": true,
+        "stop_on_model_complete": false,
+        "prompt_version": "user-check-agent-first-prompt-3",
+        "startup_to_initial_observation_s": 7.710582797881216
+      },
+      "request_configuration": {
+        "model": "gpt-6-astra",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "max_output_tokens": 8192,
+        "timeout_s": 180,
+        "max_api_calls": null,
+        "max_cost_usd": null,
+        "max_wall_time_s": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null,
+        "cached_input_price_per_million": null,
+        "cache_write_price_per_million": null,
+        "max_input_tokens": 1050000
+      },
+      "request_timeout_s": 180,
+      "history_protocol": "persistent_task_executive_fragments_text_and_six_visual_pairs_v2",
+      "image_history": 6,
+      "timing_components_s": {
+        "decision_s": 228.95551440073177,
+        "model_pipeline_s": 227.8182260270696,
+        "model_pipeline_s_by_kind": {
+          "agent": 227.818226
+        },
+        "observe_transition_s": 7.814048937987536,
+        "policy_compute_s": 1.1372883736621588,
+        "run_state_s": 31.92046103789471,
+        "simulator_step_s": 123.69807917624712,
+        "video_render_s": 137.51816196320578
+      },
+      "timing_note": "model_pipeline_s is included in decision_s; policy_compute_s = decision_s - model_pipeline_s; model_pipeline_s_by_kind splits model_pipeline_s by request kind (diagnostics api_calls); observe_transition_s, simulator_step_s and video_render_s are separate; run_state_s (run_state.json writes, inside control time) is informational. control_without_video_s = control_elapsed_s - video_render_s. Terminal truth, video and cleanup are excluded from control_elapsed_s.",
+      "action_counts": {
+        "acts_with_calls": 10,
+        "agent_decisions": 10,
+        "calls_by_kind": {
+          "agent": 10,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "calls_by_need": {
+          "agent": 10,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "deferred_needs": 0,
+        "direct_actions": 0,
+        "direct_segments": 0,
+        "events": {},
+        "fragment_actions": 885,
+        "fragment_grants": 10,
+        "hold_actions": 0,
+        "hold_actions_by_cause": {},
+        "local_retries": 0,
+        "native_macro_actions": 0,
+        "optional_macro_grants": 0,
+        "preemptions": 0,
+        "rejections": {
+          "api_error": 0,
+          "consecutive": 0,
+          "parse_error": 0,
+          "schema_error": 0
+        },
+        "relations_by_status": {},
+        "repairs": null,
+        "reviews": null
+      },
+      "gripper_command_action_counts": {
+        "gripper_close_actions": 512,
+        "gripper_open_actions": 373,
+        "gripper_neutral_actions": 0
+      },
+      "path_length_m": 2.6890134234548766,
+      "approved_plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "alphabet soup: blue cylindrical can left of tomato sauce",
+            "w": 48,
+            "x": 34
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "tomato sauce: red and green cylindrical can near basket",
+            "w": 53,
+            "x": 36
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open cavity inside the light fabric lining",
+            "w": 25,
+            "x": 40
+          }
+        ],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          },
+          {
+            "obj": "B",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "regions": [],
+        "scene": "Two food cans stand on a table beside an open lined basket.",
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": []
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "approval": {
+        "approved": true,
+        "at": "2026-10-30T16:02:45.592931+00:00",
+        "task_key": "libero_10_t0",
+        "attempts": 1,
+        "user_message": "approve, but i need to check the planning plan first",
+        "latest_user_message": "task 0 approved, monitor the test progress",
+        "scope": "One Task 0 full attempt using the displayed custom layout and browser-approved unchanged plan; monitor until terminal. Task 1 remains paused.",
+        "manual_browser_review": true,
+        "approval_source": "manual_browser_review",
+        "browser_approval": {
+          "at": "2026-10-30T16:01:16.920412+00:00",
+          "binding_sha256": "6fc814e75723842a911f67d5058b5db85e5ea7f14c6805584113ecc05da8df79",
+          "plan_sha256": "36724d5c80151cac1e41aa0370f102779e487651b05992f287bc0179d4ce2939",
+          "revision": 2
+        },
+        "review_id": "bb34e3f7-39a5-4336-9aae-6b0e4200ce86",
+        "plan_sha256": "36724d5c80151cac1e41aa0370f102779e487651b05992f287bc0179d4ce2939",
+        "initial_observation_sha256": "80291bb31e2f166146b30a7df13a45b0e04e276a8fdcbfc87a8a7af1a29cbe8a",
+        "initial_state_sha256": "d41107793aac76bbd4ee943d783263237c1337f85b9b73de4a96ef26212e82f7",
+        "source_draft_review_id": "ba63763a-73ec-4425-8f12-d26a386d62af",
+        "plan_changed_from_draft": false,
+        "task_1_authorized_to_launch_now": false
+      },
+      "audit_passed": true,
+      "audit_checks": {
+        "review_consumed_once": true,
+        "approval_preserved": true,
+        "reviewed_plan_unchanged": true,
+        "runtime_maps_match": true,
+        "configuration_hash_matches": true,
+        "launch_execution_matches_review": true,
+        "review_runtime_current": true,
+        "review_runtime_frozen": true,
+        "release_runtime_current": true,
+        "release_all_files_current": true,
+        "trial_frozen_source": true,
+        "initial_layout_unchanged": true,
+        "initial_observation_binding_matches": true,
+        "all_execution_requests_astra_high_subscription": true,
+        "execution_request_counts_match": true,
+        "zero_api_key_calls": true,
+        "no_request_retries": true,
+        "no_execution_errors": true,
+        "terminal_summary_consistent": true,
+        "timing_subtraction_correct": true,
+        "one_reused_planning_request": true,
+        "task1_not_started": true,
+        "reused_plan_astra_high_subscription": true
+      },
+      "audit_outcome": {
+        "official_task_success": true,
+        "libero_success": true,
+        "strict_physical_success_at_terminal": false,
+        "strict_physical_success_after_settle": false,
+        "v2_success": false,
+        "terminal_failure_is_hold_only": false,
+        "completion_time_eligible": true,
+        "steps": 885,
+        "control_elapsed_s": 532.0383845760953,
+        "video_render_s": 137.51816196320578,
+        "control_without_video_s": 394.5202226128895,
+        "interpretation": "Official goal succeeded; strict physical completion failed. Tomato was held at terminal and still lacked qualifying support after diagnostic release/settle.",
+        "support_interpretation_note": "not_perched_on_rim is the evaluator predicate name. The diagnostic tomato low point is below the rim and 15.92mm above floor; report failed qualifying support rather than asserting a literal top-rim perch solely from that label."
+      },
+      "physical": {
+        "terminal": {
+          "raw_conjunction": true,
+          "strict_conjunction": false,
+          "atoms": [
+            {
+              "atom": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": true,
+              "failed_checks": [],
+              "robot_contacts": [],
+              "support_contacts": 3,
+              "bottom_above_floor_mm": -0.0,
+              "wall_footprint_margin_mm": 11.16,
+              "env_contacts": [
+                "basket_1:basket_1_g1"
+              ]
+            },
+            {
+              "atom": [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": false,
+              "failed_checks": [
+                "not_held",
+                "at_rest",
+                "supported_by_container_or_contents",
+                "not_perched_on_rim"
+              ],
+              "robot_contacts": [
+                "gripper0_finger1_pad_collision",
+                "gripper0_finger2_pad_collision"
+              ],
+              "support_contacts": 0,
+              "bottom_above_floor_mm": 80.16,
+              "wall_footprint_margin_mm": -1.46,
+              "env_contacts": [
+                "basket_1:basket_1_g2"
+              ]
+            }
+          ]
+        },
+        "after_release_settle": {
+          "raw_conjunction": true,
+          "strict_conjunction": false,
+          "atoms": [
+            {
+              "atom": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": true,
+              "failed_checks": [],
+              "robot_contacts": [],
+              "support_contacts": 2,
+              "bottom_above_floor_mm": -0.0,
+              "wall_footprint_margin_mm": 10.98,
+              "env_contacts": [
+                "basket_1:basket_1_g1",
+                "tomato_sauce_1:tomato_sauce_1_g23",
+                "tomato_sauce_1:tomato_sauce_1_g24"
+              ]
+            },
+            {
+              "atom": [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": false,
+              "failed_checks": [
+                "supported_by_container_or_contents",
+                "not_perched_on_rim"
+              ],
+              "robot_contacts": [],
+              "support_contacts": 0,
+              "bottom_above_floor_mm": 15.92,
+              "wall_footprint_margin_mm": -0.4,
+              "env_contacts": [
+                "alphabet_soup_1:alphabet_soup_1_g11",
+                "basket_1:basket_1_g2",
+                "basket_1:basket_1_g3"
+              ]
+            }
+          ]
+        }
+      },
+      "physical_summary": {
+        "affects_completion": false,
+        "after_release_settle": false,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": false,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in tomato_sauce_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "not_perched_on_rim"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "diagnostic_protocol": {
+        "actions": 38,
+        "libero_success_after_settle": true,
+        "protocol": {
+          "lift_action_z": 0.5,
+          "lift_steps": 8,
+          "open_steps": 10,
+          "settle_steps": 20
+        },
+        "raw_true_fraction_during_settle": 1.0,
+        "robot_goal_object_contacts_during_settle": [
+          "tomato_sauce_1<->gripper0_finger1_pad_collision",
+          "tomato_sauce_1<->gripper0_finger2_pad_collision"
+        ]
+      },
+      "requests": {
+        "execution_sent": 10,
+        "execution_accepted": 10,
+        "execution_errors": 0,
+        "overload_retries": 0,
+        "transient_retries": 0,
+        "reused_initial_plan_requests": 1,
+        "new_planning_requests_at_launch": 0,
+        "task_total_requests": 11,
+        "api_key_calls": 0
+      },
+      "request_identity_checks": [
+        {
+          "stem": "000001-f47d9bb355b74b198d5fc3800706e240",
+          "request_ordinal": 1,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000002-ef8eed41829444669e827e33a31ce0b2",
+          "request_ordinal": 2,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000003-2ae3f535105744beacad1d3219dc450a",
+          "request_ordinal": 3,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000004-53df29899e0049c788364624e27857eb",
+          "request_ordinal": 4,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000005-58d86d820d11450996cf6ad816df7644",
+          "request_ordinal": 5,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000006-9a7f4677ae454885aecd4d453d45e1d4",
+          "request_ordinal": 6,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000007-8a8625d06e204fe18fd6130370031ef1",
+          "request_ordinal": 7,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000008-dcf15562276842cbab4183495f3e14c0",
+          "request_ordinal": 8,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000009-c57fd8248bbb408187eb429ec7541601",
+          "request_ordinal": 9,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000010-0e661208325147aa836fae75ff0c5baa",
+          "request_ordinal": 10,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        }
+      ],
+      "source_integrity": {
+        "review_runtime_current": {
+          "checked": 321,
+          "mismatches": []
+        },
+        "review_runtime_frozen": {
+          "checked": 321,
+          "mismatches": []
+        },
+        "release_runtime_current": {
+          "checked": 392,
+          "mismatches": []
+        },
+        "release_all_files_current": {
+          "checked": 851,
+          "mismatches": []
+        },
+        "trial_frozen_source": {
+          "checked": 313,
+          "mismatches": []
+        }
+      },
+      "collision": {
+        "policy": "record_only",
+        "detected": true,
+        "terminal_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 23011,
+          "forbidden_contact_points": 11943,
+          "physics_substeps": 22125,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 108029,
+          "points_manipulated_object_scene": 804,
+          "points_manipulated_object_support": 1748,
+          "points_passive_scene": 648920,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 11139,
+          "points_robot_object": 0,
+          "points_robot_scene": 0,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        },
+        "first_event": {
+          "action_index": 137,
+          "class": "robot_nonfinger_manipulated_object",
+          "contact_distance_m": -1.475362675349801e-05,
+          "contact_pos": [
+            -0.09732672368307418,
+            -0.22786132225537564,
+            0.512186741778945
+          ],
+          "geom1": {
+            "body": "alphabet_soup_1_main",
+            "finger_side": null,
+            "id": 86,
+            "name": "alphabet_soup_1_g4",
+            "owner": "alphabet_soup_1",
+            "role": "object"
+          },
+          "geom2": {
+            "body": "gripper0_right_gripper",
+            "finger_side": null,
+            "id": 75,
+            "name": "gripper0_hand_collision",
+            "owner": "robot0_gripper",
+            "role": "robot"
+          },
+          "phase": "action",
+          "physics_substep": 13
+        },
+        "reported_pair_owner_samples": {
+          "finger_object": {
+            "alphabet_soup_1 <-> robot0_gripper": 64535,
+            "robot0_gripper <-> tomato_sauce_1": 43329,
+            "basket_1 <-> robot0_gripper": 165
+          },
+          "manipulated_object_scene": {
+            "alphabet_soup_1 <-> basket_1": 777,
+            "basket_1 <-> tomato_sauce_1": 27
+          },
+          "manipulated_object_support": {
+            "arena <-> basket_1": 886,
+            "alphabet_soup_1 <-> arena": 603,
+            "arena <-> tomato_sauce_1": 61,
+            "alphabet_soup_1 <-> basket_1": 93
+          },
+          "robot_nonfinger_manipulated_object": {
+            "alphabet_soup_1 <-> robot0_gripper": 10129,
+            "basket_1 <-> robot0_gripper": 1010
+          }
+        },
+        "pair_reporting_limit": 12,
+        "pair_reporting_note": "pairs_by_class retains top12 pairs per class; owner aggregates are sampled, not exhaustive totals. Counts are physics contact samples, not distinct collision events.",
+        "after_diagnostic_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 23999,
+          "forbidden_contact_points": 11961,
+          "physics_substeps": 23075,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 109271,
+          "points_manipulated_object_scene": 822,
+          "points_manipulated_object_support": 1748,
+          "points_passive_scene": 677604,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 11139,
+          "points_robot_object": 0,
+          "points_robot_scene": 0,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        }
+      },
+      "video_validation": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 1600,
+            "height": 960,
+            "r_frame_rate": "20/1",
+            "duration": "185.600000",
+            "nb_frames": "3712"
+          }
+        ],
+        "format": {
+          "duration": "185.600000"
+        }
+      },
+      "timeline": [
+        {
+          "decision": 1,
+          "step": 0,
+          "latency_s": 35.99,
+          "wall_s_in_log": 43.7,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "Both target cans are upright on the table; the blue alphabet-soup can is left of the red/green tomato can. The basket is to their right. Calibrated views suggest the soup top is near world (-0.10,-0.20,0.51), with some visual uncertainty.",
+          "plan": "Pick the soup first, verify it with a short lift, then carry it over the basket and release inside. Repeat for the tomato sauce. First move above the soup with the open downward-facing gripper.",
+          "why": "This clear approach provides a closer wrist view before descending around the can.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.098,
+                  -0.201,
+                  0.59
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 100,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 48,
+          "policy_actions_after_decision": 48
+        },
+        {
+          "decision": 2,
+          "step": 48,
+          "latency_s": 16.1,
+          "wall_s_in_log": 74.3,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The wrist view shows the soup lid centered laterally beneath the gripper, consistent with the estimated grasp axis. The can remains upright and surrounding clearance appears adequate.",
+          "plan": "Descend around the upper can body, close the fingers, and perform a 4 cm test lift before transporting it.",
+          "why": "The monitored lift will distinguish a real grasp from empty closure or a displaced can.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.098,
+                  -0.201,
+                  0.535
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "approach",
+                "xyz_m": [
+                  0,
+                  0,
+                  -0.06
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 149,
+          "policy_actions_after_decision": 101
+        },
+        {
+          "decision": 3,
+          "step": 149,
+          "latency_s": 13.16,
+          "wall_s_in_log": 119.4,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The descent stopped about 5 mm above its target; the fingers remain open and flank the upright soup can. The close and lift stages did not run. Further downward pressure is unnecessary and may contact the lid with the hand.",
+          "plan": "Use the present upper-body grasp height, close, then lift 4 cm and inspect attachment.",
+          "why": "This avoids repeating the stalled descent while testing the visually aligned grasp.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 195,
+          "policy_actions_after_decision": 46
+        },
+        {
+          "decision": 4,
+          "step": 195,
+          "latency_s": 20.42,
+          "wall_s_in_log": 155.0,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The soup can rose with the gripper and is visibly clear of its original support; the approximately 63 mm finger gap is consistent with this grasp. The basket cavity is to world +y, but its far side is partly outside the external image.",
+          "plan": "Raise the carried can above the basket rim, then travel toward the cavity in two clear overhead legs and inspect from the wrist before lowering.",
+          "why": "The elevated route clears the tomato can and basket wall while obtaining a useful view of the cavity.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.097,
+                  -0.201,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 70,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.02,
+                  0.04,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 75,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.02,
+                  0.29,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 75,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 342,
+          "policy_actions_after_decision": 147
+        },
+        {
+          "decision": 5,
+          "step": 342,
+          "latency_s": 20.9,
+          "wall_s_in_log": 221.5,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The soup remains held after transport. The wrist now shows the basket opening; the current axis is inside but near one side. A small shift toward world -y will improve wall clearance.",
+          "plan": "Center the soup at approximately (0.02,0.25), lower it into the cavity in bounded stages, and inspect before release.",
+          "why": "This places the full can inside the visible rim rather than releasing over an edge.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.02,
+                  0.25,
+                  0.64
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "approach",
+                "xyz_m": [
+                  0,
+                  0,
+                  -0.07
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "approach",
+                "xyz_m": [
+                  0,
+                  0,
+                  -0.055
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 452,
+          "policy_actions_after_decision": 110
+        },
+        {
+          "decision": 6,
+          "step": 452,
+          "latency_s": 9.73,
+          "wall_s_in_log": 268.6,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The soup is visibly inside the basket walls. Lowering stopped at z\u22480.541, consistent with reaching interior support, though the exact contact is not identified. The can remains upright.",
+          "plan": "Open at this position, withdraw vertically, and inspect the soup's settled pose before picking the tomato sauce.",
+          "why": "Releasing without further downward pressure and clearing the view will reveal whether the can is independently supported inside.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "open",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.18
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 70,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 506,
+          "policy_actions_after_decision": 54
+        },
+        {
+          "decision": 7,
+          "step": 506,
+          "latency_s": 54.24,
+          "wall_s_in_log": 341.8,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The soup is released and remains upright within the basket, visibly separate from the raised open gripper. The tomato sauce is still upright on the table; its estimated center is near (-0.15,-0.02).",
+          "plan": "Leave the soup undisturbed and approach the tomato from above. After grasp verification, place it in the remaining basket space beside the soup.",
+          "why": "An overhead approach clears the basket rim and gives a close view for refining the second grasp.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.1,
+                  0.02,
+                  0.72
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 80,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.15,
+                  -0.02,
+                  0.6
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 588,
+          "policy_actions_after_decision": 82
+        },
+        {
+          "decision": 8,
+          "step": 588,
+          "latency_s": 12.89,
+          "wall_s_in_log": 383.0,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The tomato lid is centered between the open jaws, with a small world -x correction indicated by the wrist view. The soup remains inside the basket.",
+          "plan": "Grasp the tomato around its upper body near (-0.158,-0.021,0.49), then perform a short test lift.",
+          "why": "The corrected alignment and conservative grasp height avoid pressing the hand onto the lid.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.158,
+                  -0.021,
+                  0.545
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.158,
+                  -0.021,
+                  0.49
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 721,
+          "policy_actions_after_decision": 133
+        },
+        {
+          "decision": 9,
+          "step": 721,
+          "latency_s": 23.3,
+          "wall_s_in_log": 454.2,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The tomato can moved upward with the gripper and is visibly suspended; the stable 62 mm gap supports the visual grasp evidence. The soup remains settled in the basket.",
+          "plan": "Carry the tomato above the basket, offset toward the free space on the world +x side of the soup, and inspect the remaining clearance before descending.",
+          "why": "The elevated route avoids the rim, and the offset keeps the two cans from being stacked or colliding during insertion.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.158,
+                  -0.021,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.04,
+                  0.12,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 70,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.085,
+                  0.215,
+                  0.72
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 60,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 834,
+          "policy_actions_after_decision": 113
+        },
+        {
+          "decision": 10,
+          "step": 834,
+          "latency_s": 21.09,
+          "wall_s_in_log": 520.0,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The tomato remains securely carried over the basket. Its projected path is near the world +x rim, so a small inward correction is appropriate. The soup occupies the central/rear portion of the cavity.",
+          "plan": "Shift slightly inward to (0.073,0.205), then lower the tomato to z=0.555 beside the soup and inspect before opening.",
+          "why": "The adjustment balances clearance from both the rim and the already placed can; the release height avoids forcing the hand against the basket.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.073,
+                  0.205,
+                  0.625
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.073,
+                  0.205,
+                  0.555
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 885,
+          "policy_actions_after_decision": 51
+        }
+      ],
+      "actual_executed_example": {
+        "decision": 3,
+        "step": 149,
+        "latency_s": 13.16,
+        "wall_s_in_log": 119.4,
+        "ok": true,
+        "kind": "agent",
+        "type": "execute",
+        "belief": "The descent stopped about 5 mm above its target; the fingers remain open and flank the upright soup can. The close and lift stages did not run. Further downward pressure is unnecessary and may contact the lid with the hand.",
+        "plan": "Use the present upper-body grasp height, close, then lift 4 cm and inspect attachment.",
+        "why": "This avoids repeating the stalled descent while testing the visually aligned grasp.",
+        "execution": {
+          "segments": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "gripper": "close",
+              "profile": "contact",
+              "max_steps": 30,
+              "observation_after": false
+            },
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0,
+                0,
+                0.04
+              ],
+              "quaternion_wxyz": null,
+              "gripper": "keep",
+              "profile": "contact",
+              "max_steps": 60,
+              "observation_after": true
+            }
+          ]
+        },
+        "next_decision_or_terminal_step": 195,
+        "policy_actions_after_decision": 46
+      },
+      "provenance": {
+        "trial/summary.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/summary.json",
+          "sha256": "dfeb8b1c25dfec0801afa8e4084f4d2443333d674e757ab454da9a81be0d77b5",
+          "bytes": 90237
+        },
+        "trial/physical_truth.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/physical_truth.json",
+          "sha256": "090011b23ce11b1b43e9d2298d99e57b3862cacfb84ad9c629e5f80a6eaeceae",
+          "bytes": 18741
+        },
+        "trial/agent_stats.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/agent_stats.json",
+          "sha256": "72a8f5b6888586322361772f734fa18e38f207b217bed9d9e5acc41622d41f97",
+          "bytes": 1151925
+        },
+        "terminal_audit.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/terminal_audit.json",
+          "sha256": "5ec058f8935665dfd2b47fe50f113b1cd53b743df897c3d899ea920f36a7d17f",
+          "bytes": 13752
+        },
+        "reviewed_plan.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/reviewed_plan.json",
+          "sha256": "50720f248fe64d9f7197bfb4303a4de884495ce7d512f022cf23e20e43693c34",
+          "bytes": 1136
+        },
+        "approval.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/approval.json",
+          "sha256": "99c3ccbf7deba04d62c4bc2d34426cb549255bf70d5c1dd0086d51866e15c288",
+          "bytes": 1246
+        },
+        "launch/supervisor_console.log": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/launch/supervisor_console.log",
+          "sha256": "f73c47a464828979d9514022b80d0a617bed04496dafdc3988666b076873a4fd",
+          "bytes": 25884
+        },
+        "initial_state.npy": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/initial_state.npy",
+          "sha256": "d41107793aac76bbd4ee943d783263237c1337f85b9b73de4a96ef26212e82f7",
+          "bytes": 1112
+        },
+        "initial_observation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/initial_observation.json",
+          "sha256": "650dc3d7b9fd632029224c0b0e818283b9ff6c0fdd29ffedf6dfbea7de71dd2c",
+          "bytes": 622366
+        },
+        "layout_changes.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/layout_changes.json",
+          "sha256": "5002f4122f32c1e47bb434ce6cb7be9c7478f6793336be7e16180a294d25a790",
+          "bytes": 4945
+        },
+        "physical_validation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/physical_validation.json",
+          "sha256": "876dad153266ef9c917db9f229d27680e9ef8fd5e76fa92c21c67b1c8dd44a14",
+          "bytes": 20624
+        },
+        "preview_manifest.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/preview_manifest.json",
+          "sha256": "f0353476537ca2f3eb6136ff04c9d80a2281f29143d93f0f3a38e61d8cf87339",
+          "bytes": 3386
+        },
+        "preflight.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/preflight.json",
+          "sha256": "ae85b27974bd906e0f12dcbee7244b5c3c5a7ebffa392e93dae3808c02253ec3",
+          "bytes": 105560
+        },
+        "video_validation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/video_validation.json",
+          "sha256": "b41cf9ed6a0f921a136373d91b8bcf37c0696429cc59a6368ab5bf4b4fc734fd",
+          "bytes": 231
+        }
+      },
+      "request_provenance": [
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000001-f47d9bb355b74b198d5fc3800706e240.request.json",
+          "sha256": "d33a5eb7c02a4a8fce0f8391eb346a1f2621c0ffaf695b6e08014b71d7d739c6",
+          "bytes": 752785
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000002-ef8eed41829444669e827e33a31ce0b2.request.json",
+          "sha256": "50e6866c8bf6aad8785a70f26a111383863e9cdb742399441e3fc8d4c0d9b0f4",
+          "bytes": 1430271
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000003-2ae3f535105744beacad1d3219dc450a.request.json",
+          "sha256": "7b1c27a13ce91c0f0967e1891e9fc3abc515e20f35988e45dec577e364478a31",
+          "bytes": 2055596
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000004-53df29899e0049c788364624e27857eb.request.json",
+          "sha256": "9a91337cd165a42807b38b195513bbc172aff238cd8267b8f8cd7f06996374e0",
+          "bytes": 2699353
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000005-58d86d820d11450996cf6ad816df7644.request.json",
+          "sha256": "295fcca32b55c127d9c85a0241160689829bf626c30d17dfd62ad7c40697849a",
+          "bytes": 3431804
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000006-9a7f4677ae454885aecd4d453d45e1d4.request.json",
+          "sha256": "a5392b9d8f2bdf0d35a73cceb8db5f2605b90836f93292781d24b85b3b6ec57e",
+          "bytes": 4122336
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000007-8a8625d06e204fe18fd6130370031ef1.request.json",
+          "sha256": "26c470346b4146e1fac7e50fb313483b0dc2343fbcdc90fd31e86e402e3c7675",
+          "bytes": 4151961
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000008-dcf15562276842cbab4183495f3e14c0.request.json",
+          "sha256": "9def0744299140d3bda63de238b402dbe0c672eed4dd49cbae394d65b75cba09",
+          "bytes": 4200357
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000009-c57fd8248bbb408187eb429ec7541601.request.json",
+          "sha256": "9c16556f290f92a0931a43cb9cb55280c3396d65118c1c958cfd8254e727e5d8",
+          "bytes": 4263641
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000010-0e661208325147aa836fae75ff0c5baa.request.json",
+          "sha256": "c3b2e7ea37de194cef9e1bf405730bddf9c180bbe314e5d5cf7f81fcacf3a7c4",
+          "bytes": 4396235
+        }
+      ],
+      "supplied_fragment_segments": 26,
+      "supplied_fragment_skill_counts": {
+        "move_to_pose": 15,
+        "approach": 3,
+        "set_gripper": 4,
+        "move_relative": 4
+      },
+      "fragment_segment_count_note": "Counts of model-supplied segments, including segments that were pending or interrupted. They are not completed-segment counts.",
+      "interpretation": "The official goal became true while tomato sauce was still held and being lowered. Soup passed strict terminal truth. Tomato failed release/rest/support/rim-support checks; after diagnostic release and settle, support and not_perched_on_rim still failed. Do not infer a literal rim-top perch from the predicate name: recorded geometry shows wall/contact interaction below the rim.",
+      "milestone_steps": {
+        "soup_lift": 195,
+        "soup_placed": 506,
+        "tomato_lift": 721
+      }
+    },
+    "t1": {
+      "result": {
+        "status": "terminal_official_success_strict_terminal_failure_diagnostic_settle_pass",
+        "task_key": "libero_10_t1",
+        "version": "agent-speedup-v2-user-check-7.1",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "high",
+        "layout": "rearranged, episode 0, seed 7",
+        "official_success": true,
+        "strict_terminal_success": false,
+        "strict_after_release_settle_success": true,
+        "v2_success": false,
+        "completion_time_eligible": true,
+        "official_completion_time_without_video_s": 341.1609662992414,
+        "recorded_control_elapsed_s": 450.994430199964,
+        "video_render_s": 109.83346390072256,
+        "policy_actions": 715,
+        "execution_requests": 12,
+        "accepted_execution_responses": 12,
+        "reused_initial_planning_requests": 1,
+        "new_initial_planning_requests_this_execution": 0,
+        "total_unique_requests_for_task": 13,
+        "api_key_calls": 0,
+        "collision_policy": "record_only",
+        "collision_flagged_samples": 4035,
+        "collision_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 18591,
+          "forbidden_contact_points": 4035,
+          "physics_substeps": 17875,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 98206,
+          "points_manipulated_object_scene": 1682,
+          "points_manipulated_object_support": 881,
+          "points_passive_scene": 510097,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 1112,
+          "points_robot_object": 0,
+          "points_robot_scene": 1241,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        },
+        "terminal_failing_checks": {
+          "in butter_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "lowest_point_below_rim",
+            "not_perched_on_rim"
+          ],
+          "in cream_cheese_1 basket_1_contain_region": [
+            "at_rest"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "after_settle_failing_checks": {},
+        "video": "trial/episode.mp4",
+        "terminal_frame": "terminal_frame.png",
+        "updated_at": "2026-10-30T16:32:03.306202+00:00"
+      },
+      "config": {
+        "suite": "libero_10",
+        "task_id": 1,
+        "task_key": "libero_10_t1",
+        "task": "put both the cream cheese box and the butter in the basket",
+        "seed": 7,
+        "episode_index": 0,
+        "benchmark_variant": "custom_initial_layout",
+        "direction_semantics": "external_view_v1",
+        "method": "agent_speedup_v2_user_check",
+        "mode": "live_chatgpt_subscription_agent_speedup_v2_user_check",
+        "reasoning_effort": "high",
+        "billing": "chatgpt_subscription",
+        "max_api_calls": null,
+        "max_policy_steps": null,
+        "max_wall_time_s": null,
+        "zero_shot": false,
+        "calibration": null,
+        "human_reviewed_plan": true,
+        "stop_on_model_complete": false,
+        "prompt_version": "user-check-agent-first-prompt-3",
+        "startup_to_initial_observation_s": 8.32725011301227
+      },
+      "request_configuration": {
+        "model": "gpt-6-astra",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "max_output_tokens": 8192,
+        "timeout_s": 180,
+        "max_api_calls": null,
+        "max_cost_usd": null,
+        "max_wall_time_s": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null,
+        "cached_input_price_per_million": null,
+        "cache_write_price_per_million": null,
+        "max_input_tokens": 1050000
+      },
+      "request_timeout_s": 180,
+      "history_protocol": "persistent_task_executive_fragments_text_and_six_visual_pairs_v2",
+      "image_history": 6,
+      "timing_components_s": {
+        "decision_s": 208.22465424844995,
+        "model_pipeline_s": 207.35752937803045,
+        "model_pipeline_s_by_kind": {
+          "agent": 207.357529
+        },
+        "observe_transition_s": 5.462623875588179,
+        "policy_compute_s": 0.8671248704195023,
+        "run_state_s": 22.051278247265145,
+        "simulator_step_s": 103.81844430253841,
+        "video_render_s": 109.83346390072256
+      },
+      "timing_note": "model_pipeline_s is included in decision_s; policy_compute_s = decision_s - model_pipeline_s; model_pipeline_s_by_kind splits model_pipeline_s by request kind (diagnostics api_calls); observe_transition_s, simulator_step_s and video_render_s are separate; run_state_s (run_state.json writes, inside control time) is informational. control_without_video_s = control_elapsed_s - video_render_s. Terminal truth, video and cleanup are excluded from control_elapsed_s.",
+      "action_counts": {
+        "acts_with_calls": 12,
+        "agent_decisions": 12,
+        "calls_by_kind": {
+          "agent": 12,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "calls_by_need": {
+          "agent": 12,
+          "plan": 0,
+          "point_coarse": 0,
+          "point_fine": 0,
+          "repair": 0,
+          "replan": 0,
+          "review": 0
+        },
+        "deferred_needs": 0,
+        "direct_actions": 0,
+        "direct_segments": 0,
+        "events": {},
+        "fragment_actions": 715,
+        "fragment_grants": 12,
+        "hold_actions": 0,
+        "hold_actions_by_cause": {},
+        "local_retries": 0,
+        "native_macro_actions": 0,
+        "optional_macro_grants": 0,
+        "preemptions": 0,
+        "rejections": {
+          "api_error": 0,
+          "consecutive": 0,
+          "parse_error": 0,
+          "schema_error": 0
+        },
+        "relations_by_status": {},
+        "repairs": null,
+        "reviews": null
+      },
+      "gripper_command_action_counts": {
+        "gripper_close_actions": 421,
+        "gripper_open_actions": 294,
+        "gripper_neutral_actions": 0
+      },
+      "path_length_m": 2.4276756373736332,
+      "approved_plan": {
+        "hold_true": [],
+        "parts": [
+          {
+            "id": "A",
+            "move": "free",
+            "text": "cream cheese box: small rectangular blue and white box",
+            "w": 44,
+            "x": 37
+          },
+          {
+            "id": "B",
+            "move": "free",
+            "text": "butter: small rectangular red and yellow package",
+            "w": 48,
+            "x": 34
+          },
+          {
+            "id": "C",
+            "move": "free",
+            "text": "basket: open cavity inside the fabric lining",
+            "w": 25,
+            "x": 40
+          }
+        ],
+        "placement_goals": [
+          {
+            "obj": "A",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          },
+          {
+            "obj": "B",
+            "ref": "C",
+            "relation": "inside",
+            "tolerance_m": null
+          }
+        ],
+        "regions": [],
+        "scene": "Cream cheese box and butter on a table beside an open lined basket.",
+        "steps": [
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "A",
+            "ref": "C",
+            "sense": "any",
+            "until": []
+          },
+          {
+            "do": "place_in",
+            "grip": [],
+            "keep": [],
+            "obj": "B",
+            "ref": "C",
+            "sense": "any",
+            "until": []
+          }
+        ]
+      },
+      "approval": {
+        "approved": true,
+        "at": "2026-10-30T16:22:01.426503+00:00",
+        "task_key": "libero_10_t1",
+        "attempts": 1,
+        "user_message": "approve, but i need to check the planning plan first",
+        "latest_user_message": "task 1 approved, monitor the test progress",
+        "scope": "One Task 1 full attempt using the displayed custom layout and browser-approved unchanged plan; monitor until terminal. No retry.",
+        "manual_browser_review": true,
+        "approval_source": "manual_browser_review",
+        "browser_approval": {
+          "at": "2026-10-30T16:21:07.481332+00:00",
+          "binding_sha256": "c829d905c669dff6d24db85c8487d2c6dc637df22b9a62ac2b5c5d82c55f379e",
+          "plan_sha256": "93f3cbf6e8ed53b5febce26f5db4ac8471fbc45f462a47679c9ceac4f7304b30",
+          "revision": 2
+        },
+        "review_id": "04a77e5a-621b-4f21-b97d-d1ffcc6b2799",
+        "plan_sha256": "93f3cbf6e8ed53b5febce26f5db4ac8471fbc45f462a47679c9ceac4f7304b30",
+        "initial_observation_sha256": "149c8f6ec6f72f7fed761e886bd68d9d3126bdde011d10f8a54d04322c731e46",
+        "initial_state_sha256": "15431fb136250d0f2ab94d03632851b4ff81d3621e59be69bae98508cddcf043",
+        "source_draft_review_id": "fb32d64c-cdb6-4b37-88f9-8e1180608d20",
+        "plan_changed_from_draft": false
+      },
+      "audit_passed": true,
+      "audit_checks": {
+        "review_consumed_once": true,
+        "approval_preserved": true,
+        "reviewed_plan_unchanged": true,
+        "runtime_maps_match": true,
+        "configuration_hash_matches": true,
+        "launch_execution_matches_review": true,
+        "review_runtime_current": true,
+        "review_runtime_frozen": true,
+        "release_runtime_current": true,
+        "release_all_files_current": true,
+        "trial_frozen_source": true,
+        "initial_layout_unchanged": true,
+        "initial_observation_binding_matches": true,
+        "all_execution_requests_astra_high_subscription": true,
+        "execution_request_counts_match": true,
+        "zero_api_key_calls": true,
+        "no_request_retries": true,
+        "no_execution_errors": true,
+        "terminal_summary_consistent": true,
+        "timing_subtraction_correct": true,
+        "one_reused_planning_request": true,
+        "reused_plan_astra_high_subscription": true,
+        "single_episode_attempt": true
+      },
+      "audit_outcome": {
+        "official_task_success": true,
+        "libero_success": true,
+        "strict_physical_success_at_terminal": false,
+        "strict_physical_success_after_settle": true,
+        "v2_success": false,
+        "terminal_failure_is_hold_only": false,
+        "completion_time_eligible": true,
+        "steps": 715,
+        "control_elapsed_s": 450.994430199964,
+        "video_render_s": 109.83346390072256,
+        "control_without_video_s": 341.1609662992414,
+        "interpretation": "Official goal succeeded before complete physical placement. Diagnostic release/settle passed strict checks but does not override terminal scoring: butter failed support/below-rim/not-perched checks outside the hold exception, and unheld cream cheese separately failed at_rest.",
+        "frozen_hold_exception_per_atom": {
+          "in butter_1 basket_1_contain_region": {
+            "failed_checks_outside_hold_exception": [
+              "lowest_point_below_rim",
+              "not_perched_on_rim",
+              "supported_by_container_or_contents"
+            ],
+            "has_own_failed_hold_check": true
+          },
+          "in cream_cheese_1 basket_1_contain_region": {
+            "failed_checks_outside_hold_exception": [],
+            "has_own_failed_hold_check": false
+          }
+        }
+      },
+      "physical": {
+        "terminal": {
+          "raw_conjunction": true,
+          "strict_conjunction": false,
+          "atoms": [
+            {
+              "atom": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": false,
+              "failed_checks": [
+                "at_rest"
+              ],
+              "robot_contacts": [],
+              "support_contacts": 1,
+              "bottom_above_floor_mm": -1.05,
+              "wall_footprint_margin_mm": 21.17,
+              "env_contacts": [
+                "basket_1:basket_1_g1"
+              ],
+              "speed_mps": 0.0093
+            },
+            {
+              "atom": [
+                "in",
+                "butter_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": false,
+              "failed_checks": [
+                "not_held",
+                "at_rest",
+                "supported_by_container_or_contents",
+                "lowest_point_below_rim",
+                "not_perched_on_rim"
+              ],
+              "robot_contacts": [
+                "gripper0_finger1_collision",
+                "gripper0_finger1_pad_collision",
+                "gripper0_finger2_collision",
+                "gripper0_finger2_pad_collision"
+              ],
+              "support_contacts": 0,
+              "bottom_above_floor_mm": 113.12,
+              "wall_footprint_margin_mm": -3.19,
+              "env_contacts": [],
+              "speed_mps": 0.19714
+            }
+          ]
+        },
+        "after_release_settle": {
+          "raw_conjunction": true,
+          "strict_conjunction": true,
+          "atoms": [
+            {
+              "atom": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": true,
+              "failed_checks": [],
+              "robot_contacts": [],
+              "support_contacts": 1,
+              "bottom_above_floor_mm": -0.0,
+              "wall_footprint_margin_mm": 21.11,
+              "env_contacts": [
+                "basket_1:basket_1_g1",
+                "butter_1:butter_1_g1"
+              ],
+              "speed_mps": 0.0
+            },
+            {
+              "atom": [
+                "in",
+                "butter_1",
+                "basket_1_contain_region"
+              ],
+              "raw": true,
+              "strict": true,
+              "failed_checks": [],
+              "robot_contacts": [],
+              "support_contacts": 1,
+              "bottom_above_floor_mm": -0.0,
+              "wall_footprint_margin_mm": 6.77,
+              "env_contacts": [
+                "basket_1:basket_1_g1",
+                "cream_cheese_1:cream_cheese_1_g1"
+              ],
+              "speed_mps": 0.0
+            }
+          ]
+        }
+      },
+      "physical_summary": {
+        "affects_completion": false,
+        "after_release_settle": true,
+        "at_terminal": false,
+        "diagnosis_only": true,
+        "physical_success": false,
+        "physical_success_after_settle": true,
+        "physical_success_at_terminal": false,
+        "raw_libero_success": true,
+        "raw_libero_success_after_settle": true,
+        "terminal_failing_checks": {
+          "in butter_1 basket_1_contain_region": [
+            "not_held",
+            "at_rest",
+            "supported_by_container_or_contents",
+            "lowest_point_below_rim",
+            "not_perched_on_rim"
+          ],
+          "in cream_cheese_1 basket_1_contain_region": [
+            "at_rest"
+          ]
+        },
+        "terminal_failure_is_hold_only": false,
+        "truth_version": "agent-speedup-v2-truth-v3",
+        "v2_success": false,
+        "verdict": "lenient_success"
+      },
+      "diagnostic_protocol": {
+        "actions": 38,
+        "libero_success_after_settle": true,
+        "protocol": {
+          "lift_action_z": 0.5,
+          "lift_steps": 8,
+          "open_steps": 10,
+          "settle_steps": 20
+        },
+        "raw_true_fraction_during_settle": 1.0,
+        "robot_goal_object_contacts_during_settle": []
+      },
+      "requests": {
+        "execution_sent": 12,
+        "execution_accepted": 12,
+        "execution_errors": 0,
+        "overload_retries": 0,
+        "transient_retries": 0,
+        "reused_initial_plan_requests": 1,
+        "new_planning_requests_at_launch": 0,
+        "task_total_requests": 13,
+        "api_key_calls": 0
+      },
+      "request_identity_checks": [
+        {
+          "stem": "000001-8dba10e82b914c87b8bab00214e8e0ef",
+          "request_ordinal": 1,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000002-31a266c22d654c71b46c18dc7399e291",
+          "request_ordinal": 2,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000003-8642919dcb12415d9a17ff0dd1d63193",
+          "request_ordinal": 3,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000004-ab756926903c4b01a6213018d802fdbf",
+          "request_ordinal": 4,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000005-452da75499a94b0a9a5d3cf30e40a2e9",
+          "request_ordinal": 5,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000006-4c42dc5cd7cd49aab7f2fe5c78370466",
+          "request_ordinal": 6,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000007-054d1ee8067d4b66894ced2a508f4dc5",
+          "request_ordinal": 7,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000008-71ac49ff3c6c41a7a9bb6de21bb23574",
+          "request_ordinal": 8,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000009-ae752d16f5f2408892da7776b8f288e2",
+          "request_ordinal": 9,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000010-50cc8b03ee4644a1a8b88c12647f5719",
+          "request_ordinal": 10,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000011-813d5df272aa46aabf1fb6961e85b432",
+          "request_ordinal": 11,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        },
+        {
+          "stem": "000012-fee2c153dffa4a84a7fa336680db5ddb",
+          "request_ordinal": 12,
+          "requested_model": "gpt-6-astra",
+          "requested_effort": "high",
+          "request_billing": "chatgpt_subscription",
+          "returned_model": "gpt-6-astra",
+          "returned_effort": "high",
+          "response_status": "completed",
+          "response_error": null,
+          "response_billing": "chatgpt_subscription",
+          "parser_verified_completion": true
+        }
+      ],
+      "source_integrity": {
+        "review_runtime_current": {
+          "checked": 321,
+          "mismatches": []
+        },
+        "review_runtime_frozen": {
+          "checked": 321,
+          "mismatches": []
+        },
+        "release_runtime_current": {
+          "checked": 392,
+          "mismatches": []
+        },
+        "release_all_files_current": {
+          "checked": 851,
+          "mismatches": []
+        },
+        "trial_frozen_source": {
+          "checked": 313,
+          "mismatches": []
+        }
+      },
+      "collision": {
+        "policy": "record_only",
+        "detected": true,
+        "terminal_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 18591,
+          "forbidden_contact_points": 4035,
+          "physics_substeps": 17875,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 98206,
+          "points_manipulated_object_scene": 1682,
+          "points_manipulated_object_support": 881,
+          "points_passive_scene": 510097,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 1112,
+          "points_robot_object": 0,
+          "points_robot_scene": 1241,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        },
+        "first_event": {
+          "action_index": 73,
+          "class": "robot_scene",
+          "contact_distance_m": -4.4507978754437794e-05,
+          "contact_pos": [
+            -0.14000917574636998,
+            -0.03507723434093171,
+            0.43674744219501205
+          ],
+          "geom1": {
+            "body": "living_room_table_col",
+            "finger_side": null,
+            "id": 10,
+            "name": "geom_10",
+            "owner": "arena",
+            "role": "arena"
+          },
+          "geom2": {
+            "body": "gripper0_leftfinger",
+            "finger_side": "left",
+            "id": 77,
+            "name": "gripper0_finger1_collision",
+            "owner": "robot0_gripper",
+            "role": "robot_finger"
+          },
+          "phase": "action",
+          "physics_substep": 1
+        },
+        "reported_pair_owner_samples": {
+          "finger_object": {
+            "butter_1 <-> robot0_gripper": 54330,
+            "cream_cheese_1 <-> robot0_gripper": 43449,
+            "basket_1 <-> robot0_gripper": 427
+          },
+          "manipulated_object_scene": {
+            "basket_1 <-> cream_cheese_1": 1682
+          },
+          "manipulated_object_support": {
+            "arena <-> basket_1": 826,
+            "arena <-> butter_1": 49,
+            "arena <-> cream_cheese_1": 6
+          },
+          "robot_nonfinger_manipulated_object": {
+            "basket_1 <-> robot0_gripper": 1112
+          },
+          "robot_scene": {
+            "arena <-> robot0_gripper": 1241
+          }
+        },
+        "pair_reporting_limit": 12,
+        "pair_reporting_note": "pairs_by_class retains top12 pairs per class; owner aggregates are reported samples, not guaranteed exhaustive totals. Counts are physics contact samples, not distinct collision events.",
+        "after_diagnostic_counts": {
+          "active_positive_distance_contacts": 0,
+          "checks": 19579,
+          "forbidden_contact_points": 4299,
+          "physics_substeps": 18825,
+          "points_finger_articulated_part": 0,
+          "points_finger_object": 98237,
+          "points_manipulated_object_scene": 1946,
+          "points_manipulated_object_support": 1078,
+          "points_passive_scene": 537669,
+          "points_robot_internal": 0,
+          "points_robot_nonfinger_manipulated_object": 1112,
+          "points_robot_object": 0,
+          "points_robot_scene": 1241,
+          "positive_distance_contacts_ignored": 0,
+          "unmapped_contact_points": 0
+        }
+      },
+      "video_validation": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 1600,
+            "height": 960,
+            "r_frame_rate": "20/1",
+            "duration": "152.600000",
+            "nb_frames": "3052"
+          }
+        ],
+        "format": {
+          "duration": "152.600000"
+        }
+      },
+      "timeline": [
+        {
+          "decision": 1,
+          "step": 0,
+          "latency_s": 23.43,
+          "wall_s_in_log": 31.8,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The blue-white cream cheese box is near world (-0.13, 0.02) on the table; the red-yellow butter is to its image-left. The basket is to image-right. These are RGB-derived estimates, not measured object poses.",
+          "plan": "Pick the cream cheese first, verify attachment with a short lift, then place it inside the basket; repeat for butter. Move above the cheese for a closer grasp view.",
+          "why": "A clear overhead approach reduces position uncertainty before descending between nearby packages.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.13,
+                  0.021,
+                  0.535
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 90,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 35,
+          "policy_actions_after_decision": 35
+        },
+        {
+          "decision": 2,
+          "step": 35,
+          "latency_s": 22.09,
+          "wall_s_in_log": 64.1,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The closer wrist view centers the cream cheese between the open jaws. Its top is approximately z=0.442 m, with its narrow dimension along the jaw axis; surrounding objects appear clear of a vertical grasp.",
+          "plan": "Descend to the box sides, close, and make a 4 cm test lift before carrying it to the basket.",
+          "why": "The short lift and fresh images will distinguish an attached box from an empty or marginal grasp.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.133,
+                  0.02,
+                  0.478
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 45,
+                "observation_after": false
+              },
+              {
+                "skill": "approach",
+                "xyz_m": [
+                  0,
+                  0,
+                  -0.052
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 50,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 84,
+          "policy_actions_after_decision": 49
+        },
+        {
+          "decision": 3,
+          "step": 84,
+          "latency_s": 14.17,
+          "wall_s_in_log": 92.7,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "Descent stalled at z=0.446 m before closure; the box remains centered and the fingers are beside its upper edges. The cause is uncertain, so I will not force the lower target. A shallow grasp may be possible here.",
+          "plan": "Close at the current height and test with a 3.5 cm lift. If the box remains on the table, revise the grasp orientation rather than repeat the stalled descent.",
+          "why": "This checks a plausible upper-edge grasp without additional downward motion.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.035
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 50,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 125,
+          "policy_actions_after_decision": 41
+        },
+        {
+          "decision": 4,
+          "step": 125,
+          "latency_s": 22.25,
+          "wall_s_in_log": 128.0,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The cream cheese rose with the hand and remains fixed between the fingers in the wrist view; the 42 mm gap is consistent with its width. Attachment is strongly supported. Basket interior position is still approximate.",
+          "plan": "Raise the box above the rim, then carry it over the basket center and inspect before lowering.",
+          "why": "The elevated route clears the table objects and basket wall while giving a useful overhead placement view.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.135,
+                  0.02,
+                  0.65
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 75,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.005,
+                  0.25,
+                  0.65
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 90,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 216,
+          "policy_actions_after_decision": 91
+        },
+        {
+          "decision": 5,
+          "step": 216,
+          "latency_s": 27.46,
+          "wall_s_in_log": 186.1,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The cheese remains held above the basket. The wrist view shows the cavity slightly toward world +x and -y from the current grasp; shifting about 3 cm and 2.5 cm respectively centers the whole box away from the walls.",
+          "plan": "Center over the cavity, lower inside, release near the lining, then withdraw vertically and inspect support.",
+          "why": "This places the box below the rim with clearance and checks the actual resting result after release.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.035,
+                  0.225,
+                  0.57
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "approach",
+                "xyz_m": [
+                  0,
+                  0,
+                  -0.075
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 75,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "open",
+                "profile": "contact",
+                "max_steps": 25,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.16
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 271,
+          "policy_actions_after_decision": 55
+        },
+        {
+          "decision": 6,
+          "step": 271,
+          "latency_s": 10.97,
+          "wall_s_in_log": 216.1,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The cheese is visibly within the basket footprint, but lowering stalled at z=0.541 m. The hand is close to the rim, so further downward force is inappropriate. The box has a clear short settling path into the lining.",
+          "plan": "Release at the current position and withdraw upward; inspect whether the whole box settles inside before proceeding to butter.",
+          "why": "Opening avoids pushing against the rim and allows placement to be assessed independently of the stalled descent.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "open",
+                "profile": "contact",
+                "max_steps": 25,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.13
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 317,
+          "policy_actions_after_decision": 46
+        },
+        {
+          "decision": 7,
+          "step": 317,
+          "latency_s": 13.58,
+          "wall_s_in_log": 245.1,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The cream cheese is released and visibly resting flat on the basket lining, entirely inside the walls. The butter remains on the table near estimated world (-0.17, -0.195).",
+          "plan": "Leave the cheese undisturbed. Travel above the intervening objects, then approach over the butter for grasp alignment.",
+          "why": "The next overhead view will refine the butter pose before contact.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.14,
+                  0.02,
+                  0.67
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 80,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.17,
+                  -0.195,
+                  0.54
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 85,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 423,
+          "policy_actions_after_decision": 106
+        },
+        {
+          "decision": 8,
+          "step": 423,
+          "latency_s": 19.58,
+          "wall_s_in_log": 300.0,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The butter is centered slightly toward world +x from the current hand, around (-0.161, -0.190), with its narrow width aligned to the jaws. Its top appears near z=0.447 m.",
+          "plan": "Align and descend to an upper-side grasp, close, then test attachment with a short vertical lift.",
+          "why": "The refined target uses the close wrist view and avoids the unnecessarily deep descent used on the first box.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.161,
+                  -0.19,
+                  0.485
+                ],
+                "quaternion_wxyz": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 50,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.161,
+                  -0.19,
+                  0.444
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 60,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 50,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 476,
+          "policy_actions_after_decision": 53
+        },
+        {
+          "decision": 9,
+          "step": 476,
+          "latency_s": 12.67,
+          "wall_s_in_log": 331.2,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The butter approach stopped only 2 mm above target, at z=0.446 m. The package remains centered between the fingers, similar to the successful cheese grasp; closure has not yet executed.",
+          "plan": "Close at this measured height and perform a 4 cm test lift, without further downward pressure.",
+          "why": "Fresh images after lifting will establish whether the butter is attached.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "close",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 50,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 529,
+          "policy_actions_after_decision": 53
+        },
+        {
+          "decision": 10,
+          "step": 529,
+          "latency_s": 11.96,
+          "wall_s_in_log": 361.4,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The butter rose with the hand and retains its position between the fingers; the stable 39 mm gap supports a secure grasp. The cheese was last seen resting inside the basket.",
+          "plan": "Carry the butter above the table objects to the basket, aiming beside the cheese rather than directly on it. Inspect alignment before release.",
+          "why": "An elevated three-stage route clears the nearby cans, bottle, and basket rim.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.161,
+                  -0.19,
+                  0.67
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  -0.1,
+                  0.04,
+                  0.67
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 75,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.035,
+                  0.28,
+                  0.66
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 85,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 674,
+          "policy_actions_after_decision": 145
+        },
+        {
+          "decision": 11,
+          "step": 674,
+          "latency_s": 17.1,
+          "wall_s_in_log": 430.9,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The butter remains held above the basket, beside the cheese. Its outer edge is near the side lining, so a small shift toward the center improves clearance while retaining separation from the cheese.",
+          "plan": "Shift to y=0.273 m, lower to z=0.56 m without repeating the earlier rim-contact depth, release, and withdraw to inspect both packages.",
+          "why": "This uses the established basket geometry and a short settling drop instead of forcing the hand deeper into the rim.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.035,
+                  0.273,
+                  0.59
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 50,
+                "observation_after": false
+              },
+              {
+                "skill": "move_to_pose",
+                "xyz_m": [
+                  0.035,
+                  0.273,
+                  0.56
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "contact",
+                "max_steps": 45,
+                "observation_after": false
+              },
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "open",
+                "profile": "contact",
+                "max_steps": 25,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.14
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 710,
+          "policy_actions_after_decision": 36
+        },
+        {
+          "decision": 12,
+          "step": 710,
+          "latency_s": 12.07,
+          "wall_s_in_log": 457.3,
+          "ok": true,
+          "kind": "agent",
+          "type": "execute",
+          "belief": "The butter is over the interior beside the cheese, but the hand encountered a stall at z=0.581 m near the side rim. The box itself appears clear of the wall and can settle downward; further descent is not warranted.",
+          "plan": "Open at the current height, retreat vertically, and inspect both objects' final support and containment.",
+          "why": "This releases the butter into the cavity without continuing the obstructed descent.",
+          "execution": {
+            "segments": [
+              {
+                "skill": "set_gripper",
+                "xyz_m": null,
+                "quaternion_wxyz": null,
+                "gripper": "open",
+                "profile": "contact",
+                "max_steps": 30,
+                "observation_after": false
+              },
+              {
+                "skill": "move_relative",
+                "xyz_m": [
+                  0,
+                  0,
+                  0.13
+                ],
+                "quaternion_wxyz": null,
+                "gripper": "keep",
+                "profile": "transit",
+                "max_steps": 65,
+                "observation_after": true
+              }
+            ]
+          },
+          "next_decision_or_terminal_step": 715,
+          "policy_actions_after_decision": 5
+        }
+      ],
+      "actual_executed_example": {
+        "decision": 3,
+        "step": 84,
+        "latency_s": 14.17,
+        "wall_s_in_log": 92.7,
+        "ok": true,
+        "kind": "agent",
+        "type": "execute",
+        "belief": "Descent stalled at z=0.446 m before closure; the box remains centered and the fingers are beside its upper edges. The cause is uncertain, so I will not force the lower target. A shallow grasp may be possible here.",
+        "plan": "Close at the current height and test with a 3.5 cm lift. If the box remains on the table, revise the grasp orientation rather than repeat the stalled descent.",
+        "why": "This checks a plausible upper-edge grasp without additional downward motion.",
+        "execution": {
+          "segments": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "gripper": "close",
+              "profile": "contact",
+              "max_steps": 30,
+              "observation_after": false
+            },
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0,
+                0,
+                0.035
+              ],
+              "quaternion_wxyz": null,
+              "gripper": "keep",
+              "profile": "contact",
+              "max_steps": 50,
+              "observation_after": true
+            }
+          ]
+        },
+        "next_decision_or_terminal_step": 125,
+        "policy_actions_after_decision": 41
+      },
+      "provenance": {
+        "trial/summary.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/summary.json",
+          "sha256": "25e1b89aa7baa210513dc6fc56b387174d4ec938c38c336e37ca127398674bd6",
+          "bytes": 83600
+        },
+        "trial/physical_truth.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/physical_truth.json",
+          "sha256": "db4ea5d2b9566516cbbf96f1090f4916d6f790e6907356bd662ccbeb4338b21d",
+          "bytes": 17709
+        },
+        "trial/agent_stats.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/agent_stats.json",
+          "sha256": "e705e1d33ba0a13f37216a27ebff25f33d74ab7b96001447aef12e745169385c",
+          "bytes": 768686
+        },
+        "terminal_audit.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/terminal_audit.json",
+          "sha256": "f73f895699c6be25d07aabc6ca9df2be768b9bcfa5dc96d36baf3deeaaad1bed",
+          "bytes": 15147
+        },
+        "reviewed_plan.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/reviewed_plan.json",
+          "sha256": "0cf6f26c9767accc589ef33659d65eb17969c7af37a3050b0676054144de9047",
+          "bytes": 1129
+        },
+        "approval.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/approval.json",
+          "sha256": "37f7ccd7f5a2c5e06f2f7d75fcdec8c579e5afb0f24908b8a3a7b7b3d0410af6",
+          "bytes": 1189
+        },
+        "launch/supervisor_console.log": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/launch/supervisor_console.log",
+          "sha256": "e01c175758fa8c86e796859b28011b675c444e97f0d2f8c99bb6e1e6adb0ef2a",
+          "bytes": 26041
+        },
+        "initial_state.npy": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/initial_state.npy",
+          "sha256": "15431fb136250d0f2ab94d03632851b4ff81d3621e59be69bae98508cddcf043",
+          "bytes": 1112
+        },
+        "initial_observation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/initial_observation.json",
+          "sha256": "c85dab85e9ee16b13721ac74679fd0a798442ec6706b839a2190ee415dbc565a",
+          "bytes": 613089
+        },
+        "layout_changes.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/layout_changes.json",
+          "sha256": "d72684790161db8f888601344d39f62709862539a30db7adf130676028bda928",
+          "bytes": 4943
+        },
+        "physical_validation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/physical_validation.json",
+          "sha256": "3c9df5181af872cd888b0510cc19f5dcabb3ea52746a08c5ff5b858a79c66839",
+          "bytes": 20635
+        },
+        "preview_manifest.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/preview_manifest.json",
+          "sha256": "79b9cf3a2b4b1eb4c28c7fa99d291d0ff35a4cf877ad135f877ad56ae71e6951",
+          "bytes": 3383
+        },
+        "preflight.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/preflight.json",
+          "sha256": "5a6e3363781e468905d95c5fed4f69eab07d42397b9f973aacbf5e21094bb215",
+          "bytes": 105536
+        },
+        "video_validation.json": {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/video_validation.json",
+          "sha256": "0e2eb02b2eecbb649e6af5657e6221310ab8c51c44ac8321795472082e067714",
+          "bytes": 231
+        }
+      },
+      "request_provenance": [
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000001-8dba10e82b914c87b8bab00214e8e0ef.request.json",
+          "sha256": "7cf48b0332d6504f39620f03f8322b27cca427884e28e282fccc0c1fcfe2302f",
+          "bytes": 744599
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000002-31a266c22d654c71b46c18dc7399e291.request.json",
+          "sha256": "a0b2dbdb3ddb814d5c76f270d9ac8738ed7a99ee3e478b0578361e4ebbd0586e",
+          "bytes": 1440608
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000003-8642919dcb12415d9a17ff0dd1d63193.request.json",
+          "sha256": "50023569b479c24c8eaeda119c6a1c05437f882195d8f4d4de0a25a9e018d094",
+          "bytes": 2084982
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000004-ab756926903c4b01a6213018d802fdbf.request.json",
+          "sha256": "cd619358cc79926efbf23f855c12db9c784143d888b9a2e2a865215be1becb64",
+          "bytes": 2752917
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000005-452da75499a94b0a9a5d3cf30e40a2e9.request.json",
+          "sha256": "200268c4a55244c9b56baf8b3fbec3154d6d6c600bdad52acdffbca746c973f8",
+          "bytes": 3510536
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000006-4c42dc5cd7cd49aab7f2fe5c78370466.request.json",
+          "sha256": "3007f80e083e8919a9f53e2873c7b3f6ed341fc3899abddeb95a2248290faf37",
+          "bytes": 4216991
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000007-054d1ee8067d4b66894ced2a508f4dc5.request.json",
+          "sha256": "c0f32ae6da7f81c4f625d39b6f88ba1a96b41bd73543c05cf940f61a1ea857f4",
+          "bytes": 4246904
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000008-71ac49ff3c6c41a7a9bb6de21bb23574.request.json",
+          "sha256": "44537d1093158a5706c2995d1410b2fce15657d9a7f69ff417a5ae270ec18866",
+          "bytes": 4246838
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000009-ae752d16f5f2408892da7776b8f288e2.request.json",
+          "sha256": "2883c424de1de2406953e6d990832c37aba2ce1f0a390994dd47bdcf176e57f3",
+          "bytes": 4256421
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000010-50cc8b03ee4644a1a8b88c12647f5719.request.json",
+          "sha256": "7956d17f127fde9b2ca18d59267fdbb221a70fa356f10a2426f4430faf18afd7",
+          "bytes": 4260390
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000011-813d5df272aa46aabf1fb6961e85b432.request.json",
+          "sha256": "bab2b02c39e21be7fbe4bb5f3a7e56e7524e60052fa4f3a4e468571e02da6547",
+          "bytes": 4264942
+        },
+        {
+          "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000012-fee2c153dffa4a84a7fa336680db5ddb.request.json",
+          "sha256": "eb40806b458a510dc12564df610b627b2595bdd08dce216a778f1f583be7f9eb",
+          "bytes": 4310334
+        }
+      ],
+      "supplied_fragment_segments": 32,
+      "supplied_fragment_skill_counts": {
+        "move_to_pose": 14,
+        "approach": 2,
+        "set_gripper": 8,
+        "move_relative": 8
+      },
+      "fragment_segment_count_note": "Counts of model-supplied segments, including segments that were pending or interrupted. They are not completed-segment counts.",
+      "interpretation": "The official goal became true five open-gripper actions into the final release, before planned withdrawal and settling. Butter still contacted fingers and had no support at terminal; cheese failed at_rest. Both objects pass strict truth after the separate 38-action diagnostic. v2 remains false because terminal failures are not hold-only.",
+      "milestone_steps": {
+        "cheese_lift": 125,
+        "cheese_placed": 317,
+        "butter_lift": 529
+      }
+    }
+  },
+  "assets": {
+    "t0_initial.png": {
+      "file": "assets/t0_initial.png",
+      "caption": "Task 0: approved rearranged initial layout, external RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/external.png",
+        "sha256": "18ac7b4be7da291ccf64326e042e2afb981330c79fa8df2ec872df21bba31b23",
+        "bytes": 248062
+      },
+      "sha256": "18ac7b4be7da291ccf64326e042e2afb981330c79fa8df2ec872df21bba31b23",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_initial_wrist.png": {
+      "file": "assets/t0_initial_wrist.png",
+      "caption": "Task 0: approved rearranged initial layout, wrist RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/wrist.png",
+        "sha256": "773ff0fd71b2190716f95ac4f177843b1e87ebf47316507d23009a1f3ae41dd7",
+        "bytes": 213730
+      },
+      "sha256": "773ff0fd71b2190716f95ac4f177843b1e87ebf47316507d23009a1f3ae41dd7",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_original_external.png": {
+      "file": "assets/t0_original_external.png",
+      "caption": "Task 0: original layout, external RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/original_external.png",
+        "sha256": "ab3ac336b92efc5e489d02b30249b14f2547798a6b1a8e60d3ca397d5fc56876",
+        "bytes": 245271
+      },
+      "sha256": "ab3ac336b92efc5e489d02b30249b14f2547798a6b1a8e60d3ca397d5fc56876",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_original_wrist.png": {
+      "file": "assets/t0_original_wrist.png",
+      "caption": "Task 0: original layout, wrist RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/original_wrist.png",
+        "sha256": "c44b03f35d91df92a63a6573218666e1f3d7f155bbe3db05e893601de28fec7f",
+        "bytes": 214944
+      },
+      "sha256": "c44b03f35d91df92a63a6573218666e1f3d7f155bbe3db05e893601de28fec7f",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_layout_comparison.png": {
+      "file": "assets/t0_layout_comparison.png",
+      "caption": "Task 0: saved original/rearranged layout comparison.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/layout_comparison.png",
+        "sha256": "3ee847c7bf2c8a71f9404604dd34449b865b2d537a2cdbfcb3bf08a9ea1801d9",
+        "bytes": 419015
+      },
+      "sha256": "3ee847c7bf2c8a71f9404604dd34449b865b2d537a2cdbfcb3bf08a9ea1801d9",
+      "method": "byte-for-byte file copy",
+      "width": 1060,
+      "height": 872
+    },
+    "t0_terminal_dashboard.png": {
+      "file": "assets/t0_terminal_dashboard.png",
+      "caption": "Task 0: existing terminal dashboard frame from recorded video. Its SUCCESS label is raw LIBERO success; strict terminal and v2 outcomes are both false. The dashboard step label is zero-based.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/terminal_frame.png",
+        "sha256": "f70af901b41f94eea0bb32e6a23aea5217e8874204ea5c229f3353ee4b316e0c",
+        "bytes": 702379
+      },
+      "sha256": "f70af901b41f94eea0bb32e6a23aea5217e8874204ea5c229f3353ee4b316e0c",
+      "method": "byte-for-byte file copy",
+      "width": 1600,
+      "height": 960
+    },
+    "t0_active_dashboard.png": {
+      "file": "assets/t0_active_dashboard.png",
+      "caption": "Task 0: existing active dashboard frame (video frame 400).",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/active_frame.png",
+        "sha256": "0807588c73986472a032239a02c35b8227f96f06d7a764a82fe073b99b8ff6d2",
+        "bytes": 659569
+      },
+      "sha256": "0807588c73986472a032239a02c35b8227f96f06d7a764a82fe073b99b8ff6d2",
+      "method": "byte-for-byte file copy",
+      "width": 1600,
+      "height": 960
+    },
+    "t0_external_grid.png": {
+      "file": "assets/t0_external_grid.png",
+      "caption": "Task 0: exact external plan-review grid.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/plan_inspection/external_grid.png",
+        "sha256": "9efcfe02f077c1e86aafa709b9366a3ba6d13fa9444257dd1423316c799685a0",
+        "bytes": 298074
+      },
+      "sha256": "9efcfe02f077c1e86aafa709b9366a3ba6d13fa9444257dd1423316c799685a0",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_wrist_grid.png": {
+      "file": "assets/t0_wrist_grid.png",
+      "caption": "Task 0: exact wrist plan-review grid.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/plan_inspection/wrist_grid.png",
+        "sha256": "668310427d1e8c7c08a3da5ea2f8fc3d42dd0d09a14872fa68f94af55c2d4241",
+        "bytes": 264321
+      },
+      "sha256": "668310427d1e8c7c08a3da5ea2f8fc3d42dd0d09a14872fa68f94af55c2d4241",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t0_soup_lift.png": {
+      "file": "assets/t0_soup_lift.png",
+      "caption": "Task 0: soup lift, external RGB supplied with decision 4, observation step 195.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000004-53df29899e0049c788364624e27857eb.request.json",
+        "sha256": "9a91337cd165a42807b38b195513bbc172aff238cd8267b8f8cd7f06996374e0",
+        "bytes": 2699353
+      },
+      "request_ordinal": 4,
+      "observation_step": 195,
+      "camera": "external",
+      "sha256": "69865d3a00bbb9293d4b9e6873da6aad06e787e18828384b457066f38774b7c7",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t0_soup_lift_wrist.png": {
+      "file": "assets/t0_soup_lift_wrist.png",
+      "caption": "Task 0: soup lift, wrist RGB supplied with decision 4, observation step 195.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000004-53df29899e0049c788364624e27857eb.request.json",
+        "sha256": "9a91337cd165a42807b38b195513bbc172aff238cd8267b8f8cd7f06996374e0",
+        "bytes": 2699353
+      },
+      "request_ordinal": 4,
+      "observation_step": 195,
+      "camera": "wrist",
+      "sha256": "5877e4a035e535a93a7e58df3913fa97b665c67e29e3e12f6b8e2cc61b563e32",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t0_soup_placed.png": {
+      "file": "assets/t0_soup_placed.png",
+      "caption": "Task 0: soup placed, external RGB supplied with decision 7, observation step 506.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000007-8a8625d06e204fe18fd6130370031ef1.request.json",
+        "sha256": "26c470346b4146e1fac7e50fb313483b0dc2343fbcdc90fd31e86e402e3c7675",
+        "bytes": 4151961
+      },
+      "request_ordinal": 7,
+      "observation_step": 506,
+      "camera": "external",
+      "sha256": "4eafd30369c1fdd6acd3c6949d3e8bdcda8b034a8e4885cd6152ba0a0efb14d1",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t0_soup_placed_wrist.png": {
+      "file": "assets/t0_soup_placed_wrist.png",
+      "caption": "Task 0: soup placed, wrist RGB supplied with decision 7, observation step 506.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000007-8a8625d06e204fe18fd6130370031ef1.request.json",
+        "sha256": "26c470346b4146e1fac7e50fb313483b0dc2343fbcdc90fd31e86e402e3c7675",
+        "bytes": 4151961
+      },
+      "request_ordinal": 7,
+      "observation_step": 506,
+      "camera": "wrist",
+      "sha256": "f9de84dbdd28b0727a92a0798df51633a33cc31bc164dcbfb1028296d253a47d",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t0_tomato_lift.png": {
+      "file": "assets/t0_tomato_lift.png",
+      "caption": "Task 0: tomato lift, external RGB supplied with decision 9, observation step 721.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000009-c57fd8248bbb408187eb429ec7541601.request.json",
+        "sha256": "9c16556f290f92a0931a43cb9cb55280c3396d65118c1c958cfd8254e727e5d8",
+        "bytes": 4263641
+      },
+      "request_ordinal": 9,
+      "observation_step": 721,
+      "camera": "external",
+      "sha256": "37149e2c68ee5c6254ee9e9fc8e6b0b3052c5e1d314c2c0016c834001f19a2b4",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t0_tomato_lift_wrist.png": {
+      "file": "assets/t0_tomato_lift_wrist.png",
+      "caption": "Task 0: tomato lift, wrist RGB supplied with decision 9, observation step 721.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/trial/requests/000009-c57fd8248bbb408187eb429ec7541601.request.json",
+        "sha256": "9c16556f290f92a0931a43cb9cb55280c3396d65118c1c958cfd8254e727e5d8",
+        "bytes": 4263641
+      },
+      "request_ordinal": 9,
+      "observation_step": 721,
+      "camera": "wrist",
+      "sha256": "b381c0913c3f55ecdc2b963c7e6d9ab2525f7b1cfe7eaebd9d3b2f2c7c117f6b",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_initial.png": {
+      "file": "assets/t1_initial.png",
+      "caption": "Task 1: approved rearranged initial layout, external RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/external.png",
+        "sha256": "09979ef4d2f26d19ed8a32f80aee31ab3fdf878b9af87cb7edd45a891c9fa0ee",
+        "bytes": 248461
+      },
+      "sha256": "09979ef4d2f26d19ed8a32f80aee31ab3fdf878b9af87cb7edd45a891c9fa0ee",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_initial_wrist.png": {
+      "file": "assets/t1_initial_wrist.png",
+      "caption": "Task 1: approved rearranged initial layout, wrist RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/wrist.png",
+        "sha256": "76a9587f949fdfc541bc23bc70adcce80fa2e51a0206917fa2d55445f2c0f2d4",
+        "bytes": 208039
+      },
+      "sha256": "76a9587f949fdfc541bc23bc70adcce80fa2e51a0206917fa2d55445f2c0f2d4",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_original_external.png": {
+      "file": "assets/t1_original_external.png",
+      "caption": "Task 1: original layout, external RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/original_external.png",
+        "sha256": "f253e528b6f1ada7d4d5a84443c0fe0bd703c51ff9fe1c00d19b3e891eb8e2ee",
+        "bytes": 245925
+      },
+      "sha256": "f253e528b6f1ada7d4d5a84443c0fe0bd703c51ff9fe1c00d19b3e891eb8e2ee",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_original_wrist.png": {
+      "file": "assets/t1_original_wrist.png",
+      "caption": "Task 1: original layout, wrist RGB.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/original_wrist.png",
+        "sha256": "c351242675ff1dbb84b2363776f68813e2e19002577d1ce5ea6d28d5759c75e4",
+        "bytes": 212698
+      },
+      "sha256": "c351242675ff1dbb84b2363776f68813e2e19002577d1ce5ea6d28d5759c75e4",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_layout_comparison.png": {
+      "file": "assets/t1_layout_comparison.png",
+      "caption": "Task 1: saved original/rearranged layout comparison.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/layout_comparison.png",
+        "sha256": "37ba3a748150bc45d6535a282934116f6462406ddda7e7aaba7bca0a2d053610",
+        "bytes": 423295
+      },
+      "sha256": "37ba3a748150bc45d6535a282934116f6462406ddda7e7aaba7bca0a2d053610",
+      "method": "byte-for-byte file copy",
+      "width": 1060,
+      "height": 872
+    },
+    "t1_terminal_dashboard.png": {
+      "file": "assets/t1_terminal_dashboard.png",
+      "caption": "Task 1: existing terminal dashboard frame from recorded video. Its SUCCESS label is raw LIBERO success; strict terminal and v2 outcomes are both false. The dashboard step label is zero-based.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/terminal_frame.png",
+        "sha256": "ea544dd23aa55e2afb1bfdbc18714772ae1b0a5ea62e628ed954b5d650ceb094",
+        "bytes": 659581
+      },
+      "sha256": "ea544dd23aa55e2afb1bfdbc18714772ae1b0a5ea62e628ed954b5d650ceb094",
+      "method": "byte-for-byte file copy",
+      "width": 1600,
+      "height": 960
+    },
+    "t1_active_dashboard.png": {
+      "file": "assets/t1_active_dashboard.png",
+      "caption": "Task 1: existing active dashboard frame (video frame 400).",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/active_frame.png",
+        "sha256": "0f6620ab8820d2274b2c7290483bb82c4c9b2375a62d88c3d809ed770132fee8",
+        "bytes": 666465
+      },
+      "sha256": "0f6620ab8820d2274b2c7290483bb82c4c9b2375a62d88c3d809ed770132fee8",
+      "method": "byte-for-byte file copy",
+      "width": 1600,
+      "height": 960
+    },
+    "t1_external_grid.png": {
+      "file": "assets/t1_external_grid.png",
+      "caption": "Task 1: exact external plan-review grid.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/plan_inspection/external_grid.png",
+        "sha256": "1ed4887964400fc8cc148699639dcb13c2902f86554f1e1c7d31b4088e4f793a",
+        "bytes": 297360
+      },
+      "sha256": "1ed4887964400fc8cc148699639dcb13c2902f86554f1e1c7d31b4088e4f793a",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_wrist_grid.png": {
+      "file": "assets/t1_wrist_grid.png",
+      "caption": "Task 1: exact wrist plan-review grid.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/plan_inspection/wrist_grid.png",
+        "sha256": "a4f24afd3e9346239f11efe8403dd99e0999073eed42daa35e2621924a833e80",
+        "bytes": 259140
+      },
+      "sha256": "a4f24afd3e9346239f11efe8403dd99e0999073eed42daa35e2621924a833e80",
+      "method": "byte-for-byte file copy",
+      "width": 512,
+      "height": 512
+    },
+    "t1_cheese_lift.png": {
+      "file": "assets/t1_cheese_lift.png",
+      "caption": "Task 1: cheese lift, external RGB supplied with decision 4, observation step 125.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000004-ab756926903c4b01a6213018d802fdbf.request.json",
+        "sha256": "cd619358cc79926efbf23f855c12db9c784143d888b9a2e2a865215be1becb64",
+        "bytes": 2752917
+      },
+      "request_ordinal": 4,
+      "observation_step": 125,
+      "camera": "external",
+      "sha256": "654dbd7c92b5530eb59a54a2fa58fe398e1c2fcfb409bb8c67d4d1e9430ea998",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_cheese_lift_wrist.png": {
+      "file": "assets/t1_cheese_lift_wrist.png",
+      "caption": "Task 1: cheese lift, wrist RGB supplied with decision 4, observation step 125.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000004-ab756926903c4b01a6213018d802fdbf.request.json",
+        "sha256": "cd619358cc79926efbf23f855c12db9c784143d888b9a2e2a865215be1becb64",
+        "bytes": 2752917
+      },
+      "request_ordinal": 4,
+      "observation_step": 125,
+      "camera": "wrist",
+      "sha256": "3c7e8db741588a19accd955cafd176d745cfbf7ef90da98a34a187180a820332",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_cheese_placed.png": {
+      "file": "assets/t1_cheese_placed.png",
+      "caption": "Task 1: cheese placed, external RGB supplied with decision 7, observation step 317.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000007-054d1ee8067d4b66894ced2a508f4dc5.request.json",
+        "sha256": "c0f32ae6da7f81c4f625d39b6f88ba1a96b41bd73543c05cf940f61a1ea857f4",
+        "bytes": 4246904
+      },
+      "request_ordinal": 7,
+      "observation_step": 317,
+      "camera": "external",
+      "sha256": "fb23a374cad2ade26ac4445fb88161be9336455da1961369bea53291375d79ad",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_cheese_placed_wrist.png": {
+      "file": "assets/t1_cheese_placed_wrist.png",
+      "caption": "Task 1: cheese placed, wrist RGB supplied with decision 7, observation step 317.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000007-054d1ee8067d4b66894ced2a508f4dc5.request.json",
+        "sha256": "c0f32ae6da7f81c4f625d39b6f88ba1a96b41bd73543c05cf940f61a1ea857f4",
+        "bytes": 4246904
+      },
+      "request_ordinal": 7,
+      "observation_step": 317,
+      "camera": "wrist",
+      "sha256": "ff467f4ecac3a680ef31376ad1f507a09059db77f54e75655b59fcfdc30d9c1d",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_butter_lift.png": {
+      "file": "assets/t1_butter_lift.png",
+      "caption": "Task 1: butter lift, external RGB supplied with decision 10, observation step 529.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000010-50cc8b03ee4644a1a8b88c12647f5719.request.json",
+        "sha256": "7956d17f127fde9b2ca18d59267fdbb221a70fa356f10a2426f4430faf18afd7",
+        "bytes": 4260390
+      },
+      "request_ordinal": 10,
+      "observation_step": 529,
+      "camera": "external",
+      "sha256": "3460b92f670019d8fd54c24c4c5a298ec86381874a118027b8e6adb2bbf40430",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    },
+    "t1_butter_lift_wrist.png": {
+      "file": "assets/t1_butter_lift_wrist.png",
+      "caption": "Task 1: butter lift, wrist RGB supplied with decision 10, observation step 529.",
+      "source": {
+        "path": "runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_1/trial/requests/000010-50cc8b03ee4644a1a8b88c12647f5719.request.json",
+        "sha256": "7956d17f127fde9b2ca18d59267fdbb221a70fa356f10a2426f4430faf18afd7",
+        "bytes": 4260390
+      },
+      "request_ordinal": 10,
+      "observation_step": 529,
+      "camera": "wrist",
+      "sha256": "6cfd1c0cf8c23a9a5e8f412bd715481f6d0c1c9798d1a14486dc2f2ab85b556b",
+      "method": "Unmodified PNG bytes decoded from latest user input_image data URL in saved request.",
+      "width": 512,
+      "height": 512
+    }
+  },
+  "interpretation_notes": [
+    "Official raw success is the task stop trigger. Strict terminal truth, diagnostic release-and-settle truth, and v2_success are separate recorded outcomes.",
+    "The 38-action release-and-settle diagnostic is post-stop, uses no new model decisions, and does not continue the policy episode or replace its terminal state.",
+    "Both reviewed plans have empty regions and hold_true arrays. Direction context is frozen but explicit left/right/front/behind placement relations are not exercised.",
+    "Collision numbers count repeated physics contact samples, not distinct collisions. They were record-only and did not stop or relabel official success.",
+    "All policy actions in these two runs are framework fragments; direct control and optional native macro capabilities are not exercised.",
+    "Model beliefs and model-specified target poses in the decision timeline are estimates/instructions, not simulator object ground truth.",
+    "Completion time is control_elapsed_s minus video_render_s, not video playback duration. Model pipeline is included in decision time, not additive to it.",
+    "Images are copied byte-for-byte from recorded artifacts or decoded byte-for-byte from saved request image data URLs; no pixel alteration or image generation is performed."
+  ],
+  "release": {
+    "version": "agent-speedup-v2-user-check-7.1",
+    "direction_semantics": "external_view_v1",
+    "frozen_at_utc": "2026-10-28T09:28:51.162354+00:00",
+    "archive_sha256": "b3e8f84f3bf1b7603fad0ae0d8c4bee8a5a125b50ab08e320394b4069af57a68",
+    "baseline_archive_sha256": "31acb3fde93a2bbb05a472bacf3def1f7a6e17495db23e2b5fea31eee4526f7e",
+    "v0": {
+      "baseline": {
+        "passed": 279,
+        "failed": 59,
+        "skipped": 0
+      },
+      "uc71": {
+        "passed": 350,
+        "failed": 59,
+        "skipped": 0
+      },
+      "new_failures": [],
+      "fixed_baseline_failures": [],
+      "missing_baseline_tests": []
+    },
+    "new_tests_passed": 71,
+    "full_task_tests_authorized": false,
+    "release_file_count": 851,
+    "runtime_file_count": 392
+  }
+}

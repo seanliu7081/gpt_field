@@ -1,0 +1,777 @@
+PAGE 1
+TECHNICAL FRAMEWORK / LIBERO-10
+SpeedUp v2 User Check 7.1
+Human-reviewed goals.
+Persistent visual decisions.
+Measured motion fragments.
+Architecture, data contracts, calibrated direction
+semantics, execution control and independent
+evaluation.
+English technical guide · October 30, 2026
+Frozen UC7.1 Version A / A9 · gpt-6-astra / high
+Recorded worked examples
+t0: soup + tomato sauce into basket.
+t1: cream cheese + butter into basket.
+Release: agent-speedup-v2-user-check-7.1 | Evidence: approved October 30 custom-layout runs; no new rollout for this guide.
+01
+
+
+PAGE 2
+DOCUMENT CONTRACT
+Scope, release and reading map
+This guide describes the frozen implementation used in the two approved LIBERO-10 attempts.
+Item
+Meaning
+Release identity
+agent-speedup-v2-user-check-7.1; direction_semantics = external_view_v1.
+Framework chapters
+Model/executor boundary, plans and approval, direction semantics, actions, feedback and
+deployment protocol.
+Evaluation chapters
+Official goal, terminal physical truth, diagnostic settling, timing and recorded contact
+accounting.
+Worked examples
+One rearranged layout each for t0 and t1; official init 0 / seed 7; actual browser approval.
+Evidence boundary
+These two runs are not a ten-task sweep, multi-seed study, baseline ablation or measured
+UC7.1 speedup.
+Source policy
+Runtime, prompts and scoring were unchanged during both runs. Old v7 deck remains a
+separate historical report.
+[P] UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md; [L] frozen release manifest; [R0,R1] approved run artifacts.
+02
+
+
+PAGE 3
+ARCHITECTURE
+Three responsibilities, one control loop
+The model owns task decisions; the executor owns repeated motor control; evaluation remains separate.
+Task executive
+Interpret images and task.
+Choose target, grasp and
+route.
+Inspect visual outcomes.
+Revise method from
+feedback.
+Measured executor
+Track numeric pose targets.
+Run explicit gripper stages.
+Check arrival and progress.
+Return control at a
+boundary.
+Independent evaluator
+Check the official goal.
+Audit support and stability.
+Record physical contacts.
+Keep hidden truth out of
+policy.
+The measured feedback loop is local to the robot. Visual reasoning and task-level recovery happen at
+model-decision boundaries.
+[M1] agent policy; [M2] agent client; [M3] fragments; [M6] simulator and independent physical-truth evaluator.
+03
+
+
+PAGE 4
+LIFECYCLE
+From preparation to one authorized attempt
+A draft is generated before policy actions; approval is consumed once before execution requests.
+Prepare
+Validated layout
+Frozen reset
+One model draft
+Review
+Images + selectors
+Check every step
+Approve plan
+Execute
+Observe / decide
+Measured fragments
+Fresh feedback
+Finalize
+Official terminal
+Physical diagnosis
+Video + audit
+Continuous execution: fresh RGB + measured robot state → model decision → bounded local sequence →
+measured result → next observation.
+Authorization boundary: one approved task/layout/configuration, one attempt; no automatic episode restart.
+[P §§4–6] preparation, approval and supervision; [M4] ReviewStore; [M5] user-check runner.
+04
+
+
+PAGE 5
+OBSERVATION CONTRACT
+What enters the policy—and what does not
+Calibration is allowed in UC7.1. It does not supply object depth or hidden task answers.
+Policy-visible input
+Two upright RGB views at 512×512.
+Measured robot pose / gripper state and seven
+arm joints.
+Camera and fixed tool geometry for execution.
+Official task text, reviewed goals, action history
+and measured feedback.
+Evaluator-only information
+Simulator object poses and identities.
+BDDL numeric goal regions and success
+predicates.
+Physical contact, support and stability truth.
+Reset validation and post-terminal diagnosis stay
+outside model input.
+Initial plan/replan requests use images and task context without camera calibration; execution requests carry calibrated geometry.
+[M2,M6] calibrated observation / executive request path; [M7] plan client; [P §2] allowed input boundary.
+05
+
+
+PAGE 6
+PLAN DATA MODEL
+The reviewed plan is a semantic contract
+Object references and goals are reviewed; a plan is not a fixed trajectory or a grasp certificate.
+Field
+Role
+parts
+Stable IDs + visual descriptions; x = external-grid cell, w = wrist-grid cell; move =
+free/fixed/hinged/sliding/unknown.
+steps
+do, obj, ref, grip, sense, keep, until define an ordered task intent and selected constraints.
+hold_true
+Relations that the plan asks to preserve across the task.
+regions
+Support / anchor / relation / frame / bounds_xy_m define spatial targets. Directional bounds
+may remain null.
+placement_goals
+Object/reference relation and optional tolerance; independent evaluation still owns task
+success.
+Grid convention
+8×8, 1–64 row-major from top-left; 0 means invisible. A cell identifies a region, not a metric
+contact point.
+[M4,M7,M8] review schema, selector-edit validation and spatial extension; actual t0/t1 plan copies are preserved.
+06
+
+
+PAGE 7
+WORKED PLAN / NO MANUAL EDITS
+Actual t0 plan: two objects, one container
+The browser-approved draft has two place_in steps and two inside goals; extra constraints are empty.
+parts: A=soup, B=tomato, C=basket
+cells (external / wrist):
+  A: 34 / 48
+  B: 36 / 53
+  C: 40 / 25
+steps:
+  place_in(A, C), sense="any"
+  place_in(B, C), sense="any"
+placement_goals:
+  inside(A, C), tolerance=null
+  inside(B, C), tolerance=null
+hold_true=[], regions=[]
+grip=[], keep=[], until=[] per step
+Saved external planning grid.
+No extra pose or motion trajectory was inserted by the
+reviewer.
+[R0] planning_review/review.json and review/review.json; plan unchanged, both steps checked; shorthand rendering of exact fields.
+07
+
+
+PAGE 8
+USER CHECK INTERFACE
+Browser review, edits and approval
+The existing UI edits structured selectors and validates the resulting plan before approval.
+PLAN REVIEW / SCHEMATIC
+Object
+A · alphabet soup
+Action
+place_in
+Reference
+C · basket
+Grasp part
+object itself / default
+Movement sense
+sense = any
+Step checked
+✓ reviewed
+Review order
+Inspect both views and object cells.
+Check task steps and constraints.
+Save allowed selector edits.
+Check every step and approve.
+t0 / t1 provenance
+Actual browser approval; revision 2; both
+steps checked; plans unchanged.
+Original model drafts retained separately.
+[UI,M4] actual field semantics; left panel is a labeled vector schematic, not a browser screenshot. Both runs used manual_browser_review.
+08
+
+
+PAGE 9
+INTEGRITY / SINGLE USE
+Approval binds more than the JSON plan
+A change to the task, initial observation, runtime, configuration or view frame invalidates the bound context.
+Frozen context
+Task + episode + initial
+RGB/state hash
+Runtime SHA-256 map
+Execution configuration
+Preparation + view_frame
+Approval record
+Context hash + reviewed plan
+Revision + checked steps
+Approval timestamp
+Plan hash
+Consumption
+Fresh output required
+Claim marker written once
+Approval cannot be replayed
+Even zero-action failure
+consumes it
+runtime_sha256 includes @configuration. A git commit alone is insufficient because the release also froze previously uncommitted
+files.
+[M4] _context, _approval_binding, approve, claim; [M5] runtime_inventory / execution_options; [L] source manifest.
+09
+
+
+PAGE 10
+DIRECTION SEMANTICS / EXTERNAL_VIEW_V1
+UC7.1 defines directions from the external view
+The same frozen reference is used in planning language, approval, execution requests and region solving.
+R = world-from-external-camera rotation
+r = normalize(R[:2, 0])
+a = (-r_y, r_x)
+right_of = +r       left_of  = -r
+behind   = +a       front_of = -a
+For these recorded LIBERO scenes:
+r ≈ (0, +1); a ≈ (-1, 0).
+World +z remains up. Numeric motion targets and region
+bounds still use world metres.
+right = +r
+left = -r
+behind = +a
+front = -a
+anchor
+Global horizontal convention, not a perspective Jacobian.
+Wrist images never redefine these words.
+[M8] build_view_frame / region_directions; [L] A1–A3; formula uses calibration, not hard-coded LIBERO axes.
+10
+
+
+PAGE 11
+DIRECTION PROPAGATION AND LIMITS
+One direction source across the stack
+The full task contract is sent initially; compact region_directions is included in every executive request.
+Stage
+Implementation contract
+Preparation / approval
+Compute and freeze preparation.view_frame; retain calibration, right_xy, away_xy, roll and
+unavailable reason.
+PlanLock / policy context
+Carry the frozen frame through approval consumption and the persistent episode context.
+Execution request
+Supply the compact direction table even when the reviewed regions list is empty.
+Directional solver
+For direction d, keep candidate points p with p·d greater than the anchor polygon’s maximum
+projection.
+Unavailable / display
+Missing calibration does not fall back to legacy world-axis directions in the solver. Axis-wording
+highlights are diagnostic only.
+Large roll/inverted views remain a limitation. UC7.1 records them; it adds no image rotation, E1 preference rule or UC8 changes.
+[M8] spatial solver; [M1,M2,M4,M5] propagation; [L] A0–A9 release. t0/t1 contain no directional regions, so do not validate that feature.
+11
+
+
+PAGE 12
+EXECUTIVE REQUEST / RESPONSE
+Persistent model decisions between sequences
+The agent keeps textual task history and a bounded visual history instead of restarting after every fragment.
+Request context
+Task and reviewed goal contract at initialization.
+Fresh paired RGB + measured robot state.
+Latest execution feedback and history.
+Frozen region_directions every request.
+Up to six recent visual pairs.
+Decision contract
+belief: explicitly model-estimated state.
+plan / why: intended action and reason.
+type: execute, motion, macro, observe or finish.
+Only the selected payload is active.
+Completed responses are validated before use.
+A model “finish” claim cannot set official task success. Stable gripper gap is measured feedback, not object-attachment proof.
+[M1,M2] continuous task executive and persistent history; [R0,R1] actual request/result logs with model gpt-6-astra and effort high.
+12
+
+
+PAGE 13
+EXECUTION API
+Action branches and their responsibilities
+Generic fragments handle repeated local control; optional native macros keep their own prerequisites.
+Branch
+Executed behavior
+Boundary
+execute
+Sequence of 1–6 generic segments; at most 240
+control steps per grant.
+Measured completion and explicit observation
+checkpoints.
+motion
+Short numerical pose/gripper target; 1–5 local control
+steps.
+A short grant may end before target arrival.
+macro
+Optional hold / turn / place_on / release path.
+Its own grounding / calibration / feasibility
+requirements apply.
+observe /
+finish
+One pose-hold step retaining gripper command; finish
+also makes a model completion claim.
+Neither replaces the independent benchmark
+predicate.
+An unavailable macro returns a reason to the model; legacy grasp verification is not a universal gate before direct execution.
+[M1,M2,M3,M9] policy dispatch, executive schema, measured fragments and optional macro adapters.
+13
+
+
+PAGE 14
+FRAGMENT CONTRACT
+Five reusable measured-motion fragments
+Coordinates refer to the robot grip site in world metres; orientation is the hand’s absolute world quaternion (wxyz).
+Skill
+Semantics
+move_to_pose
+Absolute world xyz target; quaternion_wxyz or null to retain measured entry orientation.
+move_relative
+Resolve xyz displacement once from the measured segment-entry pose.
+approach
+World displacement using the contact profile; a stall is not a contact certificate.
+set_gripper
+Hold entry pose; open or close as an explicit stage; require pose arrival, minimum duration and
+stable measured gap.
+wait
+Hold the entry pose and command for its declared max_steps, then return.
+observation_after
+Yield after that segment. Pending stages do not autoplay or resume implicitly after a handoff.
+[M3] fragment_capabilities and execution engine. Skill names are generic; the model selects task-specific numerical values online.
+14
+
+
+PAGE 15
+EXECUTION EXAMPLE / T0 DECISION 3
+A real grasp-and-test-lift request
+The first descent stalled; the model chose to close at the reached height and inspect a short lift.
+"execution": {"segments": [
+  {"skill": "set_gripper",
+   "xyz_m": null, "quaternion_wxyz": null,
+   "gripper": "close", "profile": "contact",
+   "max_steps": 30, "observation_after": false},
+  {"skill": "move_relative",
+   "xyz_m": [0, 0, 0.04],
+   "quaternion_wxyz": null, "gripper": "keep",
+   "profile": "contact", "max_steps": 60,
+   "observation_after": true}
+]}
+# The 4 cm lift is model-selected,
+# not a task-specific executor constant.
+Next saved observation (step 195): soup can
+visibly lifted with the gripper. Attachment is
+judged from subsequent evidence.
+[R0] recorded decision 3 at step 149; request 4 image at step 195. Payload excerpt reproduced without a new model request.
+15
+
+
+PAGE 16
+MEASURED CONTROL / 20 HZ OSC_POSE
+Control bounds are local, not episode caps
+Targets are tracked from measured pose with bounded Cartesian commands.
+Parameter
+Transit profile
+Contact profile
+Target translation from entry
+≤ 0.30 m
+≤ 0.08 m
+Per-action translation cap
+0.020 m
+0.005 m
+Position arrival tolerance
+0.004 m
+0.002 m
+Target rotation / per-action cap
+1.2 rad / 0.1 rad
+0.5 rad / 0.1 rad
+Rotation arrival tolerance
+0.06 rad
+0.04 rad
+≤120 steps per segment; ≤240 per execution grant. Arrival needs two stable samples. Gripper stages require at least 8 open
+or 12 close actions. These local bounds do not impose a task time/action/call limit.
+[M3] frozen fragment capabilities; [M5] episode limits are None. Contact profile means slower control, not guaranteed collision avoidance.
+16
+
+
+PAGE 17
+FEEDBACK AND HANDOFF
+Return control when execution evidence changes
+Local measurements determine completion or yield; they do not decide physical task success.
+Event
+Measured condition
+Pose arrival
+Position and rotation within profile tolerances for 2 consecutive samples; acknowledge
+completion only after a real action.
+Gripper completion
+At least 8 open / 12 close actions; 5 recent gaps span ≤0.6 mm; pose arrival also required.
+Motion stall
+After ≥16 actions, error improves by <0.8 mm over 12 samples. Weighted error = position
+error + 0.05 × rotation error.
+Maintained-grip gap change
+Outside set_gripper while maintaining close: gap rises ≥6 mm above its observed minimum for
+3 consecutive samples.
+Other handoff boundaries
+observation_after, completed wait, step budget or target-envelope rejection. Pending
+segments never autoplay.
+A stall does not certify contact identity. Pose/gap completion does not certify grasp or placement. Continuation requires a new model decision
+from current evidence.
+[M1,M3] measured predicates and execution handoff. Thresholds are local fragment rules; they do not impose an episode-wide cap.
+17
+
+
+PAGE 18
+BENCHMARK SCOPE
+LIBERO-10: the complete task registry
+Zero-based task IDs. Only t0 and t1 are execution examples in this October 30 campaign.
+ID
+Official task language
+t0
+put both the alphabet soup and the tomato sauce in the basket
+t1
+put both the cream cheese box and the butter in the basket
+t2
+turn on the stove and put the moka pot on it
+t3
+put the black bowl in the bottom drawer of the cabinet and close it
+t4
+put the white mug on the left plate and put the yellow and white mug on the right plate
+t5
+pick up the book and place it in the back compartment of the caddy
+t6
+put the white mug on the plate and put the chocolate pudding to the right of the plate
+t7
+put both the alphabet soup and the cream cheese box in the basket
+t8
+put both moka pots on the stove
+t9
+put the yellow and white mug in the microwave and close it
+[T] src/gpt_field/agent_speedup_v2_tasks.py:53–72; all ten exact official prompts. This guide does not claim a ten-task evaluation.
+18
+
+
+PAGE 19
+LAYOUT PREPARATION
+Rearranged scenes keep the task unchanged
+Current protocol starts from official init 0 / seed 7 and freezes a validated custom object layout.
+Actual saved t0 reset comparison: original on the left, rearranged on the right. Image
+content is unmodified.
+Preparation checks
+Move only free-object XY in the input state;
+retain robot, fixed objects, Z, orientation and
+velocity.
+Preserve official task and goal logic.
+Check stable support and initial goal=false.
+Repeat real resets; match observation
+hashes.
+Archive state files, change list, physical
+validation and both camera previews.
+[P §3]; [R0,R1] layout_changes.json, preview_manifest.json, physical_validation.json and repeated-reset evidence.
+19
+
+
+PAGE 20
+OPERATING CONTRACT
+Supervise one attempt without silent restarts
+Each task has a separate approval, fresh output directory and one-use launch marker.
+Before launch
+Check frozen runtime hashes.
+Verify observation + review
+binding.
+Use an exclusive launch lock.
+Keep the approved
+configuration.
+During execution
+Supervisor runs the wrapper.
+No automatic process restart.
+Track requests and feedback.
+Contacts are record-only.
+At termination
+Preserve raw outcome and logs.
+Run separate physical
+diagnosis.
+Verify source and video
+artifacts.
+Close private
+processes/sockets.
+No task-wide time, action or call cap. Official success, existing error/conflict paths and user stop remain termination
+conditions. User stop is handled at the feedback boundary.
+[P §§5–6] supervisor autostart=false, autorestart=false, startretries=0; [R0,R1] launch and shutdown records.
+20
+
+
+PAGE 21
+TRANSPORT / SUBSCRIPTION ONLY
+Request retry is different from task retry
+The 180-second deadline covers HTTP open and the full SSE response after authentication.
+Condition
+Frozen behavior
+Overload
+server_is_overloaded with HTTP 503 or absent status: at most 2 overload retries.
+Transient transport
+Missing completion, truncated event, stream interruption or network error: at most 2 retries in
+total for this category.
+Retry boundary
+Same observation, no response envelope and no history commit. Partial output is never
+executed.
+Independent limits
+Overload and transient counters are separate. Mixed errors can exceed 3 total sends; accepted
+backoff is at most 60 s.
+Non-retryable / task restart
+HTTP 520 / unknown_error and deadline exceeded do not retry. A new full attempt needs new
+approval and output.
+No model downgrade or API-key fallback. t0/t1 recorded zero request errors and zero retries.
+[M2] client; [X] retry classification and transport deadline; [P §6]; [R0,R1] request logs and terminal audit.
+21
+
+
+PAGE 22
+EVALUATION CONTRACT
+Report four outcomes, not one SUCCESS label
+The runner stops at official success; physical truth examines the state at that same boundary.
+Layer
+Meaning
+Official LIBERO goal
+task_success / libero_success use the original task predicate; an object may still be held.
+Strict terminal truth
+Physical checks at termination: containment, release, support and rest. Rest uses the
+recent 10-step displacement/rotation window when available.
+Post-stop diagnosis
+38 diagnostic actions: 10 open + 8 lift + 20 settle. Inspect possible release/settle effects
+separately.
+Framework v2_success
+raw_terminal AND [strict_terminal OR (hold_only AND strict_after AND raw_after)]. Read the
+saved frozen result; do not rescore a diagnostic pass.
+Hold-only: each failing atom has only permitted hold/rest/orientation failures and also fails not_held or robot_not_touching_part.
+Support/below-rim failures are excluded.
+[M6] independent physical-truth evaluator; [P §7]; [E] strict checks, HELD_CHECKS and terminal_failure_is_hold_only.
+22
+
+
+PAGE 23
+MEASUREMENT
+Completion time and model-call accounting
+Report official completion time only when official success and completion_time_eligible are true.
+official completion time = control_elapsed_s - video_render_s
+                         = control_without_video_s
+Recorded component
+t0
+t1
+Control-loop elapsed
+532.04 s
+450.99 s
+Video render overhead
+137.52 s
+109.83 s
+Official completion, video excluded
+394.52 s
+341.16 s
+Requests: execution + reused draft
+10 + 1 = 11
+12 + 1 = 13
+Time includes model wait, control computation, simulator actions and logging; excludes setup, planning, approval and post-stop diagnosis. It is not
+video playback length.
+[P §8]; [R0,R1] summary.json and timing_components; retrospective removal of measured video-render overhead.
+23
+
+
+PAGE 24
+RECORDED EXECUTION / 885 POLICY ACTIONS
+t0: soup and tomato sauce into the basket
+One approved rearranged attempt; 10 accepted execution decisions, all using measured fragments.
+Initial external view.
+Two target objects and the basket.
+External view, step 195.
+Soup is lifted after a short test lift.
+Wrist view, step 506.
+Soup placement visible in the basket.
+[R0] actual saved initial and request images. Policy execution proceeds next to the tomato sauce; no generated scene imagery.
+24
+
+
+PAGE 25
+TERMINAL STATE / DIAGNOSIS
+t0: official success, incomplete physical placement
+At termination, soup passes strict checks; tomato sauce remains held and fails support/rest checks.
+Official: true
+Strict terminal: false
+After-settle strict: false
+Framework v2: false
+After diagnostic release, tomato becomes
+unheld and at rest, but still fails admissible
+container support / rim-related checks.
+Its lowest point is about 15.9 mm above the
+container floor.
+[R0] terminal_frame.png and trial/physical_truth.json. Dashboard SUCCESS denotes the official predicate, not strict physical completion.
+25
+
+
+PAGE 26
+RECORDED EXECUTION / 715 POLICY ACTIONS
+t1: cream cheese and butter into the basket
+One approved rearranged attempt; 12 accepted execution decisions, all using measured fragments.
+Initial external view.
+Cheese, butter and the basket.
+Wrist view, step 317.
+Cream cheese placement is visible.
+External view, step 529.
+Butter is lifted for transfer.
+[R1] actual saved initial and request images; terminal evaluation remains separate from these visual milestones.
+26
+
+
+PAGE 27
+TERMINAL STATE / HOLD-ONLY RULE
+t1: settling helps, but does not change v2 failure
+The official predicate fires during opening, after 5 opening actions and before planned withdrawal/settling.
+Official: true
+Strict terminal: false
+After-settle strict: true
+Framework v2: false
+Butter fails release, rest, support and
+below-rim checks at termination. Cheese
+also fails rest.
+These failures exceed the per-object
+hold-only exception. The later diagnostic
+pass cannot relabel the attempt.
+[R1] terminal_frame.png, physical_truth.json and summary.v2_success; frame step 0714 is zero-based, corresponding to 715 policy actions.
+27
+
+
+PAGE 28
+RESULTS / NO BASELINE OR SWEEP CLAIM
+Two attempts: audited outcome comparison
+Both tasks reached the official predicate; neither passed the frozen framework success rule.
+Measure
+t0
+t1
+Official success
+true
+true
+Strict at terminal
+false
+false
+Strict after diagnostic settling
+false
+true
+Framework v2_success
+false
+false
+Policy actions / execution requests
+885 / 10
+715 / 12
+Official completion, video excluded
+394.52 s
+341.16 s
+Flagged contact samples (record-only)
+11,943
+4,035
+Contact samples are repeated physics observations, not counts of distinct collisions. Different tasks do not establish a speedup ratio.
+[R0,R1] 23 terminal audit checks each passed; one reused planning draft each; no retry, model downgrade or API-key call.
+28
+
+
+PAGE 29
+PLANNING VIDEO / 1600×960 AT 20 FPS
+Read the video as control telemetry
+Saved active frame with XY, XZ and ZY projections and an embedded legend.
+Blue arrows: bounded direction toward
+the active fragment target.
+White point: gripper.
+Yellow cross: active target.
+Pink trail: measured motion.
+Dashed yellow: entry-to-target reference.
+This is a target-error control field. It does
+not represent obstacle clearance or certify
+collision safety.
+[P §9]; [R1] active_frame.png. No stale target arrows at termination. API wait is compressed; playback length is not completion time.
+29
+
+
+PAGE 30
+EVIDENCE QUALITY
+Validation coverage and known limits
+Release tests, planning probes and the current task attempts answer different questions.
+Evidence
+What it establishes—and its limit
+V0 release checks
+350 passed, 59 pre-existing failures; 71 new checks passed, no new failures. The full regression
+suite was not green.
+V1 planning probes
+13 scenes, 13 planning calls, zero policy actions. Raw draft legality 12/13; direction/part checks
+38/38.
+Current campaign checks
+65 focused offline checks passed; source hashes matched; 23 terminal audit checks passed for
+each attempt. These are integrity checks, not task success.
+Current execution scope
+Two single attempts on custom layouts. Both plans have regions=[]; they do not test
+directional-region behavior.
+Unmeasured claims
+No ten-task execution sweep, multi-seed robustness, matched baseline timing, collision-free
+guarantee or measured speedup is supplied here.
+[L] release validation; [R0,R1] prelaunch / terminal audits; [E] evaluation_notes.json preserves source locations and caveats.
+30
+
+
+PAGE 31
+OPERATOR REFERENCE / COMMAND SHAPE
+Reproduce the workflow with fresh approval
+These are command templates, not actions performed while generating this document.
+cd /workspace/gpt_field
+RUNNER=scripts/evaluate_agent_speedup_v2_user_check.py
+# Fresh TASK_DIR; verified initial_state.npy + expected observation hash.
+.venv/bin/python "$RUNNER" preflight [task/layout/config flags]
+.venv/bin/python "$RUNNER" prepare   [same flags] --review-dir "$TASK_DIR/review"
+.venv/bin/python "$RUNNER" review --review-dir "$TASK_DIR/review" \
+  --host 127.0.0.1 --port 8765
+# After valid approval, invoke once through the supervised wrapper:
+.venv/bin/python "$RUNNER" run --review-dir "$TASK_DIR/review" \
+  --output "$TASK_DIR/trial"
+Required preparation settings: --reasoning-effort high --planning-video --request-deadline-s 180 --stream-progress; official
+episode index 0, verified custom state and observation hash. Use the protocol’s environment and simulator Python. The runner
+config selects Astra; there is no --model flag.
+The exact executable templates are in [P §5]. start --auto-approve also executes; it is not a preparation command.
+[P §§4–6] command templates, environment, browser loopback access and one-attempt supervised launch. Never reuse a consumed review.
+31
+
+
+PAGE 32
+TECHNICAL REFERENCES
+Source map and reproducible document assets
+Project-relative source IDs used in footers; detailed line ranges and file hashes accompany the PDF.
+ID
+Source or retained artifact
+P / L
+UC7_1_ASTRA_HIGH_TEST_PROTOCOL.md
+reports/uc7_direction_semantics_20261028/implementation_uc71/
+M1 / M2 / M3
+src/gpt_field/agent_speedup_v2_user_check_agent.py
+agent_speedup_v2_user_check_agent_client.py / agent_speedup_v2_user_check_fragments.py
+M4 / M5
+src/gpt_field/agent_speedup_v2_user_check.py
+scripts/evaluate_agent_speedup_v2_user_check.py
+UI / E
+src/gpt_field/agent_speedup_v2_user_check.html / agent_speedup_v2_user_check_server.py
+src/gpt_field/agent_speedup_v2_truth.py
+M6 / M7
+src/gpt_field/agent_speedup_v2_user_check_sim.py
+src/gpt_field/agent_speedup_v2_user_check_client.py
+M8 / M9 / X / T
+In src/gpt_field/: …_user_check_spatial.py / …_user_check_agent.py + agent_speedup_v2.py
+…_client.py + …_user_check_transport.py / …_tasks.py; ellipsis = agent_speedup_v2
+R0 / R1
+runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001/task_0/ and task_1/
+Saved trial, planning/review, approval, video, terminal audit and shutdown artifacts
+Companion files: builder, evidence.json, technical_notes.json, evaluation_notes.json, exact scene images, extracted PDF text and rendering QA. Full source paths and
+line ranges are in the notes.
+Frozen archive SHA-256: b3e8f84f3bf1b7603fad0ae0d8c4bee8a5a125b50ab08e320394b4069af57a68
+32

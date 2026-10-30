@@ -1,0 +1,66 @@
+SpeedUp v2 User Check 7.1: Technical Framework on LIBERO-10
+English technical guide, 32 landscape pages, 2026-10-30.
+
+OUTPUT
+speedup_v2_user_check_v71_libero10_technical_framework_en.pdf
+Searchable text, embedded DejaVu fonts, 32 page bookmarks.
+
+BUILD (from /workspace/gpt_field)
+.venv/bin/python presentations/speedup_v2_user_check_v71_libero10_en/build_pdf.py
+.venv/bin/python presentations/speedup_v2_user_check_v71_libero10_en/check_pdf.py
+
+DEPENDENCIES
+ReportLab, PyMuPDF and Pillow. Builders use existing project vendor libraries at
+scene_test/astra_field_slides/vendor and system DejaVu fonts. No network, model
+credentials, policy imports or simulator is needed to build this document.
+
+SCOPE
+Frozen agent-speedup-v2-user-check-7.1, Version A including A9, external_view_v1.
+The current fixed model is gpt-6-astra / high / subscription.
+The worked examples are the two approved custom-layout t0/t1 attempts in:
+runs/agent_speedup_v2_uc71_relayout_t0_t1_20261030_001
+No new rollouts or model requests were made for this document. The old v7 PDF
+and runtime sources were not edited. This is not a full ten-task execution
+sweep, a multi-seed evaluation or a measured speedup comparison.
+
+READING MAP
+01-04: scope and architecture
+05-09: observation, plan schema, browser review and approval binding
+10-12: calibrated direction semantics and persistent executive
+13-17: action API, exact fragment example, controller limits and handoffs
+18-21: full task registry, layout preparation, supervision and transport
+22-23: physical success rules, time and request accounting
+24-28: real t0/t1 scene evidence and audited results
+29-32: planning-video interpretation, validation limits, operation and sources
+
+EVIDENCE
+- evidence.json: metrics, timelines, approved plans, source and image hashes.
+- technical_notes.json: source paths/line ranges for framework contracts.
+- evaluation_notes.json: scoring rules, all ten task prompts and caveats.
+- assets/: 30 unmodified saved images or exact embedded request image bytes.
+- page_manifest.json and layout_bounds.json: document layout metadata.
+- pdf_text.txt, pdf_qa.json, preview/: full text, checks and all rendered pages.
+- document_manifest.json: SHA-256 inventory of the document inputs and PDF.
+- review_report.json: independent factual and visual review outcomes.
+
+RESULT INTERPRETATION
+Both t0 and t1 reach official success, strict terminal=false, v2_success=false.
+Post-stop diagnostic strict success is false for t0 and true for t1; the latter
+is outside the frozen per-object hold-only exception and cannot promote v2.
+Official completion time excludes measured video render overhead and does not
+represent strict physical completion. Contact totals count flagged physics
+samples, not distinct collision events.
+
+QUALITY CHECKS
+Every page rendered successfully; no off-page text, replacement characters or
+empty text pages. All 32 bookmarks present. All pages visually reviewed via
+contact sheets; dense, scoring and scene pages separately checked. Independent
+source reviewers verified framework semantics, exact scene captions and result
+accounting. All 30 asset hashes match the saved evidence inventory.
+The release integrity reviewer also rechecked 851 release files and 392 runtime
+files against the frozen manifest, with zero mismatches.
+
+SOURCE BUNDLE
+speedup_v2_user_check_v71_libero10_technical_framework_sources.zip includes the
+PDF, Python builders, notes, evidence, exact image assets and QA/manifest files.
+Rendered previews are omitted from the ZIP and can be regenerated locally.
