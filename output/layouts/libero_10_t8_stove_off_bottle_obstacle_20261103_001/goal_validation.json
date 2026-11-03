@@ -1,0 +1,163 @@
+{
+  "all_passed": true,
+  "counterfactual_on_poses": {
+    "moka_pot_1": [
+      -0.09738117733702924,
+      -0.20868127306188192,
+      0.9966093293329532,
+      -3.303897867704491e-10,
+      2.0696019431863475e-07,
+      -4.609649680441761e-06,
+      0.9999999999893551
+    ],
+    "moka_pot_2": [
+      -0.0073811773370292405,
+      -0.20868127306188192,
+      0.9966093293329532,
+      -3.3038978680198123e-10,
+      2.0696019431856733e-07,
+      -4.609649680441839e-06,
+      0.9999999999893551
+    ]
+  },
+  "kind": "evaluator_only_counterfactual_goal_truth_table",
+  "model_calls": 0,
+  "physics_integration_steps": 0,
+  "policy_actions": 0,
+  "rows": [
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": false,
+        "stove_on": false
+      },
+      "actual_success": false,
+      "button_qpos": -0.0025,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": false,
+        "stove_on": false
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": true,
+        "stove_on": false
+      },
+      "actual_success": false,
+      "button_qpos": -0.0025,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": true,
+        "stove_on": false
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": false,
+        "stove_on": false
+      },
+      "actual_success": false,
+      "button_qpos": -0.0025,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": false,
+        "stove_on": false
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": true,
+        "stove_on": false
+      },
+      "actual_success": false,
+      "button_qpos": -0.0025,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": true,
+        "stove_on": false
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": false,
+        "stove_on": true
+      },
+      "actual_success": false,
+      "button_qpos": 1.0,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": false,
+        "stove_on": true
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": true,
+        "stove_on": true
+      },
+      "actual_success": false,
+      "button_qpos": 1.0,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": false,
+        "moka_pot_2_on_stove": true,
+        "stove_on": true
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": false,
+        "stove_on": true
+      },
+      "actual_success": false,
+      "button_qpos": 1.0,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": false,
+        "stove_on": true
+      },
+      "expected_success": false,
+      "passed": true
+    },
+    {
+      "actual_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": true,
+        "stove_on": true
+      },
+      "actual_success": true,
+      "button_qpos": 1.0,
+      "expected_predicates": {
+        "moka_pot_1_on_stove": true,
+        "moka_pot_2_on_stove": true,
+        "stove_on": true
+      },
+      "expected_success": true,
+      "passed": true
+    }
+  ],
+  "state_restored_bitwise": true,
+  "support_geometry": {
+    "contact_overlap_m": 1e-06,
+    "geom": "flat_stove_1_collision_burner",
+    "top_z_m": 0.9305
+  }
+}

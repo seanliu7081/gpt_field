@@ -43,6 +43,10 @@ class LiberoConfig:
     stop_on_success: bool = True
     initial_state_override: str | None = None
     task_bddl_override: str | None = None
+    # Explicit registered task identity; ordinary layout overrides still cannot
+    # alter task language. Both fields are evaluator configuration, not sensors.
+    custom_task_prompt: str | None = None
+    custom_task_id: int | None = None
     collision_check_mode: str = "none"
     include_arm_joints: bool = False
     # Inert when monitoring is disabled. False records contacts without changing
@@ -74,6 +78,11 @@ class LiberoConfig:
                 raise ValueError("task_bddl_override must be a nonempty path or None")
             if self.initial_state_override is None:
                 raise ValueError("task_bddl_override requires initial_state_override for its model")
+        if self.custom_task_prompt is not None or self.custom_task_id is not None:
+            from .agent_speedup_v2_tasks import resolve_custom_v2_task
+            resolve_custom_v2_task(self.suite, self.custom_task_id, self.custom_task_prompt)
+            if self.task_bddl_override is None or self.initial_state_override is None:
+                raise ValueError("custom task requires task_bddl_override and initial_state_override")
         if self.collision_check_mode not in ("none", "bowl_obstacles_v1", "task_manipulation_v1"):
             raise ValueError("collision_check_mode must be none, bowl_obstacles_v1 or task_manipulation_v1")
         if self.collision_check_mode == "bowl_obstacles_v1" and (
@@ -200,7 +209,7 @@ def _bddl_symbols(expression):
             yield from _bddl_symbols(child)
 
 
-def validate_task_bddl_contract(original_path, override_path) -> dict:
+def validate_task_bddl_contract(original_path, override_path, *, expected_language=None) -> dict:
     """Preserve the original task and target assets while adding scene objects.
 
     This comparison does not import LIBERO or expose object state to the policy.
@@ -209,14 +218,27 @@ def validate_task_bddl_contract(original_path, override_path) -> dict:
     original, _ = _load_task_bddl(original_path)
     changed, _ = _load_task_bddl(override_path)
     for key in ("problem", ":domain", ":language", ":goal", ":obj_of_interest"):
+        if key == ":language" and expected_language is not None:
+            from .agent_speedup_v2_tasks import CUSTOM_TASK_KEYS, resolve_v2_task
+            if not isinstance(expected_language, str) or expected_language not in {
+                    resolve_v2_task(name).prompt for name in CUSTOM_TASK_KEYS}:
+                raise ValueError("Custom BDDL language must belong to a registered custom task")
+            if changed.get(key) != expected_language.split():
+                raise ValueError("Custom BDDL language does not match the declared custom task")
+            continue
         if original.get(key) != changed.get(key):
             raise ValueError(f"Custom BDDL must preserve original {key}")
     old_assets, new_assets = _bddl_assets(original), _bddl_assets(changed)
     targets = set(original.get(":obj_of_interest", [])) | (set(_bddl_symbols(original[":goal"])) & old_assets.keys())
     if not targets or any(name not in old_assets or new_assets.get(name) != old_assets[name] for name in targets):
         raise ValueError("Custom BDDL must preserve target instance names and asset classes")
-    return {"language_preserved": True, "goal_preserved": True, "target_assets_preserved": True,
-            "target_assets": {name: old_assets[name] for name in sorted(targets)}}
+    result = {"language_preserved": original.get(":language") == changed.get(":language"),
+              "goal_preserved": True, "target_assets_preserved": True,
+              "target_assets": {name: old_assets[name] for name in sorted(targets)}}
+    if expected_language is not None:
+        result.update(custom_task_language=expected_language,
+                      original_language=" ".join(original[":language"]))
+    return result
 
 
 def _validate_official_bddl_contract(original_path, override_path, contract):
@@ -226,6 +248,11 @@ def _validate_official_bddl_contract(original_path, override_path, contract):
     original = robosuite_parse_problem(str(original_path))
     changed = robosuite_parse_problem(str(override_path))
     for key in ("problem_name", "language_instruction", "goal_state", "obj_of_interest"):
+        if key == "language_instruction" and contract.get("custom_task_language") is not None:
+            if (changed.get(key) != contract["custom_task_language"].split()
+                    or original.get(key) != contract["original_language"].split()):
+                raise ValueError("Official parser found unexpected custom task language")
+            continue
         if original.get(key) != changed.get(key):
             raise ValueError(f"Official parser found changed BDDL {key}")
     for description in (original, changed):
@@ -791,6 +818,12 @@ class _LiberoWorker:
             self.metadata.update(
                 benchmark_variant="LIBERO task with custom scene and initial layout (explicit checkout)",
                 task_bddl_override=validate_task_bddl_override(config.task_bddl_override))
+        if config.custom_task_prompt is not None:
+            from .agent_speedup_v2_tasks import resolve_custom_v2_task
+            custom_task = resolve_custom_v2_task(config.suite, config.custom_task_id, config.custom_task_prompt)
+            self.metadata.update(benchmark_variant="registered custom LIBERO task (explicit checkout)",
+                                 custom_task_key=custom_task.key,
+                                 custom_task_prompt=custom_task.prompt, source_task_id=custom_task.task_id)
         if config.collision_check_mode != "none":
             monitoring = {"sampling": "every actual physics substep and final control endpoint",
                     "monitored_scope": list(_BowlObstacleCollisionMonitor.monitored_scope),
@@ -812,8 +845,15 @@ class _LiberoWorker:
             }
 
     def tasks(self) -> list[dict]:
-        return [{"task_id": i, "name": self.benchmark.get_task(i).name, "prompt": self.benchmark.get_task(i).language}
-                for i in range(self.benchmark.get_num_tasks())]
+        tasks = [{"task_id": i, "name": self.benchmark.get_task(i).name,
+                  "prompt": self.benchmark.get_task(i).language}
+                 for i in range(self.benchmark.get_num_tasks())]
+        if self.config.custom_task_prompt is not None:
+            from .agent_speedup_v2_tasks import resolve_custom_v2_task
+            custom_task = resolve_custom_v2_task(
+                self.config.suite, self.config.custom_task_id, self.config.custom_task_prompt)
+            tasks[custom_task.task_id].update(name=custom_task.key, prompt=custom_task.prompt)
+        return tasks
 
     def reset(self, task_id: int, episode_index: int) -> dict:
         import numpy as np
@@ -822,6 +862,9 @@ class _LiberoWorker:
 
         if not 0 <= task_id < self.benchmark.get_num_tasks() or not 0 <= episode_index < 50:
             raise ValueError("task or official episode index out of range")
+        if self.config.custom_task_prompt is not None and (
+                task_id != self.config.custom_task_id or episode_index != 0):
+            raise ValueError("Registered custom task requires its source task id and episode index 0")
         if self.config.collision_check_mode == "bowl_obstacles_v1" and task_id != 0:
             raise ValueError("bowl_obstacles_v1 is defined only for LIBERO-Spatial bowl task 0")
         collision_task = None
@@ -836,6 +879,8 @@ class _LiberoWorker:
         torch.manual_seed(self.config.seed)
         task = self.benchmark.get_task(task_id)
         self.prompt = task.language
+        if self.config.custom_task_prompt is not None:
+            self.prompt = self.config.custom_task_prompt
         init_path = self.benchmark_root / "init_files" / task.problem_folder / task.init_states_file
         # Official local .init files contain numpy arrays; torch >=2.6 otherwise
         # defaults to weights_only=True. This is explicit trusted checkout data.
@@ -855,7 +900,8 @@ class _LiberoWorker:
         if self.config.task_bddl_override is not None:
             bddl_metadata = validate_task_bddl_override(self.config.task_bddl_override)
             bddl_path = Path(bddl_metadata["path"])
-            custom_contract = validate_task_bddl_contract(original_bddl_path, bddl_path)
+            custom_contract = validate_task_bddl_contract(
+                original_bddl_path, bddl_path, expected_language=self.config.custom_task_prompt)
             _validate_official_bddl_contract(original_bddl_path, bddl_path, custom_contract)
             if self.config.collision_check_mode == "bowl_obstacles_v1":
                 expected_targets = {"akita_black_bowl_1": "akita_black_bowl", "plate_1": "plate"}

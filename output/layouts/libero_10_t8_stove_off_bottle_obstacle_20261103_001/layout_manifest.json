@@ -1,0 +1,563 @@
+{
+  "additional_passive_hold_actions": 10,
+  "bottle": {
+    "asset": "ketchup",
+    "bootstrap_region_note": "BDDL constructor seed only; saved initial_state.npy defines final placement",
+    "collision_bounds": {
+      "collision_box_count": 12,
+      "lower_xyz_m": [
+        -0.028435228620234555,
+        -0.08961845611408367,
+        0.9002
+      ],
+      "size_xyz_m": [
+        0.05622000000000001,
+        0.036760000000000015,
+        0.14561000000000013
+      ],
+      "upper_xyz_m": [
+        0.02778477137976546,
+        -0.05285845611408366,
+        1.0458100000000001
+      ]
+    },
+    "destination_site": "flat_stove_1_cook_region",
+    "name": "ketchup_obstacle_1",
+    "orientation_wxyz": [
+      0.7071067811865476,
+      0.7071067811865476,
+      0.0,
+      0.0
+    ],
+    "placement": {
+      "can_other_contact_count": 0,
+      "can_other_contacts": [],
+      "first_blocked_settling_fraction": null,
+      "fraction_source_pot_to_cook_region": 0.45,
+      "perpendicular_offset_m": 0.0,
+      "xyz_m": [
+        -0.0007752286202345471,
+        -0.07048845611408366,
+        0.97262
+      ]
+    },
+    "source_object": "moka_pot_2",
+    "source_to_destination_centerline_xy_m": [
+      [
+        0.041447820329870204,
+        0.04257839411593308
+      ],
+      [
+        -0.05238117733702924,
+        -0.20868127306188192
+      ]
+    ],
+    "table_height_m": 0.9,
+    "table_support_geometry": {
+      "body": "table",
+      "geom_id": 10,
+      "lower_xyz_m": [
+        -0.5,
+        -0.6,
+        0.85
+      ],
+      "upper_xyz_m": [
+        0.5,
+        0.6,
+        0.9
+      ],
+      "upper_z_m": 0.9
+    },
+    "workspace_reference_height_m": 0.9
+  },
+  "bottle_passive_rotation_drift_rad": 0.0,
+  "bottle_passive_translation_drift_m": 6.383626536929177e-10,
+  "bottle_table_support_contacts": [
+    {
+      "a": "world",
+      "b": "ketchup_obstacle_1",
+      "distance_m": -1.4547201997276715e-05,
+      "geom1": "table_collision",
+      "geom2": "ketchup_obstacle_1_g1",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        -0.028435228842640364,
+        -0.0543284555979938,
+        0.8999854527980027
+      ]
+    },
+    {
+      "a": "world",
+      "b": "ketchup_obstacle_1",
+      "distance_m": -1.4530190763793886e-05,
+      "geom1": "table_collision",
+      "geom2": "ketchup_obstacle_1_g1",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        -0.028435228844098825,
+        -0.08822845559797678,
+        0.8999854698092362
+      ]
+    },
+    {
+      "a": "world",
+      "b": "ketchup_obstacle_1",
+      "distance_m": -1.4514971990036588e-05,
+      "geom1": "table_collision",
+      "geom2": "ketchup_obstacle_1_g1",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        0.02778477115732277,
+        -0.05432845560034783,
+        0.89998548502801
+      ]
+    },
+    {
+      "a": "world",
+      "b": "ketchup_obstacle_1",
+      "distance_m": -1.4497960756553758e-05,
+      "geom1": "table_collision",
+      "geom2": "ketchup_obstacle_1_g1",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        0.027784771155864307,
+        -0.08822845560033081,
+        0.8999855020392434
+      ]
+    }
+  ],
+  "checks": {
+    "all_object_poses_preserved_after_reset": true,
+    "all_source_artifacts_unchanged": true,
+    "bottle_passive_rotation_under_1deg": true,
+    "bottle_passive_translation_under_2mm": true,
+    "bottle_table_supported": true,
+    "bottle_upright": true,
+    "goal_truth_table_passed": true,
+    "initial_goal_false": true,
+    "layout_and_goal_bddl_preserved": true,
+    "new_task_language_loaded": true,
+    "no_bottle_object_or_robot_contact": true,
+    "only_stove_joint_changed_in_saved_state": true,
+    "other_settled_state_values_preserved": true,
+    "repeat_reset_observation_identical": true,
+    "source_reset_reproduced": true,
+    "stove_fixture_and_cook_region_preserved": true,
+    "stove_off_after_passive_hold": true,
+    "stove_off_after_reset": true
+  },
+  "checks_passed": true,
+  "created_at_utc": "2026-11-03T02:31:35.775296+00:00",
+  "custom_after_passive_hold_fixture": {
+    "body_quat_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body_xyz_m": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "button_qpos": -0.0025,
+    "cook_region_halfsize_m": [
+      0.075,
+      0.075,
+      0.0025
+    ],
+    "cook_region_xyz_m": [
+      -0.05238117733702924,
+      -0.20868127306188192,
+      0.905
+    ],
+    "is_on": false,
+    "model_body_pos": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "model_body_quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "name": "flat_stove_1"
+  },
+  "custom_after_passive_hold_object_poses": {
+    "ketchup_obstacle_1": {
+      "body_xyz_m": [
+        -0.0007753118777587348,
+        -0.07048838291751973,
+        0.972390953528353
+      ],
+      "joint": "ketchup_obstacle_1_joint0",
+      "qpos": [
+        -0.0007753118777587348,
+        -0.07048838291751972,
+        0.9723909535283531,
+        0.7071071360169786,
+        0.7071064263557071,
+        -4.053877692983437e-07,
+        4.0535775459985537e-07
+      ],
+      "qvel": [
+        -1.672484749653999e-17,
+        4.327638195454773e-15,
+        3.8307716207384133e-14,
+        -5.977159781162973e-14,
+        4.2688801812957376e-20,
+        2.4055598477332934e-16
+      ]
+    },
+    "moka_pot_1": {
+      "body_xyz_m": [
+        -0.054300781741487086,
+        0.25772989380871714,
+        0.9661058538799662
+      ],
+      "joint": "moka_pot_1_joint0",
+      "qpos": [
+        -0.054300781741487086,
+        0.25772989380871714,
+        0.966105853879967,
+        -3.303897867704491e-10,
+        2.0696019431863475e-07,
+        -4.609649680441761e-06,
+        0.9999999999893551
+      ],
+      "qvel": [
+        -4.388879238291661e-16,
+        -6.11294883537078e-16,
+        3.834085173345087e-13,
+        -9.270091056549204e-15,
+        6.636237431723653e-15,
+        -4.617915051925891e-20
+      ]
+    },
+    "moka_pot_2": {
+      "body_xyz_m": [
+        0.04144782033013018,
+        0.04257839411041213,
+        0.9661058538799662
+      ],
+      "joint": "moka_pot_2_joint0",
+      "qpos": [
+        0.04144782033013018,
+        0.04257839411041213,
+        0.966105853879967,
+        -3.3038978680198123e-10,
+        2.0696019431856733e-07,
+        -4.609649680441839e-06,
+        0.9999999999893551
+      ],
+      "qvel": [
+        -4.388613085191378e-16,
+        -6.108214349201147e-16,
+        3.834004087547832e-13,
+        -9.260201662670994e-15,
+        6.616738377445003e-15,
+        -8.572384895055538e-19
+      ]
+    }
+  },
+  "custom_bddl_sha256": "b128a27dfc7cb08d8e66acdf03d11f8de034015eefe57e326d56a16c57ad04cc",
+  "custom_initial_fixture": {
+    "body_quat_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body_xyz_m": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "button_qpos": -0.0025,
+    "cook_region_halfsize_m": [
+      0.075,
+      0.075,
+      0.0025
+    ],
+    "cook_region_xyz_m": [
+      -0.05238117733702924,
+      -0.20868127306188192,
+      0.905
+    ],
+    "is_on": false,
+    "model_body_pos": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "model_body_quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "name": "flat_stove_1"
+  },
+  "custom_initial_settled_object_poses": {
+    "ketchup_obstacle_1": {
+      "body_xyz_m": [
+        -0.0007753118775187348,
+        -0.07048838291769316,
+        0.9723909528899906
+      ],
+      "joint": "ketchup_obstacle_1_joint0",
+      "qpos": [
+        -0.0007753118775187348,
+        -0.07048838291769316,
+        0.9723909528899906,
+        0.7071071360161375,
+        0.7071064263565482,
+        -4.0538659405695385e-07,
+        4.0535657933915215e-07
+      ],
+      "qvel": [
+        -6.3313240111254565e-12,
+        4.609765001971547e-12,
+        1.7058428381891948e-08,
+        -6.383466234624316e-11,
+        7.359792724946511e-16,
+        8.769137922984984e-11
+      ]
+    },
+    "moka_pot_1": {
+      "body_xyz_m": [
+        -0.054300781741747066,
+        0.25772989381423766,
+        0.9661058475851021
+      ],
+      "joint": "moka_pot_1_joint0",
+      "qpos": [
+        -0.054300781741747066,
+        0.25772989381423766,
+        0.9661058475851021,
+        -3.3038986322779656e-10,
+        2.0695822572042393e-07,
+        -4.609607874297236e-06,
+        0.9999999999893551
+      ],
+      "qvel": [
+        6.554029921432573e-12,
+        -1.3898866851976127e-10,
+        1.677857117804461e-07,
+        -2.1049230393878066e-09,
+        -9.923692550401653e-11,
+        -3.822414181469309e-15
+      ]
+    },
+    "moka_pot_2": {
+      "body_xyz_m": [
+        0.041447820329870204,
+        0.04257839411593308,
+        0.9661058475851021
+      ],
+      "joint": "moka_pot_2_joint0",
+      "qpos": [
+        0.041447820329870204,
+        0.04257839411593308,
+        0.9661058475851021,
+        -3.30389863225971e-10,
+        2.0695822572057724e-07,
+        -4.609607874297686e-06,
+        0.9999999999893551
+      ],
+      "qvel": [
+        6.5540296405872185e-12,
+        -1.3898866807757965e-10,
+        1.6778571178532787e-07,
+        -2.1049230160162047e-09,
+        -9.923696425797919e-11,
+        -3.824262471384725e-15
+      ]
+    }
+  },
+  "custom_initial_state_sha256": "ce955a0975611663a136ccc1aafb370ca098daad2b22ec5266138305ee089c86",
+  "episode_index": 0,
+  "initial_observation_sha256": "863d4e72bcb3cda4164625bd0043163c276b64e63cd1f4053add8774710d5561",
+  "kind": "custom_task_evaluator_authoring_only",
+  "model_calls": 0,
+  "model_dimensions": {
+    "na": 0,
+    "nq": 31,
+    "nv": 28
+  },
+  "new_bottle_contacts": [],
+  "policy_actions": 0,
+  "prompt": "turn on the stove and put both moka pots on it",
+  "repeat_initial_observation_sha256": "863d4e72bcb3cda4164625bd0043163c276b64e63cd1f4053add8774710d5561",
+  "seed": 7,
+  "simulator_configuration": {
+    "control_freq_hz": 20,
+    "controller": "OSC_POSE",
+    "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+    "python_executable": "/workspace/venvs/libero-plus/bin/python",
+    "render_size": 512
+  },
+  "source_artifact_sha256": {
+    "README.md": "b949c1e4515b9bf4a4d84a8720b6cbbacf99220d8fa10136c528605c899c94b4",
+    "build.log": "10248687b85ae9e3168ae90ad224b966032d6b8b98284f80e945b7a4006e8e90",
+    "custom_external.png": "be5466e3e9e56061a815c930c0153c2fddc5c60eb2ccb6ea8d28e73b02eb0b73",
+    "custom_external_1024.png": "4ad8513508e33a4c40784317599ceeb4094dd218c7c35ced18dfde25ed5ed29e",
+    "custom_task.bddl": "54bc8d32240afeafeb579867723d6e2819a4e7318950e5f57e6cf5d3c936ddac",
+    "custom_top_down.png": "f3db4ac9e8fb73a530d9319a30183ebb06e1a469e3514a91fed9d66f7ff50a7d",
+    "custom_wrist.png": "ba5e358b9da8839dfcab9ff31663f6eee8c93a565f3e0df471fe3d2a0cf9a45e",
+    "initial_observation.json": "da703c2415d09f6eba3945e6885d910ea7f6167abeb69e529bee72abebcbd3a3",
+    "initial_observation.sha256": "ec29cad1a146498726d8f8f1d59ee8de9a84e3506b94da73192d79fa8ffcf67a",
+    "initial_state.npy": "cb246c6ebd261ebc71899c45b4019f6f01a32cbdd0a8e6dcbf9bd8038972a034",
+    "layout_manifest.json": "0302e677fb0d5a4d6e6b5ba8ffb4a9d298c625e12cd3cee9f50962f3c88fbd2a",
+    "original_external.png": "b21adeb8c60dfa9f98897aa3ab80e74a9b3dd34c0061ffb355bb3a2cf400bad3",
+    "original_external_1024.png": "c208ece12958324487f38c89b68bca4b0510bb1684d99c8d23fa52f6d01ea859",
+    "original_geometry.json": "61adbbbb8ad7f9e99dabbafa9cccb0f8e1fb471dc687d7caa50b718a7cbaf5c0",
+    "original_initial_state.npy": "e33a7af8bbbf4687db7a410564fb4fd42b96787f0f27172e976ad7df1c415f86",
+    "original_observation.json": "190aeaaf0101ed2a34e85c4b826917b550f17a2c7d31c6f5250fbc62203de23a",
+    "original_task.bddl": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+    "original_top_down.png": "72785acbe069b060af3baaa53bfea02dc26c11e43623e7b284b4ceb84826b724",
+    "original_wrist.png": "5badbe78c118c23c627bb4ed52eb5bf901f6c55e595f89a8576ce311c1dea2c9",
+    "placement_candidates.json": "de3b2bc6de2501e092bf7d03be92d51f5587454754e4eda56ba46f1e829b4b82",
+    "prepare_layout.py": "fb5e428f364defe9e5cb7cc07695bebc40436c9e465c117e1bb15fc294a867a6",
+    "preview.log": "53a3f7fe9cf4b08b065d642d1984907aa9895d51a06a0b07497d6e2da0607ce2",
+    "probe.log": "ca96a00d061f548062a46ca08f1e0cf71f533e4cff60ecb861fb1c0e505134ff"
+  },
+  "source_initial_fixture": {
+    "body_quat_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body_xyz_m": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "button_qpos": 1.4382913917406646,
+    "cook_region_halfsize_m": [
+      0.075,
+      0.075,
+      0.0025
+    ],
+    "cook_region_xyz_m": [
+      -0.05238117733702924,
+      -0.20868127306188192,
+      0.905
+    ],
+    "is_on": true,
+    "model_body_pos": [
+      -0.20238117733702923,
+      -0.20868127306188192,
+      0.905
+    ],
+    "model_body_quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "name": "flat_stove_1"
+  },
+  "source_layout": "/workspace/gpt_field/output/layouts/libero_10_t8_bottle_obstacle_20261103_001",
+  "source_object_pose_comparison": {
+    "ketchup_obstacle_1": {
+      "qpos_bitwise_equal": true,
+      "quaternion_max_abs_delta": 0.0,
+      "translation_delta_m": 0.0
+    },
+    "moka_pot_1": {
+      "qpos_bitwise_equal": true,
+      "quaternion_max_abs_delta": 0.0,
+      "translation_delta_m": 0.0
+    },
+    "moka_pot_2": {
+      "qpos_bitwise_equal": true,
+      "quaternion_max_abs_delta": 0.0,
+      "translation_delta_m": 0.0
+    }
+  },
+  "source_task_key": "libero_10_t8",
+  "standard_reset_settle_actions": 10,
+  "stove_change": {
+    "changed_flat_state_indices": [
+      31
+    ],
+    "joint": "flat_stove_1_button",
+    "new_qpos": -0.0025,
+    "new_qvel": 0.0,
+    "off_predicate": "button qpos < 0",
+    "on_predicate": "button qpos >= 0.5",
+    "qpos_address": 30,
+    "qvel_address": 27,
+    "source_qpos": 1.4382913917406646
+  },
+  "task_contract": {
+    "goal": [
+      [
+        "and",
+        [
+          "on",
+          "moka_pot_1",
+          "flat_stove_1_cook_region"
+        ],
+        [
+          "on",
+          "moka_pot_2",
+          "flat_stove_1_cook_region"
+        ],
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ]
+    ],
+    "init": [
+      [
+        "on",
+        "flat_stove_1",
+        "kitchen_table_flat_stove_init_region"
+      ],
+      [
+        "on",
+        "moka_pot_1",
+        "kitchen_table_moka_pot_right_init_region"
+      ],
+      [
+        "on",
+        "moka_pot_2",
+        "kitchen_table_moka_pot_left_init_region"
+      ],
+      [
+        "turnoff",
+        "flat_stove_1"
+      ],
+      [
+        "on",
+        "ketchup_obstacle_1",
+        "kitchen_table_bottle_bootstrap_region"
+      ]
+    ],
+    "language": "turn on the stove and put both moka pots on it"
+  },
+  "task_key": "libero_10_t8_stove_off_bottle_obstacle",
+  "validation_scope": "Passive scene/reset checks and synthetic evaluator goal truth table; no policy completion test."
+}

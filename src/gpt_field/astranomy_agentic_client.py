@@ -9,6 +9,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import math
+from pathlib import Path
 import time
 from typing import Any, Mapping
 
@@ -16,11 +17,14 @@ from .astra import APIError, AstraConfig, SchemaError, _canonical, _strict_loads
 from .astranomy_agentic_geometry import validate_geometry_metadata
 from .astranomy_agentic_prompt import PROMPT_VERSION, instructions
 from .astranomy_agentic_tasks import resolve_astranomy_task
+from .chatgpt_plan import _failure_metadata
 from .hybrid_subscription import ChatGPTPlanHybridClient
 from .observation import decode_image
 
 
-CLIENT_VERSION = "astranomy-agentic-subscription-client-v2"
+CLIENT_VERSION = "astranomy-agentic-subscription-client-v3"
+OVERLOAD_BACKOFF_S = (10.0, 20.0, 40.0)
+OVERLOAD_MAX_WAIT_S = 60.0
 HISTORY_PROTOCOL = "responses_native_short_target_full_visual_and_text_history_v1"
 TOOL_NAMESPACE = "robot"
 TOOL_NAME = "execute_eef_target"
@@ -124,7 +128,8 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
     history_protocol = HISTORY_PROTOCOL
 
     def __init__(self, config=None, *, token_provider, task_key="bowl_plate", transport=None,
-                 log_dir=None, clock=time.monotonic, image_history=None, reasoning_effort="medium"):
+                 log_dir=None, clock=time.monotonic, image_history=None, reasoning_effort="medium",
+                 overload_retries=0, sleep=None):
         config = config or AstraConfig()
         if config.model != "gpt-6-astra" or reasoning_effort not in ("medium", "high"):
             raise ValueError("Astranomy Agentic requires gpt-6-astra with medium or high reasoning")
@@ -132,6 +137,12 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
             raise ValueError("Astranomy Agentic full tasks have no episode call or wall-time cap")
         if image_history is not None:
             raise ValueError("Astranomy Agentic retains every image turn; no image-history limit")
+        if type(overload_retries) is not int or not 0 <= overload_retries <= len(OVERLOAD_BACKOFF_S):
+            raise ValueError("overload_retries must be an integer from 0 through 3")
+        self.overload_retries = overload_retries
+        self._overload_sleep = time.sleep if sleep is None else sleep
+        self._overload_retry_attempts = 0
+        self._overload_retry_wait_s = 0.0
         self.task_spec = resolve_astranomy_task(task_key)
         self.task_key = self.task_spec.key
         # The shared constructor requires a positive legacy image-history value.
@@ -155,6 +166,17 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
         result.update(protocol=HISTORY_PROTOCOL, pending_tool_result=self._pending_call_id is not None,
                       image_history_limit=None,
                       text_history="all_observations_native_outputs_and_robot_tool_results")
+        result.update(self._overload_stats())
+        return result
+
+    def _overload_stats(self):
+        return {"overload_retries": self.overload_retries,
+                "overload_retry_attempts": self._overload_retry_attempts,
+                "overload_retry_wait_s": self._overload_retry_wait_s}
+
+    def budget_snapshot(self):
+        result = super().budget_snapshot()
+        result.update(self._overload_stats())
         return result
 
     def build_payload(self, request, grid=None, mode="astranomy_agentic"):
@@ -233,7 +255,43 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
 
     def predict(self, request, grid=None, mode="astranomy_agentic"):
         with self._history_lock:
-            result = super().predict(request, grid, mode)
+            # Keep the measured input and accepted transcript fixed throughout
+            # an overload wait. Each attempt still uses the shared API ledger.
+            frozen_request = copy.deepcopy(request)
+            observations_before = self._observation_count
+            retries = 0
+            while True:
+                try:
+                    result = super().predict(frozen_request, grid, mode)
+                    break
+                except APIError as exc:
+                    metadata = _failure_metadata(exc)
+                    if (retries >= self.overload_retries
+                            or metadata.get("error_code") != "server_is_overloaded"
+                            or metadata.get("http_status") not in (None, 503)
+                            or self.last_response is not None
+                            or self._observation_count != observations_before):
+                        raise
+                    delay = max(OVERLOAD_BACKOFF_S[retries], metadata.get("retry_after_s", 0))
+                    if delay > OVERLOAD_MAX_WAIT_S:
+                        raise
+                    path = (Path(self.last_log_path).with_suffix(".overload_retry.json")
+                            if self.last_log_path is not None else None)
+                    self._write_log(path, {
+                        "status": "overload_retry_scheduled", **metadata,
+                        "retry_number": retries + 1, "retry_limit": self.overload_retries,
+                        "delay_s": delay, "request_key": self.last_request_key,
+                        "same_observation": True, "history_committed": False,
+                        "controller_actions_during_wait": 0,
+                    })
+                    started = self.clock()
+                    try:
+                        self._overload_sleep(delay)
+                    finally:
+                        self._overload_retry_wait_s += max(0.0, self.clock() - started)
+                    # Interruptions propagate before another request is made.
+                    retries += 1
+                    self._overload_retry_attempts += 1
             call = next(item for item in self.last_response["output"] if item.get("type") == "function_call")
             self._pending_call_id = call["call_id"]
             self._pending_command = copy.deepcopy(result["arguments"])

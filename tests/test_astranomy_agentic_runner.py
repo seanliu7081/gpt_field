@@ -213,6 +213,8 @@ def test_raw_success_interrupts_selected_segment_and_returns_actual_count(
     assert sim.closed
     assert result["reasoning_effort"] == "medium"
     assert result["collision_policy"] == "record_only"
+    assert result["overload_retries"] == 0
+    assert result["overload_retry_policy"]["backoff_s"] == []
 
 
 def test_existing_output_directory_is_never_overwritten(runner, tmp_path):
@@ -349,13 +351,39 @@ def test_cli_forwards_high_custom_scene_options_without_running(runner, tmp_path
 
     monkeypatch.setattr(runner, "execute", capture)
     assert runner.main(["--task", "libero_10_t8", "--output", str(tmp_path / "attempt"),
-        "--reasoning-effort", "high", "--task-bddl-override", "scene.bddl",
+        "--reasoning-effort", "high", "--overload-retries", "3", "--task-bddl-override", "scene.bddl",
         "--initial-state-override", "state.npy", "--expected-initial-observation-sha256", "a" * 64,
         "--sim-python", "/fixture/python", "--libero-root", "/fixture/LIBERO", "--no-video"]) == 0
     assert seen["task_key"] == "libero_10_t8" and seen["reasoning_effort"] == "high"
+    assert seen["overload_retries"] == 3
     assert seen["task_bddl_override"] == Path("scene.bddl")
     assert seen["initial_state_override"] == Path("state.npy")
     assert seen["expected_initial_observation_sha256"] == "a" * 64
     assert seen["sim_python"] == Path("/fixture/python")
     assert seen["libero_root"] == Path("/fixture/LIBERO")
     assert seen["video"] is False
+
+
+def test_bounded_overload_retry_policy_reaches_client_and_saved_metadata(
+        runner, tmp_path, observation):
+    sim, client = FakeSim(observation, success_after=1), FakeClient()
+    seen = {}
+
+    def make_client(config, **kwargs):
+        seen.update(kwargs)
+        return client
+
+    result = runner.execute(tmp_path / "attempt", task_key="bowl_plate", video=False,
+        token_provider=lambda: "unused", client_factory=make_client,
+        sim_factory=lambda config: sim, overload_retries=3)
+    assert seen["overload_retries"] == 3
+    expected = {"max_retries": 3, "backoff_s": [10, 20, 40],
+        "max_wait_per_retry_s": 60,
+        "server_retry_after_policy": "may increase a delay up to the ceiling; larger hints stop retries",
+        "trigger": "server_is_overloaded", "http_statuses": [None, 503],
+        "same_observation": True,
+        "controller_actions_during_wait": 0}
+    identity = json.loads((tmp_path / "attempt/manifest.json").read_text())["configuration"]
+    assert identity["overload_retries"] == result["overload_retries"] == 3
+    assert identity["overload_retry_policy"] == result["overload_retry_policy"] == expected
+    assert len(sim.actions) == client.calls == 1

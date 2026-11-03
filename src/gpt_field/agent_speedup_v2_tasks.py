@@ -105,9 +105,20 @@ for _i, (_prompt, _scene, _sha) in enumerate(_L10):
 for _i, (_prompt, _sha) in enumerate(_GOAL):
     if _i != 3:
         _entries[f"libero_goal_g{_i}"] = _spec(f"libero_goal_g{_i}", "libero_goal", _i, _prompt, _GOAL_SCENE, _sha)
+# Explicit custom task identity: the official t8 entry remains unchanged. The
+# model receives only this instruction; source-task/index metadata is evaluator-only.
+CUSTOM_TASK_KEYS = ("libero_10_t8_stove_off_bottle_obstacle",)
+_CUSTOM_LAYOUT = Path(__file__).resolve().parents[2] / (
+    "output/layouts/libero_10_t8_stove_off_bottle_obstacle_20261103_001")
+_entries[CUSTOM_TASK_KEYS[0]] = _spec(
+    CUSTOM_TASK_KEYS[0], "libero_10", 8,
+    "turn on the stove and put both moka pots on it", "KITCHEN_SCENE8",
+    "863d4e72bcb3cda4164625bd0043163c276b64e63cd1f4053add8774710d5561")
 _TASKS = MappingProxyType(_entries)
 V2_TASK_ALIASES = MappingProxyType({"libero_goal_g3": "drawer_bowl"})
-V2_TASK_KEYS = tuple(_TASKS)
+# Keep existing official-suite iteration and batch defaults unchanged. Custom
+# tasks are selected explicitly through CUSTOM_TASK_KEYS by capable runners.
+V2_TASK_KEYS = tuple(key for key in _TASKS if key not in CUSTOM_TASK_KEYS)
 PRIMARY_TASK = "libero_10_t2"
 REGRESSION_TASKS = ("bowl_plate", "drawer_bowl")
 BACKUP_TASK = "libero_10_t7"
@@ -120,12 +131,22 @@ def resolve_v2_task(task_key):
         raise ValueError("task key must be a string")
     task_key = V2_TASK_ALIASES.get(task_key, task_key)
     if task_key not in _TASKS:
-        raise ValueError(f"Unknown agent_speedup_v2 task {task_key!r}; choose one of {', '.join(V2_TASK_KEYS)}")
+        raise ValueError(f"Unknown agent_speedup_v2 task {task_key!r}; choose one of {', '.join((*V2_TASK_KEYS, *CUSTOM_TASK_KEYS))}")
     return _TASKS[task_key]
 
 
 def list_v2_tasks():
     return [_TASKS[key] for key in V2_TASK_KEYS]
+
+
+def resolve_custom_v2_task(suite, task_id, prompt):
+    """Only registered custom identities may replace an official instruction."""
+    if type(task_id) is int and isinstance(prompt, str):
+        for key in CUSTOM_TASK_KEYS:
+            spec = _TASKS[key]
+            if (suite, task_id, prompt) == (spec.suite, spec.task_id, spec.prompt):
+                return spec
+    raise ValueError("custom task prompt and task id must match a registered custom task")
 
 
 def frozen_reset_sha256(task_key, episode_index):
@@ -143,12 +164,16 @@ def build_v2_sim_config(task_key, *, sim_python=DEFAULT_SIM_PYTHON, libero_root=
     Returns (LiberoConfig, monitor_options)."""
     from .libero import LiberoConfig
     spec = resolve_v2_task(task_key)
+    custom = ({"custom_task_prompt": spec.prompt, "custom_task_id": spec.task_id,
+               "task_bddl_override": str(_CUSTOM_LAYOUT / "custom_task.bddl"),
+               "initial_state_override": str(_CUSTOM_LAYOUT / "initial_state.npy")}
+              if spec.key in CUSTOM_TASK_KEYS else {})
     config = LiberoConfig(suite=spec.suite, seed=7, max_steps=None, settle_steps=10,
                           libero_root=str(Path(libero_root).expanduser().resolve()),
                           python_executable=os.path.abspath(os.path.expanduser(sim_python)),
                           include_arm_joints=False, render_size=IMAGE_SIZE, image_size=IMAGE_SIZE,
                           collision_check_mode=collision_base_mode(task_key), stop_on_collision=False,
-                          stop_on_success=True)
+                          stop_on_success=True, **custom)
     return config, {"goal_aware": True, "truth_window": True}
 
 

@@ -171,8 +171,10 @@ def freeze_inputs(output, sim_config):
 def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=False,
             video=True, client_factory=None, sim_factory=None, reasoning_effort="medium",
             task_bddl_override=None, initial_state_override=None,
-            expected_initial_observation_sha256=None, sim_python=None, libero_root=None):
-    from gpt_field.astranomy_agentic_client import AstranomyAgenticClient
+            expected_initial_observation_sha256=None, sim_python=None, libero_root=None,
+            overload_retries=0):
+    from gpt_field.astranomy_agentic_client import (AstranomyAgenticClient,
+        OVERLOAD_BACKOFF_S, OVERLOAD_MAX_WAIT_S)
     from gpt_field.astranomy_agentic_motion import (ShortTargetExecutor, ShortTargetConfig,
         TargetLimitError, measured_pose, rejected_feedback)
     output = Path(output).resolve()
@@ -184,6 +186,8 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
         raise ValueError("episode index must be 0..49")
     if reasoning_effort not in ("medium", "high"):
         raise ValueError("reasoning_effort must be medium or high")
+    if type(overload_retries) is not int or not 0 <= overload_retries <= 3:
+        raise ValueError("overload_retries must be an integer from 0 to 3")
     if bool(task_bddl_override) != bool(initial_state_override):
         raise ValueError("Custom scene requires both task_bddl_override and initial_state_override")
     if initial_state_override and expected_initial_observation_sha256 is None:
@@ -203,10 +207,18 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
     freeze_sources(output)
     client = None if smoke else (client_factory or AstranomyAgenticClient)(
         config, token_provider=token_provider, task_key=task_key, log_dir=output / "requests",
-        reasoning_effort=reasoning_effort)
+        reasoning_effort=reasoning_effort, overload_retries=overload_retries)
+    overload_retry_policy = {"max_retries": overload_retries,
+        "backoff_s": list(OVERLOAD_BACKOFF_S[:overload_retries]),
+        "max_wait_per_retry_s": OVERLOAD_MAX_WAIT_S,
+        "server_retry_after_policy": "may increase a delay up to the ceiling; larger hints stop retries",
+        "trigger": "server_is_overloaded", "http_statuses": [None, 503],
+        "same_observation": True,
+        "controller_actions_during_wait": 0}
     identity = {"method": METHOD, "zero_shot": True, "task": task.prompt, "task_id": task.task_id,
         "episode_index": episode_index, "distance_task": task_key, "simulator": asdict(sim_config),
         "api": asdict(config), "reasoning_effort": reasoning_effort, "billing": "offline_scripted" if smoke else "chatgpt_subscription",
+        "overload_retries": overload_retries, "overload_retry_policy": overload_retry_policy,
         "custom_scene": bool(input_provenance), "input_provenance": input_provenance,
         "expected_initial_observation_sha256": expected,
         "initial_observation_hash_contract": "Astranomy initial_identity: raw legacy RGB/state before upright conversion, excluding joint fields",
@@ -274,6 +286,7 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
         return {"method": METHOD, "status": status, "task": task.prompt, "suite": task.suite,
             "distance_task": task_key, "task_id": task.task_id, "episode_index": episode_index, "seed": 7,
             "zero_shot": True, "reasoning_effort": reasoning_effort, "billing": identity["billing"],
+            "overload_retries": overload_retries, "overload_retry_policy": overload_retry_policy,
             "custom_scene": bool(input_provenance), "input_provenance": input_provenance,
             "expected_initial_observation_sha256": expected,
             "collision_policy": identity["collision_policy"],
@@ -464,6 +477,8 @@ def main(argv=None):
     parser.add_argument("--task", choices=ASTRANOMY_TASK_KEYS, default="bowl_plate")
     parser.add_argument("--episode-index", type=int, default=0)
     parser.add_argument("--reasoning-effort", choices=("medium", "high"), default="medium")
+    parser.add_argument("--overload-retries", type=int, choices=range(4), default=0,
+                        help="Retry the same observation after overload; base waits 10/20/40 s, server hints bounded at 60 s")
     parser.add_argument("--task-bddl-override", type=Path)
     parser.add_argument("--initial-state-override", type=Path)
     parser.add_argument("--expected-initial-observation-sha256",
@@ -483,7 +498,8 @@ def main(argv=None):
         reasoning_effort=args.reasoning_effort, task_bddl_override=args.task_bddl_override,
         initial_state_override=args.initial_state_override,
         expected_initial_observation_sha256=args.expected_initial_observation_sha256,
-        sim_python=args.sim_python, libero_root=args.libero_root)
+        sim_python=args.sim_python, libero_root=args.libero_root,
+        overload_retries=args.overload_retries)
     return 0 if result["evaluation_completed"] or result["diagnostic_complete"] else 3
 
 

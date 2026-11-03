@@ -57,7 +57,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import datetime, timezone
 import functools
 import hashlib
@@ -197,7 +197,20 @@ def _validate_collision_configuration_v2(sim_config, task_key):
 
 def validate_configuration(config, sim_config, task_spec, *, allow_initial_state_override=False,
                            allow_task_bddl_override=False):
-    _validate_task_configuration(config, sim_config, task_spec, speed_first_v3=True)
+    from gpt_field.agent_speedup_v2_tasks import CUSTOM_TASK_KEYS, resolve_custom_v2_task
+    if task_spec.key in CUSTOM_TASK_KEYS:
+        declared = resolve_custom_v2_task(sim_config.suite, sim_config.custom_task_id,
+                                          sim_config.custom_task_prompt)
+        if declared.key != task_spec.key:
+            raise ValueError("Custom simulator identity does not match the selected task")
+    elif sim_config.custom_task_prompt is not None or sim_config.custom_task_id is not None:
+        raise ValueError("Official task profiles cannot use custom task instructions")
+    # The inherited validator temporarily normalizes suite to libero_spatial
+    # while checking generic controls. Our identity was checked above; remove
+    # only that metadata from its temporary copy, never from execution config.
+    legacy_config = (replace(sim_config, custom_task_prompt=None, custom_task_id=None)
+                     if sim_config.custom_task_prompt is not None else sim_config)
+    _validate_task_configuration(config, legacy_config, task_spec, speed_first_v3=True)
     _validate_collision_configuration_v2(sim_config, task_spec.key)
     if sim_config.include_arm_joints:
         raise ValueError("agent_speedup_v2 uses the state8 protocol; include_arm_joints must be False")

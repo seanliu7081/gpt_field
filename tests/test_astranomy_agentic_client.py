@@ -8,7 +8,8 @@ import pytest
 
 from gpt_field.astra import APIError, AstraConfig, SchemaError
 from gpt_field.astranomy_agentic_client import (
-    AstranomyAgenticClient, TOOL_NAME, TOOL_NAMESPACE, validate_command, validate_feedback,
+    AstranomyAgenticClient, OVERLOAD_BACKOFF_S, TOOL_NAME, TOOL_NAMESPACE,
+    validate_command, validate_feedback,
 )
 from gpt_field.astranomy_agentic_geometry import extract_geometry_metadata
 from gpt_field.astranomy_agentic_motion import (
@@ -356,3 +357,146 @@ def test_transport_error_redacts_the_subscription_token(tmp_path):
     assert TOKEN not in str(exc.value)
     for path in tmp_path.glob("*.json"):
         assert TOKEN not in path.read_text()
+
+
+class RetryClock:
+    def __init__(self):
+        self.now = 0.0
+        self.delays = []
+
+    def __call__(self):
+        return self.now
+
+    def sleep(self, delay):
+        self.delays.append(delay)
+        self.now += delay
+
+
+def overload_error(status=503, retry_after=None, code="server_is_overloaded"):
+    error = APIError(f"provider detail {TOKEN}")
+    error.error_code = code
+    if status is not None:
+        error.http_status = status
+    if retry_after is not None:
+        error.retry_after_s = retry_after
+    return error
+
+
+def test_overload_recovery_keeps_identical_input_and_commits_one_tool_call(tmp_path):
+    transport = Transport([response(), overload_error(), overload_error(status=None), response(ident=4)])
+    clock = RetryClock()
+    request = observation(3)
+    c = client(transport, overload_retries=2, clock=clock, sleep=clock.sleep, log_dir=tmp_path)
+    c.predict(observation())
+    c.record_result(feedback())
+    previous = c.history_snapshot()
+
+    def wait(delay):
+        assert c.history_snapshot() == previous
+        assert not c.history_stats()["pending_tool_result"]
+        # A caller changing its observation cannot change a pending retry.
+        request["robot_state"][0] = 123.0
+        request["step"] = 999
+        clock.sleep(delay)
+
+    c._overload_sleep = wait
+    command = c.predict(request)
+    assert command["name"] == TOOL_NAME
+    assert transport.requests[1] == transport.requests[2] == transport.requests[3]
+    assert json.loads(transport.requests[3]["input"][-1]["content"][0]["text"])["step"] == 3
+    assert c.history_snapshot()[:len(previous)] == previous
+    assert c.history_stats()["observations"] == 2
+    assert c.history_stats()["feedback_records"] == 1
+    assert c.history_stats()["pending_tool_result"]
+    c.record_result(feedback())
+    outputs = [item for item in c.history_snapshot() if item.get("type") == "function_call_output"]
+    assert [item["call_id"] for item in outputs] == ["call_1", "call_4"]
+    with pytest.raises(ValueError, match="No outstanding"):
+        c.record_result(feedback())
+    budget = c.budget_snapshot()
+    assert budget["subscription_inference_calls"] == 4
+    assert budget["unknown_usage_calls"] == 2
+    assert budget["overload_retry_attempts"] == 2
+    assert budget["overload_retry_wait_s"] == 30
+    assert clock.delays == [10, 20]
+    logs = [json.loads(path.read_text()) for path in tmp_path.glob("*.overload_retry.json")]
+    assert len(logs) == 2
+    assert sorted(log["retry_number"] for log in logs) == [1, 2]
+    assert all(log["controller_actions_during_wait"] == 0 and log["same_observation"] for log in logs)
+    assert all(not log["history_committed"] and log["error_code"] == "server_is_overloaded" for log in logs)
+    assert "provider detail" not in json.dumps(logs) and TOKEN not in json.dumps(logs)
+    c.reset_history()
+    assert c.history_stats()["overload_retry_attempts"] == 2  # Lifetime ledger, like API calls.
+
+
+@pytest.mark.parametrize("retry_count", [0, 3])
+def test_overload_exhaustion_is_bounded_and_leaves_no_executable_response(retry_count):
+    transport = Transport([overload_error() for _ in range(4)])
+    clock = RetryClock()
+    c = client(transport, overload_retries=retry_count, clock=clock, sleep=clock.sleep)
+    with pytest.raises(APIError) as exc:
+        c.predict(observation())
+    assert exc.value.error_code == "server_is_overloaded"
+    assert len(transport.requests) == retry_count + 1
+    assert all(payload == transport.requests[0] for payload in transport.requests)
+    assert clock.delays == list(OVERLOAD_BACKOFF_S[:retry_count])
+    assert c.history_snapshot() == [] and not c.history_stats()["pending_tool_result"]
+    assert c.budget_snapshot()["api_calls"] == retry_count + 1
+    assert c.budget_snapshot()["overload_retry_attempts"] == retry_count
+    assert c.budget_snapshot()["overload_retry_wait_s"] == sum(clock.delays)
+
+
+@pytest.mark.parametrize("retry_after, expected_delay", [
+    (25, 25), (60, 60), (61, None), (float("nan"), 10), (-1, 10), (True, 10),
+])
+def test_overload_retry_after_is_safe_and_bounded(retry_after, expected_delay):
+    transport = Transport([overload_error(retry_after=retry_after), response()])
+    clock = RetryClock()
+    c = client(transport, overload_retries=1, clock=clock, sleep=clock.sleep)
+    if expected_delay is None:
+        with pytest.raises(APIError):
+            c.predict(observation())
+        assert len(transport.requests) == 1 and not clock.delays
+    else:
+        c.predict(observation())
+        assert len(transport.requests) == 2 and clock.delays == [expected_delay]
+
+
+@pytest.mark.parametrize("reply", [
+    overload_error(status=401), overload_error(status=429),
+    overload_error(code="rate_limit_exceeded"), APIError("ordinary transport failure"),
+    SchemaError("malformed result"), response(model="gpt-6-sol"),
+    response(reasoning={"effort": "high"}), response(status="incomplete"),
+    response(output=[{"type": "message", "content": [{"type": "refusal", "refusal": "No"}]}]),
+])
+def test_opt_in_retry_does_not_retry_other_failures(reply):
+    transport = Transport([reply])
+    clock = RetryClock()
+    c = client(transport, overload_retries=3, clock=clock, sleep=clock.sleep)
+    with pytest.raises((APIError, SchemaError)):
+        c.predict(observation())
+    assert len(transport.requests) == 1 and not clock.delays
+    assert c.history_snapshot() == [] and not c.history_stats()["pending_tool_result"]
+
+
+def test_interruption_during_overload_wait_stops_before_another_request():
+    transport = Transport([overload_error(), response()])
+    clock = RetryClock()
+
+    def interrupted_wait(delay):
+        clock.now += 2
+        raise KeyboardInterrupt()
+
+    c = client(transport, overload_retries=3, clock=clock, sleep=interrupted_wait)
+    with pytest.raises(KeyboardInterrupt):
+        c.predict(observation())
+    assert len(transport.requests) == 1
+    assert c.budget_snapshot()["overload_retry_attempts"] == 0
+    assert c.budget_snapshot()["overload_retry_wait_s"] == 2
+    assert c.history_snapshot() == [] and not c.history_stats()["pending_tool_result"]
+
+
+@pytest.mark.parametrize("value", [-1, 4, True, 1.0, None])
+def test_overload_retry_configuration_requires_a_small_integer(value):
+    with pytest.raises(ValueError, match="overload_retries"):
+        client(overload_retries=value)

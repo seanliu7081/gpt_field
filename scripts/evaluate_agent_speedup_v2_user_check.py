@@ -59,6 +59,7 @@ from gpt_field.agent_speedup_v2_user_check_spatial import (  # noqa: E402
 from gpt_field.agent_speedup_v2_user_check_direction_display import (  # noqa: E402
     region_direction_lines, world_axis_wording_diagnostics,
 )
+from gpt_field.agent_speedup_v2_tasks import CUSTOM_TASK_KEYS  # noqa: E402
 
 
 def framework_settings(reasoning_effort=USER_CHECK_REASONING_EFFORT):
@@ -800,7 +801,10 @@ def preflight(config, sim_config, *, task_key, episode_index, monitor_options=No
     scene = task_bddl_metadata(sim_config)
     if scene is not None:
         result.update(benchmark_variant="custom_task_scene", task_bddl_override=scene,
-                      task_contract_validation="Existing worker reset checks original language, goal, and target assets before model preparation")
+                      task_contract_validation=(
+                          "Worker reset checks registered custom language, unchanged goal, and target assets before model preparation"
+                          if sim_config.custom_task_prompt is not None else
+                          "Existing worker reset checks original language, goal, and target assets before model preparation"))
     return result
 
 
@@ -828,7 +832,7 @@ def main(argv=None):
             command.add_argument("--review-dir", type=Path, required=True)
         if name in ("run", "start"):
             command.add_argument("--output", type=Path, required=True)
-        command.add_argument("--task", choices=(*base.V2_TASK_KEYS, *base.V2_TASK_ALIASES))
+        command.add_argument("--task", choices=(*base.V2_TASK_KEYS, *base.V2_TASK_ALIASES, *CUSTOM_TASK_KEYS))
         command.add_argument("--episode-index", type=int, choices=range(50))
         command.add_argument("--sim-python")
         command.add_argument("--libero-root")
