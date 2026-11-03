@@ -1,0 +1,85 @@
+{
+  "kind": "evaluator_only_closed_drawer_initialization_probe",
+  "model_calls": 0,
+  "policy_actions": 0,
+  "passive_hold_actions_per_case": 50,
+  "total_passive_hold_actions": 300,
+  "render_size": 32,
+  "python": "/workspace/venvs/libero-plus/bin/python",
+  "egl_device": 4,
+  "joint_order": [
+    "wooden_cabinet_1_top_level",
+    "wooden_cabinet_1_middle_level",
+    "wooden_cabinet_1_bottom_level"
+  ],
+  "method": "Each case restored the first draft settled state, assigned the same tested qpos to all three drawer joints with zero joint velocity, translated the contained bowl by the top drawer displacement, refreshed the simulator state, counted cabinet self contacts, and ran fifty zero-motion open-gripper hold steps. No task artifact was changed by this probe.",
+  "source_draft_after_10_settle_qpos": [
+    -0.003814742558299418,
+    -0.0038126270956210092,
+    -0.0006582663130431894
+  ],
+  "cases": [
+    {
+      "initial_qpos_m": 0.0001,
+      "initial_cabinet_self_contact_count": 0,
+      "qpos_after_10_steps": [0.00009999999999999967, 0.0001, 0.0001],
+      "qpos_after_50_steps": [0.00010000000000000049, 0.0001, 0.0001],
+      "closed_after_50_steps": true
+    },
+    {
+      "initial_qpos_m": 0.0005,
+      "initial_cabinet_self_contact_count": 0,
+      "qpos_after_10_steps": [0.0004999999999999993, 0.0005, 0.0005],
+      "qpos_after_50_steps": [0.0004999999999999993, 0.0005, 0.0005],
+      "closed_after_50_steps": true
+    },
+    {
+      "initial_qpos_m": 0.001,
+      "initial_cabinet_self_contact_count": 0,
+      "qpos_after_10_steps": [0.0009999999999999987, 0.001, 0.001],
+      "qpos_after_50_steps": [0.0009999999999999987, 0.001, 0.001],
+      "closed_after_50_steps": true
+    },
+    {
+      "initial_qpos_m": 0.0025,
+      "initial_cabinet_self_contact_count": 12,
+      "example_initial_penetration": {
+        "geom_a": "wooden_cabinet_1_g6",
+        "geom_b": "wooden_cabinet_1_g11",
+        "distance_m": -0.000840399306692885
+      },
+      "qpos_after_10_steps": [-0.003821405039003285, -0.0038126270956210027, -0.0006582663130431865],
+      "qpos_after_50_steps": [-0.003823169709286471, -0.0038143634697662084, -0.0006591355944653868],
+      "closed_after_50_steps": false
+    },
+    {
+      "initial_qpos_m": 0.005,
+      "initial_cabinet_self_contact_count": 12,
+      "example_initial_penetration": {
+        "geom_a": "wooden_cabinet_1_g6",
+        "geom_b": "wooden_cabinet_1_g11",
+        "distance_m": -0.0016312673466025976
+      },
+      "qpos_after_10_steps": [0.005, 0.005, 0.004999998009868264],
+      "qpos_after_50_steps": [0.005, 0.005, 0.00499999004834533],
+      "closed_after_50_steps": true,
+      "rejected_due_to_initial_self_penetration": true
+    },
+    {
+      "initial_qpos_m": 0.009,
+      "initial_cabinet_self_contact_count": 12,
+      "example_initial_penetration": {
+        "geom_a": "wooden_cabinet_1_g6",
+        "geom_b": "wooden_cabinet_1_g11",
+        "distance_m": -0.0008156316386363897
+      },
+      "qpos_after_10_steps": [0.009000004565920011, 0.009000003372910428, 0.008999998009848098],
+      "qpos_after_50_steps": [0.00900002283188514, 0.009000016866240145, 0.0089999900482445],
+      "closed_after_50_steps": true,
+      "rejected_due_to_initial_self_penetration": true
+    }
+  ],
+  "selected_qpos_m": 0.001,
+  "selection_reason": "All drawers satisfy the unchanged strict Close predicate qpos>0, remain stable for fifty passive steps, and start without cabinet self contacts.",
+  "scope": "Disposable simulator initialization diagnostics; not a robot task-completion attempt. Compact evidence transcribed from the actual probe output."
+}

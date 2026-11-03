@@ -1,0 +1,381 @@
+{
+  "all_passed": true,
+  "burner_cabinet_depth_difference_m": 3.78469614259469e-08,
+  "checks": {
+    "builder_scene_checks_passed": true,
+    "burner_aligned_cabinet_depth_within_3um": true,
+    "cabinet_and_bowl_remain_right_of_robot": true,
+    "cabinet_fixture_unchanged": true,
+    "default_loader_ordered_wrapper": true,
+    "default_loader_passive_step_valid_without_progress": true,
+    "instruction_goal_assets_init_preserved": true,
+    "moka_translated_forward_5cm_without_rotation": true,
+    "native_initial_conditions_valid": true,
+    "new_frozen_inputs_unchanged": true,
+    "no_initial_unwanted_contacts": true,
+    "non_moka_settled_joints_unchanged_within_1e12": true,
+    "original_artifact_manifest_hashes_match": true,
+    "original_sources_unchanged": true,
+    "raw_initial_state_only_moka_x_changed_plus_5cm": true,
+    "robot_base_unchanged": true,
+    "stove_and_drawer_functional_fronts_parallel": true,
+    "stove_and_pot_full_bounds_within_table": true,
+    "stove_and_pot_remain_left_of_robot": true,
+    "stove_translated_forward_11cm_without_rotation": true
+  },
+  "created_at_utc": "2026-11-03T10:19:09.467911+00:00",
+  "initial_flat_state_changed_indices": [
+    17
+  ],
+  "kind": "independent_forward_alignment_revision_audit",
+  "model_calls": 0,
+  "moka_delta_xyz_m": [
+    0.04999999999999993,
+    0.0,
+    0.0
+  ],
+  "native_loader_smoke": {
+    "after_passive_step": {
+      "completed_stage_count": 0,
+      "events": [],
+      "final_predicates": {
+        "bowl_inside_drawer": true,
+        "bowl_on_cabinet_top": false,
+        "drawer_closed": true,
+        "drawer_open": false,
+        "moka_on_stove": false,
+        "stove_off": true,
+        "stove_on": false
+      },
+      "initial_state_valid": true,
+      "invalid_reason": null,
+      "kind": "ordered_custom_task_progress_v1",
+      "next_stage": "drawer_opened",
+      "observation_index": 1,
+      "ordered_complete": false,
+      "ordered_success": false,
+      "raw_goal_success": false
+    },
+    "all_passed": true,
+    "checks": {
+      "default_loader_ordered_wrapper": true,
+      "default_loader_passive_step_valid_without_progress": true,
+      "native_initial_conditions_valid": true,
+      "new_frozen_inputs_unchanged": true
+    },
+    "initial_progress": {
+      "completed_stage_count": 0,
+      "events": [],
+      "final_predicates": {
+        "bowl_inside_drawer": true,
+        "bowl_on_cabinet_top": false,
+        "drawer_closed": true,
+        "drawer_open": false,
+        "moka_on_stove": false,
+        "stove_off": true,
+        "stove_on": false
+      },
+      "initial_state_valid": true,
+      "invalid_reason": null,
+      "kind": "ordered_custom_task_progress_v1",
+      "next_stage": "drawer_opened",
+      "observation_index": 0,
+      "ordered_complete": false,
+      "ordered_success": false,
+      "raw_goal_success": false
+    },
+    "kind": "single_context_native_ordered_loader_smoke",
+    "loader_settle_actions": 10,
+    "model_calls": 0,
+    "passive_hold_actions_after_reset": 1,
+    "policy_actions": 0,
+    "render_size": 128,
+    "source_sha256": {
+      "custom_task.bddl": "27367289a2bc17a20a8d02b8326942a914e221ed03a2fb89d57be14085926efb",
+      "initial_state.npy": "e4503e30901e589d08dad982fb7de356f43b85175496f26df5eb5d72a3328453",
+      "load_task.py": "d5b9d2621caae5b1933efeaf838d7f0ff427291d428508cb7fbcbb89932f4b65",
+      "ordered_success.py": "22c721a48660903f191ad95351b7e5d4fa96131d39e72f8e86c2d7cb9377d016",
+      "validate_scene.py": "637a11095b08ed09720791ce7c9b43d9c0c955eed9e5e67f3951dcc1e09b6dc8"
+    }
+  },
+  "new_frozen_input_sha256": {
+    "custom_task.bddl": "27367289a2bc17a20a8d02b8326942a914e221ed03a2fb89d57be14085926efb",
+    "initial_state.npy": "e4503e30901e589d08dad982fb7de356f43b85175496f26df5eb5d72a3328453",
+    "load_task.py": "d5b9d2621caae5b1933efeaf838d7f0ff427291d428508cb7fbcbb89932f4b65",
+    "ordered_success.py": "22c721a48660903f191ad95351b7e5d4fa96131d39e72f8e86c2d7cb9377d016",
+    "validate_scene.py": "637a11095b08ed09720791ce7c9b43d9c0c955eed9e5e67f3951dcc1e09b6dc8"
+  },
+  "new_snapshot": {
+    "burner_xyz_m": [
+      -0.0799990997409992,
+      -0.25000053939424194,
+      0.905
+    ],
+    "collision_bounds": {
+      "akita_black_bowl_1": [
+        [
+          -0.12150304060688782,
+          0.3228253874713737,
+          1.0641499599549935
+        ],
+        [
+          -0.014303100282852787,
+          0.429832588841394,
+          1.114691895200738
+        ]
+      ],
+      "flat_stove_1": [
+        [
+          -0.28205244776856114,
+          -0.3450005393942419,
+          0.885
+        ],
+        [
+          0.015000900259000804,
+          -0.15500053939424194,
+          0.95502
+        ]
+      ],
+      "moka_pot_1": [
+        [
+          0.02943177687642818,
+          -0.3063090921991944,
+          0.8999955237905508
+        ],
+        [
+          0.11084816804289832,
+          -0.158770870355977,
+          1.0517959227727818
+        ]
+      ],
+      "wooden_cabinet_1": [
+        [
+          -0.1883091376099245,
+          0.24876904979845502,
+          0.9095868098380618
+        ],
+        [
+          0.0317051567953559,
+          0.5033490497984551,
+          1.12799
+        ]
+      ]
+    },
+    "fixtures": {
+      "flat_stove_1": {
+        "quat": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "xyz": [
+          -0.2299990997409992,
+          -0.25000053939424194,
+          0.905
+        ]
+      },
+      "wooden_cabinet_1": {
+        "quat": [
+          0.7071067811865476,
+          0.0,
+          0.0,
+          -0.7071067811865475
+        ],
+        "xyz": [
+          -0.07999913758796062,
+          0.37999904979845506,
+          0.905
+        ]
+      }
+    },
+    "functional_fronts_world": {
+      "drawer": [
+        -1.0,
+        -2.220446049250313e-16,
+        0.0
+      ],
+      "stove": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "joints": {
+      "akita_black_bowl_1_joint0": {
+        "qpos": [
+          -0.06771913994008656,
+          0.3767190490435948,
+          1.0625599683749973,
+          0.9999999999999892,
+          -9.331358730251588e-08,
+          1.1880442609892952e-07,
+          -6.3441460552112854e-12
+        ],
+        "qvel": [
+          -7.848867604758717e-14,
+          -3.432669529321714e-19,
+          4.6518830424965936e-14,
+          9.652767516669542e-16,
+          5.817313265816584e-16,
+          -9.283054532667933e-19
+        ]
+      },
+      "flat_stove_1_button": {
+        "qpos": -0.0025,
+        "qvel": 0.0
+      },
+      "gripper0_finger_joint1": {
+        "qpos": 0.03872926102991975,
+        "qvel": 0.0031804525387003537
+      },
+      "gripper0_finger_joint2": {
+        "qpos": -0.03872904505335611,
+        "qvel": -0.0031961558973083778
+      },
+      "moka_pot_1_joint0": {
+        "qpos": [
+          0.06999997264178844,
+          -0.2499993913666796,
+          0.9661058531607807,
+          0.9999999999893543,
+          -4.609635564437397e-06,
+          -2.0695954813273313e-07,
+          5.908306246666783e-12
+        ],
+        "qvel": [
+          -2.2307639166787387e-12,
+          4.889896984826304e-11,
+          1.9169799211931357e-08,
+          -7.405151042766965e-10,
+          -3.37815600338859e-11,
+          -1.5088564824012193e-15
+        ]
+      },
+      "robot0_joint1": {
+        "qpos": 0.01533425072321569,
+        "qvel": -0.014440803991822045
+      },
+      "robot0_joint2": {
+        "qpos": -0.15827156556275687,
+        "qvel": 0.012541761680433024
+      },
+      "robot0_joint3": {
+        "qpos": 0.009781597207308394,
+        "qvel": 0.012984290691230934
+      },
+      "robot0_joint4": {
+        "qpos": -2.418484710666689,
+        "qvel": 0.021120187980280637
+      },
+      "robot0_joint5": {
+        "qpos": 0.003263854015376891,
+        "qvel": 0.0030554352918657954
+      },
+      "robot0_joint6": {
+        "qpos": 2.2050397652790665,
+        "qvel": -0.02755084041935259
+      },
+      "robot0_joint7": {
+        "qpos": 0.8064517971922274,
+        "qvel": 0.006808157210712688
+      },
+      "wooden_cabinet_1_bottom_level": {
+        "qpos": 0.001,
+        "qvel": 0.0
+      },
+      "wooden_cabinet_1_middle_level": {
+        "qpos": 0.001,
+        "qvel": 0.0
+      },
+      "wooden_cabinet_1_top_level": {
+        "qpos": 0.0009999999780360093,
+        "qvel": -7.857379174714548e-14
+      }
+    },
+    "robot_base_body": "robot0_base",
+    "robot_base_xyz_m": [
+      -0.66,
+      0.0,
+      0.912
+    ]
+  },
+  "policy_actions": 0,
+  "previous_snapshot_source": "/workspace/gpt_field/output/layouts/drawer_bowl_right_moka_stove_left_no_obstacles_20261103_001/layout_revision_audit.json",
+  "reach_geometry_diagnostic": {
+    "nominal_handle_horizontal_distance_m": 0.7505757518036823,
+    "pot_body_horizontal_distance_m": 0.7716214458792098,
+    "scope": "Geometry diagnostic only; no inverse kinematics, grasp trajectory, or policy reachability test.",
+    "shoulder_xyz_m": [
+      -0.66,
+      0.0,
+      1.245
+    ]
+  },
+  "scope": "One128px native ordered reset+onepassive step; archived before/after geometry and provenance audit. Builder scene predicates reused; no policy or duplicate truth-table run.",
+  "settled_comparison_absolute_tolerance": 1e-12,
+  "source_reference_sha256": "7d0345fe0583be082b678220267d450cb8319918b2fc229fdc44ff5775f1f3dd",
+  "stove_delta_xyz_m": [
+    0.10999999999999999,
+    0.0,
+    0.0
+  ],
+  "unchanged_joint_max_absolute_deltas": {
+    "akita_black_bowl_1_joint0": {
+      "qpos": 1.5064348618019723e-18,
+      "qvel": 4.008247586706419e-15
+    },
+    "flat_stove_1_button": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "gripper0_finger_joint1": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "gripper0_finger_joint2": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint1": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint2": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint3": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint4": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint5": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint6": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "robot0_joint7": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "wooden_cabinet_1_bottom_level": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "wooden_cabinet_1_middle_level": {
+      "qpos": 0.0,
+      "qvel": 0.0
+    },
+    "wooden_cabinet_1_top_level": {
+      "qpos": 0.0,
+      "qvel": 2.0345367718326003e-22
+    }
+  }
+}

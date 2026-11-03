@@ -205,6 +205,8 @@ def validate_configuration(config, sim_config, task_spec, *, allow_initial_state
             raise ValueError("Custom simulator identity does not match the selected task")
     elif sim_config.custom_task_prompt is not None or sim_config.custom_task_id is not None:
         raise ValueError("Official task profiles cannot use custom task instructions")
+    from gpt_field.libero import validate_registered_custom_task_artifacts
+    validate_registered_custom_task_artifacts(sim_config)
     # The inherited validator temporarily normalizes suite to libero_spatial
     # while checking generic controls. Our identity was checked above; remove
     # only that metadata from its temporary copy, never from execution config.
@@ -229,7 +231,7 @@ def validate_configuration(config, sim_config, task_spec, *, allow_initial_state
         raise ValueError("agent_speedup_v2 uses seed 7, settle 10 and no action horizon")
 
 
-def _collision_record_v2(sim_status):
+def _collision_record_v2(sim_status, *, ordered_task_key=None):
     """v1's _collision_record invariants for the generic record-only monitor."""
     record = sim_status.get("collision")
     if not isinstance(record, dict) or record.get("enabled") is not True or record.get("mode") != CONTACT_MODE:
@@ -238,11 +240,40 @@ def _collision_record_v2(sim_status):
         raise ValueError("Collision monitor and raw LIBERO status must be explicit")
     if record.get("stop_on_collision") is not False or record.get("collision_policy") != "record_only":
         raise ValueError("v2 contact monitor must be record-only")
-    if sim_status.get("success") != sim_status["libero_success"]:
-        raise ValueError("v2 simulator success must equal raw LIBERO success")
+    if ordered_task_key is not None:
+        progress = sim_status.get("ordered_task")
+        if (sim_status.get("success_qualification") != "ordered_custom_goal"
+                or not isinstance(progress, dict) or progress.get("enabled") is not True
+                or progress.get("task_key") != ordered_task_key
+                or progress.get("initial_state_valid") is not True
+                or type(progress.get("ordered_complete")) is not bool
+                or type(sim_status.get("ordered_success")) is not bool
+                or progress.get("observation_index") != sim_status.get("steps")):
+            raise ValueError("Registered ordered task requires matching evaluator progress")
+        qualified = sim_status["libero_success"] and progress["ordered_complete"]
+        if sim_status["ordered_success"] != qualified or sim_status.get("success") != qualified:
+            raise ValueError("Ordered task success must equal raw LIBERO success AND observed order")
+        if sim_status.get("terminated") and not qualified and not sim_status.get("horizon_reached"):
+            raise ValueError("An unordered final arrangement must not terminate the ordered task")
+    else:
+        if sim_status.get("ordered_task") is not None or sim_status.get("ordered_success") is not None:
+            raise ValueError("Ordered task progress requires an explicitly registered task")
+        if sim_status.get("success") != sim_status["libero_success"]:
+            raise ValueError("v2 simulator success must equal raw LIBERO success")
     if record["detected"] and not sim_status["libero_success"] and sim_status.get("terminated"):
         raise ValueError("A recorded contact must not terminate a v2 episode")
     return dict(record)
+
+
+def _ordered_task_key(task_spec):
+    from gpt_field.agent_speedup_v2_tasks import custom_v2_task_contract
+    contract = custom_v2_task_contract(task_spec.key) or {}
+    return task_spec.key if contract.get("ordered_success_kind") is not None else None
+
+
+def _task_stopping_rules(task_spec, inherited):
+    return [("ordered task sequence AND final LIBERO goal" if rule == "LIBERO success"
+             and _ordered_task_key(task_spec) else rule) for rule in inherited]
 
 
 def _collision_v1_record(sim_status, chained):
@@ -797,7 +828,7 @@ def preflight(config, sim_config, output=None, *, task_key=PRIMARY_TASK, episode
             "live_command_first_run": live_command(task_spec.key, episode_index,
                                                    stop_after_steps=LIVE_FIRST_RUN_STOP_AFTER_STEPS),
             "live_command_options": LIVE_COMMAND_OPTIONS, "live_gate": LIVE_GATE,
-            "stopping_rule": STOPPING_RULE, "max_policy_steps": None, "max_api_calls": None, "max_wall_time_s": None}
+            "stopping_rule": _task_stopping_rules(task_spec, STOPPING_RULE), "max_policy_steps": None, "max_api_calls": None, "max_wall_time_s": None}
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -853,6 +884,7 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
         raise FileExistsError("Fresh agent_speedup_v2 experiment requires a new output directory; no resume")
     episode_index = _validate_episode_index(episode_index)
     task_spec = resolve_v2_task(task_key)
+    ordered_task_key = _ordered_task_key(task_spec)
     if smoke_script not in SMOKE_SCRIPTS:
         raise ValueError(f"smoke_script must be one of {SMOKE_SCRIPTS}")
     if type(video) is not bool or type(smoke) is not bool:
@@ -924,6 +956,7 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
     stopping = ([f"{smoke_steps} scripted smoke actions", *STOPPING_RULE] if smoke else
                 [*STOPPING_RULE, *([f"operator step cap: stop after {stop_after_steps} actions (user_stop)"]
                                    if stop_after_steps is not None else [])])
+    stopping = _task_stopping_rules(task_spec, stopping)
     smoke_policy = ("PlumbingHoldPolicy (robot-only scripted phases)" if smoke and not relation_smoke else
                     "AgentSpeedUpV2Policy(client) with the ORACLE stub behind ScriptedV2Transport" if relation_smoke
                     else None)
@@ -971,6 +1004,10 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
         "max_policy_steps": smoke_steps, "max_api_calls": None, "max_wall_time_s": None,
         "output_token_limit_sent": None, "api_key_fallback": False, "model_fallback": False,
         "evaluation_scored": not smoke, "prior_budgets_inherited": False, "live_gate": LIVE_GATE}
+    if ordered_task_key is not None:
+        identity.update(success_qualification="ordered_custom_goal",
+                        ordered_task_key=ordered_task_key,
+                        v2_success_rule="observed ordered task sequence AND final raw LIBERO goal AND strict physical truth; existing hold-only release-and-settle qualification retained")
     if layout_metadata is not None:
         identity.update(benchmark_variant="custom_initial_layout", initial_layout=layout_metadata)
     if bddl_metadata is not None:
@@ -1021,6 +1058,8 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
     truth = {"terminal": None, "after_release_settle": None, "answer_key": None, "parse_check": None,
              "skipped": None}
     terminal_raw_libero_success = None
+    terminal_ordered_success = None
+    terminal_ordered_task = None
 
     def secrets():
         return list(getattr(client, "_used_access_tokens", ()) or ())
@@ -1242,14 +1281,21 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
         data = collect()
         ledger, budget_data, history_data = data["ledger"], data["budget"], data["history"]
         final = outcome_status(video_error)
-        completed = not smoke and final == "success"
+        completed = (not smoke and final == "success"
+                     and (ordered_task_key is None or terminal_ordered_success is True))
         physical = (physical_summary(truth["terminal"], truth["after_release_settle"],
                                      raw_libero_success=terminal_raw_libero_success)
                     if truth["terminal"] is not None else
                     {"verdict": "truth_unavailable", "skipped": truth["skipped"], "diagnosis_only": True,
                      "affects_completion": False})
+        if ordered_task_key is not None:
+            physical.update(ordered_success_required=True, ordered_success=terminal_ordered_success)
+            if terminal_ordered_success is not True:
+                physical.update(v2_success=False, terminal_failure_is_hold_only=False,
+                                ordered_failure_reason="ordered_sequence_incomplete")
         v2_success = bool(final in V2_SUCCESS_STATUSES and terminal_raw_libero_success is True
-                          and physical.get("v2_success") is True)
+                          and physical.get("v2_success") is True
+                          and (ordered_task_key is None or terminal_ordered_success is True))
         policy_compute = timings["decision_s"] - timings["model_pipeline_s"]
         accounting = model_accounting(budget_data, history_data)
         agent = data["agent_stats"] if isinstance(data["agent_stats"], dict) else {}
@@ -1294,6 +1340,9 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
                 "are excluded from control_elapsed_s.",
             "libero_success_observed": success_seen, "libero_success": terminal_raw_libero_success,
             "task_success": completed, "v2_success": v2_success,
+            **({"ordered_success": terminal_ordered_success,
+                "ordered_task": terminal_ordered_task,
+                "success_qualification": "ordered_custom_goal"} if ordered_task_key is not None else {}),
             "v2_success_rule": identity["v2_success_rule"],
             "physical_truth": physical, "collision": collision, "collision_v1_record_only": collision_v1,
             "completion_time_eligible": completed, "failure_reason": None, "evaluation_completed": completed,
@@ -1323,7 +1372,9 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
             "finalization": {"stage": finalization_stage,
                              "deferred_signals": list(signals.deferred) if signals is not None else []},
             "output": str(output),
-            "interpretation": ("Scripted agent_speedup_v2 plumbing smoke with real simulator execution; no model "
+            "interpretation": ("One ordered custom-task episode; completion requires observed sequence and final LIBERO goal, with strict physical truth additionally qualifying v2_success. Collisions are recorded."
+                               if ordered_task_key is not None else
+                               "Scripted agent_speedup_v2 plumbing smoke with real simulator execution; no model "
                                "calls and no performance score." if smoke and not relation_smoke else
                                "agent_speedup_v2 relation smoke: the real v2 policy, client and relation layer on "
                                "the real simulator with the ORACLE stub answering every request (zero model calls, "
@@ -1341,7 +1392,8 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
             write_json(output / "collision.json", {"generic": collision, "v1_record_only": collision_v1})
         write_json(output / "task_evaluation.json", {key: summary[key] for key in (
             "status", "task_success", "libero_success", "collision", "failure_reason", "evaluation_completed",
-            "success_rate", "scored_episodes", "incomplete_episodes", "completion_time_eligible")})
+            "success_rate", "scored_episodes", "incomplete_episodes", "completion_time_eligible",
+            * (("ordered_success", "ordered_task", "success_qualification") if ordered_task_key is not None else ()))})
         write_json(output / "agent_stats.json", data["agent_stats"])
         write_json(output / "ledger.json", data["ledger"])
 
@@ -1358,7 +1410,7 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
 
     def record_collisions(append, step_index):
         nonlocal collision, collision_v1
-        collision = _collision_record_v2(sim.status)
+        collision = _collision_record_v2(sim.status, ordered_task_key=ordered_task_key)
         collision_v1 = _collision_v1_record(sim.status, identity["collision_v1_chained"])
         new = [name for name in (collision.get("first_by_class") or {}) if name in FORBIDDEN
                and name not in seen_forbidden]
@@ -1405,7 +1457,7 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
                 raise ValueError("Official task does not match the selected task profile")
             write_json(output / "simulator.json", {"metadata": sim.metadata, "tasks": tasks})
             obs = sim.reset(task_spec.task_id, episode_index)
-            collision = _collision_record_v2(sim.status)
+            collision = _collision_record_v2(sim.status, ordered_task_key=ordered_task_key)
             if obs.prompt != task_spec.prompt or obs.prompt != selected[0].get("prompt"):
                 raise ValueError("Reset observation has a different task")
             initial_observation = obs.to_dict()
@@ -1448,7 +1500,7 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
                         "mount_decision": mount, "rulings": dict(robot.RULINGS)})
                 record_collisions(append, None)
                 while True:
-                    collision = _collision_record_v2(sim.status)
+                    collision = _collision_record_v2(sim.status, ordered_task_key=ordered_task_key)
                     success_seen = success_seen or sim.status["libero_success"]
                     if sim.status.get("success"):
                         success_seen = True
@@ -1597,6 +1649,9 @@ def execute(output, *, config, sim_config, task_key, episode_index, monitor_opti
                     trace_error(caught, interrupted_stage or stage)
                 try:
                     terminal_raw_libero_success = sim.status.get("libero_success") if sim is not None else None
+                    if ordered_task_key is not None and sim is not None:
+                        terminal_ordered_success = sim.status.get("ordered_success")
+                        terminal_ordered_task = json.loads(json.dumps(sim.status.get("ordered_task")))
                 except Exception:
                     terminal_raw_libero_success = None
                 guarded("finalization_trace_events", finalization_trace_events, 0)

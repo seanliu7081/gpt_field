@@ -175,6 +175,39 @@ def validate_task_bddl_override(path) -> dict:
     return _load_task_bddl(path)[1]
 
 
+def _registered_composite_contract(expected_language):
+    if expected_language is None:
+        return None
+    from .agent_speedup_v2_tasks import CUSTOM_TASK_KEYS, custom_v2_task_contract, resolve_v2_task
+    for key in CUSTOM_TASK_KEYS:
+        if resolve_v2_task(key).prompt == expected_language:
+            return custom_v2_task_contract(key)
+    return None
+
+
+def validate_registered_custom_task_artifacts(config) -> dict | None:
+    """Fail closed on composite scene/state substitutions before simulator use.
+
+    Frozen input copies are supported, but their bytes must match this explicitly
+    registered task. Existing official and language-only override contracts keep
+    their previous behavior.
+    """
+    if config.custom_task_prompt is None:
+        return None
+    from .agent_speedup_v2_tasks import custom_v2_task_contract, resolve_custom_v2_task
+    spec = resolve_custom_v2_task(config.suite, config.custom_task_id, config.custom_task_prompt)
+    contract = custom_v2_task_contract(spec.key)
+    if contract is None:
+        return None
+    _, bddl = _load_task_bddl(config.task_bddl_override)
+    _, state = _load_initial_state_override(config.initial_state_override)
+    if bddl["sha256"] != contract["bddl_sha256"]:
+        raise ValueError("Registered composite task requires its exact frozen BDDL artifact")
+    if state["sha256"] != contract["initial_state_sha256"]:
+        raise ValueError("Registered composite task requires its exact frozen initial state artifact")
+    return {**dict(contract), "task_bddl_override": bddl, "initial_state_override": state}
+
+
 def _bddl_assets(sections):
     assets = {}
     for section in (":objects", ":fixtures"):
@@ -216,7 +249,33 @@ def validate_task_bddl_contract(original_path, override_path, *, expected_langua
     The worker separately checks the official parser's interpretation.
     """
     original, _ = _load_task_bddl(original_path)
-    changed, _ = _load_task_bddl(override_path)
+    changed, changed_metadata = _load_task_bddl(override_path)
+    composite = _registered_composite_contract(expected_language)
+    if composite is not None:
+        if changed_metadata["sha256"] != composite["bddl_sha256"]:
+            raise ValueError("Registered composite task requires its exact frozen BDDL artifact")
+        if changed.get(":language") != expected_language.split():
+            raise ValueError("Custom BDDL language does not match the declared custom task")
+        for key in ("problem", ":domain"):
+            if original.get(key) != changed.get(key):
+                raise ValueError(f"Registered composite BDDL must preserve original {key}")
+        assets = _bddl_assets(changed)
+        targets = set(changed.get(":obj_of_interest", [])) | (
+            set(_bddl_symbols(changed[":goal"])) & assets.keys())
+        if not targets or any(name not in assets for name in targets):
+            raise ValueError("Registered composite BDDL has invalid target assets")
+        return {
+            "contract_kind": "registered_composite", "custom_task_key": composite["task_key"],
+            "custom_task_language": expected_language,
+            "original_language": " ".join(original[":language"]),
+            "language_preserved": original.get(":language") == changed.get(":language"),
+            "goal_preserved": original.get(":goal") == changed.get(":goal"),
+            "target_assets_preserved": False,
+            "target_assets": {name: assets[name] for name in sorted(targets)},
+            "registered_bddl_sha256": composite["bddl_sha256"],
+            "registered_initial_state_sha256": composite["initial_state_sha256"],
+            "ordered_success_kind": composite["ordered_success_kind"],
+        }
     for key in ("problem", ":domain", ":language", ":goal", ":obj_of_interest"):
         if key == ":language" and expected_language is not None:
             from .agent_speedup_v2_tasks import CUSTOM_TASK_KEYS, resolve_v2_task
@@ -244,6 +303,25 @@ def validate_task_bddl_contract(original_path, override_path, *, expected_langua
 def _validate_official_bddl_contract(original_path, override_path, contract):
     """Use the environment's parser too, solely inside the evaluator process."""
     from libero.libero.envs.bddl_utils import robosuite_parse_problem
+
+    if contract.get("contract_kind") == "registered_composite":
+        from .agent_speedup_v2_tasks import custom_v2_task_contract
+        registered = custom_v2_task_contract(contract["custom_task_key"])
+        if registered is None:
+            raise ValueError("Official parser requires a registered composite task")
+        # The trusted canonical file and the frozen run copy must both match the
+        # registered bytes. Compare all official-parser fields, including init,
+        # regions and asset declarations, without borrowing the old task's goal.
+        for path in (registered["bddl_path"], override_path):
+            if _load_task_bddl(path)[1]["sha256"] != registered["bddl_sha256"]:
+                raise ValueError("Official parser requires the exact registered composite BDDL")
+        canonical = robosuite_parse_problem(registered["bddl_path"])
+        changed = robosuite_parse_problem(str(override_path))
+        if canonical != changed:
+            raise ValueError("Official parser found unexpected registered composite BDDL semantics")
+        if changed.get("language_instruction") != contract["custom_task_language"].split():
+            raise ValueError("Official parser found unexpected custom task language")
+        return
 
     original = robosuite_parse_problem(str(original_path))
     changed = robosuite_parse_problem(str(override_path))
@@ -865,6 +943,7 @@ class _LiberoWorker:
         if self.config.custom_task_prompt is not None and (
                 task_id != self.config.custom_task_id or episode_index != 0):
             raise ValueError("Registered custom task requires its source task id and episode index 0")
+        composite_contract = validate_registered_custom_task_artifacts(self.config)
         if self.config.collision_check_mode == "bowl_obstacles_v1" and task_id != 0:
             raise ValueError("bowl_obstacles_v1 is defined only for LIBERO-Spatial bowl task 0")
         collision_task = None
@@ -919,6 +998,10 @@ class _LiberoWorker:
         )
         self.env.seed(self.config.seed)
         self.env.reset()
+        if composite_contract is not None:
+            camera_id = self.env.sim.model.camera_name2id("agentview")
+            self.env.sim.model.cam_fovy[camera_id] = composite_contract["external_camera_fovy_deg"]
+            self.env.sim.forward()
         if bddl_metadata is not None:
             expected_shape = np.asarray(self.env.sim.get_state().flatten()).shape
             if selected_state.shape != expected_shape:
@@ -960,6 +1043,12 @@ class _LiberoWorker:
             }
             self.status.update(scene_provenance)
             self.metadata.update(scene_provenance)
+        if composite_contract is not None:
+            self.metadata["registered_composite_task"] = composite_contract
+            self.status["registered_composite_task"] = {
+                key: composite_contract[key] for key in (
+                    "task_key", "bddl_sha256", "initial_state_sha256",
+                    "external_camera_fovy_deg", "ordered_success_kind")}
         return self._response(obs)
 
     def step(self, action: Sequence[float]) -> dict:

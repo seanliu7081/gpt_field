@@ -1,0 +1,167 @@
+{
+  "all_passed": false,
+  "checks": {
+    "context_0_config_environment_restored": true,
+    "context_0_correct_prompt": true,
+    "context_0_initial_predicates": true,
+    "context_0_no_initial_progress_or_success": true,
+    "context_0_ordered_wrapper": true,
+    "context_0_valid_initial_state": true,
+    "context_1_config_environment_restored": true,
+    "context_1_correct_prompt": true,
+    "context_1_initial_predicates": true,
+    "context_1_no_initial_progress_or_success": true,
+    "context_1_ordered_wrapper": true,
+    "context_1_valid_initial_state": true,
+    "frozen_inputs_unchanged": false,
+    "independent_context_observations_equal": true,
+    "independent_context_states_bitwise_equal": true,
+    "native_reset_progress_reestablishes_baseline": true,
+    "native_state_replacement_invalidates_progress": true,
+    "passive_step_observed_without_progress": true,
+    "passive_step_preserves_initial_predicates": true,
+    "passive_step_returns_four_items": true
+  },
+  "contexts": [
+    {
+      "after_passive_hold": {
+        "completed_stage_count": 0,
+        "events": [],
+        "final_predicates": {
+          "bowl_inside_drawer": true,
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "drawer_open": false,
+          "moka_on_stove": false,
+          "stove_off": true,
+          "stove_on": false
+        },
+        "initial_state_valid": true,
+        "invalid_reason": null,
+        "kind": "ordered_custom_task_progress_v1",
+        "next_stage": "drawer_opened",
+        "observation_index": 1,
+        "ordered_complete": false,
+        "ordered_success": false,
+        "raw_goal_success": false
+      },
+      "context_index": 0,
+      "initial_predicates": {
+        "bowl_inside_drawer": true,
+        "bowl_on_cabinet_top": false,
+        "drawer_closed": true,
+        "drawer_open": false,
+        "moka_on_stove": false,
+        "stove_off": true,
+        "stove_on": false
+      },
+      "initial_progress": {
+        "completed_stage_count": 0,
+        "events": [],
+        "final_predicates": {
+          "bowl_inside_drawer": true,
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "drawer_open": false,
+          "moka_on_stove": false,
+          "stove_off": true,
+          "stove_on": false
+        },
+        "initial_state_valid": true,
+        "invalid_reason": null,
+        "kind": "ordered_custom_task_progress_v1",
+        "next_stage": "drawer_opened",
+        "observation_index": 0,
+        "ordered_complete": false,
+        "ordered_success": false,
+        "raw_goal_success": false
+      },
+      "observation_sha256": "2bc4464b43d897b5b4a4a5540769e1d8e0dad9b42daea1091d730e210e742c96",
+      "prompt": "open the top drawer and place the bowl on top of the cabinet then close the drawer then turn on the stove and place the moka pot on it",
+      "state_sha256": "46c6522797b61d5976d579692258fcbb6a5a2d3714d7badf94377c6022a5c54e"
+    },
+    {
+      "after_reset_progress": {
+        "completed_stage_count": 0,
+        "events": [],
+        "initial_state_valid": true,
+        "invalid_reason": null,
+        "kind": "ordered_custom_task_progress_v1",
+        "next_stage": "drawer_opened",
+        "observation_index": 0,
+        "ordered_complete": false
+      },
+      "after_state_replacement": {
+        "completed_stage_count": 0,
+        "events": [],
+        "final_predicates": {
+          "bowl_inside_drawer": true,
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "drawer_open": false,
+          "moka_on_stove": false,
+          "stove_off": true,
+          "stove_on": false
+        },
+        "initial_state_valid": false,
+        "invalid_reason": "set_init_state_requires_reset_progress",
+        "kind": "ordered_custom_task_progress_v1",
+        "next_stage": "drawer_opened",
+        "observation_index": 0,
+        "ordered_complete": false,
+        "ordered_success": false,
+        "raw_goal_success": false
+      },
+      "context_index": 1,
+      "initial_predicates": {
+        "bowl_inside_drawer": true,
+        "bowl_on_cabinet_top": false,
+        "drawer_closed": true,
+        "drawer_open": false,
+        "moka_on_stove": false,
+        "stove_off": true,
+        "stove_on": false
+      },
+      "initial_progress": {
+        "completed_stage_count": 0,
+        "events": [],
+        "final_predicates": {
+          "bowl_inside_drawer": true,
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "drawer_open": false,
+          "moka_on_stove": false,
+          "stove_off": true,
+          "stove_on": false
+        },
+        "initial_state_valid": true,
+        "invalid_reason": null,
+        "kind": "ordered_custom_task_progress_v1",
+        "next_stage": "drawer_opened",
+        "observation_index": 0,
+        "ordered_complete": false,
+        "ordered_success": false,
+        "raw_goal_success": false
+      },
+      "observation_sha256": "2bc4464b43d897b5b4a4a5540769e1d8e0dad9b42daea1091d730e210e742c96",
+      "prompt": "open the top drawer and place the bowl on top of the cabinet then close the drawer then turn on the stove and place the moka pot on it",
+      "state_sha256": "46c6522797b61d5976d579692258fcbb6a5a2d3714d7badf94377c6022a5c54e"
+    }
+  ],
+  "created_at_utc": "2026-11-03T09:58:34.655961+00:00",
+  "kind": "native_ordered_loader_smoke",
+  "loader_settle_actions_per_context": 10,
+  "model_calls": 0,
+  "passive_hold_actions_after_reset": 1,
+  "policy_actions": 0,
+  "python_executable": "/workspace/venvs/libero-plus/bin/python",
+  "render_size": 128,
+  "scope": "Default ordered wrapper integration at 128 px; two resets and one passive step. No policy completion attempt.",
+  "source_sha256": {
+    "custom_task.bddl": "c684aeadeb0c44b113f8966ec7658e0f79449f1f8fecec57349a2f95a23dd46d",
+    "initial_state.npy": "152c4e07ee8439581fb45b25d8334e905c40b1a6a98cc7d78d540b9804973378",
+    "load_task.py": "bea8c1c194b403b248fe576f545e369180398939528ef2550237686cbcf1441f",
+    "ordered_success.py": "412fca502425319b54db39d7d552c97d2ab81984b45e78adecadff9f0241a483"
+  },
+  "task_key": "drawer_bowl_moka_stove_right_no_obstacles"
+}

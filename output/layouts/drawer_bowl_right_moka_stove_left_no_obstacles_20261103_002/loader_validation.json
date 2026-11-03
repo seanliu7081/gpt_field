@@ -1,0 +1,64 @@
+{
+  "after_passive_step": {
+    "completed_stage_count": 0,
+    "events": [],
+    "final_predicates": {
+      "bowl_inside_drawer": true,
+      "bowl_on_cabinet_top": false,
+      "drawer_closed": true,
+      "drawer_open": false,
+      "moka_on_stove": false,
+      "stove_off": true,
+      "stove_on": false
+    },
+    "initial_state_valid": true,
+    "invalid_reason": null,
+    "kind": "ordered_custom_task_progress_v1",
+    "next_stage": "drawer_opened",
+    "observation_index": 1,
+    "ordered_complete": false,
+    "ordered_success": false,
+    "raw_goal_success": false
+  },
+  "all_passed": true,
+  "checks": {
+    "default_loader_ordered_wrapper": true,
+    "default_loader_passive_step_valid_without_progress": true,
+    "native_initial_conditions_valid": true,
+    "new_frozen_inputs_unchanged": true
+  },
+  "initial_progress": {
+    "completed_stage_count": 0,
+    "events": [],
+    "final_predicates": {
+      "bowl_inside_drawer": true,
+      "bowl_on_cabinet_top": false,
+      "drawer_closed": true,
+      "drawer_open": false,
+      "moka_on_stove": false,
+      "stove_off": true,
+      "stove_on": false
+    },
+    "initial_state_valid": true,
+    "invalid_reason": null,
+    "kind": "ordered_custom_task_progress_v1",
+    "next_stage": "drawer_opened",
+    "observation_index": 0,
+    "ordered_complete": false,
+    "ordered_success": false,
+    "raw_goal_success": false
+  },
+  "kind": "single_context_native_ordered_loader_smoke",
+  "loader_settle_actions": 10,
+  "model_calls": 0,
+  "passive_hold_actions_after_reset": 1,
+  "policy_actions": 0,
+  "render_size": 128,
+  "source_sha256": {
+    "custom_task.bddl": "27367289a2bc17a20a8d02b8326942a914e221ed03a2fb89d57be14085926efb",
+    "initial_state.npy": "e4503e30901e589d08dad982fb7de356f43b85175496f26df5eb5d72a3328453",
+    "load_task.py": "d5b9d2621caae5b1933efeaf838d7f0ff427291d428508cb7fbcbb89932f4b65",
+    "ordered_success.py": "22c721a48660903f191ad95351b7e5d4fa96131d39e72f8e86c2d7cb9377d016",
+    "validate_scene.py": "637a11095b08ed09720791ce7c9b43d9c0c955eed9e5e67f3951dcc1e09b6dc8"
+  }
+}

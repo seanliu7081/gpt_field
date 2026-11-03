@@ -107,13 +107,35 @@ for _i, (_prompt, _sha) in enumerate(_GOAL):
         _entries[f"libero_goal_g{_i}"] = _spec(f"libero_goal_g{_i}", "libero_goal", _i, _prompt, _GOAL_SCENE, _sha)
 # Explicit custom task identity: the official t8 entry remains unchanged. The
 # model receives only this instruction; source-task/index metadata is evaluator-only.
-CUSTOM_TASK_KEYS = ("libero_10_t8_stove_off_bottle_obstacle",)
+COMPOSITE_TASK_KEY = "drawer_bowl_right_moka_stove_left_no_obstacles"
+CUSTOM_TASK_KEYS = ("libero_10_t8_stove_off_bottle_obstacle", COMPOSITE_TASK_KEY)
 _CUSTOM_LAYOUT = Path(__file__).resolve().parents[2] / (
     "output/layouts/libero_10_t8_stove_off_bottle_obstacle_20261103_001")
+_COMPOSITE_LAYOUT = Path(__file__).resolve().parents[2] / (
+    "output/layouts/drawer_bowl_right_moka_stove_left_no_obstacles_20261103_002")
 _entries[CUSTOM_TASK_KEYS[0]] = _spec(
     CUSTOM_TASK_KEYS[0], "libero_10", 8,
     "turn on the stove and put both moka pots on it", "KITCHEN_SCENE8",
     "863d4e72bcb3cda4164625bd0043163c276b64e63cd1f4053add8774710d5561")
+_entries[COMPOSITE_TASK_KEY] = _spec(
+    COMPOSITE_TASK_KEY, "libero_10", 2,
+    "open the top drawer and place the bowl on top of the cabinet then close the drawer "
+    "then turn on the stove and place the moka pot on it",
+    "CUSTOM_DRAWER_BOWL_MOKA_STOVE",
+    "32fe45e3b76a4aef956ea47325a20893ac7c71d448fdbe10fc5a11888bd9fa96")
+_CUSTOM_LAYOUTS = MappingProxyType({CUSTOM_TASK_KEYS[0]: _CUSTOM_LAYOUT,
+                                  COMPOSITE_TASK_KEY: _COMPOSITE_LAYOUT})
+# Evaluator-only immutable artifact contract. This is not policy input and does
+# not permit arbitrary tasks to replace benchmark goals or object assets.
+_COMPOSITE_CONTRACT = MappingProxyType({
+    "kind": "registered_composite",
+    "task_key": COMPOSITE_TASK_KEY,
+    "bddl_path": str(_COMPOSITE_LAYOUT / "custom_task.bddl"),
+    "bddl_sha256": "27367289a2bc17a20a8d02b8326942a914e221ed03a2fb89d57be14085926efb",
+    "initial_state_sha256": "e4503e30901e589d08dad982fb7de356f43b85175496f26df5eb5d72a3328453",
+    "external_camera_fovy_deg": 70.0,
+    "ordered_success_kind": "drawer_bowl_moka_v1",
+})
 _TASKS = MappingProxyType(_entries)
 V2_TASK_ALIASES = MappingProxyType({"libero_goal_g3": "drawer_bowl"})
 # Keep existing official-suite iteration and batch defaults unchanged. Custom
@@ -149,6 +171,12 @@ def resolve_custom_v2_task(suite, task_id, prompt):
     raise ValueError("custom task prompt and task id must match a registered custom task")
 
 
+def custom_v2_task_contract(task_key):
+    """Return an immutable evaluator-only contract for a composite task, if any."""
+    spec = resolve_v2_task(task_key)
+    return _COMPOSITE_CONTRACT if spec.key == COMPOSITE_TASK_KEY else None
+
+
 def frozen_reset_sha256(task_key, episode_index):
     """The frozen hash, or None (fail-closed: the runner then requires an explicit expected hash)."""
     return resolve_v2_task(task_key).frozen_reset_sha256.get(episode_index)
@@ -165,8 +193,8 @@ def build_v2_sim_config(task_key, *, sim_python=DEFAULT_SIM_PYTHON, libero_root=
     from .libero import LiberoConfig
     spec = resolve_v2_task(task_key)
     custom = ({"custom_task_prompt": spec.prompt, "custom_task_id": spec.task_id,
-               "task_bddl_override": str(_CUSTOM_LAYOUT / "custom_task.bddl"),
-               "initial_state_override": str(_CUSTOM_LAYOUT / "initial_state.npy")}
+               "task_bddl_override": str(_CUSTOM_LAYOUTS[spec.key] / "custom_task.bddl"),
+               "initial_state_override": str(_CUSTOM_LAYOUTS[spec.key] / "initial_state.npy")}
               if spec.key in CUSTOM_TASK_KEYS else {})
     config = LiberoConfig(suite=spec.suite, seed=7, max_steps=None, settle_steps=10,
                           libero_root=str(Path(libero_root).expanduser().resolve()),

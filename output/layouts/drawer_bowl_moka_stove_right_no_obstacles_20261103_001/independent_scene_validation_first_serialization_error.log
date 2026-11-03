@@ -1,0 +1,25 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /venv/fm_dno/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/workspace/gpt_field/output/layouts/drawer_bowl_moka_stove_right_no_obstacles_20261103_001/validate_scene.py", line 313, in <module>
+    path.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n")
+  File "/venv/fm_dno/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/venv/fm_dno/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bool_ is not JSON serializable

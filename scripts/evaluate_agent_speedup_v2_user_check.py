@@ -539,7 +539,10 @@ def _normalize_artifacts(output, summary, review, lock, *, variant_sources, runt
     identity["client"]["instructions_note"] = (
         "Base v2 instruction identity remains under agent_speedup_v2; the active "
         "continuous agent instruction hashes are recorded here.")
-    identity["agent_speedup_v2"]["scope"] = "unchanged_evaluator_and_optional_macro_reference"
+    identity["agent_speedup_v2"]["scope"] = (
+        "base_evaluator_with_registered_ordered_custom_task_and_optional_macro_reference"
+        if identity.get("success_qualification") == "ordered_custom_goal" else
+        "unchanged_evaluator_and_optional_macro_reference")
     identity["active_agent"] = {
         "method": METHOD, "version": VERSION, "framework": framework_settings(reasoning_effort),
         "model_role": "continuous_visual_task_control_and_optional_macro_selection",
@@ -800,8 +803,12 @@ def preflight(config, sim_config, *, task_key, episode_index, monitor_options=No
                       live_command_first_run=result["live_command"])
     scene = task_bddl_metadata(sim_config)
     if scene is not None:
+        from gpt_field.agent_speedup_v2_tasks import custom_v2_task_contract
+        custom_contract = custom_v2_task_contract(task_key)
         result.update(benchmark_variant="custom_task_scene", task_bddl_override=scene,
                       task_contract_validation=(
+                          "Worker reset checks the exact registered composite BDDL and state hashes, task language, goal/assets, camera settings and ordered completion"
+                          if custom_contract is not None else
                           "Worker reset checks registered custom language, unchanged goal, and target assets before model preparation"
                           if sim_config.custom_task_prompt is not None else
                           "Existing worker reset checks original language, goal, and target assets before model preparation"))

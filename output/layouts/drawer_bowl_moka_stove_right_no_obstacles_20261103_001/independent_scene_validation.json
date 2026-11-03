@@ -1,0 +1,1106 @@
+{
+  "all_passed": true,
+  "bowl_roof_clearance_m": 0.010458104799262014,
+  "checks": {
+    "akita_black_bowl_1_passive_stable_under_2mm_and_1deg": true,
+    "all_task_centers_image_right_positive_y": true,
+    "bowl_below_cabinet_roof_without_intersection": true,
+    "bowl_supported_by_cabinet": true,
+    "exactly_cabinet_and_stove_fixtures": true,
+    "exactly_two_task_objects_no_distractors": true,
+    "initial_bowl_inside_closed_drawer": true,
+    "initial_goal_false": true,
+    "initial_objects_not_already_on_targets": true,
+    "initial_stove_off": true,
+    "moka_pot_1_passive_stable_under_2mm_and_1deg": true,
+    "moka_supported_by_table": true,
+    "no_initial_cabinet_self_penetration": true,
+    "no_initial_unwanted_task_or_robot_contacts": true,
+    "passive_hold_preserves_required_init_predicates": true,
+    "sampled_drawer_sweep_clear": true,
+    "sixteen_goal_truth_table_cases_passed": true,
+    "state_restored_bitwise": true,
+    "whole_bowl_fits_drawer_laterally": true
+  },
+  "drawer_sweep": {
+    "all_passed": true,
+    "drawer_world_positive_axis": [
+      1.0,
+      2.220446049250313e-16,
+      0.0
+    ],
+    "kind": "sampled_evaluator_kinematic_clearance_check",
+    "model_calls": 0,
+    "physics_integration_steps": 0,
+    "policy_actions": 0,
+    "rows": [
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": 0.001,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.011384615384615385,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.023769230769230768,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.036153846153846154,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.04853846153846154,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.06092307692307692,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.07330769230769231,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.08569230769230769,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.09807692307692308,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.11046153846153846,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.12284615384615384,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.13523076923076924,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.14761538461538462,
+        "forbidden_contacts": [],
+        "passed": true
+      },
+      {
+        "bowl_inside_drawer": true,
+        "drawer_qpos_m": -0.16,
+        "forbidden_contacts": [],
+        "passed": true
+      }
+    ],
+    "scope": "Fourteen sampled positions; does not prove a robot grasp/pull trajectory.",
+    "state_restored_bitwise": true
+  },
+  "fixtures": [
+    "flat_stove_1",
+    "wooden_cabinet_1"
+  ],
+  "goal_truth_table": {
+    "all_passed": true,
+    "counterfactual_on_poses": {
+      "akita_black_bowl_1": [
+        -0.06432913758796062,
+        0.37645904979845507,
+        1.126399008420004,
+        0.9999999999999892,
+        -9.331358730410167e-08,
+        1.1880442609979385e-07,
+        -6.344146053300329e-12
+      ],
+      "moka_pot_1": [
+        -0.18999909974099918,
+        0.11999946060575804,
+        0.9966093293319433,
+        0.9999999999893543,
+        -4.609635564437421e-06,
+        -2.0695954813275378e-07,
+        5.90830624871125e-12
+      ]
+    },
+    "kind": "evaluator_only_counterfactual_goal_truth_table",
+    "model_calls": 0,
+    "physics_integration_steps": 0,
+    "policy_actions": 0,
+    "rows": [
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": false,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": false,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": false
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "actual_success": false,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": false,
+          "stove_on": true
+        },
+        "expected_success": false,
+        "passed": true
+      },
+      {
+        "actual_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "actual_success": true,
+        "expected_predicates": {
+          "bowl_on_cabinet_top": true,
+          "drawer_closed": true,
+          "moka_pot_on_stove": true,
+          "stove_on": true
+        },
+        "expected_success": true,
+        "passed": true
+      }
+    ],
+    "scope": "Final conjunction only; ordered stage completion is validated separately.",
+    "state_restored_bitwise": true,
+    "support_geometries": {
+      "akita_black_bowl_1": "wooden_cabinet_1_g9",
+      "moka_pot_1": "flat_stove_1_collision_burner"
+    }
+  },
+  "initial_cabinet_self_penetrations": [],
+  "initial_predicates": {
+    "bowl_inside_drawer": true,
+    "bowl_on_cabinet_top": false,
+    "drawer_closed": true,
+    "initial_success": false,
+    "moka_pot_on_stove": false,
+    "stove_off": true,
+    "stove_on": false
+  },
+  "initial_support_contacts": {
+    "akita_black_bowl_1": [
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.910714495061975e-08,
+        "geom_a": "akita_black_bowl_1_g36",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.6220022559502253e-08,
+        "geom_a": "akita_black_bowl_1_g36",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.5265009809963723e-08,
+        "geom_a": "akita_black_bowl_1_g36",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.2377887418846226e-08,
+        "geom_a": "akita_black_bowl_1_g36",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.6249882982942595e-08,
+        "geom_a": "akita_black_bowl_1_g37",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.5445519860401133e-08,
+        "geom_a": "akita_black_bowl_1_g37",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.2407747842286568e-08,
+        "geom_a": "akita_black_bowl_1_g37",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.1603384719745106e-08,
+        "geom_a": "akita_black_bowl_1_g37",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -2.0022503242452183e-08,
+        "geom_a": "akita_black_bowl_1_g38",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.884633942431262e-08,
+        "geom_a": "akita_black_bowl_1_g38",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.7135380855635086e-08,
+        "geom_a": "akita_black_bowl_1_g38",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.5959217037495522e-08,
+        "geom_a": "akita_black_bowl_1_g38",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.5647619125481115e-08,
+        "geom_a": "akita_black_bowl_1_g39",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.45712510252443e-08,
+        "geom_a": "akita_black_bowl_1_g39",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.2760496738664016e-08,
+        "geom_a": "akita_black_bowl_1_g39",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.1684128638427202e-08,
+        "geom_a": "akita_black_bowl_1_g39",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.9815395160802024e-08,
+        "geom_a": "akita_black_bowl_1_g40",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.8432487796989442e-08,
+        "geom_a": "akita_black_bowl_1_g40",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.5973260019750883e-08,
+        "geom_a": "akita_black_bowl_1_g40",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "a": "akita_black_bowl_1",
+        "b": "wooden_cabinet_1",
+        "distance_m": -1.4590352655938301e-08,
+        "geom_a": "akita_black_bowl_1_g40",
+        "geom_b": "wooden_cabinet_1_g16",
+        "normal": [
+          -0.0,
+          -0.0,
+          -1.0
+        ]
+      }
+    ],
+    "moka_pot_1": [
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.1938522303185937e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g2",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.1835042546025063e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g2",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.96337048912487e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g2",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9530225134087828e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g2",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9823160882156965e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g3",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9357587764945645e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g3",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.971968112499609e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g3",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.925410800778477e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g3",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.2381047245986774e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g4",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.1915474128775453e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g4",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.22775674888259e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g4",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.181199437161458e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g4",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.206197732231019e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g5",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.193087904257105e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g5",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.0569085437563334e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g5",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.0437987157824195e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g5",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.096035895626791e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g6",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.082926067652877e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g6",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9467467071521056e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g6",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9336368791781916e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g6",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.081687742863658e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g7",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.063356930072381e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g7",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.941911178810894e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g7",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -1.9235803660196167e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g7",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.2281226419035294e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g8",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.209791829112252e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g8",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.088346077850765e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g8",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "a": "table_or_arena",
+        "b": "moka_pot_1",
+        "distance_m": -2.070015265059488e-06,
+        "geom_a": "table_collision",
+        "geom_b": "moka_pot_1_g8",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    ]
+  },
+  "initial_unwanted_contacts": [],
+  "kind": "independent_custom_scene_validation",
+  "model_calls": 0,
+  "objects": [
+    "akita_black_bowl_1",
+    "moka_pot_1"
+  ],
+  "passive_hold_actions": 10,
+  "passive_stability": {
+    "akita_black_bowl_1": {
+      "after_qpos": [
+        -0.06771913994009114,
+        0.3767190490435948,
+        1.0625599683749973,
+        0.9999999999999892,
+        -9.331358730385164e-08,
+        1.1880442618162233e-07,
+        -6.344145870886372e-12
+      ],
+      "before_qpos": [
+        -0.06771913994008656,
+        0.3767190490435948,
+        1.0625599683749973,
+        0.9999999999999892,
+        -9.331358730410167e-08,
+        1.1880442609979385e-07,
+        -6.344146053300329e-12
+      ],
+      "rotation_drift_rad": 0.0,
+      "translation_drift_m": 4.579669976578771e-15
+    },
+    "moka_pot_1": {
+      "after_qpos": [
+        0.01999997264170336,
+        0.12000060863518472,
+        0.9661058538799795,
+        0.9999999999893543,
+        -4.609649680741543e-06,
+        -2.0696019272016309e-07,
+        5.90827742298236e-12
+      ],
+      "before_qpos": [
+        0.0199999726417885,
+        0.12000060863332047,
+        0.9661058531607807,
+        0.9999999999893543,
+        -4.609635564437421e-06,
+        -2.0695954813275378e-07,
+        5.90830624871125e-12
+      ],
+      "rotation_drift_rad": 0.0,
+      "translation_drift_m": 7.192012328187011e-10
+    }
+  },
+  "policy_actions": 0,
+  "scope": "Scene geometry, reset stability, physical predicates, and sampled drawer travel; no policy completion test.",
+  "task_body_centers_m": {
+    "akita_black_bowl_1": [
+      -0.06771913994008641,
+      0.3767190490435948,
+      1.0625599683749973
+    ],
+    "flat_stove_1": [
+      -0.3399990997409992,
+      0.11999946060575804,
+      0.905
+    ],
+    "moka_pot_1": [
+      0.01999997264179296,
+      0.12000060863322268,
+      0.9661058531224411
+    ],
+    "wooden_cabinet_1": [
+      -0.07999913758796062,
+      0.37999904979845506,
+      0.905
+    ]
+  }
+}

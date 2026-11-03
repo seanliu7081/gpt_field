@@ -1,0 +1,133 @@
+{
+  "added_obstacles": [],
+  "checks": {
+    "independent_revision_and_loader_audit_passed": true,
+    "repeat_reset_observation_identical": true,
+    "scene_validation_passed": true
+  },
+  "checks_passed": true,
+  "completion_semantics": {
+    "default_loader": "ordered sequence and current final conjunction",
+    "policy_completion_tested": false,
+    "raw_bddl": "unordered four-predicate final conjunction",
+    "shared_uc71_cli_registered": false
+  },
+  "created_at_utc": "2026-11-03T10:17:28.171811+00:00",
+  "episode_index": 0,
+  "file_sha256": {
+    "README.md": "238b9dd63d309b3c4b636b8aa0a475aac299a735a0db119890bb8ec43d2f041b",
+    "custom_task.bddl": "27367289a2bc17a20a8d02b8326942a914e221ed03a2fb89d57be14085926efb",
+    "initial_state.npy": "e4503e30901e589d08dad982fb7de356f43b85175496f26df5eb5d72a3328453",
+    "layout_revision_audit.json": "2f01942c6a6de3264a68a4ec1b0c12241992c5191c85219382c3a457a38ab69e",
+    "load_task.py": "d5b9d2621caae5b1933efeaf838d7f0ff427291d428508cb7fbcbb89932f4b65",
+    "ordered_success.py": "22c721a48660903f191ad95351b7e5d4fa96131d39e72f8e86c2d7cb9377d016",
+    "prepare_layout.py": "95f9de9437406ad571e5dc7e40f982defcaa8865f3f14a31c79bdabc3fed8225",
+    "revision_source.json": "f5af02d151a7445845901cfdbcdad8cd22addbf78babbaead7202598478310d4",
+    "scene_validation.json": "768cc9bbe841836ed7db2943000afa667afe36c673104ded10929053703bb328",
+    "settled_state.npy": "77e5666451005e17c972a8ead935ceb593e0e5c81e6303c52bed59adde8097f5",
+    "test_ordered_success.py": "8ce9e23d0dce030e7f33007f50ec475e409a83180e05b92cc4d4878c2ee9176c",
+    "validate_loader.py": "dfa83b5ffe61bbac3ba7a06519f4ed05f5de0b93680584b933b47a50f04ef282",
+    "validate_scene.py": "637a11095b08ed09720791ce7c9b43d9c0c955eed9e5e67f3951dcc1e09b6dc8"
+  },
+  "fixtures": [
+    "wooden_cabinet_1",
+    "flat_stove_1"
+  ],
+  "initial_observation_sha256": "32fe45e3b76a4aef956ea47325a20893ac7c71d448fdbe10fc5a11888bd9fa96",
+  "initial_state": {
+    "bowl": "inside top drawer",
+    "drawer": "closed",
+    "moka_pot": "on table",
+    "stove": "off"
+  },
+  "kind": "custom_composite_task",
+  "model_calls": 0,
+  "movable_objects": [
+    "akita_black_bowl_1",
+    "moka_pot_1"
+  ],
+  "ordered_steps": [
+    "open top drawer",
+    "place bowl on cabinet top",
+    "close top drawer",
+    "turn stove on",
+    "place moka pot on stove"
+  ],
+  "policy_actions": 0,
+  "prompt": "open the top drawer and place the bowl on top of the cabinet then close the drawer then turn on the stove and place the moka pot on it",
+  "repeat_initial_observation_sha256": "32fe45e3b76a4aef956ea47325a20893ac7c71d448fdbe10fc5a11888bd9fa96",
+  "reused_render_helper": {
+    "path": "/workspace/gpt_field/output/layouts/libero_10_t8_bottle_obstacle_20261103_001/prepare_layout.py",
+    "sha256": "fb5e428f364defe9e5cb7cc07695bebc40436c9e465c117e1bb15fc294a867a6"
+  },
+  "revision_source": {
+    "alignment": "stove burner center X equals cabinet origin X (-0.08 m); both working fronts face -X",
+    "front_definition": "world +X, toward bottom/front of upright preview",
+    "moka_translation_xyz_m": [
+      0.05,
+      0,
+      0
+    ],
+    "orientation_change_rad": 0,
+    "requested_change": "Move stove and moka forward; align stove beside drawer at the same depth.",
+    "source_directory": "/workspace/gpt_field/output/layouts/drawer_bowl_right_moka_stove_left_no_obstacles_20261103_001",
+    "source_file_sha256": {
+      "README.md": "673db5cc0978e31772dff43ecaf9cb1b9b27a363abf1bf955f498a100a9d4d99",
+      "artifact_manifest.json": "22fe9695c4139a0c32c81a76b6ad8218bfb159816b50659235948cae539e3fd0",
+      "construction.json": "92e8ef98418a2e817bafcb64d473e430746af0ba2d248538f8ec248a104f89b8",
+      "custom_external.png": "6d232fc2374da00300eb8df3f2771cd1e3ed7061e6c1dd2692b88d125d36b1b6",
+      "custom_external_1024.png": "5a91e93bad05c4ce305de9361f44b237bfb9cf3ffc15d189873b99616242e4b8",
+      "custom_task.bddl": "09dc69ccaf4555fa2bfddb5e491d9f26bb56d0b731dae44c209741f57b63ad37",
+      "custom_top_down.png": "5bf361a209561382ac1d49399929d45cafce735ef608fbfc56804bd1a52eb7e4",
+      "custom_wrist.png": "3b5313f41040ef70139ec74c7ee449c920030ea381b4750fc64e1f94bb67e017",
+      "drawer_open_diagnostic_external_1024.png": "4c8979fdd06b6ae3dff96e7476cdfcd639e19907c89ae259a08f211a842c58f8",
+      "drawer_open_diagnostic_top_down.png": "d5e4d2369f8ee9b215916f41b56dd1bcb47f93dfeed53287bbc0393670115262",
+      "independent_scene_validation.json": "bbd97748c566b7afd91f290bbc708752485f331155c8115489c3eb7d8e6d203e",
+      "independent_scene_validation.log": "b8dab31053abe6843e64e015186b8fde7bce3d385ac1c89d55efe6855e5cadc8",
+      "initial_observation.json": "bed05908aa50001acc5613c95064103db8c973567c6b40c56fed98f5e2e3b4dc",
+      "initial_observation.sha256": "93afd9628bd7cd36dd50e042e41a89645f4bd8bff765b1692f4a81d94d2d32b1",
+      "initial_state.npy": "a1ccc7a08e838447268e9ca108945705b73aa619a21d5f1948309428e9ae2d97",
+      "layout_manifest.json": "e8b4cb9eecd8a145a9b40109c9296acf750fd33e6d5b98c67022d47d64168b5b",
+      "layout_revision_audit.json": "7d0345fe0583be082b678220267d450cb8319918b2fc229fdc44ff5775f1f3dd",
+      "layout_revision_audit_first_bitwise_check.json": "2a73b4ab39d03eb7fc090871087098ffbee934ceb08af1ee8fc88b0308dfb732",
+      "load_task.py": "d5b9d2621caae5b1933efeaf838d7f0ff427291d428508cb7fbcbb89932f4b65",
+      "loader_validation.json": "7eef97f7e3f3db556bbaf82ee6768e762c0a3ea408908dd80faf9e02b16eff1d",
+      "loader_validation.log": "e3840d9b11f97864d01ac9cec3ae85805c77c828f1bbf6816a590d54d41d407a",
+      "ordered_success.py": "22c721a48660903f191ad95351b7e5d4fa96131d39e72f8e86c2d7cb9377d016",
+      "preparation.log": "e826e75bd65920190404384140258db983e1a836a7075128240a5ad43dad79dd",
+      "prepare_layout.py": "b9f052a7e55e5fb8eb39fad828e69f2d03f7d00c205ec34915f7f6910c99d03f",
+      "revision_source.json": "2ceaf9905820ad13c4b6a55a30e779ec393b4db6329fb3ed1c41e291fa0c8502",
+      "scene_validation.json": "be81ebb93fd5f6104a39319dda16c4b37a189d466aa06d0b47bc8320b0f6e7e7",
+      "settled_state.npy": "fefa6db5427f8a6b3f8518209dd22a767b83b8edb94ef6c83b74a2239252e17d",
+      "test_ordered_success.py": "8ce9e23d0dce030e7f33007f50ec475e409a83180e05b92cc4d4878c2ee9176c",
+      "validate_loader.py": "dfa83b5ffe61bbac3ba7a06519f4ed05f5de0b93680584b933b47a50f04ef282",
+      "validate_scene.py": "637a11095b08ed09720791ce7c9b43d9c0c955eed9e5e67f3951dcc1e09b6dc8"
+    },
+    "stove_translation_xyz_m": [
+      0.11,
+      0,
+      0
+    ]
+  },
+  "sealed_at_utc": "2026-11-03T10:19:55.984519+00:00",
+  "seed": 7,
+  "settle_steps": 10,
+  "side_definition": "cabinet/bowl right (world +Y), stove/moka left (world -Y) of the robot base in upright previews",
+  "simulator_configuration": {
+    "control_freq_hz": 20,
+    "controller": "OSC_POSE",
+    "external_camera_fovy_deg": 70.0,
+    "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+    "python_executable": "/workspace/venvs/libero-plus/bin/python",
+    "render_size": 512
+  },
+  "task_key": "drawer_bowl_right_moka_stove_left_no_obstacles",
+  "validation_scope": "Passive simulator checks and evaluator-only counterfactuals; not an agent completion test.",
+  "validation_summary": {
+    "all_passed": true,
+    "drawer_travel_samples": 14,
+    "final_goal_truth_table_cases": 16,
+    "revision_audit_checks": 20,
+    "scene_checks": 20
+  }
+}

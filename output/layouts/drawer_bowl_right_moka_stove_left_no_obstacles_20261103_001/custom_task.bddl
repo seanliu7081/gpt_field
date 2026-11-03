@@ -1,0 +1,55 @@
+(define (problem LIBERO_Kitchen_Tabletop_Manipulation)
+  (:domain robosuite)
+  (:language open the top drawer and place the bowl on top of the cabinet then close the drawer then turn on the stove and place the moka pot on it)
+  (:regions
+    (cabinet_init_region
+      (:target kitchen_table)
+      (:ranges ((-0.080001 0.379999 -0.079999 0.380001)))
+      (:yaw_rotation ((-1.5707963267948966 -1.5707963267948966))))
+    (stove_init_region
+      (:target kitchen_table)
+      (:ranges ((-0.340001 -0.250001 -0.339999 -0.249999)))
+      (:yaw_rotation ((0.0 0.0))))
+    (moka_init_region
+      (:target kitchen_table)
+      (:ranges ((0.015 -0.255 0.025 -0.245)))
+      (:yaw_rotation ((0.0 0.0))))
+    (top_region (:target wooden_cabinet_1))
+    (middle_region (:target wooden_cabinet_1))
+    (bottom_region (:target wooden_cabinet_1))
+    (top_side (:target wooden_cabinet_1))
+    (cook_region (:target flat_stove_1))
+  )
+  (:fixtures
+    kitchen_table - kitchen_table
+    wooden_cabinet_1 - wooden_cabinet
+    flat_stove_1 - flat_stove
+  )
+  (:objects
+    akita_black_bowl_1 - akita_black_bowl
+    moka_pot_1 - moka_pot
+  )
+  (:obj_of_interest
+    wooden_cabinet_1
+    akita_black_bowl_1
+    flat_stove_1
+    moka_pot_1
+  )
+  (:init
+    (On wooden_cabinet_1 kitchen_table_cabinet_init_region)
+    (On flat_stove_1 kitchen_table_stove_init_region)
+    (In akita_black_bowl_1 wooden_cabinet_1_top_region)
+    (On moka_pot_1 kitchen_table_moka_init_region)
+    (Close wooden_cabinet_1_top_region)
+    (Close wooden_cabinet_1_middle_region)
+    (Close wooden_cabinet_1_bottom_region)
+    (Turnoff flat_stove_1)
+  )
+  (:goal
+    (And
+      (On akita_black_bowl_1 wooden_cabinet_1_top_side)
+      (Close wooden_cabinet_1_top_region)
+      (Turnon flat_stove_1)
+      (On moka_pot_1 flat_stove_1_cook_region))
+  )
+)

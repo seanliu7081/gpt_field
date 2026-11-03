@@ -39,10 +39,28 @@ def _robot_proprioception(value):
 
 class UserCheckLiberoWorker(V2LiberoWorker):
     def __init__(self, config, monitor_options=None):
+        self._ordered_progress = None
+        self._ordered_task_key = None
+        self._ordered_observed_steps = 0
         super().__init__(config, monitor_options)
         self.metadata["user_check_osc_translation_scale_m"] = TRANSLATION_SCALE_M
+        if config.custom_task_prompt is not None:
+            from .agent_speedup_v2_tasks import custom_v2_task_contract, resolve_custom_v2_task
+            from .ordered_task_evaluation import ORDERED_KIND, ORDERED_EVALUATOR_VERSION
+            spec = resolve_custom_v2_task(config.suite, config.custom_task_id, config.custom_task_prompt)
+            contract = custom_v2_task_contract(spec.key)
+            if contract and contract.get("ordered_success_kind") == ORDERED_KIND:
+                self._ordered_task_key = spec.key
+                self.metadata.update(success_qualification="ordered_custom_goal",
+                                     ordered_task_key=spec.key,
+                                     ordered_evaluator_version=ORDERED_EVALUATOR_VERSION,
+                                     ordered_progress_policy_visible=False)
 
     def reset(self, task_id, episode_index):
+        # Base reset performs its ten passive settling actions. They never
+        # establish ordered milestones, including on a reused worker.
+        self._ordered_progress = None
+        self._ordered_observed_steps = 0
         response = super().reset(task_id, episode_index)
         if TRANSLATION_SCALE_M != 0.05:
             # Apply after the stock zero-action reset/settle, preserving the
@@ -67,7 +85,56 @@ class UserCheckLiberoWorker(V2LiberoWorker):
                 "applied_after_reset": True,
                 "source_config_unchanged": True,
             }
+        if self._ordered_task_key is not None:
+            from .ordered_task_evaluation import OrderedProgress, drawer_bowl_moka_predicates
+            self._ordered_progress = OrderedProgress()
+            baseline = self._ordered_progress.reset(drawer_bowl_moka_predicates(self.env))
+            if not baseline["initial_state_valid"]:
+                raise RuntimeError("Registered ordered task reset violates its initial predicates")
+            self._qualify_ordered_status()
+            response["status"] = self.status.copy()
         return response
+
+    def _raw_success(self):
+        raw = super()._raw_success()
+        progress = getattr(self, "_ordered_progress", None)
+        if progress is not None and not self.counterfactual_applied:
+            steps = self.status["steps"]
+            if steps > self._ordered_observed_steps:
+                if steps != self._ordered_observed_steps + 1:
+                    raise RuntimeError("Ordered evaluator missed an actual policy step")
+                from .ordered_task_evaluation import drawer_bowl_moka_predicates
+                # V2 calls here after base step and before its monitor refresh,
+                # matching the kinematics of the raw success evaluation.
+                progress.observe(drawer_bowl_moka_predicates(self.env))
+                self._ordered_observed_steps = steps
+        return raw
+
+    def _qualify_ordered_status(self):
+        from .ordered_task_evaluation import qualify_status
+        self.status = qualify_status(self.status, self._ordered_progress, self._ordered_task_key,
+                                     stop_on_success=self.config.stop_on_success)
+
+    def step(self, action):
+        response = super().step(action)
+        if self._ordered_progress is not None:
+            self._qualify_ordered_status()
+            response["status"] = self.status.copy()
+        return response
+
+    def truth(self):
+        result = super().truth()
+        if self._ordered_progress is not None:
+            from .ordered_task_evaluation import qualify_truth
+            result = qualify_truth(result, self._ordered_progress, self._ordered_task_key)
+        return result
+
+    def settle_truth(self, protocol=None):
+        result = super().settle_truth(protocol)
+        if self._ordered_progress is not None:
+            from .ordered_task_evaluation import qualify_truth
+            result = qualify_truth(result, self._ordered_progress, self._ordered_task_key)
+        return result
 
     def _response(self, obs):
         response = super()._response(obs)
