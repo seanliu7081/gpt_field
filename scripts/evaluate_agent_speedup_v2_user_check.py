@@ -125,6 +125,14 @@ def initial_layout_metadata(sim_config):
     return validate_initial_state_override(sim_config.initial_state_override)
 
 
+def task_bddl_metadata(sim_config):
+    """Identify custom scene bytes; the worker validates the official task contract at reset."""
+    if sim_config.task_bddl_override is None:
+        return None
+    from gpt_field.libero import validate_task_bddl_override
+    return validate_task_bddl_override(sim_config.task_bddl_override)
+
+
 def require_custom_reset_sha(sim_config, expected):
     expected = base._validate_expected_sha(expected)
     if sim_config.initial_state_override is not None and expected is None:
@@ -141,6 +149,17 @@ def freeze_initial_layout(directory, metadata):
     target = Path(directory) / "frozen_inputs"
     target.mkdir()
     (target / "initial_state.npy").write_bytes(blob)
+
+
+def freeze_task_bddl(directory, metadata):
+    if metadata is None:
+        return
+    blob = Path(metadata["path"]).read_bytes()
+    if hashlib.sha256(blob).hexdigest() != metadata["sha256"]:
+        raise ReviewError("Custom task BDDL changed before it could be frozen")
+    target = Path(directory) / "frozen_inputs"
+    target.mkdir(exist_ok=True)
+    (target / "custom_task.bddl").write_bytes(blob)
 
 
 def video_visualization_settings(*, video=True, planning_video=False):
@@ -186,6 +205,9 @@ def execution_options(config, sim_config, *, monitor_options=None, video=True,
     layout = initial_layout_metadata(sim_config)
     if layout is not None:
         result.update(benchmark_variant="custom_initial_layout", initial_layout=layout)
+    scene = task_bddl_metadata(sim_config)
+    if scene is not None:
+        result.update(benchmark_variant="custom_task_scene", task_bddl_override=scene)
     return result
 
 
@@ -229,7 +251,8 @@ def prepare_review(review_dir, *, config, sim_config, task_key, episode_index,
         raise FileExistsError("Preparation requires a fresh review directory")
     task = base.resolve_v2_task(task_key)
     episode_index = base._validate_episode_index(episode_index)
-    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True)
+    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True,
+                                allow_task_bddl_override=True)
     base._validate_stop_after_steps(stop_after_steps)
     require_custom_reset_sha(sim_config, expected_initial_observation_sha256)
     expected, expected_source = base.resolve_expected_sha(
@@ -245,6 +268,7 @@ def prepare_review(review_dir, *, config, sim_config, task_key, episode_index,
         request_deadline_s=request_deadline_s, stream_progress=stream_progress)
     directory.mkdir(parents=True, exist_ok=False)
     freeze_initial_layout(directory, initial_layout_metadata(sim_config))
+    freeze_task_bddl(directory, task_bddl_metadata(sim_config))
     sim, client = None, None
     started = time.monotonic()
     try:
@@ -561,7 +585,8 @@ def execute_reviewed(output, *, review_dir, config, sim_config, task_key, episod
     store = ReviewStore(review_dir)
     task = base.resolve_v2_task(task_key)
     monitor = dict(monitor_options or base.build_sim_config(task.key)[1])
-    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True)
+    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True,
+                                allow_task_bddl_override=True)
     base._validate_episode_index(episode_index)
     base._validate_stop_after_steps(stop_after_steps)
     if monitor.get("oracle", False) is not False:
@@ -575,6 +600,11 @@ def execute_reviewed(output, *, review_dir, config, sim_config, task_key, episod
         frozen = store.path / "frozen_inputs/initial_state.npy"
         if not frozen.is_file() or hashlib.sha256(frozen.read_bytes()).hexdigest() != layout["sha256"]:
             raise ReviewError("Frozen custom initial state changed after preparation")
+    scene = ((review.get("preparation") or {}).get("execution") or {}).get("task_bddl_override")
+    if scene is not None:
+        frozen = store.path / "frozen_inputs/custom_task.bddl"
+        if not frozen.is_file() or hashlib.sha256(frozen.read_bytes()).hexdigest() != scene["sha256"]:
+            raise ReviewError("Frozen custom task BDDL changed after preparation")
     if review["task_prompt"] != task.prompt:
         raise ReviewError("Review prompt differs from the official task prompt")
     runtime = runtime_inventory(
@@ -656,6 +686,7 @@ def execute_reviewed(output, *, review_dir, config, sim_config, task_key, episod
         video=video, smoke=smoke, smoke_steps=smoke_steps,
         stop_after_steps=stop_after_steps,
         allow_initial_state_override=True,
+        allow_task_bddl_override=True,
     )
     return _normalize_artifacts(
         output, summary, review, lock, variant_sources=variant_sources, runtime=runtime,
@@ -664,7 +695,8 @@ def execute_reviewed(output, *, review_dir, config, sim_config, task_key, episod
 
 def _live_gate(config, sim_config, task_key, episode_index, expected):
     task = base.resolve_v2_task(task_key)
-    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True)
+    base.validate_configuration(config, sim_config, task, allow_initial_state_override=True,
+                                allow_task_bddl_override=True)
     require_custom_reset_sha(sim_config, expected)
     base.resolve_expected_sha(task.key, episode_index, expected)
     base.check_render_environment(warn=lambda *a, **k: print(*a, file=sys.stderr, **k))
@@ -676,6 +708,7 @@ def _live_gate(config, sim_config, task_key, episode_index, expected):
 
 def _start_command(task_key, episode_index, *, video=True, stop_after_steps=None,
                    initial_state_override=None, expected_initial_observation_sha256=None,
+                   task_bddl_override=None,
                    planning_video=False, reasoning_effort=USER_CHECK_REASONING_EFFORT,
                    request_deadline_s=None, stream_progress=False):
     words = [
@@ -699,6 +732,8 @@ def _start_command(task_key, episode_index, *, video=True, stop_after_steps=None
     if initial_state_override is not None:
         words.extend(("--initial-state-override", initial_state_override,
                       "--expected-initial-observation-sha256", expected_initial_observation_sha256))
+    if task_bddl_override is not None:
+        words.extend(("--task-bddl-override", task_bddl_override))
     return f"cd {shlex.quote(str(ROOT))} && PYTHONPATH=src " + shlex.join(words)
 
 
@@ -713,7 +748,7 @@ def preflight(config, sim_config, *, task_key, episode_index, monitor_options=No
     require_custom_reset_sha(sim_config, expected_initial_observation_sha256)
     visualization = video_visualization_settings(video=video, planning_video=planning_video)
     result = base.preflight(config, sim_config, task_key=task_key, episode_index=episode_index,
-                            allow_initial_state_override=True)
+                            allow_initial_state_override=True, allow_task_bddl_override=True)
     result["base_v2_reference_payloads"] = result.pop("payloads")
     result["base_v2_reference_payload_sha256"] = result.pop("payload_sha256")
     result["base_v2_reference_client"] = result.pop("client")
@@ -741,6 +776,7 @@ def preflight(config, sim_config, *, task_key, episode_index, monitor_options=No
         live_command=_start_command(task_key, episode_index, video=video,
                                     stop_after_steps=stop_after_steps,
                                     initial_state_override=sim_config.initial_state_override,
+                                    task_bddl_override=sim_config.task_bddl_override,
                                     expected_initial_observation_sha256=expected_initial_observation_sha256,
                                     planning_video=planning_video, reasoning_effort=reasoning_effort,
                                     request_deadline_s=request_deadline_s, stream_progress=stream_progress),
@@ -761,6 +797,10 @@ def preflight(config, sim_config, *, task_key, episode_index, monitor_options=No
                       frozen_reset_sha256=expected_initial_observation_sha256,
                       reset_hash_policy="fail-closed: explicit custom layout preview hash",
                       live_command_first_run=result["live_command"])
+    scene = task_bddl_metadata(sim_config)
+    if scene is not None:
+        result.update(benchmark_variant="custom_task_scene", task_bddl_override=scene,
+                      task_contract_validation="Existing worker reset checks original language, goal, and target assets before model preparation")
     return result
 
 
@@ -795,6 +835,8 @@ def main(argv=None):
         command.add_argument("--expected-initial-observation-sha256")
         command.add_argument("--initial-state-override", type=Path,
                              help="Custom .npy initial layout; requires its explicit preview observation SHA256")
+        command.add_argument("--task-bddl-override", type=Path,
+                             help="Custom BDDL scene preserving the official task; requires matching initial state and preview SHA256")
         command.add_argument("--no-video", action="store_true", default=None)
         command.add_argument("--planning-video", action="store_true", default=None,
                              help="Preserve the reference dashboard and show derived fragment control-field diagnostics")
@@ -844,6 +886,11 @@ def main(argv=None):
                        else saved.get("simulator", {}).get("initial_state_override"))
         if layout_path is not None:
             sim_config = replace(sim_config, initial_state_override=layout_path)
+        scene_path = (str(args.task_bddl_override.expanduser().resolve())
+                      if args.task_bddl_override is not None
+                      else saved.get("simulator", {}).get("task_bddl_override"))
+        if scene_path is not None:
+            sim_config = replace(sim_config, task_bddl_override=scene_path)
         config = base.configuration()
         video = not args.no_video if args.no_video is not None else saved.get("video", True)
         planning_video = (args.planning_video if args.planning_video is not None

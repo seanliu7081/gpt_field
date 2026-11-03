@@ -1,0 +1,101 @@
+{
+  "video": "t08-bottle-obstacle-map-transit100.mp4",
+  "fps": 20,
+  "width": 1920,
+  "height": 1080,
+  "frames": 2322,
+  "duration_s": 116.1,
+  "control_states": 844,
+  "playback": "Each control state 0.1s; 0.5x simulator speed; labeled event freezes; API waits omitted",
+  "source_video": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_bottle_obstacle_transit100_t08_20261103_001/trial/episode.mp4",
+  "mapping": "control_state_frames.json",
+  "data": "obstacle_map_timeline.json",
+  "chapters": [
+    {
+      "control_state": 0,
+      "initial_observation": true,
+      "video_time_s": 0,
+      "duration_s": 2,
+      "title": "初始观察 · 10 cm / 50 cm"
+    },
+    {
+      "control_state": 0,
+      "video_time_s": 2.0,
+      "duration_s": 2.1,
+      "title": "旋转目标超限 · 本段未执行"
+    },
+    {
+      "control_state": 1,
+      "video_time_s": 4.1,
+      "duration_s": 1.7,
+      "title": "观察 / 保持 · 共享地图保留"
+    },
+    {
+      "control_state": 38,
+      "video_time_s": 9.4,
+      "duration_s": 4.1,
+      "title": "首次碰瓶 · 夹爪左指接触瓶身"
+    },
+    {
+      "control_state": 82,
+      "video_time_s": 17.8,
+      "duration_s": 3.1,
+      "title": "transit 停滞 · 模型更新地图并退开"
+    },
+    {
+      "control_state": 87,
+      "video_time_s": 21.3,
+      "duration_s": 2.6,
+      "title": "路径不可用 · 起点插值涉及屏蔽网格"
+    },
+    {
+      "control_state": 224,
+      "video_time_s": 37.5,
+      "duration_s": 3.1,
+      "title": "瓶子与前方摩卡壶接触"
+    },
+    {
+      "control_state": 368,
+      "video_time_s": 54.9,
+      "duration_s": 1.5,
+      "title": "前方摩卡壶抬起 · 准备升高搬运"
+    },
+    {
+      "control_state": 508,
+      "video_time_s": 70.3,
+      "duration_s": 1.5,
+      "title": "接触操作停滞 · 返回模型"
+    },
+    {
+      "control_state": 538,
+      "video_time_s": 74.7,
+      "duration_s": 2.2,
+      "title": "松手片段达到预算 · 更新地图修订 3"
+    },
+    {
+      "control_state": 597,
+      "video_time_s": 82.7,
+      "duration_s": 2.6,
+      "title": "再次起点插值不可用 · 先向上退出"
+    },
+    {
+      "control_state": 767,
+      "video_time_s": 102.2,
+      "duration_s": 1.3,
+      "title": "contact 操作 · 本段未启用路径规划"
+    },
+    {
+      "control_state": 843,
+      "video_time_s": 111.0,
+      "duration_s": 5.1,
+      "title": "LIBERO 成功 · 释放动作刚开始"
+    }
+  ],
+  "embedded_chapters": true,
+  "no_simulator_or_model_calls": true,
+  "terminal_diagnostic_actions_included": false,
+  "event_semantics": "Decision-boundary map shown at exact measured state before next action; failures suppress active route. Initial uninitialized map shown separately before model decision at state0.",
+  "transit_command_limit_m": 0.1,
+  "transit_target_limit_m": 0.5,
+  "size_bytes": 5453862
+}

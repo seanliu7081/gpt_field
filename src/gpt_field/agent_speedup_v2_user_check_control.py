@@ -14,6 +14,7 @@ from types import FunctionType, SimpleNamespace
 
 import numpy as np
 
+from .action import TRANSLATION_SCALE_M, USER_CHECK_TRANSIT_ACTION_M
 from . import agent_speedup_v2_primitives as primitives
 from . import agent_speedup_v2_relations as relations
 from .agent_speedup_v2_types import th_value, thresholds_dicts
@@ -31,6 +32,8 @@ def control_settings() -> dict:
     """JSON-safe settings for the review binding, run manifest and diagnostics."""
     return {
         "version": CONTROL_VERSION,
+        "transit_action_cap_m": USER_CHECK_TRANSIT_ACTION_M,
+        "osc_translation_scale_m": TRANSLATION_SCALE_M,
         "scope": "scoped constraints, contact semantics, causal feedback and placement handoff",
         "constraint_scope": "current intent plus global claims; future steps are inactive",
         "contact_semantics": "explicit constraints prevail; support is pair and phase scoped",

@@ -1,0 +1,77 @@
+{
+  "approved_inventory_sha256": "82f73870b0c99f1baf5f5400e125ffc76a88fe26fb17095a5d86febe4fabe7e2",
+  "ledger_entries": 72750,
+  "ledger_counts": {
+    "file": 71779,
+    "directory": 971
+  },
+  "unapproved_ledger_entries": [],
+  "duplicate_ledger_entries": [],
+  "remaining_approved_paths": [],
+  "preserved_v3_validation_inputs": {
+    "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_001/execution/approved_plan.json": true,
+    "runs/v3_completion_baseline_20261026T133633Z/attempts/attempt_003/execution/approved_plan.json": true
+  },
+  "missing_protected_roots": [],
+  "obsolete_listed_processes_still_live": [],
+  "retained_services": [
+    {
+      "pid": 1283420,
+      "exists": true,
+      "args": [
+        "/usr/bin/python3",
+        "/usr/local/bin/supervisord",
+        "-c",
+        "runs/agent_speedup_v2_uc71_task0_plan_edit_20261101_001/ui/supervisord.conf"
+      ],
+      "referenced_paths_exist": {
+        "runs/agent_speedup_v2_uc71_task0_plan_edit_20261101_001/ui/supervisord.conf": true
+      }
+    },
+    {
+      "pid": 1283427,
+      "exists": true,
+      "args": [
+        "/workspace/gpt_field/.venv/bin/python",
+        "-u",
+        "/workspace/gpt_field/runs/agent_speedup_v2_uc71_task0_plan_edit_20261101_001/ui/serve_ui.py"
+      ],
+      "referenced_paths_exist": {
+        "/workspace/gpt_field/runs/agent_speedup_v2_uc71_task0_plan_edit_20261101_001/ui/serve_ui.py": true
+      }
+    },
+    {
+      "pid": 739996,
+      "exists": true,
+      "args": [
+        "/usr/bin/python3",
+        "/usr/local/bin/supervisord",
+        "-c",
+        "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/supervisord.conf"
+      ],
+      "referenced_paths_exist": {
+        "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/supervisord.conf": true
+      }
+    },
+    {
+      "pid": 745681,
+      "exists": true,
+      "args": [
+        "/workspace/gpt_field/.venv/bin/python",
+        "-u",
+        "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/ide_review_bridge.py"
+      ],
+      "referenced_paths_exist": {
+        "/workspace/gpt_field/runs/agent_speedup_v2_user_check_libero_10_manual_batch_001/ide_review_bridge.py": true
+      }
+    }
+  ],
+  "deletion_result_complete": true,
+  "file_count_reconciliation": {
+    "approved_regular_files": 71787,
+    "ledger_deleted_regular_files": 71779,
+    "shutdown_removed_regular_pid_files": 8
+  },
+  "read_only_audit": true,
+  "passed": true
+}

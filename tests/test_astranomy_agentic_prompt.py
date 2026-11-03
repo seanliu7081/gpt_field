@@ -12,6 +12,7 @@ from gpt_field.astranomy_agentic_geometry import (
     wrist_camera_pose_from_observation,
 )
 from gpt_field.astranomy_agentic_prompt import instructions
+from gpt_field.astranomy_agentic_tasks import ASTRANOMY_TASK_KEYS, resolve_astranomy_task
 from gpt_field.distance_tasks import resolve_distance_task
 
 
@@ -163,3 +164,10 @@ def test_prompt_validates_geometry_without_copying_observation_into_instructions
     corrupted["gripper"]["current_object"] = "bowl"
     with pytest.raises(ValueError):
         instructions("bowl_plate", corrupted)
+
+
+@pytest.mark.parametrize("task_key", ASTRANOMY_TASK_KEYS)
+def test_additional_tasks_change_only_the_official_sentence(task_key):
+    baseline = instructions("bowl_plate").replace(resolve_astranomy_task("bowl_plate").prompt, "TASK")
+    candidate = instructions(task_key).replace(resolve_astranomy_task(task_key).prompt, "TASK")
+    assert candidate == baseline

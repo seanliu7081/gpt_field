@@ -1,0 +1,106 @@
+{
+  "status": "passed_event_source_and_preview_review",
+  "source_run": "agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_001",
+  "method": "Read-only saved trace/public output review and offline FineCompactField query; no model or simulator calls.",
+  "event_state_indices": [
+    0,
+    162,
+    196,
+    433,
+    507
+  ],
+  "events": [
+    {
+      "state": 0,
+      "kind": "target_rejection",
+      "label_zh": "旋转目标超限：1.572 rad > 1.2 rad；本段未执行。",
+      "position_error_m": 0.13440931155477404,
+      "orientation_error_rad": 1.5724039342022946,
+      "note": "Translation is within the 0.50m envelope. Public recovery splits wrist rotation into two stages.",
+      "trace_line": 3
+    },
+    {
+      "state": 162,
+      "kind": "route_start_blocked",
+      "label_zh": "6 cm 间隙使起点插值涉及被屏蔽网格顶点；本段未执行。",
+      "query_result": null,
+      "inside_expanded_aabbs": false,
+      "invalid_interpolation_corner_count": 2,
+      "measured_xyz_m": [
+        -0.08981604955758658,
+        -0.10206545781136724,
+        0.5272483458135655
+      ],
+      "invalid_interpolation_vertices_xyz_m": [
+        [
+          -0.06990802477879329,
+          -0.12203272890568362,
+          0.5236241729067828
+        ],
+        [
+          -0.06990802477879329,
+          -0.12203272890568362,
+          0.5436241729067828
+        ]
+      ],
+      "note": "Map revision2 clearance0.06; revision3 at state163 retains boxes and reduces clearance to0.04. This is model-map validity, not evidence of physical collision.",
+      "trace_line": 490
+    },
+    {
+      "state": 196,
+      "kind": "transit_stall",
+      "label_zh": "接近目标后停滞：误差4.82mm，仍高于4mm到达阈值。",
+      "position_error_m": 0.0048175340298402865,
+      "weighted_error_improvement_m": -0.0004526953001286098,
+      "trace_line": 591
+    },
+    {
+      "state": 433,
+      "kind": "contact_stall",
+      "label_zh": "接触下降停滞：误差8.15mm；交回模型调整。",
+      "position_error_m": 0.008152040024841985,
+      "weighted_error_improvement_m": 0.0005543378999684854,
+      "note": "This contact approach has no transit route. Public recovery closes gripper then requests a short lift for visual inspection.",
+      "trace_line": 1302
+    },
+    {
+      "state": 507,
+      "kind": "transit_stall",
+      "label_zh": "接近目标后停滞：误差4.88mm，仍高于4mm到达阈值。",
+      "position_error_m": 0.004878018894067325,
+      "weighted_error_improvement_m": 9.640022610174926e-05,
+      "trace_line": 1524
+    }
+  ],
+  "stall_semantics": {
+    "window_samples": 12,
+    "minimum_actions_before_check": 16,
+    "weighted_progress_threshold_m": 0.0008,
+    "required_arrival_samples": 2,
+    "cause": "No obstruction or collision cause can be inferred from segment_stall alone."
+  },
+  "render_semantics": {
+    "obstacles": "World-axis-aligned boxes estimated by model; clearance expands each lower/upper bound isotropically.",
+    "field": "Boxes/masks are not an obstacle signed-distance field.",
+    "motion": "Cyan planned line only for active transit; pink measured grip trajectory is not whole robot/carried-object swept volume.",
+    "command": "10cm is configured command norm limit, not measured displacement.",
+    "timing": "State0 reset; stateN after actionN-1; failure/map changes use exact decision state. Contact during actionN displayed on endpoint stateN+1."
+  },
+  "reviewed_previews": [
+    "preview-step-0000.png",
+    "preview-step-0196.png",
+    "preview-step-0433.png",
+    "preview-step-0507.png",
+    "preview-step-0549.png"
+  ],
+  "preview_findings": [
+    "Captions readable without truncation.",
+    "Rotation-envelope rejection is distinguished from translation target limit.",
+    "Failed transit paths, contact stages, and terminal state have no cyan active route.",
+    "Terminal caption distinguishes LIBERO success from strict release/rest checks and excludes diagnostic actions.",
+    "Renderer selects decision-boundary map revision at the same measured state; initial uninitialized map is displayed separately.",
+    "World boxes and isotropic clearance are projected consistently into 3D, XY and XZ views."
+  ],
+  "renderer_sha256": "5cd665cbcb9c0289675d089dea93955e71c4048d2f20152723c3a15543e463fa",
+  "final_video_validation": "Encoding/container validation owned by parent; this review covers source semantics and preview images."
+}

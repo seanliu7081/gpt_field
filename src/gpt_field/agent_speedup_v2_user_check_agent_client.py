@@ -16,6 +16,7 @@ import time
 from collections.abc import Mapping
 from pathlib import Path
 
+from .action import USER_CHECK_TRANSIT_ACTION_M
 from .agent_speedup_v2_client import (
     AgentSpeedUpV2Client, OVERLOAD_BACKOFF_BASE_S, OVERLOAD_JITTER_S,
     OVERLOAD_MAX_WAIT_S, TRANSIENT_BACKOFF_BASE_S,
@@ -23,7 +24,7 @@ from .agent_speedup_v2_client import (
 from .agent_speedup_v2_user_check_client import ReviewedV2Client
 from .agent_speedup_v2_user_check_context import _bounded, causal_nodes, size
 from .agent_speedup_v2_user_check_fragments import (
-    execution_schema, validate_execution, fragment_capabilities,
+    execution_schema, validate_execution, fragment_capabilities, validate_route,
 )
 from .agent_speedup_v2_user_check_motion import _conform_motion, local_motion_schema
 from .astra import APIError, SchemaError, _canonical
@@ -38,7 +39,7 @@ from .ordered_transport import ordered_dumps
 
 
 CLIENT_VERSION = "user-check-agent-first-client-2"
-PROMPT_VERSION = "user-check-agent-first-prompt-3"
+PROMPT_VERSION = "user-check-agent-first-prompt-6"
 HISTORY_PROTOCOL = "persistent_task_executive_fragments_text_and_six_visual_pairs_v2"
 IMAGE_HISTORY = 6
 AGENT_KIND = "agent"
@@ -83,9 +84,25 @@ motion; uncertainty calls for shorter monitored steps, not automatic deadlock.
 
 Each response has belief (current evidence and uncertainty), plan (unfinished
 subgoals and the next approach), why (what this action changes or observes), type,
-motion, macro and execution. All keys are required. These belief/plan fields are
+motion, macro, execution and obstacle_map. All keys are required. These belief/plan fields are
 YOUR estimates, never measured task-completion flags. Choose exactly one action
-and set every unused action payload to null:
+and set every unused action payload to null. obstacle_map is a separate shared-map
+update and may accompany any action:
+
+obstacle_map: null reuses context.execution.obstacle_map. An object
+{avoid_boxes:[{lower_xyz_m:[x,y,z],upper_xyz_m:[x,y,z]}],clearance_m:r}
+REPLACES the entire cached avoid set; an empty avoid_boxes array explicitly clears
+it. Supply 0..4 world-axis-aligned boxes and r in 0..0.20 m for hand/carried-object
+extent and estimation error. On the first execute decision, supply coarse relevant
+stationary obstacles from current RGB and calibration. Use an empty set only when
+no relevant obstacles are visible for the upcoming transits. Keep relevant boxes
+even when a selected segment appears to clear them; the planner decides whether
+that segment needs a detour. Reuse unchanged obstacles with null on later decisions.
+Remove the object you will manipulate from the avoid set BEFORE its grasp/carry
+sequence. Replace the map after moving or placing an object, switching targets,
+or seeing changed geometry; include newly placed objects when relevant. The cache
+is your estimate with its update step, not automatically tracked object geometry.
+The initial source=uninitialized empty map does not mean the scene is known clear.
 
 execute: motion=null, macro=null, execution={segments:[...]}. Prefer execute for
 a sufficiently understood free-space approach, carry or retreat, or an explicit
@@ -100,7 +117,7 @@ It does not certify semantic attachment, placement or task success. No native sc
 registration or motion calibration is needed for these fragments.
 
 execution.segments contains 1..6 objects, each with exactly skill, xyz_m,
-quaternion_wxyz, gripper, profile, max_steps, observation_after. Coordinates are
+quaternion_wxyz, gripper, profile, max_steps, observation_after, route. Coordinates are
 in the fixed world frame, metres; orientation is absolute right_hand wxyz.
 - move_to_pose: xyz_m is an absolute world grip-site target.
 - move_relative: xyz_m is a world displacement from the measured pose at THIS
@@ -115,12 +132,27 @@ Arm-movement stages always use gripper=keep; put any finger change in a separate
 set_gripper stage. For arm stages quaternion_wxyz=null retains measured entry
 orientation. max_steps is 1..120 per stage, with sum(max_steps)<=240 across the
 whole sequence. At 20 Hz, budgets are upper bounds, not arrival guarantees.
-profile=transit allows at most 0.30 m / 1.2 rad from a stage's measured start;
-profile=contact allows at most 0.08 m / 0.5 rad. The unchanged OSC feedback loop
-caps each action at 0.02 m translation (0.005 m for contact) and 0.1 rad rotation.
-These envelopes are not permission to cross uncertain space. Choose a clear
-route and intermediate waypoints using RGB and camera calibration. The executor
-does not discover obstacles or plan a collision-free path for you.
+profile=transit allows at most 0.50 m / 1.2 rad from a stage's measured start;
+profile=contact allows at most 0.08 m / 0.5 rad. Each action's translation command
+norm is capped at {transit_action_m} m (0.005 m for contact), with 0.1 rad rotation.
+Measured displacement is checked after each action and depends on robot dynamics.
+Choose the destination and relevant obstacles using RGB and camera calibration.
+Every transit move_to_pose or move_relative uses the local planner by default.
+route=null inherits the cached obstacle_map; it does not bypass planning. A nonnull
+route object with the same avoid_boxes/clearance_m fields temporarily overrides
+the map for that stage without changing the cache. Usually keep route=null and
+update obstacle_map only when the relevant scene changes.
+The local planner expands the chosen boxes, checks the straight connection, and
+searches a detour if needed. It follows internal waypoints without extra model
+calls; the original stage target and gripper command stay unchanged. You need
+not spell out every detour waypoint. Boxes remain your estimates,
+not simulator geometry. The path tracker uses the same configured transit command
+limit; its lookahead is at least that limit. The planner does not discover missing obstacles or
+check the full robot. If it reports route_unavailable, inspect its feedback and
+choose a new view, target, or corrected boxes; no blocked-path fallback runs.
+Use route=null for contact approach, set_gripper and wait. Keep intended grasp
+and support contacts in those explicit stages; avoid boxes must not block the
+current grip site or the selected transit destination after expansion.
 
 observation_after=true means STOP the sequence after this stage and return fresh
 RGB to you. Remaining stages are reported as unexecuted and are NOT automatically
@@ -199,7 +231,7 @@ have midpoint [0,0,-0.0036] m relative to the grip site in hand coordinates; pad
 size is [0.016,0.008,0.016] m, nominal open inner gap 0.079 m. Tool geometry does
 not prove clearance or contact. Judge the whole hand, carried object and nearby
 objects in both views. Keep task reasoning concise and output the JSON only.
-""".strip()
+""".strip().replace("{transit_action_m}", f"{USER_CHECK_TRANSIT_ACTION_M:.2f}")
 
 
 def agent_schema() -> dict:
@@ -212,6 +244,8 @@ def agent_schema() -> dict:
         "continuation": {"type": "boolean"},
     }, "required": ["step_index", "budget_steps", "continuation"],
         "additionalProperties": False}
+    execution = execution_schema()
+    obstacle_map = copy.deepcopy(execution["properties"]["segments"]["items"]["properties"]["route"])
     properties = {
         "belief": {"type": "string", "minLength": 1, "maxLength": 1800},
         "plan": {"type": "string", "minLength": 1, "maxLength": 1800},
@@ -219,7 +253,8 @@ def agent_schema() -> dict:
         "type": {"type": "string", "enum": ["execute", "motion", "macro", "observe", "finish"]},
         "motion": {"anyOf": [motion, {"type": "null"}]},
         "macro": {"anyOf": [macro, {"type": "null"}]},
-        "execution": {"anyOf": [execution_schema(), {"type": "null"}]},
+        "execution": {"anyOf": [execution, {"type": "null"}]},
+        "obstacle_map": obstacle_map,
     }
     return {"type": "object", "properties": properties, "required": list(properties),
             "additionalProperties": False}
@@ -229,8 +264,10 @@ def validate_agent_decision(value) -> dict:
     """Reject malformed commands; position/rotation bounds use measured runtime pose."""
     try:
         schema = agent_schema()
-        if not isinstance(value, Mapping) or set(value) != set(schema["required"]):
-            raise ValueError("executive response must contain exactly belief, plan, why, type, motion, macro, execution")
+        required = set(schema["required"])
+        if not isinstance(value, Mapping) or set(value) not in (required, required - {"obstacle_map"}):
+            raise ValueError("executive response must contain belief, plan, why, type, motion, macro, execution, obstacle_map")
+        obstacle_map = validate_route(value.get("obstacle_map"))
         for key in ("belief", "plan", "why"):
             item = value[key]
             if (not isinstance(item, str) or not item.strip()
@@ -263,7 +300,9 @@ def validate_agent_decision(value) -> dict:
             validate_execution(value["execution"])
         elif value["execution"] is not None:
             raise ValueError("execution must be null for this action")
-        return copy.deepcopy(dict(value))
+        result = copy.deepcopy(dict(value))
+        result["obstacle_map"] = obstacle_map
+        return result
     except (ValueError, TypeError, KeyError) as exc:
         raise SchemaError(f"agent output: {exc}") from None
 
@@ -277,7 +316,8 @@ def _execution_evidence_view(value, budget=7000):
     retained = ("skill", "segment_index", "stage_index", "stage", "segment", "status",
                 "reason", "executed_steps", "requested_steps", "max_steps", "observation_after",
                 "position_error_m", "orientation_error_rad", "finger_gap_mm", "gap_mm",
-                "progress", "stall", "arrival", "measurements", "thresholds")
+                "progress", "stall", "arrival", "measurements", "thresholds",
+                "routing", "route_tracking", "route_remaining_m", "detail")
 
     def collect(item, path):
         if isinstance(item, dict):
@@ -292,11 +332,15 @@ def _execution_evidence_view(value, budget=7000):
                     collect(child, path + f"[{index}]")
 
     collect(value, "execution")
-    usable = max(1000, budget - 500)
-    return {"summary": _bounded(value, int(usable * .5)),
+    map_size = size(value["obstacle_map"]) if isinstance(value, dict) and "obstacle_map" in value else 0
+    usable = max(1000, budget - map_size - 500)
+    result = {"summary": _bounded(value, int(usable * .5)),
             "stage_outcomes": _bounded(stage_rows[-12:], int(usable * .25)),
             "causes": _bounded(causal_nodes(value), int(usable * .25)),
             "full_detail": "execution_audit"}
+    if isinstance(value, dict) and "obstacle_map" in value:
+        result["obstacle_map"] = copy.deepcopy(value["obstacle_map"])
+    return result
 
 
 class AgentFirstV2Client(ReviewedV2Client):

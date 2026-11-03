@@ -7,6 +7,7 @@ from numbers import Real
 
 import numpy as np
 
+from .action import TRANSLATION_SCALE_M
 from .field import GridField
 from .schema import vector3
 
@@ -25,8 +26,8 @@ class PathTracker:
                             ("endpoint_tolerance_m", endpoint_tolerance_m)):
             if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value) or value <= 0:
                 raise ValueError(f"{name} must be finite and positive")
-        if max_command_m > 0.05:
-            raise ValueError("max_command_m must not exceed the OSC translation norm limit of 0.05 m")
+        if max_command_m > TRANSLATION_SCALE_M:
+            raise ValueError(f"max_command_m must not exceed the configured OSC translation norm limit of {TRANSLATION_SCALE_M:g} m")
         self.lookahead_m = float(lookahead_m)
         self.max_command_m = float(max_command_m)
         self.endpoint_tolerance_m = float(endpoint_tolerance_m)

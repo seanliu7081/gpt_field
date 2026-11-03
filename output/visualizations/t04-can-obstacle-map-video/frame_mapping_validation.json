@@ -1,0 +1,155 @@
+{
+  "checks": {
+    "exact_contiguous_frame_coverage": true,
+    "fps_20": true,
+    "dashboard_1600x960": true,
+    "event_state_matches_trace_state": true,
+    "source_camera_crops_match_saved_observation_with_lossy_encoding": true
+  },
+  "passed": true,
+  "video": {
+    "frame_count": 5436,
+    "fps": 20.0,
+    "width": 1600,
+    "height": 960
+  },
+  "matched_event_blocks": 2554,
+  "max_state_absolute_error": 0.0,
+  "state_mismatches": [],
+  "representative_frames": [
+    {
+      "state_index": 0,
+      "source_frame_index": 0,
+      "source_time_s": 0.0,
+      "file": "source_frame_samples/state-0000-source-frame-0000.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9703562259674072,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 41.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7528167963027954,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 48.0
+        }
+      }
+    },
+    {
+      "state_index": 1,
+      "source_frame_index": 24,
+      "source_time_s": 1.2,
+      "file": "source_frame_samples/state-0001-source-frame-0024.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0040390491485596,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 41.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.774261236190796,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 40.0
+        }
+      }
+    },
+    {
+      "state_index": 142,
+      "source_frame_index": 618,
+      "source_time_s": 30.9,
+      "file": "source_frame_samples/state-0142-source-frame-0618.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9205079078674316,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 48.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.5916359424591064,
+          "p95_abs_error": 4.0,
+          "max_abs_error": 57.0
+        }
+      }
+    },
+    {
+      "state_index": 396,
+      "source_frame_index": 1674,
+      "source_time_s": 83.7,
+      "file": "source_frame_samples/state-0396-source-frame-1674.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.8804947137832642,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 33.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7885664701461792,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 38.0
+        }
+      }
+    },
+    {
+      "state_index": 539,
+      "source_frame_index": 2286,
+      "source_time_s": 114.3,
+      "file": "source_frame_samples/state-0539-source-frame-2286.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.8321818113327026,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 61.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7111855745315552,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 49.0
+        }
+      }
+    },
+    {
+      "state_index": 795,
+      "source_frame_index": 3360,
+      "source_time_s": 168.0,
+      "file": "source_frame_samples/state-0795-source-frame-3360.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.8718702793121338,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 43.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.9032620191574097,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 70.0
+        }
+      }
+    },
+    {
+      "state_index": 1276,
+      "source_frame_index": 5374,
+      "source_time_s": 268.7,
+      "file": "source_frame_samples/state-1276-source-frame-5374.png",
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.8713328838348389,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 42.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.784503698348999,
+          "p95_abs_error": 5.0,
+          "max_abs_error": 70.0
+        }
+      }
+    }
+  ],
+  "camera_comparison_note": "Compare decoded MP4 crop to saved512x512 PNG flipped left-right and Lanczos resized336x336. Small RGB differences are expected from lossy H.264.",
+  "tools": {
+    "python": "/workspace/gpt_field/.venv/bin/python",
+    "Pillow": true,
+    "OpenCV": "4.13.0",
+    "ffmpeg": "/usr/bin/ffmpeg",
+    "ffprobe": "/usr/bin/ffprobe"
+  }
+}

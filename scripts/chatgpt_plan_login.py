@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Foreground, loopback-only Sign in with ChatGPT; no inference or API billing.
 
-On a remote workspace, securely forward local port 1455 to its loopback port
-1455 before opening the printed /login URL. Never expose the helper publicly.
+On a remote workspace, securely forward a local port to the listener's loopback
+port. If those ports differ, set --browser-port to the local forwarded port.
+Never expose the helper publicly.
 No OAuth callback, token, or authorization URL is printed or logged.
 """
 
@@ -10,10 +11,11 @@ from __future__ import annotations
 
 import argparse
 import html
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import sys
+import threading
 import time
 from urllib.parse import urlsplit
 
@@ -23,9 +25,18 @@ from gpt_field.chatgpt_auth import (AuthError, AuthorizationAttempt, DEFAULT_STO
                                   OpenAIAuthService, TokenStore)
 
 
+class LoginHTTPServer(ThreadingHTTPServer):
+    """An idle browser preconnection must not block the sign-in page."""
+
+    def handle_error(self, request, client_address):
+        # A request can contain an OAuth code; never emit its traceback.
+        print("A browser connection failed safely; no credentials were logged.", flush=True)
+
+
 def login(store: TokenStore, *, profile: str | None, new_account: bool,
-          port: int, timeout: int) -> dict:
-    if not 1 <= port <= 65535 or not 1 <= timeout <= 3600:
+          port: int, timeout: int, browser_port: int | None = None) -> dict:
+    browser_port = port if browser_port is None else browser_port
+    if not 1 <= port <= 65535 or not 1 <= browser_port <= 65535 or not 1 <= timeout <= 3600:
         raise AuthError("Use a valid loopback port and a timeout from 1 to 3600 seconds.")
     if profile and new_account:
         raise AuthError("Select a saved profile or a new account, not both.")
@@ -35,8 +46,12 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
         selected = store.load(profile)
     host_id = store.host_id()
     service = OpenAIAuthService()
+    request_lock = threading.Lock()
+    browser_origin = f"http://127.0.0.1:{browser_port}"
 
     class Handler(BaseHTTPRequestHandler):
+        timeout = 10
+
         def log_message(self, format, *args):
             pass
 
@@ -57,7 +72,13 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
             self.wfile.write(body)
 
         def do_GET(self):
-            if self.headers.get("Host") != f"127.0.0.1:{port}":
+            # Headers are read independently; serialize shared OAuth attempt state.
+            # Idle preconnections never acquire this lock.
+            with request_lock:
+                self.handle_get()
+
+        def handle_get(self):
+            if self.headers.get("Host") != f"127.0.0.1:{browser_port}":
                 self.page(400, "Use the exact loopback sign-in URL printed by the helper.")
                 return
             try:
@@ -65,7 +86,7 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
                 if parsed.path == "/login" and not parsed.query:
                     self.page(200, "Authorize this app to use your ChatGPT plan. Review its plan and credit limits in ChatGPT Settings before starting experiments.", button=True)
                 elif parsed.path == "/authorize" and not parsed.query:
-                    server.attempt = AuthorizationAttempt(host_id, f"http://127.0.0.1:{port}/auth/callback",
+                    server.attempt = AuthorizationAttempt(host_id, f"{browser_origin}/auth/callback",
                                                            selected_record=selected,
                                                            registered_client_id=server.issued_client_id)
                     self.send_response(302)
@@ -85,8 +106,12 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
                         # to this attempt; never register another app accidentally.
                         if server.attempt.registered_client_id:
                             server.issued_client_id = server.attempt.registered_client_id
-                    server.result = store.status(record["client_id"])
-                    self.page(200, "ChatGPT plan authorization is saved securely. You may close this tab and return to the workspace.")
+                    result = store.status(record["client_id"])
+                    try:
+                        self.page(200, "ChatGPT plan authorization is saved securely. You may close this tab and return to the workspace.")
+                    finally:
+                        # Let the response finish before the main thread exits.
+                        server.result = result
                 else:
                     self.page(404, "Open /login to start ChatGPT authorization.")
             except AuthError as exc:
@@ -100,7 +125,7 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
                 print("A browser sign-in attempt failed safely; no credentials were logged.", flush=True)
 
     try:
-        server = HTTPServer(("127.0.0.1", port), Handler)
+        server = LoginHTTPServer(("127.0.0.1", port), Handler)
     except OSError:
         raise AuthError("Cannot bind the requested loopback port. Select another port and forward that same port locally.") from None
     server.attempt = None
@@ -108,8 +133,8 @@ def login(store: TokenStore, *, profile: str | None, new_account: bool,
     server.result = None
     server.timeout = 1
     deadline = time.monotonic() + timeout
-    print(f"Open http://127.0.0.1:{port}/login", flush=True)
-    print("Remote workspace: forward this same port privately before opening the URL.", flush=True)
+    print(f"Open {browser_origin}/login", flush=True)
+    print(f"Remote workspace: privately forward local port {browser_port} to remote 127.0.0.1:{port} before opening the URL.", flush=True)
     print("Waiting for browser authorization. Tokens and callback URLs will not be printed.", flush=True)
     try:
         while server.result is None and time.monotonic() < deadline:
@@ -131,7 +156,10 @@ def main(argv=None) -> int:
     login_parser = commands.add_parser("login", help="Run a temporary loopback-only OAuth listener")
     login_parser.add_argument("--profile", help="Reauthorize this existing issued client ID")
     login_parser.add_argument("--new-account", action="store_true")
-    login_parser.add_argument("--port", type=int, default=1455)
+    login_parser.add_argument("--port", type=int, default=1455,
+                              help="Loopback listener port on this machine")
+    login_parser.add_argument("--browser-port", type=int,
+                              help="Local forwarded port used by your browser; defaults to --port")
     login_parser.add_argument("--timeout", type=int, default=600)
     select_parser = commands.add_parser("select", help="Make a saved account registration active")
     select_parser.add_argument("profile")
@@ -140,7 +168,7 @@ def main(argv=None) -> int:
         store = TokenStore(args.store_dir)
         if args.command == "login":
             result = login(store, profile=args.profile, new_account=args.new_account,
-                           port=args.port, timeout=args.timeout)
+                           port=args.port, timeout=args.timeout, browser_port=args.browser_port)
         elif args.command == "select":
             store.select(args.profile)
             result = store.status()

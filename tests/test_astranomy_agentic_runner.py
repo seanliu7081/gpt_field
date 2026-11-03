@@ -1,7 +1,9 @@
 """Offline lifecycle regressions; no model, credentials, or simulator is started."""
 import importlib.util
+import hashlib
 import json
 from contextlib import nullcontext
+from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -71,6 +73,10 @@ class FakeSim:
     def close(self):
         self.closed = True
 
+    def truth(self):
+        assert self.status["terminated"] and not self.closed
+        return {"offline_truth_fixture": True, "steps": len(self.actions)}
+
 
 class FakeClient:
     def __init__(self, *args, **kwargs):
@@ -99,11 +105,11 @@ class FakeClient:
         return self.request(request)
 
 
-def execute(runner, tmp_path, sim, client):
+def execute(runner, tmp_path, sim, client, **kwargs):
     return runner.execute(tmp_path / "attempt", task_key="bowl_plate", video=False,
                           token_provider=lambda: "unused-offline-fixture",
                           sim_factory=lambda config: sim,
-                          client_factory=lambda *args, **kwargs: client)
+                          client_factory=lambda *args, **kwargs: client, **kwargs)
 
 
 @pytest.mark.parametrize("limit", ["translation", "rotation"])
@@ -205,6 +211,8 @@ def test_raw_success_interrupts_selected_segment_and_returns_actual_count(
     assert result["last_feedback"] == feedback
     assert not {"success", "libero_success", "reward", "collision"}.intersection(feedback)
     assert sim.closed
+    assert result["reasoning_effort"] == "medium"
+    assert result["collision_policy"] == "record_only"
 
 
 def test_existing_output_directory_is_never_overwritten(runner, tmp_path):
@@ -247,3 +255,107 @@ def test_operator_stop_records_partial_segment_without_another_action(
     records = [json.loads(line) for line in (output / "trace.jsonl").read_text().splitlines()]
     assert [item["feedback"] for item in records if item["event"] == "tool_result"] == [feedback]
     assert sim.closed
+
+
+def test_high_custom_scene_uses_frozen_inputs_and_explicit_raw_reset_hash(
+        runner, tmp_path, monkeypatch, observation):
+    prompt = "put both moka pots on the stove"
+    observation = replace(observation, prompt=prompt)
+    bddl = tmp_path / "scene.bddl"
+    bddl.write_text("(define (problem test) (:domain robosuite) "
+                    "(:language put both moka pots on the stove) "
+                    "(:objects moka_pot_1 moka_pot_2 - moka_pot) "
+                    "(:goal (and (on moka_pot_1 stove) (on moka_pot_2 stove))))")
+    initial_state = tmp_path / "state.npy"
+    np.save(initial_state, np.arange(60, dtype=float))
+    expected = runner.initial_identity(observation)
+    monkeypatch.setattr(runner.life, "DEFAULT_EXPECTED_SHA256", {("libero_10_t8", 0): "wrong"})
+    sim = FakeSim(observation, success_after=1)
+    client = FakeClient()
+    seen = {}
+
+    def make_client(config, **kwargs):
+        seen["client"] = kwargs
+        return client
+
+    def make_sim(config):
+        seen["sim"] = config
+        assert Path(config.task_bddl_override).read_bytes() == bddl.read_bytes()
+        assert Path(config.initial_state_override).read_bytes() == initial_state.read_bytes()
+        return sim
+
+    result = runner.execute(tmp_path / "attempt", task_key="libero_10_t8", video=False,
+        token_provider=lambda: "unused-offline-fixture", sim_factory=make_sim,
+        client_factory=make_client, reasoning_effort="high", task_bddl_override=bddl,
+        initial_state_override=initial_state, expected_initial_observation_sha256=expected,
+        sim_python="/fixture/python", libero_root="/fixture/LIBERO")
+    assert result["status"] == "success" and result["reasoning_effort"] == "high"
+    assert seen["client"]["reasoning_effort"] == "high"
+    assert seen["sim"].suite == "libero_10" and seen["sim"].max_steps is None
+    assert seen["sim"].python_executable == "/fixture/python"
+    assert seen["sim"].libero_root == "/fixture/LIBERO"
+    assert seen["sim"].include_arm_joints and seen["sim"].collision_check_mode == "none"
+    assert result["collision_policy"] == "record_only"
+    assert result["collision_monitor"] == "generic_contact_v2"
+    output = tmp_path / "attempt"
+    identity = json.loads((output / "manifest.json").read_text())["configuration"]
+    from gpt_field.astranomy_agentic_motion import ShortTargetConfig
+    assert identity["motion"] == ShortTargetConfig().to_dict()
+    assert identity["reasoning_effort"] == "high" and identity["custom_scene"] is True
+    provenance = json.loads((output / "input_provenance.json").read_text())
+    for field, source in (("task_bddl_override", bddl), ("initial_state_override", initial_state)):
+        record = provenance[field]
+        assert record["source"] == str(source)
+        assert Path(record["frozen_path"]).parent == output / "frozen_inputs"
+        assert record["sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+    check = json.loads((output / "initial_observation_check.json").read_text())
+    assert check["matched"] is True and check["expected"] == expected
+    assert check["source"] == "explicit_override"
+    assert result["physical_truth"] == {"offline_truth_fixture": True, "steps": 1}
+    assert json.loads((output / "physical_truth.json").read_text()) == result["physical_truth"]
+    assert client.calls == len(sim.actions) == 1 and sim.closed
+
+
+def test_explicit_reset_mismatch_precedes_geometry_and_model(runner, tmp_path, observation):
+    sim, client = FakeSim(observation, success_after=1), FakeClient()
+    result = execute(runner, tmp_path, sim, client,
+                     expected_initial_observation_sha256="0" * 64)
+    assert result["status"] == "infrastructure_error"
+    assert sim.geometry_calls == client.calls == len(sim.actions) == 0
+    assert sim.closed
+
+
+@pytest.mark.parametrize("overrides", [
+    {"initial_state_override": "state.npy"},
+    {"task_bddl_override": "scene.bddl"},
+    {"initial_state_override": "state.npy", "task_bddl_override": "scene.bddl"},
+])
+def test_custom_scene_requires_pair_and_explicit_identity(runner, tmp_path, overrides):
+    with pytest.raises(ValueError, match="Custom scene requires"):
+        runner.execute(tmp_path / "attempt", task_key="libero_10_t8",
+            token_provider=lambda: "unused", video=False, **overrides)
+    assert not (tmp_path / "attempt").exists()
+
+
+def test_cli_forwards_high_custom_scene_options_without_running(runner, tmp_path, monkeypatch):
+    from gpt_field import chatgpt_auth
+    seen = {}
+    monkeypatch.setattr(chatgpt_auth, "SubscriptionCredentials",
+                        lambda **kwargs: SimpleNamespace(access_token=lambda: "unused"))
+
+    def capture(output, **kwargs):
+        seen.update(output=output, **kwargs)
+        return {"evaluation_completed": True}
+
+    monkeypatch.setattr(runner, "execute", capture)
+    assert runner.main(["--task", "libero_10_t8", "--output", str(tmp_path / "attempt"),
+        "--reasoning-effort", "high", "--task-bddl-override", "scene.bddl",
+        "--initial-state-override", "state.npy", "--expected-initial-observation-sha256", "a" * 64,
+        "--sim-python", "/fixture/python", "--libero-root", "/fixture/LIBERO", "--no-video"]) == 0
+    assert seen["task_key"] == "libero_10_t8" and seen["reasoning_effort"] == "high"
+    assert seen["task_bddl_override"] == Path("scene.bddl")
+    assert seen["initial_state_override"] == Path("state.npy")
+    assert seen["expected_initial_observation_sha256"] == "a" * 64
+    assert seen["sim_python"] == Path("/fixture/python")
+    assert seen["libero_root"] == Path("/fixture/LIBERO")
+    assert seen["video"] is False

@@ -108,6 +108,39 @@ def test_preview_uses_only_one_native_namespace_tool_and_never_authenticates():
     assert c.history_snapshot() == [] and c.budget_snapshot()["subscription_inference_calls"] == 0
 
 
+def test_t08_high_effort_is_sent_and_accepted_without_changing_the_motion_tool():
+    transport = Transport([response(reasoning={"effort": "high"})])
+    c = client(transport, task_key="libero_10_t8", reasoning_effort="high")
+    command = c.predict(observation())
+    payload = transport.requests[0]
+    assert payload["reasoning"] == {"effort": "high"}
+    assert c.task_spec.suite == "libero_10" and c.task_spec.task_id == 8
+    assert "Task: put both moka pots on the stove" in payload["instructions"]
+    observed = json.loads(payload["input"][-1]["content"][0]["text"])
+    assert observed["task"] == "put both moka pots on the stove"
+    assert payload["tools"] == client().build_payload(observation())["tools"]
+    assert command == {"name": TOOL_NAME, "arguments": {"target": pose(), "steps": 3}}
+    c.record_result(feedback())
+    assert c.history_stats()["feedback_records"] == 1
+
+
+def test_high_effort_rejects_a_reported_medium_response_without_committing_history():
+    transport = Transport([response(reasoning={"effort": "medium"})])
+    c = client(transport, task_key="libero_10_t8", reasoning_effort="high")
+    with pytest.raises(APIError):
+        c.predict(observation())
+    assert transport.requests[0]["reasoning"] == {"effort": "high"}
+    assert c.history_snapshot() == []
+    assert c.history_stats()["pending_tool_result"] is False
+
+
+def test_effort_changes_the_request_identity():
+    medium = client(task_key="libero_10_t8")
+    high = client(task_key="libero_10_t8", reasoning_effort="high")
+    assert medium.request_key(medium.build_payload(observation())) != high.request_key(
+        high.build_payload(observation()))
+
+
 def test_all_visual_and_text_history_native_plans_and_feedback_are_retained(tmp_path, monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "forbidden-paid-api-fixture")
     transport = Transport()
@@ -296,11 +329,12 @@ def test_namespace_is_optional_and_sse_preserves_native_messages_and_calls():
 
 
 @pytest.mark.parametrize("kwargs", [
-    {"config": AstraConfig(model="gpt-6-sol")}, {"reasoning_effort": "high"},
+    {"config": AstraConfig(model="gpt-6-sol")}, {"reasoning_effort": "low"},
+    {"reasoning_effort": None}, {"reasoning_effort": "xhigh"},
     {"image_history": 2}, {"image_history": 0}, {"config": AstraConfig(max_api_calls=3)},
     {"config": AstraConfig(max_wall_time_s=60)}, {"config": AstraConfig(max_cost_usd=1)},
 ])
-def test_configuration_preserves_subscription_medium_astra_full_history_and_no_episode_cap(kwargs):
+def test_configuration_preserves_subscription_astra_full_history_and_no_episode_cap(kwargs):
     with pytest.raises(ValueError):
         client(**kwargs)
 

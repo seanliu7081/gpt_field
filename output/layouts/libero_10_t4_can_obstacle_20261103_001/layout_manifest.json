@@ -1,0 +1,1298 @@
+{
+  "additional_passive_hold_actions": 10,
+  "can": {
+    "asset": "tomato_sauce",
+    "bootstrap_region_note": "BDDL constructor seed only; saved initial_state.npy defines final placement",
+    "collision_bounds": {
+      "collision_box_count": 24,
+      "lower_xyz_m": [
+        -0.054474949094583634,
+        -0.24536935556741868,
+        0.4369600000000001
+      ],
+      "size_xyz_m": [
+        0.06219177624042705,
+        0.0616379100907935,
+        0.07618999999999998
+      ],
+      "upper_xyz_m": [
+        0.0077168271458434145,
+        -0.18373144547662518,
+        0.5131500000000001
+      ]
+    },
+    "name": "tomato_sauce_obstacle_1",
+    "orientation_wxyz": [
+      0.7071067811865476,
+      0.7071067811865476,
+      0.0,
+      0.0
+    ],
+    "placement": {
+      "can_other_contact_count": 0,
+      "can_other_contacts": [],
+      "first_blocked_settling_fraction": null,
+      "fraction_mug_to_plate": 0.45,
+      "perpendicular_offset_m": 0.03,
+      "xyz_m": [
+        -0.023259060974370107,
+        -0.2178493555674187,
+        0.47555000000000014
+      ]
+    },
+    "source_to_destination_centerline_xy_m": [
+      [
+        -0.0874851104853002,
+        -0.15589814830207166
+      ],
+      [
+        -0.004480900097302456,
+        -0.3231972960810304
+      ]
+    ],
+    "table_height_m": 0.43676000000000015,
+    "table_support_geometry": {
+      "body": "living_room_table_col",
+      "geom_id": 10,
+      "lower_xyz_m": [
+        -0.6943200000000003,
+        -0.6193200000000004,
+        0.4130800000000001
+      ],
+      "upper_xyz_m": [
+        0.19432000000000021,
+        0.7241000000000003,
+        0.43676000000000015
+      ],
+      "upper_z_m": 0.43676000000000015
+    },
+    "workspace_reference_height_m": 0.41
+  },
+  "can_after_hold_bounds": {
+    "collision_box_count": 24,
+    "lower_xyz_m": [
+      -0.054973418497247024,
+      -0.24544447714370704,
+      0.43675971776769706
+    ],
+    "size_xyz_m": [
+      0.06268751393961206,
+      0.06171247481895112,
+      0.0762117317552593
+    ],
+    "upper_xyz_m": [
+      0.0077140954423650255,
+      -0.18373200232475592,
+      0.5129714495229564
+    ]
+  },
+  "can_local_y_world_z_cosine": 0.9999776559963814,
+  "can_passive_rotation_drift_rad": 0.0,
+  "can_passive_translation_drift_m": 2.3592239273284576e-16,
+  "can_table_support_contacts": [
+    {
+      "a": "world",
+      "b": "tomato_sauce_obstacle_1",
+      "distance_m": -1.411161515176007e-07,
+      "geom1": null,
+      "geom2": "tomato_sauce_obstacle_1_g8",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        -0.05446454424124131,
+        -0.22188110019965446,
+        0.4367598588838486
+      ]
+    },
+    {
+      "a": "world",
+      "b": "tomato_sauce_obstacle_1",
+      "distance_m": -1.1813804101298842e-07,
+      "geom1": null,
+      "geom2": "tomato_sauce_obstacle_1_g17",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        0.0034590196320014033,
+        -0.2147044984349199,
+        0.43675988186195913
+      ]
+    },
+    {
+      "a": "world",
+      "b": "tomato_sauce_obstacle_1",
+      "distance_m": -5.4665807747370954e-08,
+      "geom1": null,
+      "geom2": "tomato_sauce_obstacle_1_g17",
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position_xyz_m": [
+        0.001421259704916189,
+        -0.20097489776835092,
+        0.4367599453341924
+      ]
+    }
+  ],
+  "checks": {
+    "can_passive_drift_under_2mm": true,
+    "can_passive_rotation_under_1deg": true,
+    "can_table_supported": true,
+    "can_upright_cosine_over_0_995": true,
+    "initial_goal_false": true,
+    "no_new_can_object_or_robot_contact": true,
+    "no_robot_object_contact": true,
+    "original_objects_preserved_after_reset": true
+  },
+  "checks_passed": true,
+  "created_at_utc": "2026-11-02T22:41:50.965234+00:00",
+  "custom_after_passive_hold_object_poses": {
+    "plate_1": {
+      "body_xyz_m": [
+        -0.0044809000973024555,
+        -0.3231972960810304,
+        0.43927283236836456
+      ],
+      "joint": "plate_1_joint0",
+      "qpos": [
+        -0.0044809000973024555,
+        -0.3231972960810304,
+        0.43927283236836456,
+        0.7071067995388686,
+        1.1052386476938931e-06,
+        -6.787108420793457e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        9.996944053432259e-18,
+        -1.115498224382959e-17,
+        1.2336766603399245e-14,
+        3.429163946085195e-15,
+        -3.945827232292555e-15,
+        2.8901424018220535e-19
+      ]
+    },
+    "plate_2": {
+      "body_xyz_m": [
+        0.005439239785305707,
+        0.31090320887371986,
+        0.43927283236836456
+      ],
+      "joint": "plate_2_joint0",
+      "qpos": [
+        0.005439239785305707,
+        0.31090320887371986,
+        0.43927283236836456,
+        0.7071067995388686,
+        1.10523864769736e-06,
+        -6.787108420775682e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        9.293296567420118e-18,
+        -2.516716322061704e-18,
+        1.2270520415042426e-14,
+        3.512917102489483e-15,
+        -1.6689731247154439e-15,
+        -5.481932443758241e-19
+      ]
+    },
+    "porcelain_mug_1": {
+      "body_xyz_m": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.4343699608590306
+      ],
+      "joint": "porcelain_mug_1_joint0",
+      "qpos": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.4343699608590306,
+        -0.7071071577485004,
+        2.1398180163939254e-07,
+        1.2661737084458523e-07,
+        0.70710640462435
+      ],
+      "qvel": [
+        2.3675253271760504e-17,
+        -2.2675949019249547e-17,
+        1.167874379523812e-14,
+        -2.5792681160118484e-14,
+        2.0242580528175123e-14,
+        -2.4866143913732428e-17
+      ]
+    },
+    "red_coffee_mug_1": {
+      "body_xyz_m": [
+        -0.20239367395815558,
+        0.018270047325528657,
+        0.4385990213862531
+      ],
+      "joint": "red_coffee_mug_1_joint0",
+      "qpos": [
+        -0.20239367395815558,
+        0.018270047325528657,
+        0.4385990213862531,
+        -0.7071070833759007,
+        -5.101358841446348e-07,
+        6.141475732935411e-07,
+        0.7071064789966134
+      ],
+      "qvel": [
+        -4.816556912541798e-18,
+        -4.491580928498179e-18,
+        1.1407804084042281e-14,
+        2.9294476358713153e-15,
+        2.351514946745265e-15,
+        1.9317972163157522e-19
+      ]
+    },
+    "tomato_sauce_obstacle_1": {
+      "body_xyz_m": [
+        -0.023513642604803254,
+        -0.2178877707125081,
+        0.47516915037869295
+      ],
+      "joint": "tomato_sauce_obstacle_1_joint0",
+      "qpos": [
+        -0.023513642604803254,
+        -0.2178877707125081,
+        0.47516915037869295,
+        0.7067526368543018,
+        0.7074530256889011,
+        -0.002339988151570805,
+        0.002334780195611895
+      ],
+      "qvel": [
+        -4.698876209613587e-16,
+        -2.646301554390685e-15,
+        1.112378176234549e-14,
+        6.890755865190104e-14,
+        -4.433125202603121e-16,
+        1.2277478906075603e-14
+      ]
+    },
+    "white_yellow_mug_1": {
+      "body_xyz_m": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643121
+      ],
+      "joint": "white_yellow_mug_1_joint0",
+      "qpos": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643121,
+        -0.7071066158037059,
+        -8.931891958044694e-07,
+        -3.670736079490137e-08,
+        0.7071069465687868
+      ],
+      "qvel": [
+        8.184019062073837e-19,
+        2.4961478390213973e-18,
+        1.0595841187918745e-14,
+        -3.589280473878549e-16,
+        -5.7124464839145185e-15,
+        2.613396363456686e-19
+      ]
+    }
+  },
+  "custom_bddl_sha256": "5c808defda474b6dac7490d0ad5d36c38d2fa04e432344fee1046011c5499459",
+  "custom_initial_settled_object_poses": {
+    "plate_1": {
+      "body_xyz_m": [
+        -0.0044809000973024555,
+        -0.3231972960810304,
+        0.43927283236836295
+      ],
+      "joint": "plate_1_joint0",
+      "qpos": [
+        -0.0044809000973024555,
+        -0.3231972960810304,
+        0.43927283236836295,
+        0.7071067995388686,
+        1.105238647737092e-06,
+        -6.787108423084173e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        1.8365659509011896e-17,
+        7.228909259838574e-18,
+        1.2966878614060878e-13,
+        7.218608900532599e-15,
+        3.1905245463924286e-15,
+        1.9047477454932062e-19
+      ]
+    },
+    "plate_2": {
+      "body_xyz_m": [
+        0.005439239785305707,
+        0.31090320887371986,
+        0.43927283236836295
+      ],
+      "joint": "plate_2_joint0",
+      "qpos": [
+        0.005439239785305707,
+        0.31090320887371986,
+        0.43927283236836295,
+        0.7071067995388686,
+        1.1052386477303083e-06,
+        -6.787108422995024e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        1.1144097332185477e-17,
+        1.2187622653564283e-17,
+        1.2967261367119375e-13,
+        4.403129104538404e-15,
+        4.789362466708622e-15,
+        -7.056882919516799e-20
+      ]
+    },
+    "porcelain_mug_1": {
+      "body_xyz_m": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.43436996085903024
+      ],
+      "joint": "porcelain_mug_1_joint0",
+      "qpos": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.43436996085903024,
+        -0.7071071577485004,
+        2.139818015926494e-07,
+        1.2661737087700385e-07,
+        0.70710640462435
+      ],
+      "qvel": [
+        -6.525361841558958e-17,
+        -7.190656903944391e-17,
+        3.931979493906743e-14,
+        -2.8082432630258448e-14,
+        -3.029745771111731e-14,
+        -5.61043158318878e-19
+      ]
+    },
+    "red_coffee_mug_1": {
+      "body_xyz_m": [
+        -0.20239367395815558,
+        0.018270047325528657,
+        0.43859902138625195
+      ],
+      "joint": "red_coffee_mug_1_joint0",
+      "qpos": [
+        -0.20239367395815558,
+        0.018270047325528657,
+        0.43859902138625195,
+        -0.7071070833759007,
+        -5.101358837776942e-07,
+        6.141475734553806e-07,
+        0.7071064789966134
+      ],
+      "qvel": [
+        -1.6513833693620203e-17,
+        -6.66624043423391e-17,
+        9.386596298672725e-14,
+        5.193175030954045e-15,
+        3.8562783212118544e-14,
+        -2.618152115132919e-18
+      ]
+    },
+    "tomato_sauce_obstacle_1": {
+      "body_xyz_m": [
+        -0.02351364260480349,
+        -0.2178877707125081,
+        0.47516915037869295
+      ],
+      "joint": "tomato_sauce_obstacle_1_joint0",
+      "qpos": [
+        -0.02351364260480349,
+        -0.2178877707125081,
+        0.47516915037869295,
+        0.7067526368543018,
+        0.7074530256889011,
+        -0.0023399881515707237,
+        0.002334780195611936
+      ],
+      "qvel": [
+        1.504341746460791e-15,
+        -2.361674902036052e-15,
+        1.2969114802883902e-14,
+        6.192592503024378e-14,
+        -4.445779448793786e-16,
+        -3.631809032850675e-14
+      ]
+    },
+    "white_yellow_mug_1": {
+      "body_xyz_m": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643106
+      ],
+      "joint": "white_yellow_mug_1_joint0",
+      "qpos": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643106,
+        -0.7071066158037059,
+        -8.931891958753039e-07,
+        -3.670736072124127e-08,
+        0.7071069465687868
+      ],
+      "qvel": [
+        -3.0741756622067197e-18,
+        2.3379091597613238e-17,
+        1.18186061544255e-13,
+        -7.881332526809839e-16,
+        -6.265875634125516e-15,
+        1.1255880249082342e-18
+      ]
+    }
+  },
+  "custom_initial_state_sha256": "76e81e7877e0e4c6d14638b644a6a8ebbd6c81f0d744318990debf9d59dc5642",
+  "custom_raw_object_poses": {
+    "plate_1": {
+      "body_xyz_m": [
+        -0.004484096730218601,
+        -0.323196452271519,
+        0.48
+      ],
+      "joint": "plate_1_joint0",
+      "qpos": [
+        -0.004484096730218601,
+        -0.323196452271519,
+        0.48,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "plate_2": {
+      "body_xyz_m": [
+        0.005436043152389564,
+        0.3109040526832313,
+        0.48
+      ],
+      "joint": "plate_2_joint0",
+      "qpos": [
+        0.005436043152389564,
+        0.3109040526832313,
+        0.48,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "porcelain_mug_1": {
+      "body_xyz_m": [
+        -0.08749379526689854,
+        -0.15587967479928394,
+        0.48
+      ],
+      "joint": "porcelain_mug_1_joint0",
+      "qpos": [
+        -0.08749379526689854,
+        -0.15587967479928394,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "red_coffee_mug_1": {
+      "body_xyz_m": [
+        -0.20239484106729974,
+        0.01828094942676447,
+        0.48
+      ],
+      "joint": "red_coffee_mug_1_joint0",
+      "qpos": [
+        -0.20239484106729974,
+        0.01828094942676447,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "tomato_sauce_obstacle_1": {
+      "body_xyz_m": [
+        -0.023259060974370107,
+        -0.2178493555674187,
+        0.47555000000000014
+      ],
+      "joint": "tomato_sauce_obstacle_1_joint0",
+      "qpos": [
+        -0.023259060974370107,
+        -0.2178493555674187,
+        0.47555000000000014,
+        0.7071067811865476,
+        0.7071067811865476,
+        0.0,
+        0.0
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "white_yellow_mug_1": {
+      "body_xyz_m": [
+        -0.027569912620858457,
+        0.07786369131226778,
+        0.48
+      ],
+      "joint": "white_yellow_mug_1_joint0",
+      "qpos": [
+        -0.027569912620858457,
+        0.07786369131226778,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "custom_state_length": 97,
+  "episode_index": 0,
+  "initial_observation_sha256": "06f623f31ee2ea2e8ef600ce29d299413d81a8647d8f59663f3aff2e660da187",
+  "initial_status": {
+    "bddl_sha256": "5c808defda474b6dac7490d0ad5d36c38d2fa04e432344fee1046011c5499459",
+    "collision": {
+      "allowed_classes": [
+        "finger_object",
+        "finger_articulated_part",
+        "manipulated_object_support"
+      ],
+      "collision_policy": "record_only",
+      "counts": {
+        "active_positive_distance_contacts": 0,
+        "checks": 1,
+        "forbidden_contact_points": 0,
+        "physics_substeps": 0,
+        "points_finger_articulated_part": 0,
+        "points_finger_object": 0,
+        "points_manipulated_object_scene": 0,
+        "points_manipulated_object_support": 0,
+        "points_passive_scene": 55,
+        "points_robot_internal": 0,
+        "points_robot_nonfinger_manipulated_object": 0,
+        "points_robot_object": 0,
+        "points_robot_scene": 0,
+        "positive_distance_contacts_ignored": 0,
+        "unmapped_contact_points": 0
+      },
+      "detected": false,
+      "enabled": true,
+      "first_by_class": {},
+      "first_event": null,
+      "forbidden_classes": [
+        "robot_scene",
+        "robot_nonfinger_manipulated_object",
+        "robot_object",
+        "manipulated_object_scene"
+      ],
+      "goal_aware": true,
+      "goal_objects": [
+        "plate_1",
+        "plate_2",
+        "porcelain_mug_1",
+        "white_yellow_mug_1"
+      ],
+      "goal_region_predicates": {},
+      "goal_regions": {},
+      "held_objects": [],
+      "ignored_classes": [
+        "robot_internal",
+        "passive_scene"
+      ],
+      "manipulated_objects": [],
+      "mode": "generic_contact_v2",
+      "pairs_by_class": {},
+      "stop_on_collision": false,
+      "success_qualification": "raw_libero_goal",
+      "version": "agent-speedup-v2-generic-contact-v2"
+    },
+    "collision_free_success": false,
+    "custom_task_contract": {
+      "goal_preserved": true,
+      "language_preserved": true,
+      "target_assets": {
+        "plate_1": "plate",
+        "plate_2": "plate",
+        "porcelain_mug_1": "porcelain_mug",
+        "white_yellow_mug_1": "white_yellow_mug"
+      },
+      "target_assets_preserved": true
+    },
+    "episode_index": 0,
+    "horizon_reached": false,
+    "initial_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate.pruned_init",
+    "initial_state_override_file": "/workspace/gpt_field/output/layouts/libero_10_t4_can_obstacle_20261103_001/initial_state.npy",
+    "initial_state_override_sha256": "76e81e7877e0e4c6d14638b644a6a8ebbd6c81f0d744318990debf9d59dc5642",
+    "initial_state_sha256": "b6f20784b381c75d715f4fdaadda1fb460cbe24adcbad76f381a009419b8474e",
+    "initial_state_source": "custom_override",
+    "libero_success": false,
+    "original_bddl_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate.bddl",
+    "original_bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+    "steps": 0,
+    "success": false,
+    "task_bddl_override_file": "/workspace/gpt_field/output/layouts/libero_10_t4_can_obstacle_20261103_001/custom_task.bddl",
+    "task_bddl_override_sha256": "5c808defda474b6dac7490d0ad5d36c38d2fa04e432344fee1046011c5499459",
+    "task_id": 4,
+    "terminated": false
+  },
+  "kind": "custom_scene_evaluator_authoring_only",
+  "mapped_joints": [
+    {
+      "joint": "robot0_joint1",
+      "source_qpos_address": [
+        0,
+        1
+      ],
+      "source_qvel_address": [
+        0,
+        1
+      ],
+      "target_qpos_address": [
+        0,
+        1
+      ],
+      "target_qvel_address": [
+        0,
+        1
+      ]
+    },
+    {
+      "joint": "robot0_joint2",
+      "source_qpos_address": [
+        1,
+        2
+      ],
+      "source_qvel_address": [
+        1,
+        2
+      ],
+      "target_qpos_address": [
+        1,
+        2
+      ],
+      "target_qvel_address": [
+        1,
+        2
+      ]
+    },
+    {
+      "joint": "robot0_joint3",
+      "source_qpos_address": [
+        2,
+        3
+      ],
+      "source_qvel_address": [
+        2,
+        3
+      ],
+      "target_qpos_address": [
+        2,
+        3
+      ],
+      "target_qvel_address": [
+        2,
+        3
+      ]
+    },
+    {
+      "joint": "robot0_joint4",
+      "source_qpos_address": [
+        3,
+        4
+      ],
+      "source_qvel_address": [
+        3,
+        4
+      ],
+      "target_qpos_address": [
+        3,
+        4
+      ],
+      "target_qvel_address": [
+        3,
+        4
+      ]
+    },
+    {
+      "joint": "robot0_joint5",
+      "source_qpos_address": [
+        4,
+        5
+      ],
+      "source_qvel_address": [
+        4,
+        5
+      ],
+      "target_qpos_address": [
+        4,
+        5
+      ],
+      "target_qvel_address": [
+        4,
+        5
+      ]
+    },
+    {
+      "joint": "robot0_joint6",
+      "source_qpos_address": [
+        5,
+        6
+      ],
+      "source_qvel_address": [
+        5,
+        6
+      ],
+      "target_qpos_address": [
+        5,
+        6
+      ],
+      "target_qvel_address": [
+        5,
+        6
+      ]
+    },
+    {
+      "joint": "robot0_joint7",
+      "source_qpos_address": [
+        6,
+        7
+      ],
+      "source_qvel_address": [
+        6,
+        7
+      ],
+      "target_qpos_address": [
+        6,
+        7
+      ],
+      "target_qvel_address": [
+        6,
+        7
+      ]
+    },
+    {
+      "joint": "gripper0_finger_joint1",
+      "source_qpos_address": [
+        7,
+        8
+      ],
+      "source_qvel_address": [
+        7,
+        8
+      ],
+      "target_qpos_address": [
+        7,
+        8
+      ],
+      "target_qvel_address": [
+        7,
+        8
+      ]
+    },
+    {
+      "joint": "gripper0_finger_joint2",
+      "source_qpos_address": [
+        8,
+        9
+      ],
+      "source_qvel_address": [
+        8,
+        9
+      ],
+      "target_qpos_address": [
+        8,
+        9
+      ],
+      "target_qvel_address": [
+        8,
+        9
+      ]
+    },
+    {
+      "joint": "porcelain_mug_1_joint0",
+      "source_qpos_address": [
+        9,
+        16
+      ],
+      "source_qvel_address": [
+        9,
+        15
+      ],
+      "target_qpos_address": [
+        16,
+        23
+      ],
+      "target_qvel_address": [
+        15,
+        21
+      ]
+    },
+    {
+      "joint": "red_coffee_mug_1_joint0",
+      "source_qpos_address": [
+        16,
+        23
+      ],
+      "source_qvel_address": [
+        15,
+        21
+      ],
+      "target_qpos_address": [
+        23,
+        30
+      ],
+      "target_qvel_address": [
+        21,
+        27
+      ]
+    },
+    {
+      "joint": "white_yellow_mug_1_joint0",
+      "source_qpos_address": [
+        23,
+        30
+      ],
+      "source_qvel_address": [
+        21,
+        27
+      ],
+      "target_qpos_address": [
+        30,
+        37
+      ],
+      "target_qvel_address": [
+        27,
+        33
+      ]
+    },
+    {
+      "joint": "plate_1_joint0",
+      "source_qpos_address": [
+        30,
+        37
+      ],
+      "source_qvel_address": [
+        27,
+        33
+      ],
+      "target_qpos_address": [
+        37,
+        44
+      ],
+      "target_qvel_address": [
+        33,
+        39
+      ]
+    },
+    {
+      "joint": "plate_2_joint0",
+      "source_qpos_address": [
+        37,
+        44
+      ],
+      "source_qvel_address": [
+        33,
+        39
+      ],
+      "target_qpos_address": [
+        44,
+        51
+      ],
+      "target_qvel_address": [
+        39,
+        45
+      ]
+    }
+  ],
+  "model_calls": 0,
+  "new_can_contacts": [],
+  "official_state_file": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate.pruned_init",
+  "official_state_file_sha256": "b6f20784b381c75d715f4fdaadda1fb460cbe24adcbad76f381a009419b8474e",
+  "original_bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+  "original_initial_state_sha256": "fe565bf66f818e4e5032570b0a11abbf05d5bada329061bc211ce430025c0e6a",
+  "original_joint_qpos_qvel_bitwise_preserved": true,
+  "original_object_settled_pose_comparison": {
+    "plate_1": {
+      "orientation_delta_rad": 0.0,
+      "translation_delta_m": 8.673617379884035e-19
+    },
+    "plate_2": {
+      "orientation_delta_rad": 0.0,
+      "translation_delta_m": 2.6020852139652106e-18
+    },
+    "porcelain_mug_1": {
+      "orientation_delta_rad": 6.664001874625056e-08,
+      "translation_delta_m": 0.0
+    },
+    "red_coffee_mug_1": {
+      "orientation_delta_rad": 1.1151007970493858e-07,
+      "translation_delta_m": 2.797157557069881e-17
+    },
+    "white_yellow_mug_1": {
+      "orientation_delta_rad": 0.0,
+      "translation_delta_m": 0.0
+    }
+  },
+  "original_objects_moved": false,
+  "original_raw_object_poses": {
+    "plate_1": {
+      "body_xyz_m": [
+        -0.004484096730218601,
+        -0.323196452271519,
+        0.48
+      ],
+      "joint": "plate_1_joint0",
+      "qpos": [
+        -0.004484096730218601,
+        -0.323196452271519,
+        0.48,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "plate_2": {
+      "body_xyz_m": [
+        0.005436043152389564,
+        0.3109040526832313,
+        0.48
+      ],
+      "joint": "plate_2_joint0",
+      "qpos": [
+        0.005436043152389564,
+        0.3109040526832313,
+        0.48,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "porcelain_mug_1": {
+      "body_xyz_m": [
+        -0.08749379526689854,
+        -0.15587967479928394,
+        0.48
+      ],
+      "joint": "porcelain_mug_1_joint0",
+      "qpos": [
+        -0.08749379526689854,
+        -0.15587967479928394,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "red_coffee_mug_1": {
+      "body_xyz_m": [
+        -0.20239484106729974,
+        0.01828094942676447,
+        0.48
+      ],
+      "joint": "red_coffee_mug_1_joint0",
+      "qpos": [
+        -0.20239484106729974,
+        0.01828094942676447,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "white_yellow_mug_1": {
+      "body_xyz_m": [
+        -0.027569912620858457,
+        0.07786369131226778,
+        0.48
+      ],
+      "joint": "white_yellow_mug_1_joint0",
+      "qpos": [
+        -0.027569912620858457,
+        0.07786369131226778,
+        0.48,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "original_settled_object_poses": {
+    "plate_1": {
+      "body_xyz_m": [
+        -0.004480900097302456,
+        -0.3231972960810304,
+        0.43927283236836295
+      ],
+      "joint": "plate_1_joint0",
+      "qpos": [
+        -0.004480900097302456,
+        -0.3231972960810304,
+        0.43927283236836295,
+        0.7071067995388686,
+        1.1052386477369563e-06,
+        -6.787108423028252e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        1.8828941959399746e-17,
+        7.428426212025253e-18,
+        1.296745054875262e-13,
+        7.149985024958986e-15,
+        3.1599950121552183e-15,
+        5.3729592832732595e-20
+      ]
+    },
+    "plate_2": {
+      "body_xyz_m": [
+        0.00543923978530571,
+        0.31090320887371986,
+        0.43927283236836295
+      ],
+      "joint": "plate_2_joint0",
+      "qpos": [
+        0.00543923978530571,
+        0.31090320887371986,
+        0.43927283236836295,
+        0.7071067995388686,
+        1.1052386477376307e-06,
+        -6.787108422891559e-07,
+        0.707106762833037
+      ],
+      "qvel": [
+        7.842512106301141e-18,
+        5.508466330064979e-18,
+        1.296475023928368e-13,
+        3.671583465802282e-15,
+        2.6982031391790393e-15,
+        4.950404882000597e-19
+      ]
+    },
+    "porcelain_mug_1": {
+      "body_xyz_m": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.43436996085903024
+      ],
+      "joint": "porcelain_mug_1_joint0",
+      "qpos": [
+        -0.0874851104853002,
+        -0.15589814830207166,
+        0.43436996085903024,
+        -0.7071071577485004,
+        2.1398180159552444e-07,
+        1.2661737087198272e-07,
+        0.70710640462435
+      ],
+      "qvel": [
+        -6.51108230940981e-17,
+        -8.179750080434197e-17,
+        3.931901955626326e-14,
+        -2.8080446444103806e-14,
+        -3.047428812297712e-14,
+        -2.3424796431121745e-18
+      ]
+    },
+    "red_coffee_mug_1": {
+      "body_xyz_m": [
+        -0.20239367395815555,
+        0.01827004732552866,
+        0.43859902138625195
+      ],
+      "joint": "red_coffee_mug_1_joint0",
+      "qpos": [
+        -0.20239367395815555,
+        0.01827004732552866,
+        0.43859902138625195,
+        -0.7071070833759007,
+        -5.101358837690575e-07,
+        6.141475734468268e-07,
+        0.7071064789966134
+      ],
+      "qvel": [
+        -1.5274475438172036e-17,
+        -6.368248048012537e-17,
+        9.386590097476312e-14,
+        5.2130670425112904e-15,
+        3.861056101051512e-14,
+        -2.417125011537086e-18
+      ]
+    },
+    "white_yellow_mug_1": {
+      "body_xyz_m": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643106
+      ],
+      "joint": "white_yellow_mug_1_joint0",
+      "qpos": [
+        -0.027557283449105366,
+        0.07786279309674213,
+        0.4368570012643106,
+        -0.7071066158037059,
+        -8.931891958780365e-07,
+        -3.6707360720433704e-08,
+        0.7071069465687868
+      ],
+      "qvel": [
+        -2.8092528796092925e-18,
+        2.5888870894852787e-17,
+        1.1817901665788716e-13,
+        -1.3956555500933636e-15,
+        -5.683767365017601e-15,
+        1.3400704755513407e-18
+      ]
+    }
+  },
+  "original_state_length": 84,
+  "policy_actions": 0,
+  "preview": {
+    "external": "custom_external.png",
+    "top_down": "custom_top_down.png",
+    "top_down_evaluator_only": true,
+    "wrist": "custom_wrist.png"
+  },
+  "prompt": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+  "robot_object_contacts": [],
+  "seed": 7,
+  "simulator_configuration": {
+    "collision_check_mode": "none",
+    "image_size": 512,
+    "include_arm_joints": false,
+    "initial_state_override": "/workspace/gpt_field/output/layouts/libero_10_t4_can_obstacle_20261103_001/initial_state.npy",
+    "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+    "max_steps": null,
+    "python_executable": "/workspace/venvs/libero-plus/bin/python",
+    "render_size": 512,
+    "response_timeout_s": 120.0,
+    "seed": 7,
+    "settle_steps": 10,
+    "stop_on_collision": false,
+    "stop_on_success": true,
+    "suite": "libero_10",
+    "task_bddl_override": "/workspace/gpt_field/output/layouts/libero_10_t4_can_obstacle_20261103_001/custom_task.bddl"
+  },
+  "standard_reset_settle_actions": 10,
+  "task_contract": {
+    "goal_preserved": true,
+    "language_preserved": true,
+    "target_assets": {
+      "plate_1": "plate",
+      "plate_2": "plate",
+      "porcelain_mug_1": "porcelain_mug",
+      "white_yellow_mug_1": "white_yellow_mug"
+    },
+    "target_assets_preserved": true
+  },
+  "task_key": "libero_10_t4"
+}

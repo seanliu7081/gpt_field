@@ -1034,6 +1034,10 @@ helper from this project directory:
 
 On a remote IDE connection, privately forward port **1455** from this instance
 to local port **1455**, then open `http://127.0.0.1:1455/login` on your computer.
+If the IDE assigns a different local port, such as **1456**, restart the helper
+with `login --port 1455 --browser-port 1456` and use
+`http://127.0.0.1:1456/login`. The browser port is also used in the OAuth callback;
+the listener remains on the remote port **1455**.
 The helper binds only to loopback; no public service or tunnel is needed. Complete
 the OpenAI login and consent screen yourself. Review the app's plan/credit
 permissions there; subscription use remains subject to your account's limits.

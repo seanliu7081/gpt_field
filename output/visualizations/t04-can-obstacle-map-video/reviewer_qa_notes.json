@@ -1,0 +1,85 @@
+{
+  "reviewed_at_utc": "2026-11-02T23:23:21.034408+00:00",
+  "scope": "Read-only rendering/data review and saved-PNG inspection; no model or simulator calls.",
+  "renderer_sha256_at_review": "f4d3993c2d9defd8a7cc8c2fe96b512c374529dc321fb942d82c2e6df39bd67e",
+  "previews_inspected": [
+    "preview-step-0396.png",
+    "preview-step-0539.png",
+    "preview-step-1276.png"
+  ],
+  "passed_observations": [
+    "All 15 routes use shared maps; no per-stage override/visual map mismatch.",
+    "All 912 contact frames have route_id null. Renderer uses current route_id, not stale last_route_id.",
+    "Original model boxes are expanded by clearance once. XY/XZ are labeled as geometric projections.",
+    "Footer labels boxes as model estimates, can identity as inferred, and disclaims SDF/full-body interpretation.",
+    "Source mapping validates all 2554 recorder blocks against trace states with zero state error; seven RGB crop comparisons match lossy source video.",
+    "Action clock, half-speed playback, event pauses, and omission of API waits are explicitly labeled.",
+    "Terminal caption distinguishes LIBERO success from failed strict terminal checks and later release/settle diagnostic, which is absent from video.",
+    "Camera panels, map revisions, clearance values and main captions are readable at native 1920x1080."
+  ],
+  "targeted_adjustments_recommended": [
+    {
+      "item": "Invalid-start event freeze",
+      "recommendation": "Use measured state538 with failure event focus539, suppress active cyan route, then resume recovery state539.",
+      "reason": "Action537 ends at state538 and produces invalid_measured_start; state539 includes the next recovery action.",
+      "reported_to_renderer_owner": true
+    },
+    {
+      "item": "Invalid-start wording",
+      "recommendation": "Use interpolation-mask validity wording instead of outer-grid-boundary wording.",
+      "reason": "Exact saved point is inside the local cube and outside all closed boxes, but four active interpolation corners are blocked.",
+      "reported_to_renderer_owner": true
+    },
+    {
+      "item": "Can label readability",
+      "recommendation": "Optional label repositioning/leader line above cube edges.",
+      "reason": "B2 can label is partly intersected by overlapping cuboid lines in 3D; overall interpretation remains available in footer and panels.",
+      "reported_to_renderer_owner": true
+    }
+  ],
+  "offline_field_verification": {
+    "source_trace_line": 1618,
+    "control_state": 538,
+    "point_xyz_m": [
+      -0.02523276567869557,
+      0.033806907242919126,
+      0.5269566735727329
+    ],
+    "grid_size": 13,
+    "grid_spacing_m": 0.02,
+    "inside_cube": true,
+    "outside_all_closed_expanded_boxes": true,
+    "query_value": null,
+    "masked_active_interpolation_corner_count": 4,
+    "masked_corner_x_m": -0.04513037224332095,
+    "method": "Reconstructed FineCompactField using exact saved grid, center, goal and clipped expanded boxes; direct query, no planner search."
+  },
+  "status": "passed_source_and_preview_review",
+  "revised_preview_review": {
+    "previews": [
+      "preview-step-0395.png",
+      "preview-step-0538.png"
+    ],
+    "camera_pose_and_map_selection": "correct",
+    "cyan_failed_route": "correctly suppressed",
+    "remaining_caption_bug": "Later focus=n assignment overrides early mapped event focus; 395/538 previews show generic contact/transit captions instead of failure banner. Renderer owner notified to remove reassignment.",
+    "minor_3d_labels": "Acceptable; no further changes needed."
+  },
+  "final_review": {
+    "reviewed_at_utc": "2026-11-02T23:24:53.890718+00:00",
+    "renderer_sha256": "ffcb90406f3561c1f40c29f270511f6bd4b1b4925844186d8b1ce619727dca1e",
+    "previews_inspected": [
+      "preview-step-0142.png",
+      "preview-step-0395.png",
+      "preview-step-0538.png",
+      "preview-step-1276.png"
+    ],
+    "failure_395": "Correct measured state395 and map revision3, failure banner visible, blocked-route goal shown, cyan route suppressed.",
+    "failure_538": "Correct pre-recovery state538 and explicit blocked-interpolation-corner explanation, cyan route suppressed.",
+    "contact": "No stale active transit path; actual contact marker and contact-stage caption are readable.",
+    "terminal": "LIBERO success and later diagnostic release distinction remains clear.",
+    "minor_3d_labels": "Acceptable at native size; no blocking readability concern.",
+    "blocking_issues": [],
+    "status": "Passed source/preview semantics and readability review. Encoded-video container/export verification remains with renderer owner."
+  }
+}

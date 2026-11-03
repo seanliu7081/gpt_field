@@ -22,12 +22,13 @@ from .agent_speedup_v2_types import PlanNeed, PointNeed, RepairNeed, jsonable
 from .agent_speedup_v2_user_check_local import LocalRecoveryFulfiller
 from .agent_speedup_v2_user_check_motion import LocalMotionPrimitive
 from .agent_speedup_v2_user_check_fragments import FragmentSequencePrimitive, fragment_capabilities
+from .agent_speedup_v2_user_check_routing import TransitObstacleMap
 from .astranomy_agentic_motion import ShortTargetConfig, measured_pose
 from .policy import Decision
 from .astra import SchemaError
 
 
-POLICY_VERSION = "agent-speedup-v2-user-check-agent-3"
+POLICY_VERSION = "agent-speedup-v2-user-check-agent-4"
 CONTROLLER = base.CONTROLLER
 MAX_MACRO_GRANT_STEPS = 60
 MAX_NATIVE_CALLS_PER_ACT = 2
@@ -106,6 +107,7 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
         self._direct_actions = 0
         self._native_actions = 0
         self._last_fragment_result = None
+        self._obstacle_map = TransitObstacleMap()
         self._macro_grants = 0
         self._model_completion_claims = []
         self._pending_agent_events = []
@@ -193,6 +195,7 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
             "active": bool(active and not self._primitive.done),
             "progress": self._primitive.progress() if active else None,
             "last_result": deepcopy(self._last_fragment_result),
+            "obstacle_map": self._obstacle_map.snapshot(),
             "shared_state": {
                 "measured_robot": measured,
                 "last_gripper_command": self.ctx.memory["user_check_gripper_command"],
@@ -308,6 +311,7 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
         self.ctx.active_relation = None
 
     def _apply_agent(self, answer, view):
+        self._obstacle_map.update(answer.get("obstacle_map"), step=self.step_index)
         kind = answer["type"]
         if kind == "macro":
             selected = answer["macro"]
@@ -351,7 +355,8 @@ class AgentFirstV2Policy(base.AgentSpeedUpV2Policy):
                                    "finger_gap_mm": view.gap_mm, "action_type": kind}
             self._primitive = FragmentSequencePrimitive(
                 view, answer["execution"],
-                keep_gripper=self.ctx.memory["user_check_gripper_command"])
+                keep_gripper=self.ctx.memory["user_check_gripper_command"],
+                obstacle_map=self._obstacle_map.snapshot())
             if self._primitive.done:
                 self._complete_direct()
             return

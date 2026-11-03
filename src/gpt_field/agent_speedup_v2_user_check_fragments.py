@@ -2,8 +2,8 @@
 
 Targets are supplied by the model in the world grip_site/right_hand convention.
 Each control step uses robot proprioception and the existing OSC action adapter.
-There is no scene oracle, grasp certificate, collision planner, implicit retry,
-release, lift, or claim of visual/task success in this module.
+Transit stages use a local planner with reusable model-supplied obstacle boxes.
+These estimates are not a scene oracle or a physical collision certificate.
 """
 from __future__ import annotations
 
@@ -11,20 +11,22 @@ from collections.abc import Mapping
 from copy import deepcopy
 import math
 from numbers import Real
+from time import perf_counter
 
 import numpy as np
 
-from .action import ActionAdapter
+from .action import ActionAdapter, USER_CHECK_TRANSIT_ACTION_M
 from .astranomy_agentic_motion import measured_pose, rotation_error_rad
 from .contact_skills import Primitive, StepView
+from .agent_speedup_v2_user_check_routing import TransitObstacleMap, TransitRoute, RouteUnavailable
 
-FRAGMENT_VERSION = "user-check-measured-fragments-1"
+FRAGMENT_VERSION = "user-check-measured-fragments-4"
 MAX_SEGMENTS = 6
 MAX_SEGMENT_STEPS = 120
 MAX_EXECUTION_STEPS = 240
 PROFILES = {
-    "transit": {"target_translation_m": .30, "target_rotation_rad": 1.2,
-                "action_translation_m": .02, "position_tolerance_m": .004,
+    "transit": {"target_translation_m": .50, "target_rotation_rad": 1.2,
+                "action_translation_m": USER_CHECK_TRANSIT_ACTION_M, "position_tolerance_m": .004,
                 "rotation_tolerance_rad": .06},
     "contact": {"target_translation_m": .08, "target_rotation_rad": .5,
                 "action_translation_m": .005, "position_tolerance_m": .002,
@@ -48,6 +50,13 @@ def execution_schema() -> dict:
     def nullable_vector(size):
         return {"anyOf": [{"type": "array", "items": number,
                            "minItems": size, "maxItems": size}, {"type": "null"}]}
+    vector = {"type": "array", "items": number, "minItems": 3, "maxItems": 3}
+    box = {"type": "object", "properties": {"lower_xyz_m": vector, "upper_xyz_m": vector},
+           "required": ["lower_xyz_m", "upper_xyz_m"], "additionalProperties": False}
+    route = {"type": "object", "properties": {
+        "avoid_boxes": {"type": "array", "items": box, "minItems": 0, "maxItems": 4},
+        "clearance_m": {"type": "number", "minimum": 0, "maximum": .20}},
+        "required": ["avoid_boxes", "clearance_m"], "additionalProperties": False}
     fields = {
         "skill": {"type": "string", "enum": list(SKILLS)},
         "xyz_m": nullable_vector(3),
@@ -56,6 +65,7 @@ def execution_schema() -> dict:
         "profile": {"type": "string", "enum": list(PROFILES)},
         "max_steps": {"type": "integer", "minimum": 1, "maximum": MAX_SEGMENT_STEPS},
         "observation_after": {"type": "boolean"},
+        "route": {"anyOf": [route, {"type": "null"}]},
     }
     return {"type": "object", "properties": {
         "segments": {"type": "array", "minItems": 1, "maxItems": MAX_SEGMENTS,
@@ -77,6 +87,29 @@ def _norm(vector):
     return math.hypot(*(float(v) for v in vector))
 
 
+def validate_route(route):
+    if route is None:
+        return None
+    if not isinstance(route, Mapping) or set(route) != {"avoid_boxes", "clearance_m"}:
+        raise ValueError("route requires avoid_boxes and clearance_m")
+    margin = route["clearance_m"]
+    if isinstance(margin, (bool, np.bool_)) or not isinstance(margin, Real) or not 0 <= margin <= .20:
+        raise ValueError("route.clearance_m must be finite and in 0..0.20 m")
+    boxes = route["avoid_boxes"]
+    if not isinstance(boxes, (list, tuple)) or not 0 <= len(boxes) <= 4:
+        raise ValueError("route.avoid_boxes requires 0..4 boxes")
+    normalized = []
+    for box in boxes:
+        if not isinstance(box, Mapping) or set(box) != {"lower_xyz_m", "upper_xyz_m"}:
+            raise ValueError("route box requires lower_xyz_m and upper_xyz_m")
+        lower = _finite_vector(box["lower_xyz_m"], 3, "route.lower_xyz_m")
+        upper = _finite_vector(box["upper_xyz_m"], 3, "route.upper_xyz_m")
+        if any(a >= b for a, b in zip(lower, upper)):
+            raise ValueError("route box lower coordinates must be below upper coordinates")
+        normalized.append({"lower_xyz_m": lower, "upper_xyz_m": upper})
+    return {"avoid_boxes": normalized, "clearance_m": float(margin)}
+
+
 def validate_execution(value) -> dict:
     """Check every field combination before execution, returning a detached copy.
 
@@ -92,9 +125,11 @@ def validate_execution(value) -> dict:
     normalized = []
     for index, raw in enumerate(segments):
         prefix = f"execution.segments[{index}]"
-        if not isinstance(raw, Mapping) or set(raw) != required:
+        if not isinstance(raw, Mapping) or set(raw) not in (required, required - {"route"}):
             raise ValueError(f"{prefix}: fields must exactly match the segment schema")
         segment = deepcopy(dict(raw))
+        # Keep recorded pre-routing sequences usable; new model outputs include null explicitly.
+        segment["route"] = validate_route(segment.get("route"))
         skill, profile, grip = segment["skill"], segment["profile"], segment["gripper"]
         if not isinstance(skill, str) or skill not in SKILLS:
             raise ValueError(f"{prefix}.skill: unsupported skill")
@@ -106,6 +141,8 @@ def validate_execution(value) -> dict:
             raise ValueError(f"{prefix}.max_steps: must be an integer from 1 through {MAX_SEGMENT_STEPS}")
         if type(segment["observation_after"]) is not bool:
             raise ValueError(f"{prefix}.observation_after: must be boolean")
+        if segment["route"] is not None and (profile != "transit" or skill not in ("move_to_pose", "move_relative")):
+            raise ValueError(f"{prefix}: route is available only for transit arm movement")
         if segment["xyz_m"] is not None:
             segment["xyz_m"] = _finite_vector(segment["xyz_m"], 3, prefix + ".xyz_m")
         if segment["quaternion_wxyz"] is not None:
@@ -148,6 +185,15 @@ def fragment_capabilities() -> dict:
         "max_segment_steps": MAX_SEGMENT_STEPS, "max_execution_steps": MAX_EXECUTION_STEPS,
         "minimum_gripper_steps": deepcopy(MIN_GRIPPER_STEPS),
         "arrival_stable_samples": ARRIVAL_STABLE_SAMPLES,
+        "routing": {"optional": False, "input": "reusable model-estimated obstacle_map; optional per-stage route override",
+                    "scope": "transit move_to_pose/move_relative only; model-estimated geometry",
+                    "grid_spacing_m": .02, "planning": "once at stage entry",
+                    "max_action_translation_m": PROFILES["transit"]["action_translation_m"],
+                    "null": "plan using the shared obstacle map; direct connection when clear, detour when blocked",
+                    "unavailable": "return to model; do not execute the blocked route",
+                    "map_update": "obstacle_map object replaces the complete avoid set; null reuses it; empty boxes clear it",
+                    "initial_map": "empty and labeled uninitialized until the model supplies its estimate",
+                    "scene_setup_required": False},
         "semantics": {
             "move_to_pose": "absolute world xyz_m and optional absolute world quaternion_wxyz",
             "move_relative": "world xyz_m displacement resolved once from measured segment entry pose",
@@ -161,6 +207,7 @@ def fragment_capabilities() -> dict:
             "continuation": "submit a new execution from the current observation; relative targets use new measured entry poses",
             "interruption": "stall, target envelope rejection, budget, or sustained gap rise returns control; no implicit retry",
             "preparation": "uses current robot proprioception and known OSC conversion; no scene registration or calibration sweep",
+            "route": "null uses the shared map; object overrides it for this stage only; every transit uses local path planning",
         },
         "unknowns": ["object identity", "object pose", "grasp success", "collision-free path", "task success"],
     }
@@ -173,11 +220,13 @@ class FragmentSequencePrimitive(Primitive):
     enforced from measured entry state for every segment, including later ones.
     """
 
-    def __init__(self, view: StepView, execution, keep_gripper="open"):
+    def __init__(self, view: StepView, execution, keep_gripper="open", *, obstacle_map=None):
         super().__init__("execute_fragment")
         if not isinstance(view, StepView):
             raise TypeError("fragment execution requires a StepView snapshot")
         self.execution = validate_execution(execution)
+        self.obstacle_map = deepcopy(obstacle_map if obstacle_map is not None
+                                     else TransitObstacleMap().snapshot())
         if keep_gripper not in ("open", "close"):
             raise ValueError("keep_gripper requires the actual open/close runtime command")
         self.gripper_command = keep_gripper
@@ -191,6 +240,8 @@ class FragmentSequencePrimitive(Primitive):
         self._current = None
         self._target_xyz = None
         self._target_wxyz = None
+        self._route = None
+        self._route_delta = None
         self._arrival_count = 0
         self._gap_rise_count = 0
         self._gap_floor_mm = float(view.gap_mm)
@@ -207,6 +258,7 @@ class FragmentSequencePrimitive(Primitive):
 
     def _enter_segment(self, view):
         segment = self.execution["segments"][self._segment_index]
+        self._route = self._route_delta = None
         pose = measured_pose(view.state)
         self._target_xyz = np.asarray(pose[:3], dtype=float)
         if segment["skill"] in MOTION_SKILLS:
@@ -238,10 +290,45 @@ class FragmentSequencePrimitive(Primitive):
                       detail="target exceeds the profile envelope from measured segment entry; this segment issued no action")
             return
         self.commanded_reorientation |= angle > 1e-9
+        if segment["profile"] == "transit" and segment["skill"] in MOTION_SKILLS:
+            override = segment["route"] is not None
+            route = segment["route"] if override else self.obstacle_map
+            map_evidence = {
+                "map_source": "stage_override" if override else "shared_map",
+                "map_revision": None if override else self.obstacle_map["revision"],
+                "map_updated_at_step": None if override else self.obstacle_map["updated_at_step"],
+                "geometry_source": "model_estimate" if override else self.obstacle_map["source"],
+            }
+            started = perf_counter()
+            try:
+                self._route = TransitRoute(
+                    start_xyz=pose[:3], goal_xyz=self._target_xyz,
+                    orientation_wxyz=self._target_wxyz, route=route,
+                    max_command_m=profile["action_translation_m"],
+                    position_tolerance_m=profile["position_tolerance_m"])
+                self._current["routing"] = {**self._route.diagnostics(), **map_evidence}
+            except RouteUnavailable as exc:
+                self._current["routing"] = {**exc.details, **map_evidence,
+                    "status": "unavailable", "reason": exc.reason,
+                    "planning_s": perf_counter() - started}
+                self._end("failed", "route_unavailable", detail=str(exc))
+                return
+            if not self._prepare_route(view):
+                return
         # This initial measurement can count toward arrival, but completion is
         # observed after an actual acknowledged action, never inside _next.
         if segment["skill"] in MOTION_SKILLS and self._arrived(distance, angle):
             self._arrival_count = 1
+
+    def _prepare_route(self, view):
+        try:
+            self._route_delta, tracking = self._route.command(view.position)
+            self._current["route_tracking"] = tracking
+            return True
+        except RouteUnavailable as exc:
+            self._current["route_tracking"] = {"status": "unavailable", "reason": exc.reason, **exc.details}
+            self._end("failed", "route_unavailable", detail=str(exc))
+            return False
 
     def _next(self, view):
         if not np.array_equal(view.state, self._last_state):
@@ -249,7 +336,8 @@ class FragmentSequencePrimitive(Primitive):
         segment = self._current["request"]
         if segment["skill"] == "set_gripper":
             self.gripper_command = segment["gripper"]
-        delta = self._target_xyz - view.position
+        delta = (self._target_xyz - view.position if self._route is None
+                 else np.asarray(self._route_delta, dtype=float))
         length = _norm(delta)
         limit = PROFILES[segment["profile"]]["action_translation_m"]
         if length > limit:
@@ -271,7 +359,12 @@ class FragmentSequencePrimitive(Primitive):
                   "quaternion_wxyz": self._last_pose[3:7], "position_error_m": distance,
                   "orientation_error_rad": angle, "gap_mm": self._last_gap_mm,
                   "gripper_command": self.gripper_command}
+        if self._route is not None:
+            sample["route_remaining_m"] = self._route.progress(after.position)
+            record["route_remaining_m"] = sample["route_remaining_m"]
         record["measurements"].append(sample)
+        if self._route is not None and not self._prepare_route(after):
+            return {"fragment": self.progress()}
         arrived = self._arrived(distance, angle)
         self._arrival_count = self._arrival_count + 1 if arrived else 0
         self._gap_floor_mm = min(self._gap_floor_mm, self._last_gap_mm)
@@ -310,7 +403,8 @@ class FragmentSequencePrimitive(Primitive):
             self._end("failed", "execution_budget_exhausted")
         elif segment["skill"] in MOTION_SKILLS and record["actions"] >= STALL_MIN_STEPS:
             window = record["measurements"][-STALL_WINDOW_STEPS:]
-            errors = [item["position_error_m"] + .05 * item["orientation_error_rad"] for item in window]
+            progress_key = "route_remaining_m" if self._route is not None else "position_error_m"
+            errors = [item[progress_key] + .05 * item["orientation_error_rad"] for item in window]
             if errors[0] - min(errors[1:]) < STALL_PROGRESS_M:
                 record["stall_evidence"] = {
                     "window_steps": len(window),
@@ -319,10 +413,10 @@ class FragmentSequencePrimitive(Primitive):
                     "orientation_error_start_rad": window[0]["orientation_error_rad"],
                     "orientation_error_end_rad": window[-1]["orientation_error_rad"],
                     "weighted_error_improvement_m": errors[0] - min(errors[1:]),
-                    "weighted_error_definition": "position_error_m + 0.05 * orientation_error_rad",
+                    "weighted_error_definition": f"{progress_key} + 0.05 * orientation_error_rad",
                 }
                 self._end("failed", "segment_stall",
-                          detail="pose error did not measurably improve over the local window; obstruction/contact cause is unknown")
+                          detail="movement progress did not measurably improve over the local window; obstruction/contact cause is unknown")
         return {"fragment": self.progress()}
 
     def _complete_segment(self, view, reason):

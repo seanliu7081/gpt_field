@@ -8,12 +8,19 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+import os
 from typing import Sequence
 
 import numpy as np
 
 
-TRANSLATION_SCALE_M = 0.05
+# Opt-in user-check experiment, inherited by the policy and its simulator worker.
+# The user-check worker matches this adapter scale on its live OSC controller.
+# Without the setting all existing runners keep the stock 5 cm interface.
+USER_CHECK_TRANSIT_ACTION_M = float(os.environ.get("GPT_FIELD_USER_CHECK_TRANSIT_ACTION_M", "0.02"))
+if not math.isfinite(USER_CHECK_TRANSIT_ACTION_M) or not 0 < USER_CHECK_TRANSIT_ACTION_M <= 0.10:
+    raise ValueError("GPT_FIELD_USER_CHECK_TRANSIT_ACTION_M must be in (0, 0.10]")
+TRANSLATION_SCALE_M = max(0.05, USER_CHECK_TRANSIT_ACTION_M)
 ROTATION_SCALE_RAD = 0.5
 
 
@@ -65,7 +72,7 @@ class ActionAdapter:
     ) -> tuple[float, ...]:
         delta = _vector(delta_xyz, 3, "delta_xyz")
         if np.any(np.abs(delta) > TRANSLATION_SCALE_M + 1e-12):
-            raise ValueError("translation exceeds verified OSC limit of 0.05 m per axis")
+            raise ValueError(f"translation exceeds configured OSC limit of {TRANSLATION_SCALE_M:g} m per axis")
         state = _vector(state8, 8, "state8")
         target = _vector(orientation_target_xyzw, 4, "orientation_target_xyzw")
         norm = float(np.linalg.norm(target))

@@ -15,12 +15,12 @@ from typing import Any, Mapping
 from .astra import APIError, AstraConfig, SchemaError, _canonical, _strict_loads
 from .astranomy_agentic_geometry import validate_geometry_metadata
 from .astranomy_agentic_prompt import PROMPT_VERSION, instructions
-from .distance_tasks import resolve_distance_task
+from .astranomy_agentic_tasks import resolve_astranomy_task
 from .hybrid_subscription import ChatGPTPlanHybridClient
 from .observation import decode_image
 
 
-CLIENT_VERSION = "astranomy-agentic-subscription-client-v1"
+CLIENT_VERSION = "astranomy-agentic-subscription-client-v2"
 HISTORY_PROTOCOL = "responses_native_short_target_full_visual_and_text_history_v1"
 TOOL_NAMESPACE = "robot"
 TOOL_NAME = "execute_eef_target"
@@ -126,13 +126,13 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
     def __init__(self, config=None, *, token_provider, task_key="bowl_plate", transport=None,
                  log_dir=None, clock=time.monotonic, image_history=None, reasoning_effort="medium"):
         config = config or AstraConfig()
-        if config.model != "gpt-6-astra" or reasoning_effort != "medium":
-            raise ValueError("Astranomy Agentic requires gpt-6-astra with medium reasoning")
+        if config.model != "gpt-6-astra" or reasoning_effort not in ("medium", "high"):
+            raise ValueError("Astranomy Agentic requires gpt-6-astra with medium or high reasoning")
         if config.max_api_calls is not None or config.max_wall_time_s is not None:
             raise ValueError("Astranomy Agentic full tasks have no episode call or wall-time cap")
         if image_history is not None:
             raise ValueError("Astranomy Agentic retains every image turn; no image-history limit")
-        self.task_spec = resolve_distance_task(task_key)
+        self.task_spec = resolve_astranomy_task(task_key)
         self.task_key = self.task_spec.key
         # The shared constructor requires a positive legacy image-history value.
         # This subclass never invokes its image trimming path and reports no limit.
@@ -182,7 +182,7 @@ class AstranomyAgenticClient(ChatGPTPlanHybridClient):
             content.extend([{"type": "input_text", "text": label},
                             {"type": "input_image", "detail": "high", "image_url": request[field]}])
         return {"model": self.config.model, "store": False, "stream": True,
-                "reasoning": {"effort": "medium"}, "include": ["reasoning.encrypted_content"],
+                "reasoning": {"effort": self.reasoning_effort}, "include": ["reasoning.encrypted_content"],
                 "instructions": instructions(self.task_key, geometry),
                 "input": copy.deepcopy(self._history + [{"role": "user", "content": content}]),
                 "tools": [{"type": "namespace", "name": TOOL_NAMESPACE,

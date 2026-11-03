@@ -1,0 +1,84 @@
+{
+  "video": "t04-can-obstacle-map-transit100.mp4",
+  "fps": 20,
+  "width": 1920,
+  "height": 1080,
+  "frames": 1598,
+  "duration_s": 79.9,
+  "control_states": 550,
+  "playback": "Each control state 0.1s; 0.5x simulator speed; labeled event freezes; API waits omitted",
+  "source_video": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_001/trial/episode.mp4",
+  "mapping": "control_state_frames.json",
+  "data": "obstacle_map_timeline.json",
+  "chapters": [
+    {
+      "control_state": 0,
+      "initial_observation": true,
+      "video_time_s": 0,
+      "duration_s": 2,
+      "title": "初始观察 · 10 cm / 50 cm"
+    },
+    {
+      "control_state": 0,
+      "video_time_s": 2.0,
+      "duration_s": 3.1,
+      "title": "旋转目标超限：1.572 rad > 1.2 rad"
+    },
+    {
+      "control_state": 115,
+      "video_time_s": 16.5,
+      "duration_s": 2.1,
+      "title": "记录到夹爪掌部—杯子接触"
+    },
+    {
+      "control_state": 162,
+      "video_time_s": 23.2,
+      "duration_s": 3.1,
+      "title": "路径不可用：6 cm 间隙使起点插值无效"
+    },
+    {
+      "control_state": 163,
+      "video_time_s": 26.3,
+      "duration_s": 1.9,
+      "title": "共享障碍地图更新 · 修订 3"
+    },
+    {
+      "control_state": 196,
+      "video_time_s": 31.4,
+      "duration_s": 2.4,
+      "title": "transit 停滞 · 已接近目标，但尚未满足到达阈值"
+    },
+    {
+      "control_state": 347,
+      "video_time_s": 48.8,
+      "duration_s": 1.6,
+      "title": "共享障碍地图更新 · 修订 4"
+    },
+    {
+      "control_state": 433,
+      "video_time_s": 58.9,
+      "duration_s": 2.1,
+      "title": "contact 下降停滞 · 转交模型调整"
+    },
+    {
+      "control_state": 507,
+      "video_time_s": 68.3,
+      "duration_s": 2.4,
+      "title": "transit 停滞 · 已接近目标，但尚未满足到达阈值"
+    },
+    {
+      "control_state": 549,
+      "video_time_s": 74.8,
+      "duration_s": 5.1,
+      "title": "LIBERO 成功 · 第二只杯子仍被夹持"
+    }
+  ],
+  "embedded_chapters": true,
+  "no_simulator_or_model_calls": true,
+  "terminal_diagnostic_actions_included": false,
+  "event_semantics": "Decision-boundary map shown at exact measured state before next action; failures suppress active route. Initial uninitialized map shown separately before model decision at state0.",
+  "transit_command_limit_m": 0.1,
+  "transit_target_limit_m": 0.5,
+  "size_bytes": 3747879,
+  "qa": "video_qa.json"
+}

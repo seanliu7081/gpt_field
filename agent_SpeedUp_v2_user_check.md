@@ -1,6 +1,6 @@
 # speed up v2 user check
 
-当前版本：`agent-speedup-v2-user-check-7`。模型持续负责任务，通用动作片段负责连续闭环执行。
+当前版本：`agent-speedup-v2-user-check-7.1`。模型持续负责任务，通用动作片段负责连续闭环执行。
 初始计划可由用户在浏览器中逐项选择、审核，也可在明确授权后使用 `start --auto-approve` 自动确认；
 自动确认单独记录，`human_reviewed_plan=false`。执行和自动调整使用 `gpt-6-astra` / `high`。
 原始 v2、Astranomy 和已完成运行的冻结代码不变。本版本没有任务编号、对象名称或预设任务坐标分支。
@@ -28,13 +28,57 @@
 执行器每步依据实测状态重算 OSC 命令，到达、夹爪稳定、停滞、预算结束或指定观察点时返回。
 后续片段仅在前一片段的测量完成条件满足后开始；观察点后的片段不会自动执行。
 
-每段包含 `skill`、`xyz_m`、`quaternion_wxyz`、`gripper`、`profile`、`max_steps`、`observation_after`。
+每段包含 `skill`、`xyz_m`、`quaternion_wxyz`、`gripper`、`profile`、`max_steps`、`observation_after`、`route`。
 坐标均为 world；相对目标在该片段开始时根据**实际位姿**解析一次。
 移动片段保持夹爪命令；开闭必须使用独立 `set_gripper`，不隐式释放或重新抓取。
-`transit` 目标距离最多 30 cm、旋转 1.2 rad；`contact` 为 8 cm、0.5 rad，
-每步平移分别最多 2 cm、5 mm，旋转最多 0.1 rad。每段最多 120 步，总预算最多 240 步。
+`transit` 目标距离最多 50 cm、旋转 1.2 rad；`contact` 为 8 cm、0.5 rad，
+transit 每步平移命令默认最多 2 cm（`GPT_FIELD_USER_CHECK_TRANSIT_ACTION_M` 可配置至 0.10 m），contact 为 5 mm，
+旋转最多 0.1 rad。每段最多 120 步，总预算最多 240 步。
 这些是设计边界，不代表路径已验证无碰撞。模型需要根据当前 RGB 选择路线及观察点。
 本地位姿到达、夹爪稳定均不等于抓持成功或任务完成。
+
+### Transit 默认局部规划与障碍复用
+
+每个 transit 的 `move_to_pose` / `move_relative` 默认经过局部规划器。
+模型响应新增顶层 `obstacle_map`：`null` 复用上一轮地图，下面的对象整体替换缓存；
+`avoid_boxes: []` 显式清空。地图在同一 episode 的多个执行请求间复用，最多包含 4 个盒子。
+
+```json
+{
+  "avoid_boxes": [
+    {"lower_xyz_m": [0.10, -0.05, 0.70], "upper_xyz_m": [0.16, 0.05, 0.85]}
+  ],
+  "clearance_m": 0.03
+}
+```
+
+首次 `execute` 应根据当前 RGB 和相机信息提供相关静止障碍；仅当接下来的 transit 没有可见的相关障碍时给空集合。
+即使某段看起来能越过这些物体，也保留相关盒子，由规划器判断该段是否需要绕行。
+缓存通过 `context.execution.obstacle_map` 返回模型，并保存 `revision`、`updated_at_step`、`source`。
+初始空缓存的 `source=uninitialized`，不表示已确认场景无障碍。后续保持不变时输出 `null` 即可。
+
+地图是当前动作需要避开的物体集合，不是模拟器真值或自动跟踪的场景。开始抓取/搬运前，
+模型应从集合中移除当前操作物；移动、放置物体、切换目标或观察到场景改变后，重新给出完整集合，
+必要时把刚放下的物体加入下一次动作的障碍。系统不根据夹爪闭合自动推断物体位置。
+
+每段 `route=null` 继承共享地图，**不会绕过规划器**；非空 `route` 使用相同字段，
+只临时覆盖该段的避让集合与间隙，不修改共享地图。接触靠近、开闭夹爪和等待仍使用 `route=null`。
+局部规划器将 0–4 个盒子按 `clearance_m` 扩张，复用现有细场规划器的直达分支和路径搜索，
+再交给实测位姿跟踪器执行。此适配使用 2 cm 网格，覆盖起点、终点及 10 cm 绕行余量；
+不将旧 16 cm / 1 mm 配置直接套在 50 cm 目标上。每段开始时规划一次；跟踪器使用同一个 transit 平移命令上限，
+前视距离为 `max(0.03 m, transit 命令上限)`。配置 0.10 m 时，长直线路径可发出 10 cm 平移命令；
+目标附近或转角处可缩短。默认配置仍为 2 cm 命令 / 3 cm 前视，contact 仍为 5 mm，transit 目标仍为 50 cm。
+命令经过 ActionAdapter 归一化后由 UserCheck worker 匹配 OSC 平移尺度；实测位移取决于机器人动力学并在每步反馈中检查。
+模型最终目标保持固定，中间路点不消耗模型的片段数量，也不提前触发下一段夹爪操作。
+绕行的停滞判断使用剩余路径进度；不因为暂时远离最终目标就判失败。
+
+这版增加 episode 内复用的轻量障碍缓存，不增加全场景注册、额外感知调用、自动地图过期门禁或原生宏前置条件。
+无可用路径时，以 `route_unavailable` 交回模型，不回退到穿过障碍的直达动作。
+规划只针对提供的盒子和间隙，不声明完整机械臂避碰或物理安全保证。
+旧日志中省略 `route` 或顶层 `obstacle_map` 时按 `null` 读取；在当前版本中 transit 同样默认继承地图。
+历史运行的冻结代码保留原行为。片段协议为 `user-check-measured-fragments-4`，执行策略为
+`agent-speedup-v2-user-check-agent-4`，提示词为 `user-check-agent-first-prompt-6`。
+规划诊断保留使用的地图来源/版本、盒子数量、直达连接判定、路径及规划时间；实现验证不等于真实任务收益验证。
 
 共享状态分别保留实测机器人数据、夹爪命令、带来源/时刻的模型判断和原生控制器估计。
 新的动作片段从当前状态直接接手，不要求旧宏的全场景校准/注册，也不自动回到原抓取位置。

@@ -15,6 +15,7 @@ from numbers import Real
 import os
 import sys
 
+from .action import TRANSLATION_SCALE_M
 from .agent_speedup_v2_sim import V2LiberoWorker, V2SimProcess, _json_line
 from .astranomy_agentic_geometry import extract_geometry_metadata
 from .robocasa_user_check_geometry import validate_geometry_metadata
@@ -37,6 +38,37 @@ def _robot_proprioception(value):
 
 
 class UserCheckLiberoWorker(V2LiberoWorker):
+    def __init__(self, config, monitor_options=None):
+        super().__init__(config, monitor_options)
+        self.metadata["user_check_osc_translation_scale_m"] = TRANSLATION_SCALE_M
+
+    def reset(self, task_id, episode_index):
+        response = super().reset(task_id, episode_index)
+        if TRANSLATION_SCALE_M != 0.05:
+            # Apply after the stock zero-action reset/settle, preserving the
+            # saved initial observation. Gains, rotations and timing stay fixed.
+            for robot in self.env.robots:
+                controller = robot.controller
+                controller.output_min[:3] = -TRANSLATION_SCALE_M
+                controller.output_max[:3] = TRANSLATION_SCALE_M
+                # Settling has already populated robosuite's scaling cache.
+                controller.action_scale = None
+                controller.action_input_transform = None
+                controller.action_output_transform = None
+            self.metadata["controller"] = {
+                **self.metadata["controller"],
+                "output_min": self.env.robots[0].controller.output_min.tolist(),
+                "output_max": self.env.robots[0].controller.output_max.tolist(),
+            }
+            self.metadata["action_order"][:3] = [
+                f"d{axis}/{TRANSLATION_SCALE_M:g}" for axis in "xyz"]
+            self.metadata["user_check_controller_override"] = {
+                "translation_scale_m": TRANSLATION_SCALE_M,
+                "applied_after_reset": True,
+                "source_config_unchanged": True,
+            }
+        return response
+
     def _response(self, obs):
         response = super()._response(obs)
         # Read the same cached observation supplied by env.step(), never the
@@ -80,6 +112,12 @@ class UserCheckSimProcess(V2SimProcess):
         if request.get("op") in ("reset", "step"):
             self._robot_sensors = _robot_proprioception(result["robot_proprioception"])
         return result
+
+    def reset(self, task_id, episode_index):
+        observation = super().reset(task_id, episode_index)
+        if TRANSLATION_SCALE_M != 0.05:
+            self.metadata = self._request({"op": "metadata"})
+        return observation
 
     def _observation(self, data):
         native = super()._observation(data)

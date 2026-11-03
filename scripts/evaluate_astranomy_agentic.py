@@ -11,7 +11,8 @@ Agentic configuration / expanded interface). The original uses DROID, three
 Panda, two upright 512x512 views and native 20 Hz OSC. Camera calibration and
 fixed gripper geometry are policy inputs; scene truth and subtask progress are
 not. The subscription transport is the same OAuth route as prior baselines,
-with no API-key billing or fallback. Medium reasoning remains fixed.
+with no API-key billing or fallback. Medium reasoning is the default; high is
+available explicitly. Motion limits are unchanged by reasoning effort.
 
 Run one fresh task:
   PYTHONPATH=src .venv/bin/python scripts/evaluate_astranomy_agentic.py \
@@ -23,7 +24,7 @@ for a generic offline protocol diagnostic. Every output directory must be new.
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import datetime, timezone
 import hashlib
 import importlib.util
@@ -39,9 +40,10 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from gpt_field.astra import AstraConfig
-from gpt_field.distance_tasks import DISTANCE_TASK_KEYS, resolve_distance_task
+from gpt_field.astranomy_agentic_tasks import ASTRANOMY_TASK_KEYS, resolve_astranomy_task
 from gpt_field.experiment import digest, source_manifest, write_json
-from gpt_field.libero import LiberoConfig
+from gpt_field.libero import (LiberoConfig, validate_initial_state_override,
+                              validate_task_bddl_override)
 from gpt_field.observation import decode_image, image_to_data_url
 from gpt_field.video import MP4Stream, WIDTH, HEIGHT, _font
 
@@ -57,12 +59,16 @@ def configuration():
                        max_api_calls=None, max_wall_time_s=None, max_cost_usd=None)
 
 
-def sim_configuration(task_key):
-    task = resolve_distance_task(task_key)
+def sim_configuration(task_key, *, sim_python=None, libero_root=None,
+                      task_bddl_override=None, initial_state_override=None):
+    task = resolve_astranomy_task(task_key)
     return LiberoConfig(suite=task.suite, seed=7, image_size=512, render_size=512,
-        max_steps=None, settle_steps=10, python_executable=life.DEFAULT_SIM_PYTHON,
-        libero_root=life.DEFAULT_LIBERO_ROOT, stop_on_success=True,
-        collision_check_mode="task_manipulation_v1", stop_on_collision=False,
+        max_steps=None, settle_steps=10, python_executable=str(sim_python or life.DEFAULT_SIM_PYTHON),
+        libero_root=str(libero_root or life.DEFAULT_LIBERO_ROOT), stop_on_success=True,
+        task_bddl_override=str(Path(task_bddl_override).expanduser().resolve()) if task_bddl_override else None,
+        initial_state_override=str(Path(initial_state_override).expanduser().resolve()) if initial_state_override else None,
+        collision_check_mode="task_manipulation_v1" if task.key in ("bowl_plate", "drawer_bowl") else "none",
+        stop_on_collision=False,
         include_arm_joints=True)
 
 
@@ -81,6 +87,10 @@ class CalibratedSimProcess(life._SessionSimProcess):
         from gpt_field.astranomy_agentic_geometry import validate_geometry_metadata
         return validate_geometry_metadata(self._request({"op": "geometry"}))
 
+    def truth(self):
+        """Read terminal evaluator evidence; never part of a model request."""
+        return self._request({"op": "truth"})
+
 
 def model_request(obs, step, geometry):
     from gpt_field.astranomy_agentic_motion import measured_pose
@@ -96,14 +106,15 @@ def initial_identity(obs):
 
 
 class Recorder:
-    def __init__(self, output, task, smoke=False):
+    def __init__(self, output, task, smoke=False, reasoning_effort="medium"):
         self.output, self.task, self.smoke = output, task, smoke
+        self.reasoning_effort = reasoning_effort
         self.stream = MP4Stream(output / "episode.mp4", fps=20)
 
     def record(self, obs, step, calls, tool, phase, feedback=None):
         canvas = Image.new("RGB", (WIDTH, HEIGHT), (12, 18, 30))
         draw = ImageDraw.Draw(canvas)
-        title = "ASTRANOMY AGENTIC ADAPTATION / LIBERO / " + ("SCRIPTED DIAGNOSTIC" if self.smoke else "ASTRA MEDIUM SUBSCRIPTION")
+        title = "ASTRANOMY AGENTIC ADAPTATION / LIBERO / " + ("SCRIPTED DIAGNOSTIC" if self.smoke else f"ASTRA {self.reasoning_effort.upper()} SUBSCRIPTION")
         draw.text((30, 20), title, font=_font(25, True), fill="white")
         draw.text((30, 65), self.task, font=_font(20), fill="white")
         draw.text((30, 105), f"Step {step} | model calls {calls} | {phase}", font=_font(20), fill="#66e3a1")
@@ -134,8 +145,33 @@ def freeze_sources(output):
     write_json(output / "source_provenance.json", records)
 
 
+def freeze_inputs(output, sim_config):
+    """Execute from copied scene inputs and preserve their original identities."""
+    records, replacements = {}, {}
+    for field, filename, validator in (
+            ("task_bddl_override", "custom_task.bddl", validate_task_bddl_override),
+            ("initial_state_override", "initial_state.npy", validate_initial_state_override)):
+        source = getattr(sim_config, field)
+        if source is None:
+            continue
+        metadata = validator(source)
+        data = Path(metadata["path"]).read_bytes()
+        if hashlib.sha256(data).hexdigest() != metadata["sha256"]:
+            raise ValueError("Custom scene input changed while being frozen")
+        destination = output / "frozen_inputs" / filename
+        destination.parent.mkdir(exist_ok=True)
+        destination.write_bytes(data)
+        replacements[field] = str(destination)
+        records[field] = {**metadata, "source": metadata["path"], "frozen_path": str(destination)}
+    if records:
+        write_json(output / "input_provenance.json", records)
+    return replace(sim_config, **replacements), records
+
+
 def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=False,
-            video=True, client_factory=None, sim_factory=None):
+            video=True, client_factory=None, sim_factory=None, reasoning_effort="medium",
+            task_bddl_override=None, initial_state_override=None,
+            expected_initial_observation_sha256=None, sim_python=None, libero_root=None):
     from gpt_field.astranomy_agentic_client import AstranomyAgenticClient
     from gpt_field.astranomy_agentic_motion import (ShortTargetExecutor, ShortTargetConfig,
         TargetLimitError, measured_pose, rejected_feedback)
@@ -146,14 +182,34 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
         raise ValueError("A subscription token provider is required; API keys are unsupported")
     if not 0 <= episode_index < 50:
         raise ValueError("episode index must be 0..49")
-    task, config, sim_config = resolve_distance_task(task_key), configuration(), sim_configuration(task_key)
+    if reasoning_effort not in ("medium", "high"):
+        raise ValueError("reasoning_effort must be medium or high")
+    if bool(task_bddl_override) != bool(initial_state_override):
+        raise ValueError("Custom scene requires both task_bddl_override and initial_state_override")
+    if initial_state_override and expected_initial_observation_sha256 is None:
+        raise ValueError("Custom scene requires expected_initial_observation_sha256")
+    if expected_initial_observation_sha256 is not None and (
+            len(expected_initial_observation_sha256) != 64
+            or any(c not in "0123456789abcdef" for c in expected_initial_observation_sha256)):
+        raise ValueError("expected_initial_observation_sha256 must be a lowercase SHA256 digest")
+    task, config = resolve_astranomy_task(task_key), configuration()
+    sim_config = sim_configuration(task_key, sim_python=sim_python, libero_root=libero_root,
+                                  task_bddl_override=task_bddl_override,
+                                  initial_state_override=initial_state_override)
+    expected = (expected_initial_observation_sha256 if expected_initial_observation_sha256 is not None
+                else life.DEFAULT_EXPECTED_SHA256.get((task_key, episode_index)))
     output.mkdir(parents=True)
+    sim_config, input_provenance = freeze_inputs(output, sim_config)
     freeze_sources(output)
     client = None if smoke else (client_factory or AstranomyAgenticClient)(
-        config, token_provider=token_provider, task_key=task_key, log_dir=output / "requests")
+        config, token_provider=token_provider, task_key=task_key, log_dir=output / "requests",
+        reasoning_effort=reasoning_effort)
     identity = {"method": METHOD, "zero_shot": True, "task": task.prompt, "task_id": task.task_id,
         "episode_index": episode_index, "distance_task": task_key, "simulator": asdict(sim_config),
-        "api": asdict(config), "reasoning_effort": "medium", "billing": "offline_scripted" if smoke else "chatgpt_subscription",
+        "api": asdict(config), "reasoning_effort": reasoning_effort, "billing": "offline_scripted" if smoke else "chatgpt_subscription",
+        "custom_scene": bool(input_provenance), "input_provenance": input_provenance,
+        "expected_initial_observation_sha256": expected,
+        "initial_observation_hash_contract": "Astranomy initial_identity: raw legacy RGB/state before upright conversion, excluding joint fields",
         "api_key_fallback": False, "model_fallback": False, "software": source_manifest(),
         "motion": ShortTargetConfig().to_dict(),
         "image_history": "all", "text_history": "all", "runtime_harness": "custom_subscription_tool_loop",
@@ -168,7 +224,9 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
             "no simulator subtask-progress input; raw task outcome remains evaluator-only",
             "no whole-episode action cap per existing user protocol"],
         "stopping_rule": ["raw LIBERO success", "operator stop", "infrastructure/subscription failure"],
-        "collision_policy": "record_only", "success_qualification": "raw_libero_goal",
+        "collision_policy": "record_only",
+        "collision_monitor": "generic_contact_v2" if sim_config.collision_check_mode == "none" else "task_manipulation_v1",
+        "success_qualification": "raw_libero_goal",
         "simulation_pauses_for_api": True, "prior_budgets_inherited": False}
     write_json(output / "manifest.json", {"configuration": identity, "identity_hash": digest(identity),
         "created_utc": datetime.now(timezone.utc).isoformat()})
@@ -180,6 +238,7 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
     sim_status, last_tool, last_feedback = {}, None, None
     timings = {k: 0.0 for k in ("model_pipeline_s", "local_planning_s", "local_control_s", "simulator_step_s", "geometry_s", "video_render_s")}
     cleanup_errors, summaries = [], []
+    physical_truth = None
     smoke_index = 0
     trace = (output / "trace.jsonl").open("w")
 
@@ -214,7 +273,11 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
         elapsed = None if control_started is None else (control_stopped or time.monotonic()) - control_started
         return {"method": METHOD, "status": status, "task": task.prompt, "suite": task.suite,
             "distance_task": task_key, "task_id": task.task_id, "episode_index": episode_index, "seed": 7,
-            "zero_shot": True, "reasoning_effort": "medium", "billing": identity["billing"],
+            "zero_shot": True, "reasoning_effort": reasoning_effort, "billing": identity["billing"],
+            "custom_scene": bool(input_provenance), "input_provenance": input_provenance,
+            "expected_initial_observation_sha256": expected,
+            "collision_policy": identity["collision_policy"],
+            "collision_monitor": identity["collision_monitor"], "physical_truth": physical_truth,
             "api_calls": budget.get("api_calls", calls), "api_key_calls": 0, "api_key_fallback": False,
             "model_responses": calls, "moves": moves, "rejected_moves": rejected, "steps": steps,
             "simulated_motion_s": steps / 20, "timing_components": dict(timings),
@@ -248,13 +311,14 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
                 raise ValueError("Official task mismatch")
             write_json(output / "initial_observation.json", obs.to_dict())
             actual = initial_identity(obs)
-            expected = life.DEFAULT_EXPECTED_SHA256.get((task_key, episode_index))
             write_json(output / "initial_observation_check.json", {"sha256": actual, "expected": expected,
-                       "matched": actual == expected if expected else None})
+                       "matched": actual == expected if expected else None,
+                       "source": "explicit_override" if expected_initial_observation_sha256 is not None else "historical_reference",
+                       "hash_contract": identity["initial_observation_hash_contract"]})
             if expected and actual != expected:
-                raise ValueError("Initial RGB/state differs from the frozen historical reset; no inference performed")
+                raise ValueError("Initial RGB/state differs from the expected reset; no inference performed")
             if video:
-                recorder = Recorder(output, task.prompt, smoke=smoke)
+                recorder = Recorder(output, task.prompt, smoke=smoke, reasoning_effort=reasoning_effort)
             log("reset", observation=obs.to_dict(), sim_status=sim_status)
             control_started = time.monotonic()
             render("reset")
@@ -366,6 +430,12 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
             log("error", error=error)
         finally:
             control_stopped = time.monotonic()
+            if control_started is not None and sim_config.collision_check_mode == "none":
+                try:
+                    physical_truth = sim.truth()
+                    write_json(output / "physical_truth.json", physical_truth)
+                except Exception as exc:
+                    cleanup_errors.append({"stage": "terminal_truth", "type": type(exc).__name__})
             trace.close()
             write_json(output / "summary.json", summary())
             write_json(output / "tool_results.json", summaries)
@@ -391,8 +461,15 @@ def execute(output, *, task_key, episode_index=0, token_provider=None, smoke=Fal
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--task", choices=DISTANCE_TASK_KEYS, default="bowl_plate")
+    parser.add_argument("--task", choices=ASTRANOMY_TASK_KEYS, default="bowl_plate")
     parser.add_argument("--episode-index", type=int, default=0)
+    parser.add_argument("--reasoning-effort", choices=("medium", "high"), default="medium")
+    parser.add_argument("--task-bddl-override", type=Path)
+    parser.add_argument("--initial-state-override", type=Path)
+    parser.add_argument("--expected-initial-observation-sha256",
+                        help="Expected Astranomy raw reset identity, before upright image conversion")
+    parser.add_argument("--sim-python", type=Path)
+    parser.add_argument("--libero-root", type=Path)
     parser.add_argument("--store-dir", type=Path)
     parser.add_argument("--no-video", action="store_true")
     parser.add_argument("--sim-smoke", action="store_true")
@@ -402,7 +479,11 @@ def main(argv=None):
     from gpt_field.chatgpt_auth import SubscriptionCredentials
     token_provider = None if args.sim_smoke else SubscriptionCredentials(store_dir=args.store_dir).access_token
     result = execute(args.output, task_key=args.task, episode_index=args.episode_index,
-        token_provider=token_provider, smoke=args.sim_smoke, video=not args.no_video)
+        token_provider=token_provider, smoke=args.sim_smoke, video=not args.no_video,
+        reasoning_effort=args.reasoning_effort, task_bddl_override=args.task_bddl_override,
+        initial_state_override=args.initial_state_override,
+        expected_initial_observation_sha256=args.expected_initial_observation_sha256,
+        sim_python=args.sim_python, libero_root=args.libero_root)
     return 0 if result["evaluation_completed"] or result["diagnostic_complete"] else 3
 
 

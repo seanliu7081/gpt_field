@@ -1,0 +1,57 @@
+{
+  "definition": "One transit call is one executed motion segment with profile=transit and skill move_to_pose or move_relative; gripper/wait/contact and unexecuted pending segments are excluded.",
+  "method": {
+    "target_distance": "Euclidean distance from measured segment entry grip_site XYZ to resolved target XYZ.",
+    "actual_net_displacement": "Euclidean distance between measured entry and final grip_site XYZ for the segment.",
+    "actual_path_length": "Sum of Euclidean before-to-after grip_site XYZ displacement over every executed control step in the segment (20 Hz samples).",
+    "segment_identity": "(global feedback step + 1 - fragment executed_steps, segment index); use the final recorded segment snapshot.",
+    "aggregation": "Each executed transit segment has equal weight; combined mean uses all segments from both tasks."
+  },
+  "tasks": {
+    "T00": {
+      "executed_transit_segments": 13,
+      "requested_transit_segments": 16,
+      "requested_but_not_executed": 3,
+      "average_target_distance_cm": 19.196270232549434,
+      "average_actual_net_displacement_cm": 19.047657665287314,
+      "average_actual_path_length_cm": 19.125663697853597,
+      "total_actual_path_length_m": 2.486336280720968,
+      "minimum_actual_path_length_cm": 5.059891173571067,
+      "maximum_actual_path_length_cm": 47.99798852161478,
+      "target_over_30cm_count": 3,
+      "actual_path_over_30cm_count": 3,
+      "control_steps": 545,
+      "status_counts": {
+        "succeeded": 13
+      },
+      "source_trace": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_transit50_t00_retry_20261102_001/task_0/trial/trace.jsonl"
+    },
+    "T01": {
+      "executed_transit_segments": 13,
+      "requested_transit_segments": 15,
+      "requested_but_not_executed": 2,
+      "average_target_distance_cm": 19.133889398915752,
+      "average_actual_net_displacement_cm": 19.00267411785285,
+      "average_actual_path_length_cm": 19.099089456722627,
+      "total_actual_path_length_m": 2.4828816293739417,
+      "minimum_actual_path_length_cm": 5.622052710185459,
+      "maximum_actual_path_length_cm": 45.53647326479464,
+      "target_over_30cm_count": 2,
+      "actual_path_over_30cm_count": 2,
+      "control_steps": 519,
+      "status_counts": {
+        "succeeded": 13
+      },
+      "source_trace": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_transit50_t01_20261102_001/task_1/trial/trace.jsonl"
+    }
+  },
+  "combined": {
+    "executed_transit_segments": 26,
+    "average_target_distance_cm": 19.16507981573259,
+    "average_actual_net_displacement_cm": 19.025165891570087,
+    "average_actual_path_length_cm": 19.11237657728811,
+    "total_actual_path_length_m": 4.969217910094909,
+    "target_over_30cm_count": 5,
+    "actual_path_over_30cm_count": 5
+  }
+}

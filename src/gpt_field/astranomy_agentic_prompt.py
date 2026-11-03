@@ -8,15 +8,15 @@ from __future__ import annotations
 from typing import Mapping
 
 from .astranomy_agentic_geometry import validate_geometry_metadata
-from .distance_tasks import resolve_distance_task
+from .astranomy_agentic_tasks import resolve_astranomy_task
 
 
-PROMPT_VERSION = "astranomy-agentic-panda-expanded-v1"
+PROMPT_VERSION = "astranomy-agentic-panda-expanded-v2"
 
 
 def instructions(task_key: str = "bowl_plate", geometry: Mapping | None = None) -> str:
     """Only the official task sentence varies; no task-specific recipe is added."""
-    task = resolve_distance_task(task_key)
+    task = resolve_astranomy_task(task_key)
     if geometry is not None:
         validate_geometry_metadata(geometry)
     return f"""Interface {PROMPT_VERSION}. You control one simulated Franka Panda with a PandaGripper.

@@ -1,0 +1,1228 @@
+{
+  "scope": "Outside runs/ results-only proposal; no deletion or process changes performed",
+  "keep_result_trees": {
+    "reports/uc7_direction_semantics_20261028": "UC7 baseline and UC7.1 release/protocol/evidence; frozen source snapshot is required for reproducibility",
+    "reports/task1_planner_fix_20261027": "UC7 planning fix associated with preserved failed relayout drafts",
+    "reports/task1_stream_investigation_20261027": "UC7 relayout transport-failure evidence",
+    "reports/agent_speedup_analysis_20261026": "Mixed UC7/v3 analysis; shared comparison source material and UC7 evidence are intertwined; conservatively preserve whole 21MB bundle",
+    "results/speedup_evidence_20261026T055123Z": "Frozen v7 baseline plus five v7-based original/compact-I/O attempts; preserve entire 1.3GB comparison bundle",
+    "exports/gpt_field_libero10_20261022": "Explicit method agent-speedup-v2-user-check-7 official10-task export",
+    "presentations/speedup_v2_user_check_v7_en": "Requested preserved v7 presentation",
+    "presentations/speedup_v2_user_check_v71_libero10_en": "Requested preserved v7.1 presentation",
+    "robodojo_uc71": "UC7.1 RoboDojo port, frozen core, planning and validation evidence; runtime is mostly environments/dependencies",
+    "astranomy": "Dedicated direct-control tree; classification delegated to direct-control audit"
+  },
+  "protected_dependencies": [
+    "scene_test/astra_field_slides/vendor",
+    "scene_test/_deps",
+    "scene_test/libero_scene/_deps",
+    "scene_test/rgb_scene/models",
+    "reports/hybrid_method_slides_20261012/.venv",
+    "scene_test/astra_field_slides/assets/*.ttf",
+    "scene_test/astra_field_slides/assets/OFL.txt",
+    "scene_test/astra_field_slides/assets/font_source.json",
+    "presentations/speedup_v1/assets/*.ttf",
+    "presentations/speedup_v1/assets/OFL.txt",
+    "presentations/speedup_v1/assets/font_source.json",
+    "all source scripts/tests/docs/configuration",
+    "historical cleanup JSON receipts"
+  ],
+  "dependency_evidence": [
+    "presentations/speedup_v2_user_check_v7_en/build_slides.py:7",
+    "presentations/speedup_v2_user_check_v71_libero10_en/build_pdf.py:7",
+    "both check_pdf.py:5 import scene_test/astra_field_slides/vendor"
+  ],
+  "candidates": [
+    {
+      "path": "scene_test/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 479,
+      "logical_bytes": 1807126130,
+      "allocated_bytes": 1808125952
+    },
+    {
+      "path": "scene_test/astra_scene/inferences_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 40,
+      "logical_bytes": 2863513,
+      "allocated_bytes": 2953216
+    },
+    {
+      "path": "scene_test/astra_scene/prepared_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 30,
+      "logical_bytes": 2612213,
+      "allocated_bytes": 2678784
+    },
+    {
+      "path": "scene_test/astra_scene/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 15162,
+      "logical_bytes": 396375815,
+      "allocated_bytes": 421851136
+    },
+    {
+      "path": "scene_test/libero_scene/captures_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 273,
+      "logical_bytes": 5646783,
+      "allocated_bytes": 6230016
+    },
+    {
+      "path": "scene_test/libero_scene/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 104,
+      "logical_bytes": 332797557,
+      "allocated_bytes": 332996608
+    },
+    {
+      "path": "scene_test/rgb_scene/inputs_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 5,
+      "logical_bytes": 636353,
+      "allocated_bytes": 647168
+    },
+    {
+      "path": "scene_test/rgb_scene/predictions_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 18,
+      "logical_bytes": 1204146,
+      "allocated_bytes": 1245184
+    },
+    {
+      "path": "scene_test/rgb_scene/references_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 259,
+      "logical_bytes": 3849863,
+      "allocated_bytes": 4403200
+    },
+    {
+      "path": "scene_test/rgb_scene/references_002",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 262,
+      "logical_bytes": 4082027,
+      "allocated_bytes": 4640768
+    },
+    {
+      "path": "scene_test/rgb_scene/references_003",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 262,
+      "logical_bytes": 4088734,
+      "allocated_bytes": 4648960
+    },
+    {
+      "path": "scene_test/rgb_scene/references_004",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 798,
+      "logical_bytes": 14894812,
+      "allocated_bytes": 16609280
+    },
+    {
+      "path": "scene_test/rgb_scene/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 936,
+      "logical_bytes": 891033462,
+      "allocated_bytes": 892977152
+    },
+    {
+      "path": "scene_test/field_planning/preparation_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 28,
+      "logical_bytes": 1497018,
+      "allocated_bytes": 1548288
+    },
+    {
+      "path": "scene_test/field_planning/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 41,
+      "logical_bytes": 31786370,
+      "allocated_bytes": 31866880
+    },
+    {
+      "path": "scene_test/field_planning_v2/preparation_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 2,
+      "logical_bytes": 2622,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "scene_test/field_planning_v2/runs",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 46,
+      "logical_bytes": 28296304,
+      "allocated_bytes": 28377088
+    },
+    {
+      "path": "scene_test/field_planning_v2/video_001",
+      "kind": "directory",
+      "reason": "Generated outputs of older scene-field/reconstruction/planning experiments, outside preserved methods",
+      "file_count": 69,
+      "logical_bytes": 23397665,
+      "allocated_bytes": 23552000
+    },
+    {
+      "path": "scene_test/astra_scene/original_sources_before.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 93337,
+      "allocated_bytes": 94208
+    },
+    {
+      "path": "scene_test/astra_scene/test_run_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1504,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/astra_scene/analytic_audit_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 9171,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "scene_test/astra_scene/test_sources_final.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1545,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/astra_scene/preservation_final.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 214689,
+      "allocated_bytes": 217088
+    },
+    {
+      "path": "scene_test/astra_scene/comparison_summary.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 13308,
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "scene_test/astra_scene/final_artifact_audit_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 2955688,
+      "allocated_bytes": 2957312
+    },
+    {
+      "path": "scene_test/libero_scene/original_sources_before.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 89834,
+      "allocated_bytes": 90112
+    },
+    {
+      "path": "scene_test/libero_scene/preservation_final.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1430,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/rgb_scene/original_sources_before.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 91237,
+      "allocated_bytes": 94208
+    },
+    {
+      "path": "scene_test/rgb_scene/reference_validation_004.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 2735,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/rgb_scene/preservation_final.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 712,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/field_planning/sources_before.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 94834,
+      "allocated_bytes": 98304
+    },
+    {
+      "path": "scene_test/field_planning/adapter_audit_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 796235,
+      "allocated_bytes": 798720
+    },
+    {
+      "path": "scene_test/field_planning/validation_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1495,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/field_planning/validation_002.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1618,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/field_planning/evaluator_distance_diagnostic_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 49422,
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "scene_test/field_planning/validation_003.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 1893,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/field_planning/preservation_final.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 217450,
+      "allocated_bytes": 221184
+    },
+    {
+      "path": "scene_test/field_planning/final_audit_001.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 12430,
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "scene_test/field_planning_v2/existing_before.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 116354,
+      "allocated_bytes": 118784
+    },
+    {
+      "path": "scene_test/field_planning_v2/review_audit.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 7473,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "scene_test/field_planning_v2/final_audit.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 4734,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "scene_test/field_planning_v2/video_case_review.json",
+      "kind": "file",
+      "reason": "Generated audit/result metadata for obsolete scene-field experiments",
+      "file_count": 1,
+      "logical_bytes": 10952,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "scene_test/astra_field_slides/evidence_planning.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 7540,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "scene_test/astra_field_slides/evidence_astra.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 17479,
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "scene_test/astra_field_slides/astra_field_explained_zh.pdf",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 2011776,
+      "allocated_bytes": 2015232
+    },
+    {
+      "path": "scene_test/astra_field_slides/deck_manifest.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 3181,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/astra_field_slides/layout_text.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 54237,
+      "allocated_bytes": 57344
+    },
+    {
+      "path": "scene_test/astra_field_slides/validation.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 773,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/astra_field_slides/slides_text.txt",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 13968,
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "scene_test/astra_field_slides/previews",
+      "kind": "directory",
+      "reason": "Generated slide previews or scene evidence assets for older method",
+      "file_count": 20,
+      "logical_bytes": 3741436,
+      "allocated_bytes": 3780608
+    },
+    {
+      "path": "presentations/speedup_v1/evidence_results.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 45568,
+      "allocated_bytes": 49152
+    },
+    {
+      "path": "presentations/speedup_v1/evidence_framework.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 64412,
+      "allocated_bytes": 65536
+    },
+    {
+      "path": "presentations/speedup_v1/assets_provenance_framework.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 6071,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "presentations/speedup_v1/evidence_methods.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 22113,
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "presentations/speedup_v1/speedup_v1_framework_methods_results_zh.pdf",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 2290678,
+      "allocated_bytes": 2293760
+    },
+    {
+      "path": "presentations/speedup_v1/deck_manifest.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 11735,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "presentations/speedup_v1/layout_text.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 74755,
+      "allocated_bytes": 77824
+    },
+    {
+      "path": "presentations/speedup_v1/validation.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 774,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "presentations/speedup_v1/slides_text.txt",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 19565,
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "presentations/speedup_v1/review_notes.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 476,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "presentations/speedup_v1/previews",
+      "kind": "directory",
+      "reason": "Generated slide previews or scene evidence assets for older method",
+      "file_count": 28,
+      "logical_bytes": 5446778,
+      "allocated_bytes": 5492736
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/method_notes.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 22012,
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/results_notes.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 64284,
+      "allocated_bytes": 65536
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/hybrid_method_current_en.pdf",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 964696,
+      "allocated_bytes": 966656
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/slide_manifest.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 38850,
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/pdf_text.txt",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 17289,
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/pdf_qa.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 141,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/source_index.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 3738,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/delivery_manifest.json",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 4689,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/hybrid_method_current_en_source.zip",
+      "kind": "file",
+      "reason": "Generated presentation/results artifact for older unrelated method",
+      "file_count": 1,
+      "logical_bytes": 3249388,
+      "allocated_bytes": 3252224
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/preview",
+      "kind": "directory",
+      "reason": "Generated slide previews or scene evidence assets for older method",
+      "file_count": 25,
+      "logical_bytes": 2928536,
+      "allocated_bytes": 2977792
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/deck_assets",
+      "kind": "directory",
+      "reason": "Generated slide previews or scene evidence assets for older method",
+      "file_count": 7,
+      "logical_bytes": 258199,
+      "allocated_bytes": 274432
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/closed_rgb.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 215005,
+      "allocated_bytes": 217088
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/closed_gt_depth.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 14825,
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/closed_decoded_depth.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 11657,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/closed_absolute_error.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 50129,
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/closed_comparison_strip.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 314093,
+      "allocated_bytes": 315392
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/open_rgb.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 206170,
+      "allocated_bytes": 208896
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/open_gt_depth.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 13682,
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/open_decoded_depth.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 9048,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/open_absolute_error.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 40989,
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/open_comparison_strip.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 292552,
+      "allocated_bytes": 294912
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/depth_colorbar.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 7292,
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/error_colorbar.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 9265,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/collision_native_scene.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 274653,
+      "allocated_bytes": 278528
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/collision_native_scene_marked.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 275595,
+      "allocated_bytes": 278528
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/collision_contact_zoom.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 99965,
+      "allocated_bytes": 102400
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/collision_render_data.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 3823,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/rrt_native_scene.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 260238,
+      "allocated_bytes": 262144
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/rrt_field_panel.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 25984,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "scene_test/astra_field_slides/assets/evidence_figures_manifest.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 26428,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_initial_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 426515,
+      "allocated_bytes": 430080
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_initial_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 67297,
+      "allocated_bytes": 69632
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_initial_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 66184,
+      "allocated_bytes": 69632
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_hold_pass_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 573397,
+      "allocated_bytes": 573440
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_hold_pass_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 79880,
+      "allocated_bytes": 81920
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_hold_pass_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 82153,
+      "allocated_bytes": 86016
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_terminal_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 598437,
+      "allocated_bytes": 602112
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_terminal_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 83954,
+      "allocated_bytes": 86016
+    },
+    {
+      "path": "presentations/speedup_v1/assets/bowl_zero_shot_002_terminal_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 73138,
+      "allocated_bytes": 73728
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_initial_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 424089,
+      "allocated_bytes": 425984
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_initial_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 70488,
+      "allocated_bytes": 73728
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_initial_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 68594,
+      "allocated_bytes": 69632
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_handle_released_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 526534,
+      "allocated_bytes": 528384
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_handle_released_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 76381,
+      "allocated_bytes": 77824
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_handle_released_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 56911,
+      "allocated_bytes": 57344
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_bowl_hold_pass_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 589364,
+      "allocated_bytes": 589824
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_bowl_hold_pass_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 77813,
+      "allocated_bytes": 77824
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_bowl_hold_pass_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 88352,
+      "allocated_bytes": 90112
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_terminal_full.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 579718,
+      "allocated_bytes": 581632
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_terminal_agent.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 79149,
+      "allocated_bytes": 81920
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer_zero_shot_003_terminal_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 76593,
+      "allocated_bytes": 77824
+    },
+    {
+      "path": "presentations/speedup_v1/assets/source_frame_manifest.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 10597,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "presentations/speedup_v1/assets/task_frames_contact_sheet.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 469978,
+      "allocated_bytes": 471040
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_input_external.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 256403,
+      "allocated_bytes": 258048
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_input_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 224052,
+      "allocated_bytes": 225280
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_handle_coarse_success.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 143858,
+      "allocated_bytes": 147456
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_handle_fine_success.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 64366,
+      "allocated_bytes": 65536
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_bowl_coarse_success.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 196911,
+      "allocated_bytes": 200704
+    },
+    {
+      "path": "presentations/speedup_v1/assets/drawer003_bowl_fine_success.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 205231,
+      "allocated_bytes": 208896
+    },
+    {
+      "path": "presentations/speedup_v1/assets/waypoint_field_slices.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 177951,
+      "allocated_bytes": 180224
+    },
+    {
+      "path": "presentations/speedup_v1/assets/waypoint_tracking.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 58607,
+      "allocated_bytes": 61440
+    },
+    {
+      "path": "presentations/speedup_v1/assets/field_figure_manifest.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 1609,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_201_data.npz",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 296322,
+      "allocated_bytes": 299008
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_201_eef_track.csv",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 1399,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_201_input_external.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 50659,
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_201_input_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 41597,
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_201_recorded_compact_and_plan.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 8403,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_300_data.npz",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 329923,
+      "allocated_bytes": 331776
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_300_eef_track.csv",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 1044,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_300_input_external.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 50380,
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_300_input_wrist.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 50678,
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/block_300_recorded_compact_and_plan.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 8206,
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/metadata.json",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 25868,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_cost_slice.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 416210,
+      "allocated_bytes": 417792
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_cost_slice.pdf",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 33127,
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_cost_slice_wide.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 265132,
+      "allocated_bytes": 266240
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_cost_slice_wide.pdf",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 36856,
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_tracking.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 430943,
+      "allocated_bytes": 434176
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_tracking.pdf",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 27946,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/terminal_field_tracking.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 386631,
+      "allocated_bytes": 389120
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/terminal_field_tracking.pdf",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 27164,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_tracking_wide.png",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 175885,
+      "allocated_bytes": 176128
+    },
+    {
+      "path": "reports/hybrid_method_slides_20261012/field_assets/field_tracking_wide.pdf",
+      "kind": "file",
+      "reason": "Generated scene/figure data; retain adjacent builder scripts, font files and licences",
+      "file_count": 1,
+      "logical_bytes": 25444,
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "results/summary.json",
+      "kind": "file",
+      "reason": "Older 2026-10-11 spatial bowl Field/Hybrid aggregate, not UC7/UC7.1/Astranomy baseline",
+      "file_count": 1,
+      "logical_bytes": 6751,
+      "allocated_bytes": 8192
+    }
+  ],
+  "candidate_totals": {
+    "roots_or_files": 145,
+    "files": 19017,
+    "logical_bytes": 3589789069,
+    "allocated_bytes": 3623391232,
+    "allocated_gib": 3.3745460510253906
+  },
+  "active_v3_review_services": {
+    "supervisor": "runs/agent_speedup_v3_t1_t2_t3_001_launch/supervisord.conf",
+    "supervisor_pid": 1237965,
+    "children": [
+      {
+        "name": "speedup_v3_t2",
+        "pid": 1237967,
+        "review_dir": "runs/agent_speedup_v3_t2_review_001",
+        "status": "draft",
+        "version": "agent-speedup-v3-1",
+        "approved": false
+      },
+      {
+        "name": "speedup_v3_t3",
+        "pid": 1237968,
+        "review_dir": "runs/agent_speedup_v3_t3_review_001",
+        "status": "draft",
+        "version": "agent-speedup-v3-1",
+        "approved": false
+      }
+    ],
+    "required_before_deletion": "Stop only these two draft review programs, then shut down this private supervisor if its launch directory is deleted. No task episode is running in either review process. Separate v3 t1_002 supervisor has only exited programs and can be shut down before deleting that launch directory. Do not stop the preserved UC7 manual-batch bridge or editable task0 UC7.1 UI."
+  },
+  "symlink_policy": "Do not follow symlinks. Inspected result directories have no links except .venv interpreter/lib links and two robodojo pulse links; these dependency trees are retained."
+}

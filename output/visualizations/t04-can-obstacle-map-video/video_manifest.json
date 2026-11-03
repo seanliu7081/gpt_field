@@ -1,0 +1,84 @@
+{
+  "video": "t04-can-obstacle-map.mp4",
+  "fps": 20,
+  "width": 1920,
+  "height": 1080,
+  "frames": 3012,
+  "duration_s": 150.6,
+  "control_states": 1277,
+  "playback": "Each control state 0.1s; 0.5x simulator speed; labeled event freezes; API waits omitted",
+  "source_video": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_can_obstacle_t04_20261103_001/trial/episode.mp4",
+  "mapping": "control_state_frames.json",
+  "data": "obstacle_map_timeline.json",
+  "chapters": [
+    {
+      "control_state": 0,
+      "video_time_s": 0.0,
+      "duration_s": 2.1,
+      "title": "初始画面：模型尚未建立障碍地图"
+    },
+    {
+      "control_state": 1,
+      "video_time_s": 2.1,
+      "duration_s": 1.4,
+      "title": "共享障碍地图更新 · 修订 1"
+    },
+    {
+      "control_state": 121,
+      "video_time_s": 15.4,
+      "duration_s": 1.4,
+      "title": "夹爪掌部与白杯发生接触"
+    },
+    {
+      "control_state": 142,
+      "video_time_s": 18.8,
+      "duration_s": 3.1,
+      "title": "白杯与罐子发生接触 · 夹爪闭合阶段"
+    },
+    {
+      "control_state": 156,
+      "video_time_s": 23.2,
+      "duration_s": 1.8,
+      "title": "共享障碍地图更新 · 修订 2"
+    },
+    {
+      "control_state": 395,
+      "video_time_s": 48.8,
+      "duration_s": 3.1,
+      "title": "路径不可用：起点进入新地图的扩张框"
+    },
+    {
+      "control_state": 538,
+      "video_time_s": 66.1,
+      "duration_s": 3.1,
+      "title": "路径跟踪停止：插值涉及被屏蔽网格顶点"
+    },
+    {
+      "control_state": 733,
+      "video_time_s": 88.6,
+      "duration_s": 1.4,
+      "title": "共享障碍地图更新 · 修订 4"
+    },
+    {
+      "control_state": 816,
+      "video_time_s": 98.2,
+      "duration_s": 1.4,
+      "title": "共享障碍地图更新 · 修订 5"
+    },
+    {
+      "control_state": 1276,
+      "video_time_s": 145.5,
+      "duration_s": 5.1,
+      "title": "LIBERO 成功 · 机械臂仍握着第二只杯子"
+    }
+  ],
+  "no_simulator_or_model_calls": true,
+  "terminal_diagnostic_actions_included": false,
+  "failure_freezes": {
+    "395": "new map revision 3 at measured pre-hold state",
+    "538": "invalid measured start before recovery action 538; cyan path suppressed"
+  },
+  "embedded_chapters": true,
+  "qa": "video_qa.json",
+  "size_bytes": 7518914
+}
