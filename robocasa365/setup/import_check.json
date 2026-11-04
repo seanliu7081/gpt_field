@@ -1,0 +1,78 @@
+{
+  "python": "3.11.16 (main, Aug 25 2026, 14:00:53) [Clang 22.1.3 ]",
+  "versions": {
+    "robocasa": "1.0.1",
+    "robosuite": "1.5.2",
+    "numpy": "2.2.5",
+    "scipy": "1.15.3",
+    "numba": "0.61.2",
+    "mujoco": "3.3.1",
+    "Pillow": "12.3.0",
+    "opencv-python": "4.13.0.92",
+    "PyJWT": "2.15.1"
+  },
+  "sources": {
+    "robocasa": "/workspace/gpt_field/robocasa365/vendor/robocasa/robocasa/__init__.py",
+    "robosuite": "/workspace/gpt_field/robocasa365/vendor/robosuite/robosuite/__init__.py"
+  },
+  "restock_pantry_registered": true,
+  "pandaomron_controller_json_loaded": true,
+  "controller_type": "HYBRID_MOBILE_BASE",
+  "controller_body_parts": {
+    "right": {
+      "type": "OSC_POSE",
+      "input_max": 1,
+      "input_min": -1,
+      "output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "output_min": [
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "kp": 150,
+      "damping_ratio": 1,
+      "impedance_mode": "fixed",
+      "kp_limits": [
+        0,
+        300
+      ],
+      "damping_ratio_limits": [
+        0,
+        10
+      ],
+      "position_limits": null,
+      "orientation_limits": null,
+      "uncouple_pos_ori": true,
+      "input_type": "delta",
+      "input_ref_frame": "base",
+      "interpolation": null,
+      "ramp_ratio": 0.2,
+      "gripper": {
+        "type": "GRIP"
+      }
+    },
+    "torso": {
+      "type": "JOINT_POSITION",
+      "interpolation": "null",
+      "kp": 2000
+    },
+    "base": {
+      "type": "JOINT_VELOCITY",
+      "interpolation": "null"
+    }
+  },
+  "simulator_instances_created": 0,
+  "environment_resets": 0,
+  "policy_actions": 0,
+  "model_calls": 0
+}

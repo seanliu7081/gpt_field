@@ -1,0 +1,36 @@
+{
+  "kind": "authorized_full_test_prelaunch_native_contract_audit",
+  "status": "static_and_fake_checks_passed_native_reset_pending",
+  "source_snapshot_before_correction": {
+    "checked": 1663,
+    "missing": 0,
+    "changed": 0
+  },
+  "correction": {
+    "issue": "Mobile controller output limits are followed by native actuator scaling; yaw actuator range is +/-1.5, not +/-1.",
+    "native_base_actuator_min": [
+      -1.0,
+      -1.0,
+      -1.5
+    ],
+    "native_base_actuator_max": [
+      1.0,
+      1.0,
+      1.5
+    ],
+    "normalized_command_limit": 0.2,
+    "yaw_actuator_command_limit_rad_s": 0.3,
+    "actions_changed": false,
+    "interpretation": "Corrected model-visible scale description and added runtime contract validation; native commands and per-chunk limits unchanged."
+  },
+  "test_command": "PYTHONPATH=src:robocasa365:tests GPT_FIELD_USER_CHECK_TRANSIT_ACTION_M=0.05 robocasa365/.venv/bin/python -m pytest -q robocasa365/tests/test_sim.py",
+  "tests_passed": 25,
+  "tests_failed": 0,
+  "simulator_creations": 0,
+  "model_calls": 0,
+  "runtime_seal_requires_refresh": true,
+  "source_sha256": {
+    "robocasa365/rc365/sim.py": "edde8f5304c1994b42a6592e936b271ce4cf2cd5a92c9df3715fc17e2c4f06af",
+    "robocasa365/tests/test_sim.py": "bc1964fa53d8599f5fff217e78b19872b485f40778aee9f247617233b92d28a0"
+  }
+}

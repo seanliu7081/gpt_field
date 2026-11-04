@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-11-04T05:52:17.674591+00:00",
+  "comparison": "Single saved transit100 episode vs single successful Astranomy direct retry; initial failed Astranomy attempt excluded from per-episode timing.",
+  "runs": {
+    "transit100": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_001",
+    "astranomy": "/workspace/gpt_field/runs/astranomy_direct_can_obstacle_t04_high_20261104_002"
+  },
+  "matched_checks": {
+    "custom_task.bddl": true,
+    "initial_state.npy": true,
+    "initial_rgb_state_sha256": true,
+    "same_task_seed_episode": true,
+    "same_model_effort_subscription": true
+  },
+  "timing_definition": "Control time excludes measured recording. Transit also adds its separate initial-plan model time for the inclusive model-work comparison; this does not include all initial local preparation. Wall-time comparison includes each native wrapper setup/recording/finalization.",
+  "metrics": {
+    "transit100": {
+      "control_excluding_video_s": 287.3210143290926,
+      "separate_initial_plan_model_s": 17.483770861988887,
+      "control_plus_initial_plan_model_s": 304.80478519108146,
+      "total_model_pipeline_s": 217.8163009788841,
+      "process_wall_s": 402.055748,
+      "recording_overhead_s": 67.983264262788,
+      "model_calls": 14,
+      "planning_calls": 1,
+      "execution_calls": 13,
+      "actions": 549,
+      "simulated_motion_s": 27.45,
+      "raw_libero_success": true,
+      "strict_at_policy_terminal": false,
+      "strict_after_separate_38_action_release_diagnostic": true,
+      "can_contact_substep_samples": 0,
+      "robot_nonfinger_object_contact_substep_samples": 3372,
+      "route_planning_s": 0.08725035935640335,
+      "detour_stages": 0,
+      "planner_search_calls": 0
+    },
+    "astranomy": {
+      "control_excluding_video_s": 740.1771660021041,
+      "separate_initial_plan_model_s": 0,
+      "control_plus_initial_plan_model_s": 740.1771660021041,
+      "total_model_pipeline_s": 682.9305808052886,
+      "process_wall_s": 765.4005899978802,
+      "recording_overhead_s": 14.178933664923534,
+      "model_calls": 63,
+      "planning_calls": 0,
+      "execution_calls": 63,
+      "actions": 306,
+      "simulated_motion_s": 15.3,
+      "raw_libero_success": true,
+      "strict_at_policy_terminal": false,
+      "separate_release_diagnostic_performed": false,
+      "can_contact_substep_samples": 426,
+      "robot_nonfinger_object_contact_substep_samples": 154,
+      "can_visibly_tipped": true
+    }
+  },
+  "derived": {
+    "astranomy_over_transit_control_plus_plan_ratio": 2.4283646516182107,
+    "transit_control_plus_plan_reduction_pct": 58.820023206415016,
+    "transit_control_plus_plan_saved_s": 435.3723808110226,
+    "transit_total_wall_reduction_pct": 47.47119962357051,
+    "transit_model_call_reduction_pct": 77.77777777777779,
+    "astranomy_action_reduction_pct": 44.26229508196722,
+    "transit_actions_per_execution_response": 42.23076923076923,
+    "astranomy_actions_per_execution_response": 4.857142857142857
+  },
+  "method_differences": {
+    "transit100": "Initial plan plus multi-stage motion fragments, local execution and reused obstacle map; transit command cap 0.10m, target limit0.50m, contact cap0.005m.",
+    "astranomy": "One absolute target per response,1-5 native20Hz steps; target translation max0.05m, per-step command cap0.02m. Full accepted visual/text history and calibrated geometry."
+  },
+  "caveats": [
+    "One successful recorded episode per framework; different run times/server latency and controller settings, not a controlled causal ablation or success-rate estimate.",
+    "Raw LIBERO reached in both while yellow/white mug remained held/not settled; transit passed a separate38-action release/settle diagnostic excluded from policy action count, while Astranomy has not undergone that test.",
+    "Contact-point counts are repeated physics-substep samples, not independent collision-event counts or safety rankings.",
+    "Transit had no can contact but did have palm/object contact; it is not collision free.",
+    "No route-search/detour activated in this transit episode, so data do not establish A-star search as the cause of obstacle avoidance.",
+    "Fresh Astranomy002 is the successful retry; failed001 consumed34 calls and322.012s additional process wall time but is not included in these per-episode metrics."
+  ],
+  "evidence": {
+    "transit_summary": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_001/result_summary.json",
+    "astranomy_summary": "/workspace/gpt_field/runs/astranomy_direct_can_obstacle_t04_high_20261104_002/result_summary.json",
+    "transit_video": "/workspace/gpt_field/runs/agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_001/trial/episode.mp4",
+    "astranomy_video": "/workspace/gpt_field/runs/astranomy_direct_can_obstacle_t04_high_20261104_002/trial/episode.mp4"
+  }
+}

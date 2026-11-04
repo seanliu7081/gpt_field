@@ -1,0 +1,25 @@
+{
+  "kind": "isolated_mobile_adapter_offline_validation",
+  "status": "passed_offline_only",
+  "command": "PYTHONPATH=src:robocasa365:tests GPT_FIELD_USER_CHECK_TRANSIT_ACTION_M=0.05 robocasa365/.venv/bin/python -m pytest -q robocasa365/tests/test_sim.py",
+  "passed": 22,
+  "failed": 0,
+  "model_calls": 0,
+  "simulator_resets": 0,
+  "simulator_steps": 0,
+  "native_environment_validation": "pending user-approved setup-only reset/controller inspection; no native environment was instantiated",
+  "checked": [
+    "strict native index mapping",
+    "bounded mobile commands and unchanged gripper",
+    "world/base goal reference rebasing using rotated fake frame",
+    "latest torso hold after leaving mobile mode",
+    "consecutive mobile desired-goal persistence",
+    "immutable sent native action archive before in-place transforms",
+    "robot-only mobile observation whitelist",
+    "strict native arm/base/torso contract rejection"
+  ],
+  "source_sha256": {
+    "robocasa365/rc365/sim.py": "9643b5577df428e1ee556aeb2f998e7ee33e615731dcb6d6d8b48c9b03b532a9",
+    "robocasa365/tests/test_sim.py": "42c754cfc0c3a00e9f8a089ecffaa773a17f0e15238c6db1cc89dd237e9456b5"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "audit_type": "independent_read_only_launch_environment_audit_with_separate_offline_test_addition",
+  "recorded_at_asia_shanghai": "2026-11-04T12:55:27.503634+08:00",
+  "preparation_snapshot_audit": {
+    "file_entries_checked": 1663,
+    "mismatches_at_initial_read_only_check": 0,
+    "aggregate_configuration_and_asset_trees_recomputed": false,
+    "upstream_tracked_worktrees_clean": true
+  },
+  "authorized_prelaunch_amendments": {
+    "sources_resealed": false,
+    "current_file_differences_from_preparation": [
+      {
+        "path": "/workspace/gpt_field/robocasa365/configs/restock_pantry.json",
+        "preparation_sha256": "5526d7796fdbcbb1b4a801f0709393255b0b51aa0436d3b5e148ad3af3806380",
+        "current_sha256": "869b67a8804e9b40153b233d1e82b02ee3fcc27d526a94923ca9ea91a2990bb8"
+      },
+      {
+        "path": "/workspace/gpt_field/robocasa365/rc365/policy.py",
+        "preparation_sha256": "3b7ab75e9f5e3f29c037b5528a0691cf72d3e2ab12ab18409781ac58729d72b5",
+        "current_sha256": "2f47b24620f9b6f305c354c62fd8c839e0d26da82ffe48c833c8a17b7b21a3e7"
+      },
+      {
+        "path": "/workspace/gpt_field/robocasa365/rc365/runner.py",
+        "preparation_sha256": "d1a8b58b8cdaf5b98150572c1483798cfcc67fbc60e126f02c8d5bdea2fa9925",
+        "current_sha256": "34e9dc94522d2ebf64ecafb452a53e1d4c9269dff4a8f2a982988629f7d115c3"
+      },
+      {
+        "path": "/workspace/gpt_field/robocasa365/rc365/sim.py",
+        "preparation_sha256": "9643b5577df428e1ee556aeb2f998e7ee33e615731dcb6d6d8b48c9b03b532a9",
+        "current_sha256": "edde8f5304c1994b42a6592e936b271ce4cf2cd5a92c9df3715fc17e2c4f06af"
+      }
+    ],
+    "note": "Parent is applying authorized prelaunch approval-label/controller fixes and must seal final startup sources. Earlier preparation integrity result is not a seal for these amendments."
+  },
+  "native_renderer_static_checks": {
+    "libraries_dlopen_ok": [
+      "libEGL.so.1",
+      "libEGL_nvidia.so.0",
+      "libGLX_nvidia.so.0",
+      "libOpenGL.so.0"
+    ],
+    "nvidia_egl_vendor_json_exists": true,
+    "visible_gpus": 8,
+    "gpu_type": "NVIDIA GeForce RTX 4090",
+    "recommended_device_index": 7,
+    "gpu7_observed_free_memory_mib": 13617,
+    "gpu7_observed_utilization_percent": [
+      59,
+      92,
+      75
+    ],
+    "resource_qualification": "All GPUs shared/busy. GPU7 has memory capacity for rendering; not idle or reserved.",
+    "actual_egl_context_created": false,
+    "suggested_env": {
+      "MUJOCO_GL": "egl",
+      "PYOPENGL_PLATFORM": "egl",
+      "MUJOCO_EGL_DEVICE_ID": "7",
+      "CUDA_VISIBLE_DEVICES": "unset"
+    }
+  },
+  "supervision": {
+    "binaries": [
+      "/usr/local/bin/supervisord",
+      "/usr/local/bin/supervisorctl"
+    ],
+    "example": "runs/astranomy_direct_can_obstacle_t04_high_20261104_002/supervisord.conf",
+    "required_scope": "Unique per-trial socket chmod0600, pidfile, logs; no shared supervisor changes",
+    "recommended_settings": {
+      "autorestart": false,
+      "startretries": 0,
+      "stopsignal": "INT",
+      "stopwaitsecs": 240
+    },
+    "wrapper": "Use exec so SIGINT reaches the runner; simulator child cleanup remains runner-owned"
+  },
+  "capacity_observed": {
+    "disk_available_gib": 179,
+    "ram_available_gib": 329
+  },
+  "real_simulator_instances_started_by_auditor": 0,
+  "environment_resets_by_auditor": 0,
+  "model_requests_by_auditor": 0,
+  "credentials_read_by_auditor": false,
+  "shared_services_modified": false
+}

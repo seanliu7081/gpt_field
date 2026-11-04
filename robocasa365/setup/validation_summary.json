@@ -1,0 +1,52 @@
+{
+  "status": "READY_FOR_USER_TEST_APPROVAL_OFFLINE_ONLY",
+  "completed_at_asia_shanghai": "2026-11-04T12:51:49.460692+08:00",
+  "scope": "Plan, isolated installation/assets, mobile adapter and pure offline tests only",
+  "first_task": "RestockPantry",
+  "first_test_authorized": false,
+  "user_selected_mobile_base_and_torso": true,
+  "offline_tests": {
+    "tests": 71,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_files_sealed": 1663,
+  "parent_baseline_files_unchanged": 38,
+  "source_inventory_matches_final_files": true,
+  "full_asset_content_tree_sha256": {
+    "@robocasa_assets_tree": "b5bdd61d2710eda978c5c3f6a065a9f10071e821fef5dc7980c14a6f6f1ac0d2",
+    "@robosuite_assets_tree": "f5335b671c1bdab6a3f771f57459934846ffe674f4ea09c152202a8436653140"
+  },
+  "catalog_counts": {
+    "total": 365,
+    "atomic": 65,
+    "composite": 300,
+    "dataset_metadata_available": 317,
+    "horizon_known": 317,
+    "horizon_unknown": 48
+  },
+  "real_simulator_instances": 0,
+  "real_environment_resets": 0,
+  "real_policy_actions": 0,
+  "live_model_requests": 0,
+  "api_key_requests": 0,
+  "demonstration_downloads": 0,
+  "automatic_trial_queue": false,
+  "limits": [
+    "Native renderer/controller/reset reproducibility and task performance are not real-simulator validated; first authorized trial must validate them.",
+    "Mobile chunks are bounded native controls, without autonomous navigation or full-body collision planning.",
+    "First trial is an uncapped exploratory pilot; official reference horizon2550 is separately reported, not an official target50 score.",
+    "48 task catalog entries lack an official registry horizon; none is invented.",
+    "Runtime-only environment deliberately omits upstream lerobot/tianshou training or benchmark-tool dependencies."
+  ],
+  "artifacts": [
+    "PLAN_ZH.md",
+    "README.md",
+    "configs/restock_pantry.json",
+    "configs/task_catalog.json",
+    "setup/provisioning_report.json",
+    "setup/preparation_inventory.json",
+    "setup/offline_tests.xml"
+  ]
+}
