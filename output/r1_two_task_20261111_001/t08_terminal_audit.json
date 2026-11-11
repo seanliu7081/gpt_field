@@ -1,0 +1,284 @@
+{
+  "audit_version": 1,
+  "created_at_utc": "2026-11-10T16:45:08.661180+00:00",
+  "run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_004",
+  "method": "Saved artifacts only; hashes, trace continuity, metrics, recorded request metadata, and ffprobe frame read. No policy replay, model calls, or simulator reset.",
+  "passed": true,
+  "checks": {
+    "source_map_equals_original_r1": {
+      "passed": true,
+      "detail": {
+        "source_count": 370
+      }
+    },
+    "run_frozen_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "runtime_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "terminal_source_audit": {
+      "passed": true
+    },
+    "frozen_input_paths_match": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "input_custom_task.bddl": {
+      "passed": true
+    },
+    "input_initial_state.npy": {
+      "passed": true
+    },
+    "initial_observation_sha": {
+      "passed": true,
+      "detail": {
+        "sha256": "7f96963551a64fc826f1cbf549e81497ddb1f40258ad9ee7438bb81dc5411080"
+      }
+    },
+    "policy_action_step_sequence": {
+      "passed": true,
+      "detail": {
+        "actions": 504
+      }
+    },
+    "complete_state_chain": {
+      "passed": true,
+      "detail": {
+        "mismatch_steps": []
+      }
+    },
+    "initial_and_terminal_state_match": {
+      "passed": true
+    },
+    "finite_valid_actions_and_states": {
+      "passed": true
+    },
+    "all_feedback_complete": {
+      "passed": true
+    },
+    "decision_step_matches": {
+      "passed": true
+    },
+    "autonomous_terminal": {
+      "passed": true
+    },
+    "unchanged_gripper_terminal_hold": {
+      "passed": true
+    },
+    "subscription_counts": {
+      "passed": true,
+      "detail": {
+        "count": 12
+      }
+    },
+    "subscription_only": {
+      "passed": true
+    },
+    "requested_model_revision_effort": {
+      "passed": true
+    },
+    "all_requests_valid": {
+      "passed": true
+    },
+    "request_sequence": {
+      "passed": true
+    },
+    "no_retries_or_episode_caps": {
+      "passed": true
+    },
+    "model_latency_sum": {
+      "passed": true
+    },
+    "strict_score_consistency": {
+      "passed": true
+    },
+    "raw_score_consistency": {
+      "passed": true
+    },
+    "evaluation_step_counts": {
+      "passed": true
+    },
+    "result_summary_consistency": {
+      "passed": true
+    },
+    "result_launch_timing": {
+      "passed": true
+    },
+    "online_timing_not_video_subtracted": {
+      "passed": true
+    },
+    "trace_timing_monotonic": {
+      "passed": true
+    },
+    "simulator_step_timing_sum": {
+      "passed": true
+    },
+    "feedback_timing_sum": {
+      "passed": true
+    },
+    "decision_timing_sum": {
+      "passed": true
+    },
+    "collision_snapshot_matches_trace": {
+      "passed": true
+    },
+    "collision_class_totals": {
+      "passed": true
+    },
+    "collision_pair_totals": {
+      "passed": true
+    },
+    "video_readable": {
+      "passed": true,
+      "detail": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1600,
+            "height": 960,
+            "r_frame_rate": "10/1",
+            "duration": "101.000000",
+            "nb_read_frames": "1010"
+          }
+        ],
+        "format": {
+          "duration": "101.000000",
+          "size": "4689625"
+        }
+      }
+    },
+    "video_finalized": {
+      "passed": true
+    }
+  },
+  "check_count": 38,
+  "metrics": {
+    "status": "finish",
+    "steps": 504,
+    "online_wall_s": 240.11417578184046,
+    "strict_success": true,
+    "strict_success_at_terminal": true,
+    "strict_success_after_same_gripper_hold": true,
+    "raw_success_at_terminal": true,
+    "raw_success_after_same_gripper_hold": true,
+    "completion_wall_s": 241.23043062491342,
+    "completion_time_eligible": true,
+    "model_requests": 12,
+    "api_key_calls": 0,
+    "model_latency_s": 163.31447501364164,
+    "vision_tool_s": 8.819615400861949,
+    "forbidden_contact_samples": 565,
+    "forbidden_contact_class_counts": {
+      "robot_scene": 0,
+      "robot_nonfinger_manipulated_object": 0,
+      "robot_object": 0,
+      "manipulated_object_scene": 565
+    },
+    "forbidden_contact_pairs": {
+      "robot_scene": [],
+      "robot_nonfinger_manipulated_object": [],
+      "robot_object": [],
+      "manipulated_object_scene": [
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 218,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g6"
+          ],
+          "points": 255
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 218,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g3"
+          ],
+          "points": 184
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 482,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g7"
+          ],
+          "points": 37
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 482,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g3"
+          ],
+          "points": 36
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 228,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g4"
+          ],
+          "points": 22
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 228,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g8"
+          ],
+          "points": 19
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 228,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g2"
+          ],
+          "points": 12
+        }
+      ]
+    },
+    "trace_event_counts": {
+      "reset": 1,
+      "action": 504,
+      "raw_success_first_reached": 1,
+      "policy_terminal": 1,
+      "evaluator_same_gripper_hold": 10
+    }
+  },
+  "artifact_sha256": {
+    "result.json": "621b09e8ff34f3dd2af9744f2fc3759f55dc1f9abc47ef537b9112442dcffb3a",
+    "trial/summary.json": "f8b8bb1ca9b9e7421af6daa7e93fd9021029d185ca74b4d4ad4e143d2dacee10",
+    "trial/trace.jsonl": "2db97fe2f8dbb55d7708edc186b8e95d53294bad7b3a9456d0f554d65e0717b2",
+    "source_manifest.json": "5bb3f7c727e142ca27434331ac60c03a9aacf954907bf8d5f629e88b56d8418a",
+    "trial/episode.mp4": "86c4c32f283b7f7969bc18800ecd84ad900b1fe52be9e6012fb325f83110d712"
+  },
+  "limitations": [
+    "No full simulator replay or independent physical re-evaluation; raw and strict scores cross-checked against recorded evaluator artifacts.",
+    "Contact counts are sampled contact points, not distinct collision incidents.",
+    "Video playback duration is not online wall time."
+  ]
+}

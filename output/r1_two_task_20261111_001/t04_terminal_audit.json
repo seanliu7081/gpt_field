@@ -1,0 +1,234 @@
+{
+  "audit_version": 1,
+  "created_at_utc": "2026-11-10T16:42:40.912296+00:00",
+  "run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_008",
+  "method": "Saved artifacts only; hashes, trace continuity, metrics, recorded request metadata, and ffprobe frame read. No policy replay, model calls, or simulator reset.",
+  "passed": true,
+  "checks": {
+    "source_map_equals_original_r1": {
+      "passed": true,
+      "detail": {
+        "source_count": 370
+      }
+    },
+    "run_frozen_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "runtime_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "terminal_source_audit": {
+      "passed": true
+    },
+    "frozen_input_paths_match": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "input_custom_task.bddl": {
+      "passed": true
+    },
+    "input_initial_state.npy": {
+      "passed": true
+    },
+    "initial_observation_sha": {
+      "passed": true,
+      "detail": {
+        "sha256": "06f623f31ee2ea2e8ef600ce29d299413d81a8647d8f59663f3aff2e660da187"
+      }
+    },
+    "policy_action_step_sequence": {
+      "passed": true,
+      "detail": {
+        "actions": 474
+      }
+    },
+    "complete_state_chain": {
+      "passed": true,
+      "detail": {
+        "mismatch_steps": []
+      }
+    },
+    "initial_and_terminal_state_match": {
+      "passed": true
+    },
+    "finite_valid_actions_and_states": {
+      "passed": true
+    },
+    "all_feedback_complete": {
+      "passed": true
+    },
+    "decision_step_matches": {
+      "passed": true
+    },
+    "autonomous_terminal": {
+      "passed": true
+    },
+    "unchanged_gripper_terminal_hold": {
+      "passed": true
+    },
+    "subscription_counts": {
+      "passed": true,
+      "detail": {
+        "count": 16
+      }
+    },
+    "subscription_only": {
+      "passed": true
+    },
+    "requested_model_revision_effort": {
+      "passed": true
+    },
+    "all_requests_valid": {
+      "passed": true
+    },
+    "request_sequence": {
+      "passed": true
+    },
+    "no_retries_or_episode_caps": {
+      "passed": true
+    },
+    "model_latency_sum": {
+      "passed": true
+    },
+    "strict_score_consistency": {
+      "passed": true
+    },
+    "raw_score_consistency": {
+      "passed": true
+    },
+    "evaluation_step_counts": {
+      "passed": true
+    },
+    "result_summary_consistency": {
+      "passed": true
+    },
+    "result_launch_timing": {
+      "passed": true
+    },
+    "online_timing_not_video_subtracted": {
+      "passed": true
+    },
+    "trace_timing_monotonic": {
+      "passed": true
+    },
+    "simulator_step_timing_sum": {
+      "passed": true
+    },
+    "feedback_timing_sum": {
+      "passed": true
+    },
+    "decision_timing_sum": {
+      "passed": true
+    },
+    "collision_snapshot_matches_trace": {
+      "passed": true
+    },
+    "collision_class_totals": {
+      "passed": true
+    },
+    "collision_pair_totals": {
+      "passed": true
+    },
+    "video_readable": {
+      "passed": true,
+      "detail": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1600,
+            "height": 960,
+            "r_frame_rate": "10/1",
+            "duration": "95.000000",
+            "nb_read_frames": "950"
+          }
+        ],
+        "format": {
+          "duration": "95.000000",
+          "size": "4123671"
+        }
+      }
+    },
+    "video_finalized": {
+      "passed": true
+    }
+  },
+  "check_count": 38,
+  "metrics": {
+    "status": "finish",
+    "steps": 474,
+    "online_wall_s": 279.1285198801197,
+    "strict_success": true,
+    "strict_success_at_terminal": true,
+    "strict_success_after_same_gripper_hold": true,
+    "raw_success_at_terminal": true,
+    "raw_success_after_same_gripper_hold": true,
+    "completion_wall_s": 280.429941568058,
+    "completion_time_eligible": true,
+    "model_requests": 16,
+    "api_key_calls": 0,
+    "model_latency_s": 181.84951930842362,
+    "vision_tool_s": 23.017620509956032,
+    "forbidden_contact_samples": 4,
+    "forbidden_contact_class_counts": {
+      "robot_scene": 0,
+      "robot_nonfinger_manipulated_object": 0,
+      "robot_object": 0,
+      "manipulated_object_scene": 4
+    },
+    "forbidden_contact_pairs": {
+      "robot_scene": [],
+      "robot_nonfinger_manipulated_object": [],
+      "robot_object": [],
+      "manipulated_object_scene": [
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 111,
+          "first_phase": "action",
+          "pair": [
+            "porcelain_mug_1:porcelain_mug_1_g8",
+            "tomato_sauce_obstacle_1:tomato_sauce_obstacle_1_g11"
+          ],
+          "points": 2
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 112,
+          "first_phase": "action",
+          "pair": [
+            "porcelain_mug_1:porcelain_mug_1_g9",
+            "tomato_sauce_obstacle_1:tomato_sauce_obstacle_1_g4"
+          ],
+          "points": 2
+        }
+      ]
+    },
+    "trace_event_counts": {
+      "reset": 1,
+      "action": 474,
+      "raw_success_first_reached": 1,
+      "policy_terminal": 1,
+      "evaluator_same_gripper_hold": 10
+    }
+  },
+  "artifact_sha256": {
+    "result.json": "30a10ab624cc663d2c3ade0376ee6dc3b3abb40e9ce276896198bb7df5557250",
+    "trial/summary.json": "dddbd0ae72a20e2ff469f2a37621b1181a8742a492dda5beb31e7edc17e5894c",
+    "trial/trace.jsonl": "10e14ba641ea29f2f3f312ceeaa84a4b2e0cddd3b904c9d4a87a32995e4e4ec2",
+    "source_manifest.json": "445ba9c91ab5e97ff833fb4e58921ba8312782f633e0bc64603b958dda53df54",
+    "trial/episode.mp4": "ef9531c01567744ea7e97181a7e05643b899536f4bc656ede3afb1d5ba2cdbaf"
+  },
+  "limitations": [
+    "No full simulator replay or independent physical re-evaluation; raw and strict scores cross-checked against recorded evaluator artifacts.",
+    "Contact counts are sampled contact points, not distinct collision incidents.",
+    "Video playback duration is not online wall time."
+  ]
+}

@@ -1,0 +1,604 @@
+{
+  "kind": "Recovered exact historical LIBERO-10 relayout states",
+  "suite": "libero_10",
+  "seed": 7,
+  "episode_index": 0,
+  "scene_kind": "object-position relayout; no obstacle scene",
+  "new_simulator_actions": 0,
+  "new_model_calls": 0,
+  "reconstruction_script": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/recover_states.py",
+  "tasks": {
+    "0": {
+      "task_id": 0,
+      "official_init_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.pruned_init",
+        "sha256": "1899fe54c51e24a41d5f9e32254730d6777f4894ab68e0e873f1fa7ae2062030",
+        "bytes": 58927
+      },
+      "official_bddl_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+        "sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+        "bytes": 3284
+      },
+      "official_init_index": 0,
+      "seed": 7,
+      "episode_index": 0,
+      "task_bddl_override": null,
+      "task_prompt": "put both the alphabet soup and the tomato sauce in the basket",
+      "recovery_method": "Official saved pruned_init[0] plus exact XY assignments printed in preserved comparison PNG; np.save bytes match historical SHA256 exactly. All other state entries preserved bit-for-bit.",
+      "relayout_xy_source": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t0_layout_comparison.png",
+        "sha256": "3ee847c7bf2c8a71f9404604dd34449b865b2d537a2cdbfcb3bf08a9ea1801d9",
+        "bytes": 419015
+      },
+      "expected_state_sha256_source": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/evidence.json",
+        "sha256": "29e90e152dc6169b625a62604d061db9319d33bec3a7cdfd4c65cc1f776491af",
+        "bytes": 134291
+      },
+      "expected_initial_state_sha256": "d41107793aac76bbd4ee943d783263237c1337f85b9b73de4a96ef26212e82f7",
+      "expected_initial_observation_sha256": "80291bb31e2f166146b30a7df13a45b0e04e276a8fdcbfc87a8a7af1a29cbe8a",
+      "expected_initial_observation_hash_source_field": "tasks.t0.approval.initial_observation_sha256",
+      "historical_initial_observation_json_file_sha256": "650dc3d7b9fd632029224c0b0e818283b9ff6c0fdd29ffedf6dfbea7de71dd2c",
+      "object_changes": [
+        {
+          "object": "alphabet_soup_1",
+          "flat_state_xy_indices": [
+            10,
+            11
+          ],
+          "original_xyz_m": [
+            -0.10200787573587462,
+            -0.15245675106573645,
+            0.45999999999999996
+          ],
+          "relayout_xyz_m": [
+            -0.1,
+            -0.2,
+            0.45999999999999996
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.7071067811865475,
+            0.7071067811865476
+          ]
+        },
+        {
+          "object": "cream_cheese_1",
+          "flat_state_xy_indices": [
+            17,
+            18
+          ],
+          "original_xyz_m": [
+            0.07851475615653067,
+            -0.19384593250156518,
+            0.445
+          ],
+          "relayout_xyz_m": [
+            0.13,
+            -0.25,
+            0.445
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "object": "tomato_sauce_1",
+          "flat_state_xy_indices": [
+            24,
+            25
+          ],
+          "original_xyz_m": [
+            -0.11754099846757801,
+            0.05570959126855292,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.16,
+            -0.02,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.7071067811865475,
+            0.7071067811865476
+          ]
+        },
+        {
+          "object": "ketchup_1",
+          "flat_state_xy_indices": [
+            31,
+            32
+          ],
+          "original_xyz_m": [
+            -0.26846907903339406,
+            -0.14861372060670922,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.27,
+            -0.17,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "orange_juice_1",
+          "flat_state_xy_indices": [
+            38,
+            39
+          ],
+          "original_xyz_m": [
+            0.009968143460064742,
+            -0.2592226309284922,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.04,
+            -0.33,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "milk_1",
+          "flat_state_xy_indices": [
+            45,
+            46
+          ],
+          "original_xyz_m": [
+            0.04927029324642466,
+            -0.12142612683920982,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            0.15,
+            -0.1,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "butter_1",
+          "flat_state_xy_indices": [
+            52,
+            53
+          ],
+          "original_xyz_m": [
+            0.07044719834440541,
+            0.0526561777194373,
+            0.44
+          ],
+          "relayout_xyz_m": [
+            0.08,
+            0.02,
+            0.44
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "object": "basket_1",
+          "flat_state_xy_indices": [
+            59,
+            60
+          ],
+          "original_xyz_m": [
+            -0.002115741484281673,
+            0.2690198914964389,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            0.04,
+            0.24,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.7071067811865475,
+            0.0,
+            0.0,
+            0.7071067811865476
+          ]
+        }
+      ],
+      "expected_external_image": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t0_initial.png",
+        "sha256": "18ac7b4be7da291ccf64326e042e2afb981330c79fa8df2ec872df21bba31b23",
+        "bytes": 248062
+      },
+      "expected_wrist_image": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t0_initial_wrist.png",
+        "sha256": "773ff0fd71b2190716f95ac4f177843b1e87ebf47316507d23009a1f3ae41dd7",
+        "bytes": 213730
+      },
+      "initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_00/initial_state.npy",
+        "sha256": "d41107793aac76bbd4ee943d783263237c1337f85b9b73de4a96ef26212e82f7",
+        "bytes": 1112
+      },
+      "official_initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_00/official_initial_state.npy",
+        "sha256": "d5a46322e75ea9de30e7e8c7c116bb3fa0585a29cc07bd4308c3009ea2898073",
+        "bytes": 1112
+      },
+      "state_shape": [
+        123
+      ],
+      "state_dtype": "float64",
+      "changed_indices_from_official_init0": [
+        10,
+        11,
+        17,
+        18,
+        24,
+        25,
+        31,
+        32,
+        38,
+        39,
+        45,
+        46,
+        52,
+        53,
+        59,
+        60
+      ],
+      "changed_entry_count": 16,
+      "hash_verified_against_historical": true
+    },
+    "1": {
+      "task_id": 1,
+      "official_init_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket.pruned_init",
+        "sha256": "f8ac06ea8f43bb328d40cba1e6a9767da2f8f5386fd7ff3f845c64a96bf6d2ce",
+        "bytes": 58991
+      },
+      "official_bddl_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket.bddl",
+        "sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+        "bytes": 3267
+      },
+      "official_init_index": 0,
+      "seed": 7,
+      "episode_index": 0,
+      "task_bddl_override": null,
+      "task_prompt": "put both the cream cheese box and the butter in the basket",
+      "recovery_method": "Official saved pruned_init[0] plus exact XY assignments printed in preserved comparison PNG; np.save bytes match historical SHA256 exactly. All other state entries preserved bit-for-bit.",
+      "relayout_xy_source": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t1_layout_comparison.png",
+        "sha256": "37ba3a748150bc45d6535a282934116f6462406ddda7e7aaba7bca0a2d053610",
+        "bytes": 423295
+      },
+      "expected_state_sha256_source": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/evidence.json",
+        "sha256": "29e90e152dc6169b625a62604d061db9319d33bec3a7cdfd4c65cc1f776491af",
+        "bytes": 134291
+      },
+      "expected_initial_state_sha256": "15431fb136250d0f2ab94d03632851b4ff81d3621e59be69bae98508cddcf043",
+      "expected_initial_observation_sha256": "149c8f6ec6f72f7fed761e886bd68d9d3126bdde011d10f8a54d04322c731e46",
+      "expected_initial_observation_hash_source_field": "tasks.t1.approval.initial_observation_sha256",
+      "historical_initial_observation_json_file_sha256": "c85dab85e9ee16b13721ac74679fd0a798442ec6706b839a2190ee415dbc565a",
+      "object_changes": [
+        {
+          "object": "alphabet_soup_1",
+          "flat_state_xy_indices": [
+            10,
+            11
+          ],
+          "original_xyz_m": [
+            -0.10343406804340499,
+            -0.14994678365660474,
+            0.45999999999999996
+          ],
+          "relayout_xyz_m": [
+            0.12,
+            -0.26,
+            0.45999999999999996
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.7071067811865475,
+            0.7071067811865476
+          ]
+        },
+        {
+          "object": "cream_cheese_1",
+          "flat_state_xy_indices": [
+            17,
+            18
+          ],
+          "original_xyz_m": [
+            0.09910931425692633,
+            -0.18146601062546336,
+            0.445
+          ],
+          "relayout_xyz_m": [
+            -0.13,
+            0.02,
+            0.445
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "object": "tomato_sauce_1",
+          "flat_state_xy_indices": [
+            24,
+            25
+          ],
+          "original_xyz_m": [
+            -0.08848456163040092,
+            0.07119192282314185,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.02,
+            -0.08,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.7071067811865475,
+            0.7071067811865476
+          ]
+        },
+        {
+          "object": "ketchup_1",
+          "flat_state_xy_indices": [
+            31,
+            32
+          ],
+          "original_xyz_m": [
+            -0.26081828142576224,
+            -0.15670343898534853,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.27,
+            -0.08,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "orange_juice_1",
+          "flat_state_xy_indices": [
+            38,
+            39
+          ],
+          "original_xyz_m": [
+            -0.01843698929868356,
+            -0.2555515124556591,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            -0.05,
+            -0.33,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "milk_1",
+          "flat_state_xy_indices": [
+            45,
+            46
+          ],
+          "original_xyz_m": [
+            0.0666567767297282,
+            -0.10473606120912497,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            0.14,
+            -0.08,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "object": "butter_1",
+          "flat_state_xy_indices": [
+            52,
+            53
+          ],
+          "original_xyz_m": [
+            0.0489602377124352,
+            0.05760379687259051,
+            0.44
+          ],
+          "relayout_xyz_m": [
+            -0.16,
+            -0.19,
+            0.44
+          ],
+          "orientation_wxyz_preserved": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "object": "basket_1",
+          "flat_state_xy_indices": [
+            59,
+            60
+          ],
+          "original_xyz_m": [
+            0.007047460269848741,
+            0.26467591357914333,
+            0.48
+          ],
+          "relayout_xyz_m": [
+            0.04,
+            0.22,
+            0.48
+          ],
+          "orientation_wxyz_preserved": [
+            0.7071067811865475,
+            0.0,
+            0.0,
+            0.7071067811865476
+          ]
+        }
+      ],
+      "expected_external_image": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t1_initial.png",
+        "sha256": "09979ef4d2f26d19ed8a32f80aee31ab3fdf878b9af87cb7edd45a891c9fa0ee",
+        "bytes": 248461
+      },
+      "expected_wrist_image": {
+        "path": "/workspace/gpt_field/presentations/speedup_v2_user_check_v71_libero10_en/assets/t1_initial_wrist.png",
+        "sha256": "76a9587f949fdfc541bc23bc70adcce80fa2e51a0206917fa2d55445f2c0f2d4",
+        "bytes": 208039
+      },
+      "initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_01/initial_state.npy",
+        "sha256": "15431fb136250d0f2ab94d03632851b4ff81d3621e59be69bae98508cddcf043",
+        "bytes": 1112
+      },
+      "official_initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_01/official_initial_state.npy",
+        "sha256": "efc8d7e756d4e2c02fae161763b391b0ee7ba6797c09a2d088a1e318e169f5b2",
+        "bytes": 1112
+      },
+      "state_shape": [
+        123
+      ],
+      "state_dtype": "float64",
+      "changed_indices_from_official_init0": [
+        10,
+        11,
+        17,
+        18,
+        24,
+        25,
+        31,
+        32,
+        38,
+        39,
+        45,
+        46,
+        52,
+        53,
+        59,
+        60
+      ],
+      "changed_entry_count": 16,
+      "hash_verified_against_historical": true
+    },
+    "6": {
+      "task_id": 6,
+      "official_init_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/init_files/libero_10/LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate.pruned_init",
+        "sha256": "6e811394c4ff9a43ae23515d8512e9b657c04344b94dd5baed121b595490514f",
+        "bytes": 35119
+      },
+      "official_bddl_source": {
+        "path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate.bddl",
+        "sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+        "bytes": 2458
+      },
+      "official_init_index": 0,
+      "seed": 7,
+      "episode_index": 0,
+      "task_bddl_override": null,
+      "task_prompt": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "recovery_method": "Byte-for-byte copy of retained frozen historical initial_state.npy; source hash matches preserved review metadata.",
+      "initial_state_source": {
+        "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t6_relayout/frozen_inputs/initial_state.npy",
+        "sha256": "77105d4e8f8d72675690bb9f0e9a579e1ab1621b04dd75e914fc54d473502a26",
+        "bytes": 696
+      },
+      "review_source": {
+        "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t6_relayout/review.json",
+        "sha256": "6b3aa666b65575b4a2b2629bc374528b29db8bc244c7f45dc89ea4cff052bc33",
+        "bytes": 1443723
+      },
+      "initial_observation_source": {
+        "path": "/workspace/gpt_field/reports/uc7_direction_semantics_20261028/implementation_uc71/v1_planning/libero_10_t6_relayout/initial_observation.json",
+        "sha256": "e17795cde64c2c8d8cffbb7dd84f28b3871720fd479957192d1410a58cacdd22",
+        "bytes": 584041
+      },
+      "expected_initial_state_sha256": "77105d4e8f8d72675690bb9f0e9a579e1ab1621b04dd75e914fc54d473502a26",
+      "expected_initial_observation_sha256": "ddb1ee8d611863cb002fb3012d35244d39c790a7204750945004695a51d4ab3c",
+      "expected_initial_observation_hash_source_field": "review.initial_observation_sha256",
+      "expected_external_image": {
+        "path": "/workspace/gpt_field/output/visualizations/libero10-relayout-comparison-20261105/task_06/relayout_external.png",
+        "sha256": "0d26bb387be2a8998a3df3ecc444519a68d9d2e1f1ed78a0d011769d7745fe49",
+        "bytes": 266821
+      },
+      "initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_06/initial_state.npy",
+        "sha256": "77105d4e8f8d72675690bb9f0e9a579e1ab1621b04dd75e914fc54d473502a26",
+        "bytes": 696
+      },
+      "official_initial_state": {
+        "path": "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/task_06/official_initial_state.npy",
+        "sha256": "0efcee9432909b308e59c34c6e9350635314a27ac59556072e218217e661051a",
+        "bytes": 696
+      },
+      "state_shape": [
+        71
+      ],
+      "state_dtype": "float64",
+      "changed_indices_from_official_init0": [
+        10,
+        11,
+        17,
+        18,
+        31,
+        32
+      ],
+      "changed_entry_count": 6,
+      "hash_verified_against_historical": true
+    }
+  }
+}

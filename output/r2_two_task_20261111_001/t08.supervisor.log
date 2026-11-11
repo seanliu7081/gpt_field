@@ -1,0 +1,2191 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /venv/fm_dno/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /workspace/heading_flow_pub/third_party/LIBERO/libero/datasets does not exist!
+/workspace/gpt_field/artifacts/foundation_vision/vendor/depth-anything-3/src/depth_anything_3/cfg.py:25: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval)
+[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70
+[INFO ] using MLP layer as FFN
+Loading weights from local directory
+[INFO ] Processed Images Done taking 0.0646669864654541 seconds. Shape:  torch.Size([2, 3, 504, 504])
+[INFO ] Using camera conditions provided by the user
+[INFO ] Model Forward Pass Done. Time: 0.5707900524139404 seconds
+[INFO ] Conversion to Prediction Done. Time: 0.0026314258575439453 seconds
+{
+  "version": "foundation_vision_harness_V3",
+  "status": "finish",
+  "error": null,
+  "task": "libero_10_t8",
+  "episode_index": 0,
+  "steps": 936,
+  "terminal_claim": {
+    "kind": "finish",
+    "reason": "Both moka pots are visibly upright on the stove, and the open gripper has withdrawn clear of their handles.",
+    "step": 936
+  },
+  "withheld_decisions_after_stop": 0,
+  "first_raw_success": {
+    "step": 861,
+    "online_wall_s": 429.69104277784936
+  },
+  "raw_success_at_terminal": true,
+  "strict_success_at_terminal": true,
+  "raw_success_after_same_gripper_hold": true,
+  "strict_success_after_same_gripper_hold": true,
+  "same_gripper_hold_steps": 10,
+  "strict_success": true,
+  "completion_time_eligible": true,
+  "completion_wall_s": 450.8829959637951,
+  "online_wall_s": 449.77578085497953,
+  "evaluation_hold_wall_s": 1.0955019278917462,
+  "startup_wall_s": 4.697778496192768,
+  "postprocessing_wall_s": 2.1650061707478017,
+  "total_wall_s": 456.6385655219201,
+  "video_time_subtracted": false,
+  "agent_stats": {
+    "version": "foundation_vision_harness_V3",
+    "revision": "astra_tools_r2_obstacle_map",
+    "step": 936,
+    "terminal": {
+      "kind": "finish",
+      "reason": "Both moka pots are visibly upright on the stove, and the open gripper has withdrawn clear of their handles.",
+      "step": 936
+    },
+    "model_decisions": 15,
+    "grasp_attempts": 2,
+    "completed_segments": 25,
+    "queue_remaining": 0,
+    "segment_history": [
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "near moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.015,
+                -0.022,
+                1.065
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_stall",
+        "step": 25
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.045,
+                -0.022,
+                1.135
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                0.9238797538373537,
+                0.3826828980362601,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "route_unavailable",
+        "step": 25
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 62,
+        "evidence": {
+          "position_error_m": 0.001273798831793347,
+          "orientation_error_rad": 0.001382727174094878,
+          "measured_pose_wxyz": [
+            -0.011577873456572269,
+            -0.022724273100700732,
+            1.1367877787931617,
+            0.0008721660373620275,
+            -0.9999756597196605,
+            -0.0005617126052573921,
+            0.006899548795534593,
+            0.0006145971467604872
+          ],
+          "measured_gap_mm": 79.95083222825916,
+          "target_xyz_m": [
+            -0.011115552578416961,
+            -0.022387497813892515,
+            1.1379259375148236
+          ],
+          "target_quaternion_wxyz": [
+            0.000568772161613166,
+            -0.999972116028049,
+            -0.0002581784768850849,
+            0.007441572984826165
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 88
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.045,
+                -0.022,
+                1.14
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                0.9238795391929063,
+                0.3826834162342326,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 34,
+        "evidence": {
+          "position_error_m": 0.003883393662321465,
+          "orientation_error_rad": 0.03415726199512652,
+          "measured_pose_wxyz": [
+            0.047896676202506844,
+            -0.022627608169954985,
+            1.1425092073049858,
+            0.0017078381273681082,
+            -0.930182323770971,
+            -0.3670860589097762,
+            0.0023985802165924007,
+            0.00017358326091532206
+          ],
+          "measured_gap_mm": 79.98611333912677,
+          "target_xyz_m": [
+            0.045,
+            -0.022,
+            1.14
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            0.9238795391929063,
+            0.3826834162342326,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.05667361556733401,
+                "planning_s": 0.003928367979824543,
+                "map_source": "shared_map",
+                "map_revision": 2
+              }
+            }
+          ]
+        },
+        "step": 122
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.045,
+                -0.022,
+                1.105
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                0.7071067811865475,
+                0.7071067811865475,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 35,
+        "evidence": {
+          "position_error_m": 0.0014875798985774823,
+          "orientation_error_rad": 0.03490238936986558,
+          "measured_pose_wxyz": [
+            0.04386482096603786,
+            -0.02213874527060494,
+            1.1059513213260457,
+            0.001072465096733469,
+            -0.7193060755401265,
+            -0.694692147031978,
+            -0.0006635976028439057,
+            5.448346499292711e-05
+          ],
+          "measured_gap_mm": 79.99564132280057,
+          "target_xyz_m": [
+            0.045,
+            -0.022,
+            1.105
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            0.7071067811865475,
+            0.7071067811865475,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.03762612467004233,
+                "planning_s": 0.00299726496450603,
+                "map_source": "shared_map",
+                "map_revision": 2
+              }
+            }
+          ]
+        },
+        "step": 157
+      },
+      {
+        "segment": {
+          "id": "segment_04",
+          "object": "near moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "near moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.045,
+                -0.022,
+                1.035
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 60,
+        "evidence": {
+          "position_error_m": 0.0011148588505515693,
+          "orientation_error_rad": 0.0017806509250872463,
+          "measured_pose_wxyz": [
+            0.04546873347263533,
+            -0.022333556683393804,
+            1.0359549550393854,
+            0.001807871405335108,
+            -0.7191202984891315,
+            -0.6948832068007293,
+            -0.0002383447483573133,
+            3.235045126592784e-05
+          ],
+          "measured_gap_mm": 79.99741196389873,
+          "target_xyz_m": [
+            0.045,
+            -0.022,
+            1.035
+          ],
+          "target_quaternion_wxyz": [
+            0.001072465096733469,
+            -0.7193060755401265,
+            -0.694692147031978,
+            -0.0006635976028439057
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 217
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                -0.015
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 12,
+        "evidence": {
+          "position_error_m": 0.0010711642638468516,
+          "orientation_error_rad": 0.0006434503919342276,
+          "measured_pose_wxyz": [
+            0.04521728885593466,
+            -0.022577683137031717,
+            1.0219671658669847,
+            0.0019101548363807052,
+            -0.7189729299235099,
+            -0.6950352996014747,
+            -0.00045787945264999855,
+            2.9158296295128672e-05
+          ],
+          "measured_gap_mm": 79.99766733629639,
+          "target_xyz_m": [
+            0.04546873347263533,
+            -0.022333556683393804,
+            1.0209549550393855
+          ],
+          "target_quaternion_wxyz": [
+            0.0018078714053351079,
+            -0.7191202984891315,
+            -0.6948832068007293,
+            -0.0002383447483573133
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 229
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "close"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 13,
+        "evidence": {
+          "position_error_m": 0.000251459178917024,
+          "orientation_error_rad": 0.0004695394978213606,
+          "measured_pose_wxyz": [
+            0.04511951699539516,
+            -0.02280380227969597,
+            1.021916742506634,
+            0.002125724026590576,
+            -0.7189082373278671,
+            -0.6951015935533202,
+            -0.0004497100585232455,
+            0.8112575068967232
+          ],
+          "measured_gap_mm": 15.09939944826215,
+          "target_xyz_m": [
+            0.04521728885593466,
+            -0.022577683137031717,
+            1.0219671658669847
+          ],
+          "target_quaternion_wxyz": [
+            0.0019101548363807052,
+            -0.7189729299235099,
+            -0.6950352996014747,
+            -0.00045787945264999855
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "gap_stable"
+            }
+          ]
+        },
+        "step": 242
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "near moka pot",
+          "checkpoint": "held",
+          "checkpoint_object": "near moka pot",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 62,
+        "evidence": {
+          "position_error_m": 0.001545227267481708,
+          "orientation_error_rad": 0.0021512543087981646,
+          "measured_pose_wxyz": [
+            0.0443699937071307,
+            -0.02250322424545014,
+            1.0905993226821866,
+            0.0011999277259866679,
+            -0.7190965711822841,
+            -0.6949085000849348,
+            -0.0009262812969200636,
+            0.8240133245555312
+          ],
+          "measured_gap_mm": 14.078934035557506,
+          "target_xyz_m": [
+            0.04511951699539516,
+            -0.02280380227969597,
+            1.091916742506634
+          ],
+          "target_quaternion_wxyz": [
+            0.002125724026590576,
+            -0.7189082373278671,
+            -0.6951015935533202,
+            -0.0004497100585232455
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 304
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.044,
+                -0.022,
+                1.23
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "route_unavailable",
+        "step": 304
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.06
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 57,
+        "evidence": {
+          "position_error_m": 0.0014204476656181832,
+          "orientation_error_rad": 0.0016728386299691646,
+          "measured_pose_wxyz": [
+            0.04378994609803575,
+            -0.022212518000985778,
+            1.1494583513659646,
+            0.0005352033044047138,
+            -0.7192940607434251,
+            -0.6947046517768872,
+            -0.001102059985045736,
+            0.8240129011405865
+          ],
+          "measured_gap_mm": 14.07896790875308,
+          "target_xyz_m": [
+            0.04441120267847509,
+            -0.02251376756823079,
+            1.150699705678905
+          ],
+          "target_quaternion_wxyz": [
+            0.0012752917727550835,
+            -0.7190986480198112,
+            -0.6949063361649239,
+            -0.0008318682683337243
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 362
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.044,
+                -0.022,
+                1.23
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 9,
+        "evidence": {
+          "position_error_m": 0.002243541715906836,
+          "orientation_error_rad": 0.005537872768239952,
+          "measured_pose_wxyz": [
+            0.0446277612298139,
+            -0.021805955025743833,
+            1.2278548329162224,
+            0.002288470172180775,
+            -0.7194880842241044,
+            -0.694500262140705,
+            0.0010224726357074918,
+            0.8240181034079257
+          ],
+          "measured_gap_mm": 14.078551727365943,
+          "target_xyz_m": [
+            0.044,
+            -0.022,
+            1.23
+          ],
+          "target_quaternion_wxyz": [
+            0.0005352033044047138,
+            -0.7192940607434251,
+            -0.6947046517768872,
+            -0.001102059985045736
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.08054220292015163,
+                "planning_s": 0.005455670179799199,
+                "map_source": "shared_map",
+                "map_revision": 4
+              }
+            }
+          ]
+        },
+        "step": 371
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.285,
+                1.23
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 20,
+        "evidence": {
+          "position_error_m": 0.0024543553098401267,
+          "orientation_error_rad": 0.008126996380366111,
+          "measured_pose_wxyz": [
+            0.014653589617666421,
+            -0.2874165254002214,
+            1.2302535050769445,
+            0.005613245428681271,
+            -0.718263258480613,
+            -0.6957485938068351,
+            -0.0005265058225845659,
+            0.8240178267409969
+          ],
+          "measured_gap_mm": 14.078573860720248,
+          "target_xyz_m": [
+            0.015,
+            -0.285,
+            1.23
+          ],
+          "target_quaternion_wxyz": [
+            0.0022884701721807756,
+            -0.7194880842241045,
+            -0.6945002621407051,
+            0.001022472635707492
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.26486508129086955,
+                "planning_s": 0.006698491983115673,
+                "map_source": "shared_map",
+                "map_revision": 4
+              }
+            }
+          ]
+        },
+        "step": 391
+      },
+      {
+        "segment": {
+          "id": "segment_04",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.285,
+                1.115
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 15,
+        "evidence": {
+          "position_error_m": 0.0017984805936010317,
+          "orientation_error_rad": 0.00572578175238757,
+          "measured_pose_wxyz": [
+            0.016208531010072868,
+            -0.28579142341895974,
+            1.116071276908728,
+            0.00834894641978466,
+            -0.7181659682703194,
+            -0.6958217026849297,
+            0.000308520144155943,
+            0.8239553097820091
+          ],
+          "measured_gap_mm": 14.083575217439266,
+          "target_xyz_m": [
+            0.015,
+            -0.285,
+            1.115
+          ],
+          "target_quaternion_wxyz": [
+            0.00561324542868127,
+            -0.718263258480613,
+            -0.6957485938068351,
+            -0.0005265058225845659
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.11527935646803457,
+                "planning_s": 0.0037534967996180058,
+                "map_source": "shared_map",
+                "map_revision": 4
+              }
+            }
+          ]
+        },
+        "step": 406
+      },
+      {
+        "segment": {
+          "id": "segment_05",
+          "object": "near moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "near moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.285,
+                1.062
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 34,
+        "evidence": {
+          "position_error_m": 0.0012886707091956326,
+          "orientation_error_rad": 0.001437851708191133,
+          "measured_pose_wxyz": [
+            0.014071459636540022,
+            -0.28432264848744704,
+            1.0625828206573267,
+            0.007744208560077063,
+            -0.7184011155469674,
+            -0.6955858001053201,
+            0.0005090250410547347,
+            0.8239301772514951
+          ],
+          "measured_gap_mm": 14.085585819880391,
+          "target_xyz_m": [
+            0.015,
+            -0.285,
+            1.062
+          ],
+          "target_quaternion_wxyz": [
+            0.00834894641978466,
+            -0.7181659682703195,
+            -0.6958217026849297,
+            0.00030852014415594305
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 440
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "open"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_budget_exhausted",
+        "step": 456
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.075
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 64,
+        "evidence": {
+          "position_error_m": 0.0011289233638873714,
+          "orientation_error_rad": 0.0020889263782488017,
+          "measured_pose_wxyz": [
+            0.013853130683537822,
+            -0.284669510733164,
+            1.1369286547922564,
+            0.00787393272722308,
+            -0.7180811187078588,
+            -0.6959148709348356,
+            -2.346120697420017e-05,
+            0.001654826627719097
+          ],
+          "measured_gap_mm": 79.86761386978247,
+          "target_xyz_m": [
+            0.01440912050681709,
+            -0.2846795844004964,
+            1.1379111219923028
+          ],
+          "target_quaternion_wxyz": [
+            0.008627380145141637,
+            -0.7183182475000519,
+            -0.6956609018397828,
+            0.0006109596922452189
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 520
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "near moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.06
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 51,
+        "evidence": {
+          "position_error_m": 0.0012990384258863355,
+          "orientation_error_rad": 0.002311117907601826,
+          "measured_pose_wxyz": [
+            0.013279466438287802,
+            -0.28462376721044896,
+            1.1957640442583093,
+            0.00701083064677522,
+            -0.717822080262171,
+            -0.6961909438968927,
+            -0.0006920821377889145,
+            0.00020708508993594332
+          ],
+          "measured_gap_mm": 79.98343319280512,
+          "target_xyz_m": [
+            0.013853130683537822,
+            -0.284669510733164,
+            1.1969286547922564
+          ],
+          "target_quaternion_wxyz": [
+            0.007873932727223079,
+            -0.7180811187078587,
+            -0.6959148709348356,
+            -2.3461206974200167e-05
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 571
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "far moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "far moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.025,
+                0.18,
+                1.19
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 29,
+        "evidence": {
+          "position_error_m": 0.0017712597690531045,
+          "orientation_error_rad": 0.005696004583931777,
+          "measured_pose_wxyz": [
+            -0.02444824030336923,
+            0.18144301780047917,
+            1.1908663844609295,
+            0.006662123725572944,
+            -0.7185440321706847,
+            -0.6954468607150553,
+            0.0019374883054454595,
+            0.00033681146720498933
+          ],
+          "measured_gap_mm": 79.9730550826236,
+          "target_xyz_m": [
+            -0.025,
+            0.18,
+            1.19
+          ],
+          "target_quaternion_wxyz": [
+            0.007010830646775219,
+            -0.7178220802621709,
+            -0.6961909438968926,
+            -0.0006920821377889144
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.46623361827933557,
+                "planning_s": 0.021227039163932204,
+                "map_source": "shared_map",
+                "map_revision": 6
+              }
+            }
+          ]
+        },
+        "step": 600
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.048,
+                0.19,
+                1.09
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 12,
+        "evidence": {
+          "position_error_m": 0.0012972655804633344,
+          "orientation_error_rad": 0.0038268367524912877,
+          "measured_pose_wxyz": [
+            -0.04908638018533287,
+            0.19069544458057644,
+            1.090137959829363,
+            0.005224105981875398,
+            -0.7188327795878262,
+            -0.6951629975928197,
+            0.0007419464235857362,
+            0.0003112246875053293
+          ],
+          "measured_gap_mm": 79.97510202499957,
+          "target_xyz_m": [
+            -0.048,
+            0.19,
+            1.09
+          ],
+          "target_quaternion_wxyz": [
+            0.006662123725572943,
+            -0.7185440321706846,
+            -0.6954468607150552,
+            0.0019374883054454593
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.10393235705684148,
+                "planning_s": 0.0015632330905646086,
+                "map_source": "shared_map",
+                "map_revision": 7
+              }
+            }
+          ]
+        },
+        "step": 612
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "far moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "far moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.048,
+                0.19,
+                1.025
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 47,
+        "evidence": {
+          "position_error_m": 0.0009263527077671208,
+          "orientation_error_rad": 0.0008190406154940151,
+          "measured_pose_wxyz": [
+            -0.04823659986781292,
+            0.18971175328231615,
+            1.0258479762210597,
+            0.0054955244830730155,
+            -0.718620638311052,
+            -0.6953801555603297,
+            0.0007852750879614277,
+            0.00012513411776704508
+          ],
+          "measured_gap_mm": 79.98998927057865,
+          "target_xyz_m": [
+            -0.048,
+            0.19,
+            1.025
+          ],
+          "target_quaternion_wxyz": [
+            0.0052241059818753975,
+            -0.7188327795878261,
+            -0.6951629975928196,
+            0.0007419464235857361
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 659
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                -0.004,
+                0.0,
+                -0.022
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 20,
+        "evidence": {
+          "position_error_m": 0.001188974394170931,
+          "orientation_error_rad": 0.0014251008893286096,
+          "measured_pose_wxyz": [
+            -0.051653849139011346,
+            0.1896364780575655,
+            1.0048816083309586,
+            0.005964206626044768,
+            -0.7184132528360725,
+            -0.695589896726284,
+            0.0012336778886217667,
+            0.00013750510447407827
+          ],
+          "measured_gap_mm": 79.98899959164207,
+          "target_xyz_m": [
+            -0.05223659986781291,
+            0.18971175328231615,
+            1.0038479762210597
+          ],
+          "target_quaternion_wxyz": [
+            0.0054955244830730155,
+            -0.718620638311052,
+            -0.6953801555603297,
+            0.0007852750879614276
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 679
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "close"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 13,
+        "evidence": {
+          "position_error_m": 0.0003272585751148792,
+          "orientation_error_rad": 0.0003604469809396704,
+          "measured_pose_wxyz": [
+            -0.051889277376156985,
+            0.1896231114233176,
+            1.0046546875226805,
+            0.005853453453111169,
+            -0.7183904232970941,
+            -0.6956146466092229,
+            0.001095545718006435,
+            0.8205277524574641
+          ],
+          "measured_gap_mm": 14.357779803402869,
+          "target_xyz_m": [
+            -0.051653849139011346,
+            0.1896364780575655,
+            1.0048816083309586
+          ],
+          "target_quaternion_wxyz": [
+            0.005964206626044768,
+            -0.7184132528360725,
+            -0.695589896726284,
+            0.0012336778886217667
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "gap_stable"
+            }
+          ]
+        },
+        "step": 692
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "far moka pot",
+          "checkpoint": "held",
+          "checkpoint_object": "far moka pot",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.075
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 66,
+        "evidence": {
+          "position_error_m": 0.0014253520765474367,
+          "orientation_error_rad": 0.0015931925712761568,
+          "measured_pose_wxyz": [
+            -0.05261280143273715,
+            0.1895706651669325,
+            1.0784277438109076,
+            0.0053218832600515015,
+            -0.7185720191226594,
+            -0.6954319636575295,
+            0.0005610846493731884,
+            0.8241877865841328
+          ],
+          "measured_gap_mm": 14.064977073269375,
+          "target_xyz_m": [
+            -0.051889277376156985,
+            0.1896231114233176,
+            1.0796546875226805
+          ],
+          "target_quaternion_wxyz": [
+            0.005853453453111168,
+            -0.718390423297094,
+            -0.6956146466092228,
+            0.001095545718006435
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 758
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.053,
+                0.19,
+                1.28
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 14,
+        "evidence": {
+          "position_error_m": 0.002613153006329593,
+          "orientation_error_rad": 0.003089389652434874,
+          "measured_pose_wxyz": [
+            -0.05357042405821277,
+            0.1889498441025736,
+            1.2776761330461057,
+            0.006684359291055302,
+            -0.7180898891287689,
+            -0.6959177944636775,
+            0.0008085918076995619,
+            0.8243021961873388
+          ],
+          "measured_gap_mm": 14.055824305012893,
+          "target_xyz_m": [
+            -0.053,
+            0.19,
+            1.28
+          ],
+          "target_quaternion_wxyz": [
+            0.005321883260051501,
+            -0.7185720191226593,
+            -0.6954319636575294,
+            0.0005610846493731882
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.20157308529734447,
+                "planning_s": 0.011960291070863605,
+                "map_source": "shared_map",
+                "map_revision": 9
+              }
+            }
+          ]
+        },
+        "step": 772
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.115,
+                -0.255,
+                1.28
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 26,
+        "evidence": {
+          "position_error_m": 0.0017429012793567485,
+          "orientation_error_rad": 0.008186697297995782,
+          "measured_pose_wxyz": [
+            -0.11526078214880321,
+            -0.2567218432608732,
+            1.2800703798652633,
+            0.009750703236719196,
+            -0.7164598631115418,
+            -0.6975599055081307,
+            -0.0006054453468437689,
+            0.824305827972191
+          ],
+          "measured_gap_mm": 14.05553376222472,
+          "target_xyz_m": [
+            -0.115,
+            -0.255,
+            1.28
+          ],
+          "target_quaternion_wxyz": [
+            0.006684359291055301,
+            -0.7180898891287689,
+            -0.6959177944636774,
+            0.0008085918076995619
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.448185739662371,
+                "planning_s": 0.019576974911615252,
+                "map_source": "shared_map",
+                "map_revision": 9
+              }
+            }
+          ]
+        },
+        "step": 798
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.115,
+                -0.255,
+                1.12
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 12,
+        "evidence": {
+          "position_error_m": 0.0029354006430134956,
+          "orientation_error_rad": 0.007378755226442237,
+          "measured_pose_wxyz": [
+            -0.11789970639983288,
+            -0.25508085340437275,
+            1.1204491574966242,
+            0.006776929387090974,
+            -0.7161604560107534,
+            -0.6978973822982607,
+            -0.002741943797324218,
+            0.8243006354024701
+          ],
+          "measured_gap_mm": 14.055949167802394,
+          "target_xyz_m": [
+            -0.115,
+            -0.255,
+            1.12
+          ],
+          "target_quaternion_wxyz": [
+            0.009750703236719198,
+            -0.7164598631115418,
+            -0.6975599055081307,
+            -0.0006054453468437689
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.1600798527665296,
+                "planning_s": 0.007522413972765207,
+                "map_source": "shared_map",
+                "map_revision": 9
+              }
+            }
+          ]
+        },
+        "step": 810
+      },
+      {
+        "segment": {
+          "id": "segment_04",
+          "object": "far moka pot",
+          "checkpoint": "observe",
+          "checkpoint_object": "far moka pot",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.115,
+                -0.255,
+                1.05
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 48,
+        "evidence": {
+          "position_error_m": 0.0010521816361327948,
+          "orientation_error_rad": 0.0007423099496865732,
+          "measured_pose_wxyz": [
+            -0.11571765074670753,
+            -0.2544756782724852,
+            1.0505631610135842,
+            0.0066319324476590445,
+            -0.7163562991964474,
+            -0.6976984975656029,
+            -0.002544910269573923,
+            0.824277932789891
+          ],
+          "measured_gap_mm": 14.057765376808716,
+          "target_xyz_m": [
+            -0.115,
+            -0.255,
+            1.05
+          ],
+          "target_quaternion_wxyz": [
+            0.006776929387090972,
+            -0.7161604560107533,
+            -0.6978973822982606,
+            -0.0027419437973242177
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 858
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "far moka pot",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "open"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_budget_exhausted",
+        "step": 874
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "far moka pot",
+          "checkpoint": "released",
+          "checkpoint_object": "far moka pot",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.075
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 62,
+        "evidence": {
+          "position_error_m": 0.0013005812153150807,
+          "orientation_error_rad": 0.001377916516567671,
+          "measured_pose_wxyz": [
+            -0.11617222186284465,
+            -0.25494911724279146,
+            1.1245335955548126,
+            0.0063377341272558224,
+            -0.7159674084426955,
+            -0.6980979055479112,
+            -0.0031332800070339524,
+            0.0018227177868048727
+          ],
+          "measured_gap_mm": 79.85418257705561,
+          "target_xyz_m": [
+            -0.11572548724848851,
+            -0.25498971197306564,
+            1.1257543706159276
+          ],
+          "target_quaternion_wxyz": [
+            0.006834512357228079,
+            -0.7161667181944366,
+            -0.6978903534995179,
+            -0.002752396004775633
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 936
+      }
+    ],
+    "feedback": {
+      "kind": "execution_feedback",
+      "reason": "visual_checkpoint",
+      "segment": null,
+      "evidence": {
+        "state": "released",
+        "object": "far moka pot",
+        "measured_result": {
+          "status": "succeeded",
+          "reason": "fragment_complete",
+          "actions": 62,
+          "evidence": {
+            "position_error_m": 0.0013005812153150807,
+            "orientation_error_rad": 0.001377916516567671,
+            "measured_pose_wxyz": [
+              -0.11617222186284465,
+              -0.25494911724279146,
+              1.1245335955548126,
+              0.0063377341272558224,
+              -0.7159674084426955,
+              -0.6980979055479112,
+              -0.0031332800070339524,
+              0.0018227177868048727
+            ],
+            "measured_gap_mm": 79.85418257705561,
+            "target_xyz_m": [
+              -0.11572548724848851,
+              -0.25498971197306564,
+              1.1257543706159276
+            ],
+            "target_quaternion_wxyz": [
+              0.006834512357228079,
+              -0.7161667181944366,
+              -0.6978903534995179,
+              -0.002752396004775633
+            ],
+            "gripper_command": "open",
+            "detail": null,
+            "handoff_kind": "completed",
+            "segments": [
+              {
+                "status": "succeeded",
+                "reason": "pose_arrived"
+              }
+            ]
+          }
+        },
+        "semantic_verdict": "awaiting_Astra_RGB_review"
+      },
+      "remaining_segment_ids": []
+    },
+    "config": {
+      "history_items": 6
+    },
+    "model_requests": [
+      {
+        "kind": "harness",
+        "ordinal": 1,
+        "status": "accepted",
+        "latency_s": 9.272378167835996,
+        "step": 0
+      },
+      {
+        "kind": "harness",
+        "ordinal": 2,
+        "status": "accepted",
+        "latency_s": 45.18077449104749,
+        "step": 1
+      },
+      {
+        "kind": "harness",
+        "ordinal": 3,
+        "status": "accepted",
+        "latency_s": 61.62220370396972,
+        "step": 25
+      },
+      {
+        "kind": "harness",
+        "ordinal": 4,
+        "status": "accepted",
+        "latency_s": 16.89303509518504,
+        "step": 26
+      },
+      {
+        "kind": "harness",
+        "ordinal": 5,
+        "status": "accepted",
+        "latency_s": 16.425203756894916,
+        "step": 217
+      },
+      {
+        "kind": "harness",
+        "ordinal": 6,
+        "status": "accepted",
+        "latency_s": 26.28941557998769,
+        "step": 304
+      },
+      {
+        "kind": "harness",
+        "ordinal": 7,
+        "status": "accepted",
+        "latency_s": 17.95983723620884,
+        "step": 305
+      },
+      {
+        "kind": "harness",
+        "ordinal": 8,
+        "status": "accepted",
+        "latency_s": 16.362204015953466,
+        "step": 440
+      },
+      {
+        "kind": "harness",
+        "ordinal": 9,
+        "status": "accepted",
+        "latency_s": 20.861552360933274,
+        "step": 456
+      },
+      {
+        "kind": "harness",
+        "ordinal": 10,
+        "status": "accepted",
+        "latency_s": 16.751390845049173,
+        "step": 600
+      },
+      {
+        "kind": "harness",
+        "ordinal": 11,
+        "status": "accepted",
+        "latency_s": 13.33917620102875,
+        "step": 659
+      },
+      {
+        "kind": "harness",
+        "ordinal": 12,
+        "status": "accepted",
+        "latency_s": 24.8495886400342,
+        "step": 758
+      },
+      {
+        "kind": "harness",
+        "ordinal": 13,
+        "status": "accepted",
+        "latency_s": 17.884343603160232,
+        "step": 858
+      },
+      {
+        "kind": "harness",
+        "ordinal": 14,
+        "status": "accepted",
+        "latency_s": 5.077815090073273,
+        "step": 874
+      },
+      {
+        "kind": "harness",
+        "ordinal": 15,
+        "status": "accepted",
+        "latency_s": 4.507395031163469,
+        "step": 936
+      }
+    ],
+    "vision_tools": {
+      "calls": 1,
+      "requests": 4,
+      "result_cache_hits": 0,
+      "segment_backend_calls": 0,
+      "depth_backend_calls": 1,
+      "factory_calls": 0,
+      "unavailable_results": 0,
+      "expired_results": 0,
+      "backend_errors": 0,
+      "logging_errors": 0,
+      "elapsed_s": 8.676248556934297,
+      "mode": "on-demand",
+      "closed": false,
+      "initialized_backends": [
+        "depth_estimator"
+      ],
+      "cached_frames": 1,
+      "automatic_calls": 0
+    },
+    "robot_guard": {
+      "calls": 933,
+      "rejected": 0,
+      "wall_s": 18.884826310211793,
+      "shape_checks": 2799,
+      "cache_hits": 0,
+      "prediction_error_rad_max": 0.02199085530683842
+    },
+    "timing": {
+      "model_s": 313.2763138185255,
+      "vision_tool_s": 8.677658739034086,
+      "robot_guard_s": 18.88979419367388,
+      "wall_s": 450.88380146585405
+    }
+  },
+  "client_stats": {
+    "history_stats": {
+      "protocol": "fvh_v3_astra_batch_optional_tools_r1",
+      "accepted_requests": 15,
+      "messages": 6,
+      "retained_image_pairs": 0,
+      "calls_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 15
+      },
+      "accepted_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 15
+      },
+      "output_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 7740
+      },
+      "reasoning_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 3746
+      },
+      "visible_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 3994
+      },
+      "visible_token_budgets": {
+        "plan": 340,
+        "replan": 340,
+        "point_fine": 6,
+        "point_coarse": 6,
+        "repair": 80,
+        "review": 80,
+        "harness": null
+      },
+      "repair_step_visible_token_budget": 300,
+      "over_visible_budget_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 0
+      },
+      "overload_retry_policy": "none",
+      "overload_retry_requests": 0,
+      "overload_retry_wait_s": 0.0,
+      "transient_retry_policy": "none",
+      "transient_retry_requests": 0,
+      "transient_retry_wait_s": 0.0,
+      "transient_retry_codes": {},
+      "reask_requests": 0,
+      "reask_rejected_for_dropped_steps": 0,
+      "history_contract_limit": 6,
+      "text_history": "bounded accepted batches/tool intents; current feedback supplied by executor"
+    },
+    "budget_snapshot": {
+      "snapshot_version": "chatgpt-subscription-http-sse-v1",
+      "configuration": {
+        "model": "gpt-6-astra",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "max_output_tokens": 8192,
+        "timeout_s": 180,
+        "max_api_calls": null,
+        "max_cost_usd": null,
+        "max_wall_time_s": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null,
+        "cached_input_price_per_million": null,
+        "cache_write_price_per_million": null,
+        "max_input_tokens": 1050000
+      },
+      "billing": "chatgpt_subscription",
+      "api_calls": 15,
+      "subscription_inference_calls": 15,
+      "api_key_calls": 0,
+      "input_tokens": 119529,
+      "output_tokens": 7740,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 3746,
+      "unknown_usage_calls": 0,
+      "subscription_cost_usd": null,
+      "cost_usd_upper_bound": null,
+      "reservation_per_call_usd": null,
+      "max_api_calls": null,
+      "max_cost_usd": null,
+      "max_wall_time_s": null,
+      "elapsed_s": 451.22715700021945,
+      "output_token_limit_sent": null,
+      "usage_accounting": "Server-reported tokens; account subscription limits apply; no API-key billing"
+    }
+  },
+  "performance": {
+    "timings": {
+      "trace_write": {
+        "count": 939,
+        "total_s": 3.4712806351017207,
+        "mean_s": 0.00369678448892622,
+        "p50_s": 0.003864457132294774,
+        "p95_s": 0.004616135032847523,
+        "max_s": 0.14798790402710438
+      },
+      "recording_submit": {
+        "count": 1873,
+        "total_s": 4.167888383613899,
+        "mean_s": 0.0022252474018226906,
+        "p50_s": 0.0024669638369232416,
+        "p95_s": 0.0029639540705829856,
+        "max_s": 0.1910687529016286
+      },
+      "status_write": {
+        "count": 937,
+        "total_s": 1.0493373051285744,
+        "mean_s": 0.0011198904003506664,
+        "p50_s": 0.0010436810553073883,
+        "p95_s": 0.001881887065246701,
+        "max_s": 0.003292915876954794
+      },
+      "decision": {
+        "count": 937,
+        "total_s": 341.36116444901563,
+        "mean_s": 0.36431287561261005,
+        "p50_s": 0.020139116095378995,
+        "p95_s": 0.023896223958581684,
+        "max_s": 61.62826927611604
+      },
+      "simulator_step": {
+        "count": 936,
+        "total_s": 98.03439998580143,
+        "mean_s": 0.10473760682243742,
+        "p50_s": 0.1034538330277428,
+        "p95_s": 0.11626080493442714,
+        "max_s": 0.21249220613390207
+      },
+      "feedback": {
+        "count": 936,
+        "total_s": 1.1646346906200051,
+        "mean_s": 0.0012442678318589798,
+        "p50_s": 0.0004367759684100747,
+        "p95_s": 0.004956174816470593,
+        "max_s": 0.010546839097514749
+      }
+    },
+    "progress": {
+      "by_primitive": {
+        "observation_hold": {
+          "steps": 3,
+          "translation_m": 0.0020049264418986225,
+          "rotation_rad": 0.005901782981392584,
+          "absolute_finger_gap_change_m": 0.00027813536213532053,
+          "near_zero_arm_motion_steps": 0,
+          "goal_position_samples": 0,
+          "goal_distance_reduction_m": 0.0,
+          "goal_position_approaching_steps": 0,
+          "goal_position_receding_steps": 0
+        },
+        "measured_v2_fragment": {
+          "steps": 933,
+          "translation_m": 3.0342521114528194,
+          "rotation_rad": 2.812263386749455,
+          "absolute_finger_gap_change_m": 0.2670685120739664,
+          "near_zero_arm_motion_steps": 43,
+          "goal_position_samples": 933,
+          "goal_distance_reduction_m": 2.895121429957385,
+          "goal_position_approaching_steps": 831,
+          "goal_position_receding_steps": 24
+        }
+      },
+      "goal_reductions_are_per_step_local_targets_not_task_progress": true,
+      "near_zero_arm_motion_is_not_a_failure_classification": true
+    },
+    "accounted_online_components_s": 449.24870544928126,
+    "other_online_wall_s": 0.5270754056982696,
+    "accounting": "decision includes model/perception/filter work; failed_decision is a subset; quantiles computed at reporting; evaluator holds excluded",
+    "progress_scope": "measured arm motion and signed local-goal distance change, not task completion"
+  },
+  "video": {
+    "path": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005/trial/episode.mp4",
+    "asynchronous": true,
+    "sampled_events": 1873,
+    "rendered_events": 1873,
+    "dropped_events": 0,
+    "queue_capacity": 3,
+    "worker_alive": false,
+    "error": null,
+    "playback_is_wall_clock": false
+  },
+  "cleanup_errors": [],
+  "automatic_retry": false,
+  "raw_success_terminates_control": false,
+  "evaluation_hold_changes_gripper": false,
+  "operator_stop_file": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005/trial/operator_stop.request.json",
+  "pre_episode_startup_wall_s": 0.27668081200681627,
+  "episode_startup_wall_s": 4.421097684185952,
+  "episode_total_wall_s": 456.32690665801056,
+  "launch_total_wall_s": 456.6385655219201,
+  "source_unchanged": true
+}

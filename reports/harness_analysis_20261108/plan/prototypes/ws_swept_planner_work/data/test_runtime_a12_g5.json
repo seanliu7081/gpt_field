@@ -1,0 +1,118 @@
+{
+ "model": "data/panda_body_a12_g5",
+ "fk_parity_max_abs": 2.220446049250313e-16,
+ "state8_vs_bound_fk_sphere_max_abs_m": 4.440892098500626e-16,
+ "t08_measured_profile": {
+  "first_contact_step_recorded": 37,
+  "first_negative_clearance_step_model": 38,
+  "min_clearance_m": -0.007889626691104809,
+  "clearance_at_steps": {
+   "26": 0.0175,
+   "29": 0.0171,
+   "32": 0.0175,
+   "35": 0.0176,
+   "38": -0.0051,
+   "41": -0.0074,
+   "44": -0.0057,
+   "47": -0.0035,
+   "50": -0.0013,
+   "53": 0.001,
+   "56": 0.0036,
+   "59": 0.0063,
+   "62": 0.009,
+   "65": 0.0114,
+   "68": 0.0133,
+   "71": 0.0131,
+   "74": 0.0127,
+   "77": 0.0128,
+   "80": 0.013,
+   "83": 0.0132
+  },
+  "argmin_part_at_onset": "finger1_collision",
+  "contact_steps_detected": 14,
+  "contact_steps": 47,
+  "neg_without_contact": 0
+ },
+ "t08_candidate_profiles": {
+  "coupled_slerp": {
+   "min_clearance_m": -0.0008,
+   "argmin_fraction": 0.525,
+   "worst_part": "finger1_collision"
+  },
+  "translate_then_rotate_in_place": {
+   "min_clearance_m": -0.022,
+   "argmin_fraction": 0.322,
+   "worst_part": "finger1_collision"
+  },
+  "rotate_first_at_entry_then_translate": {
+   "min_clearance_m": 0.0153,
+   "argmin_fraction": 1.0,
+   "worst_part": "finger1_collision"
+  }
+ },
+ "t08_stage": {
+  "entry_step": 28,
+  "entry_xyz": [
+   -0.0221,
+   -0.023,
+   1.0771
+  ],
+  "target_xyz": [
+   -0.025,
+   -0.023,
+   1.035
+  ],
+  "rotation_rad": 0.971
+ },
+ "timing": {
+  "K1_M4": {
+   "fk_ms": 0.628,
+   "place_ms": 0.19,
+   "narrow_all_pairs_ms": 0.152,
+   "broad_plus_narrow_ms": 0.402,
+   "spheres": 319,
+   "candidate_pairs": 10
+  },
+  "K1_M20": {
+   "fk_ms": 0.627,
+   "place_ms": 0.181,
+   "narrow_all_pairs_ms": 0.661,
+   "broad_plus_narrow_ms": 0.232,
+   "spheres": 319,
+   "candidate_pairs": 2
+  },
+  "K60_M4": {
+   "fk_ms": 1.101,
+   "place_ms": 0.65,
+   "narrow_all_pairs_ms": 11.267,
+   "broad_plus_narrow_ms": 0.427,
+   "spheres": 319,
+   "candidate_pairs": 0
+  },
+  "K60_M20": {
+   "fk_ms": 0.974,
+   "place_ms": 0.594,
+   "narrow_all_pairs_ms": 54.166,
+   "broad_plus_narrow_ms": 6.616,
+   "spheres": 319,
+   "candidate_pairs": 14
+  },
+  "K200_M4": {
+   "fk_ms": 1.82,
+   "place_ms": 1.827,
+   "narrow_all_pairs_ms": 32.128,
+   "broad_plus_narrow_ms": 5.331,
+   "spheres": 319,
+   "candidate_pairs": 6
+  },
+  "K200_M20": {
+   "fk_ms": 1.995,
+   "place_ms": 1.602,
+   "narrow_all_pairs_ms": 256.917,
+   "broad_plus_narrow_ms": 14.876,
+   "spheres": 319,
+   "candidate_pairs": 12
+  },
+  "gripper_only_K60_M1_ms": 1.478
+ }
+}

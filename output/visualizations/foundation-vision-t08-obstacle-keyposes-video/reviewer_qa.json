@@ -1,0 +1,53 @@
+{
+  "reviewed_at_utc": "2026-11-05T14:11:49.456979+00:00",
+  "passed": true,
+  "blocking_findings": [],
+  "scope": "Independent saved-artifact/source review only; no model calls, simulator steps, renderer changes, or source-run mutations. Existing mapping validation reused. Only this review report written.",
+  "checks": {
+    "591_policy_states_0_through_590": true,
+    "exact_camera_mapping_591_states": true,
+    "causal_route_goal_and_map_checks_all_states": true,
+    "explicit_requested_quaternions_exactly_3": true,
+    "terminal_last_stage_active": true,
+    "terminal_gripper_closed_and_hold_only_truth": true,
+    "38_diagnostic_actions_excluded": true,
+    "400_are_contact_point_samples": true,
+    "first_contact_at_state278_pot2_burner": true,
+    "mapping_previously_validated": true,
+    "encoded_render_obstacle_keyposes_video.py_hash_matches": true,
+    "encoded_timeline.json_hash_matches": true,
+    "encoded_control_state_frames.json_hash_matches": true
+  },
+  "visual_previews_inspected": [
+    "preview-step-0528.png",
+    "preview-step-0590.png"
+  ],
+  "findings": [
+    "All 11 call boundaries suppress previous active routes; routes are shown only during the recorded active current-call transit stage.",
+    "Relative requested deltas remain deltas before measured stage entry. Absolute goals can appear at decision time.",
+    "Map revisions are causal: intro uninitialized, revisions 1/2/3 at states 0/188/328.",
+    "Three explicit quaternion requests preserved; inherited requests are not rendered as explicit orientation commands.",
+    "State 528 identifies call 09 K2 stopped and K3 not executed, with call 10 displayed.",
+    "Terminal 590 says second pot still held and final approach active at stop. The 38 evaluator diagnostic actions are excluded.",
+    "Visible narration does not label 400 contact-point samples as independent collisions or claim autonomous terminal release.",
+    "First forbidden contact is action 277 -> state 278, first transported pot moka_pot_2 vs burner; no bottle contact is inferred."
+  ],
+  "limitations": [
+    "Faithfulness audit, not planner safety or physical success verification. Model-estimated boxes/grip-site paths are not full-robot collision evidence.",
+    "Prior mapping validation covers all event states and sampled RGB crops; this review did not re-decode the complete video."
+  ],
+  "encoded_manifest": {
+    "frames": 1722,
+    "duration_s": 86.1,
+    "control_states": 591,
+    "policy_actions": 590
+  },
+  "evidence_sha256": {
+    "render_obstacle_keyposes_video.py": "bf93a53235171203680e36c67c570f40a4f3c9f43573b2a6922ee71442604b0e",
+    "extract_timeline.py": "13a69b88598c8e84c79c3974fd318f4626198f1e7f3b3b2addd997e2c249477e",
+    "timeline.json": "0d0f03347a0cb7f8f5a6938451a8e90ef39828b239147efdfce6609073518185",
+    "control_state_frames.json": "131a4b0d9c682664c0d92346e8c73ac1002e15522b3f036b6b32b95038b00916",
+    "frame_mapping_validation.json": "c2cd30c14c8ba2fe5ec04703c2752f68dfecd9bc1fe582f56a5e7d63e90c5caa",
+    "video_manifest.json": "581098537ee97bdac421f4904cea5e6d0be0bf18a177388a420a3bf329ac8a3e"
+  }
+}

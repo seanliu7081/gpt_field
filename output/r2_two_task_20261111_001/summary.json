@@ -1,0 +1,106 @@
+{
+  "revision": "astra_tools_r2_obstacle_map",
+  "one_episode_per_task": true,
+  "sequential": true,
+  "source_file_count": 370,
+  "same_inputs_and_runtime_settings_as_previous_r1": true,
+  "results": [
+    {
+      "task": "T04",
+      "run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009",
+      "revision": "astra_tools_r2_obstacle_map",
+      "status": "finish",
+      "online_wall_s": 366.8020081229042,
+      "completion_wall_s": null,
+      "actions": 700,
+      "model_requests": 17,
+      "raw_success_at_terminal": false,
+      "raw_success_after_hold": false,
+      "physical_at_terminal": true,
+      "physical_after_hold": true,
+      "combined_success": false,
+      "forbidden_contact_samples": 18,
+      "source_matches_reference": true,
+      "source_unchanged": true,
+      "model_share_online": 0.674671768206357,
+      "route_count": 9,
+      "route_box_counts": [
+        3,
+        4
+      ],
+      "route_start_refusals": 1,
+      "detour_search_calls": 0,
+      "video": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009/trial/episode.mp4"
+    },
+    {
+      "task": "T08",
+      "run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005",
+      "revision": "astra_tools_r2_obstacle_map",
+      "status": "finish",
+      "online_wall_s": 449.77578085497953,
+      "completion_wall_s": 450.8829959637951,
+      "actions": 936,
+      "model_requests": 15,
+      "raw_success_at_terminal": true,
+      "raw_success_after_hold": true,
+      "physical_at_terminal": true,
+      "physical_after_hold": true,
+      "combined_success": true,
+      "forbidden_contact_samples": 874,
+      "source_matches_reference": true,
+      "source_unchanged": true,
+      "model_share_online": 0.696516635962519,
+      "route_count": 13,
+      "route_box_counts": [
+        3
+      ],
+      "route_start_refusals": 2,
+      "detour_search_calls": 0,
+      "video": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005/trial/episode.mp4"
+    }
+  ],
+  "comparison_with_immediately_previous_r1": [
+    {
+      "task": "T04",
+      "r1_run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_008",
+      "r1_combined_success": true,
+      "r2_combined_success": false,
+      "r1_online_wall_s": 279.1285198801197,
+      "r2_online_wall_s": 366.8020081229042,
+      "online_difference_s": 87.67348824278452,
+      "online_difference_percent": 31.40972061201004,
+      "r1_actions": 474,
+      "r2_actions": 700,
+      "r1_model_requests": 16,
+      "r2_model_requests": 17,
+      "r1_contact_samples": 4,
+      "r2_contact_samples": 18
+    },
+    {
+      "task": "T08",
+      "r1_run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_004",
+      "r1_combined_success": true,
+      "r2_combined_success": true,
+      "r1_online_wall_s": 240.11417578184046,
+      "r2_online_wall_s": 449.77578085497953,
+      "online_difference_s": 209.66160507313907,
+      "online_difference_percent": 87.31746236574989,
+      "r1_actions": 504,
+      "r2_actions": 936,
+      "r1_model_requests": 12,
+      "r2_model_requests": 15,
+      "r1_contact_samples": 565,
+      "r2_contact_samples": 874
+    }
+  ],
+  "comparison_limit": "One episode per task/revision; outcomes and latencies do not isolate a causal prompt effect. T04 r2 is incomplete, so its duration is not completion latency.",
+  "contact_note": "Physics-substep samples, not independent collision events.",
+  "shutdown": {
+    "at_utc": "2026-11-10T17:07:52.797989+00:00",
+    "private_supervisor_socket_absent": true,
+    "private_supervisor_pidfile_absent": true,
+    "matching_active_runners_or_workers": [],
+    "automatic_retries_started": 0,
+    "remaining_tasks": []
+  }
+}

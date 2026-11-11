@@ -1,0 +1,190 @@
+{
+  "scope": "offline saved-input check only; no model, simulator or robot actions",
+  "geometry_source": "frame_000014_revision_000030.npz",
+  "ownership_source_match_max_m": 6.625438978585648e-08,
+  "saved_depth_precision": "float32; reconstruction is not bitwise replay",
+  "paths": [
+    {
+      "case": "previously_rejected_small_viewpoint_move",
+      "planned": true,
+      "joint_path_points": 5,
+      "evidence": {
+        "planner": "astra_keypose_next_segment_joint_connector",
+        "scene_frame_id": 14,
+        "robot_geometry": {
+          "representation": "static_robot_collision_mesh_convex_hulls",
+          "robot_xml": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/robot.xml",
+          "gripper_xml": "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/panda_gripper.xml",
+          "mesh_sha256": {
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link0.stl": "dfc6d94330de8ddb005b311bfdba9f3b8e1aa7c256b71592ee7ff32cb9a9a5aa",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link1.stl": "d24e332dffccf260b91d05dde17c5998bb9559d37da8608a8ee5213d9661f603",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link2.stl": "370f7605a0fae3529db169ded50f52f171024aa792d4d773bc84197301f6a039",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link3.stl": "0a8d638b9349c6c0eefc4e888636ac4838c4b27170f18a51699321118af709c1",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link4.stl": "0180ebb5772ec9840cb049750cffb29a9ddc90311752a16ea34757782ef9e48d",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link5.stl": "dd17e688c7870e722283525879643d53a74c0024d328b0e14b034b54c8b6c31a",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link6.stl": "20b768e99a0e0440b5754dcca108016434e57937cc356acd9c352ccd3cb27f77",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link7.stl": "92ac6afcf7574c034d3170d8a68e95ac9048ab9d0dd5bbd8311b86e551b9ab1c",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/hand.stl": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed",
+            "/venv/fm_dno/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger.stl": "2d07a740392f3b9b0816f65d64fff9927d3d57c897870fc4b6ff9c56fff3a0c8"
+          },
+          "scene_truth_used": false,
+          "continuous_collision_certified": false
+        },
+        "self_filter": {
+          "method": "current_robot_silhouette_ray_occlusion",
+          "tolerance_m": 0.006,
+          "removed_points": 72312,
+          "ray_candidate_visits": 663488,
+          "camera_containing_envelopes_skipped": [],
+          "assigned_object_points_removed": 0,
+          "future_robot_poses_remove_points": false,
+          "fixed_base_environment_overlap": "existing_occupied_region_not_new_motion",
+          "limitation": "unassigned foreground objects with depth incorrectly predicted behind the robot may be confused with self/occlusion"
+        },
+        "self_surface_points_removed": 72312,
+        "continuous_collision_certified": false,
+        "complete_object_shape": false,
+        "unknown_space_allowed": true,
+        "unknown_sample_visits": 176,
+        "future_keyposes_checked": false,
+        "payload_geometry_unknown": false,
+        "planning_s": 3.429128205869347,
+        "considered": 1,
+        "candidate_count": 1,
+        "astra_keypose_index": null
+      },
+      "elapsed_s": 3.4291759058833122
+    },
+    {
+      "case": "previous_success_astra_first_keypose",
+      "planned": false,
+      "reason": "planning_compute_budget",
+      "evidence": {
+        "reason": "planning_compute_budget",
+        "evidence": {
+          "rejections": []
+        },
+        "astra_keypose_index": 0,
+        "planning_s": 12.071842947974801
+      },
+      "elapsed_s": 12.071979257976636
+    }
+  ],
+  "surface": {
+    "object": "yellow_white_mug",
+    "raw_count": 16677,
+    "planning_count": 16095,
+    "raw_extent_m": [
+      0.2625328600406647,
+      0.2335299700498581,
+      0.17386794090270996
+    ],
+    "planning_extent_m": [
+      0.12262950837612152,
+      0.1418762020766735,
+      0.09031590819358826
+    ],
+    "evidence": {
+      "version": "coherent-observed-surface-1",
+      "status": "coherent_observed_patch",
+      "raw_point_count": 16677,
+      "planning_point_count": 16095,
+      "raw_geometry_preserved": true,
+      "selection": "derived_observed_subset",
+      "complete_object_shape": false,
+      "unseen_surfaces": "unknown",
+      "collision_volume_certified": false,
+      "error_bound_m": null,
+      "filtering_does_not_prove_removed_points_are_false": true,
+      "rules": {
+        "neighbours": 8,
+        "link_neighbours": 16,
+        "density_mad_multiplier": 3.0,
+        "density_min_multiplier": 2.0,
+        "link_scale_multiplier": 2.0,
+        "normal_agreement_cosine": 0.5,
+        "dominant_mass_fraction": 0.6,
+        "second_component_ratio": 0.5,
+        "thresholds_are_calibrated_probabilities": false
+      },
+      "finite_point_count": 16677,
+      "valid_normal_point_count": 16084,
+      "crossview_supported_input_points": 13613,
+      "normal_evidence_available": true,
+      "source_views": [
+        "external",
+        "wrist"
+      ],
+      "normal_or_support_eligible_points": 16519,
+      "density_by_view": [
+        {
+          "view": "external",
+          "points": 4442,
+          "status": "neighbourhood_scale_estimated",
+          "typical_neighbour_radius_m": 0.002315012171140279,
+          "density_radius_cutoff_m": 0.004630024342280558,
+          "density_retained": 4242,
+          "normal_consistent": 4442
+        },
+        {
+          "view": "wrist",
+          "points": 12077,
+          "status": "neighbourhood_scale_estimated",
+          "typical_neighbour_radius_m": 0.001343180377392728,
+          "density_radius_cutoff_m": 0.002686360754785456,
+          "density_retained": 11861,
+          "normal_consistent": 12069
+        }
+      ],
+      "density_and_normal_retained_points": 16095,
+      "component_count": 1,
+      "largest_components": [
+        {
+          "component": 0,
+          "points": 16095,
+          "support_weighted_mass": 29294.0,
+          "crossview_supported_points": 13199,
+          "bounds_m": [
+            [
+              -0.09722621738910675,
+              0.01597631350159645,
+              0.4380026161670685
+            ],
+            [
+              0.02540329098701477,
+              0.15785251557826996,
+              0.5283185243606567
+            ]
+          ]
+        }
+      ],
+      "components_omitted_from_summary": 0,
+      "selected_component": 0,
+      "selected_mass_fraction": 1.0,
+      "second_component_mass_ratio": 0.0,
+      "reason": "dominant_density_and_normal_consistent_component",
+      "removed_point_count": 582,
+      "planning_crossview_supported_points": 13199,
+      "planning_single_view_points": 2896,
+      "planning_centroid_m": [
+        -0.038334221425021825,
+        0.1037486179378526,
+        0.47933245087010623
+      ],
+      "planning_bounds_m": [
+        [
+          -0.09722621738910675,
+          0.01597631350159645,
+          0.4380026161670685
+        ],
+        [
+          0.02540329098701477,
+          0.15785251557826996,
+          0.5283185243606567
+        ]
+      ],
+      "planning_bounds_are_complete_object_extent": false,
+      "extraction_s": 0.11530488496646285
+    }
+  }
+}

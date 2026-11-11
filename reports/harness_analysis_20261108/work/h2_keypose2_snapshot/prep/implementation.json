@@ -1,0 +1,77 @@
+{
+  "status": "implementation_complete_awaiting_full_task_approval",
+  "version": "foundation-harness-keypose-2",
+  "changes": [
+    "Astra proposes ordered metric keyposes; local planning connects only the next pose.",
+    "observe_after stops the unexecuted suffix for fresh model feedback; partial sequence is not task success.",
+    "Visual robot silhouette and source-camera occlusion remove self hypotheses; fixed base overlap does not block new motion.",
+    "Strong observed obstacles reject; weak depth and unknown coverage are retained as explicit uncertainty with bounded-step execution.",
+    "Coherent payload surface avoids raw edge extrema; closure checks incremental measured finger motion.",
+    "Structured geometric failures reach Astra; colliding endpoints do not waste RRT budget.",
+    "Video distinguishes strong and uncertain planner geometry."
+  ],
+  "checks": {
+    "integration.xml": {
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.509"
+    },
+    "final_execution_checks.xml": {
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "2.543"
+    },
+    "final_changed_checks.xml": {
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "3.206"
+    }
+  },
+  "checks_note": "One initial five-case file; only cases affected by subsequent actual fixes were rerun. No broad test matrix.",
+  "saved_input_checks": [
+    {
+      "case": "previously_rejected_small_viewpoint_move",
+      "planned": true,
+      "joint_path_points": 5,
+      "elapsed_s": 1.9763806671835482
+    },
+    {
+      "case": "previous_success_astra_first_keypose",
+      "planned": true,
+      "joint_path_points": 11,
+      "elapsed_s": 2.0746088889427483
+    }
+  ],
+  "offline_only": true,
+  "new_model_calls": 0,
+  "new_simulator_or_robot_actions": 0,
+  "full_task_started": false,
+  "raw_geometry_preserved": true,
+  "prior_runs_preserved": true,
+  "limitations": [
+    "Saved input connections do not establish full-task success or collision freedom.",
+    "Weak geometry is traversable under bounded-step policy and remains uncertain.",
+    "Historical successful keypose is used only in offline diagnosis, not hardcoded in runtime or supplied as a live demonstration."
+  ],
+  "changed_source_sha256": {
+    "src/gpt_field/foundation_harness/client.py": "0730020fce78f810237686e487d4cd011b65ceeb00626952f06e84479751bd16",
+    "src/gpt_field/foundation_harness/executor.py": "fddd75b3ca820db90c5316e5a56b48942872309d4844c7f3e70e01543b2f715c",
+    "src/gpt_field/foundation_harness/feedback.py": "bcb9e22024b9d6fddc85b5703d62ed408b1a338e9d972fbfb519c5a2f88d3c52",
+    "src/gpt_field/foundation_harness/motion.py": "b15d07a12e55a6cef575abf927363839174bc652a8959961bcbee51c51ff7410",
+    "src/gpt_field/foundation_harness/robot_geometry.py": "8fa39c48accf081fc79b856a3abf25d77ae759cfd3c6b45938a0348b1c575c84",
+    "src/gpt_field/foundation_harness/surface.py": "2240539aa7b7511456fcf2b7d02bbfb0d7caa41e5cfeec2af7eb22fff657da8e",
+    "src/gpt_field/foundation_harness/types.py": "1c94a0f4da00014c38a92d49fe768e3871fff93195674c93efb0a43a9ddd9c6e",
+    "src/gpt_field/foundation_harness/video.py": "f47bcf606adc367f346e55f82deb254a8f05098072564ccb1f7002f2a140bcea",
+    "scripts/evaluate_foundation_harness.py": "f443c86b454aeeb1e4ddb7bba56ddceb6dcc48b98cf9f29c1ea8657a0ed6fc87",
+    "tests/test_foundation_harness_integration.py": "192a8601ca413161382f678d4dbf95af45c7b04e87e8bb479a6648b585c40ff5",
+    "foundation_harness.md": "43318edaa857d670e9ee3c84516faf3cc1316876555e512753e230f8bc21ce15"
+  },
+  "next_test": "one T04 can obstacle, init0, seed7, gpt-6-astra high subscription, video and monitoring; pending explicit user approval",
+  "pending_launch": "pending_launch.json"
+}

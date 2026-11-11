@@ -1,0 +1,99 @@
+{
+  "video": "t08-foundation-vision-obstacles-keyposes.mp4",
+  "width": 1920,
+  "height": 1080,
+  "fps": 20,
+  "frames": 1722,
+  "duration_s": 86.1,
+  "control_states": 591,
+  "policy_actions": 590,
+  "playback": "Each saved control state 0.1 s; 0.5x action replay; API waits omitted; chapter holds added",
+  "source_video": "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/episode.mp4",
+  "timeline": "/workspace/gpt_field/output/visualizations/foundation-vision-t08-obstacle-keyposes-video/timeline.json",
+  "mapping": "/workspace/gpt_field/output/visualizations/foundation-vision-t08-obstacle-keyposes-video/control_state_frames.json",
+  "timeline_sha256": "0d0f03347a0cb7f8f5a6938451a8e90ef39828b239147efdfce6609073518185",
+  "mapping_sha256": "131a4b0d9c682664c0d92346e8c73ac1002e15522b3f036b6b32b95038b00916",
+  "renderer_sha256": "bf93a53235171203680e36c67c570f40a4f3c9f43573b2a6922ee71442604b0e",
+  "video_sha256": "832b5fd780247443cc754b6ffe944dfaa12827eb18f4ecff01ff3fcd9537d25a",
+  "size_bytes": 4568859,
+  "chapters": [
+    {
+      "control_state": 0,
+      "initial_observation": true,
+      "video_time_s": 0.0,
+      "duration_s": 2.0,
+      "title": "Initial observation - map not initialized"
+    },
+    {
+      "control_state": 0,
+      "video_time_s": 2.0,
+      "duration_s": 2.1,
+      "title": "Astra obstacle-map update \u00b7 Revision 1"
+    },
+    {
+      "control_state": 24,
+      "video_time_s": 6.4,
+      "duration_s": 2.6,
+      "title": "Previous segment stopped \u00b7 Control returns to Astra"
+    },
+    {
+      "control_state": 188,
+      "video_time_s": 25.3,
+      "duration_s": 2.1,
+      "title": "Astra obstacle-map update \u00b7 Revision 2"
+    },
+    {
+      "control_state": 278,
+      "video_time_s": 36.3,
+      "duration_s": 4.1,
+      "title": "First forbidden contact \u00b7 First transported pot / burner"
+    },
+    {
+      "control_state": 297,
+      "video_time_s": 42.2,
+      "duration_s": 2.6,
+      "title": "Previous segment stopped \u00b7 Control returns to Astra"
+    },
+    {
+      "control_state": 328,
+      "video_time_s": 47.8,
+      "duration_s": 2.1,
+      "title": "Astra obstacle-map update \u00b7 Revision 3"
+    },
+    {
+      "control_state": 528,
+      "video_time_s": 69.8,
+      "duration_s": 2.6,
+      "title": "Call 09 K2 stopped \u00b7 K3 was not executed \u00b7 Now call 10"
+    },
+    {
+      "control_state": 551,
+      "video_time_s": 74.6,
+      "duration_s": 2.6,
+      "title": "Previous segment stopped \u00b7 Control returns to Astra"
+    },
+    {
+      "control_state": 590,
+      "video_time_s": 81.0,
+      "duration_s": 5.1,
+      "title": "Raw task success \u00b7 Second pot still held"
+    }
+  ],
+  "embedded_chapters": true,
+  "audit": {
+    "control_states": 591,
+    "keyposes": 22,
+    "explicit_target_quaternions": 3,
+    "future_relative_goal_leaks": 0,
+    "active_routes_on_decision_boundaries": 0,
+    "map_updates": 3,
+    "source_camera_mapping_states": 591,
+    "diagnostic_actions_included": false
+  },
+  "new_model_calls": 0,
+  "new_simulator_steps": 0,
+  "keypose_markers_are_not_planner_paths": true,
+  "relative_goals_revealed_only_at_stage_entry": true,
+  "all_target_quaternions_inherited": false,
+  "terminal_semantics": "Raw task success while second pot is held; post-release diagnostic is excluded"
+}

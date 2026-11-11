@@ -61,16 +61,17 @@ class TransitRoute:
     """Assemble a geometric route, then follow it from measured robot poses."""
 
     def __init__(self, start_xyz, goal_xyz, orientation_wxyz, route, *,
-                 max_command_m, position_tolerance_m):
+                 max_command_m, position_tolerance_m, grid_spacing_m=GRID_SPACING_M):
         started = perf_counter()
         self.start = np.asarray(vector3(start_xyz, "start_xyz"))
         self.goal = np.asarray(vector3(goal_xyz, "goal_xyz"))
         self.position_tolerance_m = float(position_tolerance_m)
         self.max_command_m = float(max_command_m)
+        spacing = GridSpec(size=2, spacing_m=grid_spacing_m).spacing_m
         center = (self.start + self.goal) / 2
         half_cells = math.ceil((float(np.max(np.abs(self.goal - self.start))) / 2
-                                + DETOUR_MARGIN_M) / GRID_SPACING_M)
-        grid = GridSpec(size=2 * half_cells + 1, spacing_m=GRID_SPACING_M)
+                                + DETOUR_MARGIN_M) / spacing)
+        grid = GridSpec(size=2 * half_cells + 1, spacing_m=spacing)
         if grid.half_width_m > .5:
             raise RouteUnavailable("route_exceeds_local_map")
         lower, upper = center - grid.half_width_m, center + grid.half_width_m

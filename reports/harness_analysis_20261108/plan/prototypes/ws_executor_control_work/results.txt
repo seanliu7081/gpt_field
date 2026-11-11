@@ -1,0 +1,131 @@
+=== osc_fit.py
+all                    n= 8046 a=0.7229 b=0.0692 steady_ratio=b/(1-a)=0.2498 R2=0.9692
+transit                n= 2459 a=0.7211 b=0.0696 steady_ratio=b/(1-a)=0.2497 R2=0.9692
+contact                n= 5558 a=0.8249 b=0.0426 steady_ratio=b/(1-a)=0.2434 R2=0.9733
+transit_100mm_runs     n= 2097 a=0.7216 b=0.0694 steady_ratio=b/(1-a)=0.2494 R2=0.9687
+contact_100mm_runs     n= 4647 a=0.8272 b=0.0419 steady_ratio=b/(1-a)=0.2425 R2=0.9725
+c20 transit            n=  362 a=0.6046 b=0.1027 steady_ratio=b/(1-a)=0.2596 R2=0.9951
+steady-command along-ratio transit: n=697 median=0.257 p10=0.063 p90=0.365
+steady-command along-ratio contact: n=4240 median=0.244 p10=0.162 p90=0.272
+zero-command decay ratio s_t/s_(t-1): n=69 median=0.721 p10=0.511 p90=0.844
+=== osc_fit2.py
+rotation fit: a_r=0.9000 b_r=0.0271 steady=0.2706 R2=0.9535 n=10038
+saturated-rotation realised rate: n=1237 median=0.0229 rad/step p10=0.0190 p90=0.0270
+  translation T04_t100     a=0.582 b=0.1094 ratio=0.262 R2=0.987
+  translation T08_t100     a=0.640 b=0.0913 ratio=0.253 R2=0.981
+  translation T08_stoveoff a=0.596 b=0.1046 ratio=0.259 R2=0.989
+  translation drawer001    a=0.793 b=0.0499 ratio=0.241 R2=0.950
+  translation drawer003    a=0.695 b=0.0755 ratio=0.248 R2=0.980
+  translation T04_20mm     a=0.653 b=0.0901 ratio=0.260 R2=0.991
+  translation T04_default  a=0.560 b=0.1141 ratio=0.259 R2=0.997
+  translation H3_T04       a=0.579 b=0.1110 ratio=0.263 R2=0.986
+  translation H3_T08       a=0.593 b=0.1057 ratio=0.260 R2=0.989
+progress ratio q (free): n=4440 p1=-0.401 p5=0.714 median=1.000
+progress ratio q (any contact): n=3764 p50=0.986 p75=1.009 p90=1.049
+  q<0.2: free 0.0241  contact 0.0739
+  q<0.3: free 0.0255  contact 0.0802
+  q<0.4: free 0.0288  contact 0.0890
+  q<0.5: free 0.0329  contact 0.0967
+=== guard_eval3.py
+free [2,6)mm windows with shortfall > 2 mm: 66 {'rot': 64, 'grip': 0, 'rev': 0, 'other': 2}
+f=0.2 W=2 lowrot=False: episodes 29 detected 18 median delay 3.0 free fire events 46
+f=0.2 W=2 lowrot=True: episodes 29 detected 14 median delay 4.5 free fire events 13
+f=0.2 W=3 lowrot=False: episodes 29 detected 16 median delay 4.5 free fire events 38
+f=0.2 W=3 lowrot=True: episodes 29 detected 13 median delay 6.0 free fire events 9
+f=0.2 W=4 lowrot=False: episodes 29 detected 16 median delay 5.5 free fire events 30
+f=0.2 W=4 lowrot=True: episodes 29 detected 13 median delay 7.0 free fire events 4
+f=0.3 W=2 lowrot=False: episodes 29 detected 18 median delay 3.0 free fire events 46
+f=0.3 W=2 lowrot=True: episodes 29 detected 14 median delay 3.0 free fire events 14
+f=0.3 W=3 lowrot=False: episodes 29 detected 16 median delay 4.0 free fire events 38
+f=0.3 W=3 lowrot=True: episodes 29 detected 13 median delay 4.0 free fire events 9
+f=0.3 W=4 lowrot=False: episodes 29 detected 16 median delay 5.0 free fire events 31
+f=0.3 W=4 lowrot=True: episodes 29 detected 13 median delay 5.0 free fire events 5
+f=0.4 W=2 lowrot=False: episodes 29 detected 19 median delay 2.0 free fire events 47
+f=0.4 W=2 lowrot=True: episodes 29 detected 15 median delay 2.0 free fire events 14
+f=0.4 W=3 lowrot=False: episodes 29 detected 17 median delay 3.0 free fire events 40
+f=0.4 W=3 lowrot=True: episodes 29 detected 14 median delay 3.0 free fire events 9
+f=0.4 W=4 lowrot=False: episodes 29 detected 17 median delay 4.0 free fire events 34
+f=0.4 W=4 lowrot=True: episodes 29 detected 14 median delay 4.0 free fire events 6
+f=0.5 W=2 lowrot=False: episodes 29 detected 19 median delay 2.0 free fire events 48
+f=0.5 W=2 lowrot=True: episodes 29 detected 15 median delay 2.0 free fire events 14
+f=0.5 W=3 lowrot=False: episodes 29 detected 18 median delay 3.0 free fire events 43
+f=0.5 W=3 lowrot=True: episodes 29 detected 15 median delay 3.0 free fire events 9
+f=0.5 W=4 lowrot=False: episodes 29 detected 17 median delay 4.0 free fire events 37
+f=0.5 W=4 lowrot=True: episodes 29 detected 14 median delay 4.0 free fire events 7
+=== guard_calib.py
+evaluable contact-free translation steps 3319; per run {'T04_t100': 138, 'T08_t100': 340, 'T08_stoveoff': 303, 'drawer001': 655, 'drawer003': 714, 'T04_20mm': 488, 'T04_default': 308, 'H3_T04': 223, 'H3_T08': 150}
+  ratio p0.1: 0.526
+  ratio p0.5: 0.643
+  ratio p1: 0.753
+  ratio p2: 0.807
+  ratio p5: 0.867
+  ratio p10: 0.944
+  ratio p50: 0.998
+  fraction < 0.5: 0.0009; < 0.3: 0.0009
+=== rot_coupling.py
+rotation cmd [0.00,0.02) rad: n=3265 p0.5=0.691 p1=0.776 p5=0.878 frac<0.5=0.0003
+rotation cmd [0.02,0.04) rad: n=220 p0.5=0.500 p1=0.560 p5=0.748 frac<0.5=0.0091
+rotation cmd [0.04,0.07) rad: n=129 p0.5=0.136 p1=0.216 p5=0.604 frac<0.5=0.0465
+rotation cmd [0.07,0.20) rad: n=569 p0.5=0.044 p1=0.096 p5=0.433 frac<0.5=0.0668
+=== rot_profile.py
+segments 220; orientation overshoot (dip below tol then +0.02 rad): 7
+current : steps to 2-sample arrival median 25 p90 27; max overshoot median 17.4 mm p90 21.2 mm
+braking : steps to 2-sample arrival median 21 p90 23; max overshoot median 0.0 mm p90 0.0 mm
+=== brake_robust.py
+a_true=0.53 current  a_brake=None: median steps 14, p90 overshoot 2.5 mm
+a_true=0.53 braking  a_brake=0.71: median steps 21, p90 overshoot 0.0 mm
+a_true=0.53 braking  a_brake=0.77: median steps 52, p90 overshoot 6.3 mm
+a_true=0.63 current  a_brake=None: median steps 21, p90 overshoot 11.9 mm
+a_true=0.63 braking  a_brake=0.71: median steps 21, p90 overshoot 0.0 mm
+a_true=0.63 braking  a_brake=0.77: median steps 25, p90 overshoot 0.0 mm
+a_true=0.71 current  a_brake=None: median steps 25, p90 overshoot 21.4 mm
+a_true=0.71 braking  a_brake=0.71: median steps 20, p90 overshoot 0.0 mm
+a_true=0.71 braking  a_brake=0.77: median steps 25, p90 overshoot 0.0 mm
+a_true=0.77 current  a_brake=None: median steps 27, p90 overshoot 31.8 mm
+a_true=0.77 braking  a_brake=0.71: median steps 20, p90 overshoot 0.0 mm
+a_true=0.77 braking  a_brake=0.77: median steps 25, p90 overshoot 0.0 mm
+=== rot_brake2.py
+theta=0.30 current : median exit step 18, p90 post-exit max error 0.105 rad
+theta=0.30 switch  : median exit step 26, p90 post-exit max error 0.061 rad
+theta=0.79 current : median exit step 37, p90 post-exit max error 0.134 rad
+theta=0.79 switch  : median exit step 47, p90 post-exit max error 0.062 rad
+theta=1.57 current : median exit step 65, p90 post-exit max error 0.121 rad
+theta=1.57 switch  : median exit step 76, p90 post-exit max error 0.061 rad
+=== track_dev.py
+routed transit steps n=2012: lateral deviation median 7.10 mm p95 24.85 p99 74.83 max 185.54 mm
+=== finger_touch.py
+open settled steps: free n=4907 inward p99=0.0144 mm p99.9=0.0332 max=0.0624; std=0.0318
+contact n=395 inward median=-0.0000 p75=0.0028 p90=0.0752; frac>0.10mm=0.078; free frac>0.10mm=0.0000
+=== plant_perrun.py
+T04_t100     contact-free a=0.568 b=0.1119 rho=0.259 n=231
+T08_t100     contact-free a=0.632 b=0.0961 rho=0.261 n=466
+T08_stoveoff contact-free a=0.630 b=0.0959 rho=0.259 n=482
+drawer001    contact-free a=0.771 b=0.0575 rho=0.251 n=1452
+drawer003    contact-free a=0.685 b=0.0781 rho=0.248 n=1276
+T04_20mm     contact-free a=0.635 b=0.0946 rho=0.259 n=613
+T04_default  contact-free a=0.525 b=0.1234 rho=0.260 n=436
+H3_T04       contact-free a=0.552 b=0.1173 rho=0.262 n=347
+H3_T08       contact-free a=0.590 b=0.1075 rho=0.262 n=290
+run-bootstrap pooled a: median 0.710 95% [0.593, 0.754]
+=== fk_check.py (controller .venv)
+limits low [-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973]
+limits high [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973]
+agent_speedup_v2_uc71_can_obstacle_transit100_t04_20261103_0 n 13 base mean [-0.51, 0.0, 0.42] pos spread mm 0.268 rot spread deg 0.0328
+   min joint margin per request (joint, rad): [(4, 0.653), (4, 0.653), (4, 0.465), (4, 0.457), (4, 0.446), (4, 0.446), (4, 0.819), (4, 0.982), (4, 0.977), (4, 0.751), (4, 0.606), (4, 0.593), (4, 0.99)]
+agent_speedup_v2_uc71_drawer_bowl_moka_transit500_cap100_202 n 42 base mean [-0.66, 0.0, 0.912] pos spread mm 0.607 rot spread deg 0.0378
+   min joint margin per request (joint, rad): [(4, 0.653), (4, 0.896), (7, 1.319), (4, 1.169), (4, 1.053), (4, 0.568), (5, 0.593), (5, 0.631), (4, 0.535), (4, 1.02), (4, 1.098), (4, 1.029), (4, 1.039), (4, 1.088), (4, -0.0), (4, 0.205), (4, -0.0), (4, -0.001), (4, -0.0), (4, -0.0), (4, -0.0), (4, 0.198), (6, 0.121), (4, -0.0), (6, 0.233), (6, 0.752), (4, 0.478), (4, 0.628), (4, 0.93), (4, 1.044), (4, 1.055), (4, 0.981), (4, 0.624), (4, 0.684), (4, 0.684), (4, 0.688), (2, 1.117), (2, 0.822), (2, 0.878), (4, 1.087), (4, 1.062), (4, 1.038)]
+=== ik_pass.py (controller .venv)
+T04 targets checked 15 infeasible or margin<0.05: []
+T08 targets checked 16 infeasible or margin<0.05: []
+d001 targets checked 42 infeasible or margin<0.05: [('000016', 0, 'move_to_pose', False, 326.3, 12.28, 4, 0.0), ('000016', 2, 'move_to_pose', False, 252.4, 29.5, 4, 0.0), ('000017', 0, 'move_to_pose', False, 270.6, 35.92, 4, 0.0), ('000021', 0, 'move_to_pose', False, 19.6, 5.71, 4, 0.0), ('000022', 0, 'move_to_pose', False, 178.9, 58.78, 4, 0.0), ('000023', 0, 'move_to_pose', False, 5.5, 40.38, 4, 0.0), ('000024', 0, 'move_relative', False, 4.4, 0.41, 2, 0.232)]
+d003 targets checked 34 infeasible or margin<0.05: [('000004', 0, 'move_to_pose', False, 28.5, 10.9, 5, 0.0), ('000004', 1, 'move_to_pose', False, 28.5, 55.84, 5, 0.0), ('000008', 0, 'approach', True, 1.4, 0.68, 5, 0.0)]
+IK solve time median 7.5 ms p95 23.5 ms (n=107)
+multi-seed re-check
+  d001 000016 move_to_pose best ok=True pos_err=0.0mm ori_err=0.0deg min_margin=0.786 target_dist_from_base=0.583 m
+  d001 000017 move_to_pose best ok=True pos_err=0.2mm ori_err=0.0deg min_margin=0.936 target_dist_from_base=0.530 m
+  d001 000021 move_to_pose best ok=True pos_err=0.1mm ori_err=0.0deg min_margin=0.605 target_dist_from_base=0.681 m
+  d001 000022 move_to_pose best ok=True pos_err=0.0mm ori_err=0.0deg min_margin=0.554 target_dist_from_base=0.531 m
+  d001 000023 move_to_pose best ok=True pos_err=0.3mm ori_err=0.0deg min_margin=1.193 target_dist_from_base=0.573 m
+  d001 000024 move_relative best ok=False pos_err=4.4mm ori_err=0.4deg min_margin=0.232 target_dist_from_base=0.690 m
+  d003 000004 move_to_pose best ok=False pos_err=24.0mm ori_err=16.4deg min_margin=0.000 target_dist_from_base=0.542 m
+  d003 000008 approach best ok=True pos_err=0.1mm ori_err=0.0deg min_margin=0.013 target_dist_from_base=0.528 m

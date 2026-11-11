@@ -18,7 +18,7 @@ import numpy as np
 from .action import ActionAdapter, USER_CHECK_TRANSIT_ACTION_M
 from .astranomy_agentic_motion import measured_pose, rotation_error_rad
 from .contact_skills import Primitive, StepView
-from .agent_speedup_v2_user_check_routing import TransitObstacleMap, TransitRoute, RouteUnavailable
+from .agent_speedup_v2_user_check_routing import GRID_SPACING_M, TransitObstacleMap, TransitRoute, RouteUnavailable
 
 FRAGMENT_VERSION = "user-check-measured-fragments-4"
 MAX_SEGMENTS = 6
@@ -110,7 +110,7 @@ def validate_route(route):
     return {"avoid_boxes": normalized, "clearance_m": float(margin)}
 
 
-def validate_execution(value) -> dict:
+def validate_execution(value, *, allow_uncapped_transit=False) -> dict:
     """Check every field combination before execution, returning a detached copy.
 
     Relative translation lengths can be checked here. Absolute distances and
@@ -137,7 +137,10 @@ def validate_execution(value) -> dict:
             raise ValueError(f"{prefix}.profile: must be transit or contact")
         if not isinstance(grip, str) or grip not in ("keep", "open", "close"):
             raise ValueError(f"{prefix}.gripper: must be keep, open, or close")
-        if type(segment["max_steps"]) is not int or not 1 <= segment["max_steps"] <= MAX_SEGMENT_STEPS:
+        uncapped = (allow_uncapped_transit and segment["max_steps"] is None
+                    and profile == "transit" and skill in MOTION_SKILLS)
+        if not uncapped and (type(segment["max_steps"]) is not int
+                             or not 1 <= segment["max_steps"] <= MAX_SEGMENT_STEPS):
             raise ValueError(f"{prefix}.max_steps: must be an integer from 1 through {MAX_SEGMENT_STEPS}")
         if type(segment["observation_after"]) is not bool:
             raise ValueError(f"{prefix}.observation_after: must be boolean")
@@ -171,7 +174,8 @@ def validate_execution(value) -> dict:
             elif grip != "keep":
                 raise ValueError(f"{prefix}: wait requires gripper keep")
         normalized.append(segment)
-    if sum(segment["max_steps"] for segment in normalized) > MAX_EXECUTION_STEPS:
+    if (all(segment["max_steps"] is not None for segment in normalized)
+            and sum(segment["max_steps"] for segment in normalized) > MAX_EXECUTION_STEPS):
         raise ValueError(f"execution total max_steps must not exceed {MAX_EXECUTION_STEPS}")
     return {"segments": normalized}
 
@@ -214,17 +218,22 @@ def fragment_capabilities() -> dict:
 
 
 class FragmentSequencePrimitive(Primitive):
-    """Run a bounded sequence until measured completion or the first handoff.
+    """Run until measured completion or handoff, with legacy budgets by default.
 
     Full field validation precedes any action. Geometric bounds are additionally
     enforced from measured entry state for every segment, including later ones.
     """
 
-    def __init__(self, view: StepView, execution, keep_gripper="open", *, obstacle_map=None):
+    def __init__(self, view: StepView, execution, keep_gripper="open", *, obstacle_map=None,
+                 route_grid_spacing_m=GRID_SPACING_M, allow_uncapped_transit=False):
         super().__init__("execute_fragment")
         if not isinstance(view, StepView):
             raise TypeError("fragment execution requires a StepView snapshot")
-        self.execution = validate_execution(execution)
+        self.execution = validate_execution(execution, allow_uncapped_transit=allow_uncapped_transit)
+        limits = [segment["max_steps"] for segment in self.execution["segments"]]
+        self.budget_steps = None if any(limit is None for limit in limits) else sum(limits)
+        self.execution_step_limit = None if self.budget_steps is None else MAX_EXECUTION_STEPS
+        self.route_grid_spacing_m = route_grid_spacing_m
         self.obstacle_map = deepcopy(obstacle_map if obstacle_map is not None
                                      else TransitObstacleMap().snapshot())
         if keep_gripper not in ("open", "close"):
@@ -305,7 +314,8 @@ class FragmentSequencePrimitive(Primitive):
                     start_xyz=pose[:3], goal_xyz=self._target_xyz,
                     orientation_wxyz=self._target_wxyz, route=route,
                     max_command_m=profile["action_translation_m"],
-                    position_tolerance_m=profile["position_tolerance_m"])
+                    position_tolerance_m=profile["position_tolerance_m"],
+                    grid_spacing_m=self.route_grid_spacing_m)
                 self._current["routing"] = {**self._route.diagnostics(), **map_evidence}
             except RouteUnavailable as exc:
                 self._current["routing"] = {**exc.details, **map_evidence,
@@ -396,10 +406,10 @@ class FragmentSequencePrimitive(Primitive):
             complete_reason = "wait_elapsed"
         if complete_reason:
             self._complete_segment(after, complete_reason)
-        elif record["actions"] >= segment["max_steps"]:
+        elif segment["max_steps"] is not None and record["actions"] >= segment["max_steps"]:
             self._end("failed", "segment_budget_exhausted",
                       detail="requested control budget ended before the measured completion predicate")
-        elif self.actions_executed >= MAX_EXECUTION_STEPS:
+        elif self.execution_step_limit is not None and self.actions_executed >= self.execution_step_limit:
             self._end("failed", "execution_budget_exhausted")
         elif segment["skill"] in MOTION_SKILLS and record["actions"] >= STALL_MIN_STEPS:
             window = record["measurements"][-STALL_WINDOW_STEPS:]
@@ -457,7 +467,7 @@ class FragmentSequencePrimitive(Primitive):
             "status": self.status or "running", "reason": self.reason,
             "observed_at_fragment_step": self.actions_executed,
             "executed_steps": self.actions_executed,
-            "budget_steps": sum(s["max_steps"] for s in self.execution["segments"]),
+            "budget_steps": self.budget_steps,
             "measured_pose_wxyz": deepcopy(self._last_pose), "measured_gap_mm": self._last_gap_mm,
             "gripper_command": self.gripper_command,
             "current_segment_index": self._segment_index,

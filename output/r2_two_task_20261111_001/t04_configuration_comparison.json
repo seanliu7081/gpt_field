@@ -1,0 +1,50 @@
+{
+  "compared_to": "/workspace/gpt_field/output/r1_two_task_20261111_001/t04_inspect.json",
+  "differences": {
+    "simulator": [
+      {
+        "suite": "libero_10",
+        "seed": 7,
+        "image_size": 512,
+        "render_size": 512,
+        "max_steps": null,
+        "settle_steps": 10,
+        "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+        "python_executable": "/workspace/venvs/libero-plus/bin/python",
+        "response_timeout_s": 120.0,
+        "stop_on_success": false,
+        "initial_state_override": "/workspace/gpt_field/output/r1_two_task_20261111_001/inputs/t04/initial_state.npy",
+        "task_bddl_override": "/workspace/gpt_field/output/r1_two_task_20261111_001/inputs/t04/custom_task.bddl",
+        "custom_task_prompt": null,
+        "custom_task_id": null,
+        "collision_check_mode": "none",
+        "include_arm_joints": false,
+        "stop_on_collision": false
+      },
+      {
+        "suite": "libero_10",
+        "seed": 7,
+        "image_size": 512,
+        "render_size": 512,
+        "max_steps": null,
+        "settle_steps": 10,
+        "libero_root": "/workspace/heading_flow_pub/third_party/LIBERO",
+        "python_executable": "/workspace/venvs/libero-plus/bin/python",
+        "response_timeout_s": 120.0,
+        "stop_on_success": false,
+        "initial_state_override": "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/initial_state.npy",
+        "task_bddl_override": "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/custom_task.bddl",
+        "custom_task_prompt": null,
+        "custom_task_id": null,
+        "collision_check_mode": "none",
+        "include_arm_joints": false,
+        "stop_on_collision": false
+      }
+    ],
+    "revision": [
+      "astra_tools_r1",
+      "astra_tools_r2_obstacle_map"
+    ]
+  },
+  "frozen_input_bytes_identical": true
+}

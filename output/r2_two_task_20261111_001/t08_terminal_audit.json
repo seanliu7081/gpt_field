@@ -1,0 +1,307 @@
+{
+  "audit_version": 1,
+  "created_at_utc": "2026-11-10T17:07:27.599641+00:00",
+  "run": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005",
+  "method": "Saved artifacts only; hashes, trace continuity, metrics, recorded request metadata, and ffprobe frame read. No policy replay, model calls, or simulator reset.",
+  "passed": true,
+  "checks": {
+    "source_map_equals_original_r2": {
+      "passed": true,
+      "detail": {
+        "source_count": 370
+      }
+    },
+    "run_frozen_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "runtime_sources": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "terminal_source_audit": {
+      "passed": true
+    },
+    "frozen_input_paths_match": {
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    "input_custom_task.bddl": {
+      "passed": true
+    },
+    "input_initial_state.npy": {
+      "passed": true
+    },
+    "initial_observation_sha": {
+      "passed": true,
+      "detail": {
+        "sha256": "7f96963551a64fc826f1cbf549e81497ddb1f40258ad9ee7438bb81dc5411080"
+      }
+    },
+    "policy_action_step_sequence": {
+      "passed": true,
+      "detail": {
+        "actions": 936
+      }
+    },
+    "complete_state_chain": {
+      "passed": true,
+      "detail": {
+        "mismatch_steps": []
+      }
+    },
+    "initial_and_terminal_state_match": {
+      "passed": true
+    },
+    "finite_valid_actions_and_states": {
+      "passed": true
+    },
+    "all_feedback_complete": {
+      "passed": true
+    },
+    "decision_step_matches": {
+      "passed": true
+    },
+    "autonomous_terminal": {
+      "passed": true
+    },
+    "unchanged_gripper_terminal_hold": {
+      "passed": true
+    },
+    "subscription_counts": {
+      "passed": true,
+      "detail": {
+        "count": 15
+      }
+    },
+    "subscription_only": {
+      "passed": true
+    },
+    "requested_model_revision_effort": {
+      "passed": true
+    },
+    "all_requests_valid": {
+      "passed": true
+    },
+    "request_sequence": {
+      "passed": true
+    },
+    "no_retries_or_episode_caps": {
+      "passed": true
+    },
+    "model_latency_sum": {
+      "passed": true
+    },
+    "strict_score_consistency": {
+      "passed": true
+    },
+    "completion_eligibility": {
+      "passed": true
+    },
+    "raw_score_consistency": {
+      "passed": true
+    },
+    "evaluation_step_counts": {
+      "passed": true
+    },
+    "result_summary_consistency": {
+      "passed": true
+    },
+    "result_launch_timing": {
+      "passed": true
+    },
+    "online_timing_not_video_subtracted": {
+      "passed": true
+    },
+    "trace_timing_monotonic": {
+      "passed": true
+    },
+    "simulator_step_timing_sum": {
+      "passed": true
+    },
+    "feedback_timing_sum": {
+      "passed": true
+    },
+    "decision_timing_sum": {
+      "passed": true
+    },
+    "collision_snapshot_matches_trace": {
+      "passed": true
+    },
+    "collision_class_totals": {
+      "passed": true
+    },
+    "collision_pair_totals": {
+      "passed": true
+    },
+    "video_readable": {
+      "passed": true,
+      "detail": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1600,
+            "height": 960,
+            "r_frame_rate": "10/1",
+            "duration": "187.400000",
+            "nb_read_frames": "1874"
+          }
+        ],
+        "format": {
+          "duration": "187.400000",
+          "size": "7801794"
+        }
+      }
+    },
+    "video_finalized": {
+      "passed": true
+    }
+  },
+  "check_count": 39,
+  "metrics": {
+    "status": "finish",
+    "steps": 936,
+    "online_wall_s": 449.77578085497953,
+    "strict_success": true,
+    "strict_success_at_terminal": true,
+    "strict_success_after_same_gripper_hold": true,
+    "raw_success_at_terminal": true,
+    "raw_success_after_same_gripper_hold": true,
+    "completion_wall_s": 450.8829959637951,
+    "completion_time_eligible": true,
+    "model_requests": 15,
+    "api_key_calls": 0,
+    "model_latency_s": 313.2763138185255,
+    "vision_tool_s": 8.677658739034086,
+    "forbidden_contact_samples": 874,
+    "forbidden_contact_class_counts": {
+      "robot_scene": 0,
+      "robot_nonfinger_manipulated_object": 0,
+      "robot_object": 0,
+      "manipulated_object_scene": 874
+    },
+    "forbidden_contact_pairs": {
+      "robot_scene": [],
+      "robot_nonfinger_manipulated_object": [],
+      "robot_object": [],
+      "manipulated_object_scene": [
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 439,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g6"
+          ],
+          "points": 244
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 439,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g3"
+          ],
+          "points": 176
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 445,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g8"
+          ],
+          "points": 124
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 860,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g7"
+          ],
+          "points": 115
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 860,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g3"
+          ],
+          "points": 59
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 445,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g4"
+          ],
+          "points": 58
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 445,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_2:moka_pot_2_g2"
+          ],
+          "points": 53
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 860,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g2"
+          ],
+          "points": 27
+        },
+        {
+          "class": "manipulated_object_scene",
+          "first_action_index": 871,
+          "first_phase": "action",
+          "pair": [
+            "flat_stove_1:flat_stove_1_collision_burner",
+            "moka_pot_1:moka_pot_1_g5"
+          ],
+          "points": 18
+        }
+      ]
+    },
+    "trace_event_counts": {
+      "reset": 1,
+      "action": 936,
+      "raw_success_first_reached": 1,
+      "policy_terminal": 1,
+      "evaluator_same_gripper_hold": 10
+    }
+  },
+  "artifact_sha256": {
+    "result.json": "f975e2e39129712ec5c4a5a05c1a2e86d3e3cac41674ebf22f8cd3d9fa2ccd71",
+    "trial/summary.json": "cd30e67719853f4937412f90f3a1860f0d2ec4c81e173d12965be3f3ec5aa20d",
+    "trial/trace.jsonl": "60a11b935a6549a5afa1dc3aa91f0900f0b5cb1d9e5e0e8ddd56651bc667e09c",
+    "source_manifest.json": "6f29f2ce9e35955c555afa8fdda5455adf5decb272fd86deed58b8fc8701c0ae",
+    "trial/episode.mp4": "50d95e0fbedd007a9ea073414327586a7f83533fd806128d8784ef684d4a5f79"
+  },
+  "limitations": [
+    "No full simulator replay or independent physical re-evaluation; raw and strict scores cross-checked against recorded evaluator artifacts.",
+    "Contact counts are sampled contact points, not distinct collision incidents.",
+    "Video playback duration is not online wall time."
+  ]
+}

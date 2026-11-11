@@ -1,0 +1,21 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /venv/fm_dno/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /workspace/heading_flow_pub/third_party/LIBERO/libero/datasets does not exist!
+{"task_id": 0, "observation_sha256": "80291bb31e2f166146b30a7df13a45b0e04e276a8fdcbfc87a8a7af1a29cbe8a", "expected_observation_sha256": "80291bb31e2f166146b30a7df13a45b0e04e276a8fdcbfc87a8a7af1a29cbe8a", "observation_hash_match": true, "saved_images_pixel_match": {"external": true}, "raw_libero_success": false, "settle_steps": 10, "settle_action": [0, 0, 0, 0, 0, 0, -1], "simulator_seed": 7, "expected_settled_state_sha256": "1483c0997953778e23ab5bbab200d3afd5c09e874394b73c47093b8bc85e16da", "controller_output_min": [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], "controller_output_max": [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], "bddl": {"path": "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl", "sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618", "bytes": 3284}, "passed": true}
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Traceback (most recent call last):
+  File "/workspace/gpt_field/output/layouts/libero10_relayout_recovered_20261105/validate_resets.py", line 25, in <module>
+    response = worker.reset(task, 0)
+  File "/workspace/gpt_field/src/gpt_field/libero.py", line 976, in reset
+    original_bddl_path = Path(self.benchmark.get_task_bddl_file_path(task_id)).resolve()
+  File "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/benchmark/__init__.py", line 138, in get_task_bddl_file_path
+    get_libero_path("bddl_files"),
+  File "/workspace/heading_flow_pub/third_party/LIBERO/libero/libero/__init__.py", line 39, in get_libero_path
+    with open(config_file, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/gpt-field-libero-wit6sjcf/config.yaml'

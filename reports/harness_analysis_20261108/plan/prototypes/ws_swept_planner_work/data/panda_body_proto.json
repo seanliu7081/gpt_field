@@ -1,0 +1,881 @@
+{
+ "robot_xml": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/robot.xml",
+ "robot_xml_sha256": "263c0f9abacbc8686027ec5545bee144481cbcf5cc74aa421cbe3227030cd95e",
+ "gripper_xml": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/grippers/panda_gripper.xml",
+ "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+ "builder_sha256": "a04b1369f83a5a6cf7fd975c5895f6d31a88c18a7544596e7eb03aca290c7727",
+ "rng_seed": 0,
+ "k_by_kind": {
+  "arm": 10,
+  "hand": 14,
+  "finger": 4,
+  "pad": 2
+ },
+ "build_s": 2.642620434984565,
+ "bodies": [
+  {
+   "index": 0,
+   "name": "base",
+   "parent": -1,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 1,
+   "name": "link0",
+   "parent": 0,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 2,
+   "name": "link1",
+   "parent": 1,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.333
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint1",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-2.8973 2.8973"
+   }
+  },
+  {
+   "index": 3,
+   "name": "link2",
+   "parent": 2,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     -0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     0.9999999999999998,
+     0.0
+    ],
+    [
+     -0.0,
+     -0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint2",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-1.7628 1.7628"
+   }
+  },
+  {
+   "index": 4,
+   "name": "link3",
+   "parent": 3,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     -0.316
+    ],
+    [
+     0.0,
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint3",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-2.8973 2.8973"
+   }
+  },
+  {
+   "index": 5,
+   "name": "link4",
+   "parent": 4,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0825
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     0.0
+    ],
+    [
+     0.0,
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint4",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-3.0718 -0.0698"
+   }
+  },
+  {
+   "index": 6,
+   "name": "link5",
+   "parent": 5,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     -0.0,
+     0.0,
+     -0.0825
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     0.9999999999999998,
+     0.384
+    ],
+    [
+     -0.0,
+     -0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint5",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-2.8973 2.8973"
+   }
+  },
+  {
+   "index": 7,
+   "name": "link6",
+   "parent": 6,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     0.0
+    ],
+    [
+     0.0,
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint6",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-0.0175 3.7525"
+   }
+  },
+  {
+   "index": 8,
+   "name": "link7",
+   "parent": 7,
+   "xml": "arm",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.088
+    ],
+    [
+     0.0,
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     0.0
+    ],
+    [
+     0.0,
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "joint7",
+    "type": null,
+    "axis": "0 0 1",
+    "pos": "0 0 0",
+    "range": "-2.8973 2.8973"
+   }
+  },
+  {
+   "index": 9,
+   "name": "right_hand",
+   "parent": 8,
+   "xml": "arm",
+   "T": [
+    [
+     0.7067583573638259,
+     0.7074550334094646,
+     0.0,
+     0.0
+    ],
+    [
+     -0.7074550334094646,
+     0.7067583573638259,
+     -0.0,
+     0.0
+    ],
+    [
+     -0.0,
+     0.0,
+     1.0,
+     0.1065
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 10,
+   "name": "right_gripper",
+   "parent": -1,
+   "xml": "tool",
+   "T": [
+    [
+     2.220446049250313e-16,
+     0.9999999999999998,
+     0.0,
+     0.0
+    ],
+    [
+     -0.9999999999999998,
+     2.220446049250313e-16,
+     -0.0,
+     0.0
+    ],
+    [
+     -0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 11,
+   "name": "eef",
+   "parent": 10,
+   "xml": "tool",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.097
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 12,
+   "name": "leftfinger",
+   "parent": 10,
+   "xml": "tool",
+   "T": [
+    [
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     0.0,
+     0.0
+    ],
+    [
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0524
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "finger_joint1",
+    "type": "slide",
+    "axis": "0 1 0",
+    "pos": "0 0 0",
+    "range": "0.0 0.04"
+   }
+  },
+  {
+   "index": 13,
+   "name": "finger_joint1_tip",
+   "parent": 12,
+   "xml": "tool",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.056
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  },
+  {
+   "index": 14,
+   "name": "rightfinger",
+   "parent": 10,
+   "xml": "tool",
+   "T": [
+    [
+     2.220446049250313e-16,
+     -0.9999999999999998,
+     0.0,
+     0.0
+    ],
+    [
+     0.9999999999999998,
+     2.220446049250313e-16,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0524
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": {
+    "name": "finger_joint2",
+    "type": "slide",
+    "axis": "0 1 0",
+    "pos": "0 0 0",
+    "range": "-0.04 0.0"
+   }
+  },
+  {
+   "index": 15,
+   "name": "finger_joint2_tip",
+   "parent": 14,
+   "xml": "tool",
+   "T": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.0085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.056
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "joint": null
+  }
+ ],
+ "parts": [
+  {
+   "index": 0,
+   "name": "link0_collision",
+   "kind": "arm",
+   "body": 1,
+   "body_name": "link0",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link0.stl",
+    "sha256": "dfc6d94330de8ddb005b311bfdba9f3b8e1aa7c256b71592ee7ff32cb9a9a5aa"
+   },
+   "spheres": 8,
+   "covered_validation": true,
+   "validation_points": 40302,
+   "bulge_plane_mm": 42.7,
+   "max_radius_mm": 69.58,
+   "hull_extent_mm": [
+    225.6,
+    189.3,
+    140.0
+   ]
+  },
+  {
+   "index": 1,
+   "name": "link1_collision",
+   "kind": "arm",
+   "body": 2,
+   "body_name": "link1",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link1.stl",
+    "sha256": "d24e332dffccf260b91d05dde17c5998bb9559d37da8608a8ee5213d9661f603"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 42047,
+   "bulge_plane_mm": 50.63,
+   "max_radius_mm": 67.38,
+   "hull_extent_mm": [
+    110.0,
+    184.4,
+    247.0
+   ]
+  },
+  {
+   "index": 2,
+   "name": "link2_collision",
+   "kind": "arm",
+   "body": 3,
+   "body_name": "link2",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link2.stl",
+    "sha256": "370f7605a0fae3529db169ded50f52f171024aa792d4d773bc84197301f6a039"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40580,
+   "bulge_plane_mm": 58.2,
+   "max_radius_mm": 67.42,
+   "hull_extent_mm": [
+    110.1,
+    249.2,
+    184.6
+   ]
+  },
+  {
+   "index": 3,
+   "name": "link3_collision",
+   "kind": "arm",
+   "body": 4,
+   "body_name": "link3",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link3.stl",
+    "sha256": "0a8d638b9349c6c0eefc4e888636ac4838c4b27170f18a51699321118af709c1"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40255,
+   "bulge_plane_mm": 43.06,
+   "max_radius_mm": 59.6,
+   "hull_extent_mm": [
+    192.2,
+    166.1,
+    176.2
+   ]
+  },
+  {
+   "index": 4,
+   "name": "link4_collision",
+   "kind": "arm",
+   "body": 5,
+   "body_name": "link4",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link4.stl",
+    "sha256": "0180ebb5772ec9840cb049750cffb29a9ddc90311752a16ea34757782ef9e48d"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40258,
+   "bulge_plane_mm": 44.65,
+   "max_radius_mm": 60.82,
+   "hull_extent_mm": [
+    192.7,
+    179.2,
+    166.3
+   ]
+  },
+  {
+   "index": 5,
+   "name": "link5_collision",
+   "kind": "arm",
+   "body": 6,
+   "body_name": "link5",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link5.stl",
+    "sha256": "dd17e688c7870e722283525879643d53a74c0024d328b0e14b034b54c8b6c31a"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40663,
+   "bulge_plane_mm": 64.49,
+   "max_radius_mm": 70.52,
+   "hull_extent_mm": [
+    110.1,
+    185.0,
+    316.7
+   ]
+  },
+  {
+   "index": 6,
+   "name": "link6_collision",
+   "kind": "arm",
+   "body": 7,
+   "body_name": "link6",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link6.stl",
+    "sha256": "20b768e99a0e0440b5754dcca108016434e57937cc356acd9c352ccd3cb27f77"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40384,
+   "bulge_plane_mm": 38.45,
+   "max_radius_mm": 49.39,
+   "hull_extent_mm": [
+    180.2,
+    133.1,
+    100.3
+   ]
+  },
+  {
+   "index": 7,
+   "name": "link7_collision",
+   "kind": "arm",
+   "body": 8,
+   "body_name": "link7",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/robots/panda/meshes/link7.stl",
+    "sha256": "92ac6afcf7574c034d3170d8a68e95ac9048ab9d0dd5bbd8311b86e551b9ab1c"
+   },
+   "spheres": 10,
+   "covered_validation": true,
+   "validation_points": 40613,
+   "bulge_plane_mm": 28.74,
+   "max_radius_mm": 34.79,
+   "hull_extent_mm": [
+    125.3,
+    125.2,
+    54.8
+   ]
+  },
+  {
+   "index": 8,
+   "name": "hand_collision",
+   "kind": "hand",
+   "body": 10,
+   "body_name": "right_gripper",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/hand.stl",
+    "sha256": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed"
+   },
+   "spheres": 14,
+   "covered_validation": true,
+   "validation_points": 40679,
+   "bulge_plane_mm": 33.79,
+   "max_radius_mm": 36.38,
+   "hull_extent_mm": [
+    204.4,
+    63.3,
+    91.9
+   ]
+  },
+  {
+   "index": 9,
+   "name": "finger1_collision",
+   "kind": "finger",
+   "body": 12,
+   "body_name": "leftfinger",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger.stl",
+    "sha256": "2d07a740392f3b9b0816f65d64fff9927d3d57c897870fc4b6ff9c56fff3a0c8"
+   },
+   "spheres": 4,
+   "covered_validation": true,
+   "validation_points": 40452,
+   "bulge_plane_mm": 12.95,
+   "max_radius_mm": 17.2,
+   "hull_extent_mm": [
+    21.0,
+    26.5,
+    53.7
+   ]
+  },
+  {
+   "index": 10,
+   "name": "finger1_pad_collision",
+   "kind": "pad",
+   "body": 13,
+   "body_name": "finger_joint1_tip",
+   "src": {
+    "box_half_size": [
+     0.008,
+     0.004,
+     0.008
+    ]
+   },
+   "spheres": 2,
+   "covered_validation": true,
+   "validation_points": 40116,
+   "bulge_plane_mm": 6.07,
+   "max_radius_mm": 9.87,
+   "hull_extent_mm": [
+    16.0,
+    8.0,
+    16.0
+   ]
+  },
+  {
+   "index": 11,
+   "name": "finger2_collision",
+   "kind": "finger",
+   "body": 14,
+   "body_name": "rightfinger",
+   "src": {
+    "file": "/workspace/gpt_field/agent_speedup_v2_obstacle_harness_100mm/.venv-sim/lib/python3.10/site-packages/robosuite/models/assets/grippers/meshes/panda_gripper/finger.stl",
+    "sha256": "2d07a740392f3b9b0816f65d64fff9927d3d57c897870fc4b6ff9c56fff3a0c8"
+   },
+   "spheres": 4,
+   "covered_validation": true,
+   "validation_points": 40457,
+   "bulge_plane_mm": 15.83,
+   "max_radius_mm": 18.31,
+   "hull_extent_mm": [
+    21.0,
+    26.5,
+    53.7
+   ]
+  },
+  {
+   "index": 12,
+   "name": "finger2_pad_collision",
+   "kind": "pad",
+   "body": 15,
+   "body_name": "finger_joint2_tip",
+   "src": {
+    "box_half_size": [
+     0.008,
+     0.004,
+     0.008
+    ]
+   },
+   "spheres": 2,
+   "covered_validation": true,
+   "validation_points": 40116,
+   "bulge_plane_mm": 6.04,
+   "max_radius_mm": 9.86,
+   "hull_extent_mm": [
+    16.0,
+    8.0,
+    16.0
+   ]
+  }
+ ],
+ "npz_sha256": "a00219f1407fce2b6cb73188e8636c6ca235139a0fcd12475a67b69146fd3c4e"
+}

@@ -1,0 +1,379 @@
+
+######## actionability_critic (28 edits)
+
+[acti-0] must_fix | overclaim | §3 M3 — Lean option
+  CURRENT: **Lean option, if M3 is too large.** The perception design's minimum slice is about 24 d: PS-1…PS-7, PS-10…PS-12, without discovery (PS-8) or tracking (PS-9). With it, obstacles reach the map only through the plan inventory: the model lists every visible object, so obstacles are named by the model, not the operator. Discovery is the backstop and can follow, but **M4 cannot start without PS-9's hel
+  WHY: 'About 24 d' is the perception design's own cost for its perception-only minimum slice (that design totals 36.5 d). It is not a size for M3. In the integrated costing PS-8 + PS-9 are 3.5 + 3.0 d, so deferring them saves about 6.5 d of M3's 81–86 d, and about as many critical-path days because both sit on the §8 chain. Geometry (17 d) and the swept shadow (15 d) stay. The M4 sentence gets ownership wrong: per X11/I-08, the held record and the single fallback jaw-column envelope belong to the SceneMap (GT3), and PS-9 only adds co-motion confirmation, so M4 can start without PS-9. The real costs 
+  SUGGEST: **Lean option, if M3 is too large.** Defer discovery (PS-8) and tracking (PS-9). The perception design's "about 24 d" is that design's own cost for its perception-only minimum slice, not a size for M3. Here the saving is ≈ 6.5 d of M3's 81–86 d (PS-8 3.5 d + PS-9 3.0 d in the integrated costing), and about as many working days of critical path, since both sit on the perception chain. Geometry (≈ 17 d), the swept shadow (≈ 15 d) and integration are unchanged. What you give up: - **Without PS-8:** obstacles reach the map only through the plan inventory (≤ 12 objects, named by the model, never by the operator) and the model's `locate`. There is no height field, so S-S16's unknown volumes and S-M4's walls/rim container representation are unavailable; containers then need the scoped `allow_contact: inside` (UD-45). SP8 has no measured per-cell heights, so under UD-34 the depth bound never bec
+
+[acti-1] must_fix | inconsistent | §3 M3 — Acceptance (S3 vs b002)
+  CURRENT: - Perception wait p95 ≤ 50 ms per decision, after request 1.
+  WHY: V-M3 and UD-50 make a bounded wait for the decision-frame refresh the M3/M4 default. The feasibility review sizes that wait at about 1.0–1.9 s, blocking (est.). The perception design's figure of about 0 s assumed each snapshot is consumed one decision later with wait_for(timeout=0). A p95 ≤ 50 ms target can only pass under option (b). As written, S3 either fails its own acceptance or the default is dropped silently.
+  SUGGEST: - Perception wait per decision, after request 1. Under UD-50's bounded wait (the M3/M4 default), each request waits for a full decision-frame refresh, ≈ 1.0–1.9 s (est.). Report it as added policy time and check p95 against the service's measured refresh latency. The ≤ 50 ms target holds only under UD-50 option (b).
+
+[acti-2] must_fix | inconsistent | §3 M3 — Expected effect
+  CURRENT: - About 0 s added critical path per decision (H3 added 1.1–1.3 s per call plus a 24 s preload).
+  WHY: This is the same contradiction on the time side. With the default bounded wait, each later request blocks for a full refresh of about 1.0–1.9 s (est.). Over T04's 13 executive calls that is about 12–23 s, roughly the per-call cost of H3 that this layer claims to remove. The user needs this number to judge UD-50 and the end-state time estimates.
+  SUGGEST: - Added critical path per decision: ≈ 0 s only under UD-50 option (b). The default bounded wait (V-M3) adds up to ≈ 1.0–1.9 s per decision (est.; ≈ 12–23 s on a 13-call T04). That is close to H3's 1.1–1.3 s per call, though without H3's 24 s preload. If the bounded wait stays on in M5, add it to the M5 time estimates.
+
+[acti-3] must_fix | missing_item | §7 First two weeks — days 1–10 (E1, E2)
+  CURRENT:    - **E1:** R1 config/digest/flags/invariants; R7 frame ring with the corrected seqlock and deterministic tests; R2 runner; no-op seams in shared H1 files.    - **E2:** R6 timing, PC2 transport plus its fault-injection tests, PC1 termination text, R11 sweep planner on historical fixtures.
+  WHY: The week-2 outputs need R3 (task pack and preflight), R9 (pixel fixture, runner-level replay and differential replay), R8 and INT-7, but no track is assigned them. E1 alone carries R1 + R7 + R2 + R9, about 16 d on the feasibility re-baseline, in 10 working days. The V-S6 seams are listed last, yet E2's PC1/PC2 edits to agent_client.py and agent.py must land through them; SF-6 warns that five engineers editing these files will conflict.
+  SUGGEST:    - **E1:** the spike; R1 config/digest/flags/invariants; the V-S6 no-op seams in `agent.py` / `fragments.py` / `agent_client.py`, before any other track edits those files; R7 frame ring with the corrected seqlock and deterministic tests. R2 runner, R9's runner-level and differential replays, and R8 post-hoc video follow in weeks 3–4.    - **E2:** R3 first (task pack, importer, and the no-model reset preflight on both the new and the pristine code, V-S1), then PC2 transport with its fault-injection tests, landing through E1's seams. R6 timing, PC1 termination text and R11's sweep planner follow in weeks 3–4.
+
+[acti-4] must_fix | overclaim | §7 First two weeks — End of week 2
+  CURRENT: 4. **End of week 2.**    - The `h1_equivalent` replay passes.    - The differential replay exists.    - Overhead is benchmarked.    - The reset preflight table is ready for your UD-03 glance.    - A capped ≤ 3-call smoke runs on `h1_equivalent`.
+  WHY: The list promises, after two weeks, M0's acceptance (the bit-exact h1_equivalent replay), the differential replay, the overhead benchmark and the M0 smoke. But M0 is 28–31 engineer-days of mostly runner work on one or two engineers, and the replay alone needs R1 + R7 + R2 + R9 (about 16 d). The user or a coding agent would read week 2 as a slip when it is the plan's own arithmetic. Split it into what week 2 can show and when M0 can close.
+  SUGGEST: 4. **End of week 2 (est.).**    - The spike verdict, with the first divergence if it was not exact.    - R1 config loader, flags, invariants and digest; the V-S6 seams landed.    - FrameRing v1 with the paused-writer and paused-reader tests passing.    - The T04 pixel fixture, and the reset preflight table (new and pristine code) ready for your UD-03 glance.    - Off the M0 path: PC2's fault-injection tests, the EXC-0 plant fit, INT-1 vendoring, the static-truth benchmark dataset. 5. **Weeks 3–4 (est.).** R2 and R9 bring the full `h1_equivalent` replay to bit-exact. Then come the differential replay, the overhead benchmark and the capped ≤ 3-call smoke on `h1_equivalent` (within your UD-44 budget). M0 is 28–31 engineer-days, mostly on E1 and E2 (R1 + R2 + R7 + R9 alone are ≈ 16 d on the feasibility re-baseline), so it cannot close in two weeks.
+
+[acti-5] should_fix | inconsistent | §5 Effort, staffing — five parallel tracks
+  CURRENT: | E5 | geometry tools + swept shadow | ≈ 40 d |
+  WHY: 45 + 35 + 40 + 35 + 40 = 195 d, which is about the feasibility re-baseline (193–210 d). The same section's total is about 215–235 d. The 20–40 d gap, mostly the safety-review fixes, has no owner. Much of it lands on E3, whose M4 SP6 work is on the critical path (S-M4, S-M5).
+  SUGGEST: | E5 | geometry tools + swept shadow | ≈ 40 d | | (unassigned) | The five loads above sum to ≈ 195 d (about the feasibility re-baseline), but the total is ≈ 215–235 d. The gap is mostly the safety-review fixes. They fall mainly on E3 (S-M5, S-M6, S-S7, S-S8, parts of S-M2/S-M3/S-M4) and E5 (S-M1, S-S9, S-S10, parts of S-M4/S-S15/S-S16). Assign them before M2: E3's M4 work is on the critical path. | ≈ 20–40 d |
+
+[acti-6] should_fix | missing_item | §0 In one page — early value
+  CURRENT: - **The 3-minute target needs nearly every lever and a normal service window.** A slow window like 11-05 adds 60–90 s. All effects are estimates until the sweeps measure them.
+  WHY: At 215–235 engineer-days the user needs to know what stopping early buys. The plan never says that M0–M2 (94–102 d) already deliver the overhead cut, honest scoring, the first all-task coverage map and the executor fixes, while perception, body planning and the 3-minute target come only in M3–M5 (122–132 d). It also does not show that with five tracks from day 1, most of the perception and geometry effort is spent before any S1/S2 evidence exists. That is a staffing decision to make before Day 0.
+  SUGGEST: - **The 3-minute target needs nearly every lever and a normal service window.** A slow window like 11-05 adds 60–90 s. All effects are estimates until the sweeps measure them. - **Early value and a stopping point (decide before Day 0).** M0–M2 (≈ 94–102 engineer-days) stand on their own. They give one simulator, ≈ 0.04–0.07 s per-step harness cost instead of 0.28–0.40 s, honest finish scoring with transport retries, the first all-task coverage map (S1) and the measured executor (S2; T04 honest ≈ 240–290 s, est.). They do not give measured perception maps, the body planner or the 3-minute target; those are M3–M5 (≈ 122–132 d). S2, together with the PS-12 offline perception scorecard, is the natural go/no-go point for M3–M5. With five tracks from day 1, most of E4's and E5's ≈ 75 d is spent before S1 and S2 report. Staffing E1–E3 first and adding E4/E5 after S2 defers that spend, but the p
+
+[acti-7] should_fix | inconsistent | §0 In one page — Sweep cost
+  CURRENT: - **Sweep cost (est.).** About 10,000–16,700 subscription calls and 64–113 h of serial sweep time for S1–S5 (±30 %).
+  WHY: The headline uses the `full34` figure, while §6B recommends `full44` (about 13,000–21,700 calls and about 30 % more wall time). Two S5 options the user must decide on (S-M7's both-arms S5 and V-S14's pristine arm) each add about 2,700–4,400 calls and 17–30 h, roughly half of S5 again. Neither appears in the headline.
+  SUGGEST: - **Sweep cost (est., ±30 %).** About 10,000–16,700 subscription calls and 64–113 h of serial sweep time for S1–S5 with `full34`; ≈ 13,000–21,700 calls and ≈ 83–147 h with the recommended `full44` (UD-10). Not included: the model-only A/Bs and calibrations (§4), a pristine arm kept at 3 repeats in S5, or running both a blocking and an async arm in S5 (S-M7). Each of the last two adds ≈ 2,700–4,400 calls and ≈ 17–30 h at `full34`.
+
+[acti-8] should_fix | overclaim | §0 In one page — Expected end state
+  CURRENT: - **Expected end state (est.).** Honest T04 policy time ≈ 150–230 s (H1 today: 402 s wall). Calls per object ≤ 3 (H1: 6.5–10.5). Forbidden contacts in routed stages and with added obstacles → 0 (target). Model-written metres limited to robot-anchored offsets.
+  WHY: 402 s is H1's wall time. It includes the 117–131 s of per-step overhead and video that A2 removes and that policy time excludes by definition; the README gives 304.8 s for control + plan. Comparing an honest policy-time estimate with the wall time inflates the apparent gain. 'Robot-anchored offsets' is also too strong: object-anchored target offsets remain, and raw absolute targets stay unless S3's reference share reaches 95 % (UD-27, S-S9).
+  SUGGEST: - **Expected end state (est.).** Honest T04 policy time ≈ 150–230 s. H1 today: 402 s wall, of which 304.8 s is control + plan without video. S1 measures H1's honest policy time on the same clock, so 402 → 150–230 s overstates the gain. Calls per object ≤ 3 (H1: 6.5–10.5). Forbidden contacts in routed stages and with added obstacles → 0 (target). Model-written metres are limited to offsets from robot or object anchors (offsets beyond an anchor's extent + kσ are flagged), plus raw absolute targets unless S3 shows ≥ 95 % reference use (UD-27).
+
+[acti-9] should_fix | inconsistent | §6C — low-stakes defaults (UD-50)
+  CURRENT: | UD-50 per-request perception wait | bounded wait in M3/M4 |
+  WHY: UD-50 is filed as low-stakes, but its default costs about 1.0–1.9 s per decision (est.), tens of seconds per task against a 3-minute target. The plan also never states its value for M5, even though the acceptance sweep S5 runs the M5 build.
+  SUGGEST: | UD-50 per-request perception wait (not low-stakes: ≈ +1.0–1.9 s per decision, est.; see M3) | bounded wait in M3/M4; set the M5 value from S3/S4 stale-box evidence before the M5 freeze |
+
+[acti-10] should_fix | missing_fix | §6C — UD-34
+  CURRENT: - **UD-34:** palm depth bound. Recommendation: report-only in M3; active in M4 only where measured cell heights have σ < pad height; revert if grasp retries rise by > 1 per 5 grasps.
+  WHY: S-S12 asked the plan to note that INV-1 (cruise_approach ⇒ depth_bound=active) makes M5's approach schedule impossible while UD-34 keeps the bound report-only. Neither the §9 S-S12 row nor §6C mentions it, so the user cannot see that the revert rule also removes the D2 lever (−10…−67 s per task).
+  SUGGEST: - **UD-34:** palm depth bound. Recommendation: report-only in M3; active in M4 only where measured cell heights have σ < pad height; revert if grasp retries rise by > 1 per 5 grasps. A revert to report-only also switches off M5's approach-speed schedule (UD-41; −10…−67 s per task), because INV-1 requires an active depth bound (S-S12).
+
+[acti-11] should_fix | overclaim | §4 Measurement protocol — Statistics
+  CURRENT: - Power at 34 scenes × 3 repeats: 20 pp ≈ 0.80–0.94; 30 pp ≥ 0.99. At 34 × 1, 30 pp is only 0.67–0.82.
+  WHY: These numbers come from R11's power.py, which applies one constant logit shift to every scene and an exact McNemar test to pooled (task, repeat) pairs. S-S5 calls that model anti-conservative, and the plan replaces it with a scene-clustered test. Quoted without qualification next to that change, the numbers overstate the power behind UD-09's 3-repeat choice, which sets the cost of S5 (5,400–8,800 calls).
+  SUGGEST: - Power from R11's original simulation (pooled McNemar, one constant logit effect for every scene; S-S5 found this model anti-conservative): at 34 scenes × 3 repeats, 20 pp ≈ 0.80–0.94 and 30 pp ≥ 0.99; at 34 × 1, 30 pp only 0.67–0.82. These likely overstate the power of the scene-clustered test, so treat them as upper estimates until the re-run.
+
+[acti-12] should_fix | not_actionable | §6B — UD-09 / UD-48
+  CURRENT: | UD-09 / UD-48 | Repeats, decision rule, statistics | 1 repeat for S1–S4, 3 for S5. Lexicographic rule: zero-shot → collision-free strict success → time → calls. Scene-clustered test with pre-registered margins. |
+  WHY: The user is asked to approve 'pre-registered margins' that the plan never proposes. S-S5's rule for proceeding when a level is unresolved is also missing (the §9 S-S5 row drops it); under a lexicographic rule an unresolved level 2 then has no defined path to level 3. The power re-run is offline and cheap, so it should come before the repeats decision.
+  SUGGEST: | UD-09 / UD-48 | Repeats, decision rule, statistics | 1 repeat for S1–S4, 3 for S5. Lexicographic rule: zero-shot → collision-free strict success → time → calls. Scene-clustered test with pre-registered margins. The margins, and the rule for moving on when a level is unresolved (S-S5), are not written yet. E2 proposes them together with the heterogeneous-effect re-run of R11's power simulation (offline, weeks 1–2), and you approve them here. Confirm the 3 S5 repeats after that re-run (§4). |
+
+[acti-13] should_fix | unclear | §6B — UD-06
+  CURRENT: the analysis brief treated robot-body contact as forbidden, so this is your call.
+  WHY: 'Report both' settles what is reported but not what is pre-registered. Level 2 of the S5 rule ('collision-free strict success') needs exactly one definition fixed before the data arrive; otherwise either definition can be chosen after the results are known.
+  SUGGEST: the analysis brief treated robot-body contact as forbidden, so this is your call: choose which definition is the primary endpoint at level 2 of the S5 decision rule (UD-48); the other is reported as secondary.
+
+[acti-14] should_fix | not_actionable | §6A — UD-00
+  CURRENT: An artefact sync for runs, sweeps and benchmarks that excludes `.private/` and tokens.
+  WHY: Day 0 starts with 'set up the backup remote', but only the user can create a private remote and an off-box target and supply their credentials. The recommendation also leaves out two things. The artefact target must be private, because request logs store full payloads, including encrypted reasoning items. And the plan's own irreplaceable inputs (the fixture runs used by the replay, the plant fit, PS-12 and R11) are as exposed as new work: workspace_is_volume=false on this instance.
+  SUGGEST: A **private** artefact target (request logs hold full model payloads) for runs, sweeps and benchmarks, and for the inputs this plan is built on, which also exist only here: the fixture runs under `/workspace/gpt_field/runs` (≈ 12 GB for the whole folder) and this analysis folder. Exclude `.private/` and tokens. You create both targets and give their push credentials before Day 0.
+
+[acti-15] should_fix | missing_item | §6A — UD-02
+  CURRENT: | UD-02 | Standing approval for no-model simulator jobs on a free GPU: reset preflight, pixel fixture, replays, truth export, scripted executor benchmark, post-hoc video | Approve; about 1–3 GPU-hours per milestone. |
+  WHY: §7 has E4 run the PS-1 service on GPU 7 in week 1. But UD-02 covers simulator jobs only, and UD-44 reserves starting the GPU service for the user's go-ahead, so E4 is either blocked or acting without approval. GPU placement (UD-22) is filed as low-stakes, although the critical path runs through the service and S4 needs about 16 GB on one GPU. §2's 'only GPU 7 had ≥ 10 GB free' is also wrong: GPU 6 had about 15 GB free but was busy.
+  SUGGEST: | UD-02 | Standing approval for no-model GPU jobs: simulator jobs on a free GPU (reset preflight, pixel fixture, replays, truth export, scripted executor benchmark, post-hoc video), and perception development on one fixed GPU (service skeleton, benchmark replays on saved frames; SAM 3.1 + DA3 ≈ 8 GB) | Approve both. Simulator jobs: about 1–3 GPU-hours per milestone. Perception: only GPU 7 was idle at writing (GPU 6 had ≈ 15 GB free but was busy), and S4 needs two resident services (≈ 16 GB) on one GPU, so reserve GPU 7 from M3 (UD-22). Without this approval, E4's week-1 service work waits for a UD-44 go-ahead. |
+
+[acti-16] should_fix | inconsistent | §7 First two weeks — days 1–10 (E4)
+  CURRENT: - **E4:** truth exporter + PS-12 benchmark dataset (static truth first); PS-1 service skeleton on GPU 7.
+  WHY: As written, this line contradicts UD-44 (starting the GPU perception service needs the user's go-ahead). It also skips S-S18: the exporter must rebuild each environment through the worker's reset() on the reset-count-sensitive scenes. The perception design's own phase 0 is CPU-only, so starting against a stub loses nothing.
+  SUGGEST: - **E4:** truth exporter (a UD-02 simulator job that builds each env through the worker's `reset()`, S-S18) + PS-12 benchmark dataset (static truth first); the PS-1 service skeleton against a stub backend on CPU, moving to GPU 7 once you approve GPU perception jobs (UD-02) or give a UD-44 go-ahead.
+
+[acti-17] should_fix | not_actionable | §7 First two weeks — item 2 (equivalence spike)
+  CURRENT: 2. **Days 1–2, the equivalence spike.** Frame observation + one simulator + the T04 zero-call replay through a new-runner skeleton, which should be exact. This de-risks the largest M0 item.
+  WHY: The spike's replay compares decoded pixels with the T04 pixel fixture, which is built from the pristine worktree. Neither the worktree nor the fixture exists on day 1, and every simulator job needs the EGL minor resolved, because on this host the device index is not the minor. The spike also has no exit criterion or fallback, so the first task on Monday cannot be declared done or failed.
+  SUGGEST: 2. **Days 1–2, the equivalence spike (E1).** Day-1 prerequisites: the pristine worktree `arms/h1-baseline-3cc84ac`, INT-7's EGL-minor resolver (minors are reversed on this host), and the T04 pixel fixture built from the pristine code (R9 step 1; ≈ 100 s, a no-model simulator job under UD-02). Then frame observation + one simulator + the T04 zero-call replay through a new-runner skeleton. Exit: exact on 549/549 actions, state8 and the 13 request images → continue. Otherwise log the first divergence, tell you, and re-estimate R2/R7 before E1 goes on; the other tracks are unaffected. This de-risks the largest M0 item.
+
+[acti-18] should_fix | missing_fix | §3 M3 — Acceptance (S3 vs b002)
+  CURRENT: - Shadow-planner recall and precision against contact episodes.
+  WHY: S-M1, S-M2 and S-M3 each came with an S3 metric, so the user can see whether the interim-safety fix worked. None of them reached this list or §9, and the integrated plan's 'obstacle contact episodes not above b002' was dropped. Without them, S3 cannot show whether removing the model's boxes (with the derived robot inflation) made clearance worse.
+  SUGGEST: - Shadow-planner recall and precision against contact episodes. - Obstacle contact episodes, and hand/finger/held-object episodes in routed stages, not above b002; carry margin against truth (S-M2). - Real objects excluded as `inside_robot` by post-hoc truth: 0 (S-M1). - Arm results with and without outage cells (S-M3).
+
+[acti-19] should_fix | misstated_fix | §3 M2 — Executor, EXC-B3 (S-M6)
+  CURRENT: - The contact window is **derived by the executor** (k·σ along the motion + guard detection distance + tolerance). The model may only shrink it, and a stop near a non-anchor object is "unexpected contact" (S-M6).
+  WHY: The text gives the M3 form of the window in M2, where there are no target references, no measured σ and no SceneMap anchors (only the model's boxes until M3). S-M6 staged it explicitly: without measured σ the window is the plant-derived detection distance plus tolerance, and the non-anchor comparison starts in M3. An engineer following M2 would look for inputs that do not exist yet.
+  SUGGEST: - The contact window is **derived by the executor**. In M2 there is no measured σ or object map, so the window is the plant-derived guard detection distance + tolerance. From M3, targets given by reference add k·σ along the motion, and a stop near a non-anchor object is "unexpected contact". The model may only shrink the window (S-M6).
+
+[acti-20] should_fix | misstated_fix | §3 M2 — Executor, EXC-D1a (S-S15)
+  CURRENT: - **EXC-D1a:** grasp-gap predicates, plus `held_identity_mismatch` detection (S-S15).
+  WHY: S-S15 compares the SceneMap held record with perception's co-moving instance (held_confirmed). Both arrive in M3 (GT3, PS-9), and §9 itself maps S-S15 to GT3/PS-9. In M2 there is nothing to compare.
+  SUGGEST: - **EXC-D1a:** grasp-gap predicates. S-S15's `held_identity_mismatch` barrier compares the SceneMap held record (GT3) with PS-9's co-moving instance, so it lands in M3, not here.
+
+[acti-21] should_fix | missing_fix | §2 Architecture — safety order (INV-15)
+  CURRENT: This plan adds INV-15: `swept.speed ≠ off ⇒ executor.degraded_mode` (§3, M3).
+  WHY: Degraded mode exists because, once perception is on, INV-13 removes the model's boxes, so a perception outage leaves an empty map. That hazard depends on perception.mode, not on swept.speed. An ablation arm with perception on and speed scheduling off would pass the loader without degraded mode while still transiting at the inherited 0.10 m cap. Keying the rule to perception covers every case the review's form covers, because cruise and cruise_approach already imply perception on through INV-2 and INV-12.
+  SUGGEST: This plan adds INV-15: `perception.mode=on ⇒ executor.degraded_mode` (§3, M3). The review keyed it to `swept.speed ≠ off`. Keying it to perception also covers arms with speed scheduling off, where an outage still leaves an empty map (INV-13 has removed the model's boxes) at H1's 0.10 m transit cap.
+
+[acti-22] should_fix | missing_item | §4 Measurement protocol — Cost
+  CURRENT: - Paired-concurrent execution would cut wall time ≈ 40–50 %, if the subscription allows two streams.
+  WHY: Several planned model-calling steps exceed UD-44's 13-call limit for smokes Claude may run, but none is marked as needing a go-ahead, and their calls are missing from the cost table (the integrated plan listed most of them as 'small additions'). The S-M7 A/B is new and not costed at all.
+  SUGGEST: - Paired-concurrent execution would cut wall time ≈ 40–50 %, if the subscription allows two streams.   - Not in the table, and each above UD-44's 13-call smoke limit, so each needs your go-ahead: the PC7 A/Bs (≤ 40–60 calls each, more with S-S17's extra scenes), the H3 channel ablation (≤ 60), the cache probe (≤ 14), the pointing calibration (≤ 20), M3's overlay A/B (≤ 40) and the UD-39 multi-family A/B (S-M7: ≥ 3 families, ≥ 30 verify calls per arm).
+
+[acti-23] should_fix | missing_item | §6B — UD-10 / UD-11
+  CURRENT: That is ≈ 13,000–21,700 calls if you choose `full44`. |
+  WHY: Two facts the user needs for this choice are missing. Under S-S4 the three obstacle variants are all historical, so with `full34` S5 has no held-out obstacle scene. And R3 builds the seeded-obstacle generator in M0, so the choice is needed in week 1, not just before S1.
+  SUGGEST: That is ≈ 13,000–21,700 calls if you choose `full44`. With `full34`, every obstacle scene in S5 is historical (the 3 obstacle variants), so `full44`'s fresh seeded relayouts are the only held-out obstacle evidence (S-S4). Decide in week 1: R3 builds the seeded-obstacle generator in M0. |
+
+[acti-24] nice_to_have | unclear | §9 — V-S1/S2, S-S1 row
+  CURRENT: One absolute `--store-dir` everywhere, plus a concurrent-refresh test.
+  WHY: UD-43 notes that refresh tokens rotate and that copies break other arms. A concurrent-refresh test run on the real store could rotate away the live token if the lock misbehaves, forcing a re-login that stops every arm and tool. The row should say the test runs against a fake endpoint.
+  SUGGEST: One absolute `--store-dir` everywhere, plus a concurrent-refresh test run against a fake token endpoint and a scratch store, never the real one. Refresh tokens rotate, so a lost race on the real store would log out every arm and tool that uses it.
+
+[acti-25] nice_to_have | overclaim | Header — How this plan was made
+  CURRENT: Both said the plan is buildable and faithful to your rules.
+  WHY: The rules-and-safety review's verdict is 'mostly faithful', and it says four of its must-fix defects leave unsafe interim states. Summarising both reviews as 'faithful' makes the corrections in §9 look cosmetic.
+  SUGGEST: The feasibility review found the plan buildable. The rules-and-safety review found it mostly faithful to your rules, with 7 must-fix defects, 4 of which left unsafe interim states.
+
+[acti-26] nice_to_have | inconsistent | §0 In one page — Milestones
+  CURRENT: **Milestones.** Each milestone M1–M5 ends with an all-task sweep of one frozen build against the previous build, run in the same service window.
+  WHY: Under the recommended scope (UD-11 option b), S2 and S4 run on regression12, not on all tasks, as §4 and §6B say.
+  SUGGEST: **Milestones.** Each milestone M1–M5 ends with a sweep of one frozen build against the previous build, run in the same service window: all tasks at S1, S3 and S5; `regression12` at S2 and S4 (UD-11).
+
+[acti-27] nice_to_have | missing_item | §7 First two weeks — Day 0
+  CURRENT: - Symlink the venvs read-only and record their fingerprints.
+  WHY: Only H1's venvs are covered. The perception service runs from the main tree's `.venv-foundation-vision`, and SAM 3.1 and DA3 are editable installs from `artifacts/foundation_vision/vendor/`. Both sit outside this build and are shared with other work. Their fingerprints enter the digest, so a change by another session during a 10–60 h sweep would abort every perception-arm episode under --require-frozen.
+  SUGGEST: - Symlink the venvs read-only, and record fingerprints of all three interpreters, including the main-tree `.venv-foundation-vision` and the editable `sam3`/`depth_anything_3` sources it loads, which other sessions share (S-S3). If they change before M3, snapshot a private service venv: under `--require-frozen`, a change mid-sweep aborts every perception-arm episode.
+
+######## consistency_check (47 edits)
+
+[cons-0] must_fix | inconsistent | §3 M3 — Acceptance (S3 vs b002)
+  CURRENT: Perception wait p95 ≤ 50 ms per decision, after request 1.
+  WHY: This plan makes V-M3 option (a) the M3/M4 default (M3 'Review corrections'; UD-50 'bounded wait in M3/M4'): every later request waits for the decision-frame refresh, which the feasibility review sizes at ≈ 1.0–1.9 s (est., blocking). The p95 ≤ 50 ms target comes from the perception design's 0 s `wait_for` after the model returns, so it holds only under option (b). As written, S3 fails this metric by design. The wait before request 1 is also meant to be charged to `Timers.block("perception")`, which is not stated.
+  SUGGEST: Perception wait per decision, reported by UD-50 mode. Under the default bounded wait (V-M3 option a) it equals the decision-frame refresh, ≈ 1.0–1.9 s (est.), and is charged to policy time through `Timers.block("perception")`. The p95 ≤ 50 ms target applies only to option (b): a 0 s wait with `observed_step` stamping.
+
+[cons-1] must_fix | inconsistent | §3 M1 — Build
+  CURRENT: - **PC3b:** the plan's scene inventory (object nouns + cells for every visible object, ≤ 12).
+  WHY: INTEGRATED §6 books PC3 (b) in M3 (Includes table, and 1.0 d in M3's Protocol effort row). `protocol.plan_inventory` is F in M1 and M2 and T from M3 (§2.4). The protocol design adds the inventory only in v3-c and keeps v3-a free of other prompt changes, so that measured vs pristine H1 isolates the termination contract. No review moves it. Because this document supersedes the integrated plan where they conflict, listing it under M1 invites an inventory in the S1 `measured_h1` arm and shifts 1.0 d from M3 to M1.
+  SUGGEST: Delete this M1 bullet and add to M3's build list: "- **PC3b:** the plan's scene inventory `objects` (I-07: nouns + cells for every visible object, ≤ 12, UD-30), enabled by `protocol.plan_inventory` from b003. The S1 arm `measured_h1` keeps H1's plan prompt."
+
+[cons-2] must_fix | misstated_fix | §3 M2 — Executor, EXC-B3 (S-M6)
+  CURRENT: The contact window is **derived by the executor** (k·σ along the motion + guard detection distance + tolerance). The model may only shrink it, and a stop near a non-anchor object is "unexpected contact" (S-M6).
+  WHY: MF-6 has two cases. With a `target` reference, the window is k·`sigma_along_motion_m` (from ResolvedTarget) + guard detection distance + tolerance. Without measured σ, it is the plant-derived detection distance + tolerance only. M2 has no references or ResolvedTargets (segment `target` arrives in decision-uc72-m3), so only the second case applies there. Comparing the `guarded_stop` position with the intent anchor uses the SceneMap's nearest object and is explicitly 'From M3'; M2 has only model boxes. The fix's offline test (3 of the 15 recorded onsets must classify as `unexpected_contact_early
+  SUGGEST: The contact window is **derived by the executor**. In M2 (no measured σ) it is the plant-derived guard detection distance + tolerance. From M3, for a segment with a `target` reference, it is k·`sigma_along_motion_m` + guard detection distance + tolerance. A model-written window may only shrink it. From M3, a `guarded_stop` away from the intent anchor (the SceneMap's nearest object) is reported as `unexpected_contact_other_object` and handled as undeclared. Offline: replaying the 15 recorded onsets, the 3 early ones classify as `unexpected_contact_early` (S-M6).
+
+[cons-3] must_fix | misstated_fix | §9 — S-M2 row
+  CURRENT: From M3 until `swept.mode=on`: box inflation by the derived hand/finger/held-object term; truthful prompt wording.
+  WHY: MF-2's evidence is GT8's sentence 'The harness applies these numbers when it resolves targets and checks paths', and its fix says 'Make GT8 truthful per milestone'. GT8 ships in M2 (INTEGRATED §6 M2; `geometry.envelope_text` = T from M2), while only the grip-site point is checked. The truthful wording must therefore start at M2. Only the box inflation starts at M3, when `obstacle_map` and the model's `clearance_m` leave. The row also drops the held record's footprint and fallback envelope, and MF-2's S3 metrics.
+  SUGGEST: From M2, when GT8 ships, until `swept.mode=on`: the tool-envelope text says that only the grip-site point is checked and that the model remains responsible for the hand, fingers and carried object. From M3 (model boxes removed) until `swept.mode=on`: `GripSiteBoxOracle` inflates each box by the derived hand/finger half-extent per axis at the stage orientation and commanded gap, plus the held record's below-grip extent and footprint (or the jaw-column fallback envelope). S3 metrics: carry margin against truth, and hand/finger/held contact episodes in routed stages vs b002.
+
+[cons-4] should_fix | inconsistent | §3 M3 — Expected effect
+  CURRENT: About 0 s added critical path per decision (H3 added 1.1–1.3 s per call plus a 24 s preload).
+  WHY: '≈ 0 s per decision' is the integrated plan's estimate for the 0 s `wait_for` design. With the V-M3/UD-50 default (a bounded wait for the decision-frame refresh), each later decision blocks for ≈ 1.0–1.9 s (est.), plus the bounded wait before request 1, all inside policy time. The T04 time estimates for M3–M5 do not include it. Preload: INTEGRATED says 24.6 s per task (README: 23.5–24.6 s per process).
+  SUGGEST: About 0 s added critical path per decision only under UD-50 option (b). The default bounded wait adds ≈ 1.0–1.9 s per decision (est.), plus the bounded wait before request 1, all counted in policy time (H3 added 1.1–1.3 s per call plus a 24.6 s preload per task).
+
+[cons-5] should_fix | missing_item | §3 M3 — Geometry tools (and the M2 build list)
+  CURRENT: **Geometry tools (GT1…GT11).**
+  WHY: INTEGRATED §6 puts GT8 (tool-envelope prompt text from robot_facts_v2.json) in M2 (0.5 d; owner-table geometry row M2 0.5) and lists only GT1–GT7 and GT9–GT11 in M3. The traceability table maps H1 #10 and Step C2 to GT8 in M2. This document's M2 omits GT8, and M3's 'GT1…GT11' moves it to M3 with no source. INT-4 (`camera-calibration-1` emission, M3) is not mentioned anywhere.
+  SUGGEST: **Geometry tools (GT1–GT7, GT9–GT11), plus INT-4 (`camera-calibration-1` emission; the ideal-pinhole validator stays only on `h1_equivalent`).** GT8, the tool-envelope text (palm 31.04 mm behind the grip, fingertip reach 9.25 mm, open finger reach ±66 mm), ships in M2: add it to M2's build list with S-M2's truthful wording.
+
+[cons-6] should_fix | inconsistent | §3 M0 — Build
+  CURRENT: - **INT-1:** vendored robot assets that mirror robosuite's directory layout; npz files saved without pickles.
+  WHY: INT-1 (vendor tree + MANIFEST + `robot/kinematics.py`) is an M2 component in INTEGRATED §6, with 3.0 d in M2's effort line. I-10 kinematics is frozen at M2, and safety SF-8 cites 'robot.kinematics (INT-1, M2)'. No review moves it; V-S12/SF-12 only fixes its layout. Listing it in M0's build shifts 3.0 d that §5's effort rows do not show. INTEGRATED §8 only lets it start on day 1.
+  SUGGEST: Move to M2's build list: "- **INT-1:** `src/gpt_field/vendor/` + MANIFEST and `robot/kinematics.py`; the vendor tree mirrors robosuite's asset layout and the npz is saved without pickles (V-S12). It may start on day 1 (§5) and is frozen with M2 (I-10)." If it stays in M0, move its 3.0 d from M2 to M0 in §5.
+
+[cons-7] should_fix | wrong_number | §5 — Five parallel tracks
+  CURRENT: | E1 | runner + integration | ≈ 45 d |
+  WHY: The five track loads (45 + 35 + 40 + 35 + 40) sum to ≈ 195 d, but the total in the same section is ≈ 215–235 d. In INTEGRATED §8 the loads sum exactly to the 173 d total. Here 20–40 d are missing from the staffing, which understates the busiest tracks and the calendar.
+  SUGGEST: Rescale the five loads so they sum to ≈ 215–235 d, or add a row: "| — | review fixes and milestone operations not yet assigned to a track | ≈ 20–40 d |", with a note that the five tracks sum to ≈ 195 d.
+
+[cons-8] should_fix | unclear | §5 — Effort by milestone
+  CURRENT: **This plan, with review fixes (est.)**
+  WHY: The row is labelled an estimate and sums correctly (28+25+41+81+24+17 = 216; 31+27+44+86+27+19 = 234 ≈ 215–235). But its deltas over the feasibility row (+4 / +4 / +3 / +6 / +5–6 / +1 d; +23–24 d in all) are not itemized by fix ID, and they do not reflect the components this document moves between milestones: - INT-5 (3.5 d): M3 → M0 (V-S9); - the no-op seams: booked by the feasibility review in M2 at +2 d, now M0 (V-S6); - INT-1 (3.0 d): M2 → M0. With those moves, M2 and M3 should fall before any fixes are added, yet both rise.
+  SUGGEST: Add a footnote: "The deltas over the feasibility row (+4 / +4 / +3 / +6 / +5–6 / +1 d) are this plan's estimate of the review fixes, itemized by ID: [list, e.g. S-M3 degraded mode, S-M4 container representation, …]. They include moving INT-5 (3.5 d, M3 → M0, V-S9) and the no-op seams (≈ 2 d, booked in M2 by the feasibility review, now in M0, V-S6) [and INT-1, 3.0 d, M2 → M0, if it stays there]."
+
+[cons-9] should_fix | unclear | §0 — In one page: Critical path (also §5)
+  CURRENT: About 70–80 working days, i.e. 3.5–4 months, with five parallel tracks.
+  WHY: The integrated plan gives ≈ 57 working days, and the feasibility review re-baselines that to ≈ 65–72 d (est.). The 70–80 d figure appears in no source, is not labelled est., and has no stated basis. It is repeated in §5. 70–80 working days is ≈ 14–16 weeks, i.e. ≈ 3.2–3.7 months, not 3.5–4.
+  SUGGEST: About 70–80 working days (est.: the feasibility review's 65–72 d plus the must-fixes on the perception and planner path, S-M1…S-M5 and V-M3), i.e. ≈ 14–16 weeks (≈ 3.2–3.7 months), with five parallel tracks.
+
+[cons-10] should_fix | wrong_number | §3 M2 — Executor, EXC-0
+  CURRENT: a ≈ 0.705, realisation 0.24–0.26
+  WHY: EXC-0's fit (owner ws_executor_control, I-11) and INTEGRATED §6 M2 give a = 0.711, b = 0.0732, ρ = 0.254 and R² = 0.973, with per-run ρ 0.248–0.262. The values 0.705 and 'steady realisation 0.24–0.26' are the swept design's own pooled fit, which X36 replaces with the single `osc_response.json` source.
+  SUGGEST: a = 0.711, b = 0.0732, realisation ρ = b/(1−a) = 0.254 (per run 0.248–0.262), R² = 0.973; `osc_response.json` is the one source (X36)
+
+[cons-11] should_fix | wrong_number | §2 Architecture — Processes
+  CURRENT: Only GPU 7 had ≥ 10 GB free at writing.
+  WHY: INTEGRATED §1 and §3.4 say that at writing only GPU 7 was idle and GPU 6 had about 15 GB free. The feasibility re-check measured 24,109 MiB free on GPU 7 and 15,109 MiB on GPU 6, so two GPUs had ≥ 10 GB. V-S4/SF-4 also notes that S4 (b004 vs b003) needs two resident services, ≈ 2 × 8 GB (est.), which fit together only on GPU 7. This document leaves that out.
+  SUGGEST: At writing only GPU 7 was idle (≈ 24 GB free); GPU 6 had ≈ 15 GB free. S4 runs two resident services (b003 and b004, ≈ 2 × 8 GB est.), which fit together only on GPU 7 (V-S4).
+
+[cons-12] should_fix | inconsistent | §0 — Sweep cost (and §5 '64–113 h')
+  CURRENT: About 10,000–16,700 subscription calls and 64–113 h of serial sweep time for S1–S5 (±30 %).
+  WHY: 10,000–16,700 calls and 64–113 h are INTEGRATED §7.5's figures for `full34` (UD-11 option b). This document recommends `full44` (§4, UD-10). Applying the +≈ 30 % to the full sweeps S1, S3 and S5 only, the recommended scope costs ≈ 12,600–21,100 calls and ≈ 81–143 h. §5's 'S1–S5 alone are 64–113 h of serial runs' has the same mismatch.
+  SUGGEST: About 10,000–16,700 subscription calls and 64–113 h of serial sweep time for S1–S5 with `full34` (±30 %). With the recommended `full44` at S1/S3/S5: ≈ 12,600–21,100 calls and ≈ 81–143 h.
+
+[cons-13] should_fix | overclaim | §0 — Expected end state
+  CURRENT: Model-written metres limited to robot-anchored offsets.
+  WHY: S-S9 keeps `move_relative`, direct motion, and offsets from object, part and support anchors (`target-ref-1.offset_m`), so more than robot-anchored offsets remain. Under UD-27 as revised here, raw absolute `xyz_m` targets are removed at the M5 freeze only if references cover ≥ 95 % in S3; otherwise they stay.
+  SUGGEST: Model-written metres limited to relative moves, direct motions and offsets from measured anchors (flagged beyond the anchor's extent + kσ). Absolute targets are removed at the M5 freeze only if references cover ≥ 95 % in S3 (UD-27, S-S9).
+
+[cons-14] should_fix | overclaim | §0 — In one page
+  CURRENT: The 3-minute target needs nearly every lever and a normal service window.
+  WHY: INTEGRATED §6 M5 says the target needs nearly every lever 'including A4's plan fold (deferred)', and the README reaches ≈ 130 s only if A4, D2 and D3 also land. This document defers the plan fold (§8, UD-15). Within this plan's scope the target therefore needs a lever the plan does not build, and the sentence leaves that out.
+  SUGGEST: The 3-minute target needs nearly every lever, including the plan-call fold that this plan defers (§8, UD-15), and a normal service window.
+
+[cons-15] should_fix | inconsistent | §3 M2 — Executor, EXC-D1a
+  CURRENT: - **EXC-D1a:** grasp-gap predicates, plus `held_identity_mismatch` detection (S-S15).
+  WHY: S-S15 compares perception's `held_confirmed` co-moving instance with the SceneMap's attached anchor. Both arrive in M3 (PS-9 and GT3); M2 has neither perception nor a SceneMap. §9's own S-S15 row supersedes 'GT3, PS-9', both M3 components. The fix's 'count it among S5's late-detected failures' is also missing.
+  SUGGEST: - **EXC-D1a:** grasp-gap predicates. Then move S-S15 to M3: "a `held_identity_mismatch` barrier yield when PS-9's co-moving instance differs from the SceneMap held record (GT3), re-attachment to that instance, and a count among S5's late-detected failures (S-S15)."
+
+[cons-16] should_fix | inconsistent | §3 M3 — Perception service, detection and identity
+  CURRENT: then viewer-frame words, then an optional set-of-marks pick
+  WHY: INTEGRATED X8 and X35 resolve binding as follows. The service binds from cells, then direction hints, then prompt hits. Remaining ambiguity is resolved by the model with `scene_edits {op: bind}` on the overlay's o-ids. There is no separate bind field and no numbered marks ('Numbered marks are not rendered'). A 'set-of-marks pick' brings back the perception design's dropped mechanism, and the third binding source (prompt hits) is missing.
+  SUGGEST: then direction hints, then prompt hits; remaining ambiguity is resolved by the model with `scene_edits bind` on the overlay's o-ids (no numbered marks; X8, X35)
+
+[cons-17] should_fix | missing_fix | §6 C — UD-41 (also UD-34 and M5)
+  CURRENT: | UD-41 approach gate | measured only |
+  WHY: The last bullet of S-S12's fix ('INV-1 makes the M5 approach schedule (UD-41) impossible while UD-34 keeps the depth bound report-only') is not carried anywhere, and §9's S-S12 row omits it. The safety review also lists it among the UD revisions ('UD-41: depends on UD-34 through INV-1'). INV-1 requires `swept.depth_bound=active` for `cruise_approach`. If UD-34 keeps or reverts the bound to report-only, M5's approach schedule cannot ship, and its −10…−67 s effect is lost.
+  SUGGEST: | UD-41 approach gate | measured only. INV-1 requires `swept.depth_bound=active`, so while UD-34 keeps (or reverts) the depth bound to report-only, the M5 approach schedule and its −10…−67 s cannot ship (S-S12). |
+
+[cons-18] should_fix | inconsistent | §3 M3 — Lean option
+  CURRENT: but **M4 cannot start without PS-9's held-object model** (or its close-time fallback envelope).
+  WHY: PS-8 is discovery plus the 5 mm height field, so dropping it removes the height field. Three adopted items depend on it: - S-M4's preferred walls/rim representation ('using PS-8 height-field cells'); - S-S16's `unknown_volumes`; - SP8/UD-34's active per-cell depth bound, which INV-1 in turn requires for M5's approach speed. Per X11, the held record and its jaw-column fallback envelope belong to the SceneMap (GT3), not to PS-9; PS-9 only adds co-motion confirmation. The '≈ 24 d' is on the perception design's 36.5 d scale; in this plan the lean slice saves about PS-8 (3.5 d) + PS-9 (3.0 d).
+  SUGGEST: but without PS-8 there is no height field. S-M4 then falls back to the scoped `allow_contact: inside` (UD-45), S-S16 has no `unknown_volumes`, and SP8 stays report-only (UD-34), which by INV-1 also disables M5's approach speed. M4 needs the SceneMap held record (GT3), using the jaw-column fallback envelope when PS-9's co-motion confirmation is absent. The 24 d is on the perception design's 36.5 d scale; in this plan the slice saves about 6.5 d (PS-8 3.5 d, PS-9 3.0 d).
+
+[cons-19] should_fix | unclear | §6 B — UD-47
+  CURRENT: Define "repeat" as a new model sample at the same reset.
+  WHY: S-S4 only asks that 'repeat' be defined explicitly; this definition is the plan's own. It conflicts with running S5 'on official init states 1–3' with 3 repeats. If a repeat is a new sample at the same reset, it is unclear which init state each repeat uses, or whether S5 becomes 3 init states × 3 repeats, which would triple the S5 cost assumed in §4 (34 × 3). Init-state 1–3 hashes must also be adopted through the preflight and UD-03, and fresh obstacle seeds exist only in `full44`.
+  SUGGEST: Pre-register the mapping. For example: for official scenes, repeat r runs init state r (r = 1–3), with hashes adopted through the M0 preflight and UD-03; for single-init scenes, a repeat is a new model sample at the same reset. Fresh obstacle seeds exist only in `full44` (S-S4).
+
+[cons-20] should_fix | inconsistent | §3 M3 — Live (and §7 E4)
+  CURRENT: - A pointing calibration (≤ 20 calls).
+  WHY: Under UD-44 as written here (from S-S13), smokes above 13 calls and starting the GPU perception service need the user's go-ahead. Two M3 runs exceed 13 calls: the pointing calibration (≤ 20 calls) and the overlay A/B for UD-26 (≤ 40 calls, INTEGRATED M3 pass signals). The shadow/on smokes, and §7's 'PS-1 service skeleton on GPU 7' in days 1–10, start the GPU service. None of these is marked as needing a go-ahead.
+  SUGGEST: - A pointing calibration (≤ 20 calls) and the overlay A/B for UD-26 (≤ 40 calls). Both exceed 13 calls, so they need your go-ahead (UD-44). The shadow/on smokes, and §7's PS-1 skeleton on GPU 7, start the GPU perception service, which you start or approve (UD-44).
+
+[cons-21] should_fix | missing_fix | §3 M3 — Review corrections, S-M1
+  CURRENT: Otherwise the object is kept with a `near_robot` warning and σ inflation.
+  WHY: MF-1's fix has three further parts: - never apply the self-test to an object previously observed static and clear of the robot; - derive the containment bound from PS-3's measured raster recall; - an offline test in which the T08 bottle box during actions 37–83 and both T04 mugs at grasp stay in `ObstacleSet.objects`. The first rule stops a static obstacle that the hand presses from being re-classified as self-detection.
+  SUGGEST: Otherwise the object is kept with a `near_robot` warning and σ inflation. The self-test never applies to an object previously observed static and clear of the robot, and its containment bound comes from PS-3's measured raster recall. Offline test: the T08 bottle box (actions 37–83) and both T04 mugs at grasp stay in `ObstacleSet.objects`.
+
+[cons-22] should_fix | missing_fix | §3 M3 — Acceptance (S3 vs b002)
+  CURRENT: - Shadow-planner recall and precision against contact episodes.
+  WHY: Three must-fixes add S3 reporting that §3 drops: - MF-1: real objects excluded as `inside_robot` by post-hoc truth, target 0; - MF-2: carry margin against truth, and hand/finger/held contact episodes in routed stages vs b002; - MF-3: arm results with and without outage cells.
+  SUGGEST: - Shadow-planner recall and precision against contact episodes. - Real objects excluded as `inside_robot` (post-hoc truth) = 0 (S-M1). - Carry margin against truth, and hand/finger/held contact episodes in routed stages, vs b002 (S-M2). - Arm results reported with and without outage cells (S-M3).
+
+[cons-23] should_fix | missing_fix | §3 M4 — Acceptance (S4 vs b003)
+  CURRENT: - Stages handed off at a container boundary are reported.
+  WHY: MF-5's fix adds `jaw_sweep_*` outcomes, truncations and 'calls caused' to the M4 coverage map. Without them, S4 cannot show whether the 'no new veto' fix holds. MF-4's validation (an SP12 R-B replay of drawer 001/003 on live-style perception boxes, plus a t9 truth fixture) is also missing from M4.
+  SUGGEST: - Stages handed off at a container boundary are reported (S-M4). The container representation is validated by an SP12 R-B replay of drawer 001/003 on live-style perception boxes and a t9 truth fixture. - `jaw_sweep_*` outcomes, direct-motion truncations and the calls they caused are reported (S-M5).
+
+[cons-24] should_fix | overclaim | §3 M4 — Review corrections, S-M4
+  CURRENT: Drawer, microwave, caddy and basket must not be filled boxes, or LIBERO-10 t3/t5/t9 and LIBERO-Goal g3 become unsolvable by representation.
+  WHY: MF-4 names t3 (drawer), t9 (microwave), 'probably t5' (caddy) and g3 (drawer): 3–4 of 20 official scenes that would be scored as framework failures. It does not mention baskets. This sentence adds 'basket' without its tasks (LIBERO-10 t0, t1 and t7 in H1's registry, agent_speedup_v2_tasks.py:53-67) and turns 'probably t5' into a certainty.
+  SUGGEST: Containers and front-opening fixtures (drawer, microwave, caddy) must not be filled boxes. With filled boxes, arm links never permitted and the palm permitted only for push/insert, LIBERO-10 t3 and t9, probably t5, and LIBERO-Goal g3 (3–4 of 20 official scenes) would be scored as framework failures caused by the representation. If baskets are included, the basket tasks t0, t1 and t7 need the same check; the review did not assess them.
+
+[cons-25] should_fix | missing_fix | §3 M5 — Review correction (S-M7)
+  CURRENT: Whether async verification ships (UD-39) is decided from an interleaved, capped A/B over ≥ 3 task families with ≥ 30 verify calls per arm, reported with confidence intervals.
+  WHY: MF-7 specifies a user-started A/B; at ≥ 30 verify calls per arm it is far above UD-44's 13-call limit for Claude. UD-39's pass criterion (no rise in late-detected failures, ≤ 1 stale rejection per 10 verify calls) is dropped here and in UD-39's row ('ships only if the multi-family A/B passes'). Neither the A/B nor the alternative of running both arms in S5 (a third S5 arm) appears in §4's cost.
+  SUGGEST: Whether async verification ships (UD-39) is decided from an interleaved, capped, user-started A/B over ≥ 3 task families (e.g. T04, T08, the drawer composite, one LIBERO-Goal and one multi-object LIBERO-10 task), with ≥ 30 verify calls per arm, reported with confidence intervals. Async passes if late-detected failures do not rise and stale rejections stay ≤ 1 per 10 verify calls. Add the A/B's calls to §4. The alternative, both arms in S5, adds a third S5 arm: ≈ 2,700–4,400 calls and ≈ 17–30 h (est.).
+
+[cons-26] should_fix | misstated_fix | §6 C — low-stakes defaults (UD-20, UD-21, UD-26)
+  CURRENT: | UD-20 image retention | current pair only |
+  WHY: INTEGRATED §10 makes these three conditional on evidence: UD-20 applies 'if PC7 and the M2 smokes show no regression', UD-21 'unless PC7 shows reasoning tokens rising', and UD-26 is 'confirmed by the PC7 overlay A/B and the H3 channel ablation'. The safety review lists UD-20/21/26 as recommendations to revise, because those A/Bs used two scenes (SF-17). Stated unconditionally here, the broadened S-S17 A/Bs no longer feed any decision.
+  SUGGEST: | UD-20 image retention | current pair only, if the PC7 A/B (incl. stove-off and drawer requests, reported per family; S-S17) and the M2 smokes show no regression | — and likewise "| UD-21 `why` field | drop, unless PC7 shows reasoning tokens rising |" and "| UD-26 overlays | ids + boxes + last path, confirmed by the PC7 overlay A/B and the H3 channel ablation across scene families |"
+
+[cons-27] should_fix | missing_item | §3 M2 — A/B harness (PC7)
+  CURRENT: **A/B harness (PC7).** Model-only replays of saved payloads, including the stove-off and drawer requests (S-S17).
+  WHY: INTEGRATED M2's PC7 includes two runs that are missing here: - the cache-key probe (≤ 14 calls), on which M5's 'PC2: the cache key, if the M2 probe showed it is honoured' depends; this document never introduces it; - the H3 channel ablation (3 arms × 10 samples, ≤ 60 calls; report §5.2 item 1), which informs UD-26. Also missing: both need a go-ahead under UD-44 (above 13 calls).
+  SUGGEST: **A/B harness (PC7).** Model-only replays of saved payloads, including the stove-off and drawer requests (S-S17): the context A/B (≤ 40 calls), the cache-key probe (≤ 14 calls; decides UD-40 for M5) and the H3 channel ablation (first requests of T04/T08, 3 arms × 10 samples, ≤ 60 calls; informs UD-26). Each exceeds 13 calls, so each needs your go-ahead (UD-44).
+
+[cons-28] should_fix | unclear | §6 — Decisions needed from you
+  CURRENT: **A. Before any work starts**
+  WHY: UD-00 and UD-43…UD-50 do not exist in INTEGRATED §10, which §6 cites as the full table. Only UD-45 is marked '(new)', and UD-43, UD-46, UD-47 and UD-48 are not mentioned anywhere in §9, so their source cannot be traced. Their sources are: UD-00 S-S2; UD-43 S-S1/V-S2; UD-44 S-S13; UD-45 S-M4; UD-46 S-M3; UD-47 S-S4; UD-48 S-S5; UD-49 S-S6; UD-50 V-M3. Each also needs a needed-by milestone.
+  SUGGEST: **A. Before any work starts** (UD-00 and UD-43…UD-50 are new decisions raised by the reviews and are not in INTEGRATED_PLAN §10: UD-00 ← S-S2, UD-43 ← S-S1/V-S2, UD-44 ← S-S13, UD-45 ← S-M4 (before M4), UD-46 ← S-M3 (before M3), UD-47 ← S-S4, UD-48 ← S-S5, UD-49 ← S-S6, UD-50 ← V-M3 (before M3).)
+
+[cons-29] should_fix | overclaim | §4 — Statistics
+  CURRENT: Power at 34 scenes × 3 repeats: 20 pp ≈ 0.80–0.94; 30 pp ≥ 0.99. At 34 × 1, 30 pp is only 0.67–0.82.
+  WHY: The figures match INTEGRATED §7.4, but they come from the paired-McNemar simulation with one shared logit shift for every scene. S-S5, which this section claims to apply, shows that model is anti-conservative for repeats clustered within scenes. Quoted without a caveat, right after 'power simulation re-run with heterogeneous effects', they overstate the power of the 34 × 3 design. The type-I error report that S-S5 asks for is also missing.
+  SUGGEST: Power from the integrated plan's paired-McNemar simulation with homogeneous effects (§7.4): 34 × 3 gives 20 pp ≈ 0.80–0.94 and 30 pp ≥ 0.99; 34 × 1 gives 30 pp only 0.67–0.82. S-S5 shows this model is anti-conservative for clustered repeats, so treat these figures as optimistic until the scene-clustered re-run reports its power and type-I error.
+
+[cons-30] should_fix | missing_fix | §4 — Statistics
+  CURRENT: Pre-registered margins per decision level.
+  WHY: SF-5's evidence is that 'an unresolved level 2 has no defined path to level 3', and its fix is to 'Pre-register a margin per level, and the rule for proceeding when a level is unresolved'. That rule is missing here, in M5's decision rule and in UD-48. M5 only labels such differences 'unresolved'.
+  SUGGEST: Pre-registered margins per decision level, and a pre-registered rule for proceeding when a level is unresolved (S-S5). Both are proposed with the power re-run and approved under UD-48 before S1.
+
+[cons-31] nice_to_have | wrong_id | §3 M5 — Build
+  CURRENT: - **EXC-D2:** measured approach speed. The slow zone is σ + braking + guard distance.
+  WHY: X23 assigns approach scheduling to SP9's SpeedPolicy. INTEGRATED M5 lists 'SP9 (approach)'; EXC-D2 is reduced to the tracker-cap hook, which ships in M4. The UD-41 scope (only `stop_on: contact` stages with a measured contact expectation) is also dropped.
+  SUGGEST: - **SP9 (approach):** measured approach speed, only on `stop_on: contact` stages with a measured contact expectation (UD-41). The slow zone is measured σ + braking + guard distance. The executor's EXC-D2 hook (M4) applies the cap (X23).
+
+[cons-32] nice_to_have | wrong_id | §0 — Layer table (Fixes column)
+  CURRENT: | R2, R5, H1 #8, #10, #12, C2–C4, D1–D2 |
+  WHY: Several analysis refs sit in the wrong layer: - README R5 is 'No contact sensing', fixed in M2 by EXC-B3 `stop_on` and EXC-C1, so it belongs to layer 2. - R4 ('A serial, blocking model loop') is what layer 5's committed sequences and async verification fix. - Layer 2's 'H1 #2–7' includes H1 #2 (a checkpoint after every phase), which PC5/EXC-D1b fix in M5 (layer 5), and H1 #7 (serial startup), which R2 fixes in M0 (layer 1). - C3 (measured geometry) belongs to layers 3–4.
+  SUGGEST: | R2, R4, H1 #2, #8, #10, #12, C2, C4, D1–D2 | (and in layer 2, replace 'H1 #2–7' with 'R5, H1 #3–6'; move H1 #7 to layer 1)
+
+[cons-33] nice_to_have | overclaim | Header — How this plan was made
+  CURRENT: Both said the plan is buildable and faithful to your rules.
+  WHY: Only the feasibility review judged buildability ('The plan is buildable'). The rules/safety review called the plan 'mostly faithful to the user's rules and to the cross_critic safe order' and found 7 must-fix defects.
+  SUGGEST: The feasibility reviewer found the plan buildable; the rules and safety reviewer found it mostly faithful to your rules and the safe order.
+
+[cons-34] nice_to_have | inconsistent | §3 M0 — heading
+  CURRENT: ### M0: Foundation and equivalence (no model calls; ≈ 28–31 d)
+  WHY: The same section adopts S-S13's single capped smoke of ≤ 3 calls on `h1_equivalent` in M0, and §7 schedules it for week 2.
+  SUGGEST: ### M0: Foundation and equivalence (offline, plus one ≤ 3-call capped smoke, S-S13; ≈ 28–31 d)
+
+[cons-35] nice_to_have | inconsistent | §0 — Milestones
+  CURRENT: Each milestone M1–M5 ends with an all-task sweep of one frozen build against the previous build, run in the same service window.
+  WHY: S2 and S4 are `regression12` sweeps (UD-11 option b, §4), not all-task sweeps. S1 compares pristine H1 with measured H1, and S5 compares b005 with b001, not with the previous build. INTEGRATED §6 says only 'a sweep'.
+  SUGGEST: Each milestone M1–M5 ends with a sweep of one frozen build, run in the same service window: all-task at S1, S3 and S5, `regression12` at S2 and S4 (UD-11). S1 compares pristine and measured H1, S2–S4 compare against the previous build, and S5 against the M1 baseline.
+
+[cons-36] nice_to_have | wrong_id | §2 — Safety order (and the §9 S-M3 row)
+  CURRENT: This plan adds INV-15: `swept.speed ≠ off ⇒ executor.degraded_mode` (§3, M3).
+  WHY: INV numbers mirror IC numbers (INV-n enforces ICn). IC8, IC11 and IC15 are enforced structurally, so INV-8, INV-11 and INV-15 do not exist, and 'INV-1…INV-14, INV-D' is 12 numbered rules plus INV-D. Calling MF-3's rule 'INV-15' implies IC15 (verbatim reasons). Optionally, also require degraded mode when `perception.mode=on`: an arm with perception on and `swept.speed=off` has the same empty-map risk and escapes the rule as written.
+  SUGGEST: This plan adds INV-DM (S-M3): `swept.speed ≠ off ⇒ executor.degraded_mode` (§3, M3). INV numbers follow the IC numbers, and IC8, IC11 and IC15 are structural, so the loader has 12 numbered rules plus INV-D and INV-DM. Rename INV-15 to INV-DM in §9's S-M3 row as well.
+
+[cons-37] nice_to_have | unclear | §3 M1 — Build, R6
+  CURRENT: (policy time = plan + calls + local compute + motion)
+  WHY: I-19/§3.5 define policy time as t_v at the terminal step plus Σ max(0, compute_step − dt). Here t_v is steps × 0.05 s plus the blocking idle recorded by `Timers.block`: model calls including the plan call (V-S17), perception waits that actually wait, and planner overruns. Only compute in excess of the control period counts, not all local compute. The bounded perception waits added by V-M3 count as well.
+  SUGGEST: (policy time = simulated motion (steps × 0.05 s) + blocking waits (the plan and model calls, bounded perception waits, planner overruns) + compute in excess of the control period; I-19, V-S17)
+
+[cons-38] nice_to_have | missing_item | §6 C — heading
+  CURRENT: **C. Technical defaults, approve as a block unless you object**
+  WHY: INTEGRATED §0 and §10 require UD-04…UD-15 before S1, yet UD-07, UD-08 and UD-13 sit in group C here, which gives no needed-by. The other C defaults also lose their milestones (UD-16–21 M2, UD-22–33 M3, UD-34–38 M4, UD-39–42 M5), as do the new UD-45, UD-46 and UD-50.
+  SUGGEST: **C. Technical defaults, approve as a block unless you object** (needed by: UD-07, UD-08, UD-13 before S1; UD-16–UD-21 before M2; UD-22–UD-33, UD-46, UD-50 before M3; UD-34–UD-38, UD-45 before M4; UD-39–UD-42 before M5)
+
+[cons-39] nice_to_have | misstated_fix | §3 M3 — Review corrections, S-S16
+  CURRENT: and planning slows there.
+  WHY: SF-16's fix is to 'let SP9 slow down there', i.e. to lower the motion speed cap, not to slow planning. In M3, SP9 runs only in shadow (`swept.speed=shadow`), so the slowdown takes effect from M4, when SP9 cruise acts.
+  SUGGEST: and SP9 lowers the speed cap there (logged in shadow in M3, active from M4).
+
+[cons-40] nice_to_have | missing_item | §3 M3 — Swept planner
+  CURRENT: **Swept planner (SP1–SP5, SP12)** runs in shadow on live maps.
+  WHY: INTEGRATED M3 also includes SP8 (report), which computes and logs the depth bound and on which UD-34's 'report-only in M3' relies. It also includes SP11 (shadow), which writes `trial/swept_shadow.jsonl`. Separately, the 'multi-view primitive fit' listed under M3 geometry is part of the M4 PS-5/PS-6 refinement in the integrated plan.
+  SUGGEST: **Swept planner (SP1–SP5, SP8 report-only, SP11 shadow, SP12)** runs in shadow on live maps; the depth bound is logged, not applied (UD-34).
+
+[cons-41] nice_to_have | unclear | §3 M3 — Geometry tools, target references
+  CURRENT: (`{anchor: o3 | part A | pixel ray, relation, offset}`)
+  WHY: `target-ref-1` has `anchor` ∈ {A–H, O1–O12, o1–o24, L1–L4, S1–S4}, plus `point` (center/top/…/inside), `offset_m`, `frame` and `tool_point`. There is no 'relation' field; regions carry `rel`. A pixel ray is not an anchor: pointed pixels enter through `locate` as L-ids.
+  SUGGEST: (`target-ref-1`: anchor = o-id, plan part, inventory id, `locate` point L1–L4 or support S1–S4; `point` center/top/…/inside; `offset_m`; `frame`; `tool_point`; pointed pixels enter through `locate`)
+
+[cons-42] nice_to_have | inconsistent | §3 M3 — Live
+  CURRENT: **S3, which you start:** `full34` × 1, b003 vs b002.
+  WHY: This document recommends `full44` for the full sweeps (UD-10/UD-11: full sweeps at S1/S3/S5), yet S3 is fixed to `full34` here. M1 says '`full34` (or `full44`)' and M5 says '`full34`/`full44`'.
+  SUGGEST: **S3, which you start:** the UD-10 scene set (`full44` recommended, `full34` minimum) × 1, b003 vs b002.
+
+[cons-43] nice_to_have | wrong_number | §6 B — UD-10 / UD-11
+  CURRENT: That is ≈ 13,000–21,700 calls if you choose `full44`.
+  WHY: This applies the +30 % to the whole 10,000–16,700 total, including the two `regression12` sweeps (S2 and S4: 1,160–2,040 calls), which `full44` does not change. With +30 % on S1, S3 and S5 only, the totals are ≈ 12,600–21,100 calls and ≈ 81–143 h.
+  SUGGEST: That is ≈ 12,600–21,100 calls and ≈ 81–143 h with `full44` (+≈ 30 % on S1, S3 and S5; S2 and S4 stay `regression12`).
+
+[cons-44] nice_to_have | wrong_number | §6 A — UD-44
+  CURRENT: Claude may run capped smokes of ≤ 13 calls
+  WHY: S-S13 marks 'every smoke with ≥ 13 calls' (H1 T04 is 13 calls, a full task) as 'tell the user first'. This document lets Claude run 13-call smokes and requires a go-ahead only 'above 13' / '> 13' (UD-44 row, §9 S-S13 row, M2/M4 '≤ 13 calls').
+  SUGGEST: Claude may run capped smokes of ≤ 12 calls (S-S13: smokes of ≥ 13 calls, a full T04, need your go-ahead)
+
+[cons-45] nice_to_have | unclear | §9 — intro
+  CURRENT: Reviews: `plan/reviews/review_feasibility.md` (V-) and `plan/reviews/review_rules_safety.md` (S-). M = must fix, S = should fix.
+  WHY: Both reviews number their items MF-n / SF-n; the V- and S- prefixes are this document's own, and 'V-mig' (the feasibility review's §6 migration items 8 and 10) is never explained. Without a mapping, a reader cannot find, for example, that V-S4 is feasibility SF-4 or that S-M3 is safety MF-3.
+  SUGGEST: Reviews: `plan/reviews/review_feasibility.md` (V-) and `plan/reviews/review_rules_safety.md` (S-). V-Mn / V-Sn are MF-n / SF-n in the feasibility review, and S-Mn / S-Sn are MF-n / SF-n in the rules and safety review. V-mig collects the feasibility review's §6 migration items 8 and 10. M = must fix, S = should fix.
+
+[cons-46] nice_to_have | missing_fix | §3 M3 — Perception benchmark
+  CURRENT: - **Benchmark:** a truth-scored offline perception benchmark, built from saved runs (development aid).
+  WHY: §9's S-S4 row claims a 'σ calibration split', but no milestone carries it. SF-4 (c) asks to re-render S1's decision frames for all 34 scenes through INT-5, fit σ on the historical set, validate it per family on S1 frames, and never refit on S5 conditions; any refit is a new tag. UD-28's 'k from benchmark coverage' depends on this split.
+  SUGGEST: - **Benchmark:** a truth-scored offline perception benchmark, built from saved runs (development aid). σ (and UD-28's k) is fitted on the historical scenes, validated per family on S1 decision frames re-rendered through INT-5, and never refit on S5 conditions; any refit is a new tag (S-S4).

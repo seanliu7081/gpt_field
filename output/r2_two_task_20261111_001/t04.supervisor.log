@@ -1,0 +1,1678 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /venv/fm_dno/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /workspace/heading_flow_pub/third_party/LIBERO/libero/datasets does not exist!
+/workspace/gpt_field/artifacts/foundation_vision/vendor/depth-anything-3/src/depth_anything_3/cfg.py:25: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval)
+[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70
+[INFO ] using MLP layer as FFN
+Loading weights from local directory
+[INFO ] Processed Images Done taking 0.09890913963317871 seconds. Shape:  torch.Size([2, 3, 504, 504])
+[INFO ] Using camera conditions provided by the user
+[INFO ] Model Forward Pass Done. Time: 0.5800917148590088 seconds
+[INFO ] Conversion to Prediction Done. Time: 0.002721548080444336 seconds
+{
+  "version": "foundation_vision_harness_V3",
+  "status": "finish",
+  "error": null,
+  "task": "libero_10_t4",
+  "episode_index": 0,
+  "steps": 700,
+  "terminal_claim": {
+    "kind": "finish",
+    "reason": "The white mug is upright on the left plate, and the yellow-and-white mug is upright on the right plate; the open gripper has lifted clear, visibly confirming release.",
+    "step": 700
+  },
+  "withheld_decisions_after_stop": 0,
+  "first_raw_success": null,
+  "raw_success_at_terminal": false,
+  "strict_success_at_terminal": true,
+  "raw_success_after_same_gripper_hold": false,
+  "strict_success_after_same_gripper_hold": true,
+  "same_gripper_hold_steps": 10,
+  "strict_success": false,
+  "completion_time_eligible": false,
+  "completion_wall_s": null,
+  "online_wall_s": 366.8020081229042,
+  "evaluation_hold_wall_s": 1.2503237570635974,
+  "startup_wall_s": 9.265266638016328,
+  "postprocessing_wall_s": 2.580440203193575,
+  "total_wall_s": 378.64771496411413,
+  "video_time_subtracted": false,
+  "agent_stats": {
+    "version": "foundation_vision_harness_V3",
+    "revision": "astra_tools_r2_obstacle_map",
+    "step": 700,
+    "terminal": {
+      "kind": "finish",
+      "reason": "The white mug is upright on the left plate, and the yellow-and-white mug is upright on the right plate; the open gripper has lifted clear, visibly confirming release.",
+      "step": 700
+    },
+    "model_decisions": 17,
+    "grasp_attempts": 2,
+    "completed_segments": 15,
+    "queue_remaining": 0,
+    "segment_history": [
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.08,
+                -0.203,
+                0.63
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 17,
+        "evidence": {
+          "position_error_m": 0.0019578164320127383,
+          "orientation_error_rad": 0.00496524233178311,
+          "measured_pose_wxyz": [
+            -0.0815109640103346,
+            -0.2037486383570504,
+            0.6290052268845181,
+            0.0007595331448195063,
+            -0.9999969182976561,
+            -0.0017979167586625884,
+            -0.0015342750475882186,
+            0.00923386816437266
+          ],
+          "measured_gap_mm": 79.26129054685019,
+          "target_xyz_m": [
+            -0.08,
+            -0.203,
+            0.63
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 4,
+                "straight_path_valid": true,
+                "path_length_m": 0.20189002457954663,
+                "planning_s": 0.029964361106976867,
+                "map_source": "shared_map",
+                "map_revision": 1
+              }
+            }
+          ]
+        },
+        "step": 18
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.08,
+                -0.203,
+                0.575
+              ],
+              "quaternion_wxyz": null,
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 9,
+        "evidence": {
+          "position_error_m": 0.0019650604080815952,
+          "orientation_error_rad": 0.0021879963578339493,
+          "measured_pose_wxyz": [
+            -0.08031997990951284,
+            -0.20413479073835147,
+            0.5765720449246347,
+            0.001781276399960858,
+            -0.9999948352647406,
+            -0.0018630267891947563,
+            -0.001919799316055911,
+            0.006223616705958723
+          ],
+          "measured_gap_mm": 79.50211066352331,
+          "target_xyz_m": [
+            -0.08,
+            -0.203,
+            0.575
+          ],
+          "target_quaternion_wxyz": [
+            0.0007595331448195063,
+            -0.9999969182976561,
+            -0.0017979167586625884,
+            -0.0015342750475882186
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 4,
+                "straight_path_valid": true,
+                "path_length_m": 0.05403154636393868,
+                "planning_s": 0.005508992820978165,
+                "map_source": "shared_map",
+                "map_revision": 1
+              }
+            }
+          ]
+        },
+        "step": 27
+      },
+      {
+        "segment": {
+          "id": "segment_03",
+          "object": "white mug",
+          "checkpoint": "observe",
+          "checkpoint_object": "white mug",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.08,
+                -0.203,
+                0.525
+              ],
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 40,
+        "evidence": {
+          "position_error_m": 0.0010319904899073063,
+          "orientation_error_rad": 0.0005954425334584338,
+          "measured_pose_wxyz": [
+            -0.0801288231092055,
+            -0.202853462048699,
+            0.5260133783136728,
+            0.0017867778819084547,
+            -0.9999954588576768,
+            -0.0015744349724075024,
+            -0.0018468468649676295,
+            0.00107772705596354
+          ],
+          "measured_gap_mm": 79.91378183552291,
+          "target_xyz_m": [
+            -0.08,
+            -0.203,
+            0.525
+          ],
+          "target_quaternion_wxyz": [
+            0.0017812763999608583,
+            -0.9999948352647408,
+            -0.0018630267891947563,
+            -0.0019197993160559113
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 67
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "close"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_budget_exhausted",
+        "step": 87
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "held",
+          "checkpoint_object": "white mug",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.13
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "route_unavailable",
+        "step": 87
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "held",
+          "checkpoint_object": "white mug",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 58,
+        "evidence": {
+          "position_error_m": 0.0011723019814564822,
+          "orientation_error_rad": 0.0011114164563846534,
+          "measured_pose_wxyz": [
+            -0.07902887008816208,
+            -0.20597272102951084,
+            0.597321827470706,
+            0.00019166038139800787,
+            0.9999998455941864,
+            0.00023420061722323482,
+            0.0004660772169791972,
+            0.9287355576828322
+          ],
+          "measured_gap_mm": 5.701155385373422,
+          "target_xyz_m": [
+            -0.07860863720407515,
+            -0.2061329768418346,
+            0.5984044235788992
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 146
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 58,
+        "evidence": {
+          "position_error_m": 0.0012246195160189278,
+          "orientation_error_rad": 0.0009372315251826217,
+          "measured_pose_wxyz": [
+            -0.07935989581701398,
+            -0.20586049058583808,
+            0.6661481498090946,
+            5.658193807030057e-05,
+            0.9999998901996355,
+            0.0002588880571285924,
+            0.0003864921409739146,
+            0.92873555738976
+          ],
+          "measured_gap_mm": 5.701155408819199,
+          "target_xyz_m": [
+            -0.07902887008816208,
+            -0.20597272102951084,
+            0.667321827470706
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 204
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.365,
+                0.667
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_stall",
+        "step": 227
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.365,
+                0.585
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 19,
+        "evidence": {
+          "position_error_m": 0.002163372570349299,
+          "orientation_error_rad": 0.0046454512462170945,
+          "measured_pose_wxyz": [
+            0.013514087258331933,
+            -0.3641622648114759,
+            0.5836694196919401,
+            0.0012960515451830622,
+            0.9999973024740527,
+            0.00030836208005069493,
+            0.0019026843768380685,
+            0.9287355531312154
+          ],
+          "measured_gap_mm": 5.7011557495027665,
+          "target_xyz_m": [
+            0.015,
+            -0.365,
+            0.585
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 4,
+                "straight_path_valid": true,
+                "path_length_m": 0.09127663486663923,
+                "planning_s": 0.012253697961568832,
+                "map_source": "shared_map",
+                "map_revision": 5
+              }
+            }
+          ]
+        },
+        "step": 246
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "white mug",
+          "checkpoint": "observe",
+          "checkpoint_object": "white mug",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.365,
+                0.535
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 42,
+        "evidence": {
+          "position_error_m": 0.0011707398643609542,
+          "orientation_error_rad": 0.001518786741542822,
+          "measured_pose_wxyz": [
+            0.015450786954356114,
+            -0.36507844015493407,
+            0.5360776224264,
+            0.00027200855257848244,
+            -0.999999711660868,
+            0.0002944011737149867,
+            0.0006449941681584059,
+            0.9287355448469149
+          ],
+          "measured_gap_mm": 5.701156412246812,
+          "target_xyz_m": [
+            0.015,
+            -0.365,
+            0.535
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 288
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "open"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_budget_exhausted",
+        "step": 304
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "white mug",
+          "checkpoint": "released",
+          "checkpoint_object": "white mug",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 57,
+        "evidence": {
+          "position_error_m": 0.001320028053900733,
+          "orientation_error_rad": 0.0016567687659488576,
+          "measured_pose_wxyz": [
+            0.014865926163195299,
+            -0.36504654966435623,
+            0.604735547740421,
+            0.0003342896999077431,
+            0.9999996568896766,
+            0.0002928704349777768,
+            0.000699069262549271,
+            0.0022506510394749712
+          ],
+          "measured_gap_mm": 79.81994791684201,
+          "target_xyz_m": [
+            0.0153423794737306,
+            -0.36517200730962956,
+            0.6059601810264326
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 361
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                -0.365,
+                0.72
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 10,
+        "evidence": {
+          "position_error_m": 0.0022597539916043895,
+          "orientation_error_rad": 0.010111256839182254,
+          "measured_pose_wxyz": [
+            0.01716710701655153,
+            -0.36548701367908,
+            0.7195841238672704,
+            0.001803474010118767,
+            -0.9999872203378616,
+            0.0006549288499223543,
+            0.004677361505536174,
+            0.0014518387855935178
+          ],
+          "measured_gap_mm": 79.88385289715252,
+          "target_xyz_m": [
+            0.015,
+            -0.365,
+            0.72
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.11526453963542177,
+                "planning_s": 0.012917728163301945,
+                "map_source": "shared_map",
+                "map_revision": 8
+              }
+            }
+          ]
+        },
+        "step": 371
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "yellow-and-white mug",
+          "checkpoint": "observe",
+          "checkpoint_object": "yellow-and-white mug",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                0.015,
+                0.105,
+                0.7
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 27,
+        "evidence": {
+          "position_error_m": 0.0015606466329645887,
+          "orientation_error_rad": 0.0066858107597335455,
+          "measured_pose_wxyz": [
+            0.0150817223181802,
+            0.10652046453256525,
+            0.700342238193231,
+            0.0024262468268274107,
+            0.999994412497014,
+            -0.002124844975905927,
+            -0.0008793946301203343,
+            0.004777924325558902
+          ],
+          "measured_gap_mm": 79.6177660539553,
+          "target_xyz_m": [
+            0.015,
+            0.105,
+            0.7
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.4708994205784592,
+                "planning_s": 0.0204136548563838,
+                "map_source": "shared_map",
+                "map_revision": 8
+              }
+            }
+          ]
+        },
+        "step": 398
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.032,
+                0.15,
+                0.59
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 21,
+        "evidence": {
+          "position_error_m": 0.0022884927785148195,
+          "orientation_error_rad": 0.005070100512526359,
+          "measured_pose_wxyz": [
+            -0.03384428070170182,
+            0.1495517971704652,
+            0.5887213514500685,
+            0.0007540625156446239,
+            -0.99999678676182,
+            0.0003060193998745688,
+            -0.0024008764825880513,
+            0.0019998116245567576
+          ],
+          "measured_gap_mm": 79.84001507003546,
+          "target_xyz_m": [
+            -0.032,
+            0.15,
+            0.59
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived",
+              "routing": {
+                "obstacle_count": 3,
+                "straight_path_valid": true,
+                "path_length_m": 0.1276031665375193,
+                "planning_s": 0.01293019694276154,
+                "map_source": "shared_map",
+                "map_revision": 9
+              }
+            }
+          ]
+        },
+        "step": 419
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "yellow-and-white mug",
+          "checkpoint": "observe",
+          "checkpoint_object": "yellow-and-white mug",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.032,
+                0.15,
+                0.523
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 55,
+        "evidence": {
+          "position_error_m": 0.0012961507456272939,
+          "orientation_error_rad": 0.0012084024283334797,
+          "measured_pose_wxyz": [
+            -0.03152752205497721,
+            0.14998474183842034,
+            0.524206871383107,
+            6.469246989505667e-05,
+            0.9999998174704521,
+            0.00028434358426754363,
+            -0.0005291716859419174,
+            0.00017942182496766268
+          ],
+          "measured_gap_mm": 79.98564625400259,
+          "target_xyz_m": [
+            -0.032,
+            0.15,
+            0.523
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 474
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "close"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 14,
+        "evidence": {
+          "position_error_m": 0.00010924392444190489,
+          "orientation_error_rad": 0.0009608740749983218,
+          "measured_pose_wxyz": [
+            -0.03142440394946742,
+            0.14996646551995557,
+            0.5242379658766213,
+            0.00012189244057856421,
+            0.999999984028358,
+            9.236576313303994e-05,
+            -9.248828304472047e-05,
+            0.8357128863341011
+          ],
+          "measured_gap_mm": 13.142969093271914,
+          "target_xyz_m": [
+            -0.03152752205497721,
+            0.14998474183842034,
+            0.524206871383107
+          ],
+          "target_quaternion_wxyz": [
+            6.469246989505667e-05,
+            0.9999998174704521,
+            0.00028434358426754363,
+            -0.0005291716859419174
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "gap_stable"
+            }
+          ]
+        },
+        "step": 488
+      },
+      {
+        "segment": {
+          "id": "segment_02",
+          "object": "yellow-and-white mug",
+          "checkpoint": "held",
+          "checkpoint_object": "yellow-and-white mug",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 58,
+        "evidence": {
+          "position_error_m": 0.0014057935697904594,
+          "orientation_error_rad": 0.0012896630226818125,
+          "measured_pose_wxyz": [
+            -0.03199480939320858,
+            0.1498866487175295,
+            0.5929555765173917,
+            8.610912453255903e-05,
+            -0.9999997920961682,
+            0.0002641885858029048,
+            -0.0005818910810365541,
+            0.87551278898654
+          ],
+          "measured_gap_mm": 9.958976881076799,
+          "target_xyz_m": [
+            -0.03142440394946742,
+            0.14996646551995557,
+            0.5942379658766213
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "close",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 546
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.032,
+                0.39,
+                0.6
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "transit",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_stall",
+        "step": 571
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "observe",
+          "checkpoint_object": "yellow-and-white mug",
+          "candidates": [
+            {
+              "skill": "move_to_pose",
+              "xyz_m": [
+                -0.028,
+                0.39,
+                0.536
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_stall",
+        "step": 626
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "none",
+          "checkpoint_object": null,
+          "candidates": [
+            {
+              "skill": "set_gripper",
+              "xyz_m": null,
+              "quaternion_wxyz": null,
+              "profile": "contact",
+              "gripper": "open"
+            }
+          ]
+        },
+        "status": "interrupted",
+        "reason": "segment_budget_exhausted",
+        "step": 642
+      },
+      {
+        "segment": {
+          "id": "segment_01",
+          "object": "yellow-and-white mug",
+          "checkpoint": "released",
+          "checkpoint_object": "yellow-and-white mug",
+          "candidates": [
+            {
+              "skill": "move_relative",
+              "xyz_m": [
+                0.0,
+                0.0,
+                0.07
+              ],
+              "quaternion_wxyz": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "profile": "contact",
+              "gripper": "keep"
+            }
+          ]
+        },
+        "status": "succeeded",
+        "reason": "fragment_complete",
+        "actions": 58,
+        "evidence": {
+          "position_error_m": 0.001046417387259678,
+          "orientation_error_rad": 0.0014101024389087354,
+          "measured_pose_wxyz": [
+            -0.026493135818964668,
+            0.39441967991102467,
+            0.611459566094213,
+            0.0003490759780483447,
+            -0.9999997514513993,
+            0.00026934995099142667,
+            -0.0005501760673966606,
+            0.0021530748002457356
+          ],
+          "measured_gap_mm": 79.82775401598035,
+          "target_xyz_m": [
+            -0.02612304312141459,
+            0.39458328109656493,
+            0.612424581843136
+          ],
+          "target_quaternion_wxyz": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "gripper_command": "open",
+          "detail": null,
+          "handoff_kind": "completed",
+          "segments": [
+            {
+              "status": "succeeded",
+              "reason": "pose_arrived"
+            }
+          ]
+        },
+        "step": 700
+      }
+    ],
+    "feedback": {
+      "kind": "execution_feedback",
+      "reason": "visual_checkpoint",
+      "segment": null,
+      "evidence": {
+        "state": "released",
+        "object": "yellow-and-white mug",
+        "measured_result": {
+          "status": "succeeded",
+          "reason": "fragment_complete",
+          "actions": 58,
+          "evidence": {
+            "position_error_m": 0.001046417387259678,
+            "orientation_error_rad": 0.0014101024389087354,
+            "measured_pose_wxyz": [
+              -0.026493135818964668,
+              0.39441967991102467,
+              0.611459566094213,
+              0.0003490759780483447,
+              -0.9999997514513993,
+              0.00026934995099142667,
+              -0.0005501760673966606,
+              0.0021530748002457356
+            ],
+            "measured_gap_mm": 79.82775401598035,
+            "target_xyz_m": [
+              -0.02612304312141459,
+              0.39458328109656493,
+              0.612424581843136
+            ],
+            "target_quaternion_wxyz": [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            "gripper_command": "open",
+            "detail": null,
+            "handoff_kind": "completed",
+            "segments": [
+              {
+                "status": "succeeded",
+                "reason": "pose_arrived"
+              }
+            ]
+          }
+        },
+        "semantic_verdict": "awaiting_Astra_RGB_review"
+      },
+      "remaining_segment_ids": []
+    },
+    "config": {
+      "history_items": 6
+    },
+    "model_requests": [
+      {
+        "kind": "harness",
+        "ordinal": 1,
+        "status": "accepted",
+        "latency_s": 7.566825137939304,
+        "step": 0
+      },
+      {
+        "kind": "harness",
+        "ordinal": 2,
+        "status": "accepted",
+        "latency_s": 41.6436483100988,
+        "step": 1
+      },
+      {
+        "kind": "harness",
+        "ordinal": 3,
+        "status": "accepted",
+        "latency_s": 9.623932666843757,
+        "step": 67
+      },
+      {
+        "kind": "harness",
+        "ordinal": 4,
+        "status": "accepted",
+        "latency_s": 8.50927805993706,
+        "step": 87
+      },
+      {
+        "kind": "harness",
+        "ordinal": 5,
+        "status": "accepted",
+        "latency_s": 10.627554706996307,
+        "step": 88
+      },
+      {
+        "kind": "harness",
+        "ordinal": 6,
+        "status": "accepted",
+        "latency_s": 29.85055702109821,
+        "step": 146
+      },
+      {
+        "kind": "harness",
+        "ordinal": 7,
+        "status": "accepted",
+        "latency_s": 8.622854972956702,
+        "step": 227
+      },
+      {
+        "kind": "harness",
+        "ordinal": 8,
+        "status": "accepted",
+        "latency_s": 9.054123182082549,
+        "step": 288
+      },
+      {
+        "kind": "harness",
+        "ordinal": 9,
+        "status": "accepted",
+        "latency_s": 8.47207298502326,
+        "step": 304
+      },
+      {
+        "kind": "harness",
+        "ordinal": 10,
+        "status": "accepted",
+        "latency_s": 18.14793704613112,
+        "step": 361
+      },
+      {
+        "kind": "harness",
+        "ordinal": 11,
+        "status": "accepted",
+        "latency_s": 33.843814266845584,
+        "step": 398
+      },
+      {
+        "kind": "harness",
+        "ordinal": 12,
+        "status": "accepted",
+        "latency_s": 8.342786957044154,
+        "step": 474
+      },
+      {
+        "kind": "harness",
+        "ordinal": 13,
+        "status": "accepted",
+        "latency_s": 17.418915580958128,
+        "step": 546
+      },
+      {
+        "kind": "harness",
+        "ordinal": 14,
+        "status": "accepted",
+        "latency_s": 10.945853327168152,
+        "step": 571
+      },
+      {
+        "kind": "harness",
+        "ordinal": 15,
+        "status": "accepted",
+        "latency_s": 10.978053058963269,
+        "step": 626
+      },
+      {
+        "kind": "harness",
+        "ordinal": 16,
+        "status": "accepted",
+        "latency_s": 9.204667652025819,
+        "step": 642
+      },
+      {
+        "kind": "harness",
+        "ordinal": 17,
+        "status": "accepted",
+        "latency_s": 4.618084469810128,
+        "step": 700
+      }
+    ],
+    "vision_tools": {
+      "calls": 1,
+      "requests": 4,
+      "result_cache_hits": 0,
+      "segment_backend_calls": 0,
+      "depth_backend_calls": 1,
+      "factory_calls": 0,
+      "unavailable_results": 0,
+      "expired_results": 0,
+      "backend_errors": 0,
+      "logging_errors": 0,
+      "elapsed_s": 9.171375500969589,
+      "mode": "on-demand",
+      "closed": false,
+      "initialized_backends": [
+        "depth_estimator"
+      ],
+      "cached_frames": 1,
+      "automatic_calls": 0
+    },
+    "robot_guard": {
+      "calls": 698,
+      "rejected": 0,
+      "wall_s": 14.98880981025286,
+      "shape_checks": 2094,
+      "cache_hits": 0,
+      "prediction_error_rad_max": 0.019588433609548872
+    },
+    "timing": {
+      "model_s": 247.4709594019223,
+      "vision_tool_s": 9.172395803034306,
+      "robot_guard_s": 14.992762751178816,
+      "wall_s": 368.0644949541893
+    }
+  },
+  "client_stats": {
+    "history_stats": {
+      "protocol": "fvh_v3_astra_batch_optional_tools_r1",
+      "accepted_requests": 17,
+      "messages": 6,
+      "retained_image_pairs": 0,
+      "calls_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 17
+      },
+      "accepted_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 17
+      },
+      "output_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 6579
+      },
+      "reasoning_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 2297
+      },
+      "visible_tokens_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 4282
+      },
+      "visible_token_budgets": {
+        "plan": 340,
+        "replan": 340,
+        "point_fine": 6,
+        "point_coarse": 6,
+        "repair": 80,
+        "review": 80,
+        "harness": null
+      },
+      "repair_step_visible_token_budget": 300,
+      "over_visible_budget_by_kind": {
+        "plan": 0,
+        "replan": 0,
+        "point_fine": 0,
+        "point_coarse": 0,
+        "repair": 0,
+        "review": 0,
+        "harness": 0
+      },
+      "overload_retry_policy": "none",
+      "overload_retry_requests": 0,
+      "overload_retry_wait_s": 0.0,
+      "transient_retry_policy": "none",
+      "transient_retry_requests": 0,
+      "transient_retry_wait_s": 0.0,
+      "transient_retry_codes": {},
+      "reask_requests": 0,
+      "reask_rejected_for_dropped_steps": 0,
+      "history_contract_limit": 6,
+      "text_history": "bounded accepted batches/tool intents; current feedback supplied by executor"
+    },
+    "budget_snapshot": {
+      "snapshot_version": "chatgpt-subscription-http-sse-v1",
+      "configuration": {
+        "model": "gpt-6-astra",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "max_output_tokens": 8192,
+        "timeout_s": 180,
+        "max_api_calls": null,
+        "max_cost_usd": null,
+        "max_wall_time_s": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null,
+        "cached_input_price_per_million": null,
+        "cache_write_price_per_million": null,
+        "max_input_tokens": 1050000
+      },
+      "billing": "chatgpt_subscription",
+      "api_calls": 17,
+      "subscription_inference_calls": 17,
+      "api_key_calls": 0,
+      "input_tokens": 131664,
+      "output_tokens": 6579,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 2297,
+      "unknown_usage_calls": 0,
+      "subscription_cost_usd": null,
+      "cost_usd_upper_bound": null,
+      "reservation_per_call_usd": null,
+      "max_api_calls": null,
+      "max_cost_usd": null,
+      "max_wall_time_s": null,
+      "elapsed_s": 368.4182819160633,
+      "output_token_limit_sent": null,
+      "usage_accounting": "Server-reported tokens; account subscription limits apply; no API-key billing"
+    }
+  },
+  "performance": {
+    "timings": {
+      "trace_write": {
+        "count": 702,
+        "total_s": 2.274988909717649,
+        "mean_s": 0.003240724942617734,
+        "p50_s": 0.003302851924672723,
+        "p95_s": 0.004586498241405934,
+        "max_s": 0.14093403099104762
+      },
+      "recording_submit": {
+        "count": 1401,
+        "total_s": 2.594494183547795,
+        "mean_s": 0.0018518873544238364,
+        "p50_s": 0.0019943839870393276,
+        "p95_s": 0.0028314359951764345,
+        "max_s": 0.006050542928278446
+      },
+      "status_write": {
+        "count": 701,
+        "total_s": 0.9727933739777654,
+        "mean_s": 0.0013877223594547295,
+        "p50_s": 0.0011339429765939713,
+        "p95_s": 0.0015590630937367678,
+        "max_s": 0.1861709679942578
+      },
+      "decision": {
+        "count": 701,
+        "total_s": 272.15020355791785,
+        "mean_s": 0.3882313888130069,
+        "p50_s": 0.021549575962126255,
+        "p95_s": 0.025503798853605986,
+        "max_s": 41.70251324004494
+      },
+      "simulator_step": {
+        "count": 700,
+        "total_s": 87.55629464611411,
+        "mean_s": 0.12508042092302016,
+        "p50_s": 0.1232835870468989,
+        "p95_s": 0.13660397641360758,
+        "max_s": 0.29010741086676717
+      },
+      "feedback": {
+        "count": 700,
+        "total_s": 0.8865862826351076,
+        "mean_s": 0.001266551832335868,
+        "p50_s": 0.00046229606959968805,
+        "p95_s": 0.004691566666588181,
+        "max_s": 0.010379635030403733
+      }
+    },
+    "progress": {
+      "by_primitive": {
+        "observation_hold": {
+          "steps": 2,
+          "translation_m": 0.00011741801771392488,
+          "rotation_rad": 0.0003222073429966654,
+          "absolute_finger_gap_change_m": 0.0005730680327894599,
+          "near_zero_arm_motion_steps": 1,
+          "goal_position_samples": 0,
+          "goal_distance_reduction_m": 0.0,
+          "goal_position_approaching_steps": 0,
+          "goal_position_receding_steps": 0
+        },
+        "measured_v2_fragment": {
+          "steps": 698,
+          "translation_m": 2.183858897465018,
+          "rotation_rad": 1.1391577634634402,
+          "absolute_finger_gap_change_m": 0.2914766861297433,
+          "near_zero_arm_motion_steps": 53,
+          "goal_position_samples": 698,
+          "goal_distance_reduction_m": 2.014853217691912,
+          "goal_position_approaching_steps": 604,
+          "goal_position_receding_steps": 28
+        }
+      },
+      "goal_reductions_are_per_step_local_targets_not_task_progress": true,
+      "near_zero_arm_motion_is_not_a_failure_classification": true
+    },
+    "accounted_online_components_s": 366.4353609539103,
+    "other_online_wall_s": 0.3666471689939499,
+    "accounting": "decision includes model/perception/filter work; failed_decision is a subset; quantiles computed at reporting; evaluator holds excluded",
+    "progress_scope": "measured arm motion and signed local-goal distance change, not task completion"
+  },
+  "video": {
+    "path": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009/trial/episode.mp4",
+    "asynchronous": true,
+    "sampled_events": 1401,
+    "rendered_events": 1401,
+    "dropped_events": 0,
+    "queue_capacity": 3,
+    "worker_alive": false,
+    "error": null,
+    "playback_is_wall_clock": false
+  },
+  "cleanup_errors": [],
+  "automatic_retry": false,
+  "raw_success_terminates_control": false,
+  "evaluation_hold_changes_gripper": false,
+  "operator_stop_file": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009/trial/operator_stop.request.json",
+  "pre_episode_startup_wall_s": 0.2953787730075419,
+  "episode_startup_wall_s": 8.969887865008786,
+  "episode_total_wall_s": 378.2973298400175,
+  "launch_total_wall_s": 378.64771496411413,
+  "source_unchanged": true
+}

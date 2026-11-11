@@ -1,0 +1,83 @@
+{
+  "created_at_utc": "2026-11-10T16:51:59.171191+00:00",
+  "user_request": "foundation_vision_harness_V3 / astra_tools_r2_obstacle_map run the same test use this version, and monitor it",
+  "revision": "astra_tools_r2_obstacle_map",
+  "runtime": "/workspace/gpt_field/output/r2_two_task_20261111_001/runtime",
+  "execution": "sequential; one fresh episode each; no automatic retries",
+  "runs": [
+    {
+      "tag": "t04",
+      "task": "libero_10_t4",
+      "output": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009",
+      "wrapper": "/workspace/gpt_field/output/r2_two_task_20261111_001/t04.sh",
+      "argv": [
+        "/workspace/gpt_field/.venv-foundation-vision/bin/python",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/runtime/scripts/evaluate_foundation_vision_harness_V3.py",
+        "run",
+        "--approved",
+        "--task",
+        "libero_10_t4",
+        "--episode-index",
+        "0",
+        "--vision",
+        "on-demand",
+        "--output",
+        "/workspace/gpt_field/runs/foundation_vision_harness_V3_t04_can_obstacle_009",
+        "--task-bddl-override",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/custom_task.bddl",
+        "--initial-state-override",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/initial_state.npy",
+        "--expected-initial-observation-sha256",
+        "06f623f31ee2ea2e8ef600ce29d299413d81a8647d8f59663f3aff2e660da187",
+        "--sam-checkpoint",
+        "/workspace/gpt_field/artifacts/foundation_vision/models/sam3.1/sam3.1_multiplex.pt",
+        "--da3-model",
+        "/workspace/gpt_field/artifacts/foundation_vision/models/models--depth-anything--DA3-LARGE-1.1/snapshots/0e109ae307c5982f319a67cf6f9f99ccdc0ec97c",
+        "--store-dir",
+        "/workspace/gpt_field/.private/chatgpt_plan"
+      ],
+      "input_sha256": {
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/custom_task.bddl": "5c808defda474b6dac7490d0ad5d36c38d2fa04e432344fee1046011c5499459",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t04/initial_state.npy": "76e81e7877e0e4c6d14638b644a6a8ebbd6c81f0d744318990debf9d59dc5642"
+      },
+      "gpu": 7
+    },
+    {
+      "tag": "t08",
+      "task": "libero_10_t8",
+      "output": "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005",
+      "wrapper": "/workspace/gpt_field/output/r2_two_task_20261111_001/t08.sh",
+      "argv": [
+        "/workspace/gpt_field/.venv-foundation-vision/bin/python",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/runtime/scripts/evaluate_foundation_vision_harness_V3.py",
+        "run",
+        "--approved",
+        "--task",
+        "libero_10_t8",
+        "--episode-index",
+        "0",
+        "--vision",
+        "on-demand",
+        "--output",
+        "/workspace/gpt_field/runs/foundation_vision_harness_V3_t08_bottle_obstacle_005",
+        "--task-bddl-override",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t08/custom_task.bddl",
+        "--initial-state-override",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t08/initial_state.npy",
+        "--expected-initial-observation-sha256",
+        "7f96963551a64fc826f1cbf549e81497ddb1f40258ad9ee7438bb81dc5411080",
+        "--sam-checkpoint",
+        "/workspace/gpt_field/artifacts/foundation_vision/models/sam3.1/sam3.1_multiplex.pt",
+        "--da3-model",
+        "/workspace/gpt_field/artifacts/foundation_vision/models/models--depth-anything--DA3-LARGE-1.1/snapshots/0e109ae307c5982f319a67cf6f9f99ccdc0ec97c",
+        "--store-dir",
+        "/workspace/gpt_field/.private/chatgpt_plan"
+      ],
+      "input_sha256": {
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t08/custom_task.bddl": "54bc8d32240afeafeb579867723d6e2819a4e7318950e5f57e6cf5d3c936ddac",
+        "/workspace/gpt_field/output/r2_two_task_20261111_001/inputs/t08/initial_state.npy": "cb246c6ebd261ebc71899c45b4019f6f01a32cbdd0a8e6dcbf9bd8038972a034"
+      },
+      "gpu": 7
+    }
+  ]
+}

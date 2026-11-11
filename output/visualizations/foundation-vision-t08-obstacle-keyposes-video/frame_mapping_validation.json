@@ -1,0 +1,797 @@
+{
+  "passed": true,
+  "checks": {
+    "frame_intervals_cover_decoded_video_exactly": true,
+    "fps_20": true,
+    "resolution_1600x960": true,
+    "decoded_frame_count_matches_container": true,
+    "all_frame_and_time_boundaries_resolve": true,
+    "outside_video_indices_rejected": true,
+    "all_event_states_equal_trace_states": true,
+    "policy_trace_has_exact_actions_0_through_589": true,
+    "state_indices_cover_0_through_590": true,
+    "terminal_video_repeats_policy_state_590": true,
+    "38_diagnostic_actions_are_not_video_actions": true,
+    "sample_decode_indices_exact": true,
+    "camera_crops_match_saved_observations_with_lossy_encoding": true
+  },
+  "video": {
+    "frame_count": 2542,
+    "container_frame_count": 2542,
+    "fps": 20.0,
+    "width": 1600,
+    "height": 960,
+    "duration_s": 127.1,
+    "decoder": "ffprobe -count_frames",
+    "decode_stderr": ""
+  },
+  "event_blocks_checked": 1182,
+  "state_count": 591,
+  "max_state_absolute_error": 0.0,
+  "state_mismatches": [],
+  "representative_image_checks": [
+    {
+      "state_index": 0,
+      "source_frame_index": 0,
+      "source_time_s": 0.0,
+      "purpose": "control_state",
+      "decoder_next_frame": 1,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.1195671558380127,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.102982759475708,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        }
+      }
+    },
+    {
+      "state_index": 1,
+      "source_frame_index": 24,
+      "source_time_s": 1.2,
+      "purpose": "control_state",
+      "decoder_next_frame": 25,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.135891914367676,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.204477310180664,
+          "p95_absolute_error": 7.0,
+          "max_absolute_error": 108.0
+        }
+      }
+    },
+    {
+      "state_index": 24,
+      "source_frame_index": 116,
+      "source_time_s": 5.8,
+      "purpose": "control_state",
+      "decoder_next_frame": 117,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.195953130722046,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.1620607376098633,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 107.0
+        }
+      }
+    },
+    {
+      "state_index": 25,
+      "source_frame_index": 130,
+      "source_time_s": 6.5,
+      "purpose": "control_state",
+      "decoder_next_frame": 131,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.2198069095611572,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.266221523284912,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 108.0
+        }
+      }
+    },
+    {
+      "state_index": 93,
+      "source_frame_index": 402,
+      "source_time_s": 20.1,
+      "purpose": "control_state",
+      "decoder_next_frame": 403,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.068275213241577,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.718870997428894,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 38.0
+        }
+      }
+    },
+    {
+      "state_index": 94,
+      "source_frame_index": 416,
+      "source_time_s": 20.8,
+      "purpose": "control_state",
+      "decoder_next_frame": 417,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.08620023727417,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6846448183059692,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 38.0
+        }
+      }
+    },
+    {
+      "state_index": 188,
+      "source_frame_index": 792,
+      "source_time_s": 39.6,
+      "purpose": "control_state",
+      "decoder_next_frame": 793,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0722081661224365,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6042729616165161,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 35.0
+        }
+      }
+    },
+    {
+      "state_index": 189,
+      "source_frame_index": 806,
+      "source_time_s": 40.3,
+      "purpose": "control_state",
+      "decoder_next_frame": 807,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.064055919647217,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6410914659500122,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 43.0
+        }
+      }
+    },
+    {
+      "state_index": 243,
+      "source_frame_index": 1022,
+      "source_time_s": 51.1,
+      "purpose": "control_state",
+      "decoder_next_frame": 1023,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0959644317626953,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7101579904556274,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 35.0
+        }
+      }
+    },
+    {
+      "state_index": 244,
+      "source_frame_index": 1036,
+      "source_time_s": 51.8,
+      "purpose": "control_state",
+      "decoder_next_frame": 1037,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0943877696990967,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7437641620635986,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 35.0
+        }
+      }
+    },
+    {
+      "state_index": 277,
+      "source_frame_index": 1168,
+      "source_time_s": 58.4,
+      "purpose": "control_state",
+      "decoder_next_frame": 1169,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0950727462768555,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8980802297592163,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 110.0
+        }
+      }
+    },
+    {
+      "state_index": 278,
+      "source_frame_index": 1172,
+      "source_time_s": 58.6,
+      "purpose": "control_state",
+      "decoder_next_frame": 1173,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0953385829925537,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8866153955459595,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 98.0
+        }
+      }
+    },
+    {
+      "state_index": 297,
+      "source_frame_index": 1248,
+      "source_time_s": 62.4,
+      "purpose": "control_state",
+      "decoder_next_frame": 1249,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.084564447402954,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8435019254684448,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 89.0
+        }
+      }
+    },
+    {
+      "state_index": 298,
+      "source_frame_index": 1262,
+      "source_time_s": 63.1,
+      "purpose": "control_state",
+      "decoder_next_frame": 1263,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9681447744369507,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 104.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6589014530181885,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 96.0
+        }
+      }
+    },
+    {
+      "state_index": 328,
+      "source_frame_index": 1382,
+      "source_time_s": 69.1,
+      "purpose": "control_state",
+      "decoder_next_frame": 1383,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0195608139038086,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 119.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.967743158340454,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 68.0
+        }
+      }
+    },
+    {
+      "state_index": 329,
+      "source_frame_index": 1396,
+      "source_time_s": 69.8,
+      "purpose": "control_state",
+      "decoder_next_frame": 1397,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.04160475730896,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 119.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.9794796705245972,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 77.0
+        }
+      }
+    },
+    {
+      "state_index": 368,
+      "source_frame_index": 1552,
+      "source_time_s": 77.6,
+      "purpose": "control_state",
+      "decoder_next_frame": 1553,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0324015617370605,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6278669834136963,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 29.0
+        }
+      }
+    },
+    {
+      "state_index": 369,
+      "source_frame_index": 1566,
+      "source_time_s": 78.3,
+      "purpose": "control_state",
+      "decoder_next_frame": 1567,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.043379068374634,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6391487121582031,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 32.0
+        }
+      }
+    },
+    {
+      "state_index": 477,
+      "source_frame_index": 1998,
+      "source_time_s": 99.9,
+      "purpose": "control_state",
+      "decoder_next_frame": 1999,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0167646408081055,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6620252132415771,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 33.0
+        }
+      }
+    },
+    {
+      "state_index": 478,
+      "source_frame_index": 2012,
+      "source_time_s": 100.6,
+      "purpose": "control_state",
+      "decoder_next_frame": 2013,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9958014488220215,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.5894333124160767,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 30.0
+        }
+      }
+    },
+    {
+      "state_index": 528,
+      "source_frame_index": 2212,
+      "source_time_s": 110.6,
+      "purpose": "control_state",
+      "decoder_next_frame": 2213,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0939154624938965,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7473485469818115,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 33.0
+        }
+      }
+    },
+    {
+      "state_index": 529,
+      "source_frame_index": 2226,
+      "source_time_s": 111.3,
+      "purpose": "control_state",
+      "decoder_next_frame": 2227,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.1199657917022705,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7791831493377686,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 33.0
+        }
+      }
+    },
+    {
+      "state_index": 551,
+      "source_frame_index": 2314,
+      "source_time_s": 115.7,
+      "purpose": "control_state",
+      "decoder_next_frame": 2315,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.950387954711914,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 118.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7591382265090942,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 95.0
+        }
+      }
+    },
+    {
+      "state_index": 552,
+      "source_frame_index": 2328,
+      "source_time_s": 116.4,
+      "purpose": "control_state",
+      "decoder_next_frame": 2329,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9745488166809082,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 137.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7664989233016968,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 115.0
+        }
+      }
+    },
+    {
+      "state_index": 589,
+      "source_frame_index": 2476,
+      "source_time_s": 123.8,
+      "purpose": "control_state",
+      "decoder_next_frame": 2477,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0038678646087646,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8503342866897583,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 116.0
+        }
+      }
+    },
+    {
+      "state_index": 590,
+      "source_frame_index": 2480,
+      "source_time_s": 124.0,
+      "purpose": "control_state",
+      "decoder_next_frame": 2481,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.006356954574585,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8275020122528076,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 100.0
+        }
+      }
+    },
+    {
+      "state_index": 0,
+      "source_frame_index": 12,
+      "source_time_s": 0.6,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 13,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.101677656173706,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.0951850414276123,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        }
+      }
+    },
+    {
+      "state_index": 24,
+      "source_frame_index": 118,
+      "source_time_s": 5.9,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 119,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.1951088905334473,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 2.160513401031494,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 107.0
+        }
+      }
+    },
+    {
+      "state_index": 93,
+      "source_frame_index": 404,
+      "source_time_s": 20.2,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 405,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.065753698348999,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7178021669387817,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 38.0
+        }
+      }
+    },
+    {
+      "state_index": 188,
+      "source_frame_index": 794,
+      "source_time_s": 39.7,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 795,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0417966842651367,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.6261987686157227,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 34.0
+        }
+      }
+    },
+    {
+      "state_index": 243,
+      "source_frame_index": 1024,
+      "source_time_s": 51.2,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 1025,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.093221426010132,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7291961908340454,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 35.0
+        }
+      }
+    },
+    {
+      "state_index": 297,
+      "source_frame_index": 1250,
+      "source_time_s": 62.5,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 1251,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9086209535598755,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 104.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.574522852897644,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 87.0
+        }
+      }
+    },
+    {
+      "state_index": 328,
+      "source_frame_index": 1384,
+      "source_time_s": 69.2,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 1385,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.0189969539642334,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 119.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.9659745693206787,
+          "p95_absolute_error": 6.0,
+          "max_absolute_error": 66.0
+        }
+      }
+    },
+    {
+      "state_index": 368,
+      "source_frame_index": 1554,
+      "source_time_s": 77.7,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 1555,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.029750108718872,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.623317003250122,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 29.0
+        }
+      }
+    },
+    {
+      "state_index": 477,
+      "source_frame_index": 2000,
+      "source_time_s": 100.0,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 2001,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9169855117797852,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.5513008832931519,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 27.0
+        }
+      }
+    },
+    {
+      "state_index": 528,
+      "source_frame_index": 2214,
+      "source_time_s": 110.7,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 2215,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 2.092568874359131,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 103.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7440770864486694,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 33.0
+        }
+      }
+    },
+    {
+      "state_index": 551,
+      "source_frame_index": 2316,
+      "source_time_s": 115.8,
+      "purpose": "decision_pause",
+      "decoder_next_frame": 2317,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9432368278503418,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 118.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.7515087127685547,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 95.0
+        }
+      }
+    },
+    {
+      "state_index": 590,
+      "source_frame_index": 2482,
+      "source_time_s": 124.1,
+      "purpose": "terminal_start",
+      "decoder_next_frame": 2483,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.9730223417282104,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 105.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.8349690437316895,
+          "p95_absolute_error": 5.0,
+          "max_absolute_error": 96.0
+        }
+      }
+    },
+    {
+      "state_index": 590,
+      "source_frame_index": 2541,
+      "source_time_s": 127.05,
+      "purpose": "terminal_last_frame",
+      "decoder_next_frame": 2542,
+      "camera_comparison": {
+        "external": {
+          "mae_rgb_0_255": 1.7575674057006836,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 101.0
+        },
+        "wrist": {
+          "mae_rgb_0_255": 1.5992299318313599,
+          "p95_absolute_error": 4.0,
+          "max_absolute_error": 77.0
+        }
+      }
+    }
+  ],
+  "image_comparison_note": "Decoded lossy MP4 versus saved 512x512 observation PNG, flipped left-right and Lanczos resized to 336x336. Six RGB levels is an acceptance threshold, not identity of encoded pixels.",
+  "diagnostic_actions_excluded": 38,
+  "diagnostic_protocol": {
+    "lift_action_z": 0.5,
+    "lift_steps": 8,
+    "open_steps": 10,
+    "settle_steps": 20
+  },
+  "no_simulator_or_model_calls": true,
+  "source_sha256": {
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/episode.mp4": "0bde4162b2a0486db83112d9657d53901453f0af3772ce17613da97f28844c7b",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/episode.events.jsonl": "881ade21949d2af3611d9f6bb65e95ef18b6334e5ff8cfe6bc7051aac8611a49",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/trace.jsonl": "1e3871b95310a5ff021f516e5ecb64ea0cb43920daf0bd30fe08638348cbb124",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/initial_observation.json": "da703c2415d09f6eba3945e6885d910ea7f6167abeb69e529bee72abebcbd3a3",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/physical_truth.json": "c4d9d0983b697494d056caff216da9d377d701c04c17092275883df3da7c8010",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/summary.json": "a959d5b64cc30cd01e2480cad268c800628b3e1483a3f2a006ed057b55af4627",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/frozen_source/video.py": "6b49c7bf6044952e86898218f5011e32de59d0ae79be9630efb504c1b8887918",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/frozen_source/agent_speedup_v1_video.py": "b423ebddaa9f9361f612c73c8ac2c1d5bfaf40eabdc3ea1cc9a3ea6e9f009cd7",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/frozen_source/agent_speedup_v2_video.py": "0dc7c657cb3e13be75ab3478471333bdef831cfe8b9d3995d906e4bfa60a0dd3",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/frozen_source/agent_speedup_v2_user_check_video.py": "1be5ad879103de3d449725f7a632112f817202a17b00015ea8f64538cf19135f",
+    "/workspace/gpt_field/runs/foundation_vision_t08_bottle_obstacle_20261105_001/trial/frozen_source/evaluate_agent_speedup_v2.py": "6c19ae890e5bba3436253dc50ddd89e0adb0b4ace19ed9c496303ac92e2f8de5"
+  }
+}
